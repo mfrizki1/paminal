@@ -23,7 +23,7 @@
     <string name="tahun_lamanya">Tahun Lamanya</string>
     <string name="tahun_awal">Tahun Awal</string>
     <string name="tahun_akhir">Tahun Akhir</string>
-    <string name="tanggal">Tanggal(HH-BB-TTTT)</string>
+    <string name="tanggal">Tanggal(TGL-BLN-THN)</string>
     <string name="nama_lengkap">Nama Lengkap</string>
     <string name="nama_alias">Nama Alias(Optional)</string>
     <string name="jk">Jenis Kelamin</string>
