@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="18dp"
+        android:elevation="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_12dp"
+        android:foreground="@drawable/bg_list">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/space_12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_no_lp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nomor LP"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10dp"
+                android:text="NAMA" />
+
+            <TextView
+                android:id="@+id/txt_nrp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12dp"
+                tools:text="PANGKAT / NRP" />
+
+            <TextView
+                android:id="@+id/txt_jns_pelanggaran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="JENIS PELANGGARAN" />
+
+            <TextView
+                android:id="@+id/txt_pasal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="PASAL" />
+
+            <TextView
+                android:id="@+id/txt_putusan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="PUTUSAN / HUKUMAN" />
+
+            <TextView
+                android:id="@+id/txt_keterangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="KETERANGAN" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

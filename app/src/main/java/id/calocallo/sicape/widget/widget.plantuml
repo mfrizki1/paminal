@@ -1,0 +1,245 @@
+@startuml
+
+title __WIDGET's Class Diagram__\n
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      class id.co.iconpln.smartcity.widget.CustomValueFormatter {
+          - mFormat : DecimalFormat
+          - mMaxLength : int
+          - mSuffix : String[]
+          - mText : String
+          + CustomValueFormatter()
+          + CustomValueFormatter()
+          + getDecimalDigits()
+          + getFormattedValue()
+          + setAppendix()
+          + setMaxLength()
+          + setSuffix()
+          - makePretty()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      class id.co.iconpln.smartcity.widget.SnackbarManager {
+          {static} - LONG_DURATION_MS : int
+          {static} - MSG_TIMEOUT : int
+          {static} - SHORT_DURATION_MS : int
+          - mHandler : Handler
+          - mLock : Object
+          {static} - sSnackbarManager : SnackbarManager
+          + cancelTimeout()
+          + dismiss()
+          + isCurrent()
+          + isCurrentOrNext()
+          + onDismissed()
+          + onShown()
+          + restoreTimeout()
+          + show()
+          {static} ~ getInstance()
+          - SnackbarManager()
+          - cancelSnackbarLocked()
+          - handleTimeout()
+          - isCurrentSnackbar()
+          - isNextSnackbar()
+          - scheduleTimeoutLocked()
+          - showNextSnackbarLocked()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      interface id.co.iconpln.smartcity.widget.SnackbarManager.Callback {
+          {abstract} + dismiss()
+          {abstract} + show()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      class id.co.iconpln.smartcity.widget.SnackbarManager.SnackbarRecord {
+          - callback : WeakReference<Callback>
+          - duration : int
+          ~ SnackbarRecord()
+          ~ isSnackbar()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      class id.co.iconpln.smartcity.widget.TopSnackbar {
+          {static} + LENGTH_INDEFINITE : int
+          {static} + LENGTH_LONG : int
+          {static} + LENGTH_SHORT : int
+          {static} - ANIMATION_DURATION : int
+          {static} - ANIMATION_FADE_DURATION : int
+          {static} - MSG_DISMISS : int
+          {static} - MSG_SHOW : int
+          - mContext : Context
+          - mDuration : int
+          - mParent : ViewGroup
+          {static} - sHandler : Handler
+          + addIcon()
+          + dismiss()
+          + getDuration()
+          + getView()
+          + isShown()
+          + isShownOrQueued()
+          {static} + make()
+          {static} + make()
+          + setAction()
+          + setAction()
+          + setActionTextColor()
+          + setActionTextColor()
+          + setCallback()
+          + setDuration()
+          + setIconLeft()
+          + setIconPadding()
+          + setIconRight()
+          + setMaxWidth()
+          + setText()
+          + setText()
+          + show()
+          ~ hideView()
+          ~ showView()
+          - TopSnackbar()
+          - animateViewIn()
+          - animateViewOut()
+          {static} - convertDpToPixel()
+          - dispatchDismiss()
+          {static} - findSuitableParent()
+          - fitDrawable()
+          {static} - getBitmap()
+          {static} - getBitmap()
+          - isBeingDragged()
+          - onViewHidden()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      class id.co.iconpln.smartcity.widget.TopSnackbar.Behavior {
+          + canSwipeDismissView()
+          + onInterceptTouchEvent()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      abstract class id.co.iconpln.smartcity.widget.TopSnackbar.Callback {
+          {static} + DISMISS_EVENT_ACTION : int
+          {static} + DISMISS_EVENT_CONSECUTIVE : int
+          {static} + DISMISS_EVENT_MANUAL : int
+          {static} + DISMISS_EVENT_SWIPE : int
+          {static} + DISMISS_EVENT_TIMEOUT : int
+          + onDismissed()
+          + onShown()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      interface id.co.iconpln.smartcity.widget.TopSnackbar.Callback.DismissEvent {
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      interface id.co.iconpln.smartcity.widget.TopSnackbar.Duration {
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      class id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout {
+          - mActionView : Button
+          - mMaxInlineActionWidth : int
+          - mMaxWidth : int
+          - mMessageView : TextView
+          + SnackbarLayout()
+          + SnackbarLayout()
+          # onAttachedToWindow()
+          # onDetachedFromWindow()
+          # onFinishInflate()
+          # onLayout()
+          # onMeasure()
+          ~ animateChildrenIn()
+          ~ animateChildrenOut()
+          ~ getActionView()
+          ~ getMessageView()
+          ~ setOnAttachStateChangeListener()
+          ~ setOnLayoutChangeListener()
+          {static} - updateTopBottomPadding()
+          - updateViewsWithinLayout()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      interface id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout.OnAttachStateChangeListener {
+          {abstract} + onViewAttachedToWindow()
+          {abstract} + onViewDetachedFromWindow()
+      }
+    }
+  }
+  
+
+  namespace id.co.iconpln.smartcity {
+    namespace widget {
+      interface id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout.OnLayoutChangeListener {
+          {abstract} + onLayoutChange()
+      }
+    }
+  }
+  
+
+  id.co.iconpln.smartcity.widget.CustomValueFormatter .up.|> com.github.mikephil.charting.utils.ValueFormatter
+  id.co.iconpln.smartcity.widget.SnackbarManager o-- id.co.iconpln.smartcity.widget.SnackbarManager.SnackbarRecord : mCurrentSnackbar
+  id.co.iconpln.smartcity.widget.SnackbarManager o-- id.co.iconpln.smartcity.widget.SnackbarManager.SnackbarRecord : mNextSnackbar
+  id.co.iconpln.smartcity.widget.SnackbarManager +-down- id.co.iconpln.smartcity.widget.SnackbarManager.Callback
+  id.co.iconpln.smartcity.widget.SnackbarManager +-down- id.co.iconpln.smartcity.widget.SnackbarManager.SnackbarRecord
+  id.co.iconpln.smartcity.widget.TopSnackbar o-- id.co.iconpln.smartcity.widget.TopSnackbar.Callback : mCallback
+  id.co.iconpln.smartcity.widget.TopSnackbar o-- id.co.iconpln.smartcity.widget.SnackbarManager.Callback : mManagerCallback
+  id.co.iconpln.smartcity.widget.TopSnackbar o-- id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout : mView
+  id.co.iconpln.smartcity.widget.TopSnackbar +-down- id.co.iconpln.smartcity.widget.TopSnackbar.Behavior
+  id.co.iconpln.smartcity.widget.TopSnackbar +-down- id.co.iconpln.smartcity.widget.TopSnackbar.Callback
+  id.co.iconpln.smartcity.widget.TopSnackbar +-down- id.co.iconpln.smartcity.widget.TopSnackbar.Duration
+  id.co.iconpln.smartcity.widget.TopSnackbar +-down- id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout
+  id.co.iconpln.smartcity.widget.TopSnackbar.Behavior -up-|> com.google.android.material.behavior.SwipeDismissBehavior
+  id.co.iconpln.smartcity.widget.TopSnackbar.Callback +-down- id.co.iconpln.smartcity.widget.TopSnackbar.Callback.DismissEvent
+  id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout -up-|> android.widget.LinearLayout
+  id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout o-- id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout.OnAttachStateChangeListener : mOnAttachStateChangeListener
+  id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout o-- id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout.OnLayoutChangeListener : mOnLayoutChangeListener
+  id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout +-down- id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout.OnAttachStateChangeListener
+  id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout +-down- id.co.iconpln.smartcity.widget.TopSnackbar.SnackbarLayout.OnLayoutChangeListener
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

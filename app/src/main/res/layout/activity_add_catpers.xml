@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.catpers.AddCatpersActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--        Data Personel-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_personel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_12dp"
+                    android:text="Data Personel"
+                    android:textSize="@dimen/text_18"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_name_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_10dp"
+                    android:hint="@string/insert_name"
+                    app:layout_constraintTop_toBottomOf="@+id/textView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_name_personel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_ttl_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_12dp"
+                    android:hint="@string/insert_ttl"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_layout_tanggal_personel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_layout_name_personel">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_ttl_personel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_tanggal_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="175dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:hint="Tanggal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_layout_ttl_personel">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txt_tanggal_personel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_jk_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_12dp"
+                    android:hint="Jenis Kelamin"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_layout_ttl_personel">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txt_jk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_agama_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_12dp"
+                    android:hint="Agama"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_layout_jk_personel">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txt_agama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_pangkat_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_12dp"
+                    android:hint="Pangkat"
+                    app:helperTextEnabled="true"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_layout_nrp_personel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_layout_agama_personel">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txt_pangkat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_nrp_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="175dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:hint="NRP"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_layout_pangkat_personel">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_nrp_personel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_jabatan_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_12dp"
+                    android:hint="Jabatan"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_layout_pangkat_personel">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txt_jabatan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layotu_kesatuan_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_12dp"
+                    android:hint="Kesatuan"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_layout_jabatan_personel">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txt_kesatuan"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layotu_alamat_personel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginTop="@dimen/space_12dp"
+                    android:hint="Alamat Kesatuan"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_layotu_kesatuan_personel">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txt_alamat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/cl_personel"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:background="@color/onyx" />
+
+
+            <TextView
+                android:id="@+id/txt_lp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="Laporan Pengisi"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_lp_personel"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_lp"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_10dp"
+                android:hint="Nomor LP"
+                app:layout_constraintTop_toBottomOf="@+id/txt_lp"
+                app:startIconDrawable="@drawable/ic_person_black_18dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_lp_personel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txt_jenis_pelanggaran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_layout_lp_personel"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="Jenis Pelanggaran"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/txt_layout_lp_personel"
+                app:layout_constraintTop_toBottomOf="@+id/txt_layout_lp_personel" />
+
+            <CheckBox
+                android:id="@+id/cb_pidana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_jenis_pelanggaran"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="Pidana"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_jenis_pelanggaran" />
+
+            <include
+                android:id="@+id/layout_detail_1"
+                layout="@layout/layout_dtl_pelanggaran"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cb_pidana" />
+
+            <CheckBox
+                android:id="@+id/cb_kkep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_detail_1"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="KKEP" />
+
+
+            <include
+                android:id="@+id/layout_detail_2"
+                layout="@layout/layout_dtl_pelanggaran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@+id/cb_kkep" />
+
+            <CheckBox
+                android:id="@+id/cb_disiplin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_detail_2"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="Disiplin"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <include
+                android:id="@+id/layout_detail_3"
+                layout="@layout/layout_dtl_pelanggaran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@+id/cb_disiplin"
+                app:layout_constraintTop_toBottomOf="@id/cb_disiplin" />
+
+            <TextView
+                android:id="@+id/txt_pasal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_detail_3"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="Pasal"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_pasal_personel"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_pasal"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:hint="Pasal Yang Dilanggar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_pasal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txt_hukuman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_layout_pasal_personel"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="Hukuman / Putusan"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/txt_layout_pasal_personel" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_hkmn_personel"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_hukuman"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:hint="Hukuman"
+                app:layout_constraintTop_toBottomOf="@+id/txt_hukuman">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_hukuman"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txt_ket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_layout_hkmn_personel"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="Keterangan"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/txt_layout_hkmn_personel" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_ket"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_ket"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:hint="Keterangan (Optional)"
+                app:layout_constraintTop_toBottomOf="@+id/txt_ket">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_ket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_catpers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_layout_ket"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_12dp"
+                android:text="Simpan"
+                app:layout_constraintTop_toBottomOf="@+id/txt_layout_ket" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
