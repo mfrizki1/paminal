@@ -3,12 +3,14 @@
     <string name="login">Login</string>
     <string name="save">Simpan</string>
     <string name="error">Error</string>
+    <string name="not_save">Gagal Simpan</string>
     <string name="next">Selanjutnya</string>
     <string name="insert_name">Nama</string>
     <string name="insert_ttl">Tempat Tinggal Lahir</string>
     <string name="action_ok">OK</string>
     <string name="action_cancel">CANCEL</string>
     <string name="data_saved">Data Berhasil Disimpan</string>
+    <string name="data_Updated">Data Berhasil DiEdit</string>
 
 
     <string name="message_user_unautorizhed">You already login into another device</string>

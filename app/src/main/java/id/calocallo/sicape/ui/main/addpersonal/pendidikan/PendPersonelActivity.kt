@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.transition.Slide
 import android.view.Gravity
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
@@ -31,6 +32,7 @@ class PendPersonelActivity : BaseActivity() {
         setContentView(R.layout.activity_pend_personel)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pendidikan"
+
 /*
 
         sheenValidator = SheenValidator(this)
@@ -72,10 +74,10 @@ class PendPersonelActivity : BaseActivity() {
     private fun setAdapter() {
         rv_pend_umum.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        list.add(PendUmumModel("", "", "", "", "", ""))
-        list.add(PendUmumModel("", "", "", "", "", ""))
-        list.add(PendUmumModel("", "", "", "", "", ""))
-        list.add(PendUmumModel("", "", "", "", "", ""))
+        list.add(PendUmumModel(0,"", "", "", "", "", ""))
+        list.add(PendUmumModel(0,"", "", "", "", "", ""))
+        list.add(PendUmumModel(0,"", "", "", "", "", ""))
+        list.add(PendUmumModel(0,"", "", "", "", "", ""))
         adapter = UmumAdapter(this, list, object : UmumAdapter.OnClick {
             override fun onDelete(position: Int) {
                 list.removeAt(position)
@@ -87,7 +89,7 @@ class PendPersonelActivity : BaseActivity() {
 
         btn_add_pend_umum.setOnClickListener {
             val position = if (list.isEmpty()) 0 else list.size - 1
-            list.add(PendUmumModel("", "", "", "", "", ""))
+            list.add(PendUmumModel(0,"", "", "", "", "", ""))
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()
 

@@ -13,7 +13,7 @@ class PersonelAdapter(val context: Context, val listPersonel: ArrayList<Personel
     inner class PersonelHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(personelModel: PersonelModel) {
             with(itemView){
-                txt_personel_nama.text = personelModel.nama_lengkap
+                txt_personel_nama.text = personelModel.nama
                 txt_personel_jabatan.text = personelModel.jabatan
                 txt_personel_kesatuan.text = personelModel.kesatuan
                 txt_personel_nrp.text = personelModel.nrp

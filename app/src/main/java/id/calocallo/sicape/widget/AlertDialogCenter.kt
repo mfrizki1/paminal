@@ -1,4 +1,4 @@
-package id.co.iconpln.smartcity.widget
+package id.calocallo.sicape.widget
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,32 +32,32 @@ class AlertDialogCenter : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         isCancelable = false
-        view.btn_ok.setOnClickListener { dismiss() }
-        view.btn_cancel.setOnClickListener { dismiss() }
+//        view.btn_ok.setOnClickListener { dismiss() }
+//        view.btn_cancel.setOnClickListener { dismiss() }
 
 
         message?.let {
-            view.txt_msg.text = message
+//            view.txt_msg.text = message
         }
         positiveButton?.let {
-            view.btn_ok.visibility = View.VISIBLE
-            view.btn_ok.text = positiveButton
+//            view.btn_ok.visibility = View.VISIBLE
+//            view.btn_ok.text = positiveButton
         }
         negativeButton?.let {
-            view.btn_cancel.visibility = View.VISIBLE
-            view.btn_cancel.text = negativeButton
+//            view.btn_cancel.visibility = View.VISIBLE
+//            view.btn_cancel.text = negativeButton
         }
         positiveButtonListener?.let {
-            view.btn_ok.setOnClickListener {v->
-                it.onClick()
-                dismiss()
-            }
+//            view.btn_ok.setOnClickListener {v->
+//                it.onClick()
+//                dismiss()
+//            }
         }
         negativeButtonListener?.let {
-            view.btn_cancel.setOnClickListener {v->
-                it.onClick()
-                dismiss()
-            }
+//            view.btn_cancel.setOnClickListener {v->
+//                it.onClick()
+//                dismiss()
+//            }
         }
     }
 

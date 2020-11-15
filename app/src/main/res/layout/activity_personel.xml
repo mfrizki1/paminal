@@ -20,6 +20,19 @@
         android:layout_height="@dimen/separator"
         android:layout_below="@+id/toolbar" />
 
+    <include
+        layout="@layout/view_no_data"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/separator" />
+
+    <include layout="@layout/layout_progress_dialog"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_personel"
         android:layout_width="match_parent"
@@ -36,6 +49,7 @@
         android:layout_marginRight="@dimen/space_12dp"
         android:layout_marginBottom="@dimen/space_12dp"
         android:backgroundTint="@color/colorPrimary"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@drawable/ic_add"
+        android:tint="@color/white"/>
 
 </RelativeLayout>

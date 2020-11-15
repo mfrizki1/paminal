@@ -31,6 +31,7 @@ class PickPendFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         list = ArrayList()
+        sp_jenis_pendidikan.setText("Umum")
         initRV()
         initSP()
     }
@@ -46,18 +47,18 @@ class PickPendFragment : Fragment() {
     }
 
     private fun initRV() {
-        list.add(PendUmumModel("SDN BUMI", "2000", "2001", "BJM", "AYAH", ""))
-        list.add(PendUmumModel("SMP API", "2000", "2001", "BJM", "AYAH", ""))
-        list.add(PendUmumModel("SMK AIR", "2000", "2001", "BJM", "AYAH", ""))
-        list.add(PendUmumModel("UNIV ANGIN", "2000", "2001", "BJM", "AYAH", ""))
+        list.add(PendUmumModel(0,"SDN BUMI", "2000", "2001", "BJM", "AYAH", ""))
+        list.add(PendUmumModel(0,"SMP API", "2000", "2001", "BJM", "AYAH", ""))
+        list.add(PendUmumModel(0,"SMK AIR", "2000", "2001", "BJM", "AYAH", ""))
+        list.add(PendUmumModel(0,"UNIV ANGIN", "2000", "2001", "BJM", "AYAH", ""))
 
         rv_edit_pendidikan.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = activity?.let {
             EditPendAdapter(it, list, object : EditPendAdapter.OnClickEditPend {
                 override fun onClick(position: Int) {
-                    Log.e("ini data edit", list[0].nama_pend)
-                    goToEditPend(list[position].nama_pend)
+                    Log.e("ini data edit", list[0].pendidikan)
+                    goToEditPend(list[position].pendidikan)
                 }
             })
         }!!
@@ -71,7 +72,7 @@ class PickPendFragment : Fragment() {
         }
 
         val ft: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fl_edit_pend, editPendFragment)
+        ft.replace(R.id.fl_edit_pend, editPendFragment).addToBackStack(null)
         ft.commit()
     }
 

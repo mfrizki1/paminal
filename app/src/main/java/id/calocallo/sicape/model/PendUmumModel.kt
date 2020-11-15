@@ -1,12 +1,13 @@
 package id.calocallo.sicape.model
 
 data class PendUmumModel(
-    var nama_pend: String,
-    var thn_awal_pend: String,
-    var thn_akhir_pend: String,
-    var tmpt_pend: String,
-    var org_membiayai: String,
-    var ket_pend: String?
+    var id: Int,
+    var pendidikan: String,
+    var tahun_awal: String,
+    var tahun_akhir: String,
+    var kota: String,
+    var yang_membiayai: String,
+    var keterangan: String?
 ) {
-    constructor() : this("", "", "", "", "", "")
+    constructor() : this(0,"", "", "", "", "", "")
 }

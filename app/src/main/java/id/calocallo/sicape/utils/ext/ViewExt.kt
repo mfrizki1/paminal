@@ -49,6 +49,28 @@ fun ViewGroup?.addView(view: View?) {
 }
 
 
+fun View.visible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.gone() {
+    this.visibility = View.GONE
+}
+
+fun View.invisible() {
+    this.visibility = View.INVISIBLE
+}
+
+fun View.toggleVisibility(): View {
+    visibility = if (visibility == View.VISIBLE) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+    return this
+}
+
+
 //fun View.snack(message: String, length: Int = Snackbar.LENGTH_LONG) = snack(message, length) {}
 //inline fun View.snack(message: String, length: Int = Snackbar.LENGTH_LONG, f: Snackbar.() -> Unit) {
 //    val snack = Snackbar.make(this, message, length)

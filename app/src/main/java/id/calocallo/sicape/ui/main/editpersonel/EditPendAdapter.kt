@@ -16,7 +16,7 @@ class EditPendAdapter(
 ) : RecyclerView.Adapter<EditPendAdapter.EditPendHolder>() {
     inner class EditPendHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(pendUmumModel: PendUmumModel) {
-            itemView.txt_edit_pendidikan.text = pendUmumModel.nama_pend
+            itemView.txt_edit_pendidikan.text = pendUmumModel.pendidikan
 
             itemView.setOnClickListener {
                 onClick.onClick(adapterPosition)

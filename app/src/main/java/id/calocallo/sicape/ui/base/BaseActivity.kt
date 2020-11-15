@@ -1,13 +1,9 @@
 package id.co.iconpln.smartcity.ui.base
 
-import android.app.LauncherActivity
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -15,11 +11,9 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import id.calocallo.sicape.R
 import id.calocallo.sicape.widget.TopSnackbar
-import id.co.iconpln.smartcity.widget.AlertDialogCenter
 
 /**
  * rizmaulana@live.com 2019-06-14.

@@ -72,8 +72,8 @@ class UmumAdapter(
             etName.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("nameAfter", s.toString())
-                    list[adapterPosition].nama_pend = s.toString()
-                    name = list[adapterPosition].nama_pend
+                    list[adapterPosition].pendidikan = s.toString()
+                    name = list[adapterPosition].pendidikan
                     Log.e("name", name)
 
 
@@ -96,8 +96,8 @@ class UmumAdapter(
             etThnAwal.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("thnAwalAfter", s.toString())
-                    list[adapterPosition].thn_awal_pend = s.toString()
-                    thnAwal = list[adapterPosition].thn_awal_pend
+                    list[adapterPosition].tahun_awal = s.toString()
+                    thnAwal = list[adapterPosition].tahun_awal
                     Log.e("awal", thnAwal)
 
                 }
@@ -119,8 +119,8 @@ class UmumAdapter(
             etThnAkhir.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("thnAkhir", s.toString())
-                    list[adapterPosition].thn_akhir_pend = s.toString()
-                    thnAkhir = list[adapterPosition].thn_akhir_pend
+                    list[adapterPosition].tahun_akhir = s.toString()
+                    thnAkhir = list[adapterPosition].tahun_akhir
                     Log.e("akhir", thnAkhir)
 
 
@@ -143,8 +143,8 @@ class UmumAdapter(
             etTmpt.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("tmpt", s.toString())
-                    list[adapterPosition].tmpt_pend = s.toString()
-                    tmpt = list[adapterPosition].tmpt_pend
+                    list[adapterPosition].kota = s.toString()
+                    tmpt = list[adapterPosition].kota
                     Log.e("tmp", tmpt)
 
 
@@ -165,8 +165,8 @@ class UmumAdapter(
             etOrgMmbiayai.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("org", s.toString())
-                    list[adapterPosition].org_membiayai = s.toString()
-                    org = list[adapterPosition].org_membiayai
+                    list[adapterPosition].yang_membiayai = s.toString()
+                    org = list[adapterPosition].yang_membiayai
                     Log.e("org", org)
 
 
@@ -187,8 +187,8 @@ class UmumAdapter(
             etKet.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     Log.e("ket", s.toString())
-                    list[adapterPosition].ket_pend = s.toString()
-                    ket = list[adapterPosition].ket_pend.toString()
+                    list[adapterPosition].keterangan = s.toString()
+                    ket = list[adapterPosition].keterangan.toString()
                     Log.e("ket", ket)
 
                 }
@@ -224,12 +224,12 @@ class UmumAdapter(
 
     private fun bindViews(holder: UmumHolder, position: Int) {
         val data = list[position]
-        holder.etName.setText(data.nama_pend)
-        holder.etThnAwal.setText(data.thn_awal_pend)
-        holder.etTmpt.setText(data.tmpt_pend)
-        holder.etOrgMmbiayai.setText(data.org_membiayai)
-        holder.etThnAkhir.setText(data.thn_akhir_pend)
-        holder.etKet.setText(data.ket_pend)
+        holder.etName.setText(data.pendidikan)
+        holder.etThnAwal.setText(data.tahun_awal)
+        holder.etTmpt.setText(data.kota)
+        holder.etOrgMmbiayai.setText(data.yang_membiayai)
+        holder.etThnAkhir.setText(data.tahun_akhir)
+        holder.etKet.setText(data.keterangan)
 //        onCLick.saveData(list)
 
 //        Log.e("holder_name", holder.etName.text.toString())

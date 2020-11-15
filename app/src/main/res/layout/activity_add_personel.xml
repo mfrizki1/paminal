@@ -107,11 +107,28 @@
                         android:id="@+id/edt_tgl_ttl"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="date" />
+                        android:inputType="date"
+                        android:maxLength="10" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="No Telepon Pribadi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_no_telp_pribadi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -135,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Pekerjaan">
+                android:hint="Pekerjaan / Jabatan">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_pekerjaan"
@@ -204,6 +221,8 @@
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -302,31 +321,31 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:hint="@string/agama_sekarang">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_agm_now"
+                <AutoCompleteTextView
+                    android:id="@+id/sp_agm_now"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text" />
+                    android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:hint="@string/agama_sebelumnya">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_agm_before"
+                <AutoCompleteTextView
+                    android:id="@+id/sp_agm_before"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text" />
@@ -350,17 +369,20 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_ttl_kawin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp">
+                android:layout_marginTop="@dimen/space_8dp"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_tmpt_kawin"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/space_12dp"
                     android:hint="Tempat Menikah"
-                    app:layout_constraintEnd_toStartOf="@+id/textInputLayout_2"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_layout_tgl_kawin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -373,7 +395,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayout_2"
+                    android:id="@+id/txt_layout_tgl_kawin"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="175dp"
                     android:layout_height="wrap_content"
@@ -393,12 +415,31 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_kawin_berapa"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Jumlah Anak">
+                android:hint="Perkawinan Yang Keberapa"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_kwin_berapa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Jumlah Anak"
+                app:suffixText="Anak">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_jmlh_anak"

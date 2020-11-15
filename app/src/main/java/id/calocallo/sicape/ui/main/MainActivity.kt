@@ -1,20 +1,26 @@
 package id.calocallo.sicape.ui.main
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.FiturModel
-import id.calocallo.sicape.ui.main.catpers.CatpersActivity
-import id.calocallo.sicape.ui.main.personel.PersonelActivity
+import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.ui.main.profil.ProfilFragment
+import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar_logo.*
-import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class MainActivity : BaseActivity(), FiturAdapter.FiturListener {
+class MainActivity : BaseActivity(),
+    BottomNavigationView.OnNavigationItemSelectedListener {
+    private lateinit var sessionmanager: SessionManager
     lateinit var list: ArrayList<FiturModel>
     val listFitur = listOf(
         FiturModel("Personel", R.drawable.ic_personel),
@@ -33,6 +39,8 @@ class MainActivity : BaseActivity(), FiturAdapter.FiturListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        sessionmanager = SessionManager(this)
+
         /*
         list = ArrayList<FiturModel>()
         list.add(FiturModel("Personel", R.drawable.ic_catpers))
@@ -49,19 +57,70 @@ class MainActivity : BaseActivity(), FiturAdapter.FiturListener {
         setSupportActionBar(toolbar_logo)
         supportActionBar?.title = "Dashboard"
 
-        rv_fitur.setHasFixedSize(true)
-        rv_fitur.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
-        val adapter = FiturAdapter(this, ArrayList(listFitur), this)
-        rv_fitur.adapter = adapter
+        getPersonel()
+        initBottom()
+        if (savedInstanceState == null) {
+            bottom_navigation.selectedItemId = R.id.nav_home
+        }
+
+    }
+
+    private fun initBottom() {
+        bottom_navigation.setOnNavigationItemSelectedListener(this)
+    }
+
+    private fun getPersonel() {
+        NetworkConfig().getService()
+            .getUser(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
+            .enqueue(object : Callback<PersonelModel> {
+                override fun onFailure(call: Call<PersonelModel>, t: Throwable) {
+                    Toast.makeText(this@MainActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(
+                    call: Call<PersonelModel>,
+                    response: Response<PersonelModel>
+                ) {
+                    if (response.isSuccessful) {
+                        val user = response.body()
+//                        saveUser(user)
+                        sessionmanager.saveUser(user)
+
+                    } else {
+                        Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
     }
 
 
-    override fun onClick(position: Int) {
-        if (listFitur[position].nameFitur == "Personel") {
-            startActivity(Intent(this, PersonelActivity::class.java))
-//            startActivity(Intent(this, CatpersActivity::class.java))
-        } else {
-            Toast.makeText(this, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        var fragment: Fragment? = null
+
+        when (item.itemId) {
+            R.id.nav_home -> {
+                supportActionBar?.title = "Dashboard"
+                fragment = DashboardFragment()
+            }
+            R.id.nav_profile -> {
+                supportActionBar?.title = "Profile"
+                fragment = ProfilFragment()
+            }
         }
+        return loadFragment(fragment)
+    }
+
+    private fun loadFragment(fragment: Fragment?): Boolean {
+        if (fragment != null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fl_home, fragment)
+                .commit()
+            return true
+        }
+        return false
     }
 }

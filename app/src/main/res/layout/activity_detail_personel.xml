@@ -156,7 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_12dp"
-            android:text="Jabatan"
+            android:text="Kesatuan"
             android:textSize="@dimen/text_16"
             android:textStyle="bold" />
 
@@ -194,6 +194,17 @@
             android:layout_marginVertical="@dimen/space_8dp"
             android:background="@color/grey" />
 
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_personel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Personel"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_pendidikan"

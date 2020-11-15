@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.editpersonel.EditPendidikanActivity"></activity>
+        <activity android:name=".ui.main.editpersonel.EditPersonelActivity"></activity>
+        <activity android:name=".ui.main.editpersonel.EditPendidikanActivity" />
         <activity android:name=".ui.main.addpersonal.AddCatPersActivity" />
         <activity android:name=".ui.main.addpersonal.AddRelasiActivity" />
         <activity android:name=".ui.main.addpersonal.AddSignalementActivity" />
