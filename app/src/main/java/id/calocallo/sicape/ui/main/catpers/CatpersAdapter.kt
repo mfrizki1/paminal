@@ -16,7 +16,7 @@ class CatpersAdapter(val context:Context, val listCatpers: ArrayList<CatpersMode
     inner class CatpersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(catpersModel: CatpersModel) {
             with(itemView){
-                txt_no_lp.text = catpersModel.no_lp
+                txt_no_catpers.text = catpersModel.no_lp
                 txt_name.text = catpersModel.name
                 txt_nrp.text = catpersModel.pangkat_nrp
                 txt_jns_pelanggaran.text = catpersModel.jenis_pelanggaran

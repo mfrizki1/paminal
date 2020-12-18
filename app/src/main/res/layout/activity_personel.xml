@@ -15,12 +15,6 @@
         android:layout_below="@+id/toolbar" />
 
     <include
-        layout="@layout/view_separator"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator"
-        android:layout_below="@+id/toolbar" />
-
-    <include
         layout="@layout/view_no_data"
         android:visibility="gone"
         android:layout_width="match_parent"

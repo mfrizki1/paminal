@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.lhp.AddLhpActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <include layout="@layout/layout_toolbar_white" />
+
+        <include layout="@layout/view_separator" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/kop"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_12dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="No LHP">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_no_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Pendahuluan"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:hint="Isi Pengaduan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_isi_pengaduan_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="No Surat Perintah Penyelidikan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_no_sp_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Personel Penyelidik"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_lidik"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                tools:listitem="@layout/item_lidik" />
+
+            <include layout="@layout/layout_separator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Waktu Penugasan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_waktu_penugasan_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Tempat Penyelidikan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_tempat_penyelidikan_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Tugas Pokok">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_tugas_pokok_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Rencana Pelaksanaan Penyelidikan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_rencana_pelaksanaan_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Pelaksanaan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_pelaksanaan_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Fakta-Fakta"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="Pokok Permasalahan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_pokok_permasalahan_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Saksi"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_saksi"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                tools:listitem="@layout/item_saksi" />
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Surat"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_surat"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                tools:listitem="@layout/item_surat" />
+
+            <include layout="@layout/layout_separator" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Keterangan Ahli">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_keterangan_ahli_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Petunjuk"
+                android:textSize="@dimen/text_16"
+                android:visibility="gone"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_petunjuk"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                tools:listitem="@layout/item_petunjuk" />
+
+            <include layout="@layout/layout_separator" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Barang Bukti"
+                android:textSize="@dimen/text_16"
+                android:visibility="gone"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_bukti"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                tools:listitem="@layout/item_bukti" />
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Keterangan Terlapor"
+                android:visibility="gone"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_terlapor"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                tools:listitem="@layout/item_terlapor" />
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Analisa"
+                android:visibility="gone"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_analisa"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                tools:listitem="@layout/item_analisa" />
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Kesimpulan &amp; Rekomendasi"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Kesimpulan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_kesimpulan_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Rekomendasi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_rekomendasi_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Ketua Tim"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Ketua Tim">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_nama_ketua_tim_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pangkat">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_pangkat_ketua_tim_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nrp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_nrp_ketua_tim_lhp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Terbukti / Tidak Terbukti"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rb_terbukti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Terbukti" />
+
+            <RadioButton
+                android:id="@+id/rb_tidak_terbukti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tidak Terbukti" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="@string/save"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

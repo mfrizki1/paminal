@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_8dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/space_12dp"
+    android:paddingTop="@dimen/space_8dp">
+
+    <TextView
+        android:id="@+id/txt_no_lp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NO LP"
+        android:textSize="@dimen/text_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_nama_lp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Nama"
+        android:textSize="@dimen/text_14" />
+
+    <TextView
+        android:id="@+id/txt_nrp_pangkat_lp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Pangkat:  NRP.___"
+        android:textSize="@dimen/text_14" />
+
+    <TextView
+        android:id="@+id/txt_kesatuan_lp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Polda BJM"
+        android:textSize="@dimen/text_14" />
+
+    <TextView
+        android:id="@+id/txt_jabatan_lp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="JABATAN"
+        android:textSize="@dimen/text_14" />
+
+    <TextView
+        android:id="@+id/txt_pasal_lp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Pasal Yang Dilanggar"
+        android:textSize="@dimen/text_14" />
+    <TextView
+        android:id="@+id/txt_hukuman_lp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Hukuman / Putusan"
+        android:textSize="@dimen/text_14" />
+
+    <include layout="@layout/layout_separator" />
+
+
+</LinearLayout>

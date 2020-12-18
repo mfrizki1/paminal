@@ -22,18 +22,6 @@ class MainActivity : BaseActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
     private lateinit var sessionmanager: SessionManager
     lateinit var list: ArrayList<FiturModel>
-    val listFitur = listOf(
-        FiturModel("Personel", R.drawable.ic_personel),
-        FiturModel("Laporan Polisi", R.drawable.bg_button_oval_primary),
-        FiturModel("Laporan Hasil Penyelidikan", R.drawable.bg_button_oval_primary),
-        FiturModel("SKHD", R.drawable.bg_button_oval_primary),
-        FiturModel("CATPERS", R.drawable.bg_button_oval_primary),
-        FiturModel("SKHP", R.drawable.bg_button_oval_primary),
-        FiturModel("REHAB", R.drawable.bg_button_oval_primary),
-        FiturModel("WANJAK", R.drawable.bg_button_oval_primary),
-        FiturModel("Laporan Bulanan", R.drawable.bg_button_oval_primary),
-        FiturModel("Analisa", R.drawable.bg_button_oval_primary)
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +33,7 @@ class MainActivity : BaseActivity(),
         list = ArrayList<FiturModel>()
         list.add(FiturModel("Personel", R.drawable.ic_catpers))
         list.add(FiturModel("Laporan Polisi", R.drawable.ic_paminal))
-        list.add(FiturModel("Laporan Hasil Penyelidikan", R.drawable.ic_paminal))
+        list.add(FiturModel("Laporan Hasil Penyelidikan", R.drawable.))
         list.add(FiturModel("SKHD", R.drawable.ic_paminal))
         list.add(FiturModel("CATPERS", R.drawable.ic_paminal))
         list.add(FiturModel("SKHP", R.drawable.ic_paminal))

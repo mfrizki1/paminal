@@ -204,42 +204,299 @@
             android:textColor="@color/colorPrimary"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1.5dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_pendidikan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Riwayat Pendidikan"
+            android:text="Edit Riwayat Pendidikan"
             android:textColor="@color/colorPrimary"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1.5dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_pekerjaan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Riwayat Pekerjaan"
+            android:text="Edit Riwayat Pekerjaan"
             android:textColor="@color/colorPrimary"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1.5dp" />
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_edit_pekerjaan_luardinas"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="@dimen/space_12dp"-->
+<!--            android:text="Edit Pekerjaan Diluar Dinas"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:strokeColor="@color/colorPrimary"-->
+<!--            app:strokeWidth="1.5dp" />-->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_alamat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Riwayat Alamat"
+            android:text="Edit Riwayat Alamat"
             android:textColor="@color/colorPrimary"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="1.5dp" />
 
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_organisasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Riwayat Organisasi"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_perjuangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Riwayat Perjuangan Cita-Cita"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_penghargaan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Riwayat Penghargaan"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_pasangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Pasangan"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_ayah_kandung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Ayah Kandung"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_ayah_tiri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Ayah Tiri"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_ibu_kandung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Ibu Kandung"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_ibu_tiri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Ibu Tiri"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_mertua_laki"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Mertua Laki"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_mertua_perempuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Mertua Perempuan"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_anak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Anak"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_saudara"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Saudara"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_orang_berjasa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Orang Berjasa Selain Orang Tua"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_orang_disegani"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Orang Yang DIsegani Karena Adat"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_tokoh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Tokoh Yang Dikagumi"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_kawan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Kawan Dekat"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_media_informasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Media Informasi"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_medsos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Media Sosial"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_foto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Foto"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_signalement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Signalement"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_relasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Relasi"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_catpers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Catatan Personel"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
     </LinearLayout>
 
 </ScrollView>

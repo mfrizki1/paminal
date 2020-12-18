@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="Catatan Personel"
+            android:text="@string/catatan_personel"
             android:textSize="@dimen/text_18"
             android:textStyle="bold" />
 
@@ -31,13 +30,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Jenis Pelanggaran">
+            android:hint="@string/jenis_pelanggaran">
 
             <AutoCompleteTextView
                 android:id="@+id/spinner_cat_pers"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none" />
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,7 +47,7 @@
             android:layout_height="100dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Keterangan">
+            android:hint="@string/keterangan_optional">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_ket_cat_pers"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="Detail"
+            android:text="@string/detail"
             android:textSize="@dimen/text_18"
             android:textStyle="bold" />
 
@@ -73,12 +73,13 @@
             android:layout_height="100dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Tanggal Ditahan">
+            android:hint="@string/tanggal_ditahan">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_tgl_ditahan_cat_pers"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:maxLength="10"
                 android:inputType="date" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +90,7 @@
             android:layout_height="100dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Tempat Ditahan">
+            android:hint="@string/tempat_ditahan">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_tmpt_ditahan_cat_pers"
@@ -105,11 +106,12 @@
             android:layout_height="100dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Tanggal Dihukum">
+            android:hint="@string/tanggal_dihukum">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_tgl_dihukum_cat_pers"
                 android:layout_width="match_parent"
+                android:maxLength="10"
                 android:layout_height="match_parent"
                 android:inputType="date" />
 
@@ -121,7 +123,7 @@
             android:layout_height="100dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Tempat Dihukum">
+            android:hint="@string/tempat_dihukum">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_tmpt_dihukum_cat_pers"

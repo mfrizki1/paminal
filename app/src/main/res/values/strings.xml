@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">SICAPE</string>
+    <string name="DATA">PERSONEL</string>
     <string name="login">Login</string>
     <string name="save">Simpan</string>
     <string name="error">Error</string>
     <string name="not_save">Gagal Simpan</string>
     <string name="next">Selanjutnya</string>
+    <string name="delete">Hapus</string>
     <string name="insert_name">Nama</string>
     <string name="insert_ttl">Tempat Tinggal Lahir</string>
     <string name="action_ok">OK</string>
@@ -12,6 +14,7 @@
     <string name="data_saved">Data Berhasil Disimpan</string>
     <string name="data_Updated">Data Berhasil DiEdit</string>
 
+    <string name="image_picker_provider_authority_suffix">.imagepicker.provider</string>
 
     <string name="message_user_unautorizhed">You already login into another device</string>
     <string name="msg_unexpected_error">Cannot proced your request, please try again later</string>
@@ -20,6 +23,7 @@
     <string name="tambah">Tambah</string>
     <string name="keterangan_optional">Keterangan(Optional)</string>
     <string name="nama_pekerjaan_jabatan">Nama Pekerjaan / Jabatan</string>
+    <string name="pekerjaan">Pekerjaan</string>
     <string name="pangkat">Pangkat</string>
     <string name="kesatuan">Kesatuan</string>
     <string name="tahun_lamanya">Tahun Lamanya</string>
@@ -37,4 +41,14 @@
     <string name="agama_sebelumnya">Agama Sebelumnya</string>
     <string name="status_kawin">Status Kawin</string>
     <string name="selesai">Selesai</string>
+    <string name="umum">Umum</string>
+    <string name="kop">KEPOLISIAN NEGARA REPUBLIK INDONESIA DAERAH KALIMANTAN SELATAN \n BIDANG PROPAM</string>
+    <string name="hapus_data">Hapus Data</string>
+    <string name="catatan_personel">Catatan Personel</string>
+    <string name="jenis_pelanggaran">Jenis Pelanggaran</string>
+    <string name="detail">Detail</string>
+    <string name="tanggal_ditahan">Tanggal Ditahan</string>
+    <string name="tempat_ditahan">Tempat Ditahan</string>
+    <string name="tanggal_dihukum">Tanggal Dihukum</string>
+    <string name="tempat_dihukum">Tempat Dihukum</string>
 </resources>

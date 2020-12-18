@@ -1,3 +1,3 @@
 package id.calocallo.sicape.model
 
-data class ParentListPerjuanganCita(val parentList: ArrayList<PerjuanganCitaModel>)
+data class ParentListPerjuanganCita(val parentList: ArrayList<PerjuanganCitaReq>)

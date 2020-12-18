@@ -9,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PendUmumModel
+import id.calocallo.sicape.model.AddPendidikanModel
 import kotlinx.android.synthetic.main.layout_pendidikan_umum.view.*
 
 class UmumAdapter(
     val context: Context,
-    val list: ArrayList<PendUmumModel>,
+    val list: ArrayList<AddPendidikanModel>,
     var onCLick: OnClick
 ) : RecyclerView.Adapter<UmumAdapter.UmumHolder>() {
 

@@ -35,13 +35,13 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Dalam Negeri">
+        android:hint="Nama Relasi">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_dlm_negeri_relasi"
+            android:id="@+id/edt_nama_relasi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textMultiLine" />
@@ -49,36 +49,30 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Luar Negeri">
+        android:hint="Jenis Relasi">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_luar_negeri_relasi"
+        <AutoCompleteTextView
+            android:id="@+id/sp_jenis_relasi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_relasi"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/tambah"
         android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Pernah Dihukum / Tersangkut Perkara">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_perkara_relasi"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:iconGravity="textStart"
+        app:icon="@drawable/ic_add"
+        android:layout_marginTop="@dimen/space_8dp"/>
 
     <View
         android:layout_width="match_parent"

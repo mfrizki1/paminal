@@ -7,37 +7,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
-import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.ui.main.addpersonal.pendidikan.dinas.PendidikanDinasFragment
-import id.calocallo.sicape.ui.main.addpersonal.pendidikan.lainnya.PendidikanLainFragment
 import id.calocallo.sicape.utils.SessionManager
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.fragment_pendidikan_umum.*
 import kotlinx.android.synthetic.main.fragment_pendidikan_umum.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PendidikanUmumFragment : Fragment() {
     private lateinit var sheenValidator: SheenValidator
     private lateinit var sessionManager: SessionManager
-//    private lateinit var parentPendidikan: LinearLayout
-
-    private lateinit var list: ArrayList<PendUmumModel>
-    private var listDinas = ArrayList<PendDinasModel>()
-    private var listOther = ArrayList<PendOtherModel>()
+    private lateinit var list: ArrayList<AddPendidikanModel>
     private lateinit var parentUmum: ParentListPendUmum
-    private lateinit var parentDinas: ParentListPendDinas
-    private lateinit var parentLain: ParentListPendOther
     private lateinit var adapter: UmumAdapter
-
-    //    private lateinit var comunicator: Comunicator
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,12 +37,10 @@ class PendidikanUmumFragment : Fragment() {
         sessionManager = activity?.let { SessionManager(it) }!!
 
         sheenValidator = activity?.let { SheenValidator(it) }!!
-
         list = ArrayList()
         parentUmum = ParentListPendUmum(list)
-        parentDinas = ParentListPendDinas(listDinas)
-        parentLain = ParentListPendOther(listOther)
-
+//        parentDinas = ParentListPendDinas(listDinas)
+//        parentLain = ParentListPendOther(listOther)
 
 //        recycler()
         setAdapter()
@@ -65,25 +48,22 @@ class PendidikanUmumFragment : Fragment() {
 
         //go dinas
         view.btn_next_pend.setOnClickListener {
+            if (list.size == 1 && list[0].pendidikan == "") {
+                list.clear()
+            }
+            sessionManager.setPendUmum(list)
+            sheenValidator.validate()
 
-            NetworkConfig().getService().addPend(
-                "Bearar ${sessionManager.fetchAuthToken()}",
-                parentUmum,
-                parentDinas,
-                parentLain
-            ).enqueue(object : Callback<BaseResp> {
-                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(activity, "Gagal Input", Toast.LENGTH_SHORT).show()
+            val pendDinasFrag = PendidikanDinasFragment()
+                .apply {
+                    enterTransition = Slide(Gravity.END)
+                    exitTransition = Slide(Gravity.START)
                 }
 
-                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                    if (response.isSuccessful){
-                        Toast.makeText(activity, "TAMBAH", Toast.LENGTH_SHORT).show()
-                    }else {
-                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            })
+            val ft: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            ft.replace(R.id.fl_pendidikan, pendDinasFrag)
+            ft.addToBackStack(null)
+            ft.commit()
 
 
             //berhasil
@@ -100,31 +80,18 @@ class PendidikanUmumFragment : Fragment() {
 //            Log.e("parent", parent.pendUmumList[1].nama_pend)
 //            Log.e("parent", parent.pendUmumList[2].nama_pend)
              */
-            sheenValidator.validate()
-
-            val pendDinasFrag = PendidikanDinasFragment()
-                .apply {
-                    enterTransition = Slide(Gravity.END)
-                    exitTransition = Slide(Gravity.START)
-                }
-            val pendOtherFrag = PendidikanLainFragment()
-                .apply {
-                    enterTransition = Slide(Gravity.END)
-                    exitTransition = Slide(Gravity.START)
-                }
-            val ft: FragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-            ft.replace(R.id.fl_pendidikan, pendDinasFrag)
-            ft.addToBackStack(null)
-            ft.commit()
         }
 
     }
 
     private fun setAdapter() {
+        val umum = sessionManager.getPendUmum()
+        if (umum.size == 0) {
+            list.add(AddPendidikanModel("", "", "", "", "", ""))
+        }
         rv_pend_umum.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        list.add(PendUmumModel(0,"", "", "", "", "", ""))
-        list.add(PendUmumModel(0,"", "", "", "", "", ""))
+
         adapter = activity?.let {
             UmumAdapter(it, list, object : UmumAdapter.OnClick {
                 override fun onDelete(position: Int) {
@@ -137,7 +104,7 @@ class PendidikanUmumFragment : Fragment() {
 
         btn_add_pend_umum.setOnClickListener {
             val position = if (list.isEmpty()) 0 else list.size - 1
-            list.add(PendUmumModel(0,"", "", "", "", "", ""))
+            list.add(AddPendidikanModel("", "", "", "", "", ""))
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()
 
@@ -145,5 +112,27 @@ class PendidikanUmumFragment : Fragment() {
 
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        val umum = sessionManager.getPendUmum()
+        for (i in 0 until umum.size) {
+            list.add(
+                i, AddPendidikanModel(
+                    umum[i].pendidikan,
+                    umum[i].tahun_awal,
+                    umum[i].tahun_akhir,
+                    umum[i].kota,
+                    umum[i].yang_membiayai,
+                    umum[i].keterangan
+                )
+            )
+//            list.add(AddPendidikanModel("", "", "", "", "", ""))
+//            edt_nama_umum.setText(umum[i].pendidikan)
+//            edt_thn_awal_umum.setText(umum[i].tahun_awal)
+//            edt_thn_akhir_umum.setText(umum[i].tahun_akhir)
+//            edt_tempat_umum.setText(umum[i].kota)
+//            edt_membiayai_umum.setText(umum[i].yang_membiayai)
+//            edt_ket_umum.setText(umum[i].keterangan)
+        }
+    }
 }

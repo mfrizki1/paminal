@@ -6,16 +6,14 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MedInfoModel
-import kotlinx.android.synthetic.main.layout_anak.view.*
+import id.calocallo.sicape.model.MedInfoReq
 import kotlinx.android.synthetic.main.layout_med_info.view.*
 
 class MediaInfoAdapter(
     val context: Context,
-    val list: ArrayList<MedInfoModel>,
+    val list: ArrayList<MedInfoReq>,
     val onClickMedInfo: OnClickMedInfo
 ) : RecyclerView.Adapter<MediaInfoAdapter.MedInfoHolder>() {
     inner class MedInfoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,7 +27,7 @@ class MediaInfoAdapter(
         fun setListener() {
             etNama.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama = s.toString()
+                    list[adapterPosition].sumber = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -77,7 +75,7 @@ class MediaInfoAdapter(
             })
             etKet.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].ket = s.toString()
+                    list[adapterPosition].keterangan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -106,7 +104,7 @@ class MediaInfoAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedInfoHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_med_info, parent, false)
-        var medInfoViews = MedInfoHolder(view)
+        val medInfoViews = MedInfoHolder(view)
         medInfoViews.setListener()
         return medInfoViews
     }
@@ -117,8 +115,8 @@ class MediaInfoAdapter(
 
     override fun onBindViewHolder(holder: MedInfoHolder, position: Int) {
         val data = list[position]
-        holder.etNama.setText(data.nama)
-        holder.etKet.setText(data.ket)
+        holder.etNama.setText(data.sumber)
+        holder.etKet.setText(data.keterangan)
         holder.etAlasan.setText(data.alasan)
         holder.etTopik.setText(data.topik)
     }

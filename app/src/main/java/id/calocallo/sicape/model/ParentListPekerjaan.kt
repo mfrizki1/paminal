@@ -1,3 +1,5 @@
 package id.calocallo.sicape.model
 
-data class ParentListPekerjaan(val parentList: ArrayList<PekerjaanModel>)
+import id.calocallo.sicape.network.request.AddSinglePekerjaanReq
+
+data class ParentListPekerjaan(val parentList: ArrayList<AddSinglePekerjaanReq>)

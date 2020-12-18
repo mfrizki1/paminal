@@ -66,4 +66,6 @@
     <color name="pastel_gray_light">#dfdfdf</color>
     <color name="grey">#919BAF</color>
     <color name="bar">#CCE8FF</color>
+    <color name="grey_50">#FAFAFA</color>
+
 </resources>

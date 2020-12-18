@@ -1,3 +1,3 @@
 package id.calocallo.sicape.model
 
-data class ParentListTokoh(val parentListTokoh: ArrayList<TokohModel>)
+data class ParentListTokoh(val parentListTokoh: ArrayList<TokohReq>)

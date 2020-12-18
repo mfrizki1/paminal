@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.editpersonel.PickPendFragment">
+    tools:context=".ui.main.editpersonel.pendidikan.PickPendFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,13 +33,19 @@
             <include layout="@layout/view_no_data"
                 android:visibility="gone"/>
 
+            <include layout="@layout/layout_progress_dialog"
+                android:layout_centerInParent="true"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:visibility="gone"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_edit_pendidikan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="@dimen/space_8dp"
-                tools:listitem="@layout/layout_edit_pendidikan" />
+                tools:listitem="@layout/layout_edit_1_text" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

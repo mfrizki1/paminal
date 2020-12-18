@@ -8,13 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.TokohModel
-import kotlinx.android.synthetic.main.layout_orang_sama.view.*
+import id.calocallo.sicape.model.TokohReq
 import kotlinx.android.synthetic.main.layout_tokoh_dikagumi.view.*
 
 class TokohAdapter(
     val context: Context,
-    val list: ArrayList<TokohModel>,
+    val list: ArrayList<TokohReq>,
     val onClickTokoh: OnClickTokoh
 ) : RecyclerView.Adapter<TokohAdapter.TokohHolder>() {
     inner class TokohHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -75,7 +74,7 @@ class TokohAdapter(
             })
             etKet.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].ket = s.toString()
+                    list[adapterPosition].keterangan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -105,7 +104,7 @@ class TokohAdapter(
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.layout_tokoh_dikagumi, parent, false)
-        var tokohViews = TokohHolder(view)
+        val tokohViews = TokohHolder(view)
         tokohViews.setListener()
         return tokohViews
     }
@@ -117,8 +116,8 @@ class TokohAdapter(
     override fun onBindViewHolder(holder: TokohHolder, position: Int) {
         val data = list[position]
         holder.etNama.setText(data.nama)
-        holder.etAlasan.setText(data.alasan)
         holder.etAsalNegara.setText(data.asal_negara)
-        holder.etKet.setText(data.ket)
+        holder.etAlasan.setText(data.alasan)
+        holder.etKet.setText(data.keterangan)
     }
 }

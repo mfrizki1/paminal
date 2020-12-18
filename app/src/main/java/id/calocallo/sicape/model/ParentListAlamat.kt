@@ -1,3 +1,5 @@
 package id.calocallo.sicape.model
 
-data class ParentListAlamat(val parenListAlamat: ArrayList<AlamatModel>)
+import id.calocallo.sicape.network.request.AlamatReq
+
+data class ParentListAlamat(val parenListAlamat: ArrayList<AlamatReq>)

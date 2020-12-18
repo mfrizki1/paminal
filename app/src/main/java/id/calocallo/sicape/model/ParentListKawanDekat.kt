@@ -1,3 +1,3 @@
 package id.calocallo.sicape.model
 
-data class ParentListKawanDekat(val parentListKawanDekat: ArrayList<KawanDekatModel>)
+data class ParentListKawanDekat(val parentListKawanDekat: ArrayList<KawanDekatReq>)

@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AlamatModel
+import id.calocallo.sicape.network.request.AlamatReq
 import kotlinx.android.synthetic.main.layout_alamat.view.*
 
 class AddAlamatAdapter(
     val context: Context,
-    val list: ArrayList<AlamatModel>,
+    val list: ArrayList<AlamatReq>,
     val onClick: OnClickAlamat
 ) : RecyclerView.Adapter<AddAlamatAdapter.AlamatHolder>() {
     inner class AlamatHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,7 +26,7 @@ class AddAlamatAdapter(
         fun setListener() {
             etNameAlamat.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama_alamat = s.toString()
+                    list[adapterPosition].alamat = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -42,7 +42,7 @@ class AddAlamatAdapter(
             })
             etThnAwal.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].thn_awal = s.toString()
+                    list[adapterPosition].tahun_awal = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -58,7 +58,7 @@ class AddAlamatAdapter(
             })
             etThnAkhir.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].thn_akhir = s.toString()
+                    list[adapterPosition].tahun_akhir = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -74,7 +74,7 @@ class AddAlamatAdapter(
             })
             etRangka.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].rangka = s.toString()
+                    list[adapterPosition].dalam_rangka = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -90,7 +90,7 @@ class AddAlamatAdapter(
             })
             etKet.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].ket = s.toString()
+                    list[adapterPosition].keterangan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -120,7 +120,7 @@ class AddAlamatAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlamatHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_alamat, parent, false)
-        var alamatVies = AlamatHolder(view)
+        val alamatVies = AlamatHolder(view)
         alamatVies.setListener()
         return alamatVies
     }
@@ -131,10 +131,10 @@ class AddAlamatAdapter(
 
     override fun onBindViewHolder(holder: AlamatHolder, position: Int) {
         val data = list[position]
-        holder.etRangka.setText(data.rangka)
-        holder.etKet.setText(data.ket)
-        holder.etThnAkhir.setText(data.thn_akhir)
-        holder.etThnAwal.setText(data.thn_awal)
-        holder.etNameAlamat.setText(data.nama_alamat)
+        holder.etRangka.setText(data.dalam_rangka)
+        holder.etKet.setText(data.keterangan)
+        holder.etThnAkhir.setText(data.tahun_akhir)
+        holder.etThnAwal.setText(data.tahun_awal)
+        holder.etNameAlamat.setText(data.alamat)
     }
 }

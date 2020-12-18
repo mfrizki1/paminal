@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.personel
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -11,11 +10,12 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.ui.main.editpersonel.EditPendidikanActivity
+import id.calocallo.sicape.ui.main.editpersonel.pendidikan.EditPendidikanActivity
 import id.calocallo.sicape.ui.main.editpersonel.EditPersonelActivity
+import id.calocallo.sicape.ui.main.editpersonel.alamat.PickAlamatActivity
+import id.calocallo.sicape.ui.main.editpersonel.pekerjaan.EditPekerjaanActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_personel.*
@@ -41,6 +41,7 @@ class DetailPersonelActivity : BaseActivity() {
         val bundle = intent.extras
         val detail = bundle?.getParcelable<PersonelModel>("PERSONEL")
         idPersonel = detail?.id.toString()
+        detail?.id?.let { sessionManager.saveID(it) }
         if (bundle != null) {
             val nama = detail?.nama
             val alias = detail?.nama_alias
@@ -88,8 +89,89 @@ class DetailPersonelActivity : BaseActivity() {
             startActivity(intent)
         }
         btn_edit_pendidikan.setOnClickListener {
-            startActivity(Intent(this, EditPendidikanActivity::class.java))
+            val intent = Intent(this, EditPendidikanActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            startActivity(intent)
         }
+        btn_edit_pekerjaan.setOnClickListener {
+            val intent = Intent(this, EditPekerjaanActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            startActivity(intent)
+        }
+        btn_edit_alamat.setOnClickListener {
+            val intent = Intent(this, PickAlamatActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            Toast.makeText(this, "Alamat", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_organisasi.setOnClickListener {
+            Toast.makeText(this, "organisasi", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_perjuangan.setOnClickListener {
+            Toast.makeText(this, "Perjuangan Menggapai Cita-cita", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_penghargaan.setOnClickListener {
+            Toast.makeText(this, "Penghargaan", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_pasangan.setOnClickListener {
+            Toast.makeText(this, "Pasangan", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_ayah_kandung.setOnClickListener {
+            Toast.makeText(this, "Ayah Kandung", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_ayah_tiri.setOnClickListener {
+            Toast.makeText(this, "Ayah Tiri", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_ibu_kandung.setOnClickListener {
+            Toast.makeText(this, "Ibu Kandung", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_ibu_tiri.setOnClickListener {
+            Toast.makeText(this, "Ibu Tiri", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_mertua_laki.setOnClickListener {
+            Toast.makeText(this, "Mertua Laki", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_mertua_perempuan.setOnClickListener {
+            Toast.makeText(this, "Mertua Perempuan", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_anak.setOnClickListener {
+            Toast.makeText(this, "Anak", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_saudara.setOnClickListener {
+            Toast.makeText(this, "Saudara", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_orang_berjasa.setOnClickListener {
+            Toast.makeText(this, "Orang Berjasa", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_orang_disegani.setOnClickListener {
+            Toast.makeText(this, "Orang Disegani", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_tokoh.setOnClickListener {
+            Toast.makeText(this, "Tokoh", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_kawan.setOnClickListener {
+            Toast.makeText(this, "Sahabat", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_media_informasi.setOnClickListener {
+            Toast.makeText(this, "Media Informasi", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_medsos.setOnClickListener {
+            Toast.makeText(this, "Media Sosial", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_foto.setOnClickListener {
+            Toast.makeText(this, "FOto", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_signalement.setOnClickListener {
+            Toast.makeText(this, "Signalement", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_relasi.setOnClickListener {
+            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_catpers.setOnClickListener {
+            Toast.makeText(this, "Catatarn Personel Personel", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -100,7 +182,7 @@ class DetailPersonelActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.btn_delete_personel -> {
+            R.id.btn_delete_item -> {
                 alertDialogDelete()
             }
         }

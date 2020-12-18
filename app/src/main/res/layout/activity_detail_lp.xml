@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.lp.DetailLpActivity">
+
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Laporan Polisi"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_no_lp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="No LP 1234/"
+            android:textSize="@dimen/text_14" />
+
+        <include layout="@layout/layout_separator" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_quarter"
+            android:text="Personel"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_nama_lp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Faisal Rizki"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            android:id="@+id/txt_pangkat_nrp_lp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Pangkat : Briptu  NRP : 1234568"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            android:id="@+id/txt_kesatuan_lp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Polda Banjarmasin"
+            android:textSize="@dimen/text_14" />
+
+        <include layout="@layout/layout_separator" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_quarter"
+            android:text="Pasal Yang Dilanggar"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_pasal_lp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Faisal Rizki"
+            android:textSize="@dimen/text_14" />
+
+        <include layout="@layout/layout_separator" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_quarter"
+            android:text="Hukuman "
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_hukuman_lp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Melakukan Samting "
+            android:textSize="@dimen/text_14" />
+
+        <include layout="@layout/layout_separator" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_quarter"
+            android:text="Keterangan"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_ket_lp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Melakukan Samting "
+            android:textSize="@dimen/text_14" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_lp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="Edit Data"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

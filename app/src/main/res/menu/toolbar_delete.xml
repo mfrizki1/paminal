@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/btn_delete_personel"
+        android:id="@+id/btn_delete_item"
         android:icon="@drawable/ic_delete"
-        android:title="Hapus Data" />
+        android:title="@string/hapus_data" />
 </menu>

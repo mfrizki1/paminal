@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_8dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/space_12dp"
+    android:paddingTop="@dimen/space_8dp">
+
+    <TextView
+        android:id="@+id/txt_no_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NO SKHD"
+        android:textSize="@dimen/text_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_nama_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Nama"
+        android:textSize="@dimen/text_14" />
+
+    <TextView
+        android:id="@+id/txt_nrp_pangkat_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Pangkat:  NRP.___"
+        android:textSize="@dimen/text_14" />
+
+    <TextView
+        android:id="@+id/txt_jabatan_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Jabatan"
+        android:textSize="@dimen/text_14" />
+
+    <TextView
+        android:id="@+id/txt_kesatuan_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="Polda Bnjm"
+        android:textSize="@dimen/text_14" />
+
+    <include layout="@layout/layout_separator" />
+
+    <TextView
+        android:id="@+id/txt_hukuman_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/space_8dp"
+        android:text="Hukuman"
+        android:textSize="@dimen/text_16"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_hukuman_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_1_text" />
+
+    <include layout="@layout/layout_separator" />
+
+    <TextView
+        android:id="@+id/txt_kepala_bidang_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="Kepala Bidang"
+        android:textSize="@dimen/text_16"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_nama_bidang_skhd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="NAMA BIDANG"
+        android:textSize="@dimen/text_14" />
+
+    <TextView
+        android:id="@+id/txt_pangkat_nrp_bidang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_quarter"
+        android:text="PANGKAT : ______     NRP : _______"
+        android:textSize="@dimen/text_14" />
+
+
+    <include layout="@layout/layout_separator" />
+
+
+</LinearLayout>

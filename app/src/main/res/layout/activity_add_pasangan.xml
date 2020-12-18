@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.main.addpersonal.AddPasanganActivity">
+    tools:context=".ui.main.addpersonal.pasangan.AddPasanganActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,6 +95,7 @@
                     android:id="@+id/edt_tgl_ttl_pasangan"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:maxLength="10"
                     android:inputType="date" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -150,34 +151,34 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="@string/agama_sekarang">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_agm_skrg_pasangan"
+            <AutoCompleteTextView
+                android:id="@+id/sp_agama_skrg_pasangan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="@string/agama_sebelumnya">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_agm_sblm_pasangan"
+            <AutoCompleteTextView
+                android:id="@+id/sp_agama_sblm_pasangan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -400,6 +401,7 @@
                 android:id="@+id/edt_thn_org_diikuti_pasangan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:maxLength="4"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -479,6 +481,7 @@
                 android:id="@+id/edt_thn_org_prnh_pasangan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:maxLength="4"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>

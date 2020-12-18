@@ -1,0 +1,137 @@
+### RIWAYAT PENDIDIKAN ###
+[get data - GET] http://isolo.10makademi.net/api/riwayat/pendidikan/{id_personel}/{jenis} 
+note:
+* jenis harus: umum, kedinasan atau lain_lain
+
+[save data satuan - POST] http://isolo.10makademi.net/api/riwayat/pendidikan/{id_personel}/{jenis} --> jenis harus: umum, kedinasan atau lain_lain
+note:
+* jenis harus: umum, kedinasan atau lain_lain
+contoh data:
+{
+    "pendidikan": "ZMVUEX OOOOO",
+    "tahun_awal": 2019,
+    "tahun_akhir": null,
+    "kota": "Bjm",
+    "yang_membiayai": "oooo",
+    "keterangan": null
+}
+
+[save data banyak - POST] http://isolo.10makademi.net/api/riwayat/pendidikan/{id_personel}/many
+contoh data:
+{
+    "riwayat_pendidikan_umum": [
+        {
+            "pendidikan": "Zoommmmm OWOOO",
+            "tahun_awal": 2019,
+            "tahun_akhir": null,
+            "kota": "Bjm",
+            "yang_membiayai": "oooo",
+            "keterangan": null
+        }
+    ],
+    "riwayat_pendidikan_dinas": [
+        {
+            "pendidikan": "Dinnnn 1",
+            "tahun_awal": 2019,
+            "tahun_akhir": null,
+            "kota": "Bjm",
+            "yang_membiayai": "oooo",
+            "keterangan": null
+        },
+        {
+            "pendidikan": "Dinnnn 2",
+            "tahun_awal": 2019,
+            "tahun_akhir": null,
+            "kota": "Bjm",
+            "yang_membiayai": "oooo",
+            "keterangan": null
+        }
+    ],
+    "riwayat_pendidikan_lain_lain": [
+        {
+            "pendidikan": "Laiiiiii",
+            "tahun_awal": 2019,
+            "tahun_akhir": null,
+            "kota": "Bjm",
+            "yang_membiayai": "oooo",
+            "keterangan": null
+        },
+        {
+            "pendidikan": "Laiiiiii X",
+            "tahun_awal": 2019,
+            "tahun_akhir": null,
+            "kota": "Bjm",
+            "yang_membiayai": "oooo",
+            "keterangan": null
+        },
+        {
+            "pendidikan": "Laiiiiii Y",
+            "tahun_awal": 2019,
+            "tahun_akhir": null,
+            "kota": "Bjm",
+            "yang_membiayai": "oooo",
+            "keterangan": null
+        }
+    ]
+}
+
+[update data - PATCH] http://isolo.10makademi.net/api/riwayat/pendidikan/{id_riwayat_pendidikan}
+contoh data:
+{
+    "pendidikan": "SMK ZMVUEX",
+    "tahun_awal": 2019,
+    "tahun_akhir": null,
+    "kota": "Bjm",
+    "yang_membiayai": "oooo",
+    "keterangan": null
+}
+
+[delete data - DELETE] http://isolo.10makademi.net/api/riwayat/pendidikan/{id_riwayat_pendidikan}
+
+
+
+### RIWAYAT PEKERJAAN ###
+[get data - GET] http://isolo.10makademi.net/api/riwayat/pekerjaan/{id_personel}
+
+[save data satuan - POST] http://isolo.10makademi.net/api/riwayat/pekerjaan/{id_personel}
+contoh data:
+{
+    "pekerjaan": "Ngully",
+    "golongan": "Bintang",
+    "instansi": "Instansi X",
+    "berapa_tahun": 2,
+    "keterangan": null
+}
+
+[save data banyak - POST] http://isolo.10makademi.net/api/riwayat/pekerjaan/{id_personel}/many
+contoh data:
+{
+    "riwayat_pekerjaan": [
+        {
+            "pekerjaan": "Oke 1",
+            "golongan": "ABC",
+            "instansi": "Zaranj",
+            "berapa_tahun": 2,
+            "keterangan": null
+        },
+        {
+            "pekerjaan": "Oke 2",
+            "golongan": "ABCdx",
+            "instansi": "Kashgar",
+            "berapa_tahun": 5,
+            "keterangan": null
+        }
+    ]
+}
+
+[update data - PATCH] http://isolo.10makademi.net/api/riwayat/pekerjaan/{id_riwayat_pekerjaan}
+contoh data:
+{
+    "pekerjaan": "Njaga",
+    "golongan": "Bintang",
+    "instansi": "Instansi X",
+    "berapa_tahun": 2,
+    "keterangan": null
+}
+
+[delete data - DELETE] http://isolo.10makademi.net/api/riwayat/pekerjaan/{id_riwayat_pekerjaan}

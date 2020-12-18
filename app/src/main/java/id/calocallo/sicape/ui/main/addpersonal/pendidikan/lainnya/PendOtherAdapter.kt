@@ -9,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PendOtherModel
+import id.calocallo.sicape.model.AddPendidikanModel
 import kotlinx.android.synthetic.main.layout_pendidikan_others.view.*
 
 class PendOtherAdapter(
     val context: Context,
-    val list: ArrayList<PendOtherModel>,
+    val list: ArrayList<AddPendidikanModel>,
     val onClickOther: OnCLickOther
 ) : RecyclerView.Adapter<PendOtherAdapter.OtherHolder>() {
 
@@ -37,8 +37,8 @@ class PendOtherAdapter(
             etName.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("nameAfter", s.toString())
-                    list[adapterPosition].nama_pend = s.toString()
-                    name = list[adapterPosition].nama_pend.toString()
+                    list[adapterPosition].pendidikan = s.toString()
+                    name = list[adapterPosition].pendidikan
                     Log.e("name", name)
 
 
@@ -61,8 +61,8 @@ class PendOtherAdapter(
             etThnAwal.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("thnAwalAfter", s.toString())
-                    list[adapterPosition].thn_awal_pend = s.toString()
-                    thnAwal = list[adapterPosition].thn_awal_pend.toString()
+                    list[adapterPosition].tahun_awal = s.toString()
+                    thnAwal = list[adapterPosition].tahun_awal
                     Log.e("awal", thnAwal)
 
                 }
@@ -84,8 +84,8 @@ class PendOtherAdapter(
             etThnAkhir.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("thnAkhir", s.toString())
-                    list[adapterPosition].thn_akhir_pend = s.toString()
-                    thnAkhir = list[adapterPosition].thn_akhir_pend.toString()
+                    list[adapterPosition].tahun_akhir = s.toString()
+                    thnAkhir = list[adapterPosition].tahun_akhir
                     Log.e("akhir", thnAkhir)
 
 
@@ -108,8 +108,8 @@ class PendOtherAdapter(
             etTmpt.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("tmpt", s.toString())
-                    list[adapterPosition].tmpt_pend = s.toString()
-                    tmpt = list[adapterPosition].tmpt_pend.toString()
+                    list[adapterPosition].kota = s.toString()
+                    tmpt = list[adapterPosition].kota
                     Log.e("tmp", tmpt)
 
 
@@ -130,8 +130,8 @@ class PendOtherAdapter(
             etOrgMmbiayai.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
 //                    Log.e("org", s.toString())
-                    list[adapterPosition].org_membiayai = s.toString()
-                    org = list[adapterPosition].org_membiayai.toString()
+                    list[adapterPosition].yang_membiayai = s.toString()
+                    org = list[adapterPosition].yang_membiayai
                     Log.e("org", org)
 
 
@@ -152,8 +152,8 @@ class PendOtherAdapter(
             etKet.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     Log.e("ket", s.toString())
-                    list[adapterPosition].ket_pend = s.toString()
-                    ket = list[adapterPosition].ket_pend.toString()
+                    list[adapterPosition].keterangan = s.toString()
+                    ket = list[adapterPosition].keterangan.toString()
                     Log.e("ket", ket)
 
                 }
@@ -186,7 +186,7 @@ class PendOtherAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OtherHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_pendidikan_others, parent, false)
-        var otherViews = OtherHolder(view)
+        val otherViews = OtherHolder(view)
         otherViews.setListener()
         return otherViews
     }
@@ -201,12 +201,12 @@ class PendOtherAdapter(
 
     private fun bindViews(holder: OtherHolder, position: Int) {
         val data = list[position]
-        holder.etName.setText(data.nama_pend)
-        holder.etThnAwal.setText(data.thn_awal_pend)
-        holder.etTmpt.setText(data.tmpt_pend)
-        holder.etOrgMmbiayai.setText(data.org_membiayai)
-        holder.etThnAkhir.setText(data.thn_akhir_pend)
-        holder.etKet.setText(data.ket_pend)
+        holder.etName.setText(data.pendidikan)
+        holder.etThnAwal.setText(data.tahun_awal)
+        holder.etTmpt.setText(data.kota)
+        holder.etOrgMmbiayai.setText(data.yang_membiayai)
+        holder.etThnAkhir.setText(data.tahun_akhir)
+        holder.etKet.setText(data.keterangan)
 
     }
     interface OnCLickOther{

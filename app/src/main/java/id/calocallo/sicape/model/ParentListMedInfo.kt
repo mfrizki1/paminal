@@ -1,3 +1,3 @@
 package id.calocallo.sicape.model
 
-data class ParentListMedInfo(val parentListMedInfo: ArrayList<MedInfoModel>)
+data class ParentListMedInfo(val parentListMedInfo: ArrayList<MedInfoReq>)

@@ -59,7 +59,7 @@ class PersonelActivity : BaseActivity() {
             override fun onItemClicked(itemView: View, data: PersonelModel, itemIndex: Int) {
 //                Log.e("klik", data.nama.toString())
                 val bundle = Bundle()
-                val intent = Intent(this@PersonelActivity, DetailPersonelActivity::class.java)
+                val intent = Intent(this@PersonelActivity,      DetailPersonelActivity::class.java)
                 bundle.putParcelable("PERSONEL", data)
                 intent.putExtras(bundle)
                 startActivity(intent)

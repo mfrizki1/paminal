@@ -1,25 +1,28 @@
 package id.calocallo.sicape.ui.main.addpersonal.kawan
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.KawanDekatModel
+import id.calocallo.sicape.model.KawanDekatReq
 import id.calocallo.sicape.model.ParentListKawanDekat
 import id.calocallo.sicape.ui.main.addpersonal.mediainfo.AddMedianfoActivity
+import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_kawan_dekat.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddKawanDekatActivity : BaseActivity() {
-    private lateinit var list: ArrayList<KawanDekatModel>
+    private lateinit var sessionManager: SessionManager
+    private lateinit var list: ArrayList<KawanDekatReq>
     private lateinit var parentList: ParentListKawanDekat
     private lateinit var adapter: KawanAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_kawan_dekat)
+        sessionManager = SessionManager(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Kawan Dekat"
 
@@ -28,13 +31,31 @@ class AddKawanDekatActivity : BaseActivity() {
         initRV()
 
         btn_next_kawan.setOnClickListener {
+            if (list.size == 1 && list[0].nama == "") {
+                list.clear()
+            }
+            sessionManager.setSahabat(list)
+            Log.e("size Sahabat", sessionManager.getSahabat().size.toString())
             startActivity(Intent(this, AddMedianfoActivity::class.java))
         }
     }
 
     private fun initRV() {
-        list.add(KawanDekatModel("", "", "", "", "", ""))
-        list.add(KawanDekatModel("", "", "", "", "", ""))
+        val sahabat = sessionManager.getSahabat()
+        if(sahabat.size == 1){
+            for(i in 0 until sahabat.size){
+                list.add(i, KawanDekatReq(
+                    sahabat[i].nama,
+                    sahabat[i].jenis_kelamin,
+                    sahabat[i].umur,
+                    sahabat[i].alamat,
+                    sahabat[i].pekerjaan,
+                    sahabat[i].alasan
+                ))
+            }
+        }else{
+            list.add(KawanDekatReq("", "", "", "", "", ""))
+        }
         rv_kawan_dekat.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = KawanAdapter(this, list, object : KawanAdapter.OnClickKawan {
@@ -46,7 +67,7 @@ class AddKawanDekatActivity : BaseActivity() {
         rv_kawan_dekat.adapter = adapter
 
         btn_add_kawan.setOnClickListener {
-            list.add(KawanDekatModel("", "", "", "", "", ""))
+            list.add(KawanDekatReq("", "", "", "", "", ""))
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

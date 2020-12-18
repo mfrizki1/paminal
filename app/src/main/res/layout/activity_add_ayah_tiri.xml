@@ -95,6 +95,7 @@
                     android:id="@+id/edt_tgl_ttl_ayah_tiri"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:maxLength="10"
                     android:inputType="date" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -102,18 +103,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>  <!-- ttl-->
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="Agama">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_agm_ayah_tiri"
+            <AutoCompleteTextView
+                android:id="@+id/sp_agama_ayah_tiri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>  <!-- agama-->
 
@@ -269,13 +270,15 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Tahun Berhenti / Pensiun">
+            android:hint="Tahun Berhenti / Pensiun"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_thn_berhenti_ayah_tiri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="4" />
 
         </com.google.android.material.textfield.TextInputLayout> <!--Tahun Berhenti-->
 
@@ -286,7 +289,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Alasan Berhenti">
+            android:hint="Alasan Berhenti"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_alsn_berhenti_ayah_tiri"
@@ -296,6 +300,21 @@
 
         </com.google.android.material.textfield.TextInputLayout><!--alasan Berhenti-->
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Nama Kantor">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_nama_kntr_ayah_tiri"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine" />
+
+        </com.google.android.material.textfield.TextInputLayout> <!-- nama  kantor-->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
@@ -359,6 +378,21 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout> <!--pend terakhir-->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Pernikahan Keberapa">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_pernikahan_brp_ayah_tiri"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout> <!--pend terakhir-->
 
         <View
             android:layout_width="match_parent"
@@ -403,7 +437,8 @@
                 android:id="@+id/edt_thn_org_diikuti_ayah_tiri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="4" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -483,7 +518,8 @@
                 android:id="@+id/edt_thn_org_prnh_ayah_tiri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="4" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -529,11 +565,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_18"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="Status" />
+            android:text="Status"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -557,13 +593,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Bagaimana">
+            android:hint="Tahun Meninggal"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_bagaimana_stts_ayah_tiri"
+                android:id="@+id/edt_tahun_kematian_ayah_tiri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -574,7 +611,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Dimana">
+            android:hint="Dimana"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_dimana_ayah_tiri"
@@ -591,7 +629,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Penyebab">
+            android:hint="Penyebab"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_penyebab_ayah_tiri"

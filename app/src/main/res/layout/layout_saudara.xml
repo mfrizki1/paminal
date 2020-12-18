@@ -32,6 +32,21 @@
             app:tint="@color/colorPrimary" />
     </RelativeLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:hint="Status Ikatan">
+
+        <AutoCompleteTextView
+            android:id="@+id/sp_ikatan_saudara"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -101,6 +116,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_tgl_ttl_saudara"
                 android:layout_width="match_parent"
+                android:maxLength="10"
                 android:layout_height="match_parent"
                 android:inputType="date" />
 
@@ -114,25 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Umur"
-        app:suffixText="Tahun">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_umur_saudara"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="number" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Pekerjaan"
-        app:suffixText="Tahun">
+        android:hint="Pekerjaan">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_pekerjaan_saudara"
@@ -148,8 +146,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Organisasi"
-        app:suffixText="Tahun">
+        android:hint="Organisasi">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_organisasi_saudara"
@@ -165,8 +162,7 @@
         android:layout_height="100dp"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Keterangan"
-        app:suffixText="Tahun">
+        android:hint="Keterangan">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_ket_saudara"

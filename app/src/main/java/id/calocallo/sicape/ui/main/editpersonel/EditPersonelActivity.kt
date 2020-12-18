@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.showDrawable
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
@@ -15,13 +17,15 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AddPersonelReq
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
+import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_personel.*
 import kotlinx.android.synthetic.main.activity_edit_personel.*
+import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class EditPersonelActivity : AppCompatActivity() {
+class EditPersonelActivity : BaseActivity() {
     private var jk: String? = null
     private var agmNow: String? = null
     private var agmBefore: String? = null
@@ -39,6 +43,10 @@ class EditPersonelActivity : AppCompatActivity() {
         val bundle = intent.extras
         val detail = bundle?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
         idPersonel = detail?.id.toString()
+
+        setupActionBarWithBackButton(toolbar)
+        supportActionBar?.title = detail?.nama.toString()
+
         Log.e("id_personel", idPersonel)
         if (detail != null) {
             val nama = detail.nama
@@ -48,7 +56,7 @@ class EditPersonelActivity : AppCompatActivity() {
             val pangkat = detail.pangkat
             val nrp = detail.nrp
             val jk = detail.jenis_kelamin
-            val agama = detail.agama_sekarang
+//            val agama = detail.agama_sekarang
             val almt_kntr = detail.alamat_kantor
             val almt_ktp = detail.alamat_sesuai_ktp
             val almt_rmh = detail.alamat_rumah
@@ -72,12 +80,12 @@ class EditPersonelActivity : AppCompatActivity() {
             val agama_skrg = detail.agama_sekarang
 
 
-
             edt_bahasa_edit.setText(bahasa)
             edt_almt_kntr_edit.setText(almt_kntr)
             edt_almt_ktp_edit.setText(almt_ktp)
             edt_almt_rmh_edit.setText(almt_rmh)
             edt_hobi_edit.setText(hobi)
+//            edt_agama
             edt_kebiasaan_edit.setText(kebiasaan)
             edt_kesatuan_edit.setText(kesatuan)
             edt_kwg_edit.setText(kwg)
@@ -107,7 +115,8 @@ class EditPersonelActivity : AppCompatActivity() {
 
         initSpinner(spinner_jk_edit, spinner_stts_kwn_edit, sp_agm_now_edit, sp_agm_before_edit)
 
-
+        btn_save_personel_edit.attachTextChangeAnimator()
+        bindProgressButton(btn_save_personel_edit)
         btn_save_personel_edit.setOnClickListener {
             doUpdate(sessionManager.fetchHakAkses())
         }

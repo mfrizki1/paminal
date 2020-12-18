@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.KawanDekatModel
+import id.calocallo.sicape.model.KawanDekatReq
 import kotlinx.android.synthetic.main.layout_kawan_dekat.view.*
 
 class KawanAdapter(
     val context: Context,
-    val list: ArrayList<KawanDekatModel>,
+    val list: ArrayList<KawanDekatReq>,
     val onClickKawan: OnClickKawan
 ) : RecyclerView.Adapter<KawanAdapter.KawanHolder>() {
     inner class KawanHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -112,7 +112,7 @@ class KawanAdapter(
             val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
             spJk.setAdapter(adapter)
             spJk.setOnItemClickListener { parent, view, position, id ->
-                list[adapterPosition].jk = parent.getItemAtPosition(position).toString()
+                list[adapterPosition].jenis_kelamin = parent.getItemAtPosition(position).toString()
             }
 
             btnDelete.setOnClickListener {
@@ -130,7 +130,7 @@ class KawanAdapter(
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.layout_kawan_dekat, parent, false)
-        var kawanViews = KawanHolder(view)
+        val kawanViews = KawanHolder(view)
         kawanViews.setListener()
         return kawanViews
     }
@@ -146,6 +146,6 @@ class KawanAdapter(
         holder.etAlamat.setText(data.alasan)
         holder.etAlasan.setText(data.alasan)
         holder.etPekerjaan.setText(data.pekerjaan)
-        holder.spJk.setText(data.jk)
+        holder.spJk.setText(data.jenis_kelamin)
     }
 }

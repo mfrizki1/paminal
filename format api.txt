@@ -1,0 +1,140 @@
+API:
+
+LOGIN: [POST] http://isolo.10makademi.net/api/login // result: bearer token
+    * Param:
+        # nrp [string]
+        # password [string]
+
+
+
+
+
+PERSONEL
+
+- Get: [GET] http://isolo.10makademi.net/api/personel
+
+- Save: [POST] http://isolo.10makademi.net/api/personel
+    * Param:
+        # nama [string]
+        # nama_alias [string]
+        # jenis_kelamin [('laki_laki', 'perempuan)]
+        # tempat_lahir [string]
+        # tanggal_lahir [string: format tanggal-bulan-tahun]
+        # ras [string]
+        # jabatan [string]
+        # pangkat [string]
+        # nrp [string]
+        # kesatuan [string]
+        # id_kantor [number: nilai id dari kantor]
+        # alamat_rumah  [string]
+        # no_telp_rumah [string, nullabel]
+        # kewarganegaraan [string]
+        # cara_peroleh_kewarganegaraan [string]
+        # agama_sekarang [('islam', 'katolik', 'protestan', 'hindu', 'buddha', 'konghuchu')]
+        # agama_sebelumnya [('islam', 'katolik', 'protestan', 'hindu', 'buddha', 'konghuchu'), nullable]
+        # aliran_kepercayaan [string, nullabel]
+        # status_perkawinan [(0: belum, 1: sudah), nullabel]
+        # tempat_perkawinan [string, nullabel]
+        # tanggal_perkawinan [string: format tanggal-bulan-tahun, nullabel]
+        # perkawinan_keberapa [number, nullabel]
+        # jumlah_anak [number, nullabel]
+        # alamat_sesuai_ktp [string]
+        # no_telp [string]
+        # no_ktp [string]
+        # hobi [string]
+        # kebiasaan [string]
+        # bahasa [string]
+
+- Update: [PATCH] http://isolo.10makademi.net/api/personel/{id_personel}
+    * Param:
+        # nama [string]
+        # nama_alias [string]
+        # jenis_kelamin [('laki_laki', 'perempuan)]
+        # tempat_lahir [string]
+        # tanggal_lahir [string: format tanggal-bulan-tahun]
+        # ras [string]
+        # jabatan [string]
+        # pangkat [string]
+        # nrp [string]
+        # kesatuan [string]
+        # id_kantor [number: nilai id dari kantor]
+        # alamat_rumah  [string]
+        # no_telp_rumah [string, nullabel]
+        # kewarganegaraan [string]
+        # cara_peroleh_kewarganegaraan [string]
+        # agama_sekarang [('islam', 'katolik', 'protestan', 'hindu', 'buddha', 'konghuchu')]
+        # agama_sebelumnya [('islam', 'katolik', 'protestan', 'hindu', 'buddha', 'konghuchu'), nullable]
+        # aliran_kepercayaan [string, nullabel]
+        # status_perkawinan [(0: belum, 1: sudah), nullabel]
+        # tempat_perkawinan [string, nullabel]
+        # tanggal_perkawinan [string: format tanggal-bulan-tahun, nullabel]
+        # perkawinan_keberapa [number, nullabel]
+        # jumlah_anak [number, nullabel]
+        # alamat_sesuai_ktp [string]
+        # no_telp [string]
+        # no_ktp [string]
+        # hobi [string]
+        # kebiasaan [string]
+        # bahasa [string]
+
+- Delete: [DELETE] http://isolo.10makademi.net/api/personel/{id_personel}
+
+
+
+
+
+RIWAYAT PENDIDIKAN
+
+- Get: [GET] http://isolo.10makademi.net/api/riwayat/pendidikan/{id_personel}/{jenis} // jenis: umum, kedinasan, lain_lain
+
+- Save Many: [POST] http://isolo.10makademi.net/api/riwayat/pendidikan/many
+    * Param:
+        # riwayat_pendidikan_umum: [
+            {
+                # id_personel [number: nilai id dari personel]
+                # pendidikan [string]
+                # tahun_awal [number: tahun]
+                # tahun_akhir [number: tahun, nullable]
+                # kota [string]
+                # yang_membiayai [string]
+                # keterangan [string, nullable]
+            }, 
+            {
+                # id_personel [number: nilai id dari personel]
+                # pendidikan [string]
+                # tahun_awal [number: tahun]
+                # tahun_akhir [number: tahun, nullable]
+                # kota [string]
+                # yang_membiayai [string]
+                # keterangan [string, nullable]
+            }, 
+            ...
+          ],
+        # riwayat_pendidikan_dinas: [
+            ...
+          ],
+        # riwayat_pendidikan_lain_lain: [
+            ...
+          ]
+
+- Save: [POST] http://isolo.10makademi.net/api/riwayat/pendidikan
+    * Param:
+        # id_personel [number: nilai id dari personel]
+        # pendidikan [string]
+        # jenis [('umum', 'kedinasan', 'lain_lain')]
+        # tahun_awal [number: tahun]
+        # tahun_akhir [number: tahun, nullable]
+        # kota [string]
+        # yang_membiayai [string]
+        # keterangan [string, nullable]
+
+- Update: [PATCH] http://isolo.10makademi.net/api/kantor/{id_riwayat_pendidikan}
+    * Param:
+        # pendidikan [string]
+        # tahun_awal [number: tahun]
+        # tahun_akhir [number: tahun, nullable]
+        # kota [string]
+        # yang_membiayai [string]
+        # keterangan [string, nullable]
+
+- Delete: [DELETE] http://isolo.10makademi.net/api/kantor/{id_riwayat_pendidikan}

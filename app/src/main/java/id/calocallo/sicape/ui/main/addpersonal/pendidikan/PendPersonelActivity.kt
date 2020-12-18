@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.transition.Slide
 import android.view.Gravity
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ParentListPendUmum
-import id.calocallo.sicape.model.PendUmumModel
+import id.calocallo.sicape.model.AddPendidikanModel
 import id.calocallo.sicape.ui.main.addpersonal.pendidikan.umum.PendidikanUmumFragment
 import id.calocallo.sicape.ui.main.addpersonal.pendidikan.umum.UmumAdapter
+import id.calocallo.sicape.utils.Constants
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.fragment_pendidikan_umum.*
@@ -20,18 +20,25 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class PendPersonelActivity : BaseActivity() {
 
-    private lateinit var sheenValidator: SheenValidator
-    private var parentPendidikan: LinearLayout? = null
-
-    private lateinit var list: ArrayList<PendUmumModel>
-    private lateinit var adapter: UmumAdapter
-    private lateinit var parent: ParentListPendUmum
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pend_personel)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pendidikan"
+
+        val pendUmumFrag = PendidikanUmumFragment()
+            .apply {
+                enterTransition = Slide(Gravity.END)
+                exitTransition = Slide(Gravity.START)
+            }
+        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fl_pendidikan, pendUmumFrag)
+//        ft.addToBackStack(null)
+        ft.commit()
+
+    }
+
+}
 
 /*
 
@@ -58,41 +65,3 @@ class PendPersonelActivity : BaseActivity() {
 
          */
 
-
-        val pendUmumFrag = PendidikanUmumFragment()
-            .apply {
-                enterTransition = Slide(Gravity.END)
-                exitTransition = Slide(Gravity.START)
-            }
-        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fl_pendidikan, pendUmumFrag)
-//        ft.addToBackStack(null)
-        ft.commit()
-
-    }
-
-    private fun setAdapter() {
-        rv_pend_umum.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        list.add(PendUmumModel(0,"", "", "", "", "", ""))
-        list.add(PendUmumModel(0,"", "", "", "", "", ""))
-        list.add(PendUmumModel(0,"", "", "", "", "", ""))
-        list.add(PendUmumModel(0,"", "", "", "", "", ""))
-        adapter = UmumAdapter(this, list, object : UmumAdapter.OnClick {
-            override fun onDelete(position: Int) {
-                list.removeAt(position)
-                adapter.notifyDataSetChanged()
-
-            }
-        })
-        rv_pend_umum.adapter = adapter
-
-        btn_add_pend_umum.setOnClickListener {
-            val position = if (list.isEmpty()) 0 else list.size - 1
-            list.add(PendUmumModel(0,"", "", "", "", "", ""))
-            adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
-
-        }
-    }
-}

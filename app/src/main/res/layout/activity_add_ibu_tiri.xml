@@ -94,6 +94,7 @@
                     android:id="@+id/edt_tgl_ttl_ibu_tiri"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:maxLength="10"
                     android:inputType="date" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -101,18 +102,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>  <!-- ttl-->
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="Agama">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_agm_ibu_tiri"
+            <AutoCompleteTextView
+                android:id="@+id/sp_agama_ibu_tiri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>  <!-- agama-->
 
@@ -275,6 +276,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_thn_berhenti_ibu_tiri"
                 android:layout_width="match_parent"
+                android:maxLength="4"
                 android:layout_height="match_parent"
                 android:inputType="number" />
 
@@ -297,6 +299,22 @@
                 android:inputType="textMultiLine" />
 
         </com.google.android.material.textfield.TextInputLayout><!--alasan Berhenti-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Nama Kantor">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_nama_almt_kntr_ibu_tiri"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -362,6 +380,21 @@
 
         </com.google.android.material.textfield.TextInputLayout> <!--pend terakhir-->
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Pernikahan Keberapa">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_pernikahan_brp_ibu_tiri"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -404,6 +437,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_thn_org_diikuti_ibu_tiri"
                 android:layout_width="match_parent"
+                android:maxLength="4"
                 android:layout_height="match_parent"
                 android:inputType="number" />
 
@@ -482,6 +516,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_thn_org_prnh_ibu_tiri"
+                android:maxLength="4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="number" />
@@ -558,14 +593,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Bagaimana"
+            android:hint="Tahun Meninggal"
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_bagaimana_stts_ibu_tiri"
+                android:id="@+id/edt_tahun_kematian_ibu_tiri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

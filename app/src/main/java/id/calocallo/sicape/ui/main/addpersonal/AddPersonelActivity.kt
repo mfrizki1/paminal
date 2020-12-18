@@ -132,9 +132,12 @@ class AddPersonelActivity : BaseActivity() {
             addPersonelReq.tanggal_perkawinan = tglKawin
             addPersonelReq.tempat_perkawinan = tmptKawin
             addPersonelReq.status_perkawinan = sttsKawin
+            sessionManager.setPersonel(addPersonelReq)
+            Log.e("personel", "${sessionManager.getPersonel()}")
+            startActivity(Intent(this@AddPersonelActivity, PendPersonelActivity::class.java))
 
-
-            val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+            /*
+             *val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
             //Defined bounds are required for your drawable
             val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
             animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
@@ -154,7 +157,10 @@ class AddPersonelActivity : BaseActivity() {
                         ).show()
                     }
 
-                    override fun onResponse(call: Call<AddPersonelResp>, response: Response<AddPersonelResp>) {
+                    override fun onResponse(
+                        call: Call<AddPersonelResp>,
+                        response: Response<AddPersonelResp>
+                    ) {
                         if (response.isSuccessful) {
                             if (response.body()?.message == "Data personel saved succesfully") {
                                 btn_next_personel.showDrawable(animatedDrawable) {
@@ -167,7 +173,7 @@ class AddPersonelActivity : BaseActivity() {
                                     this@AddPersonelActivity,
                                     PendPersonelActivity::class.java
                                 )
-                               Constants.ID_PERSONEL = response.body()!!.id
+                                Constants.ID_PERSONEL = response.body()!!.id.toString()
                                 startActivity(intent)
 
                             } else {
@@ -197,6 +203,7 @@ class AddPersonelActivity : BaseActivity() {
 
                 })
 
+             */
 
             Log.e(
                 "IDEN", "$namaLengkap, $namaAlias, $tmptLahir, $tglLahir," +
@@ -204,8 +211,6 @@ class AddPersonelActivity : BaseActivity() {
                         "$almtRumah / $noTelpRumah, $kwg, $howToKWG, $tmptKawin / $tglKawin," +
                         "$almtKtp, $noKtp, $hobi, $kebiasaan, $bahasa, $jk, $sttsKawin, $suku, $jmlh_anak"
             )
-
-//            startActivity(Intent(this@AddPersonelActivity, PendPersonelActivity::class.java))
 
         }
 
@@ -261,7 +266,7 @@ class AddPersonelActivity : BaseActivity() {
                 agmNow = "budha"
             } else if (position == 4) {
                 agmNow = "hindu"
-            }else{
+            } else {
                 agmNow = "konghuchu"
             }
         }
@@ -277,7 +282,7 @@ class AddPersonelActivity : BaseActivity() {
                 agmBefore = "budha"
             } else if (position == 4) {
                 agmBefore = "hindu"
-            }else{
+            } else {
                 agmBefore = "konghuchu"
             }
         }

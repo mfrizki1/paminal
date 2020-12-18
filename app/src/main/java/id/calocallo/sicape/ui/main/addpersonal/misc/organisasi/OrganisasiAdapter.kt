@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.OrganisasiModel
+import id.calocallo.sicape.model.OrganisasiReq
 import kotlinx.android.synthetic.main.layout_organisasi.view.*
 
 class OrganisasiAdapter(
     val context: Context,
-    val list: ArrayList<OrganisasiModel>,
+    val list: ArrayList<OrganisasiReq>,
     val onClickOrg: OnCLickOrg
 ) : RecyclerView.Adapter<OrganisasiAdapter.OrgHolder>() {
     inner class OrgHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,7 +29,7 @@ class OrganisasiAdapter(
         fun setListener() {
             etNama.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama = s.toString()
+                    list[adapterPosition].organisasi = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -45,7 +45,7 @@ class OrganisasiAdapter(
             })
             etThnAwal.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].thnAwal = s.toString()
+                    list[adapterPosition].tahun_awal = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -61,7 +61,7 @@ class OrganisasiAdapter(
             })
             etThnAkhir.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].thnAkhir = s.toString()
+                    list[adapterPosition].tahun_akhir = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -77,7 +77,7 @@ class OrganisasiAdapter(
             })
             etKedudukan.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].kedudukan = s.toString()
+                    list[adapterPosition].jabatan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -93,7 +93,7 @@ class OrganisasiAdapter(
             })
             etThnIkut.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].thnIkut = s.toString()
+                    list[adapterPosition].tahun_bergabung = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -125,7 +125,7 @@ class OrganisasiAdapter(
             })
             etKet.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].ket = s.toString()
+                    list[adapterPosition].keterangan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -151,7 +151,7 @@ class OrganisasiAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrgHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_organisasi, parent, false)
-        var orgViews = OrgHolder(view)
+        val orgViews = OrgHolder(view)
         orgViews.setListener()
         return orgViews
     }
@@ -162,14 +162,14 @@ class OrganisasiAdapter(
 
     override fun onBindViewHolder(holder: OrgHolder, position: Int) {
         val data = list[position]
-        holder.etNama.setText(data.nama)
-        holder.etKedudukan.setText(data.kedudukan)
-        holder.etThnIkut.setText(data.thnIkut)
+        holder.etNama.setText(data.organisasi)
+        holder.etKedudukan.setText(data.jabatan)
+        holder.etThnIkut.setText(data.tahun_bergabung)
         holder.etAlamat.setText(data.alamat)
-        holder.etThnAkhir.setText(data.thnAkhir)
-        holder.etThnAwal.setText(data.thnAwal)
-        holder.etNama.setText(data.nama)
-        holder.etKet.setText(data.ket)
+        holder.etThnAkhir.setText(data.tahun_akhir)
+        holder.etThnAwal.setText(data.tahun_awal)
+        holder.etNama.setText(data.organisasi)
+        holder.etKet.setText(data.keterangan)
 
     }
 

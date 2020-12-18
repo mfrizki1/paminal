@@ -6,15 +6,14 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MedsosModel
+import id.calocallo.sicape.model.MedsosReq
 import kotlinx.android.synthetic.main.layout_medsos.view.*
 
 class MedSosAdapter(
     val context: Context,
-    val list: ArrayList<MedsosModel>,
+    val list: ArrayList<MedsosReq>,
     val onClickMedsos: OnClickMedsos
 ) : RecyclerView.Adapter<MedSosAdapter.MedsosHolder>() {
     inner class MedsosHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,7 +27,7 @@ class MedSosAdapter(
         fun setListener() {
             etNama.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama = s.toString()
+                    list[adapterPosition].nama_medsos = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -44,7 +43,7 @@ class MedSosAdapter(
             })
             etNamaAcc.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama_acc = s.toString()
+                    list[adapterPosition].nama_akun = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -105,7 +104,7 @@ class MedSosAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedsosHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_medsos, parent, false)
-        var medsosViews = MedsosHolder(view)
+        val medsosViews = MedsosHolder(view)
         medsosViews.setListener()
         return medsosViews
     }
@@ -116,9 +115,9 @@ class MedSosAdapter(
 
     override fun onBindViewHolder(holder: MedsosHolder, position: Int) {
         val data = list[position]
-        holder.etNama.setText(data.nama)
+        holder.etNama.setText(data.nama_medsos)
         holder.etKet.setText(data.ket)
         holder.etAlasan.setText(data.alasan)
-        holder.etNamaAcc.setText(data.nama_acc)
+        holder.etNamaAcc.setText(data.nama_akun)
     }
 }

@@ -16,6 +16,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         sessionManager = SessionManager(this)
+//        sessionManager.clearAllPers()
+//        sessionManager.clearAllAPP()
 
 //        val user: PersonelModel = BaseApp.getInstance(this).personel
 

@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PekerjaanModel
+import id.calocallo.sicape.network.request.AddSinglePekerjaanReq
 import kotlinx.android.synthetic.main.layout_pekerjaan.view.*
 
 class PekerjaanAdapter(
     val context: Context,
-    val list: ArrayList<PekerjaanModel>,
+    val list: ArrayList<AddSinglePekerjaanReq>,
     var onClickPkrjaan: OnCLickPekerjaan
 ) : RecyclerView.Adapter<PekerjaanAdapter.PekerjaanHolder>() {
     inner class PekerjaanHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,7 +26,7 @@ class PekerjaanAdapter(
         fun setListener() {
             etName.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama_pkrjn = s.toString()
+                    list[adapterPosition].pekerjaan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -42,7 +42,7 @@ class PekerjaanAdapter(
             })
             etPangkat.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].pangkat_pkrjn = s.toString()
+                    list[adapterPosition].golongan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -58,7 +58,7 @@ class PekerjaanAdapter(
             })
             etKesatuan.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].kesatuan_pkrjn = s.toString()
+                    list[adapterPosition].instansi = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -74,7 +74,6 @@ class PekerjaanAdapter(
             })
             etThnLama.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].tahun = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -86,11 +85,13 @@ class PekerjaanAdapter(
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    list[adapterPosition].berapa_tahun = s.toString()
+
                 }
             })
             etKet.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].ket_pkrjn = s.toString()
+                    list[adapterPosition].keterangan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -117,7 +118,7 @@ class PekerjaanAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PekerjaanHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_pekerjaan, parent, false)
-        var pkrjaanVIews = PekerjaanHolder(view)
+        val pkrjaanVIews = PekerjaanHolder(view)
         pkrjaanVIews.setListener()
         return pkrjaanVIews
     }
@@ -128,10 +129,10 @@ class PekerjaanAdapter(
 
     override fun onBindViewHolder(holder: PekerjaanHolder, position: Int) {
         val data = list[position]
-        holder.etName.setText(data.nama_pkrjn)
-        holder.etThnLama.setText(data.tahun)
-        holder.etKesatuan.setText(data.kesatuan_pkrjn)
-        holder.etPangkat.setText(data.pangkat_pkrjn)
+        holder.etName.setText(data.pekerjaan)
+        holder.etThnLama.setText(data.berapa_tahun.toString())
+        holder.etKesatuan.setText(data.instansi)
+        holder.etPangkat.setText(data.golongan)
     }
 
     interface OnCLickPekerjaan {

@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PerjuanganCitaModel
+import id.calocallo.sicape.model.PerjuanganCitaReq
 import kotlinx.android.synthetic.main.layout_perjuangan_cita.view.*
 
 class PerjuanganAdapter(
     val context: Context,
-    val list: ArrayList<PerjuanganCitaModel>,
+    val list: ArrayList<PerjuanganCitaReq>,
     val onClickPerjuangan: OnClickPerjuangan
 ) : RecyclerView.Adapter<PerjuanganAdapter.PerjuanganHolder>() {
     interface OnClickPerjuangan {
@@ -47,7 +47,7 @@ class PerjuanganAdapter(
             })
             etTmptPeristiwa.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].tmpt_peristiwa = s.toString()
+                    list[adapterPosition].lokasi = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -63,7 +63,7 @@ class PerjuanganAdapter(
             })
             etThnAwal.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].thn_awal = s.toString()
+                    list[adapterPosition].tahun_awal = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -79,7 +79,7 @@ class PerjuanganAdapter(
             })
             etThnAkhir.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].thn_akhir = s.toString()
+                    list[adapterPosition].tahun_akhir = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -95,7 +95,7 @@ class PerjuanganAdapter(
             })
             etRangka.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].rangka = s.toString()
+                    list[adapterPosition].dalam_rangka = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -111,7 +111,7 @@ class PerjuanganAdapter(
             })
             etKet.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].ket = s.toString()
+                    list[adapterPosition].keterangan = s.toString()
                 }
 
                 override fun beforeTextChanged(
@@ -142,7 +142,7 @@ class PerjuanganAdapter(
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.layout_perjuangan_cita, parent, false)
-        var perjuanganViews = PerjuanganHolder(view)
+        val perjuanganViews = PerjuanganHolder(view)
         perjuanganViews.setListener()
         return perjuanganViews
     }
@@ -153,11 +153,11 @@ class PerjuanganAdapter(
 
     override fun onBindViewHolder(holder: PerjuanganAdapter.PerjuanganHolder, position: Int) {
         val data = list[position]
-        holder.etRangka.setText(data.rangka)
+        holder.etRangka.setText(data.dalam_rangka)
         holder.etPeristiwa.setText(data.peristiwa)
-        holder.etTmptPeristiwa.setText(data.tmpt_peristiwa)
-        holder.etThnAwal.setText(data.thn_awal)
-        holder.etThnAkhir.setText(data.thn_akhir)
-        holder.etKet.setText(data.ket)
+        holder.etTmptPeristiwa.setText(data.lokasi)
+        holder.etThnAwal.setText(data.tahun_awal)
+        holder.etThnAkhir.setText(data.tahun_akhir)
+        holder.etKet.setText(data.keterangan)
     }
 }
