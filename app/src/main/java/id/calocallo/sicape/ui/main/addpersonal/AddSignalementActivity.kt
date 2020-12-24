@@ -20,6 +20,7 @@ class AddSignalementActivity : BaseActivity() {
         sessionManager = SessionManager(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Signalement"
+        signalementReq = SignalementModel()
 
         btn_next_signalement.setOnClickListener {
             signalementReq.cacat_ciri = edt_cacat_ciri.text.toString()

@@ -17,7 +17,7 @@ class NetworkConfig {
     }
     fun getRetrofit() : Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://isolo.10makademi.net/api/")
+            .baseUrl(" https://sipaminal.brutalclosing.com/api/")
             .client(getInterceptor())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

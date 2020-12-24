@@ -65,8 +65,8 @@ class PickPendFragment : Fragment() {
         rl_pb.visible()
         NetworkConfig().getService().showPendByJenis(
             "Bearer ${sessionManager.fetchAuthToken()}",
-            "4",
-//            sessionManager.fetchID().toString(), //Constants.ID_PERSONEL
+//            "4",
+            sessionManager.fetchID().toString(), //Constants.ID_PERSONEL
             nama_jenis
         ).enqueue(object : Callback<ArrayList<PendidikanModel>> {
             override fun onFailure(call: Call<ArrayList<PendidikanModel>>, t: Throwable) {
@@ -82,10 +82,14 @@ class PickPendFragment : Fragment() {
                 if (response.isSuccessful) {
                     rl_pb.gone()
                     list = response.body()!!
-                    if (list == null) {
+//                    val kosong = Array<PendidikanModel>()()
+                    if (response.body()!!.isEmpty()) {
                         rl_no_data.visible()
+                        rv_edit_pendidikan.gone()
                     } else {
                         initRV(list)
+                        rl_no_data.gone()
+                        rv_edit_pendidikan.visible()
                     }
                 } else {
                     rl_pb.gone()
@@ -159,4 +163,9 @@ class PickPendFragment : Fragment() {
         ft.commit()
     }
 
+    override fun onResume() {
+        super.onResume()
+        initAPI("umum")
+        initSP()
+    }
 }

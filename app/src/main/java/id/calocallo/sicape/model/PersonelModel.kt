@@ -2,7 +2,6 @@ package id.calocallo.sicape.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.*
 
 data class PersonelModel(
     val id: Int?,
@@ -15,9 +14,7 @@ data class PersonelModel(
     val jabatan: String?,
     val pangkat: String?,
     val nrp: String?,
-    val kesatuan: String?,
-    val alamat_kantor: String?,
-    val no_telp_kantor: String?,
+    val id_satuan_kerja: Int?,
     val alamat_rumah: String?,
     val no_telp_rumah: String?,
     val kewarganegaraan: String?,
@@ -35,89 +32,83 @@ data class PersonelModel(
     val no_ktp: String?,
     val hobi: String?,
     val kebiasaan: String?,
-    val bahasa: String?
+    val bahasa: String?,
+    val satuan_kerja: SatKerResp?
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
+    constructor(source: Parcel) : this(
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readValue(Int::class.java.classLoader) as Int?,
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readParcelable<SatKerResp>(SatKerResp::class.java.classLoader)
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeValue(id)
+        writeString(nama)
+        writeString(nama_alias)
+        writeString(jenis_kelamin)
+        writeString(tempat_lahir)
+        writeString(tanggal_lahir)
+        writeString(ras)
+        writeString(jabatan)
+        writeString(pangkat)
+        writeString(nrp)
+        writeValue(id_satuan_kerja)
+        writeString(alamat_rumah)
+        writeString(no_telp_rumah)
+        writeString(kewarganegaraan)
+        writeString(cara_peroleh_kewarganegaraan)
+        writeString(agama_sekarang)
+        writeString(agama_sebelumnya)
+        writeString(aliran_kepercayaan)
+        writeString(status_perkawinan)
+        writeString(tempat_perkawinan)
+        writeString(tanggal_perkawinan)
+        writeString(perkawinan_keberapa)
+        writeString(jumlah_anak)
+        writeString(alamat_sesuai_ktp)
+        writeString(no_telp)
+        writeString(no_ktp)
+        writeString(hobi)
+        writeString(kebiasaan)
+        writeString(bahasa)
+        writeParcelable(satuan_kerja, 0)
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(id)
-        parcel.writeString(nama)
-        parcel.writeString(nama_alias)
-        parcel.writeString(jenis_kelamin)
-        parcel.writeString(tempat_lahir)
-        parcel.writeString(tanggal_lahir)
-        parcel.writeString(ras)
-        parcel.writeString(jabatan)
-        parcel.writeString(pangkat)
-        parcel.writeString(nrp)
-        parcel.writeString(kesatuan)
-        parcel.writeString(alamat_kantor)
-        parcel.writeString(no_telp_kantor)
-        parcel.writeString(alamat_rumah)
-        parcel.writeString(no_telp_rumah)
-        parcel.writeString(kewarganegaraan)
-        parcel.writeString(cara_peroleh_kewarganegaraan)
-        parcel.writeString(agama_sekarang)
-        parcel.writeString(agama_sebelumnya)
-        parcel.writeString(aliran_kepercayaan)
-        parcel.writeString(status_perkawinan)
-        parcel.writeString(tempat_perkawinan)
-        parcel.writeString(tanggal_perkawinan)
-        parcel.writeString(perkawinan_keberapa)
-        parcel.writeString(jumlah_anak)
-        parcel.writeString(alamat_sesuai_ktp)
-        parcel.writeString(no_telp)
-        parcel.writeString(no_ktp)
-        parcel.writeString(hobi)
-        parcel.writeString(kebiasaan)
-        parcel.writeString(bahasa)
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<PersonelModel> =
+            object : Parcelable.Creator<PersonelModel> {
+                override fun createFromParcel(source: Parcel): PersonelModel = PersonelModel(source)
+                override fun newArray(size: Int): Array<PersonelModel?> = arrayOfNulls(size)
+            }
     }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<PersonelModel> {
-        override fun createFromParcel(parcel: Parcel): PersonelModel {
-            return PersonelModel(parcel)
-        }
-
-        override fun newArray(size: Int): Array<PersonelModel?> {
-            return arrayOfNulls(size)
-        }
-    }
-
 }

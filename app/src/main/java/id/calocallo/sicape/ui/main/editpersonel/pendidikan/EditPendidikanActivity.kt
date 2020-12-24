@@ -20,7 +20,7 @@ class EditPendidikanActivity : BaseActivity() {
 
 
         setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title = personel?.nama
+        supportActionBar?.title = personel?.nama.toString()
 
 
         val pickPendFragment = PickPendFragment()

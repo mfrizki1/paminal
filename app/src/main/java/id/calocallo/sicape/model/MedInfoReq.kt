@@ -5,4 +5,6 @@ data class MedInfoReq (
     var topik: String?,
     var alasan: String?,
     var keterangan: String?
-)
+){
+    constructor():this("","","","")
+}

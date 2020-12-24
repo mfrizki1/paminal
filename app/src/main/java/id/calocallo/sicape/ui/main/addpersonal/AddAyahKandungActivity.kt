@@ -71,9 +71,9 @@ class AddAyahKandungActivity : BaseActivity() {
     }
 
     private fun initSpinner(
-        spinner: AutoCompleteTextView,
-        spinnerSttsHidup: AutoCompleteTextView,
-        spAgamaAyah: AutoCompleteTextView
+        spinner: AutoCompleteTextView, //pekerjaan
+        spinnerSttsHidup: AutoCompleteTextView, //hidup
+        spAgamaAyah: AutoCompleteTextView //agama
     ) {
         val item = listOf("Masih", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
@@ -82,6 +82,9 @@ class AddAyahKandungActivity : BaseActivity() {
             if (position == 0) { // masih
 //                Log.e("stts_kerja_spinner", parent.getItemAtPosition(position).toString())
                 txt_layout_pekerjaan_ayah.visibility = View.VISIBLE
+                txt_layout_nama_kantor_ayah.visibility = View.VISIBLE
+                txt_layout_alamat_kantor_ayah.visibility = View.VISIBLE
+                txt_layout_no_telp_kantor_ayah.visibility = View.VISIBLE
                 txt_layout_thn_berhenti_ayah.visibility = View.GONE
                 txt_layout_alsn_berhenti_ayah.visibility = View.GONE
 //                stts_kerja = parent.getItemAtPosition(position).toString()
@@ -92,6 +95,9 @@ class AddAyahKandungActivity : BaseActivity() {
                 txt_layout_thn_berhenti_ayah.visibility = View.VISIBLE
                 txt_layout_alsn_berhenti_ayah.visibility = View.VISIBLE
                 txt_layout_pekerjaan_ayah.visibility = View.GONE
+                txt_layout_nama_kantor_ayah.visibility = View.GONE
+                txt_layout_alamat_kantor_ayah.visibility = View.GONE
+                txt_layout_no_telp_kantor_ayah.visibility = View.GONE
 //                stts_kerja = parent.getItemAtPosition(position).toString()
                 stts_kerja = 0
 

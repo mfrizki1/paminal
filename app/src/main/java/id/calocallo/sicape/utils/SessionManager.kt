@@ -483,18 +483,18 @@ class SessionManager(context: Context) {
         )
     }
 
-    fun setSahabat(obj: ArrayList<KawanDekatReq>) {
+    fun setSahabat(obj: ArrayList<SahabatReq>) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(SAHABAT, json)
         editor.commit()
     }
 
-    fun getSahabat(): ArrayList<KawanDekatReq> {
-        val emptyJson = Gson().toJson(ArrayList<KawanDekatReq>())
+    fun getSahabat(): ArrayList<SahabatReq> {
+        val emptyJson = Gson().toJson(ArrayList<SahabatReq>())
         return Gson().fromJson(
             prefsPers.getString(SAHABAT, emptyJson),
-            object : TypeToken<ArrayList<KawanDekatReq>>() {}.type
+            object : TypeToken<ArrayList<SahabatReq>>() {}.type
         )
     }
 
@@ -513,18 +513,18 @@ class SessionManager(context: Context) {
         )
     }
 
-    fun setMedsos(obj: ArrayList<MedsosReq>) {
+    fun setMedsos(obj: ArrayList<MedSosReq>) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(MEDSOS, json)
         editor.commit()
     }
 
-    fun getMedsos(): ArrayList<MedsosReq> {
-        val emptyJson = Gson().toJson(ArrayList<MedsosReq>())
+    fun getMedsos(): ArrayList<MedSosReq> {
+        val emptyJson = Gson().toJson(ArrayList<MedSosReq>())
         return Gson().fromJson(
             prefsPers.getString(MEDSOS, emptyJson),
-            object : TypeToken<ArrayList<MedsosReq>>() {}.type
+            object : TypeToken<ArrayList<MedSosReq>>() {}.type
         )
     }
 

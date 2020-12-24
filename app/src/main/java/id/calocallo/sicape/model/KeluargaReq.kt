@@ -1,13 +1,13 @@
 package id.calocallo.sicape.model
 
-data class AyahReq(
+data class KeluargaReq(
     var nama: String?,
     var nama_alias: String?,
     var tempat_lahir: String?,
     var tanggal_lahir: String?,
     var agama: String?,
     var ras: String?,
-    var kewarganegaran: String?,
+    var kewarganegaraan: String?,
     var cara_peroleh_kewarganegaraan: String?,
     var aliran_kepercayaan_dianut: String?,
     var alamat_rumah: String?,
@@ -22,7 +22,6 @@ data class AyahReq(
     var nama_kantor: String?,
     var alamat_kantor: String?,
     var no_telp_kantor: String?,
-    var pernikahan_brp: String?,
     var pekerjaan_sebelumnya: String?,
     var pendidikan_terakhir: String?,
 
@@ -42,39 +41,13 @@ data class AyahReq(
     var sebab_kematian: String
 ) {
     constructor() : this(
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        0,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        0,
-        "",
-        "",
-        ""
+        "", "", "", "", "", "", "",
+        "", "", "", "",
+        "", 0, "", "", "",
+        "", "", "", "", "",
+        "", "", "",
+        "",  "",
+        "", "",
+        "", 0, "", "", ""
     )
 }

@@ -16,63 +16,65 @@ class RelasiAdapter(
     val context: Context,
     val list: ArrayList<RelasiReq>,
     val onClickrelasi: OnClickRelasi
-): RecyclerView.Adapter<RelasiAdapter.RelasiHolder>() {
-    inner class RelasiHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val etNama = itemView.edt_nama_relasi
-        val spJenis = itemView.sp_jenis_relasi
-        val btnDelete = itemView.btn_delete_relasi
-        val btnAdd = itemView.btn_add_relasi
-
-        fun setListener() {
-            etNama.addTextChangedListener(object: TextWatcher{
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama = s.toString()
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-
-            val item = listOf("Dalam Negeri", "Luar Negeri")
-            val adapterJenis = ArrayAdapter(context, R.layout.item_spinner, item)
-            spJenis.setAdapter(adapterJenis)
-            spJenis.setOnItemClickListener { parent, view, position, id ->
-                if(position == 0){
-                    list[adapterPosition].lokasi = "dalam_negeri"
-                }else{
-                    list[adapterPosition].lokasi = "luar_negeri"
-                }
-            }
-            btnDelete.setOnClickListener {
-                onClickrelasi.onDelete(adapterPosition)
-            }
-            btnAdd.setOnClickListener {
-                onClickrelasi.onAdd()
-            }
-
-
-        }
-
-    }
+) : RecyclerView.Adapter<RelasiAdapter.RelasiHolder>() {
     interface OnClickRelasi {
         fun onDelete(position: Int)
         fun onAdd()
     }
 
+    inner class RelasiHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(relasiReq: RelasiReq) {
+            with(itemView) {
+                edt_nama_relasi.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        relasiReq.nama = s.toString()
+                    }
+
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                val item = listOf("Dalam Negeri", "Luar Negeri")
+                val adapterJenis = ArrayAdapter(context, R.layout.item_spinner, item)
+                sp_jenis_relasi.setAdapter(adapterJenis)
+                sp_jenis_relasi.setOnItemClickListener { parent, view, position, id ->
+                    if (position == 0) {
+                        relasiReq.lokasi = "dalam_negeri"
+                    } else {
+                        relasiReq.lokasi = "luar_negeri"
+                    }
+                }
+                btn_delete_relasi.visibility = if (adapterPosition == 0) View.GONE
+                else View.VISIBLE
+                btn_delete_relasi.setOnClickListener {
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        onClickrelasi.onDelete(adapterPosition)
+                    }
+                }
+                btn_add_relasi.setOnClickListener{
+                    onClickrelasi.onAdd()
+                }
+            }
+        }
+
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RelasiHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_relasi, parent, false)
-        val relasiViews = RelasiHolder(view)
-        relasiViews.setListener()
-        return relasiViews
+        return RelasiHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -80,8 +82,7 @@ class RelasiAdapter(
     }
 
     override fun onBindViewHolder(holder: RelasiHolder, position: Int) {
-        val data = list[position]
-        holder.etNama.setText(data.nama)
-        holder.spJenis.setText(data.lokasi)
+        holder.bind(list[position])
     }
+
 }

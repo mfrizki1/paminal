@@ -9,4 +9,7 @@ data class SaudaraReq(
     var pekerjaan_atau_sekolah: String?,
     var organisasi_yang_diikuti: String?,
     var keterangan: String?
-)
+){
+    constructor():this("","","","","",
+    "","","")
+}

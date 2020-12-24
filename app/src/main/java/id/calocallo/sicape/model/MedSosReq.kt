@@ -1,8 +1,10 @@
 package id.calocallo.sicape.model
 
-data class MedsosReq (
+data class MedSosReq (
     var nama_medsos: String?,
     var nama_akun: String?,
     var alasan: String?,
-    var ket: String?
-)
+    var keterangan: String?
+){
+    constructor():this("","","","")
+}

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MedsosReq
+import id.calocallo.sicape.model.MedSosReq
 import id.calocallo.sicape.model.ParentListMedsos
 import id.calocallo.sicape.ui.main.addpersonal.AddFotoActivity
 import id.calocallo.sicape.utils.SessionManager
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddMedsosActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private lateinit var list: ArrayList<MedsosReq>
+    private lateinit var list: ArrayList<MedSosReq>
     private lateinit var parentList: ParentListMedsos
     lateinit var adapter: MedSosAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,16 +45,16 @@ class AddMedsosActivity : BaseActivity() {
         if (medsos.size == 1) {
             for (i in 0 until medsos.size) {
                 list.add(
-                    i, MedsosReq(
+                    i, MedSosReq(
                         medsos[i].nama_medsos,
                         medsos[i].nama_akun,
                         medsos[i].alasan,
-                        medsos[i].ket
+                        medsos[i].keterangan
                     )
                 )
             }
         } else {
-            list.add(MedsosReq("", "", "", ""))
+            list.add(MedSosReq("", "", "", ""))
         }
         rv_medsos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = MedSosAdapter(this, list, object : MedSosAdapter.OnClickMedsos {
@@ -66,7 +66,7 @@ class AddMedsosActivity : BaseActivity() {
         rv_medsos.adapter = adapter
 
         btn_add_medsos.setOnClickListener {
-            list.add(MedsosReq("", "", "", ""))
+            list.add(MedSosReq("", "", "", ""))
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

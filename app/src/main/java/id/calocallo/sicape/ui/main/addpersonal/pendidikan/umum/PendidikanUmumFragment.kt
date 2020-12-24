@@ -22,7 +22,7 @@ class PendidikanUmumFragment : Fragment() {
     private lateinit var sessionManager: SessionManager
     private lateinit var list: ArrayList<AddPendidikanModel>
     private lateinit var parentUmum: ParentListPendUmum
-    private lateinit var adapter: UmumAdapter
+    private lateinit var adapter: PendUmumAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -93,7 +93,7 @@ class PendidikanUmumFragment : Fragment() {
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         adapter = activity?.let {
-            UmumAdapter(it, list, object : UmumAdapter.OnClick {
+            PendUmumAdapter(it, list, object : PendUmumAdapter.OnClick {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
                     adapter.notifyDataSetChanged()

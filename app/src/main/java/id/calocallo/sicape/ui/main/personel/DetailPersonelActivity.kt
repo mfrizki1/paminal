@@ -13,12 +13,26 @@ import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.ui.main.editpersonel.pendidikan.EditPendidikanActivity
 import id.calocallo.sicape.ui.main.editpersonel.EditPersonelActivity
 import id.calocallo.sicape.ui.main.editpersonel.alamat.PickAlamatActivity
+import id.calocallo.sicape.ui.main.editpersonel.anak.PickAnakActivity
+import id.calocallo.sicape.ui.main.editpersonel.foto.EditFotoActivity
+import id.calocallo.sicape.ui.main.editpersonel.keluarga.EditKeluargaActivity
+import id.calocallo.sicape.ui.main.editpersonel.keluarga.EditPasanganActivity
+import id.calocallo.sicape.ui.main.editpersonel.med_sos.PickMedSosActivity
+import id.calocallo.sicape.ui.main.editpersonel.media_info.PickMedInfoActivity
+import id.calocallo.sicape.ui.main.editpersonel.orangs.PickOrangsActivity
+import id.calocallo.sicape.ui.main.editpersonel.organisasi_dll.PickMenuOrganisasiDllActivity
 import id.calocallo.sicape.ui.main.editpersonel.pekerjaan.EditPekerjaanActivity
+import id.calocallo.sicape.ui.main.editpersonel.relasi.PickRelasiActivity
+import id.calocallo.sicape.ui.main.editpersonel.sahabat.PickSahabatActivity
+import id.calocallo.sicape.ui.main.editpersonel.saudara.PickSaudaraActivity
+import id.calocallo.sicape.ui.main.editpersonel.signalement.EditSignalementActivity
+import id.calocallo.sicape.ui.main.editpersonel.tokoh.PickTokohActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_personel.*
+import kotlinx.android.synthetic.main.item_personel.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,17 +57,37 @@ class DetailPersonelActivity : BaseActivity() {
         idPersonel = detail?.id.toString()
         detail?.id?.let { sessionManager.saveID(it) }
         if (bundle != null) {
+            when (detail?.id_satuan_kerja) {
+                1 -> txt_kesatuan_personel.text = "POLRESTA BANJARMASIN"
+                2 -> txt_kesatuan_personel.text = "POLRES BANJARBARU"
+                3 -> txt_kesatuan_personel.text = "POLRES BANJAR"
+                4 -> txt_kesatuan_personel.text = "POLRES TAPIN"
+                5 -> txt_kesatuan_personel.text = "POLRES HULU SUNGAI SELATAN"
+                6 -> txt_kesatuan_personel.text = "POLRES HULU SUNGAI TENGAH"
+                7 -> txt_kesatuan_personel.text = "POLRES HULU SUNGAI UTARA"
+                8 -> txt_kesatuan_personel.text = "POLRES BALANGAN"
+                9 -> txt_kesatuan_personel.text = "POLRES TABALONG"
+                10 -> txt_kesatuan_personel.text = "POLRES TANAH LAUT"
+                11 -> txt_kesatuan_personel.text = "POLRES TANAH BUMBU"
+                12 -> txt_kesatuan_personel.text = "POLRES KOTABARU"
+                13 -> txt_kesatuan_personel.text = "POLRES BATOLA"
+                14 -> txt_kesatuan_personel.text = "SAT BRIMOB"
+                15 -> txt_kesatuan_personel.text = "SAT POLAIR"
+                16 -> txt_kesatuan_personel.text = "SPN BANJARBARU"
+                17 -> txt_kesatuan_personel.text = "POLDA KALSEL"
+                18 -> txt_kesatuan_personel.text = "SARPRAS"
+            }
             val nama = detail?.nama
             val alias = detail?.nama_alias
             val jabatan = detail?.jabatan
-            val kesatuan = detail?.kesatuan
             val pangkat = detail?.pangkat
             val nrp = detail?.nrp
             val tgl_lhr = detail?.tanggal_lahir
             val tmpt_lhr = detail?.tempat_lahir
             var jk = detail?.jenis_kelamin
             var agama = detail?.agama_sekarang
-            val almt_kntr = detail?.alamat_kantor
+//            val almt_kntr = detail?.alamat_kantor
+
 
             if (jk == "laki_laki") {
                 jk = "Laki-laki"
@@ -76,8 +110,7 @@ class DetailPersonelActivity : BaseActivity() {
             txt_agama.text = agama
             txt_pangkat_nrp.text = "$pangkat / $nrp"
             txt_jabatan_personel.text = jabatan
-            txt_kesatuan_personel.text = kesatuan
-            txt_alamat_kantor_personel.text = almt_kntr
+            txt_alamat_kantor_personel.text = detail?.satuan_kerja?.alamat_kantor
 
         } else {
             Log.e("tidak masuk", "tidak masuk")
@@ -86,91 +119,163 @@ class DetailPersonelActivity : BaseActivity() {
         btn_edit_personel.setOnClickListener {
             val intent = Intent(this, EditPersonelActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
         btn_edit_pendidikan.setOnClickListener {
             val intent = Intent(this, EditPendidikanActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
         btn_edit_pekerjaan.setOnClickListener {
             val intent = Intent(this, EditPekerjaanActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
         btn_edit_alamat.setOnClickListener {
             val intent = Intent(this, PickAlamatActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            Toast.makeText(this, "Alamat", Toast.LENGTH_SHORT).show()
+            startActivity(intent)
         }
-        btn_edit_organisasi.setOnClickListener {
-            Toast.makeText(this, "organisasi", Toast.LENGTH_SHORT).show()
+        btn_edit_organisasi_dll.setOnClickListener {
+            val intent = Intent(this, PickMenuOrganisasiDllActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
         }
-        btn_edit_perjuangan.setOnClickListener {
-            Toast.makeText(this, "Perjuangan Menggapai Cita-cita", Toast.LENGTH_SHORT).show()
-        }
-        btn_edit_penghargaan.setOnClickListener {
-            Toast.makeText(this, "Penghargaan", Toast.LENGTH_SHORT).show()
-        }
+//        btn_edit_perjuangan.setOnClickListener {
+//            Toast.makeText(this, "Perjuangan Menggapai Cita-cita", Toast.LENGTH_SHORT).show()
+//        }
+//        btn_edit_penghargaan.setOnClickListener {
+//            Toast.makeText(this, "Penghargaan", Toast.LENGTH_SHORT).show()
+//        }
         btn_edit_pasangan.setOnClickListener {
-            Toast.makeText(this, "Pasangan", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditPasanganActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
         }
         btn_edit_ayah_kandung.setOnClickListener {
-            Toast.makeText(this, "Ayah Kandung", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditKeluargaActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            intent.putExtra("KELUARGA", "ayah_kandung")
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
         }
         btn_edit_ayah_tiri.setOnClickListener {
-            Toast.makeText(this, "Ayah Tiri", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditKeluargaActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            intent.putExtra("KELUARGA", "ayah_tiri")
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
         }
         btn_edit_ibu_kandung.setOnClickListener {
-            Toast.makeText(this, "Ibu Kandung", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditKeluargaActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            intent.putExtra("KELUARGA", "ibu_kandung")
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
         }
         btn_edit_ibu_tiri.setOnClickListener {
-            Toast.makeText(this, "Ibu Tiri", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditKeluargaActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            intent.putExtra("KELUARGA", "ayah_tiri")
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
         }
         btn_edit_mertua_laki.setOnClickListener {
-            Toast.makeText(this, "Mertua Laki", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditKeluargaActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            intent.putExtra("KELUARGA", "mertua_laki_laki")
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
         }
         btn_edit_mertua_perempuan.setOnClickListener {
-            Toast.makeText(this, "Mertua Perempuan", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditKeluargaActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            intent.putExtra("KELUARGA", "mertua_perempuan")
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
         }
         btn_edit_anak.setOnClickListener {
-            Toast.makeText(this, "Anak", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PickAnakActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Anak", Toast.LENGTH_SHORT).show()
         }
         btn_edit_saudara.setOnClickListener {
-            Toast.makeText(this, "Saudara", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PickSaudaraActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Saudara", Toast.LENGTH_SHORT).show()
         }
         btn_edit_orang_berjasa.setOnClickListener {
-            Toast.makeText(this, "Orang Berjasa", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PickOrangsActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Orang Berjasa", Toast.LENGTH_SHORT).show()
         }
-        btn_edit_orang_disegani.setOnClickListener {
-            Toast.makeText(this, "Orang Disegani", Toast.LENGTH_SHORT).show()
-        }
+//        btn_edit_orang_disegani.setOnClickListener {
+//            Toast.makeText(this, "Orang Disegani", Toast.LENGTH_SHORT).show()
+//        }
         btn_edit_tokoh.setOnClickListener {
-            Toast.makeText(this, "Tokoh", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PickTokohActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Tokoh", Toast.LENGTH_SHORT).show()
         }
         btn_edit_kawan.setOnClickListener {
-            Toast.makeText(this, "Sahabat", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PickSahabatActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Sahabat", Toast.LENGTH_SHORT).show()
         }
         btn_edit_media_informasi.setOnClickListener {
-            Toast.makeText(this, "Media Informasi", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PickMedInfoActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Media Informasi", Toast.LENGTH_SHORT).show()
         }
         btn_edit_medsos.setOnClickListener {
-            Toast.makeText(this, "Media Sosial", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PickMedSosActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Media Sosial", Toast.LENGTH_SHORT).show()
         }
         btn_edit_foto.setOnClickListener {
-            Toast.makeText(this, "FOto", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditFotoActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "FOto", Toast.LENGTH_SHORT).show()
         }
         btn_edit_signalement.setOnClickListener {
-            Toast.makeText(this, "Signalement", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EditSignalementActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Signalement", Toast.LENGTH_SHORT).show()
         }
         btn_edit_relasi.setOnClickListener {
-            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PickRelasiActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
         }
-        btn_edit_catpers.setOnClickListener {
-            Toast.makeText(this, "Catatarn Personel Personel", Toast.LENGTH_SHORT).show()
-        }
+//        btn_edit_catpers.setOnClickListener {
+//            Toast.makeText(this, "Catatarn Personel Personel", Toast.LENGTH_SHORT).show()
+//        }
 
     }
 

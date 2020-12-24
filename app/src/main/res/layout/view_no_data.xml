@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/rl_no_data">
 
@@ -10,6 +10,7 @@
         android:layout_marginTop="@dimen/space_8dp"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginHorizontal="80dp"
         android:src="@drawable/ic_not_found" />
@@ -25,4 +26,4 @@
         android:textSize="@dimen/text_18"
         android:textStyle="bold" />
 
-</LinearLayout>
+</RelativeLayout>

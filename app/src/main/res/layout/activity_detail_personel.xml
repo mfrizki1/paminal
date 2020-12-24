@@ -252,39 +252,39 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_edit_organisasi"
+            android:id="@+id/btn_edit_organisasi_dll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Edit Riwayat Organisasi"
+            android:text="Edit Riwayat Organisasi, Perjuangan Cita-Cita &amp; Penghargaan"
             android:textColor="@color/colorPrimary"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1.5dp" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_edit_perjuangan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Edit Riwayat Perjuangan Cita-Cita"
-            android:textColor="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="1.5dp" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_edit_perjuangan"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="@dimen/space_12dp"-->
+<!--            android:text="Edit Riwayat Perjuangan Cita-Cita"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:strokeColor="@color/colorPrimary"-->
+<!--            app:strokeWidth="1.5dp" />-->
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_edit_penghargaan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Edit Riwayat Penghargaan"
-            android:textColor="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="1.5dp" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_edit_penghargaan"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="@dimen/space_12dp"-->
+<!--            android:text="Edit Riwayat Penghargaan"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:strokeColor="@color/colorPrimary"-->
+<!--            app:strokeWidth="1.5dp" />-->
 
 
         <com.google.android.material.button.MaterialButton
@@ -393,22 +393,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Edit Data Orang Berjasa Selain Orang Tua"
+            android:text="Edit Data Orang Berjasa Selain Orang Tua &amp; Orang Yang Disegani Karena Adat"
             android:textColor="@color/colorPrimary"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1.5dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_edit_orang_disegani"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Edit Data Orang Yang DIsegani Karena Adat"
-            android:textColor="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="1.5dp" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_edit_orang_disegani"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="@dimen/space_12dp"-->
+<!--            android:text="Edit Data Orang Yang DIsegani Karena Adat"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:strokeColor="@color/colorPrimary"-->
+<!--            app:strokeWidth="1.5dp" />-->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_tokoh"
@@ -426,7 +426,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Edit Data Kawan Dekat"
+            android:text="Edit Data Sahabat"
             android:textColor="@color/colorPrimary"
             app:backgroundTint="@color/white"
             app:strokeColor="@color/colorPrimary"
@@ -487,16 +487,16 @@
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1.5dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_edit_catpers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:text="Edit Data Catatan Personel"
-            android:textColor="@color/colorPrimary"
-            app:backgroundTint="@color/white"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="1.5dp" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_edit_catpers"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="@dimen/space_12dp"-->
+<!--            android:text="Edit Data Catatan Personel"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            app:backgroundTint="@color/white"-->
+<!--            app:strokeColor="@color/colorPrimary"-->
+<!--            app:strokeWidth="1.5dp" />-->
     </LinearLayout>
 
 </ScrollView>

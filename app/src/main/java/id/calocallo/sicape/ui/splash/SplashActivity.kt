@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
 
 //        val user = sessionManager.fetchUser()
         val isUserLoged = sessionManager.getUserLogin()
-        if (isUserLoged == true) {
+        if (isUserLoged) {
             Handler(Looper.getMainLooper()).postDelayed({
                 run {
                     startActivity(Intent(this@SplashActivity, MainActivity::class.java))

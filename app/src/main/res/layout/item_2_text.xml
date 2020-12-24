@@ -10,15 +10,16 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_8dp"
         android:layout_marginTop="@dimen/space_8dp"
+        android:textStyle="bold"
         android:text="ABC \t DFG \t GHJ"
-        android:textSize="@dimen/text_14" />
+        android:textSize="@dimen/text_16" />
 
     <TextView
         android:id="@+id/txt_detail_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_8dp"
-        android:layout_marginTop="@dimen/space_8dp"
+        android:layout_marginTop="@dimen/space_half"
         android:layout_marginBottom="@dimen/space_8dp"
         android:text="ABC \t DFG \t GHJ"
         android:textSize="@dimen/text_14" />

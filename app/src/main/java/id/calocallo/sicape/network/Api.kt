@@ -12,12 +12,17 @@ interface Api {
         const val ACCEPT = "Accept: application/json"
         const val LOGIN = "login"
 
-        const val PERSONEL = "personel"
-        const val UPD_PERSONEL = "personel/{id_personel}"
+        const val SATUAN_KERJA = "satuan/kerja"
+
+        const val PERSONEL = "personel/identitas"
+        const val UPD_PERSONEL = "personel/{id_personel}/identitas"
         const val DELETE_PERSONEL = "personel/{id_personel}"
 
+        const val RIWAYAT_PERSONEL = "personel/{id_personel}/riwayat/{nama_riwayat}"
+
         const val PENDIDIKAN_MANY = "riwayat/pendidikan/{id_personel}/many"
-//        const val PENDIDIKAN_SINGLE = "${RIWAYAT}/pendidikan/{id_personel}/{jenis}"
+
+        //        const val PENDIDIKAN_SINGLE = "${RIWAYAT}/pendidikan/{id_personel}/{jenis}"
         const val PENDIDIKAN_SINGLE = "personel/{id_personel}/riwayat/pendidikan/{jenis}"
         const val UPD_PENDIDIKAN = "personel/riwayat/pendidikan/{id_riwayat_pendidikan}"
 
@@ -30,7 +35,40 @@ interface Api {
         const val UPD_PEKERJAAN_LUAR = "personel/pekerjaan/diluar/dinas/{id_pekerjaan}"
 
         const val ALAMAT_SINGLE = "personel/{id_personel}/riwayat/alamat"
-        const val UPD_ALAMAT = "personle/riwayat/{id_alamat}}"
+        const val UPD_ALAMAT = "personeL/riwayat/{id_alamat}}"
+
+        const val ORGANISASI_SINGLE = "personel/{id_personel}/riwayat/organisasi"
+        const val UPD_ORGANISASI = "personel/riwayat/organisasi/{id_organisasi}"
+
+        const val PERJUANGAN_SINGLE = "personel/{id_personel}/riwayat/perjuangan"
+        const val UPD_PERJUANGAN = "personel/riwayat/perjuangan/{id_perjuangan}"
+
+        const val PENGHARGAAN_SINGLE = "personel/{id_personel}/riwayat/penghargaan"
+        const val UPD_PENGHARGAAN = "personel/riwayat/penghargaan/{id_penghargaan}"
+
+        const val KELUARGA =
+            "personel/{id_personel}/keluarga/{status_keluarga}" //ayah-->mertua-perempuan
+
+        const val ANAK_SINGLE = "personel/{id_personel}/anak"
+        const val UPD_ANAK = "personel/anak/{id_anak}"
+
+        const val SAUDARA_SINGLE = "personel/{id_personel}/saudara"
+        const val UPD_SAUDARA = "personel/saudara/{id_saudara}"
+
+        const val ORANGS_SINGLE = "personel/{id_personel}/orang/{nama_orangs}"
+        const val UPD_ORANGS = "personel/orang/{nama_orangs}/{id_orangs}"
+
+        const val TOKOH_SINGLE = "personel/{id_personel}/tokoh/dikagumi"
+        const val UPD_TOKOH = "personel/tokoh/dikagumi/{id_tokoh}"
+
+        const val SAHABAT_SINGLE = "personel/{id_personel}/sahabat"
+        const val UPD_SAHABAT = "personel/sahabat/{id_sahabat}"
+
+        const val MED_INFO_SINGLE = "personel/{id_personel}/media/disenangi"
+        const val UPD_MED_INFO = "personel/media/disenangi/{id_med_info}"
+
+        const val MED_SOS_SINGLE = "personel/{id_personel}/media/sosial"
+        const val UPD_MED_SOS = "personel/media/sosial/{id_med_sos}"
 
         const val FOTO_MUKA = "file/foto/upload/foto_muka"
         const val FOTO_KANAN = "file/foto/upload/foto_kanan"
@@ -56,6 +94,10 @@ interface Api {
     @Headers(ACCEPT)
     @GET(PERSONEL)
     fun showPersonel(@Header("Authorization") tokenBearer: String): Call<ArrayList<PersonelModel>>
+
+    @Headers(ACCEPT)
+    @GET(SATUAN_KERJA)
+    fun showSatker(@Header("Authorization") tokenBearer: String): Call<ArrayList<SatKerResp>>
 
     @Headers(ACCEPT)
     @POST(PERSONEL)
@@ -184,7 +226,7 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("id_personel") id_personel: String,
         @Body pekerjaanODinasReq: PekerjaanODinasReq
-    ):Call<BaseResp>
+    ): Call<BaseResp>
 
     @Headers(ACCEPT)
     @PATCH(UPD_PEKERJAAN_LUAR)
@@ -192,14 +234,14 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("id_pekerjaan") id_pekerjaan: String,
         @Body pekerjaanLuarReq: PekerjaanODinasReq
-    ):Call<BaseResp>
+    ): Call<BaseResp>
 
     @Headers(ACCEPT)
     @DELETE(UPD_PEKERJAAN_LUAR)
     fun deletePekerjaanLuar(
         @Header("Authorization") token: String,
         @Path("id_pekerjaan") id_pekerjaan: String
-    ):Call<BaseResp>
+    ): Call<BaseResp>
 
     //    <------------------ALAMATT----------------->
     @Headers(ACCEPT)
@@ -215,7 +257,7 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("id_personel") id_personel: String,
         @Body alamatReq: AlamatReq
-    ):Call<BaseResp>
+    ): Call<BaseResp>
 
     @Headers(ACCEPT)
     @PATCH(UPD_ALAMAT)
@@ -223,16 +265,371 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("id_alamat") id_alamat: String,
         @Body alamatReq: AlamatReq
-    ):Call<BaseResp>
+    ): Call<BaseResp>
 
     @Headers(ACCEPT)
     @DELETE(UPD_ALAMAT)
     fun deleteAlamat(
         @Header("Authorization") token: String,
         @Path("id_alamat") id_alamat: String
-    ):Call<BaseResp>
+    ): Call<BaseResp>
+
+    //    <------------------ORGANISASI, PERJUANGAN CITA-CITA, PENGHARGAAN----------------->
+    /**
+     * ORGANISASI
+     */
+    @Headers(ACCEPT)
+    @GET(ORGANISASI_SINGLE)
+    fun showOrganisasi(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<OrganisasiResp>>
+
+    @Headers(ACCEPT)
+    @POST(ORGANISASI_SINGLE)
+    fun addOrganisasiSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body organisasiReq: OrganisasiReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_ORGANISASI)
+    fun updateOrganisasiSingle(
+        @Header("Authorization") token: String,
+        @Path("id_organisasi") id_organisasi: String,
+        @Body organisasiReq: OrganisasiReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_ORGANISASI)
+    fun deleteOrganisasi(
+        @Header("Authorization") token: String,
+        @Path("id_organisasi") id_organisasi: String
+    ): Call<BaseResp>
+
+    /**
+     * PERJUANGAN CITA-CITA
+     */
+    @Headers(ACCEPT)
+    @GET(PERJUANGAN_SINGLE)
+    fun showPerjuangan(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<PerjuanganResp>>
+
+    @Headers(ACCEPT)
+    @POST(PERJUANGAN_SINGLE)
+    fun addPerjuanganSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body perjuanganCitaReq: PerjuanganCitaReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_PERJUANGAN)
+    fun updatePerjuanganSingle(
+        @Header("Authorization") token: String,
+        @Path("id_perjuangan") id_perjuangan: String,
+        @Body perjuanganCitaReq: PerjuanganCitaReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_PERJUANGAN)
+    fun deletePerjuangan(
+        @Header("Authorization") token: String,
+        @Path("id_perjuangan") id_perjuangan: String
+    ): Call<BaseResp>
 
 
+    /**
+     * PENGHARGAAN
+     */
+    @Headers(ACCEPT)
+    @GET(PENGHARGAAN_SINGLE)
+    fun showPenghargaan(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<PenghargaanResp>>
+
+    @Headers(ACCEPT)
+    @POST(PENGHARGAAN_SINGLE)
+    fun addPenghargaanSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body penghargaanReq: PenghargaanReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_PENGHARGAAN)
+    fun updatePenghargaanSingle(
+        @Header("Authorization") token: String,
+        @Path("id_penghargaan") id_penghargaan: String,
+        @Body penghargaanReq: PenghargaanReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_PENGHARGAAN)
+    fun deletePenghargaan(
+        @Header("Authorization") token: String,
+        @Path("id_penghargaan") id_penghargaan: String
+    ): Call<BaseResp>
+
+    //    <------------------KELUARGA----------------->
+    @Headers(ACCEPT)
+    @GET(KELUARGA)
+    fun showKeluarga(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Path("status_keluarga") status_keluarga: String
+    ): Call<KeluargaResp>
+
+    @Headers(ACCEPT)
+    @POST(KELUARGA)
+    fun addKeluargaSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Path("status_keluarga") status_keluarga: String,
+        @Body keluargaReq: KeluargaReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(KELUARGA)
+    fun updateKeluargaSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Path("status_keluarga") status_keluarga: String,
+        @Body keluargaReq: KeluargaReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(KELUARGA)
+    fun deleteKeluarga(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Path("status_keluarga") status_keluarga: String
+    ): Call<BaseResp>
+
+    //    <------------------ANAK----------------->
+    @Headers(ACCEPT)
+    @GET(ANAK_SINGLE)
+    fun showAnak(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<AnakResp>>
+
+    @Headers(ACCEPT)
+    @POST(ANAK_SINGLE)
+    fun addAnakSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body anakReq: AnakReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_ANAK)
+    fun updateAnakSingle(
+        @Header("Authorization") token: String,
+        @Path("id_anak") id_anak: String,
+        @Body anakReq: AnakReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_ANAK)
+    fun deleteAnak(
+        @Header("Authorization") token: String,
+        @Path("id_anak") id_anak: String
+    ): Call<BaseResp>
+
+    //    <------------------SAUDARA----------------->
+    @Headers(ACCEPT)
+    @GET(SAUDARA_SINGLE)
+    fun showSaudara(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<SaudaraResp>>
+
+    @Headers(ACCEPT)
+    @POST(SAUDARA_SINGLE)
+    fun addSaudaraSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body saudaraReq: SaudaraReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_SAUDARA)
+    fun updateSaudaraSingle(
+        @Header("Authorization") token: String,
+        @Path("id_saudara") id_saudara: String,
+        @Body saudaraReq: SaudaraReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_SAUDARA)
+    fun deleteSaudara(
+        @Header("Authorization") token: String,
+        @Path("id_saudara") id_saudara: String
+    ): Call<BaseResp>
+
+    //    <------------------ORANGS----------------->
+    @Headers(ACCEPT)
+    @GET(ORANGS_SINGLE)
+    fun showOrangs(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Path("nama_orangs") nama_orangs: String
+    ): Call<ArrayList<OrangsResp>>
+
+    @Headers(ACCEPT)
+    @POST(ORANGS_SINGLE)
+    fun addOrangsSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Path("nama_orangs") nama_orangs: String,
+        @Body orangsReq: OrangsReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_ORANGS)
+    fun updateOrangsSingle(
+        @Header("Authorization") token: String,
+        @Path("nama_orangs") nama_orangs: String,
+        @Path("id_orangs") id_orangs: String,
+        @Body orangsReq: OrangsReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_ORANGS)
+    fun deleteOrangs(
+        @Header("Authorization") token: String,
+        @Path("nama_orangs") nama_orangs: String,
+        @Path("id_orangs") id_orangs: String
+    ): Call<BaseResp>
+
+    //    <------------------TOKOH----------------->
+    @Headers(ACCEPT)
+    @GET(TOKOH_SINGLE)
+    fun showTokoh(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<TokohResp>>
+
+    @Headers(ACCEPT)
+    @POST(TOKOH_SINGLE)
+    fun addTokohSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body tokohReq: TokohReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_TOKOH)
+    fun updateTokohSingle(
+        @Header("Authorization") token: String,
+        @Path("id_tokoh") id_tokoh: String,
+        @Body tokohReq: TokohReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_TOKOH)
+    fun deleteTokoh(
+        @Header("Authorization") token: String,
+        @Path("id_tokoh") id_tokoh: String
+    ): Call<BaseResp>
+
+    //    <------------------SAHABAT----------------->
+    @Headers(ACCEPT)
+    @GET(SAHABAT_SINGLE)
+    fun showSahabat(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<SahabatResp>>
+
+    @Headers(ACCEPT)
+    @POST(SAHABAT_SINGLE)
+    fun addSahabatSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body sahabatReq: SahabatReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_SAHABAT)
+    fun updateSahabatSingle(
+        @Header("Authorization") token: String,
+        @Path("id_sahabat") id_sahabat: String,
+        @Body sahabatReq: SahabatReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_SAHABAT)
+    fun deleteSahabat(
+        @Header("Authorization") token: String,
+        @Path("id_sahabat") id_sahabat: String
+    ): Call<BaseResp>
+
+    //    <------------------MEDIA INFORMASI----------------->
+    @Headers(ACCEPT)
+    @GET(MED_INFO_SINGLE)
+    fun showMedInfo(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<MedInfoResp>>
+
+    @Headers(ACCEPT)
+    @POST(MED_INFO_SINGLE)
+    fun addMedInfoSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body medInfoReq: MedInfoReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_MED_INFO)
+    fun updateMedInfoSingle(
+        @Header("Authorization") token: String,
+        @Path("id_med_info") id_med_info: String,
+        @Body medInfoReq: MedInfoReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_MED_INFO)
+    fun deleteMedInfo(
+        @Header("Authorization") token: String,
+        @Path("id_med_info") id_med_info: String
+    ): Call<BaseResp>
+
+    //    <------------------MEDIA SOSIAL----------------->
+    @Headers(ACCEPT)
+    @GET(MED_SOS_SINGLE)
+    fun showMedSos(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<MedSosResp>>
+
+    @Headers(ACCEPT)
+    @POST(MED_SOS_SINGLE)
+    fun addMedSosSingle(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body medSosReq: MedSosReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_MED_SOS)
+    fun updateMedSosSingle(
+        @Header("Authorization") token: String,
+        @Path("id_med_info") id_med_info: String,
+        @Body medSosReq: MedSosReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_MED_SOS)
+    fun deleteMedSos(
+        @Header("Authorization") token: String,
+        @Path("id_med_info") id_med_info: String
+    ): Call<BaseResp>
 
     //    <------------------FOTO----------------->
     @Multipart

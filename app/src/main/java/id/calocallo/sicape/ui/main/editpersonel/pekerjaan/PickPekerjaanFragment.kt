@@ -21,8 +21,10 @@ import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import kotlinx.android.synthetic.main.fragment_pick_pekerjaan.*
+import kotlinx.android.synthetic.main.fragment_pick_pend.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
+import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import retrofit2.Call
@@ -33,8 +35,8 @@ class PickPekerjaanFragment : Fragment() {
     private lateinit var sessionManager: SessionManager
     private lateinit var adapter: EditPkrjnAdapter
     private lateinit var list: ArrayList<PekerjaanModel>
-    private lateinit var adapterPkrjnLuar : ReusableAdapter<PekerjaanLuarResp>
-    private lateinit var callbackPkrjnLuar : AdapterCallback<PekerjaanLuarResp>
+    private lateinit var adapterPkrjnLuar: ReusableAdapter<PekerjaanLuarResp>
+    private lateinit var callbackPkrjnLuar: AdapterCallback<PekerjaanLuarResp>
     private var pekerjaan = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +58,7 @@ class PickPekerjaanFragment : Fragment() {
         sp_jenis_pekerjaan.setText(R.string.pekerjaan)
 
         val hak = sessionManager.fetchHakAkses()
-        if(hak == "operator"){
+        if (hak == "operator") {
             btn_add_edit_pekerjaan.gone()
         }
 
@@ -85,13 +87,16 @@ class PickPekerjaanFragment : Fragment() {
 
 
     private fun ApiPekerjaan(name: String) {
+        rl_pb.visible()
         if (name == "pekerjaan") {
             NetworkConfig().getService().showPekerjaan(
                 "Bearer ${sessionManager.fetchAuthToken()}",
-                "4"
-//            sessionManager.fetchID().toString()
+//                "4"
+                sessionManager.fetchID().toString()
             ).enqueue(object : Callback<ArrayList<PekerjaanModel>> {
                 override fun onFailure(call: Call<ArrayList<PekerjaanModel>>, t: Throwable) {
+                    rl_pb.gone()
+                    rl_no_data.visible()
                     Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
                 }
 
@@ -100,11 +105,16 @@ class PickPekerjaanFragment : Fragment() {
                     response: Response<ArrayList<PekerjaanModel>>
                 ) {
                     if (response.isSuccessful) {
+                        rl_pb.gone()
+                        rl_no_data.gone()
                         val list = response.body()
-                        if (list != null) {
-                            initRV(list)
+                        if (list!!.isEmpty()) {
+                            rl_no_data.visible()
+                            rv_list_pekerjaan.gone()
                         } else {
-                            rl_pb.visible()
+                            initRV(list)
+                            rl_no_data.gone()
+                            rv_list_pekerjaan.visible()
                         }
 
                     } else {
@@ -112,28 +122,35 @@ class PickPekerjaanFragment : Fragment() {
                     }
                 }
             })
-        }else if(name == "pekerjaan_luar_dinas"){
+        } else if (name == "pekerjaan_luar_dinas") {
             NetworkConfig().getService().showPekerjaanLuar(
                 "Bearer ${sessionManager.fetchAuthToken()}",
-                "4"
-                //            sessionManager.fetchID().toString()
-            ).enqueue(object :Callback<ArrayList<PekerjaanLuarResp>>{
+//                "4"
+                sessionManager.fetchID().toString()
+            ).enqueue(object : Callback<ArrayList<PekerjaanLuarResp>> {
                 override fun onFailure(call: Call<ArrayList<PekerjaanLuarResp>>, t: Throwable) {
                     Toast.makeText(activity, "Eror Koneksi", Toast.LENGTH_SHORT).show()
+                    rl_pb.gone()
+                    rl_no_data.visible()
                 }
 
                 override fun onResponse(
                     call: Call<ArrayList<PekerjaanLuarResp>>,
                     response: Response<ArrayList<PekerjaanLuarResp>>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
+                        rl_pb.gone()
                         val list = response.body()
-                        if (list != null) {
+                        if (list!!.isEmpty()) {
+                            rl_no_data.visible()
+                            rv_list_pekerjaan.gone()
+                        } else {
                             RVPekerjaanLuar(list)
-                        }else{
-                            rl_pb.visible()
+                            rl_no_data.gone()
+                            rv_list_pekerjaan.visible()
                         }
-                    }else{
+                    } else {
+                        rl_no_data.visible()
                         Toast.makeText(activity, "Eror", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -143,7 +160,7 @@ class PickPekerjaanFragment : Fragment() {
     }
 
     private fun RVPekerjaanLuar(list: ArrayList<PekerjaanLuarResp>) {
-        callbackPkrjnLuar = object : AdapterCallback<PekerjaanLuarResp>{
+        callbackPkrjnLuar = object : AdapterCallback<PekerjaanLuarResp> {
             override fun initComponent(itemView: View, data: PekerjaanLuarResp, itemIndex: Int) {
                 itemView.txt_edit_pendidikan.text = data.pekerjaan
 

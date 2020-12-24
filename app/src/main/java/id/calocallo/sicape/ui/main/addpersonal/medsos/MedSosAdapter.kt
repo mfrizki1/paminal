@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MedsosReq
+import id.calocallo.sicape.model.MedSosReq
 import kotlinx.android.synthetic.main.layout_medsos.view.*
 
 class MedSosAdapter(
     val context: Context,
-    val list: ArrayList<MedsosReq>,
+    val list: ArrayList<MedSosReq>,
     val onClickMedsos: OnClickMedsos
 ) : RecyclerView.Adapter<MedSosAdapter.MedsosHolder>() {
     inner class MedsosHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -24,74 +24,96 @@ class MedSosAdapter(
         val btnDelete = itemView.btn_delete_medsos
 
 
-        fun setListener() {
-            etNama.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama_medsos = s.toString()
-                }
+        fun bind(medSosReq: MedSosReq) {
+            with(itemView) {
+                etNama.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        medSosReq.nama_medsos = s.toString()
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etNamaAcc.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama_akun = s.toString()
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etNamaAcc.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        medSosReq.nama_akun = s.toString()
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etAlasan.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].alasan = s.toString()
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etAlasan.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        medSosReq.alasan = s.toString()
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etKet.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].ket = s.toString()
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etKet.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        medSosReq.keterangan = s.toString()
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                btnDelete.visibility = if(adapterPosition==0)View.GONE else View.VISIBLE
+                btnDelete.setOnClickListener {
+                    onClickMedsos.onDelete(adapterPosition)
                 }
-            })
-
-            btnDelete.setOnClickListener {
-                onClickMedsos.onDelete(adapterPosition)
             }
         }
 
@@ -104,9 +126,7 @@ class MedSosAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedsosHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_medsos, parent, false)
-        val medsosViews = MedsosHolder(view)
-        medsosViews.setListener()
-        return medsosViews
+        return MedsosHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -114,10 +134,6 @@ class MedSosAdapter(
     }
 
     override fun onBindViewHolder(holder: MedsosHolder, position: Int) {
-        val data = list[position]
-        holder.etNama.setText(data.nama_medsos)
-        holder.etKet.setText(data.ket)
-        holder.etAlasan.setText(data.alasan)
-        holder.etNamaAcc.setText(data.nama_akun)
+        holder.bind(list[position])
     }
 }

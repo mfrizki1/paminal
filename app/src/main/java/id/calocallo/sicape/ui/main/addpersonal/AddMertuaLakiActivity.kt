@@ -118,12 +118,18 @@ class AddMertuaLakiActivity : BaseActivity() {
         spinnerPekerjaanMertuaLaki.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 txt_layout_pekerjaan_mertua_laki.visibility = View.VISIBLE
+                txt_layout_nama_kantor_mertua_laki.visibility = View.VISIBLE
+                txt_layout_alamat_kantor_mertua_laki.visibility = View.VISIBLE
+                txt_layout_no_telp_kantor_mertua_laki.visibility = View.VISIBLE
                 txt_layout_thn_berhenti_mertua_laki.visibility = View.GONE
                 txt_layout_alsn_berhenti_mertua_laki.visibility = View.GONE
                 stts_kerja = 1
 
             } else {
                 txt_layout_pekerjaan_mertua_laki.visibility = View.GONE
+                txt_layout_nama_kantor_mertua_laki.visibility = View.GONE
+                txt_layout_alamat_kantor_mertua_laki.visibility = View.GONE
+                txt_layout_no_telp_kantor_mertua_laki.visibility = View.GONE
                 txt_layout_thn_berhenti_mertua_laki.visibility = View.VISIBLE
                 txt_layout_alsn_berhenti_mertua_laki.visibility = View.VISIBLE
                 stts_kerja = 0

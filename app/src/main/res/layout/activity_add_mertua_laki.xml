@@ -300,6 +300,8 @@
 
         </com.google.android.material.textfield.TextInputLayout><!--alasan Berhenti-->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_nama_kantor_mertua_laki"
+            android:visibility="gone"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -315,6 +317,8 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_alamat_kantor_mertua_laki"
+            android:visibility="gone"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -331,6 +335,8 @@
         </com.google.android.material.textfield.TextInputLayout> <!-- alamat  kantor-->
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_no_telp_kantor_mertua_laki"
+            android:visibility="gone"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

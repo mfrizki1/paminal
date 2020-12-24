@@ -30,9 +30,9 @@ data class AllPersonelModel(
     var orang_berjasa: ArrayList<OrangsReq>,
     var orang_disegani: ArrayList<OrangsReq>,
     var tokoh_dikagumi: ArrayList<TokohReq>,
-    var sahabat: ArrayList<KawanDekatReq>,
+    var sahabat: ArrayList<SahabatReq>,
     var media_disenangi: ArrayList<MedInfoReq>,
-    var media_sosial: ArrayList<MedsosReq>
+    var media_sosial: ArrayList<MedSosReq>
 
 ) {
     constructor() : this(

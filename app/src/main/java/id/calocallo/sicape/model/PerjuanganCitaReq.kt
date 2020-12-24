@@ -7,4 +7,6 @@ data class PerjuanganCitaReq(
     var tahun_akhir: String?,
     var dalam_rangka: String?,
     var keterangan:String?
-)
+){
+    constructor():this("","","","","","")
+}

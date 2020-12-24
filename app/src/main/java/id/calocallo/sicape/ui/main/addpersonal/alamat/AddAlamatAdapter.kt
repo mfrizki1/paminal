@@ -17,96 +17,120 @@ class AddAlamatAdapter(
     val onClick: OnClickAlamat
 ) : RecyclerView.Adapter<AddAlamatAdapter.AlamatHolder>() {
     inner class AlamatHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val etNameAlamat = itemView.edt_alamat
-        val etThnAwal = itemView.edt_thn_awal_alamat
-        val etThnAkhir = itemView.edt_thn_akhir_alamat
-        val etRangka = itemView.edt_rangka_alamat
-        val etKet = itemView.edt_ket_alamat
-        val btnDelete = itemView.btn_delete_alamat
-        fun setListener() {
-            etNameAlamat.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].alamat = s.toString()
-                }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+        fun bind(alamatReq: AlamatReq) {
+            with(itemView) {
+                edt_alamat.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        alamatReq.alamat = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etThnAwal.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].tahun_awal = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                edt_thn_awal_alamat.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        alamatReq.tahun_awal = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etThnAkhir.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].tahun_akhir = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                edt_thn_akhir_alamat.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        alamatReq.tahun_akhir = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etRangka.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].dalam_rangka = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                edt_thn_akhir_alamat.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        alamatReq.dalam_rangka = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etKet.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].keterangan = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                edt_ket_alamat.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        alamatReq.keterangan = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            btnDelete.setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    onClick.onDelete(adapterPosition)
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                btn_delete_alamat.visibility = if (adapterPosition == 0) View.GONE
+                else View.VISIBLE
+                btn_delete_alamat.setOnClickListener {
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        onClick.onDelete(adapterPosition)
+                    }
                 }
             }
         }
@@ -120,9 +144,7 @@ class AddAlamatAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlamatHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_alamat, parent, false)
-        val alamatVies = AlamatHolder(view)
-        alamatVies.setListener()
-        return alamatVies
+        return AlamatHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -130,11 +152,6 @@ class AddAlamatAdapter(
     }
 
     override fun onBindViewHolder(holder: AlamatHolder, position: Int) {
-        val data = list[position]
-        holder.etRangka.setText(data.dalam_rangka)
-        holder.etKet.setText(data.keterangan)
-        holder.etThnAkhir.setText(data.tahun_akhir)
-        holder.etThnAwal.setText(data.tahun_awal)
-        holder.etNameAlamat.setText(data.alamat)
+        holder.bind(list[position])
     }
 }

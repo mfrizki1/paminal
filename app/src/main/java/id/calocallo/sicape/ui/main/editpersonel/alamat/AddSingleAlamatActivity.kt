@@ -40,8 +40,8 @@ class AddSingleAlamatActivity : BaseActivity() {
 
             NetworkConfig().getService().addAlamatSingle(
                 "Bearer ${sessionManager.fetchAuthToken()}",
-                "4",
-//                sessionManager.fetchID()
+//                "4",
+                sessionManager.fetchID().toString(),
                 alamatReq
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {

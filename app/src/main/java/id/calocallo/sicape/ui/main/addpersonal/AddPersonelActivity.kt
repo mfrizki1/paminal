@@ -104,7 +104,7 @@ class AddPersonelActivity : BaseActivity() {
 
             addPersonelReq.agama_sebelumnya = agmBefore
             addPersonelReq.agama_sekarang = agmNow
-            addPersonelReq.alamat_kantor = almtKantor
+//            addPersonelReq.alamat_kantor = almtKantor
             addPersonelReq.alamat_rumah = almtRumah
             addPersonelReq.alamat_sesuai_ktp = almtKtp
             addPersonelReq.aliran_kepercayaan = null
@@ -115,14 +115,14 @@ class AddPersonelActivity : BaseActivity() {
             addPersonelReq.jenis_kelamin = jk
             addPersonelReq.jumlah_anak = jmlh_anak
             addPersonelReq.kebiasaan = kebiasaan
-            addPersonelReq.kesatuan = kesatuan
+//            addPersonelReq.id_satuan_kerja = kesatuan
             addPersonelReq.kewarganegaraan = kwg
             addPersonelReq.nama = namaLengkap
             addPersonelReq.nama_alias = namaAlias
             addPersonelReq.no_ktp = noKtp
             addPersonelReq.no_telp = no_telp_pribadi
             addPersonelReq.no_telp_rumah = noTelpRumah
-            addPersonelReq.no_telp_kantor = noTelpKantor
+//            addPersonelReq.no_telp_kantor = noTelpKantor
             addPersonelReq.nrp = nrp
             addPersonelReq.pangkat = pangkat
             addPersonelReq.ras = suku

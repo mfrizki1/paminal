@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.item_1_text.view.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import retrofit2.Call
@@ -53,7 +54,7 @@ class PickAlamatActivity : BaseActivity() {
             }
         }
         val hak = sessionManager.fetchHakAkses()
-        if(hak == "operator"){
+        if (hak == "operator") {
             btn_add_edit_alamat.gone()
         }
         btn_add_edit_alamat.setOnClickListener {
@@ -65,31 +66,39 @@ class PickAlamatActivity : BaseActivity() {
     }
 
     private fun ApiAlamat() {
+        rl_pb.visible()
         NetworkConfig().getService().showAlamat(
             "Bearer ${sessionManager.fetchAuthToken()}",
-            "4"
-//            sessionManager.fetchID().toString()
+//            "4"
+            sessionManager.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<AlamatResp>> {
             override fun onFailure(call: Call<ArrayList<AlamatResp>>, t: Throwable) {
                 Toast.makeText(this@PickAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                rl_no_data.visible()
+                rl_pb.gone()
             }
 
             override fun onResponse(
                 call: Call<ArrayList<AlamatResp>>,
                 response: Response<ArrayList<AlamatResp>>
             ) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
+                    rl_pb.gone()
                     val alamatresponse = response.body()
-                    if (alamatresponse != null) {
+                    if (alamatresponse!!.isEmpty()) {
+                        rl_no_data.visible()
+                        rv_list_alamat.gone()
+                    } else {
+                        rl_no_data.gone()
+                        rv_list_alamat.visible()
                         adapterAlamat.adapterCallback(callbackAlamat)
                             .isVerticalView()
                             .setLayout(R.layout.layout_edit_1_text)
                             .addData(alamatresponse)
                             .build(rv_list_alamat)
-                    }else{
-                        rl_pb.visible()
                     }
-                }else{
+                } else {
+                    rl_no_data.visible()
                     Toast.makeText(this@PickAlamatActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
             }

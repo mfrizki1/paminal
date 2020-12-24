@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.KawanDekatReq
+import id.calocallo.sicape.model.SahabatReq
 import id.calocallo.sicape.model.ParentListKawanDekat
 import id.calocallo.sicape.ui.main.addpersonal.mediainfo.AddMedianfoActivity
 import id.calocallo.sicape.utils.SessionManager
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddKawanDekatActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private lateinit var list: ArrayList<KawanDekatReq>
+    private lateinit var list: ArrayList<SahabatReq>
     private lateinit var parentList: ParentListKawanDekat
     private lateinit var adapter: KawanAdapter
 
@@ -44,17 +44,18 @@ class AddKawanDekatActivity : BaseActivity() {
         val sahabat = sessionManager.getSahabat()
         if(sahabat.size == 1){
             for(i in 0 until sahabat.size){
-                list.add(i, KawanDekatReq(
+                list.add(i, SahabatReq(
                     sahabat[i].nama,
                     sahabat[i].jenis_kelamin,
                     sahabat[i].umur,
                     sahabat[i].alamat,
                     sahabat[i].pekerjaan,
-                    sahabat[i].alasan
+                    sahabat[i].alasan,
+                    sahabat[i].keterangan
                 ))
             }
         }else{
-            list.add(KawanDekatReq("", "", "", "", "", ""))
+            list.add(SahabatReq("", "", "", "", "", "",""))
         }
         rv_kawan_dekat.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -67,7 +68,7 @@ class AddKawanDekatActivity : BaseActivity() {
         rv_kawan_dekat.adapter = adapter
 
         btn_add_kawan.setOnClickListener {
-            list.add(KawanDekatReq("", "", "", "", "", ""))
+            list.add(SahabatReq("", "", "", "", "", "",""))
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

@@ -40,6 +40,13 @@
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
 
+                <include
+                    layout="@layout/layout_progress_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:layout_below="@+id/txt_foto_depan" />
+
                 <ImageView
                     android:id="@+id/img_foto_depan"
                     android:layout_width="match_parent"
@@ -87,6 +94,14 @@
                     android:text="Foto Samping Kanan"
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
+
+                <include
+                    android:id="@+id/pb_foto_kanan"
+                    layout="@layout/layout_progress_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:layout_below="@+id/txt_foto_kanan" />
 
                 <ImageView
                     android:id="@+id/img_foto_kanan"
@@ -136,6 +151,14 @@
                     android:text="Foto Samping Kiri"
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
+
+                <include
+                    android:id="@+id/pb_foto_kiri"
+                    layout="@layout/layout_progress_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:layout_below="@+id/txt_foto_kiri" />
 
                 <ImageView
                     android:id="@+id/img_foto_kiri"

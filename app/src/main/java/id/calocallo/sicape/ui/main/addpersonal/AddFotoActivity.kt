@@ -15,9 +15,12 @@ import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.FotoResp
 import id.calocallo.sicape.utils.IntentUtil
 import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.setLocalImage
+import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_foto.*
+import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -69,7 +72,7 @@ class AddFotoActivity : BaseActivity() {
             fotoReq.foto_kiri = mKiriUrl
             fotoReq.foto_muka = mDepanUrl
             sessionManager.setFoto(fotoReq)
-            Log.e("file", "$mDepanUrl $mKananUrl $mKiriUrl")
+//            Log.e("file", "${sessionManager.getFoto()}")
 
             /**
              * mDepanFile, mKananFile, mKiriFile
@@ -116,56 +119,84 @@ class AddFotoActivity : BaseActivity() {
             when (requestCode) {
                 DEPAN -> {
                     mDepanFile = file
-
+                    rl_pb.visible()
+                    img_foto_depan.gone()
                     val requestBody = RequestBody.create(MediaType.parse("*/*"), mDepanFile)
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mDepanFile!!.name, requestBody)
-                    img_foto_depan.setLocalImage(file, false)
+//                    img_foto_depan.setLocalImage(file, false)
                     NetworkConfig().getService().uploadMuka(
                         "Bearer ${sessionManager.fetchAuthToken()}",
                         filePart
                     ).enqueue(object : Callback<Base1Resp<FotoResp>> {
                         override fun onFailure(call: Call<Base1Resp<FotoResp>>, t: Throwable) {
-                            Toast.makeText(this@AddFotoActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@AddFotoActivity,
+                                "Error Koneksi",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         override fun onResponse(
                             call: Call<Base1Resp<FotoResp>>,
                             response: Response<Base1Resp<FotoResp>>
                         ) {
-                            if(response.isSuccessful){
-                                mDepanUrl  = response.body()?.data?.url
-                            }else{
-                                Toast.makeText(this@AddFotoActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
-
+                            if (response.isSuccessful) {
+                                rl_pb.gone()
+                                img_foto_depan.visible()
+                                img_foto_depan.setLocalImage(file, false)
+                                mDepanUrl = response.body()?.data?.url
+                            } else {
+                                Toast.makeText(
+                                    this@AddFotoActivity,
+                                    "Error Koneksi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                rl_pb.gone()
+                                img_foto_depan.visible()
                             }
                         }
                     })
-                    uploadFoto(mDepanFile)
+//                    uploadFoto(mDepanFile)
                 }
                 KANAN -> {
                     mKananFile = file
-                    img_foto_kanan.setLocalImage(file, false)
-                    uploadFoto(mKananFile)
+                    pb_foto_kanan.visible()
+                    img_foto_kanan.gone()
+//                    uploadFoto(mKananFile)
                     val requestBody = RequestBody.create(MediaType.parse("*/*"), mKananFile)
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mKananFile!!.name, requestBody)
                     NetworkConfig().getService().uploadKanan(
                         "Bearer ${sessionManager.fetchAuthToken()}",
                         filePart
-                    ).enqueue(object : Callback<Base1Resp<FotoResp>>{
+                    ).enqueue(object : Callback<Base1Resp<FotoResp>> {
                         override fun onFailure(call: Call<Base1Resp<FotoResp>>, t: Throwable) {
-                            Toast.makeText(this@AddFotoActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@AddFotoActivity,
+                                "Error Koneksi",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         override fun onResponse(
                             call: Call<Base1Resp<FotoResp>>,
                             response: Response<Base1Resp<FotoResp>>
                         ) {
-                            if(response.isSuccessful){
-                                mKananUrl  = response.body()?.data?.url
-                            }else{
-                                Toast.makeText(this@AddFotoActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                            if (response.isSuccessful) {
+                                img_foto_kanan.setLocalImage(file, false)
+                                pb_foto_kanan.gone()
+                                img_foto_kanan.visible()
+                                mKananUrl = response.body()?.data?.url
+                            } else {
+                                pb_foto_kanan.gone()
+                                img_foto_kanan.visible()
+                                Toast.makeText(
+                                    this@AddFotoActivity,
+                                    "Error Koneksi",
+                                    Toast.LENGTH_SHORT
+
+                                ).show()
                             }
                         }
                     })
@@ -173,27 +204,41 @@ class AddFotoActivity : BaseActivity() {
                 }
                 KIRI -> {
                     mKiriFile = file
-                    img_foto_kiri.setLocalImage(file, false)
-                    uploadFoto(mKiriFile)
+                    pb_foto_kiri.visible()
+                    img_foto_kiri.gone()
+//                    uploadFoto(mKiriFile)
                     val requestBody = RequestBody.create(MediaType.parse("*/*"), mKiriFile)
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mKiriFile!!.name, requestBody)
                     NetworkConfig().getService().uploadKiri(
                         "Bearer ${sessionManager.fetchAuthToken()}",
                         filePart
-                    ).enqueue(object : Callback<Base1Resp<FotoResp>>{
+                    ).enqueue(object : Callback<Base1Resp<FotoResp>> {
                         override fun onFailure(call: Call<Base1Resp<FotoResp>>, t: Throwable) {
-                            Toast.makeText(this@AddFotoActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@AddFotoActivity,
+                                "Error Koneksi",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         override fun onResponse(
                             call: Call<Base1Resp<FotoResp>>,
                             response: Response<Base1Resp<FotoResp>>
                         ) {
-                            if(response.isSuccessful){
-                                mKiriUrl  = response.body()?.data?.url
-                            }else{
-                                Toast.makeText(this@AddFotoActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                            if (response.isSuccessful) {
+                                img_foto_kiri.setLocalImage(file, false)
+                                pb_foto_kiri.gone()
+                                img_foto_kiri.visible()
+                                mKiriUrl = response.body()?.data?.url
+                            } else {
+                                pb_foto_kiri.gone()
+                                img_foto_kiri.visible()
+                                Toast.makeText(
+                                    this@AddFotoActivity,
+                                    "Error Koneksi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     })
@@ -206,7 +251,4 @@ class AddFotoActivity : BaseActivity() {
         }
     }
 
-    private fun uploadFoto(file: File?) {
-
-    }
 }

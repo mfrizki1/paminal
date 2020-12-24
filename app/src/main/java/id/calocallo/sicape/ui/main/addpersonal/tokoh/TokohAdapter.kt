@@ -23,74 +23,98 @@ class TokohAdapter(
         val etKet = itemView.edt_ket_tokoh_dikagumi
         val btnDelete = itemView.btn_delete_tokoh_dikagumi
 
-        fun setListener() {
-            etNama.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama = s.toString()
-                }
+      
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+        fun bind(tokohReq: TokohReq) {
+            with(itemView) {
+                etNama.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        tokohReq.nama = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etAsalNegara.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].asal_negara = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etAsalNegara.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        tokohReq.asal_negara = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etAlasan.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].alasan = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etAlasan.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        tokohReq.alasan = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etKet.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].keterangan = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etKet.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        tokohReq.keterangan = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-            btnDelete.setOnClickListener {
-                onClickTokoh.onDelete(adapterPosition)
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                btnDelete.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
+                btnDelete.setOnClickListener {
+                    onClickTokoh.onDelete(adapterPosition)
+                }
             }
         }
 
@@ -104,9 +128,7 @@ class TokohAdapter(
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.layout_tokoh_dikagumi, parent, false)
-        val tokohViews = TokohHolder(view)
-        tokohViews.setListener()
-        return tokohViews
+        return TokohHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -114,10 +136,7 @@ class TokohAdapter(
     }
 
     override fun onBindViewHolder(holder: TokohHolder, position: Int) {
-        val data = list[position]
-        holder.etNama.setText(data.nama)
-        holder.etAsalNegara.setText(data.asal_negara)
-        holder.etAlasan.setText(data.alasan)
-        holder.etKet.setText(data.keterangan)
+        holder.bind(list[position])
+
     }
 }

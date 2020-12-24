@@ -253,6 +253,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
+            android:visibility="gone"
             android:hint="Pekerjaan / Jabatan Terakhir">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -301,11 +302,13 @@
         </com.google.android.material.textfield.TextInputLayout><!--alasan Berhenti-->
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_nama_kantor_ayah_tiri"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
+            android:visibility="gone"
             android:hint="Nama Kantor">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -316,11 +319,13 @@
 
         </com.google.android.material.textfield.TextInputLayout> <!-- nama  kantor-->
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_alamat_kantor_ayah_tiri"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
+            android:visibility="gone"
             android:hint="Alamat Kantor">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -332,11 +337,13 @@
         </com.google.android.material.textfield.TextInputLayout> <!-- alamat  kantor-->
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_no_telp_kantor_ayah_tiri"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
+            android:visibility="gone"
             android:hint="No Telepon Kantor">
 
             <com.google.android.material.textfield.TextInputEditText

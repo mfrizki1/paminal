@@ -96,8 +96,8 @@
                     android:id="@+id/edt_tgl_ttl_ibu"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:maxLength="10"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:maxLength="10" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -303,12 +303,14 @@
         </com.google.android.material.textfield.TextInputLayout><!--alasan Berhenti-->
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_nama_kantor_ibu"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Nama Kantor">
+            android:hint="Nama Kantor"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_nama_almt_kntr_ibu"
@@ -319,12 +321,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_alamat_kantor_ibu"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Alamat Kantor">
+            android:hint="Alamat Kantor"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_almt_kntr_ibu"
@@ -335,12 +339,14 @@
         </com.google.android.material.textfield.TextInputLayout> <!-- alamat  kantor-->
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_layout_no_telp_kantor_ibu"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="No Telepon Kantor">
+            android:hint="No Telepon Kantor"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_no_telp_kntr_ibu"
@@ -441,8 +447,8 @@
                 android:id="@+id/edt_thn_org_diikuti_ibu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxLength="4"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="4" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -521,8 +527,8 @@
                 android:id="@+id/edt_thn_org_prnh_ibu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxLength="4"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="4" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.editpersonel.organisasi_dll.PickMenuOrganisasiDllActivity">
+
+    <include layout="@layout/layout_toolbar_white"/>
+    <include layout="@layout/view_separator"/>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_8dp"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:hint="Pilih Menu (Organisasi / Perjuangan / Penghargaan)">
+
+        <AutoCompleteTextView
+            android:id="@+id/sp_jenis_organisasi_dll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/view_no_data"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+
+        <include layout="@layout/layout_progress_dialog"
+            android:layout_centerInParent="true"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_edit_organisasi_dll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/space_8dp"
+            tools:listitem="@layout/layout_edit_1_text" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_add_edit_organisasi_dll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/space_12dp"
+            android:layout_marginBottom="@dimen/space_12dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_add"
+            android:tint="@color/white" />
+    </RelativeLayout>
+
+
+</LinearLayout>

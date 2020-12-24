@@ -28,7 +28,7 @@ class AddSinglePekerjaanFragment : Fragment() {
     var pekerjaan = ""
     private lateinit var sessionManager: SessionManager
     private val singlePekerjaanReq = AddSinglePekerjaanReq()
-    private val pekerjaanLuarReq = PekerjaanODinasReq("","","","","","")
+    private val pekerjaanLuarReq = PekerjaanODinasReq("", "", "", "", "", "")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,8 +75,8 @@ class AddSinglePekerjaanFragment : Fragment() {
 
             NetworkConfig().getService().addPekerjaanSingle(
                 "Bearer ${sessionManager.fetchAuthToken()}",
-                "4",
-//            sessionManager.fetchID().toString(),
+//                "4",
+                sessionManager.fetchID().toString(),
                 singlePekerjaanReq
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -96,7 +96,7 @@ class AddSinglePekerjaanFragment : Fragment() {
                 }
             })
 
-        }else{
+        } else {
             pekerjaanLuarReq.pekerjaan = edt_nama_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.tahun_awal = edt_thn_awal_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.tahun_akhir = edt_thn_akhir_pekerjaan_luar.text.toString()
@@ -105,10 +105,10 @@ class AddSinglePekerjaanFragment : Fragment() {
             pekerjaanLuarReq.keterangan = edt_ket_pekerjaan_luar.text.toString()
             NetworkConfig().getService().addPekerjaanLuar(
                 "Bearer ${sessionManager.fetchAuthToken()}",
-                "4",
+//                "4",
+                sessionManager.fetchID().toString(),
                 pekerjaanLuarReq
-                //            sessionManager.fetchID().toString(),
-            ).enqueue(object: Callback<BaseResp>{
+            ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
                 }

@@ -77,8 +77,8 @@ class AddSinglePendFragment : Fragment() {
 
         NetworkConfig().getService().addSinglePend(
             "Bearer ${sessionManager.fetchAuthToken()}",
-            "4",
-//            sessionManager.fetchID().toString(),
+//            "4",
+            sessionManager.fetchID().toString(),
             jenis,
             singlePendReq
         ).enqueue(object : Callback<BaseResp>{

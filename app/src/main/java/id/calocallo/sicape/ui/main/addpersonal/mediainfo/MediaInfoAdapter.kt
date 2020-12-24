@@ -24,74 +24,96 @@ class MediaInfoAdapter(
         val btnDelete = itemView.btn_delete_med_info
 
 
-        fun setListener() {
-            etNama.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].sumber = s.toString()
-                }
+        fun bind(medInfoReq: MedInfoReq) {
+            with(itemView) {
+                etNama.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        medInfoReq.sumber = s.toString()
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etTopik.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].topik = s.toString()
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etTopik.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        medInfoReq.topik = s.toString()
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etAlasan.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].alasan = s.toString()
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etAlasan.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        medInfoReq.alasan = s.toString()
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etKet.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].keterangan = s.toString()
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etKet.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        medInfoReq.keterangan = s.toString()
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                btnDelete.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
+                btnDelete.setOnClickListener {
+                    onClickMedInfo.onDelete(adapterPosition)
                 }
-            })
-
-            btnDelete.setOnClickListener {
-                onClickMedInfo.onDelete(adapterPosition)
             }
         }
 
@@ -104,9 +126,7 @@ class MediaInfoAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedInfoHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_med_info, parent, false)
-        val medInfoViews = MedInfoHolder(view)
-        medInfoViews.setListener()
-        return medInfoViews
+        return MedInfoHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -114,10 +134,6 @@ class MediaInfoAdapter(
     }
 
     override fun onBindViewHolder(holder: MedInfoHolder, position: Int) {
-        val data = list[position]
-        holder.etNama.setText(data.sumber)
-        holder.etKet.setText(data.keterangan)
-        holder.etAlasan.setText(data.alasan)
-        holder.etTopik.setText(data.topik)
+        holder.bind(list[position])
     }
 }

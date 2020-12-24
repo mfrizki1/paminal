@@ -38,10 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_12dp"
-        android:hint="Jenis Penghargaan">
+        android:hint="Nama Penghargaan">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_jenis_penghargaan"
+            android:id="@+id/edt_nama_penghargaan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textMultiLine" />

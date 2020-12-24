@@ -115,6 +115,9 @@ class AddAyahTiriActivity : BaseActivity() {
         spinnerPekerjaanAyah.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 txt_layout_pekerjaan_ayah_tiri.visibility = View.VISIBLE
+                txt_layout_nama_kantor_ayah_tiri.visibility = View.VISIBLE
+                txt_layout_alamat_kantor_ayah_tiri.visibility = View.VISIBLE
+                txt_layout_no_telp_kantor_ayah_tiri.visibility = View.VISIBLE
                 txt_layout_thn_berhenti_ayah_tiri.visibility = View.GONE
                 txt_layout_alsn_berhenti_ayah_tiri.visibility = View.GONE
                 stts_kerja = 1
@@ -122,6 +125,9 @@ class AddAyahTiriActivity : BaseActivity() {
                 txt_layout_thn_berhenti_ayah_tiri.visibility = View.VISIBLE
                 txt_layout_alsn_berhenti_ayah_tiri.visibility = View.VISIBLE
                 txt_layout_pekerjaan_ayah_tiri.visibility = View.GONE
+                txt_layout_nama_kantor_ayah_tiri.visibility = View.GONE
+                txt_layout_alamat_kantor_ayah_tiri.visibility = View.GONE
+                txt_layout_no_telp_kantor_ayah_tiri.visibility = View.GONE
                 stts_kerja = 0
             }
         }

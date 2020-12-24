@@ -10,7 +10,6 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ParentListPendUmum
 import id.calocallo.sicape.model.AddPendidikanModel
 import id.calocallo.sicape.ui.main.addpersonal.pendidikan.umum.PendidikanUmumFragment
-import id.calocallo.sicape.ui.main.addpersonal.pendidikan.umum.UmumAdapter
 import id.calocallo.sicape.utils.Constants
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import id.rizmaulana.sheenvalidator.lib.SheenValidator

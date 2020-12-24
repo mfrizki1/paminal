@@ -10,9 +10,9 @@ data class AddPersonelReq(
     var jabatan: String?,
     var pangkat: String?,
     var nrp: String?,
-    var kesatuan: String?,
-    var alamat_kantor: String?,
-    var no_telp_kantor: String?,
+    var id_satuan_kerja: Int?,
+//    var alamat_kantor: String?,
+//    var no_telp_kantor: String?,
     var alamat_rumah: String?,
     var no_telp_rumah: String?,
     var kewarganegaraan: String?,
@@ -34,10 +34,10 @@ data class AddPersonelReq(
 ) {
     constructor() : this(
         "", "", "", "", "", "",
-        "", "", "", "","", "",
+        "", "", "", 0,"", "",
         "", "", "", "",
-        "", "", "",0,
-        "","","",0,
-        "","","","","",""
+        "", 0, "","",
+        "",0,"","",
+        "","","",""
     )
 }

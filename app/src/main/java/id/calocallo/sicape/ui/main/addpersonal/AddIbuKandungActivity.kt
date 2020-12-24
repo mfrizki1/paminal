@@ -114,11 +114,17 @@ class AddIbuKandungActivity : BaseActivity() {
         spinnerPekerjaanIbu.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 txt_layout_pekerjaan_ibu.visibility = View.VISIBLE
+                txt_layout_nama_kantor_ibu.visibility = View.VISIBLE
+                txt_layout_alamat_kantor_ibu.visibility = View.VISIBLE
+                txt_layout_no_telp_kantor_ibu.visibility = View.VISIBLE
                 txt_layout_alsn_berhenti_ibu.visibility = View.GONE
                 txt_layout_thn_berhenti_ibu.visibility = View.GONE
                 stts_kerja = 1
             } else {
                 txt_layout_pekerjaan_ibu.visibility = View.GONE
+                txt_layout_nama_kantor_ibu.visibility = View.GONE
+                txt_layout_alamat_kantor_ibu.visibility = View.GONE
+                txt_layout_no_telp_kantor_ibu.visibility = View.GONE
                 txt_layout_alsn_berhenti_ibu.visibility = View.VISIBLE
                 txt_layout_thn_berhenti_ibu.visibility = View.VISIBLE
                 stts_kerja = 0

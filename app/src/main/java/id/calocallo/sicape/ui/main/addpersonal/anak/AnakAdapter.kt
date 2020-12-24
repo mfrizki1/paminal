@@ -29,129 +29,162 @@ class AnakAdapter(
         val spJenis = itemView.sp_status_ikatan
 
 
-        fun setListener() {
-            btnDelete.visibility = if (adapterPosition == 0) View.GONE
-            else View.VISIBLE
+        fun bind(anakReq: AnakReq) {
+            with(itemView) {
+                btnDelete.visibility = if (adapterPosition == 0) View.GONE
+                else View.VISIBLE
 
-            val itemIkatan = listOf("Kandung", "Tiri","Angkat")
-            val adapterIkatan = ArrayAdapter(context, R.layout.item_spinner, itemIkatan)
-            spJenis.setAdapter(adapterIkatan)
-            spJenis.setOnItemClickListener { parent, view, position, id ->
-                if(position == 0){
-                    list[adapterPosition].status_ikatan = "kandung"
-                }else if(position == 1){
-                    list[adapterPosition].status_ikatan = "tiri"
-                }else{
-                    list[adapterPosition].status_ikatan = "angkat"
-                }
-            }
-
-            etNama.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].nama = s.toString()
+                val itemIkatan = listOf("Kandung", "Tiri", "Angkat")
+                val adapterIkatan = ArrayAdapter(context, R.layout.item_spinner, itemIkatan)
+                spJenis.setAdapter(adapterIkatan)
+                spJenis.setOnItemClickListener { parent, view, position, id ->
+                    if (position == 0) {
+                        anakReq.status_ikatan = "kandung"
+                    } else if (position == 1) {
+                        anakReq.status_ikatan = "tiri"
+                    } else {
+                        anakReq.status_ikatan = "angkat"
+                    }
                 }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                etNama.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        anakReq.nama = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etTmptLhr.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].tempat_lahir = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etTmptLhr.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        anakReq.tempat_lahir = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etTglLhr.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].tanggal_lahir = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etTglLhr.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        anakReq.tanggal_lahir = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etPekerjaan.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].pekerjaan_atau_sekolah = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etPekerjaan.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        anakReq.pekerjaan_atau_sekolah = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etOrganisasi.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].organisasi_yang_diikuti = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etOrganisasi.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        anakReq.organisasi_yang_diikuti = s.toString()
+                    }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-            etKet.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    list[adapterPosition].keterangan = s.toString()
-                }
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+                etKet.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        anakReq.keterangan = s.toString()
+                    }
+
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
+
+                val item = listOf("Laki-Laki", "Perempuan")
+                val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
+                spJK.setAdapter(adapter)
+                spJK.setOnItemClickListener { parent, view, position, id ->
+                    anakReq.jenis_kelamin =
+                        parent.getItemAtPosition(position).toString()
                 }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                btnDelete.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
+                btnDelete.setOnClickListener {
+                    onClickAnak.onDelete(adapterPosition)
                 }
-            })
-
-            val item = listOf("Laki-Laki", "Perempuan")
-            val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
-            spJK.setAdapter(adapter)
-            spJK.setOnItemClickListener { parent, view, position, id ->
-                list[adapterPosition].jenis_kelamin = parent.getItemAtPosition(position).toString()
-            }
-
-            btnDelete.setOnClickListener {
-                onClickAnak.onDelete(adapterPosition)
             }
         }
 
@@ -163,9 +196,7 @@ class AnakAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnakHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_anak, parent, false)
-        val anakViews = AnakHolder(view)
-        anakViews.setListener()
-        return anakViews
+        return AnakHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -173,15 +204,7 @@ class AnakAdapter(
     }
 
     override fun onBindViewHolder(holder: AnakHolder, position: Int) {
-        val data = list[position]
-        holder.etNama.setText(data.nama)
-        holder.etKet.setText(data.keterangan)
-        holder.spJK.setText(data.jenis_kelamin)
-        holder.etOrganisasi.setText(data.organisasi_yang_diikuti)
-        holder.etTglLhr.setText(data.tanggal_lahir)
-        holder.etTmptLhr.setText(data.tempat_lahir)
-        holder.etPekerjaan.setText(data.pekerjaan_atau_sekolah)
-        holder.spJenis.setText(data.status_ikatan)
+        holder.bind(list[position])
     }
 
 
