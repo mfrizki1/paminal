@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.SahabatReq
+import id.calocallo.sicape.network.request.SahabatReq
 import id.calocallo.sicape.model.ParentListKawanDekat
 import id.calocallo.sicape.ui.main.addpersonal.mediainfo.AddMedianfoActivity
 import id.calocallo.sicape.utils.SessionManager
@@ -52,10 +52,21 @@ class AddKawanDekatActivity : BaseActivity() {
                     sahabat[i].pekerjaan,
                     sahabat[i].alasan,
                     sahabat[i].keterangan
-                ))
+                )
+                )
             }
         }else{
-            list.add(SahabatReq("", "", "", "", "", "",""))
+            list.add(
+                SahabatReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
         }
         rv_kawan_dekat.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -68,7 +79,17 @@ class AddKawanDekatActivity : BaseActivity() {
         rv_kawan_dekat.adapter = adapter
 
         btn_add_kawan.setOnClickListener {
-            list.add(SahabatReq("", "", "", "", "", "",""))
+            list.add(
+                SahabatReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

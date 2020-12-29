@@ -7,16 +7,16 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MertuaLakiReq
+import id.calocallo.sicape.network.request.MertuaLakiReq
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_ayah_kandung.*
 import kotlinx.android.synthetic.main.activity_add_mertua_laki.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddMertuaLakiActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private var mertuaLakiReq = MertuaLakiReq()
+    private var mertuaLakiReq =
+        MertuaLakiReq()
     var stts_hidup = 0
     var stts_kerja = 0
     var agama_skrg = ""
@@ -117,7 +117,6 @@ class AddMertuaLakiActivity : BaseActivity() {
         spinnerPekerjaanMertuaLaki.setAdapter(adapter)
         spinnerPekerjaanMertuaLaki.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
-                txt_layout_pekerjaan_mertua_laki.visibility = View.VISIBLE
                 txt_layout_nama_kantor_mertua_laki.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_mertua_laki.visibility = View.VISIBLE
                 txt_layout_no_telp_kantor_mertua_laki.visibility = View.VISIBLE
@@ -126,7 +125,6 @@ class AddMertuaLakiActivity : BaseActivity() {
                 stts_kerja = 1
 
             } else {
-                txt_layout_pekerjaan_mertua_laki.visibility = View.GONE
                 txt_layout_nama_kantor_mertua_laki.visibility = View.GONE
                 txt_layout_alamat_kantor_mertua_laki.visibility = View.GONE
                 txt_layout_no_telp_kantor_mertua_laki.visibility = View.GONE

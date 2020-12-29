@@ -92,6 +92,7 @@ class PersonelActivity : BaseActivity() {
 
     private fun initAPI() {
         rl_pb.visible()
+        rv_personel.gone()
         NetworkConfig().getService()
             .showPersonel(tokenBearer = "Bearer ${sessionManager.fetchAuthToken()}")
             .enqueue(object : Callback<ArrayList<PersonelModel>> {
@@ -109,8 +110,10 @@ class PersonelActivity : BaseActivity() {
                 ) {
                     if (response.isSuccessful) {
                         rl_pb.gone()
+                        rv_personel.gone()
                         val personelResp = response.body()
                         if (personelResp != null) {
+                            rv_personel.visible()
                             adapter.filterable()
                                 .adapterCallback(adapterCallback)
                                 .setLayout(R.layout.item_personel)
@@ -123,7 +126,8 @@ class PersonelActivity : BaseActivity() {
 
                     } else {
                         Toast.makeText(this@PersonelActivity, "Error", Toast.LENGTH_SHORT).show()
-
+                        rl_no_data.visible()
+                        rv_personel.gone()
                     }
 
                 }
@@ -148,5 +152,10 @@ class PersonelActivity : BaseActivity() {
 
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initAPI()
     }
 }

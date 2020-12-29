@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.OrangsReq
+import id.calocallo.sicape.network.request.OrangsReq
 import kotlinx.android.synthetic.main.layout_orang_sama.view.*
 
 class OrangsAdapter(

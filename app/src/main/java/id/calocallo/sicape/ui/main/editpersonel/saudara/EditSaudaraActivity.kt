@@ -1,11 +1,16 @@
 package id.calocallo.sicape.ui.main.editpersonel.saudara
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.SaudaraReq
-import id.calocallo.sicape.model.SaudaraResp
+import id.calocallo.sicape.network.request.SaudaraReq
+import id.calocallo.sicape.network.response.SaudaraResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
@@ -51,7 +56,8 @@ class EditSaudaraActivity : BaseActivity() {
         saudaraReq.status_ikatan = saudara?.status_ikatan
         saudaraReq.jenis_kelamin = saudara?.jenis_kelamin
 
-
+        btn_save_saudara_edit.attachTextChangeAnimator()
+        bindProgressButton(btn_save_saudara_edit)
         btn_save_saudara_edit.setOnClickListener {
             doUpdateSaudara(saudara)
         }
@@ -104,21 +110,40 @@ class EditSaudaraActivity : BaseActivity() {
         saudaraReq.organisasi_yang_diikuti = edt_organisasi_saudara_edit.text.toString()
         saudaraReq.keterangan = edt_ket_saudara_edit.text.toString()
 
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_saudara_edit.showProgress {
+            progressColor = Color.WHITE
+        }
+
         NetworkConfig().getService().updateSaudaraSingle(
             "Bearer ${sessionManager.fetchAuthToken()}",
             saudara?.id.toString(),
             saudaraReq
-        ).enqueue(object: Callback<BaseResp> {
+        ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 Toast.makeText(this@EditSaudaraActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                btn_save_saudara_edit.hideDrawable(R.string.save)
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    Toast.makeText(this@EditSaudaraActivity, "Berhasil Update Data Saudara", Toast.LENGTH_SHORT).show()
-                    finish()
-                }else{
-                    Toast.makeText(this@EditSaudaraActivity, "Error", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    btn_save_saudara_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_updated
+                        textMarginRes = R.dimen.space_10dp
+                    }
+//                    Toast.makeText(this@EditSaudaraActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
+                } else {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_saudara_edit.hideDrawable(R.string.save)
+                    },3000)
+                    btn_save_saudara_edit.hideDrawable(R.string.not_update)
                 }
             }
         })
@@ -128,16 +153,20 @@ class EditSaudaraActivity : BaseActivity() {
         NetworkConfig().getService().deleteSaudara(
             "Bearer ${sessionManager.fetchAuthToken()}",
             saudara?.id.toString()
-        ).enqueue(object: Callback<BaseResp> {
+        ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 Toast.makeText(this@EditSaudaraActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    Toast.makeText(this@EditSaudaraActivity, "Berhasil Hapus Data Saudara", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    Toast.makeText(
+                        this@EditSaudaraActivity,
+                        "Berhasil Hapus Data Saudara",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
-                }else{
+                } else {
                     Toast.makeText(this@EditSaudaraActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
             }

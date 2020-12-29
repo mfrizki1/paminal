@@ -1,22 +1,19 @@
 package id.calocallo.sicape.ui.main.editpersonel.media_info
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MedInfoResp
+import id.calocallo.sicape.network.response.MedInfoResp
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.ui.main.editpersonel.alamat.EditAlamatActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_med_info.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
-import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import kotlinx.android.synthetic.main.view_no_data.*
@@ -45,6 +42,13 @@ class PickMedInfoActivity : BaseActivity() {
         }
 
         ApiMedInfo()
+
+        btn_add_single_med_info.setOnClickListener {
+            val intent = Intent(this, AddSingleMedInfoActivity::class.java)
+            intent.putExtra("PERSONEL", detailPersonel)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+        }
         medInfoAdapter = ReusableAdapter(this)
         medInfoCallbak = object :AdapterCallback<MedInfoResp>{
             override fun initComponent(itemView: View, data: MedInfoResp, itemIndex: Int) {

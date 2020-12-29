@@ -6,13 +6,12 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AnakReq
+import id.calocallo.sicape.network.request.AnakReq
 import id.calocallo.sicape.model.ParentListAnak
 import id.calocallo.sicape.ui.main.addpersonal.saudara.AddSaudaraActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_anak.*
-import kotlinx.android.synthetic.main.layout_anak.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddAnakActivity : BaseActivity() {
@@ -67,7 +66,18 @@ class AddAnakActivity : BaseActivity() {
                 )
             }
         } else {
-            list.add(AnakReq("", "", "", "", "", "", "", ""))
+            list.add(
+                AnakReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
         }
         rvAnak.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = AnakAdapter(this, list, object : AnakAdapter.OnClickAnak {

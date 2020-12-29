@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,13 +16,19 @@
 
         <include layout="@layout/view_separator" />
 
+        <TextView
+            android:id="@+id/txt_jenis_lp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TitleText"
+            android:text="Laporan Polisi"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:orientation="vertical">
-
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -30,133 +37,333 @@
                 android:hint="NO LP">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_no_lp"
+                    android:id="@+id/edt_no_lp_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_personel_dilapor_lp_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Nama Personel">
+                android:text="Pilih Personel Dilapor"
+                android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_nama_lp"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_personel_dilapor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="@dimen/space_8dp"
+                    android:orientation="vertical">
 
-            <LinearLayout
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Personel Dilapor"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/layout_separator" />
+
+                    <TextView
+                        android:id="@+id/txt_nama_dilapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8dp"
+                        android:text="Nama Personel Dilapor"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_pangkat_dilapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Pangkat Personel Dilapor"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_nrp_dilapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="NRP Personel Dilapor"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_jabatan_dilapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Jabatan Personel Dilapor"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_kesatuan_dilapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Kesatuan Personel Dilapor"
+                        android:textSize="@dimen/text_14" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <include layout="@layout/layout_separator" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_pelanggaran_lp_add"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="@dimen/space_8dp"
+                android:layout_height="wrap_content"
+                android:text="Pilih Pelanggaran"
+                android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_8dp"
-                    android:layout_marginRight="@dimen/space_8dp"
-                    android:layout_weight="1"
-                    android:hint="Pangkat Personel">
+            <TextView
+                android:id="@+id/txt_pelanggaran_lp_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_18"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:textStyle="bold"
+                android:text="Pelanggaran"/>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_pangkat_lp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
+            <include layout="@layout/layout_separator" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_8dp"
-                    android:layout_weight="1"
-                    android:hint="NRP Personel">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_nrp_lp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_personel_terlapor_lp_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Jabatan">
+                android:text="Pilih Personel Terlapor"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_personel_terlapor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/space_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Personel Terlapor"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/layout_separator" />
+
+                    <TextView
+                        android:id="@+id/txt_nama_terlapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8dp"
+                        android:text="Nama Personel Terlapor"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_pangkat_terlapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Pangkat Personel Terlapor"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_nrp_terlapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="NRP Personel Terlapor"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_jabatan_terlapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Jabatan Personel Terlapor"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_kesatuan_terlapor_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Kesatuan Personel Terlapor"
+                        android:textSize="@dimen/text_14" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <include layout="@layout/layout_separator" />
+
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                android:hint="Nama Personel">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edt_nama_lp"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:inputType="text" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content">-->
+
+            <!--                <com.google.android.material.textfield.TextInputLayout-->
+            <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                    android:layout_marginRight="@dimen/space_8dp"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:hint="Pangkat Personel">-->
+
+            <!--                    <com.google.android.material.textfield.TextInputEditText-->
+            <!--                        android:id="@+id/edt_pangkat_lp"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:inputType="text" />-->
+            <!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--                <com.google.android.material.textfield.TextInputLayout-->
+            <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:hint="NRP Personel">-->
+
+            <!--                    <com.google.android.material.textfield.TextInputEditText-->
+            <!--                        android:id="@+id/edt_nrp_lp"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:inputType="text" />-->
+            <!--                </com.google.android.material.textfield.TextInputLayout>-->
+            <!--            </LinearLayout>-->
+
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                android:hint="Jabatan">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edt_jabatan_lp"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:inputType="textMultiLine" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                android:hint="Kesatuan">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edt_kesatuan_lp"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:inputType="text" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                android:hint="Jenis Pelanggaran">-->
+
+            <!--                <AutoCompleteTextView-->
+            <!--                    android:id="@+id/sp_jenis_lp"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:inputType="none" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="75dp"-->
+            <!--                android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                android:hint="Pasal Yang Dilanggar">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edt_pasal_lp"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:inputType="textMultiLine" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <!--            <com.google.android.material.textfield.TextInputLayout-->
+            <!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="75dp"-->
+            <!--                android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                android:hint="Hukuman / Putusan">-->
+
+            <!--                <com.google.android.material.textfield.TextInputEditText-->
+            <!--                    android:id="@+id/edt_hukuman_lp"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:inputType="text" />-->
+            <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_marginTop="@dimen/space_8dp"-->
+<!--                android:hint="Pasal">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/edt_pasal_lp_add"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:inputType="textMultiLine" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Alat Bukti">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_jabatan_lp"
+                    android:id="@+id/edt_alat_bukti_lp_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textMultiLine" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Kesatuan">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_kesatuan_lp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Jenis Pelanggaran">
-
-                <AutoCompleteTextView
-                    android:id="@+id/sp_jenis_lp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Pasal Yang Dilanggar">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_pasal_lp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textMultiLine" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Hukuman / Putusan">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_hukuman_lp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -167,18 +374,19 @@
                 android:hint="Keterangan">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_ket_lp"
+                    android:id="@+id/edt_ket_lp_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_save_lp"
+                android:id="@+id/btn_next_lp_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_marginVertical="@dimen/space_8dp"
-                android:text="@string/selesai" />
+                android:text="@string/next" />
 
         </LinearLayout>
     </LinearLayout>

@@ -1,13 +1,16 @@
 package id.calocallo.sicape.ui.main.editpersonel.anak
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AnakReq
-import id.calocallo.sicape.model.AnakResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.network.request.AnakReq
+import id.calocallo.sicape.network.response.AnakResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
@@ -15,7 +18,6 @@ import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_anak.*
-import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,34 +50,44 @@ class EditAnakActivity : BaseActivity() {
             "angkat" -> tempSttsIktn = "Angkat"
             "tiri" -> tempSttsIktn = "Tiri"
         }
-        when(anak?.jenis_kelamin){
-            "laki_laki"-> tempJK= "Laki-Laki"
-            "perempuan"-> tempJK= "Perempuan"
+        when (anak?.jenis_kelamin) {
+            "laki_laki" -> tempJK = "Laki-Laki"
+            "perempuan" -> tempJK = "Perempuan"
         }
 
         anakReq.status_ikatan = anak?.status_ikatan
         anakReq.jenis_kelamin = anak?.jenis_kelamin
 
         //spinner
-        val listStts = listOf("Kandung", "Angkat","Tiri")
+        val listStts = listOf("Kandung", "Angkat", "Tiri")
         sp_status_ikatan_edit.setText(tempSttsIktn)
         val adapterStts = ArrayAdapter(this, R.layout.item_spinner, listStts)
         sp_status_ikatan_edit.setAdapter(adapterStts)
         sp_status_ikatan_edit.setOnItemClickListener { parent, view, position, id ->
-            when(position){
-                0->{anakReq.status_ikatan = "kandung"}
-                1->{anakReq.status_ikatan = "angkat"}
-                2->{anakReq.status_ikatan = "tiri"}
+            when (position) {
+                0 -> {
+                    anakReq.status_ikatan = "kandung"
+                }
+                1 -> {
+                    anakReq.status_ikatan = "angkat"
+                }
+                2 -> {
+                    anakReq.status_ikatan = "tiri"
+                }
             }
         }
-        val listJK = listOf("Laki-Laki","Perempuan")
+        val listJK = listOf("Laki-Laki", "Perempuan")
         spinner_jk_anak_edit.setText(tempJK)
         val adapterJK = ArrayAdapter(this, R.layout.item_spinner, listJK)
         spinner_jk_anak_edit.setAdapter(adapterJK)
         spinner_jk_anak_edit.setOnItemClickListener { parent, view, position, id ->
-            when(position){
-                0->{anakReq.jenis_kelamin = "laki_laki"}
-                1->{anakReq.jenis_kelamin = "perempuan"}
+            when (position) {
+                0 -> {
+                    anakReq.jenis_kelamin = "laki_laki"
+                }
+                1 -> {
+                    anakReq.jenis_kelamin = "perempuan"
+                }
             }
         }
 
@@ -86,20 +98,30 @@ class EditAnakActivity : BaseActivity() {
         edt_organisasi_anak_edit.setText(anak?.organisasi_yang_diikuti)
         edt_ket_anak_edit.setText(anak?.keterangan)
 
+        btn_save_single_anak_edit.attachTextChangeAnimator()
+        bindProgressButton(btn_save_single_anak_edit)
         btn_save_single_anak_edit.setOnClickListener {
             doUpdateAnak(anak)
         }
         btn_delete_single_anak_edit.setOnClickListener {
-            alert("Yakin Hapus Data"){
-                positiveButton("Iya"){
+            alert("Yakin Hapus Data") {
+                positiveButton("Iya") {
                     doDeleteAnak(anak)
                 }
-                negativeButton("Tidak"){}
+                negativeButton("Tidak") {}
             }.show()
         }
     }
 
     private fun doUpdateAnak(anak: AnakResp?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_single_anak_edit.showProgress {
+            progressColor = Color.WHITE
+        }
         anakReq.nama = edt_nama_lengkap_anak_edit.text.toString()
         anakReq.tempat_lahir = edt_tmpt_ttl_anak_edit.text.toString()
         anakReq.tanggal_lahir = edt_tgl_ttl_anak_edit.text.toString()
@@ -113,34 +135,49 @@ class EditAnakActivity : BaseActivity() {
             anakReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                btn_save_single_anak_edit.hideDrawable(R.string.save)
                 Toast.makeText(this@EditAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    Toast.makeText(this@EditAnakActivity, "Berhasil Update Data Anak", Toast.LENGTH_SHORT).show()
-                    finish()
-                }else{
-                    Toast.makeText(this@EditAnakActivity, "Error", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    btn_save_single_anak_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_updated
+                        textMarginRes = R.dimen.space_10dp
+                    }
+//                    Toast.makeText(this@EditAnakActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
+                } else {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_single_anak_edit.hideDrawable(R.string.save)
+                    },3000)
+                    btn_save_single_anak_edit.hideDrawable(R.string.not_update)
+
                 }
             }
         })
     }
 
-    private fun doDeleteAnak(anak:AnakResp?){
+    private fun doDeleteAnak(anak: AnakResp?) {
         NetworkConfig().getService().deleteAnak(
             "Bearer ${sessionManager.fetchAuthToken()}",
             anak?.id.toString()
-        ).enqueue(object :Callback<BaseResp>{
+        ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 Toast.makeText(this@EditAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    Toast.makeText(this@EditAnakActivity, "Berhasil Hapus Data Anak", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    Toast.makeText(
+                        this@EditAnakActivity,
+                        "Berhasil Hapus Data Anak",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
-                }else{
+                } else {
                     Toast.makeText(this@EditAnakActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
             }

@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ParentListTokoh
-import id.calocallo.sicape.model.TokohReq
+import id.calocallo.sicape.network.request.TokohReq
 import id.calocallo.sicape.ui.main.addpersonal.kawan.AddKawanDekatActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -48,7 +48,8 @@ class AddTokohDikagumiActivity : BaseActivity() {
                     tokoh[i].asal_negara,
                     tokoh[i].alasan,
                     tokoh[i].keterangan
-                ))
+                )
+                )
             }
         }else {
             list.add(TokohReq())

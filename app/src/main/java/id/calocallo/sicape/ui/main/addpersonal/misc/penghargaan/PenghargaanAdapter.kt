@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PenghargaanReq
+import id.calocallo.sicape.network.request.PenghargaanReq
 import kotlinx.android.synthetic.main.layout_penghargaan.view.*
 
 class PenghargaanAdapter(

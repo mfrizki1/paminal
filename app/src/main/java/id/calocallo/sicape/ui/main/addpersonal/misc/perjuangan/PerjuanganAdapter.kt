@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PerjuanganCitaReq
+import id.calocallo.sicape.network.request.PerjuanganCitaReq
 import kotlinx.android.synthetic.main.layout_perjuangan_cita.view.*
 
 class PerjuanganAdapter(

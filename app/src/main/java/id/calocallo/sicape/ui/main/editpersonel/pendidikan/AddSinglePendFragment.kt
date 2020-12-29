@@ -1,6 +1,9 @@
 package id.calocallo.sicape.ui.main.editpersonel.pendidikan
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,15 +11,16 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.github.razir.progressbutton.attachTextChangeAnimator
-import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SinglePendReq
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
+import kotlinx.android.synthetic.main.activity_edit_personel.*
 import kotlinx.android.synthetic.main.fragment_add_single_pend.*
 import kotlinx.android.synthetic.main.fragment_add_single_pend.view.*
+import kotlinx.android.synthetic.main.fragment_edit_pend.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -56,7 +60,6 @@ class AddSinglePendFragment : Fragment() {
         bindProgressButton(view.btn_save_add_pend_single)
         view.btn_save_add_pend_single.setOnClickListener {
             doAdd(jenis_pendidikan)
-
         }
 
     }
@@ -75,6 +78,9 @@ class AddSinglePendFragment : Fragment() {
         singlePendReq.keterangan = edt_ket_add_pend_single.text.toString()
         singlePendReq.pendidikan = edt_nama_add_pend_single.text.toString()
 
+        view?.btn_save_add_pend_single?.showProgress {
+                progressColor = Color.WHITE
+            }
         NetworkConfig().getService().addSinglePend(
             "Bearer ${sessionManager.fetchAuthToken()}",
 //            "4",
@@ -84,17 +90,31 @@ class AddSinglePendFragment : Fragment() {
         ).enqueue(object : Callback<BaseResp>{
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                btn_save_add_pend_single.hideDrawable(R.string.save)
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if(response.isSuccessful){
                     if(response.body()?.message =="Data riwayat pendidikan saved succesfully"){
-                        activity?.finish()
+                        view?.btn_save_add_pend_single?.showDrawable(animatedDrawable) {
+                            buttonTextRes = R.string.data_saved
+                            textMarginRes = R.dimen.space_10dp
+                        }
+                        Handler(Looper.getMainLooper()).postDelayed({
+                        fragmentManager?.popBackStack()
+                        },500)
+//                        activity?.finish()
                     }else{
-                        Toast.makeText(activity, "Error Tambah Data", Toast.LENGTH_SHORT).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_add_pend_single.hideDrawable(R.string.save)
+                        },3000)
+                        btn_save_add_pend_single.hideDrawable(R.string.not_save)
                     }
                 }else{
-                    Toast.makeText(activity, "Error Tambah Data", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_add_pend_single.hideDrawable(R.string.save)
+                    },3000)
+                    btn_save_add_pend_single.hideDrawable(R.string.not_save)
                 }
             }
         })

@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ParentListSaudara
-import id.calocallo.sicape.model.SaudaraReq
+import id.calocallo.sicape.network.request.SaudaraReq
 import id.calocallo.sicape.ui.main.addpersonal.orangs.AddOrgSelainOrtuActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -65,7 +65,18 @@ class AddSaudaraActivity : BaseActivity() {
                 )
             }
         } else {
-            list.add(SaudaraReq("", "", "", "", "", "", "", ""))
+            list.add(
+                SaudaraReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
         }
         rv_saudara.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = SaudaraAdapter(this, list,
@@ -77,7 +88,18 @@ class AddSaudaraActivity : BaseActivity() {
             })
         rv_saudara.adapter = adapter
         btn_add_saudara.setOnClickListener {
-            list.add(SaudaraReq("", "", "", "", "", "", "", ""))
+            list.add(
+                SaudaraReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

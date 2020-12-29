@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.razir.progressbutton.bindProgressButton
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PendidikanModel
 import id.calocallo.sicape.network.NetworkConfig
@@ -31,7 +32,7 @@ class PickPendFragment : Fragment() {
     private lateinit var list: ArrayList<PendidikanModel>
     private lateinit var adapter: EditPendAdapter
     private var jenis: String? = null
-
+    private var nameJenis : String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +53,12 @@ class PickPendFragment : Fragment() {
         sp_jenis_pendidikan.setText(R.string.umum)
         initSP()
         initAPI(jenis.toString())
+        when(jenis){
+            "umum"->nameJenis = "Umum"
+            "kedinasan"-> nameJenis = "Kedinasan"
+            "lain_lain"-> nameJenis = "Lain-lain"
+            else->nameJenis = ""
+        }
 
         if (hakAkses == "operator") {
             btn_add_edit_pend.gone()
@@ -165,7 +172,9 @@ class PickPendFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        initAPI("umum")
+        sp_jenis_pendidikan.setText(nameJenis)
+        initAPI(jenis.toString())
         initSP()
+
     }
 }

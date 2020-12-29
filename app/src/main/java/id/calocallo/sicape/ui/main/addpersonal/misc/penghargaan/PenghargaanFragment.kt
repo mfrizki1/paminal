@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ParentListPenghargaan
-import id.calocallo.sicape.model.PenghargaanReq
+import id.calocallo.sicape.network.request.PenghargaanReq
 import id.calocallo.sicape.ui.main.addpersonal.pasangan.AddPasanganActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -61,7 +61,15 @@ class PenghargaanFragment : Fragment() {
     private fun initRecycler(rv: RecyclerView) {
         val penghargaanCreated = sessionManager.getPenghargaan()
         if (penghargaanCreated.size == 0) {
-            list.add(PenghargaanReq("", "", "", "", ""))
+            list.add(
+                PenghargaanReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
         }
         Log.e("size Penghargaabn", penghargaanCreated.size.toString())
         rv.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -77,7 +85,15 @@ class PenghargaanFragment : Fragment() {
         rv.adapter = adapter
 
         btn_add_penghargaan.setOnClickListener {
-            list.add(PenghargaanReq("", "", "", "", ""))
+            list.add(
+                PenghargaanReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

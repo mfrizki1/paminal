@@ -2,6 +2,7 @@ package id.calocallo.sicape.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import id.calocallo.sicape.network.response.SatKerResp
 
 data class PersonelModel(
     val id: Int?,
@@ -65,7 +66,8 @@ data class PersonelModel(
         source.readString(),
         source.readString(),
         source.readString(),
-        source.readParcelable<SatKerResp>(SatKerResp::class.java.classLoader)
+        source.readParcelable<SatKerResp>(
+            SatKerResp::class.java.classLoader)
     )
 
     override fun describeContents() = 0

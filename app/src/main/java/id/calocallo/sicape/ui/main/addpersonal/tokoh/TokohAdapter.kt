@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.TokohReq
+import id.calocallo.sicape.network.request.TokohReq
 import kotlinx.android.synthetic.main.layout_tokoh_dikagumi.view.*
 
 class TokohAdapter(

@@ -2,18 +2,15 @@ package id.calocallo.sicape.ui.main.addpersonal.relasi
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
-import id.calocallo.sicape.model.OrganisasiReq
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.HukumanReq
 import id.calocallo.sicape.network.request.RelasiReq
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.ui.main.addpersonal.AddCatPersActivity
 import id.calocallo.sicape.ui.main.personel.PersonelActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.action
@@ -21,8 +18,6 @@ import id.calocallo.sicape.utils.ext.showSnackbar
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_cat_pers.*
 import kotlinx.android.synthetic.main.activity_add_relasi.*
-import kotlinx.android.synthetic.main.layout_hukuman.*
-import kotlinx.android.synthetic.main.layout_relasi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -135,8 +130,7 @@ class AddRelasiActivity : BaseActivity() {
             for (i in 0 until getRelasi.size) {
                 listRelasi.add(
                     i, RelasiReq(
-                        getRelasi[i].nama,
-                        getRelasi[i].lokasi
+                        getRelasi[i].nama
                     )
                 )
             }

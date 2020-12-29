@@ -17,6 +17,7 @@ class RelasiAdapter(
     val list: ArrayList<RelasiReq>,
     val onClickrelasi: OnClickRelasi
 ) : RecyclerView.Adapter<RelasiAdapter.RelasiHolder>() {
+    private var jenisRelasi :String? = null
     interface OnClickRelasi {
         fun onDelete(position: Int)
         fun onAdd()
@@ -51,9 +52,9 @@ class RelasiAdapter(
                 sp_jenis_relasi.setAdapter(adapterJenis)
                 sp_jenis_relasi.setOnItemClickListener { parent, view, position, id ->
                     if (position == 0) {
-                        relasiReq.lokasi = "dalam_negeri"
+                        jenisRelasi =  "dalam_negeri"
                     } else {
-                        relasiReq.lokasi = "luar_negeri"
+                        jenisRelasi = "luar_negeri"
                     }
                 }
                 btn_delete_relasi.visibility = if (adapterPosition == 0) View.GONE

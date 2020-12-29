@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.SaudaraReq
+import id.calocallo.sicape.network.request.SaudaraReq
 import kotlinx.android.synthetic.main.layout_saudara.view.*
 
 class SaudaraAdapter(

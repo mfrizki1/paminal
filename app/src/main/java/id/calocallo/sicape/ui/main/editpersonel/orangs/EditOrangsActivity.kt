@@ -1,11 +1,16 @@
 package id.calocallo.sicape.ui.main.editpersonel.orangs
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.OrangsReq
-import id.calocallo.sicape.model.OrangsResp
+import id.calocallo.sicape.network.request.OrangsReq
+import id.calocallo.sicape.network.response.OrangsResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
@@ -57,7 +62,8 @@ class EditOrangsActivity : BaseActivity() {
                 spinner_orangs_edit.setText("Orang Disegani Karena Adat")
             }
         }
-
+        btn_save_orangs_edit.attachTextChangeAnimator()
+        bindProgressButton(btn_save_orangs_edit)
         btn_save_orangs_edit.setOnClickListener {
             doUpdateOrangs(orangs, menu)
         }
@@ -95,7 +101,7 @@ class EditOrangsActivity : BaseActivity() {
 
     }
 
-    private fun getOrangs(data: OrangsResp?){
+    private fun getOrangs(data: OrangsResp?) {
         edt_nama_lengkap_orangs_edit.setText(data?.nama)
         edt_umur_orangs_edit.setText(data?.umur)
         edt_alamat_orangs_edit.setText(data?.alamat)
@@ -104,6 +110,15 @@ class EditOrangsActivity : BaseActivity() {
     }
 
     private fun doUpdateOrangs(data: OrangsResp?, menu: String?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_orangs_edit.showProgress {
+            progressColor = Color.WHITE
+        }
+
         orangsReq.nama = edt_nama_lengkap_orangs_edit.text.toString()
         orangsReq.umur = edt_umur_orangs_edit.text.toString()
         orangsReq.alamat = edt_alamat_orangs_edit.text.toString()
@@ -117,14 +132,24 @@ class EditOrangsActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 Toast.makeText(this@EditOrangsActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                btn_save_orangs_edit.hideDrawable(R.string.save)
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@EditOrangsActivity, "Berhasil Update Data", Toast.LENGTH_SHORT).show()
-                    finish()
+                    btn_save_orangs_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_updated
+                        textMarginRes = R.dimen.space_10dp
+                    }
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
+//                    Toast.makeText(this@EditOrangsActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this@EditOrangsActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_orangs_edit.hideDrawable(R.string.save)
+                    },3000)
+                    btn_save_orangs_edit.hideDrawable(R.string.not_update)
                 }
             }
         })
@@ -141,8 +166,12 @@ class EditOrangsActivity : BaseActivity() {
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    Toast.makeText(this@EditOrangsActivity, "Berhasil Hapus Data", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    Toast.makeText(
+                        this@EditOrangsActivity,
+                        "Berhasil Hapus Data",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
                 } else {
                     Toast.makeText(this@EditOrangsActivity, "Error", Toast.LENGTH_SHORT).show()

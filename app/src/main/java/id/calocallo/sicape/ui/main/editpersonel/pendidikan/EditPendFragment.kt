@@ -1,16 +1,16 @@
 package id.calocallo.sicape.ui.main.editpersonel.pendidikan
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.github.razir.progressbutton.attachTextChangeAnimator
-import com.github.razir.progressbutton.bindProgressButton
-import com.github.razir.progressbutton.showDrawable
-import com.github.razir.progressbutton.showProgress
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PendidikanModel
 import id.calocallo.sicape.network.NetworkConfig
@@ -19,6 +19,7 @@ import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
+import kotlinx.android.synthetic.main.fragment_add_single_pend.*
 import kotlinx.android.synthetic.main.fragment_edit_pend.*
 import kotlinx.android.synthetic.main.fragment_edit_pend.view.*
 import retrofit2.Call
@@ -42,7 +43,7 @@ class EditPendFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sessionManager = activity?.let { SessionManager(it) }!!
 
-        if(sessionManager.fetchHakAkses() == "operator"){
+        if (sessionManager.fetchHakAkses() == "operator") {
             view.btn_save_edit_pend.gone()
             view.btn_delete_edit_pend.gone()
         }
@@ -82,7 +83,8 @@ class EditPendFragment : Fragment() {
                 if (response.isSuccessful) {
                     if (response.body()?.message == "Data riwayat pendidikan removed succesfully") {
                         Toast.makeText(activity, "Berhasil Hapus", Toast.LENGTH_SHORT).show()
-                        activity?.finish()
+//                        activity?.finish()
+                        fragmentManager?.popBackStack()
                     } else {
                         Toast.makeText(activity, "Gagal Hapus", Toast.LENGTH_SHORT).show()
                     }
@@ -102,10 +104,15 @@ class EditPendFragment : Fragment() {
         singlePendReq.keterangan = edt_ket_edit_pend.text.toString()
         singlePendReq.yang_membiayai = edt_membiayai_edit_pend.text.toString()
 
-        val animatedDrawable = activity?.let { ContextCompat.getDrawable(it, R.drawable.animated_check) }!!
+        val animatedDrawable =
+            activity?.let { ContextCompat.getDrawable(it, R.drawable.animated_check) }!!
         //Defined bounds are required for your drawable
         val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        view?.btn_save_edit_pend?.showProgress {
+            progressColor = Color.WHITE
+        }
 
         NetworkConfig().getService().updatePend(
             "Bearer ${sessionManager.fetchAuthToken()}",
@@ -114,27 +121,36 @@ class EditPendFragment : Fragment() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                btn_save_edit_pend.hideDrawable(R.string.save)
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
                     if (response.body()?.message == "Data riwayat pendidikan updated succesfully") {
-                        Toast.makeText(activity, "Berhasil Di Update", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                         view?.btn_save_edit_pend?.showDrawable(animatedDrawable) {
-                            buttonTextRes = R.string.save
+                            buttonTextRes = R.string.data_updated
                             textMarginRes = R.dimen.space_10dp
                         }
-                        activity?.finish()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            fragmentManager?.popBackStack()
+                        }, 500)
+//                        activity?.finish()
+
                     } else {
-                        view?.btn_save_edit_pend?.showProgress {
-                            buttonTextRes = R.string.not_save
-                            textMarginRes = R.dimen.space_10dp
-                        }
-                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_edit_pend.hideDrawable(R.string.save)
+                        },3000)
+                        btn_save_edit_pend.hideDrawable(R.string.not_update)
+//                        view?.btn_save_edit_pend?.hideDrawable(R.string.not_update)
                     }
 
                 } else {
-                    Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_edit_pend.hideDrawable(R.string.save)
+                    },3000)
+                    btn_save_edit_pend.hideDrawable(R.string.not_update)
+//                    view?.btn_save_edit_pend?.hideDrawable(R.string.not_update)
                 }
             }
         })

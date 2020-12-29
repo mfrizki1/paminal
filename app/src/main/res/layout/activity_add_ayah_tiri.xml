@@ -253,7 +253,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:visibility="gone"
             android:hint="Pekerjaan / Jabatan Terakhir">
 
             <com.google.android.material.textfield.TextInputEditText

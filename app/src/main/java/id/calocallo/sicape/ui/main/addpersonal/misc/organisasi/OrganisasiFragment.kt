@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.OrganisasiReq
+import id.calocallo.sicape.network.request.OrganisasiReq
 import id.calocallo.sicape.model.ParentListOrganisasi
 import id.calocallo.sicape.ui.main.addpersonal.misc.perjuangan.PerjuanganCitaFragment
 import id.calocallo.sicape.utils.SessionManager
@@ -73,7 +73,17 @@ class OrganisasiFragment : Fragment() {
     private fun initRV(rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         if (sessionManager.getOrganisasi().size == 0) {
-            list.add(OrganisasiReq("", "", "", "", "", "", ""))
+            list.add(
+                OrganisasiReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
         }
         Log.e("size Organisasi", sessionManager.getOrganisasi().size.toString())
         adapter = activity?.let {
@@ -88,7 +98,17 @@ class OrganisasiFragment : Fragment() {
         rv.adapter = adapter
 
         btn_add_org.setOnClickListener {
-            list.add(OrganisasiReq("", "", "", "", "", "", ""))
+            list.add(
+                OrganisasiReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

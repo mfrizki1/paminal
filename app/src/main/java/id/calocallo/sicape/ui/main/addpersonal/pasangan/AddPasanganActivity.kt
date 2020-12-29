@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PasanganReq
+import id.calocallo.sicape.network.request.PasanganReq
 import id.calocallo.sicape.ui.main.addpersonal.AddAyahKandungActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity

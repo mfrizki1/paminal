@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MedInfoReq
+import id.calocallo.sicape.network.request.MedInfoReq
 import id.calocallo.sicape.model.ParentListMedInfo
 import id.calocallo.sicape.ui.main.addpersonal.medsos.AddMedsosActivity
 import id.calocallo.sicape.utils.SessionManager
@@ -52,7 +52,14 @@ class AddMedianfoActivity : BaseActivity() {
                 )
             }
         }else {
-            list.add(MedInfoReq("", "", "", ""))
+            list.add(
+                MedInfoReq(
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
         }
         rv_med_info.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = MediaInfoAdapter(this, list, object : MediaInfoAdapter.OnClickMedInfo {
@@ -64,7 +71,14 @@ class AddMedianfoActivity : BaseActivity() {
         rv_med_info.adapter = adapter
 
         btn_add_med_info.setOnClickListener {
-            list.add(MedInfoReq("", "", "", ""))
+            list.add(
+                MedInfoReq(
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

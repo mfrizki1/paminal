@@ -1,9 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.editpersonel.foto.EditFotoActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar_white" />
+
+        <include layout="@layout/view_separator" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_edit_foto_depan"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            app:cardCornerRadius="12dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_foto_depan_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center|start"
+                    android:paddingHorizontal="@dimen/space_12dp"
+                    android:text="Foto Depan"
+                    android:textSize="@dimen/text_18"
+                    android:textStyle="bold" />
+
+                <include layout="@layout/view_separator"
+                    android:layout_below="@+id/txt_foto_depan_edit"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent" />
+
+                <include
+                    android:id="@+id/pb_foto_depan_edit"
+                    layout="@layout/layout_progress_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_foto_depan"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/img_foto_depan_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_foto_depan_edit"
+                    android:background="@color/grey_50"
+                    android:onClick="showImage"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/img_foto_depan_null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_placeholder" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_edit_foto_depan_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/space_12dp"
+                    android:layout_marginBottom="@dimen/space_12dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/white"
+                    app:backgroundTint="@color/colorPrimary" />
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_edit_foto_kanan_edit"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            app:cardCornerRadius="12dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_foto_kanan_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center|start"
+                    android:paddingHorizontal="@dimen/space_12dp"
+                    android:text="Foto Samping Kanan"
+                    android:textSize="@dimen/text_18"
+                    android:textStyle="bold" />
+
+                <include layout="@layout/view_separator"
+                    android:layout_below="@+id/txt_foto_kanan_edit"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent" />
+
+                <include
+                    android:id="@+id/pb_foto_kanan_edit"
+                    layout="@layout/layout_progress_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_foto_kanan_edit"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/img_foto_kanan_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_foto_kanan_edit"
+                    android:layout_gravity="center"
+                    android:background="@color/grey_50"
+                    android:onClick="showImage"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/img_foto_kanan_null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_placeholder" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_edit_foto_kanan_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/space_12dp"
+                    android:layout_marginBottom="@dimen/space_12dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/white"
+                    app:backgroundTint="@color/colorPrimary" />
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_edit_foto_kiri_edit"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            app:cardCornerRadius="12dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_foto_kiri_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center|start"
+                    android:paddingHorizontal="@dimen/space_12dp"
+                    android:text="Foto Samping Kiri"
+                    android:textSize="@dimen/text_18"
+                    android:textStyle="bold" />
+
+                <include layout="@layout/view_separator"
+                    android:layout_below="@+id/txt_foto_kiri_edit"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent" />
+
+                <include
+                    android:id="@+id/pb_foto_kiri_edit"
+                    layout="@layout/layout_progress_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_foto_kiri_edit"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/img_foto_kiri_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_foto_kiri_edit"
+                    android:layout_gravity="center"
+                    android:background="@color/grey_50"
+                    android:onClick="showImage"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/img_foto_kiri_null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_placeholder" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_edit_foto_kiri_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/space_12dp"
+                    android:layout_marginBottom="@dimen/space_12dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/white"
+                    app:backgroundTint="@color/colorPrimary" />
+            </RelativeLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_foto_edit"
+            android:layout_width="match_parent"
+            style="@style/Widget.Button"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="@string/save" />
+
+    </LinearLayout>
+
+
+</ScrollView>

@@ -23,7 +23,7 @@ class AddSignalementActivity : BaseActivity() {
         signalementReq = SignalementModel()
 
         btn_next_signalement.setOnClickListener {
-            signalementReq.cacat_ciri = edt_cacat_ciri.text.toString()
+            signalementReq.cacat = edt_cacat_ciri.text.toString()
             signalementReq.kelemahan = edt_kelemahan.text.toString()
             signalementReq.keluarga_dekat = edt_keluarga_dekat.text.toString()
             signalementReq.kesenangan = edt_kesenangan.text.toString()

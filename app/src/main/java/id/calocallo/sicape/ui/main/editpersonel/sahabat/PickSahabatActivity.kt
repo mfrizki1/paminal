@@ -1,22 +1,18 @@
 package id.calocallo.sicape.ui.main.editpersonel.sahabat
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
-import id.calocallo.sicape.model.SahabatResp
-import id.calocallo.sicape.model.TokohResp
+import id.calocallo.sicape.network.response.SahabatResp
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.ui.main.editpersonel.tokoh.EditTokohActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_sahabat.*
-import kotlinx.android.synthetic.main.activity_pick_tokoh.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*

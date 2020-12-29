@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_marginLeft="@dimen/space_12dp"
+        android:id="@+id/imageView3"
+        android:layout_width="@dimen/space_50dp"
+        android:layout_height="@dimen/space_50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <LinearLayout
+        android:id="@+id/ll_personel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3">
+
+        <TextView
+            android:id="@+id/txt_personel_nama_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_16"
+            android:layout_marginBottom="@dimen/space_half"
+            android:text="INI NAMA" />
+
+        <TextView
+            android:id="@+id/txt_personel_pangkat_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_half"
+            android:text="INI PANGKAT" />
+
+        <TextView
+            android:id="@+id/txt_personel_nrp_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_half"
+            android:text="INI NRP" />
+
+        <TextView
+            android:id="@+id/txt_personel_jabatan_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_half"
+            android:text="INI JABATAN" />
+
+        <TextView
+            android:id="@+id/txt_personel_kesatuan_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="INI KESATUAN" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/text_12"
+        android:background="@color/gainsboro"
+        app:layout_constraintTop_toBottomOf="@+id/ll_personel"
+        tools:layout_editor_absoluteX="12dp" />
+
+    <ImageView
+        android:id="@+id/img_choose_personel"
+        android:layout_width="35dp"
+        android:visibility="gone"
+        android:layout_height="35dp"
+        android:layout_marginEnd="80dp"
+        android:src="@drawable/animated_check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorPrimary" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

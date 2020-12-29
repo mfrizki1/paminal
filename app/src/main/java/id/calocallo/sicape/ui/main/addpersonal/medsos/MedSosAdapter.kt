@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MedSosReq
+import id.calocallo.sicape.network.request.MedSosReq
 import kotlinx.android.synthetic.main.layout_medsos.view.*
 
 class MedSosAdapter(

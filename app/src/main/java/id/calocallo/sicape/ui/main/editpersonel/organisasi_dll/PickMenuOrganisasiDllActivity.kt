@@ -6,9 +6,9 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.OrganisasiResp
-import id.calocallo.sicape.model.PenghargaanResp
-import id.calocallo.sicape.model.PerjuanganResp
+import id.calocallo.sicape.network.response.OrganisasiResp
+import id.calocallo.sicape.network.response.PenghargaanResp
+import id.calocallo.sicape.network.response.PerjuanganResp
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.utils.SessionManager
@@ -64,8 +64,9 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
             startActivity(intent)
         }
         OrgSP()
-        sp_jenis_organisasi_dll.setText(ORGANISASI)
-        ApiOrgDll(ORGANISASI)
+        sp_jenis_organisasi_dll.setText("Organisasi")
+    tempJenis = ORGANISASI
+        ApiOrgDll(tempJenis)
 
     }
 
@@ -93,6 +94,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
 
     private fun ApiOrgDll(name: String) {
         rl_pb.visible()
+        rl_no_data.gone()
         when (name) {
             ORGANISASI -> {
                 NetworkConfig().getService().showOrganisasi(

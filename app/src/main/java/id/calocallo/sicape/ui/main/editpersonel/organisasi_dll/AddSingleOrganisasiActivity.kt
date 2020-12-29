@@ -1,13 +1,17 @@
 package id.calocallo.sicape.ui.main.editpersonel.organisasi_dll
 
+import android.graphics.Color
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.OrganisasiReq
-import id.calocallo.sicape.model.PenghargaanReq
-import id.calocallo.sicape.model.PerjuanganCitaReq
+import id.calocallo.sicape.network.request.OrganisasiReq
+import id.calocallo.sicape.network.request.PenghargaanReq
+import id.calocallo.sicape.network.request.PerjuanganCitaReq
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -24,9 +28,12 @@ import retrofit2.Response
 
 class AddSingleOrganisasiActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private val organisasiReq = OrganisasiReq()
-    private val penghargaanReq = PenghargaanReq()
-    private val perjuanganCitaReq = PerjuanganCitaReq()
+    private val organisasiReq =
+        OrganisasiReq()
+    private val penghargaanReq =
+        PenghargaanReq()
+    private val perjuanganCitaReq =
+        PerjuanganCitaReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_organisasi)
@@ -56,13 +63,20 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         btn_pick_penghargaan.setOnClickListener {
             viewPenghargaan()
         }
-
+        bindProgressButton(btn_save_single_organisasi)
+        btn_save_single_organisasi.attachTextChangeAnimator()
         btn_save_single_organisasi.setOnClickListener {
             doOrganisasiApi()
         }
+
+        bindProgressButton(btn_save_single_penghargaan)
+        btn_save_single_penghargaan.attachTextChangeAnimator()
         btn_save_single_penghargaan.setOnClickListener {
             doPenghargaanApi()
         }
+
+        bindProgressButton(btn_save_single_perjuangan)
+        btn_save_single_perjuangan.attachTextChangeAnimator()
         btn_save_single_perjuangan.setOnClickListener {
             doPerjuanganApi()
         }
@@ -122,8 +136,17 @@ class AddSingleOrganisasiActivity : BaseActivity() {
     }
 
     private fun doPerjuanganApi() {
-        rl_pb.visible()
-        ll_perjuangan.gone()
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_single_perjuangan.showProgress {
+            progressColor = Color.WHITE
+        }
+
+//        rl_pb.visible()
+//        ll_perjuangan.gone()
         perjuanganCitaReq.peristiwa = edt_single_peristiwa.text.toString()
         perjuanganCitaReq.lokasi = edt_tempat_single_peristiwa.text.toString()
         perjuanganCitaReq.tahun_awal = edt_single_thn_awal_perjuangan.text.toString()
@@ -137,6 +160,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
             perjuanganCitaReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                btn_save_single_perjuangan.hideDrawable(R.string.save)
                 Toast.makeText(
                     this@AddSingleOrganisasiActivity,
                     "Error Koneksi",
@@ -148,17 +172,20 @@ class AddSingleOrganisasiActivity : BaseActivity() {
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@AddSingleOrganisasiActivity,
-                        "Data Perjuangan Cita-Cita Berhasil Ditambahkan",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    btn_save_single_perjuangan.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_saved
+                        textMarginRes = R.dimen.space_10dp
+                    }
                     rl_pb.gone()
                     ll_perjuangan.visible()
-                    finish()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
                 } else {
-                    Toast.makeText(this@AddSingleOrganisasiActivity, "Error", Toast.LENGTH_SHORT)
-                        .show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_single_perjuangan.hideDrawable(R.string.save)
+                    }, 3000)
+                    btn_save_single_perjuangan.hideDrawable(R.string.not_save)
                     rl_pb.gone()
                     ll_perjuangan.visible()
                 }
@@ -167,8 +194,17 @@ class AddSingleOrganisasiActivity : BaseActivity() {
     }
 
     private fun doPenghargaanApi() {
-        rl_pb.visible()
-        ll_penghargaan.gone()
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_single_penghargaan.showProgress {
+            progressColor = Color.WHITE
+        }
+
+//        rl_pb.visible()
+//        ll_penghargaan.gone()
         penghargaanReq.penghargaan = edt_nama_single_penghargaan.text.toString()
         penghargaanReq.diterima_dari = edt_diterima_single_penghargaan.text.toString()
         penghargaanReq.dalam_rangka = edt_rangka_single_penghargaan.text.toString()
@@ -181,6 +217,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
             penghargaanReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                btn_save_single_penghargaan.hideDrawable(R.string.save)
                 Toast.makeText(
                     this@AddSingleOrganisasiActivity,
                     "Error Koneksi",
@@ -193,17 +230,22 @@ class AddSingleOrganisasiActivity : BaseActivity() {
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@AddSingleOrganisasiActivity,
-                        "Data Penghargaan Berhasil Ditambahkan",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    btn_save_single_penghargaan.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_saved
+                        textMarginRes = R.dimen.space_10dp
+                    }
+
                     rl_pb.gone()
                     ll_penghargaan.visible()
-                    finish()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
                 } else {
-                    Toast.makeText(this@AddSingleOrganisasiActivity, "Error", Toast.LENGTH_SHORT)
-                        .show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_single_penghargaan.hideDrawable(R.string.save)
+                    }, 3000)
+                    btn_save_single_penghargaan.hideDrawable(R.string.not_save)
+
                     rl_pb.gone()
                     ll_penghargaan.visible()
                 }
@@ -213,8 +255,13 @@ class AddSingleOrganisasiActivity : BaseActivity() {
     }
 
     private fun doOrganisasiApi() {
-        rl_pb.visible()
-        ll_organisasi.gone()
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+//        rl_pb.visible()
+//        ll_organisasi.gone()
         organisasiReq.organisasi = edt_single_organisasi.text.toString()
         organisasiReq.tahun_awal = edt_thn_awal_single_organisasi.text.toString()
         organisasiReq.tahun_akhir = edt_thn_akhir_single_organisasi.text.toString()
@@ -222,6 +269,10 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         organisasiReq.tahun_bergabung = edt_thn_ikut_single_organisasi.text.toString()
         organisasiReq.alamat = edt_alamat_single_organisasi.text.toString()
         organisasiReq.keterangan = edt_ket_single_organisasi.text.toString()
+        btn_save_single_organisasi.showProgress {
+            progressColor = Color.WHITE
+        }
+
         NetworkConfig().getService().addOrganisasiSingle(
             "Bearer ${sessionManager.fetchAuthToken()}",
 //            "4",
@@ -229,6 +280,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
             organisasiReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                btn_save_single_organisasi.hideDrawable(R.string.save)
                 Toast.makeText(
                     this@AddSingleOrganisasiActivity,
                     "Error Koneksi",
@@ -241,21 +293,22 @@ class AddSingleOrganisasiActivity : BaseActivity() {
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@AddSingleOrganisasiActivity,
-                        "Data Organisasi Berhasil Ditambahkan",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    btn_save_single_organisasi.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_saved
+                        textMarginRes = R.dimen.space_10dp
+                    }
                     rl_pb.gone()
                     ll_organisasi.visible()
-                    finish()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
 
                 } else {
-                    Toast.makeText(
-                        this@AddSingleOrganisasiActivity,
-                        "Error Koneksi",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_single_organisasi.hideDrawable(R.string.save)
+                    }, 3000)
+                    btn_save_single_organisasi.hideDrawable(R.string.not_save)
+
                     rl_pb.gone()
                     ll_organisasi.visible()
                 }

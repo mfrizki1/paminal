@@ -1,15 +1,13 @@
 package id.calocallo.sicape.ui.main.editpersonel.tokoh
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
-import id.calocallo.sicape.model.TokohResp
+import id.calocallo.sicape.network.response.TokohResp
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.AlamatResp
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible

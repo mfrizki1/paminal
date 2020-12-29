@@ -1,20 +1,22 @@
 package id.calocallo.sicape.ui.main.editpersonel.sahabat
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.hideDrawable
+import com.github.razir.progressbutton.showDrawable
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
-import id.calocallo.sicape.model.SahabatReq
+import id.calocallo.sicape.network.request.SahabatReq
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_single_orangs.*
 import kotlinx.android.synthetic.main.activity_add_single_sahabat.*
-import kotlinx.android.synthetic.main.activity_edit_sahabat.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,7 +49,10 @@ class AddSingleSahabatActivity : BaseActivity() {
             }
         }
         btn_save_single_sahabat.setOnClickListener {
-
+            val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+            //Defined bounds are required for your drawable
+            val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+            animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
 
             sahabatReq.nama = edt_nama_single_sahabat.text.toString()
             sahabatReq.umur = edt_umur_single_sahabat.text.toString()
@@ -61,15 +66,25 @@ class AddSingleSahabatActivity : BaseActivity() {
                 sahabatReq
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                    btn_save_single_sahabat.hideDrawable(R.string.not_save)
                     Toast.makeText(this@AddSingleSahabatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@AddSingleSahabatActivity, "Berhasil Tambah Data Sahabat", Toast.LENGTH_SHORT).show()
-                        finish()
+                        btn_save_single_sahabat.showDrawable(animatedDrawable) {
+                            buttonTextRes = R.string.data_saved
+                            textMarginRes = R.dimen.space_10dp
+                        }
+//                        Toast.makeText(this@AddSingleSahabatActivity, "Berhasil Tambah Data Sahabat", Toast.LENGTH_SHORT).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            finish()
+                        }, 500)
                     } else {
-                        Toast.makeText(this@AddSingleSahabatActivity, "Error", Toast.LENGTH_SHORT).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_single_sahabat.hideDrawable(R.string.not_save)
+                        },3000)
+                        btn_save_single_sahabat.hideDrawable(R.string.save)
                     }
                 }
             })

@@ -1,10 +1,15 @@
 package id.calocallo.sicape.ui.main.editpersonel.tokoh
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.TokohReq
-import id.calocallo.sicape.model.TokohResp
+import id.calocallo.sicape.network.request.TokohReq
+import id.calocallo.sicape.network.response.TokohResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
@@ -38,7 +43,8 @@ class EditTokohActivity : BaseActivity() {
 
         val tokoh = intent.extras?.getParcelable<TokohResp>("TOKOH")
         getTokoh(tokoh)
-
+        bindProgressButton(btn_save_tokoh_edit)
+        btn_save_tokoh_edit.attachTextChangeAnimator()
         btn_save_tokoh_edit.setOnClickListener {
             doUpdateTokoh(tokoh)
         }
@@ -61,29 +67,46 @@ class EditTokohActivity : BaseActivity() {
     }
 
     private fun doUpdateTokoh(tokoh: TokohResp?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
         tokohReq.nama = edt_nama_tokoh_edit.text.toString()
         tokohReq.asal_negara = edt_asal_negara_tokoh_edit.text.toString()
         tokohReq.alasan = edt_alasan_tokoh_edit.text.toString()
         tokohReq.keterangan = edt_alasan_tokoh_edit.text.toString()
+
+        btn_save_tokoh_edit.showProgress {
+            progressColor = Color.WHITE
+        }
+
         NetworkConfig().getService().updateTokohSingle(
             "Bearer ${sessionManager.fetchAuthToken()}",
             tokoh?.id.toString(),
             tokohReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                btn_save_tokoh_edit.hideDrawable(R.string.save)
                 Toast.makeText(this@EditTokohActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@EditTokohActivity,
-                        "Berhasil Update Data Tokoh",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    finish()
+
+                    btn_save_tokoh_edit.showDrawable(animatedDrawable){
+                        textMarginRes = R.dimen.space_10dp
+                        buttonTextRes = R.string.data_updated
+                    }
+//                    Toast.makeText(this@EditTokohActivity, "Berhasil Update Data Tokoh", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
                 } else {
-                    Toast.makeText(this@EditTokohActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_tokoh_edit.hideDrawable(R.string.save)
+                    },3000)
+                    btn_save_tokoh_edit.hideDrawable(R.string.not_save)
                 }
             }
         })

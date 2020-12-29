@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.OrangsResp
+import id.calocallo.sicape.network.response.OrangsResp
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.utils.SessionManager

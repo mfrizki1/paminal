@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.SahabatReq
+import id.calocallo.sicape.network.request.SahabatReq
 import kotlinx.android.synthetic.main.layout_kawan_dekat.view.*
 
 class KawanAdapter(

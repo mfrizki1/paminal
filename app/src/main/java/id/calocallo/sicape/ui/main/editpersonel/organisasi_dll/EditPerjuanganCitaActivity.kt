@@ -1,11 +1,15 @@
 package id.calocallo.sicape.ui.main.editpersonel.organisasi_dll
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PerjuanganCitaReq
-import id.calocallo.sicape.model.PerjuanganResp
+import id.calocallo.sicape.network.request.PerjuanganCitaReq
+import id.calocallo.sicape.network.response.PerjuanganResp
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -21,7 +25,8 @@ import retrofit2.Response
 
 class EditPerjuanganCitaActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private var perjuanganCitaReq = PerjuanganCitaReq()
+    private var perjuanganCitaReq =
+        PerjuanganCitaReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_perjuangan_cita)
@@ -46,9 +51,12 @@ class EditPerjuanganCitaActivity : BaseActivity() {
         edt_rangka_perjuangan_edit.setText(perjuangan?.dalam_rangka)
         edt_ket_perjuangan_edit.setText(perjuangan?.keterangan)
 
+        btn_save_perjuangan_edit.attachTextChangeAnimator()
+        bindProgressButton(btn_save_perjuangan_edit)
         btn_save_perjuangan_edit.setOnClickListener {
             doUpdatePerjuangan(perjuangan)
         }
+
         btn_delete_perjuangan_edit.setOnClickListener {
             alert("Hapus Data", "Yakin Hapus?") {
                 positiveButton("Iya") {
@@ -62,6 +70,14 @@ class EditPerjuanganCitaActivity : BaseActivity() {
 
 
     private fun doUpdatePerjuangan(perjuangan: PerjuanganResp?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+        btn_save_perjuangan_edit.showProgress {
+                progressColor = Color.WHITE
+            }
+
         perjuanganCitaReq.peristiwa = edt_peristiwa_edit.text.toString()
         perjuanganCitaReq.lokasi = edt_tempat_peristiwa_edit.text.toString()
         perjuanganCitaReq.tahun_awal = edt_thn_awal_perjuangan_edit.text.toString()
@@ -75,36 +91,54 @@ class EditPerjuanganCitaActivity : BaseActivity() {
             perjuanganCitaReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditPerjuanganCitaActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                btn_save_perjuangan_edit.hideDrawable(R.string.save)
+                Toast.makeText(this@EditPerjuanganCitaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    .show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    Toast.makeText(this@EditPerjuanganCitaActivity, "Berhasil Update Data Perjuangan Cita-Cita", Toast.LENGTH_SHORT).show()
-                    finish()
-                }else{
-                    Toast.makeText(this@EditPerjuanganCitaActivity, "Error", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    btn_save_perjuangan_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_updated
+                        textMarginRes = R.dimen.space_10dp
+                    }
+//                    Toast.makeText(this@EditPerjuanganCitaActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
+                } else {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_perjuangan_edit.hideDrawable(R.string.save)
+                    }, 3000)
+                    btn_save_perjuangan_edit.hideDrawable(R.string.not_update)
                 }
             }
-        })
+        }
+        )
     }
 
     private fun doDeletePerjuangan(perjuangan: PerjuanganResp?) {
         NetworkConfig().getService().deletePerjuangan(
             "Bearer ${sessionManager.fetchAuthToken()}",
             perjuangan?.id.toString()
-        ).enqueue(object :Callback<BaseResp>{
+        ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditPerjuanganCitaActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditPerjuanganCitaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    .show()
 
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    Toast.makeText(this@EditPerjuanganCitaActivity, "Berhasil Hapus Data Perjuangan Cita-Cita", Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    Toast.makeText(
+                        this@EditPerjuanganCitaActivity,
+                        "Berhasil Hapus Data Perjuangan Cita-Cita",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
-                }else{
-                    Toast.makeText(this@EditPerjuanganCitaActivity, "Error", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@EditPerjuanganCitaActivity, "Error", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })

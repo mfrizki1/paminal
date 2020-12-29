@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AnakResp
+import id.calocallo.sicape.network.response.AnakResp
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.utils.SessionManager
@@ -15,7 +15,6 @@ import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_anak.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
-import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import kotlinx.android.synthetic.main.view_no_data.*

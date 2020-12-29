@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AnakReq
+import id.calocallo.sicape.network.request.AnakReq
 import kotlinx.android.synthetic.main.layout_anak.view.*
 
 class AnakAdapter(

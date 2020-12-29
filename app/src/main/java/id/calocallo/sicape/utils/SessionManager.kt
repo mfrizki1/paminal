@@ -7,14 +7,20 @@ import com.google.gson.reflect.TypeToken
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.request.*
+import id.calocallo.sicape.network.response.LpPasalResp
+import id.calocallo.sicape.network.response.LpSaksiResp
 
 class SessionManager(context: Context) {
     private lateinit var parentListPendUmum: ParentListPendUmum
     private lateinit var parentListPendDinas: ParentListPendDinas
     private lateinit var listUmum: ArrayList<AddPendidikanModel>
     private lateinit var listDinas: ArrayList<PendDinasModel>
-    private var prefs: SharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
-    private var prefsPers: SharedPreferences = context.getSharedPreferences(context.getString(R.string.DATA), Context.MODE_PRIVATE)
+    private var prefs: SharedPreferences =
+        context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
+    private var prefsPers: SharedPreferences =
+        context.getSharedPreferences(context.getString(R.string.DATA), Context.MODE_PRIVATE)
+    private var prefsLP: SharedPreferences =
+        context.getSharedPreferences(context.getString(R.string.LP), Context.MODE_PRIVATE)
 
     companion object {
         const val USER_TOKEN = "user_token"
@@ -123,12 +129,13 @@ class SessionManager(context: Context) {
         editor.commit()
     }
 
-    fun clearAllAPP(){
+    fun clearAllAPP() {
         val editor = prefs.edit()
         editor.clear()
         editor.commit()
     }
-    fun clearAllPers(){
+
+    fun clearAllPers() {
         val editor = prefsPers.edit()
         editor.clear()
         editor.commit()
@@ -595,11 +602,129 @@ class SessionManager(context: Context) {
         editor.commit()
     }
 
-    fun getCatpers(): CatatanPersReq{
+    fun getCatpers(): CatatanPersReq {
         val emptyJson = Gson().toJson(CatatanPersReq())
         return Gson().fromJson(
             prefsPers.getString(CATPER, emptyJson),
             object : TypeToken<CatatanPersReq>() {}.type
         )
     }
+
+    fun setJenisLP(jenis: String) {
+        val editor = prefsLP.edit()
+        editor.putString("JENIS_LP", jenis)
+        editor.apply()
+    }
+
+    fun getJenisLP(): String? {
+        return prefsLP.getString("JENIS_LP", null)
+    }
+
+    fun setNoLP(noLP: String) {
+        val editor = prefsLP.edit()
+        editor.putString("NO_LP", noLP)
+        editor.apply()
+    }
+
+    fun getNoLP(): String? {
+        return prefsLP.getString("NO_LP", null)
+    }
+
+    fun setIDPersonelTerlapor(id_terlapor: Int) {
+        val editor = prefsLP.edit()
+        editor.putInt("ID_TERLAPOR", id_terlapor)
+        editor.apply()
+    }
+
+    fun getIDPersonelTerlapor(): Int? {
+        return prefsLP.getInt("ID_TERLAPOR", 0)
+    }
+
+    fun setIDPersonelDilapor(id_dilapor: Int) {
+        val editor = prefsLP.edit()
+        editor.putInt("ID_DILAPOR", id_dilapor)
+        editor.apply()
+    }
+
+    fun getIDPersonelDilapor(): Int? {
+        return prefsLP.getInt("ID_DILAPOR", 0)
+    }
+
+    fun setIdPelanggaran(id_pelanggaran: Int) {
+        val editor = prefsLP.edit()
+        editor.putInt("ID_PELANGGARAN", id_pelanggaran)
+        editor.apply()
+    }
+
+    fun getIdPelanggaran(): Int? {
+        return prefsLP.getInt("ID_PELANGGARAN", 0)
+    }
+
+    fun setAlatBuktiLP(alat_bukti: String) {
+        val editor = prefsLP.edit()
+        editor.putString("ALAT_BUKI", alat_bukti)
+        editor.apply()
+    }
+
+    fun getAlatBukiLP(): String? {
+        return prefsLP.getString("ALAT_BUKTI", null)
+    }
+
+    fun setKetLP(ket: String) {
+        val editor = prefsLP.edit()
+        editor.putString("KET", ket)
+        editor.apply()
+    }
+
+    fun getKetLP(): String? {
+        return prefsLP.getString("KET", null)
+    }
+
+
+    fun setListPasalLP(listPasal: ArrayList<LpPasalResp>) {
+        val editor = prefsLP.edit()
+        val json = Gson().toJson(listPasal)
+        editor.putString("LIST_PASAL", json)
+        editor.commit()
+    }
+
+    fun getListPasalLP(): ArrayList<LpPasalResp> {
+        val emptyJson = Gson().toJson(ArrayList<LpPasalResp>())
+        return Gson().fromJson(
+            prefsLP.getString("LIST_PASAL", emptyJson),
+            object : TypeToken<ArrayList<LpPasalResp>>() {}.type
+        )
+    }
+
+    fun setIdPasal(id_pasal: Int){
+        val editor = prefsLP.edit()
+        editor.putInt("ID_PASAL", id_pasal)
+        editor.apply()
+    }
+
+    fun getIdPasal(): Int?{
+        return prefsLP.getInt("ID_PASAL", 0)
+    }
+
+    fun setListSaksiLP(listSaksi: ArrayList<LpSaksiResp>){
+        val editor = prefsLP.edit()
+        val json = Gson().toJson(listSaksi)
+        editor.putString("LIST_SAKSI", json)
+        editor.commit()
+    }
+
+    fun getListSaksi():ArrayList<LpSaksiResp>{
+        val emptyJson = Gson().toJson(ArrayList<LpSaksiResp>())
+        return Gson().fromJson(
+            prefsLP.getString("LIST_SAKSI", emptyJson),
+            object : TypeToken<ArrayList<LpSaksiResp>>() {}.type
+        )
+    }
+
+    fun clearLP(){
+        val editor = prefsLP.edit()
+        editor.clear()
+        editor.commit()
+    }
+
 }

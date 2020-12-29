@@ -7,18 +7,18 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MertuaPerempuanReq
+import id.calocallo.sicape.network.request.MertuaPerempuanReq
 import id.calocallo.sicape.ui.main.addpersonal.anak.AddAnakActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_ayah_kandung.*
 import kotlinx.android.synthetic.main.activity_add_mertua_perempuan.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddMertuaPerempuanActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
 
-    private var mertuaPerempuanReq = MertuaPerempuanReq()
+    private var mertuaPerempuanReq =
+        MertuaPerempuanReq()
     var stts_kerja = 0
     var stts_hidup = 0
     var agama_skrg = ""
@@ -82,7 +82,6 @@ class AddMertuaPerempuanActivity : BaseActivity() {
         spinnerPekerjaanMertuaPerempuan.setAdapter(adapter)
         spinnerPekerjaanMertuaPerempuan.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
-                txt_layout_pekerjaan_mertua_perempuan.visibility = View.VISIBLE
                 txt_layout_nama_kantor_mertua_perempuan.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_mertua_perempuan.visibility = View.VISIBLE
                 txt_layout_no_telp_kantor_mertua_perempuan.visibility = View.VISIBLE
@@ -111,7 +110,6 @@ class AddMertuaPerempuanActivity : BaseActivity() {
                 txt_layout_bagaimana_stts_mertua_perempuan.visibility = View.GONE
                 stts_hidup = 1
             } else {
-                txt_layout_penyebab_mertua_perempuan.visibility = View.VISIBLE
                 txt_layout_dimana_mertua_perempuan.visibility = View.VISIBLE
                 txt_layout_bagaimana_stts_mertua_perempuan.visibility = View.VISIBLE
                 stts_hidup = 0

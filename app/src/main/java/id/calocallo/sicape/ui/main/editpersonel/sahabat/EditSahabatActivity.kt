@@ -1,21 +1,25 @@
 package id.calocallo.sicape.ui.main.editpersonel.sahabat
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideDrawable
+import com.github.razir.progressbutton.showDrawable
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.SahabatReq
-import id.calocallo.sicape.model.SahabatResp
+import id.calocallo.sicape.network.request.SahabatReq
+import id.calocallo.sicape.network.response.SahabatResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_edit_orangs.*
 import kotlinx.android.synthetic.main.activity_edit_sahabat.*
-import kotlinx.android.synthetic.main.activity_edit_tokoh.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,7 +46,8 @@ class EditSahabatActivity : BaseActivity() {
         val sahabat = intent.extras?.getParcelable<SahabatResp>("SAHABAT")
 
         getSahabat(sahabat)
-
+        btn_save_sahabat_edit.attachTextChangeAnimator()
+        bindProgressButton(btn_save_sahabat_edit)
         btn_save_sahabat_edit.setOnClickListener {
             doUpdateSahabat(sahabat)
         }
@@ -86,6 +91,11 @@ class EditSahabatActivity : BaseActivity() {
     }
 
     private fun doUpdateSahabat(sahabat: SahabatResp?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
         sahabatReq.nama = edt_nama_sahabat_edit.text.toString()
         sahabatReq.umur = edt_umur_sahabat_edit.text.toString()
         sahabatReq.alamat = edt_alamat_sahabat_edit.text.toString()
@@ -98,15 +108,24 @@ class EditSahabatActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 Toast.makeText(this@EditSahabatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                btn_save_sahabat_edit.hideDrawable(R.string.save)
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@EditSahabatActivity, "Berhasil Update Data Sahabat", Toast.LENGTH_SHORT).show()
-                    finish()
+                    btn_save_sahabat_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_updated
+                        textMarginRes = R.dimen.space_10dp
+                    }
+//                    Toast.makeText(this@EditSahabatActivity, "Berhasil Update Data Sahabat", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
                 } else {
-                    Toast.makeText(this@EditSahabatActivity, "Error", Toast.LENGTH_SHORT).show()
-                }
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_sahabat_edit.hideDrawable(R.string.save)
+                    },3000)
+                    btn_save_sahabat_edit.hideDrawable(R.string.not_update)                }
             }
         })
     }

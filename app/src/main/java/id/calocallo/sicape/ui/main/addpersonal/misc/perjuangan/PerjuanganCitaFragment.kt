@@ -13,6 +13,7 @@ import android.transition.Slide
 import android.util.Log
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
+import id.calocallo.sicape.network.request.PerjuanganCitaReq
 import id.calocallo.sicape.ui.main.addpersonal.misc.penghargaan.PenghargaanFragment
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -72,7 +73,16 @@ class PerjuanganCitaFragment : Fragment() {
         Log.e("size", "size perjuangan ${perjuangan.size}}")
 
         if (perjuangan.size == 0) {
-            list.add(PerjuanganCitaReq("", "", "", "", "", ""))
+            list.add(
+                PerjuanganCitaReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
         }
         Log.e("size Perjuangan", perjuangan.size.toString())
         rv.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -87,7 +97,16 @@ class PerjuanganCitaFragment : Fragment() {
         rv.adapter = adapter
 
         btn_add_perjuangan.setOnClickListener {
-            list.add(PerjuanganCitaReq("", "", "", "", "", ""))
+            list.add(
+                PerjuanganCitaReq(
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

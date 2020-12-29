@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.OrangsReq
+import id.calocallo.sicape.network.request.OrangsReq
 import id.calocallo.sicape.model.ParentListOrangs
 import id.calocallo.sicape.ui.main.addpersonal.tokoh.AddTokohDikagumiActivity
 import id.calocallo.sicape.utils.SessionManager

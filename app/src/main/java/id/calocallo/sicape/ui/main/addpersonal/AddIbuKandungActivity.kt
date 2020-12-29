@@ -7,10 +7,9 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.IbuReq
+import id.calocallo.sicape.network.request.IbuReq
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_ayah_kandung.*
 import kotlinx.android.synthetic.main.activity_add_ibu_kandung.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -113,7 +112,6 @@ class AddIbuKandungActivity : BaseActivity() {
         spinnerPekerjaanIbu.setAdapter(adapter)
         spinnerPekerjaanIbu.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
-                txt_layout_pekerjaan_ibu.visibility = View.VISIBLE
                 txt_layout_nama_kantor_ibu.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_ibu.visibility = View.VISIBLE
                 txt_layout_no_telp_kantor_ibu.visibility = View.VISIBLE
@@ -121,7 +119,6 @@ class AddIbuKandungActivity : BaseActivity() {
                 txt_layout_thn_berhenti_ibu.visibility = View.GONE
                 stts_kerja = 1
             } else {
-                txt_layout_pekerjaan_ibu.visibility = View.GONE
                 txt_layout_nama_kantor_ibu.visibility = View.GONE
                 txt_layout_alamat_kantor_ibu.visibility = View.GONE
                 txt_layout_no_telp_kantor_ibu.visibility = View.GONE

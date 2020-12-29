@@ -1,23 +1,26 @@
 package id.calocallo.sicape.ui.main.editpersonel.keluarga
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.KeluargaReq
-import id.calocallo.sicape.model.KeluargaResp
+import id.calocallo.sicape.network.request.KeluargaReq
+import id.calocallo.sicape.network.response.KeluargaResp
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_keluarga.*
-import kotlinx.android.synthetic.main.activity_edit_pasangan.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +32,7 @@ class EditKeluargaActivity : BaseActivity() {
     private var status_hidup: String? = null
     private var status_kerja: String? = null
     private var keluargaReq = KeluargaReq()
+    private var isEmptyKeluarga: Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_keluarga)
@@ -37,7 +41,7 @@ class EditKeluargaActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama.toString()
         val hak = sessionManager.fetchHakAkses()
-        if(hak == "operator"){
+        if (hak == "operator") {
             btn_save_keluarga_edit.gone()
             btn_delete_keluarga_edit.gone()
         }
@@ -56,9 +60,19 @@ class EditKeluargaActivity : BaseActivity() {
         }
         txt_keluarga_edit.text = "Edit Data $title_keluarga"
 
+        bindProgressButton(btn_save_keluarga_edit)
+        btn_save_keluarga_edit.attachTextChangeAnimator()
         getKeluarga(keluarga)
-        btn_save_keluarga_edit.setOnClickListener {
-            doUpdateKeluarga(keluarga)
+        if (isEmptyKeluarga == true) {
+            btn_save_keluarga_edit.setOnClickListener {
+                addKeluarga(keluarga)
+
+            }
+        } else {
+            btn_save_keluarga_edit.setOnClickListener {
+                doUpdateKeluarga(keluarga)
+
+            }
         }
         btn_delete_keluarga_edit.setOnClickListener {
             alert("Yakin Hapus Data ?") {
@@ -104,6 +118,15 @@ class EditKeluargaActivity : BaseActivity() {
     }
 
     private fun doUpdateKeluarga(keluarga: String?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_keluarga_edit.showProgress {
+            progressColor = Color.WHITE
+        }
+
         keluargaReq.nama = edt_nama_lngkp_keluarga_edit.text.toString()
         keluargaReq.nama_alias = edt_alias_keluarga_edit.text.toString()
         keluargaReq.tempat_lahir = edt_tmpt_ttl_keluarga_edit.text.toString()
@@ -155,15 +178,99 @@ class EditKeluargaActivity : BaseActivity() {
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@EditKeluargaActivity,
-                        "Berhasil Update Data",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    btn_save_keluarga_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_updated
+                        textMarginRes = R.dimen.space_10dp
+                    }
+//                    Toast.makeText(this@EditKeluargaActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this@EditKeluargaActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_keluarga_edit.hideDrawable(R.string.save)
+                    }, 3000)
+                    btn_save_keluarga_edit.hideDrawable(R.string.not_update)
+//                    Toast.makeText(this@EditKeluargaActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
             }
+        })
+    }
+
+    private fun addKeluarga(keluarga: String?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_keluarga_edit.showProgress {
+            progressColor = Color.WHITE
+        }
+
+        keluargaReq.nama = edt_nama_lngkp_keluarga_edit.text.toString()
+        keluargaReq.nama_alias = edt_alias_keluarga_edit.text.toString()
+        keluargaReq.tempat_lahir = edt_tmpt_ttl_keluarga_edit.text.toString()
+        keluargaReq.tanggal_lahir = edt_tgl_ttl_keluarga_edit.text.toString()
+        keluargaReq.ras = edt_suku_keluarga_edit.text.toString()
+        keluargaReq.kewarganegaraan = edt_kwg_keluarga_edit.text.toString()
+        keluargaReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_keluarga_edit.text.toString()
+        keluargaReq.aliran_kepercayaan_dianut = edt_aliran_dianut_keluarga_edit.text.toString()
+        keluargaReq.alamat_rumah = edt_almt_skrg_keluarga_edit.text.toString()
+        keluargaReq.no_telp_rumah = edt_no_telp_keluarga_edit.text.toString()
+        keluargaReq.alamat_rumah_sebelumnya = edt_almt_rmh_sblm_keluarga_edit.text.toString()
+        keluargaReq.tahun_pensiun = edt_thn_berhenti_keluarga_edit.text.toString()
+        keluargaReq.alasan_pensiun = edt_alsn_berhenti_keluarga_edit.text.toString()
+        keluargaReq.nama_kantor = edt_nama_kntr_keluarga_edit.text.toString()
+        keluargaReq.alamat_kantor = edt_almt_kntr_keluarga_edit.text.toString()
+        keluargaReq.no_telp_kantor = edt_no_telp_kntr_keluarga_edit.text.toString()
+        keluargaReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_keluarga_edit.text.toString()
+        keluargaReq.pendidikan_terakhir = edt_pend_trkhr_keluarga_edit.text.toString()
+        keluargaReq.pekerjaan_terakhir = edt_pekerjaan_keluarga_edit.text.toString()
+        keluargaReq.kedudukan_organisasi_saat_ini =
+            edt_kddkn_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.tahun_bergabung_organisasi_saat_ini =
+            edt_thn_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.alasan_bergabung_organisasi_saat_ini =
+            edt_alasan_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.alamat_organisasi_saat_ini = edt_almt_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.kedudukan_organisasi_sebelumnya =
+            edt_kddkn_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.tahun_bergabung_organisasi_sebelumnya =
+            edt_thn_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.alasan_bergabung_organisasi_sebelumnya =
+            edt_alasan_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.alamat_organisasi_sebelumnya = edt_almt_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.tahun_kematian = edt_tahun_kematian_keluarga_edit.text.toString()
+        keluargaReq.lokasi_kematian = edt_dimana_keluarga_edit.text.toString()
+        keluargaReq.sebab_kematian = edt_penyebab_keluarga_edit.text.toString()
+
+        NetworkConfig().getService().addKeluargaSingle(
+            "Bearer ${sessionManager.fetchAuthToken()}",
+            sessionManager.fetchID().toString(),
+            keluarga.toString(),
+            keluargaReq
+        ).enqueue(object : Callback<BaseResp> {
+            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                Toast.makeText(this@EditKeluargaActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                if (response.isSuccessful) {
+                    btn_save_keluarga_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_saved
+                        textMarginRes = R.dimen.space_10dp
+                    }
+//                    Toast.makeText(this@EditKeluargaActivity, R.string.data_saved, Toast.LENGTH_SHORT).show()
+//                    btn_save_keluarga_edit.hideProgress(R.string.save)
+                } else {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_keluarga_edit.hideDrawable(R.string.save)
+                    }, 3000)
+                    btn_save_keluarga_edit.hideDrawable(R.string.not_save)
+//                    btn_save_keluarga_edit.hideDrawable(R.string.not_save)
+//                    btn_save_keluarga_edit.hideDrawable(R.string.save)
+//                    Toast.makeText(this@EditKeluargaActivity, R.string.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+
         })
     }
 
@@ -180,7 +287,12 @@ class EditKeluargaActivity : BaseActivity() {
 
             override fun onResponse(call: Call<KeluargaResp>, response: Response<KeluargaResp>) {
                 if (response.isSuccessful) {
-                    viewKeluarga(response.body()!!)
+                    val obj = response.body()
+                    if (obj?.id.toString().isEmpty()) {
+                        isEmptyKeluarga = true
+                    } else {
+                        viewKeluarga(response.body()!!)
+                    }
                 } else {
                     Toast.makeText(this@EditKeluargaActivity, "Error", Toast.LENGTH_SHORT)
                         .show()
@@ -253,7 +365,7 @@ class EditKeluargaActivity : BaseActivity() {
 
             }
             1 -> {
-                txt_layout_pekerjaan_keluarga_edit.visibility = View.VISIBLE
+
                 txt_layout_nama_kantor_keluarga_edit.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_keluarga_edit.visibility = View.VISIBLE
                 txt_layout_no_telp_kantor_keluarga_edit.visibility = View.VISIBLE
@@ -304,8 +416,6 @@ class EditKeluargaActivity : BaseActivity() {
         spinner_pekerjaan_keluarga_edit.setOnItemClickListener { parent, view, position, id ->
             when (position) {
                 0 -> {
-                    txt_layout_pekerjaan_keluarga_edit.visibility = View.VISIBLE
-                    txt_layout_nama_kantor_keluarga_edit.visibility = View.VISIBLE
                     txt_layout_alamat_kantor_keluarga_edit.visibility = View.VISIBLE
                     txt_layout_no_telp_kantor_keluarga_edit.visibility = View.VISIBLE
                     txt_layout_thn_berhenti_keluarga_edit.visibility = View.GONE
@@ -313,7 +423,6 @@ class EditKeluargaActivity : BaseActivity() {
                     keluargaReq.status_kerja = 1
                 }
                 1 -> {
-                    txt_layout_pekerjaan_keluarga_edit.visibility = View.GONE
                     txt_layout_nama_kantor_keluarga_edit.visibility = View.GONE
                     txt_layout_alamat_kantor_keluarga_edit.visibility = View.GONE
                     txt_layout_no_telp_kantor_keluarga_edit.visibility = View.GONE

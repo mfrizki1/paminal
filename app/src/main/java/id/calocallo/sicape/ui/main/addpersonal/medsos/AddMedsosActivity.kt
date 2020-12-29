@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.MedSosReq
+import id.calocallo.sicape.network.request.MedSosReq
 import id.calocallo.sicape.model.ParentListMedsos
 import id.calocallo.sicape.ui.main.addpersonal.AddFotoActivity
 import id.calocallo.sicape.utils.SessionManager
@@ -54,7 +54,14 @@ class AddMedsosActivity : BaseActivity() {
                 )
             }
         } else {
-            list.add(MedSosReq("", "", "", ""))
+            list.add(
+                MedSosReq(
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
         }
         rv_medsos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = MedSosAdapter(this, list, object : MedSosAdapter.OnClickMedsos {
@@ -66,7 +73,14 @@ class AddMedsosActivity : BaseActivity() {
         rv_medsos.adapter = adapter
 
         btn_add_medsos.setOnClickListener {
-            list.add(MedSosReq("", "", "", ""))
+            list.add(
+                MedSosReq(
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            )
             val position = if (list.isEmpty()) 0 else list.size - 1
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()

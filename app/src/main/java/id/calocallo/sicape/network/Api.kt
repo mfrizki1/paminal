@@ -35,7 +35,7 @@ interface Api {
         const val UPD_PEKERJAAN_LUAR = "personel/pekerjaan/diluar/dinas/{id_pekerjaan}"
 
         const val ALAMAT_SINGLE = "personel/{id_personel}/riwayat/alamat"
-        const val UPD_ALAMAT = "personeL/riwayat/{id_alamat}}"
+        const val UPD_ALAMAT = "personel/riwayat/alamat/{id_alamat}"
 
         const val ORGANISASI_SINGLE = "personel/{id_personel}/riwayat/organisasi"
         const val UPD_ORGANISASI = "personel/riwayat/organisasi/{id_organisasi}"
@@ -70,9 +70,20 @@ interface Api {
         const val MED_SOS_SINGLE = "personel/{id_personel}/media/sosial"
         const val UPD_MED_SOS = "personel/media/sosial/{id_med_sos}"
 
+
+        const val SIGNALEMENT = "personel/{id_personel}/signalement"
+
+        const val RELASI_SINGLE = "personel/{id_personel}/relasi/{jenis_relasi}"
+        const val UPD_RELASI = "personel/relasi/{id_relasi}"
+
+        const val DIHUKUM_SINGLE = "personel/{id_personel}/pernah/dihukum"
+        const val UPD_DIHUKUM = "personel/pernah/dihukum/{id_dihukum}"
+
         const val FOTO_MUKA = "file/foto/upload/foto_muka"
         const val FOTO_KANAN = "file/foto/upload/foto_kanan"
         const val FOTO_KIRI = "file/foto/upload/foto_kiri"
+
+        const val FOTO_SINGLE = "personel/{id_personel}/foto"
 
         const val AUTH = "auth"
         const val GET_USER = "${AUTH}/profile"
@@ -620,7 +631,7 @@ interface Api {
     @PATCH(UPD_MED_SOS)
     fun updateMedSosSingle(
         @Header("Authorization") token: String,
-        @Path("id_med_info") id_med_info: String,
+        @Path("id_med_sos") id_med_sos: String,
         @Body medSosReq: MedSosReq
     ): Call<BaseResp>
 
@@ -628,7 +639,89 @@ interface Api {
     @DELETE(UPD_MED_SOS)
     fun deleteMedSos(
         @Header("Authorization") token: String,
-        @Path("id_med_info") id_med_info: String
+        @Path("id_med_sos") id_med_sos: String
+    ): Call<BaseResp>
+
+    //    <------------------SIGNALEMENT----------------->
+
+    @Headers(ACCEPT)
+    @GET(SIGNALEMENT)
+    fun getSignalement(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<SignalementModel>
+
+    @Headers(ACCEPT)
+    @PATCH(SIGNALEMENT)
+    fun updateSignalement(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body signalementModel: SignalementModel
+    ): Call<BaseResp>
+
+    //    <------------------RELASI----------------->
+    @Headers(ACCEPT)
+    @GET(RELASI_SINGLE)
+    fun showRelasi(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Path("jenis_relasi") jenis_relasi: String
+    ): Call<ArrayList<RelasiResp>>
+
+    @Headers(ACCEPT)
+    @POST(RELASI_SINGLE)
+    fun addSingleRelasi(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Path("jenis_relasi") jenis_relasi: String,
+        @Body relasiReq: RelasiReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_RELASI)
+    fun updateSingleRelasi(
+        @Header("Authorization") token: String,
+        @Path("id_relasi") id_relasi: String,
+        @Body relasiReq: RelasiReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_RELASI)
+    fun deleteSingleRelasi(
+        @Header("Authorization") token: String,
+        @Path("id_relasi") id_relasi: String
+    ): Call<BaseResp>
+
+
+    //    <------------------DIHUKUM----------------->
+    @Headers(ACCEPT)
+    @GET(DIHUKUM_SINGLE)
+    fun showDihukum(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<ArrayList<PernahDihukumResp>>
+
+    @Headers(ACCEPT)
+    @POST(DIHUKUM_SINGLE)
+    fun addSingleDihukum(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body hukumanReq: HukumanReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @PATCH(UPD_DIHUKUM)
+    fun updateSingleDihukum(
+        @Header("Authorization") token: String,
+        @Path("id_dihukum") id_dihukum: String,
+        @Body hukumanReq: HukumanReq
+    ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @DELETE(UPD_DIHUKUM)
+    fun deleteSingleDihukum(
+        @Header("Authorization") token: String,
+        @Path("id_dihukum") id_dihukum: String
     ): Call<BaseResp>
 
     //    <------------------FOTO----------------->
@@ -656,5 +749,18 @@ interface Api {
         @Part foto: MultipartBody.Part
     ): Call<Base1Resp<FotoResp>>
 
+    @Headers(ACCEPT)
+    @GET(FOTO_SINGLE)
+    fun getFoto(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String
+    ): Call<FotoModel>
 
+    @Headers(ACCEPT)
+    @PATCH(FOTO_SINGLE)
+    fun updateFoto(
+        @Header("Authorization") token: String,
+        @Path("id_personel") id_personel: String,
+        @Body editFotoReq: EditFotoReq
+    ): Call<BaseResp>
 }

@@ -1,25 +1,25 @@
 package id.calocallo.sicape.ui.main.editpersonel
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.github.razir.progressbutton.attachTextChangeAnimator
-import com.github.razir.progressbutton.bindProgressButton
-import com.github.razir.progressbutton.showDrawable
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
-import id.calocallo.sicape.model.SatKerResp
+import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AddPersonelReq
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_detail_personel.*
 import kotlinx.android.synthetic.main.activity_edit_personel.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -48,56 +48,92 @@ class EditPersonelActivity : BaseActivity() {
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detail?.nama.toString()
+        getPersonel(detail)
 
+        initSpinner(spinner_jk_edit, spinner_stts_kwn_edit, sp_agm_now_edit, sp_agm_before_edit)
+
+        bindProgressButton(btn_save_personel_edit)
+        btn_save_personel_edit.attachTextChangeAnimator()
+        btn_save_personel_edit.setOnClickListener {
+            doUpdate(sessionManager.fetchHakAkses())
+
+        }
+        getSatker()
+
+    }
+
+    private fun getPersonel(detail: PersonelModel?) {
         when (detail?.agama_sekarang) {
             "islam" -> {
+                agmNow = "islam"
                 sp_agm_now_edit.setText("Islam")
             }
             "katolik" -> {
+                agmNow = "katolik"
                 sp_agm_now_edit.setText("Katolik")
             }
             "protestan" -> {
+                agmNow = "protestan"
                 sp_agm_now_edit.setText("Protestan")
             }
             "buddha" -> {
+                agmNow = "buddha"
                 sp_agm_now_edit.setText("Buddha")
             }
             "hindu" -> {
+                agmNow = "hindu"
                 sp_agm_now_edit.setText("Hindu")
             }
             "konghuchu" -> {
+                agmNow = "konghuchu"
                 sp_agm_now_edit.setText("Konghuchu")
+            }
+            else -> {
+                agmNow = ""
             }
         }
 
         when (detail?.agama_sebelumnya) {
             "islam" -> {
+                agmBefore = "islam"
                 sp_agm_before_edit.setText("Islam")
             }
             "katolik" -> {
+                agmBefore = "katolik"
                 sp_agm_before_edit.setText("Katolik")
             }
             "protestan" -> {
+                agmBefore = "protestan"
                 sp_agm_before_edit.setText("Protestan")
             }
             "buddha" -> {
+                agmBefore = "buddha"
                 sp_agm_before_edit.setText("Buddha")
             }
             "hindu" -> {
+                agmBefore = "hindu"
                 sp_agm_before_edit.setText("Hindu")
             }
             "konghuchu" -> {
+                agmBefore = "konghuchu"
                 sp_agm_before_edit.setText("Konghuchu")
+            }
+            else -> {
+                agmBefore = ""
             }
         }
 
         when (detail?.jenis_kelamin) {
             "laki_laki" -> {
+                jk = "laki_laki"
                 spinner_jk_edit.setText("Laki-Laki")
             }
             "perempuan" -> {
+                jk = "perempuan"
                 spinner_jk_edit.setText("Perempuan")
-
+            }
+            else -> {
+                jk = ""
             }
         }
 
@@ -123,20 +159,23 @@ class EditPersonelActivity : BaseActivity() {
         }
         when (detail?.status_perkawinan) {
             "0" -> {
-                addPersonelReq.status_perkawinan = 0
+                spinner_stts_kwn_edit.setText("Tidak")
+                sttsKawin = 0
                 txt_layout_kawin_berapa_edit.visibility = View.GONE
                 cl_ttl_kawin_edit.visibility = View.GONE
             }
             "1" -> {
-                addPersonelReq.status_perkawinan = 1
+                spinner_stts_kwn_edit.setText("Ya")
+                sttsKawin = 1
                 txt_layout_kawin_berapa_edit.visibility = View.VISIBLE
                 cl_ttl_kawin_edit.visibility = View.VISIBLE
             }
         }
         addPersonelReq.id_satuan_kerja = detail?.id_satuan_kerja
-        addPersonelReq.jenis_kelamin = detail?.jenis_kelamin
-        addPersonelReq.agama_sekarang = detail?.agama_sekarang
-        addPersonelReq.agama_sebelumnya = detail?.agama_sebelumnya
+        addPersonelReq.jenis_kelamin = jk
+        addPersonelReq.agama_sekarang = agmNow
+        addPersonelReq.agama_sebelumnya = agmBefore
+        addPersonelReq.status_perkawinan = sttsKawin
 
         edt_bahasa_edit.setText(detail?.bahasa)
         edt_almt_ktp_edit.setText(detail?.alamat_sesuai_ktp)
@@ -160,17 +199,6 @@ class EditPersonelActivity : BaseActivity() {
         edt_tgl_ttl_edit.setText(detail?.tanggal_lahir)
         edt_tmpt_ttl_edit.setText(detail?.tempat_lahir)
         edt_how_to_kwg_edit.setText(detail?.cara_peroleh_kewarganegaraan)
-
-
-        initSpinner(spinner_jk_edit, spinner_stts_kwn_edit, sp_agm_now_edit, sp_agm_before_edit)
-
-        btn_save_personel_edit.attachTextChangeAnimator()
-        bindProgressButton(btn_save_personel_edit)
-        btn_save_personel_edit.setOnClickListener {
-            doUpdate(sessionManager.fetchHakAkses())
-        }
-        getSatker()
-
     }
 
     private fun getSatker() {
@@ -187,29 +215,41 @@ class EditPersonelActivity : BaseActivity() {
                 response: Response<ArrayList<SatKerResp>>
             ) {
                 if (response.isSuccessful) {
-//                    val listNameSatker = response.body()
-//                    val listSatker = listOf(listNameSatker)
-//                    val adapter = ArrayAdapter(this@EditPersonelActivity, R.layout.item_spinner, listSatker)
-//                    val adapter = abc?.let {
-//                        ArrayAdapter(this@EditPersonelActivity, R.layout.item_spinner, it)
-//                    }
-//                    val adapter = listNameSatker?.let {
-//                        ArrayAdapter(
-//                            this@EditPersonelActivity, R.layout.item_spinner,
-//                            it
-//                        )
-//                    }
-//                    spinner_kesatuan_edit.setAdapter(adapter)
-//                    spinner_kesatuan_edit.setOnItemClickListener { parent, view, position, id ->
-//                        for (i in 0..listNameSatker?.size!!) {
-//                            when (position) {
-//                                i -> {
-//                                    addPersonelReq.id_satuan_kerja = listNameSatker[i].id
-//                                    Log.e("satker", "satker ${listNameSatker[i].id}")
-//                                }
-//                            }
-//                        }
-//                    }
+                    val listNameSatker = response.body()
+                    val listSatker = listOf(
+                        "POLRESTA BANJARMASIN",
+                        "POLRES BANJARBARU",
+                        "POLRES BANJAR",
+                        "POLRES TAPIN",
+                        "POLRES HULU SUNGAI SELATAN",
+                        "POLRES HULU SUNGAI TENGAH",
+                        "POLRES HULU SUNGAI UTARA",
+                        "POLRES BALANGAN",
+                        "POLRES TABALONG",
+                        "POLRES TANAH LAUT",
+                        "POLRES TANAH BUMBU",
+                        "POLRES KOTABARU",
+                        "POLRES BATOLA",
+                        "SAT BRIMOB",
+                        "SAT POLAIR",
+                        "SPN BANJARBARU",
+                        "POLDA KALSEL",
+                        "SARPRAS"
+                    )
+                    val adapterSatker =
+                        ArrayAdapter(this@EditPersonelActivity, R.layout.item_spinner, listSatker)
+
+                    spinner_kesatuan_edit.setAdapter(adapterSatker)
+                    spinner_kesatuan_edit.setOnItemClickListener { parent, view, position, id ->
+                        for (i in 0..listNameSatker?.size!!) {
+                            when (position) {
+                                i -> {
+                                    addPersonelReq.id_satuan_kerja = listNameSatker[i].id
+                                    Log.e("satker", "satker ${listNameSatker[i].id}")
+                                }
+                            }
+                        }
+                    }
                 } else {
                     Toast.makeText(this@EditPersonelActivity, "Error", Toast.LENGTH_SHORT).show()
                 }
@@ -242,9 +282,12 @@ class EditPersonelActivity : BaseActivity() {
         addPersonelReq.kebiasaan = edt_kebiasaan_edit.text.toString()
         addPersonelReq.bahasa = edt_bahasa_edit.text.toString()
 
+        btn_save_personel_edit.showProgress {
+            progressColor = Color.WHITE
+        }
         //animatedButton
         val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
-        //Defined bounds are required for your drawable
+//        Defined bounds are required for your drawable
         val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
 
@@ -258,23 +301,33 @@ class EditPersonelActivity : BaseActivity() {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     Toast.makeText(this@EditPersonelActivity, "Gagal Update", Toast.LENGTH_SHORT)
                         .show()
+                    btn_save_personel_edit.hideDrawable(R.string.save)
+
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                     if (response.isSuccessful) {
                         if (response.body()?.message == "Data identitas updated succesfully") {
+//                        Toast.makeText(this@EditPersonelActivity, R.string.data_saved, Toast.LENGTH_SHORT).show()
                             btn_save_personel_edit.showDrawable(animatedDrawable) {
-                                buttonTextRes = R.string.data_Updated
+                                buttonTextRes = R.string.data_updated
                                 textMarginRes = R.dimen.space_10dp
-                                finish()
                             }
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                finish()
+                            }, 500)
+
                         } else {
-                            Toast.makeText(this@EditPersonelActivity, "Error2", Toast.LENGTH_SHORT)
-                                .show()
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                btn_save_personel_edit.hideDrawable(R.string.save)
+                            }, 3000)
+                            btn_save_personel_edit.hideDrawable(R.string.not_update)
                         }
                     } else {
-                        Toast.makeText(this@EditPersonelActivity, "Error", Toast.LENGTH_SHORT)
-                            .show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_personel_edit.hideDrawable(R.string.save)
+                        }, 3000)
+                        btn_save_personel_edit.hideDrawable(R.string.not_update)
                     }
                 }
             })
@@ -294,9 +347,11 @@ class EditPersonelActivity : BaseActivity() {
         sp_jk.setAdapter(adapterJk)
         sp_jk.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
+                addPersonelReq.jenis_kelamin = "laki_laki"
                 jk = "laki_laki"
             } else {
                 jk = "perempuan"
+                addPersonelReq.jenis_kelamin = "perempuan"
             }
 //            jk = parent.getItemAtPosition(position).toString()
 //            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
@@ -319,39 +374,59 @@ class EditPersonelActivity : BaseActivity() {
 //            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
         }
 
-        val agamaItem = listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu")
+        val agamaItem =
+            listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu", "Tidak Ada")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
         sp_agama_skrg.setAdapter(adapterAgama)
         sp_agama_skrg.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 agmNow = "islam"
+                addPersonelReq.agama_sekarang = "islam"
             } else if (position == 1) {
                 agmNow = "katolik"
+                addPersonelReq.agama_sekarang = "katolik"
             } else if (position == 2) {
                 agmNow = "protestan"
+                addPersonelReq.agama_sekarang = "protestan"
             } else if (position == 3) {
-                agmNow = "budha"
+                agmNow = "buddha"
+                addPersonelReq.agama_sekarang = "buddha"
             } else if (position == 4) {
                 agmNow = "hindu"
-            } else {
+                addPersonelReq.agama_sekarang = "hindu"
+            } else if (position == 5) {
                 agmNow = "konghuchu"
+                addPersonelReq.agama_sekarang = "konghuchu"
+            } else {
+                agmNow = ""
+                addPersonelReq.agama_sekarang = ""
             }
         }
         sp_agama_sblm.setAdapter(adapterAgama)
         sp_agama_sblm.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 agmBefore = "islam"
+                addPersonelReq.agama_sebelumnya = "islam"
             } else if (position == 1) {
                 agmBefore = "katolik"
+                addPersonelReq.agama_sebelumnya = "v"
             } else if (position == 2) {
                 agmBefore = "protestan"
+                addPersonelReq.agama_sebelumnya = "protestan"
             } else if (position == 3) {
-                agmBefore = "budha"
+                agmBefore = "buddha"
+                addPersonelReq.agama_sebelumnya = "buddha"
             } else if (position == 4) {
                 agmBefore = "hindu"
-            } else {
+                addPersonelReq.agama_sebelumnya = "hindu"
+            } else if (position == 5) {
                 agmBefore = "konghuchu"
+                addPersonelReq.agama_sebelumnya = "konghuchu"
+            } else {
+                agmBefore = ""
+                addPersonelReq.agama_sebelumnya = ""
             }
         }
     }
+
 }

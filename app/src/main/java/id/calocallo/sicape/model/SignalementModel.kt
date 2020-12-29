@@ -6,7 +6,7 @@ data class SignalementModel(
     var muka: String?,
     var mata: String?,
     var sidik_jari: String?,
-    var cacat_ciri: String?,
+    var cacat: String?,
     var kesenangan: String?,
     var kelemahan: String?,
     var yang_mempengaruhi: String?,

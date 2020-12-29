@@ -22,6 +22,7 @@ import id.calocallo.sicape.ui.main.editpersonel.media_info.PickMedInfoActivity
 import id.calocallo.sicape.ui.main.editpersonel.orangs.PickOrangsActivity
 import id.calocallo.sicape.ui.main.editpersonel.organisasi_dll.PickMenuOrganisasiDllActivity
 import id.calocallo.sicape.ui.main.editpersonel.pekerjaan.EditPekerjaanActivity
+import id.calocallo.sicape.ui.main.editpersonel.pernah_dihukum.PickPernahDihukumActivity
 import id.calocallo.sicape.ui.main.editpersonel.relasi.PickRelasiActivity
 import id.calocallo.sicape.ui.main.editpersonel.sahabat.PickSahabatActivity
 import id.calocallo.sicape.ui.main.editpersonel.saudara.PickSaudaraActivity
@@ -182,7 +183,7 @@ class DetailPersonelActivity : BaseActivity() {
         btn_edit_ibu_tiri.setOnClickListener {
             val intent = Intent(this, EditKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            intent.putExtra("KELUARGA", "ayah_tiri")
+            intent.putExtra("KELUARGA", "ibu_tiri")
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
@@ -268,6 +269,13 @@ class DetailPersonelActivity : BaseActivity() {
         }
         btn_edit_relasi.setOnClickListener {
             val intent = Intent(this, PickRelasiActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+//            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
+        }
+        btn_edit_pernah_dihukum.setOnClickListener {
+            val intent = Intent(this, PickPernahDihukumActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)

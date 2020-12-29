@@ -1,12 +1,17 @@
 package id.calocallo.sicape.ui.main.editpersonel.pekerjaan
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AddSinglePekerjaanReq
@@ -16,10 +21,12 @@ import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
+import kotlinx.android.synthetic.main.activity_edit_tokoh.*
 import kotlinx.android.synthetic.main.fragment_add_single_pekerjaan.*
 import kotlinx.android.synthetic.main.fragment_add_single_pekerjaan.view.*
 import kotlinx.android.synthetic.main.fragment_add_single_pend.*
 import kotlinx.android.synthetic.main.fragment_edit_pekerjaan_luar.*
+import kotlinx.android.synthetic.main.fragment_edit_pend.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,7 +64,8 @@ class AddSinglePekerjaanFragment : Fragment() {
 
             }
         }
-
+        view.btn_save_add_add_single.attachTextChangeAnimator()
+        bindProgressButton(view.btn_save_add_add_single)
         view.btn_save_add_add_single.setOnClickListener {
             doAddPekerjaan(pekerjaan)
         }
@@ -65,6 +73,12 @@ class AddSinglePekerjaanFragment : Fragment() {
     }
 
     private fun doAddPekerjaan(pekerjaan: String) {
+        val animatedDrawable =
+            activity?.let { ContextCompat.getDrawable(it, R.drawable.animated_check) }!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
         if (pekerjaan == "pekerjaan") {
 
             singlePekerjaanReq.keterangan = edt_ket_pekerjaan_add_single.text.toString()
@@ -72,6 +86,10 @@ class AddSinglePekerjaanFragment : Fragment() {
             singlePekerjaanReq.golongan = edt_pangkat_pekerjaan_add_single.text.toString()
             singlePekerjaanReq.pekerjaan = edt_nama_pekerjaan_add_single.text.toString()
             singlePekerjaanReq.berapa_tahun = edt_lama_thn_pekerjaan_add_single.text.toString()
+
+            view?.btn_save_add_add_single?.showProgress {
+                progressColor = Color.WHITE
+            }
 
             NetworkConfig().getService().addPekerjaanSingle(
                 "Bearer ${sessionManager.fetchAuthToken()}",
@@ -81,28 +99,45 @@ class AddSinglePekerjaanFragment : Fragment() {
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                    btn_save_add_add_single.hideDrawable(R.string.save)
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                     if (response.isSuccessful) {
                         Toast.makeText(activity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT)
                             .show()
+                        view?.btn_save_add_add_single?.showDrawable(animatedDrawable) {
+                            buttonTextRes = R.string.data_saved
+                            textMarginRes = R.dimen.space_10dp
+                        }
 //                    activity?.finish()
-                        fragmentManager?.popBackStack()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            fragmentManager?.popBackStack()
+                        }, 500)
                     } else {
-                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_add_add_single.hideDrawable(R.string.save)
+                        },3000)
+                        btn_save_add_add_single.hideDrawable(R.string.not_save)
+
                     }
 
                 }
             })
 
         } else {
+
             pekerjaanLuarReq.pekerjaan = edt_nama_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.tahun_awal = edt_thn_awal_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.tahun_akhir = edt_thn_akhir_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.instansi = edt_instansi_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.dalam_rangka = edt_rangka_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.keterangan = edt_ket_pekerjaan_luar.text.toString()
+
+            btn_save_add_add_single.showProgress {
+                progressColor = Color.WHITE
+            }
+
             NetworkConfig().getService().addPekerjaanLuar(
                 "Bearer ${sessionManager.fetchAuthToken()}",
 //                "4",
@@ -115,12 +150,21 @@ class AddSinglePekerjaanFragment : Fragment() {
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(activity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT)
-                            .show()
+                        btn_save_add_add_single.showDrawable(animatedDrawable) {
+                            buttonTextRes = R.string.data_saved
+                            textMarginRes = R.dimen.space_10dp
+                        }
+//                        Toast.makeText(activity, R.string.data_saved, Toast.LENGTH_SHORT)
+//                            .show()
 //                     activity?.finish()
-                        fragmentManager?.popBackStack()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            fragmentManager?.popBackStack()
+                        },500)
                     } else {
-                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_add_add_single.hideDrawable(R.string.save)
+                        },3000)
+                        btn_save_add_add_single.hideDrawable(R.string.not_save)
                     }
                 }
             })

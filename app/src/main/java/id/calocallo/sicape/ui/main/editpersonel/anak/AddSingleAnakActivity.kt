@@ -1,11 +1,15 @@
 package id.calocallo.sicape.ui.main.editpersonel.anak
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AnakReq
+import id.calocallo.sicape.network.request.AnakReq
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -47,9 +51,9 @@ class AddSingleAnakActivity : BaseActivity() {
             }
         }
 
+        btn_save_single_anak.attachTextChangeAnimator()
+        bindProgressButton(btn_save_single_anak)
         btn_save_single_anak.setOnClickListener {
-
-
             anakReq.nama = edt_nama_lengkap_single_anak.text.toString()
             anakReq.tempat_lahir = edt_tmpt_ttl_single_anak.text.toString()
             anakReq.tanggal_lahir = edt_tgl_ttl_single_anak.text.toString()
@@ -63,26 +67,40 @@ class AddSingleAnakActivity : BaseActivity() {
     }
 
     private fun AddAnak(anakReq: AnakReq) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+        btn_save_single_anak.showProgress {
+            progressColor = Color.WHITE
+        }
         NetworkConfig().getService().addAnakSingle(
             "Bearer ${sessionManager.fetchAuthToken()}",
             sessionManager.fetchID().toString(),
             anakReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                btn_save_single_anak.hideDrawable(R.string.save)
                 Toast.makeText(this@AddSingleAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT)
                     .show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@AddSingleAnakActivity,
-                        "Data Anak Berhasil Ditambahkan",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    finish()
+                    btn_save_single_anak.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_saved
+                        textMarginRes = R.dimen.space_10dp
+                    }
+//                    Toast.makeText(this@AddSingleAnakActivity, R.string.data_saved, Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
                 } else {
-                    Toast.makeText(this@AddSingleAnakActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_single_anak.hideDrawable(R.string.save)
+                    },3000)
+                    btn_save_single_anak.hideDrawable(R.string.not_save)
+
                 }
             }
         })

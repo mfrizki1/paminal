@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AyahReq
+import id.calocallo.sicape.network.request.AyahReq
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_ayah_kandung.*
@@ -81,7 +81,7 @@ class AddAyahKandungActivity : BaseActivity() {
         spinner.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) { // masih
 //                Log.e("stts_kerja_spinner", parent.getItemAtPosition(position).toString())
-                txt_layout_pekerjaan_ayah.visibility = View.VISIBLE
+
                 txt_layout_nama_kantor_ayah.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_ayah.visibility = View.VISIBLE
                 txt_layout_no_telp_kantor_ayah.visibility = View.VISIBLE

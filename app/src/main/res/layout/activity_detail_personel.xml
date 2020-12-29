@@ -486,6 +486,16 @@
             app:backgroundTint="@color/white"
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1.5dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_pernah_dihukum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Edit Data Pernah Dihukum"
+            android:textColor="@color/colorPrimary"
+            app:backgroundTint="@color/white"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1.5dp" />
 
 <!--        <com.google.android.material.button.MaterialButton-->
 <!--            android:id="@+id/btn_edit_catpers"-->

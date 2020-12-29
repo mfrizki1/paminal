@@ -6,8 +6,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LpDisiplinModel
+import id.calocallo.sicape.network.response.LpResp
+import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lp.*
 import kotlinx.android.synthetic.main.item_lp.view.*
@@ -17,9 +21,15 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class LpActivity : BaseActivity() {
     private lateinit var list: ArrayList<LpDisiplinModel>
-//    private lateinit var adapterLp: LpAdapter
+    private var listLp: MutableList<LpResp> = mutableListOf()
+
+    //    private lateinit var adapterLp: LpAdapter
     private lateinit var adapterLpDisiplin: ReusableAdapter<LpDisiplinModel>
     private lateinit var adapterCallbackLpDisiplin: AdapterCallback<LpDisiplinModel>
+    private lateinit var adapterLp: LpAdapter
+//    private lateinit var adapterLp: ReusableAdapter<LpResp>
+    private lateinit var callbackLp: AdapterCallback<LpResp>
+    private lateinit var sessionManager: SessionManager
 
     companion object {
         const val JENIS = "JENIS"
@@ -31,6 +41,12 @@ class LpActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         val jenis = intent.extras?.getString(JENIS)
         supportActionBar?.title = "Laporan Polisi $jenis"
+        sessionManager = SessionManager(this)
+//        adapterLp = ReusableAdapter(this)
+        val hak = sessionManager.fetchHakAkses()
+        if (hak == "operator") {
+            btn_add_lp.gone()
+        }
 
         //TODO API JENIS
         var tempJenis = ""
@@ -57,7 +73,7 @@ class LpActivity : BaseActivity() {
         list.add(
             LpDisiplinModel(
                 "LP 123/2020/BIDPROPAM", "Hukuman", "Pasal 12 Ayat 1",
-                "Faisal Rizki", "Briptu", "987123456", "Polda Banjarmasin","POLARI",
+                "Faisal Rizki", "Briptu", "987123456", "Polda Banjarmasin", "POLARI",
                 "", "pidana"
             )
         )
@@ -65,33 +81,106 @@ class LpActivity : BaseActivity() {
         list.add(
             LpDisiplinModel(
                 "LP 987/2020/BIDPROPAM", "Hukuman", "Pasal 12 Ayat 1",
-                "Ahmad Julian", "Bripda", "12341234", "Polair","POLARI",
+                "Ahmad Julian", "Bripda", "12341234", "Polair", "POLARI",
                 "", "disiplin"
             )
         )
         list.add(
             LpDisiplinModel(
                 "LP 987/2020/BIDPROPAM", "Hukuman", "Pasal 12 Ayat 1",
-                "Ahmad Julian", "Bripda", "12341234", "Polres BJM","POLARI",
+                "Ahmad Julian", "Bripda", "12341234", "Polres BJM", "POLARI",
                 "", "kode_etik"
+            )
+        )
+        listLp.add(
+            LpResp(
+                1, "pidana", "LP/PIDANA/2020/BIDPROPAM", 4,
+                4, 1, sessionManager.getAlatBukiLP(), sessionManager.getListPasalLP(),
+                sessionManager.getListSaksi(), "KET", "", "", ""
+            )
+        )
+        listLp.add(
+            LpResp(
+                2, "pidana", "LP/PIDANA2/2020/BIDPROPAM", 4,
+                5, 2, sessionManager.getAlatBukiLP(), sessionManager.getListPasalLP(),
+                sessionManager.getListSaksi(), "KET", "", "", ""
+
+            )
+        )
+        listLp.add(
+            LpResp(
+                3, "kode_etik", "LP/KODE_ETIK/2020/BIDPROPAM", 4,
+                5, 2, sessionManager.getAlatBukiLP(), sessionManager.getListPasalLP(),
+                sessionManager.getListSaksi(), "KET", "", "", ""
+
             )
         )
 
         //TODO FILTERING LIST
-        val abc = list.filter { it.jenis_pelanggaran == tempJenis }
+//        val abc = list.filter { it.jenis_pelanggaran == tempJenis }
+        val abc = listLp.filter { it.jenis == tempJenis }
         Log.e("abc", "${abc.size}")
         Log.e("tempJenis", tempJenis)
 
+        callbackLp = object : AdapterCallback<LpResp> {
+            override fun initComponent(itemView: View, data: LpResp, itemIndex: Int) {
+                itemView.txt_no_lp.text = data.no_lp
+                itemView.txt_jabatan_lp_dilapor.text = "JABATAN 1"
+                itemView.txt_nama_lp_dilapor.text = "NAMA"
+                itemView.txt_nrp_pangkat_lp_dilapor.text = "PANGKAT BRIPTU, NRP: 90909090"
+                itemView.txt_kesatuan_lp_dilapor.text = "POLRESTA BJM"
+
+                itemView.txt_jabatan_lp_terlapor.text = "JABATAN 1"
+                itemView.txt_nama_lp_terlapor.text = "NAMA"
+                itemView.txt_nrp_pangkat_lp_terlapor.text = "PANGKAT BRIPTU, NRP: 90909090"
+                itemView.txt_kesatuan_lp_terlapor.text = "POLRESTA BJM"
+//                for(i in 0 .. listLp.size) {
+//                val namaPasal = data.listPasal[itemIndex]?.nama_pasal
+//                Log.e("namaPasal", namaPasal.toString())
+//                for (i in 0..listLp.size) {
+//                    for (j in 0..listLp[i].listPasal?.size!!) {
+//                        val namaPasal1 = data.listPasal?.get(j)?.nama_pasal
+//                        itemView.txt_pasal_lp.text = "Pasal : $namaPasal1"
+//                    }
+//                    val namaPasal2 = data.listPasal?.get(i)?.nama_pasal
+//                    itemView.txt_pasal_lp.text = "Pasal : $namaPasal2"
+//                }
+//                itemView.txt_pasal_lp.text = "Pasal : ${namaPasal} \n"
+//                    val namaSaksi = data.listSaksi?.get(i)?.nama_saksi
+//                    itemView.txt_saksi_lp.text = "Saksi : $namaSaksi \n"
+
+//                    if(data.alatBukti?.contains("\n")!!){
+//                        itemView.txt_alat_bukti_lp.text= "Alat Bukti : ${data.alatBukti}"
+//                    }
+//                }
+
+            }
+
+            override fun onItemClicked(itemView: View, data: LpResp, itemIndex: Int) {
+                val intent = Intent(this@LpActivity, DetailLpActivity::class.java)
+                intent.putExtra(DetailLpActivity.DETAIL_LP, data)
+                startActivity(intent)
+            }
+
+        }
+//        adapterLp.adapterCallback(callbackLp)
+//            .filterable().isVerticalView()
+//            .addData(abc)
+//            .setLayout(R.layout.item_lp)
+//            .build(rv_lp)
+
+        /*
         adapterLpDisiplin = ReusableAdapter(this)
-        adapterCallbackLpDisiplin = object : AdapterCallback<LpDisiplinModel>{
+        adapterCallbackLpDisiplin = object : AdapterCallback<LpDisiplinModel> {
             override fun initComponent(itemView: View, data: LpDisiplinModel, itemIndex: Int) {
                 itemView.txt_no_lp.text = data.no_lp
-                itemView.txt_nama_lp.text = data.nama_personel
-                itemView.txt_nrp_pangkat_lp.text = "Pangkat: ${data.pangkat_personel}    NRP: ${data.nrp_personel}"
-                itemView.txt_hukuman_lp.text = data.hukuman
-                itemView.txt_pasal_lp.text= data.pasal
-                itemView.txt_kesatuan_lp.text = data.kesatuan
-                itemView.txt_jabatan_lp.text = data.jabatan
+                itemView.txt_nama_lp_dilapor.text = data.nama_personel
+                itemView.txt_nrp_pangkat_lp_dilapor.text =
+                    "Pangkat: ${data.pangkat_personel}    NRP: ${data.nrp_personel}"
+//                itemView.txt_hukuman_lp.text = data.hukuman
+                itemView.txt_pasal_lp.text = data.pasal
+                itemView.txt_kesatuan_lp_dilapor.text = data.kesatuan
+                itemView.txt_jabatan_lp_dilapor.text = data.jabatan
             }
 
             override fun onItemClicked(itemView: View, data: LpDisiplinModel, itemIndex: Int) {
@@ -104,24 +193,26 @@ class LpActivity : BaseActivity() {
             .adapterCallback(adapterCallbackLpDisiplin)
             .setLayout(R.layout.item_lp)
             .isVerticalView()
-            .addData(abc)
+//            .addData(abc)
             .build(rv_lp)
 
-        /*
+         */
+
         rv_lp.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterLp = LpAdapter(this, abc, object : LpAdapter.OnCLickLp {
             override fun onClick(position: Int) {
                 val intent = Intent(this@LpActivity, DetailLpActivity::class.java)
-                intent.putExtra(DetailLpActivity.DETAIL_LP, list[position])
+                intent.putExtra(DetailLpActivity.DETAIL_LP, abc[position])
                 startActivity(intent)
             }
         })
         rv_lp.adapter = adapterLp
 
-         */
 
         btn_add_lp.setOnClickListener {
-            startActivity(Intent(this, AddLpActivity::class.java))
+            val intent = Intent(this, AddLpActivity::class.java)
+            intent.putExtra("JENIS_LP", tempJenis)
+            startActivity(intent)
         }
     }
 

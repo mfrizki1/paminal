@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">SICAPE</string>
     <string name="DATA">PERSONEL</string>
+    <string name="LP">LP</string>
     <string name="login">Login</string>
     <string name="save">Simpan</string>
     <string name="error">Error</string>
+    <string name="error_conn">Error Koneksi</string>
     <string name="not_save">Gagal Simpan</string>
+    <string name="not_update">Gagal Update</string>
     <string name="next">Selanjutnya</string>
     <string name="delete">Hapus</string>
     <string name="insert_name">Nama</string>
@@ -12,7 +15,8 @@
     <string name="action_ok">OK</string>
     <string name="action_cancel">CANCEL</string>
     <string name="data_saved">Data Berhasil Disimpan</string>
-    <string name="data_Updated">Data Berhasil DiEdit</string>
+    <string name="data_updated">Data Berhasil Diupdate</string>
+    <string name="data_deleted">Data Berhasil Dihapus</string>
 
     <string name="image_picker_provider_authority_suffix">.imagepicker.provider</string>
 
