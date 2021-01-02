@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ListSaksi
 import id.calocallo.sicape.model.ListSurat
-import kotlinx.android.synthetic.main.item_saksi.view.*
+import kotlinx.android.synthetic.main.item_input_saksi.view.*
 import kotlinx.android.synthetic.main.item_surat.view.*
 
 class SuratAdapter(

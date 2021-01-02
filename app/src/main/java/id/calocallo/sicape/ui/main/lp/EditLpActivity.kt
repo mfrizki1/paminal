@@ -51,14 +51,14 @@ class EditLpActivity : BaseActivity() {
         getViewEditLP(editLp)
 
 
-        btn_choose_pelanggaran_lp_add.setOnClickListener {
-            val intent = Intent(this, PickPelanggaranActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            startActivityForResult(intent, AddLpActivity.REQ_PELANGGARAN)
+//        btn_choose_pelanggaran_lp_add.setOnClickListener {
+//            val intent = Intent(this, PickPelanggaranActivity::class.java)
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+//            startActivityForResult(intent, AddLpActivity.REQ_PELANGGARAN)
+//
+//        }
 
-        }
-
-        btn_choose_personel_dilapor_lp_add.setOnClickListener {
+        btn_choose_personel_terlapor_lp_add.setOnClickListener {
             val intent = Intent(this, ChoosePersonelActivity::class.java)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivityForResult(intent, AddLpActivity.REQ_DILAPOR)
@@ -75,8 +75,8 @@ class EditLpActivity : BaseActivity() {
         btn_next_lp_add.text = resources.getString(R.string.save)
         btn_next_lp_add.setOnClickListener {
             lpReqEdit.no_lp = edt_no_lp_add.text.toString()
-            lpReqEdit.alat_bukti = edt_alat_bukti_lp_add.text.toString()
-            lpReqEdit.keterangan = edt_ket_lp_add.text.toString()
+//            lpReqEdit.alat_bukti =  edt_alat_bukti_lp_add.text.toString()
+//            lpReqEdit.keterangan = edt_ket_lp_add.text.toString()
             lpReqEdit.id_personel_dilapor = idPersonelDilapor
             lpReqEdit.id_personel_terlapor = idPersonelTerlapor
             lpReqEdit.id_pelanggaran = idPelanggaran
@@ -126,14 +126,14 @@ class EditLpActivity : BaseActivity() {
 
     private fun getViewEditLP(editLp: LpResp?) {
         edt_no_lp_add.setText(editLp?.no_lp)
-        edt_alat_bukti_lp_add.setText(editLp?.alatBukti)
-        edt_ket_lp_add.setText(editLp?.keterangan)
+//        edt_alat_bukti_lp_add.setText(editLp?.alatBukti)
+//        edt_ket_lp_add.setText(editLp?.keterangan)
 
-        txt_nama_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
-        txt_pangkat_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
-        txt_nrp_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
-        txt_jabatan_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
-        txt_kesatuan_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
+//        txt_nama_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
+//        txt_pangkat_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
+//        txt_nrp_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
+//        txt_jabatan_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
+//        txt_kesatuan_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
 
         txt_nama_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
         txt_pangkat_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
@@ -141,7 +141,7 @@ class EditLpActivity : BaseActivity() {
         txt_jabatan_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
         txt_kesatuan_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
 
-        txt_pelanggaran_lp_add.text = editLp?.id_pelanggaran.toString()
+//        txt_pelanggaran_lp_add.text = editLp?.id_pelanggaran.toString()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -153,11 +153,11 @@ class EditLpActivity : BaseActivity() {
                 when (requestCode) {
                     AddLpActivity.REQ_DILAPOR -> {
                         idPersonelDilapor = personel?.id
-                        txt_jabatan_dilapor_lp_add.text = personel?.jabatan
-                        txt_kesatuan_dilapor_lp_add.text = personel?.satuan_kerja?.kesatuan
-                        txt_nama_dilapor_lp_add.text = personel?.nama
-                        txt_nrp_dilapor_lp_add.text = "NRP : ${personel?.nrp}"
-                        txt_pangkat_dilapor_lp_add.text = "Pangkat ${personel?.pangkat}"
+//                        txt_jabatan_dilapor_lp_add.text = personel?.jabatan
+//                        txt_kesatuan_dilapor_lp_add.text = personel?.satuan_kerja?.kesatuan
+//                        txt_nama_dilapor_lp_add.text = personel?.nama
+//                        txt_nrp_dilapor_lp_add.text = "NRP : ${personel?.nrp}"
+//                        txt_pangkat_dilapor_lp_add.text = "Pangkat ${personel?.pangkat}"
                     }
 
                     AddLpActivity.REQ_TERLAPOR -> {
@@ -170,8 +170,8 @@ class EditLpActivity : BaseActivity() {
                     }
                     AddLpActivity.REQ_PELANGGARAN -> {
                         idPelanggaran = pelanggaran?.id
-                        txt_pelanggaran_lp_add.text =
-                            "Pelanggaran : ${pelanggaran?.nama_pelanggaran}"
+//                        txt_pelanggaran_lp_add.text =
+//                            "Pelanggaran : ${pelanggaran?.nama_pelanggaran}"
                     }
                 }
             }

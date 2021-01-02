@@ -83,6 +83,86 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_lp_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Pilih Laporan Polisi"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_marginVertical="@dimen/space_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_jenis_lp_lhp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Laporan Polisi"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold" />
+
+                    <include
+                        layout="@layout/layout_separator"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/space_half" />
+
+                    <TextView
+                        android:id="@+id/txt_no_lp_lhp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Laporan Polisi"
+                        android:textSize="@dimen/text_12"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_nama_personel_lhp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Nama Personel"
+                        android:textSize="@dimen/text_10" />
+
+                    <TextView
+                        android:id="@+id/txt_pangkat_nrp_personel_lhp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Pangkat, NRP"
+                        android:textSize="@dimen/text_10" />
+
+
+                    <TextView
+                        android:id="@+id/txt_jabatan_personel_lhp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="JABATAN"
+                        android:textSize="@dimen/text_10" />
+
+                    <TextView
+                        android:id="@+id/txt_kesatuan_personel_lhp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Kesatuan"
+                        android:textSize="@dimen/text_10" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <include layout="@layout/layout_separator" />
 
             <TextView
@@ -98,7 +178,7 @@
                 android:id="@+id/rv_lidik"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                tools:listitem="@layout/item_lidik" />
+                tools:listitem="@layout/item_input_lidik" />
 
             <include layout="@layout/layout_separator" />
 
@@ -216,7 +296,7 @@
                 android:id="@+id/rv_saksi"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                tools:listitem="@layout/item_saksi" />
+                tools:listitem="@layout/item_input_saksi" />
 
             <include layout="@layout/layout_separator" />
 
@@ -257,8 +337,8 @@
                 android:layout_marginVertical="@dimen/space_8dp"
                 android:text="Petunjuk"
                 android:textSize="@dimen/text_16"
-                android:visibility="gone"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_petunjuk"
@@ -275,8 +355,8 @@
                 android:layout_marginVertical="@dimen/space_8dp"
                 android:text="Barang Bukti"
                 android:textSize="@dimen/text_16"
-                android:visibility="gone"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_bukti"
@@ -291,9 +371,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/space_8dp"
                 android:text="Keterangan Terlapor"
-                android:visibility="gone"
                 android:textSize="@dimen/text_16"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_terlapor"
@@ -308,9 +388,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/space_8dp"
                 android:text="Analisa"
-                android:visibility="gone"
                 android:textSize="@dimen/text_16"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_analisa"
@@ -360,70 +440,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/space_8dp"
-                android:text="Ketua Tim"
+                android:text="Apakah Laporan Ini Terbukti Atau Tidak?"
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <RadioGroup
+                android:id="@+id/rg_terbukti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nama Ketua Tim">
+                android:paddingHorizontal="@dimen/space_12dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_nama_ketua_tim_lhp"
+                <RadioButton
+                    android:id="@+id/rb_terbukti"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:text="Terbukti" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/pangkat">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_pangkat_ketua_tim_lhp"
+                <RadioButton
+                    android:id="@+id/rb_tidak_terbukti"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:text="Tidak Terbukti" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/nrp">
+            </RadioGroup>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_nrp_ketua_tim_lhp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <include layout="@layout/layout_separator" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/space_8dp"
-                android:text="Terbukti / Tidak Terbukti"
-                android:textSize="@dimen/text_16"
-                android:textStyle="bold" />
-
-            <RadioButton
-                android:id="@+id/rb_terbukti"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Terbukti" />
-
-            <RadioButton
-                android:id="@+id/rb_tidak_terbukti"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tidak Terbukti" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save_lhp"

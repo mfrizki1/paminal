@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SICAPE</string>
+    <string name="app_name">SIPAMINAL</string>
     <string name="DATA">PERSONEL</string>
     <string name="LP">LP</string>
     <string name="login">Login</string>
@@ -55,4 +55,5 @@
     <string name="tempat_ditahan">Tempat Ditahan</string>
     <string name="tanggal_dihukum">Tanggal Dihukum</string>
     <string name="tempat_dihukum">Tempat Dihukum</string>
+    <string name="paragraf">lorem ipsum dolor lorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolor</string>
 </resources>

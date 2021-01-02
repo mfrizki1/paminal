@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ListSaksi
-import kotlinx.android.synthetic.main.item_saksi.view.*
+import kotlinx.android.synthetic.main.item_input_saksi.view.*
 
 class SaksiAdapter(
     val context: Context,
@@ -82,7 +82,7 @@ class SaksiAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SaksiHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_saksi, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_input_saksi, parent, false)
         return SaksiHolder(view)
     }
 

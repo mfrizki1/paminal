@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ListPetunjuk
 import kotlinx.android.synthetic.main.item_petunjuk.view.*
-import kotlinx.android.synthetic.main.item_saksi.view.*
+import kotlinx.android.synthetic.main.item_input_saksi.view.*
 
 class PetunjukAdapter(
     val context: Context,

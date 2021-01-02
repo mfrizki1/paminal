@@ -63,12 +63,12 @@
             android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_choose_pasal_lp"
+                android:id="@+id/btn_save_lp_all"
                 style="@style/Widget.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/space_12dp"
-                android:text="Pilih" />
+                android:text="@string/save" />
         </LinearLayout>
 
     </RelativeLayout>

@@ -18,4 +18,7 @@ data class LpResp(
     var created_at:String?,
     var updated_at:String?,
     var deleted_at: String?
-):Parcelable
+):Parcelable{
+    constructor():this(0,"","",0,0,0,"",
+    ArrayList(),ArrayList(), "","","","")
+}

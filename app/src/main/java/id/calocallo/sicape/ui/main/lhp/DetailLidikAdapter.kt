@@ -17,10 +17,15 @@ class DetailLidikAdapter(val context: Context, val list: ArrayList<ListLidik>?) 
     inner class DtlLidikHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(listLidik: ListLidik?) {
             with(itemView) {
+                when (listLidik?.status_penyelidik) {
+                    "ketua_tim" -> txt_item_detail_lhp.text =
+                        "${listLidik?.nama_lidik}, \t ${listLidik?.pangkat_lidik}, \t NRP.${listLidik?.nrp_lidik}, Status : Ketua Tim"
+                    "anggota"-> txt_item_detail_lhp.text =
+                    "${listLidik?.nama_lidik}, \t ${listLidik?.pangkat_lidik}, \t NRP.${listLidik?.nrp_lidik}, Status : Anggota"
+                }
                 for (i in 1..list?.size!!) {
 //                    var no = i.toString()
-                    txt_item_detail_lhp.text =
-                        "${listLidik?.nama_lidik} \t ${listLidik?.pangkat_lidik} \t NRP.${listLidik?.nrp_lidik}"
+
                 }
             }
 

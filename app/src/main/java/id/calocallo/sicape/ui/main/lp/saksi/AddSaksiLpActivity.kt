@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
@@ -33,7 +35,14 @@ class AddSaksiLpActivity : BaseActivity() {
 
     private fun addSaksiLp() {
         saksiLpReq.nama_saksi = edt_nama_saksi_single.text.toString()
-
+        saksiLpReq.tempat_lahir = edt_tempat_lahir_saksi_single.text.toString()
+        saksiLpReq.tanggal_lahir = edt_tanggal_lahir_saksi_single.text.toString()
+        saksiLpReq.pekerjaan = edt_pekerjaan_saksi_single.text.toString()
+        saksiLpReq.alamat = edt_alamat_saksi_single.text.toString()
+        rg_korban_saksi.setOnCheckedChangeListener { group, checkedId ->
+            val radio = findViewById<RadioButton>(checkedId)
+            if(radio.isChecked) Log.e("korban", radio.text.toString())
+        }
         val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
         val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animatedDrawable.setBounds(0, 0, size, size)
@@ -46,7 +55,7 @@ class AddSaksiLpActivity : BaseActivity() {
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            btn_save_add_saksi.hideDrawable(R.string.data_saved)
+            btn_save_add_saksi.hideDrawable(R.string.save)
         }, 3000)
     }
 }

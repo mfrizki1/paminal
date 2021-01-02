@@ -3,6 +3,7 @@ package id.calocallo.sicape.ui.main.lhp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -20,14 +21,15 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class LhpActivity : BaseActivity() {
     private lateinit var list: ArrayList<LhpModel>
-    private lateinit var listLidik : ArrayList<ListLidik>
-    private lateinit var listSaksi : ArrayList<ListSaksi>
-    private lateinit var listSurat : ArrayList<ListSurat>
-    private lateinit var listPetunjuk : ArrayList<ListPetunjuk>
-    private lateinit var listBukti : ArrayList<ListBukti>
-    private lateinit var listAnalisa : ArrayList<ListAnalisa>
-    private lateinit var listTerlapor : ArrayList<ListTerlapor>
-//    private lateinit var adapterLhp: LhpAdapter
+    private lateinit var listLidik: ArrayList<ListLidik>
+    private lateinit var listSaksi: ArrayList<ListSaksi>
+    private lateinit var listSurat: ArrayList<ListSurat>
+    private lateinit var listPetunjuk: ArrayList<ListPetunjuk>
+    private lateinit var listBukti: ArrayList<ListBukti>
+    private lateinit var listAnalisa: ArrayList<ListAnalisa>
+    private lateinit var listTerlapor: ArrayList<ListTerlapor>
+
+    //    private lateinit var adapterLhp: LhpAdapter
     private lateinit var adapterLhp: ReusableAdapter<LhpModel>
     private lateinit var adapterCallbackLhp: AdapterCallback<LhpModel>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +47,9 @@ class LhpActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Laporan Hasil Penyelidikan"
 
-        listLidik.add(ListLidik("Utuh", "Briptu", "987655123"))
-        listLidik.add(ListLidik("Galuh", "Bripda", "1345678"))
-        listLidik.add(ListLidik("Julak", "Jenderal", "2121124"))
+        listLidik.add(ListLidik("Utuh", "Briptu", "987655123", "ketua_tim"))
+        listLidik.add(ListLidik("Galuh", "Bripda", "1345678", "anggota"))
+        listLidik.add(ListLidik("Julak", "Jenderal", "2121124", "anggota"))
 
         listSaksi.add(ListSaksi("Saksi 1", "Uraian Saksi 1"))
         listSaksi.add(ListSaksi("Saksi 2", "Uraian Saksi 2"))
@@ -70,45 +72,50 @@ class LhpActivity : BaseActivity() {
 
         list.add(
             LhpModel(
-                "NO LHP 124/xx/2020/BIDPROPAM", "22", "INI PENGADUAN", listLidik, "",
+                "NO LHP 124/xx/2020/BIDPROPAM", "22", "INI PENGADUAN", 1, listLidik, "",
                 "", "", "", "",
                 "", listSaksi, listSurat, "", listPetunjuk,
-                listBukti, listTerlapor, listAnalisa, "", "", "Faisal",
-                "", "", 0
+                listBukti, listTerlapor, listAnalisa, "", "", 0
             )
         )
         list.add(
             LhpModel(
-                "124567", "22123", "INI ASDNJDSNJS", ArrayList(),
+                "124567", "22123", "INI ASDNJDSNJS", 2, listLidik,
                 "", "", "", "",
                 "", "", ArrayList(), ArrayList(), "",
-                ArrayList(), ArrayList(), ArrayList(), ArrayList(), "", "",
-                "Rizki", "", "", 1
+                ArrayList(), ArrayList(), ArrayList(), ArrayList(), "", "", 1
             )
         )
 
         list.add(
             LhpModel(
-                "123/BIDPROPAM", "22123", "INI ASDNJDSNJS", ArrayList(),
+                "123/BIDPROPAM", "22123", "INI ASDNJDSNJS", 3, listLidik,
                 "", "", "", "",
                 "", "", ArrayList(), ArrayList(), "",
-                ArrayList(), ArrayList(), ArrayList(), ArrayList(), "", "",
-                "Ahmad", "", "", 1
+                ArrayList(), ArrayList(), ArrayList(), ArrayList(), "", "", 1
             )
         )
 
 
         //adapterLibrary
         adapterLhp = ReusableAdapter(this)
-        adapterCallbackLhp = object :AdapterCallback<LhpModel>{
+        adapterCallbackLhp = object : AdapterCallback<LhpModel> {
             override fun initComponent(itemView: View, data: LhpModel, itemIndex: Int) {
+//                val lidik = data.listLidik?.filter { it.status_penyelidik == "ketua_tim" }
+                val lidik = data.listLidik?.find { it.status_penyelidik == "ketua_tim" }
+                Log.e("lidik", "$lidik")
+//                for(i in 0 ..data.listLidik?.size!!){
+//                    if(lidik?.get(i)?.status_penyelidik == "ketua_tim"){
+                itemView.txt_ketua_tim.text = lidik?.nama_lidik
+//                    }
+//                }
                 var terbukti: String
                 itemView.txt_no_lhp.text = data.no_lhp
-                itemView.txt_ketua_tim.text = data.nama_ketua_tim
-                if(data.isTerbukti == 0){
-                    terbukti = "Terbukti"
-                }else{
+                if (data.isTerbukti == 0) {
                     terbukti = "TIdak Terbukti"
+                } else {
+                    terbukti = "Terbukti"
+
                 }
                 itemView.txt_isTerbukti.text = terbukti
             }
@@ -139,11 +146,12 @@ class LhpActivity : BaseActivity() {
 
          */
 
-        btn_lhp_add.setOnClickListener { 
+        btn_lhp_add.setOnClickListener {
             startActivity(Intent(this, AddLhpActivity::class.java))
         }
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_bar, menu)
         val item = menu?.findItem(R.id.action_search)

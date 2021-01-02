@@ -7,6 +7,13 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
+import id.calocallo.sicape.ui.main.lhp.edit.analisa.PickAnalisaLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.barangbukti.PickBarBuktiLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.lidik.PickLidikLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.petunjuk.PickPetunjukActivity
+import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickSaksiLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.surat.PickSuratLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.toggleVisibility
@@ -56,8 +63,8 @@ class DetailLhpActivity : BaseActivity() {
         val listAnalisaDetail = dataLhp?.listAnalisa
         val listTerlaporDetail = dataLhp?.listTerlapor
 
-        if(listLdkDetail == null) rl_no_data_lidik.visible()
-        if(listSaksiDetail == null) rl_no_data_saksi.visible()
+        if(listLdkDetail?.isEmpty()!!) rl_no_data_lidik.visible()
+        if(listSaksiDetail?.isEmpty()!!) rl_no_data_saksi.visible()
         if(listSuratDetail?.isEmpty()!!) rl_no_data_surat.visible()
         if(listPetunjukDetail?.isEmpty()!!) rl_no_data_petunjuk.visible()
         if(listBuktiDetail?.isEmpty()!!) rl_no_data_bukti.visible()
@@ -65,13 +72,8 @@ class DetailLhpActivity : BaseActivity() {
         if(listTerlaporDetail?.isEmpty()!!) rl_no_data_terlapor.visible()
 
         initRV(
-            listLdkDetail,
-            listSaksiDetail,
-            listSuratDetail,
-            listPetunjukDetail,
-            listBuktiDetail,
-            listAnalisaDetail,
-            listTerlaporDetail
+            listLdkDetail, listSaksiDetail, listSuratDetail, listPetunjukDetail, listBuktiDetail,
+            listAnalisaDetail, listTerlaporDetail
         )
 
         if (dataLhp.isTerbukti == 0) {
@@ -80,15 +82,61 @@ class DetailLhpActivity : BaseActivity() {
             terbukti = "Tidak Terbukti"
         }
         txt_isTerbukti_detail.text = terbukti
-        val ketuaTim = "${dataLhp.nama_ketua_tim}\t ${dataLhp.pangkat_ketua_tim}\t ${dataLhp.nrp_ketua_tim}"
-        txt_ketua_tim_detail.text = ketuaTim
+//        val ketuaTim = "${dataLhp.nama_ketua_tim}\t ${dataLhp.pangkat_ketua_tim}\t ${dataLhp.nrp_ketua_tim}"
+//        val lidik = dataLhp.listLidik?.filter { it.status_penyelidik =="ketua_tim" }
+        val lidik = dataLhp.listLidik?.find { it.status_penyelidik =="ketua_tim" }
+        txt_ketua_tim_detail.text ="${lidik?.nama_lidik} \t Pangkat : ${lidik?.pangkat_lidik} \t ${lidik?.nrp_lidik}"
 
         val hakAkses = sessionManager.fetchHakAkses()
         if(hakAkses == "operator"){
             btn_edit_lhp.toggleVisibility()
+            btn_edit_lidik_lhp.toggleVisibility()
+            btn_edit_saksi_lhp.toggleVisibility()
+            btn_edit_surat_lhp.toggleVisibility()
+            btn_edit_petunjuk_lhp.toggleVisibility()
+            btn_edit_barang_buki_lhp.toggleVisibility()
+            btn_edit_ket_terlapor_lhp.toggleVisibility()
+            btn_edit_analisa_lhp.toggleVisibility()
         }
         btn_edit_lhp.setOnClickListener {
             val intent = Intent(this, EditLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+        }
+
+        btn_edit_lidik_lhp.setOnClickListener {
+            val intent = Intent(this, PickLidikLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+        }
+        btn_edit_saksi_lhp.setOnClickListener {
+            val intent = Intent(this, PickSaksiLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+        }
+        btn_edit_surat_lhp.setOnClickListener {
+            val intent = Intent(this, PickSuratLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+        }
+        btn_edit_petunjuk_lhp.setOnClickListener {
+            val intent = Intent(this, PickPetunjukActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+        }
+
+        btn_edit_barang_buki_lhp.setOnClickListener {
+            val intent = Intent(this, PickBarBuktiLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+        }
+        btn_edit_ket_terlapor_lhp.setOnClickListener {
+            val intent = Intent(this, PickTerlaporLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+        }
+        btn_edit_analisa_lhp.setOnClickListener {
+            val intent = Intent(this, PickAnalisaLhpActivity::class.java)
             intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
             startActivity(intent)
         }

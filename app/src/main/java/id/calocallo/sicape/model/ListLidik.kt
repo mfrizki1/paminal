@@ -6,11 +6,13 @@ import android.os.Parcelable
 data class ListLidik(
     var nama_lidik: String?,
     var pangkat_lidik: String?,
-    var nrp_lidik: String?
+    var nrp_lidik: String?,
+    var status_penyelidik: String?
 ): Parcelable {
-    constructor() : this("", "", "")
+    constructor() : this("", "", "","")
 
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -20,6 +22,7 @@ data class ListLidik(
         parcel.writeString(nama_lidik)
         parcel.writeString(pangkat_lidik)
         parcel.writeString(nrp_lidik)
+        parcel.writeString(status_penyelidik)
     }
 
     override fun describeContents(): Int {

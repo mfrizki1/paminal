@@ -48,7 +48,7 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_50dp"
+        android:layout_height="100dp"
         android:layout_marginTop="@dimen/space_8dp"
         android:hint="Penjelasan Dari Terlapor">
 

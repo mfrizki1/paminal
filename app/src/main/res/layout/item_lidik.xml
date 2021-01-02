@@ -1,97 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
+
     <TextView
-        android:id="@+id/txt_umum_custom"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_nama_lidik"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:text="Personel Penyelidik"
-        android:textSize="@dimen/text_16"
-        android:textStyle="bold" />
+        android:text="NAMA PERSONEL"
+        android:textSize="@dimen/text_14"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_pangkat_nrp_lidik"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_half"
+        android:text="PANGKAT: BRIPTU NRP: "
+        android:textSize="@dimen/text_14"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/txt_nama_lidik"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nama_lidik" />
+
+    <TextView
+        android:id="@+id/ttx_status_lidik"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_half"
+        android:text="Status : Ketua Tim"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/txt_pangkat_nrp_lidik"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pangkat_nrp_lidik" />
 
     <ImageView
-        android:id="@+id/btn_delete_lidik"
-        android:layout_width="@dimen/space_32dp"
-        android:layout_height="@dimen/space_32dp"
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:layout_marginEnd="@dimen/space_12dp"
-        android:src="@drawable/ic_delete"
-        app:tint="@color/colorPrimary" />
+        android:layout_centerVertical="true"
+        android:layout_marginVertical="@dimen/space_8dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/ic_go"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txt_layout_nama_lidik"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <View
+        android:id="@+id/view3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_umum_custom"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Nama Penyelidik">
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/gainsboro"
+        app:layout_constraintTop_toBottomOf="@+id/ttx_status_lidik">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_nama_lidik"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_pangkat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_layout_nama_lidik"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:orientation="horizontal">
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/pangkat">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_pangkat_lidik"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/space_12dp"
-                android:layout_weight="1"
-                android:inputType="text" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="@string/nrp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_nrp_lidik"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="number" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_add_lidik"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/ll_pangkat"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:text="@string/tambah"
-        app:icon="@drawable/ic_add"
-        app:iconGravity="textStart"/>
-
-
-
-</RelativeLayout>
+    </View>
+</androidx.constraintlayout.widget.ConstraintLayout>

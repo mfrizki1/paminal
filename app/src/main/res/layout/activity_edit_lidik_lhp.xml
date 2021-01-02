@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.lhp.edit.lidik.EditLidikLhpActivity">
+
+    <include layout="@layout/layout_toolbar_white"/>
+    <include layout="@layout/view_separator"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_layout_status_lidik"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_umum_custom"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:hint="Status Penyelidik">
+
+        <AutoCompleteTextView
+            android:id="@+id/spinner_status_lidik_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_layout_nama_lidik"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_layout_status_lidik"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:hint="Nama Penyelidik">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_nama_lidik_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pangkat"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_layout_nama_lidik"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/pangkat">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_pangkat_lidik_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/space_12dp"
+                android:layout_weight="1"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/nrp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_nrp_lidik_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_lidik_edit"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_pangkat"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="@string/save" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete_lidik_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_pangkat"
+        android:textStyle="bold"
+        app:backgroundTint="@color/white"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="@string/delete" />
+
+</LinearLayout>

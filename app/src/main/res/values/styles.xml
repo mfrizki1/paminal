@@ -67,5 +67,10 @@
         <item name="android:layout_marginRight">@dimen/space_12dp</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>

@@ -16,18 +16,6 @@ class LpAdapter(val context: Context, val list: List<LpResp>, val onCLickLp: OnC
 
     inner class LpHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(lpResp: LpResp) {
-            val NoLP = itemView.txt_no_lp
-            val namaDilapor = itemView.txt_nama_lp_dilapor
-            val pangkatNrpDilapor = itemView.txt_nrp_pangkat_lp_dilapor
-            val jabatanDilapor = itemView.txt_jabatan_lp_dilapor
-            val kesatuanDilapor = itemView.txt_kesatuan_lp_dilapor
-
-            val namaTerlapor = itemView.txt_nama_lp_terlapor
-            val pangkatNrpTerlapor = itemView.txt_nrp_pangkat_lp_terlapor
-            val jabatanTerlapor = itemView.txt_jabatan_lp_terlapor
-            val kesatuanTerlapor = itemView.txt_kesatuan_lp_terlapor
-
-
             with(itemView) {
                 txt_no_lp.text = lpResp.no_lp
                 txt_nama_lp_dilapor.text = lpResp.id_personel_dilapor.toString()
@@ -47,12 +35,16 @@ class LpAdapter(val context: Context, val list: List<LpResp>, val onCLickLp: OnC
                 )
                 itemView.rv_pasal_lp.apply {
                     layoutManager = pasalLayout
-                    adapter = LpPasalAdapter(list[adapterPosition])
+//                    adapter = LpPasalAdapter(list[adapterPosition], adapterPosition)
                     setRecycledViewPool(viewPool)
                 }
 
                 itemView.rv_saksi_lp.apply {
-                    layoutManager = LinearLayoutManager(itemView.rv_saksi_lp.context, LinearLayoutManager.VERTICAL, false)
+                    layoutManager = LinearLayoutManager(
+                        itemView.rv_saksi_lp.context,
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
                     adapter = LpSaksiAdapter(list[adapterPosition])
                     setRecycledViewPool(viewPool)
                 }

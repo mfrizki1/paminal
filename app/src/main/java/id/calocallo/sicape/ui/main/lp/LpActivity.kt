@@ -27,18 +27,20 @@ class LpActivity : BaseActivity() {
     private lateinit var adapterLpDisiplin: ReusableAdapter<LpDisiplinModel>
     private lateinit var adapterCallbackLpDisiplin: AdapterCallback<LpDisiplinModel>
     private lateinit var adapterLp: LpAdapter
-//    private lateinit var adapterLp: ReusableAdapter<LpResp>
+
+    //    private lateinit var adapterLp: ReusableAdapter<LpResp>
     private lateinit var callbackLp: AdapterCallback<LpResp>
     private lateinit var sessionManager: SessionManager
 
     companion object {
         const val JENIS = "JENIS"
+        const val TYPEVIEW = "TYPEVIEW"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lp)
-        setupActionBarWithBackButton(toolbar)
+                setContentView(R.layout.activity_lp)
+         setupActionBarWithBackButton(toolbar)
         val jenis = intent.extras?.getString(JENIS)
         supportActionBar?.title = "Laporan Polisi $jenis"
         sessionManager = SessionManager(this)
@@ -134,25 +136,6 @@ class LpActivity : BaseActivity() {
                 itemView.txt_nama_lp_terlapor.text = "NAMA"
                 itemView.txt_nrp_pangkat_lp_terlapor.text = "PANGKAT BRIPTU, NRP: 90909090"
                 itemView.txt_kesatuan_lp_terlapor.text = "POLRESTA BJM"
-//                for(i in 0 .. listLp.size) {
-//                val namaPasal = data.listPasal[itemIndex]?.nama_pasal
-//                Log.e("namaPasal", namaPasal.toString())
-//                for (i in 0..listLp.size) {
-//                    for (j in 0..listLp[i].listPasal?.size!!) {
-//                        val namaPasal1 = data.listPasal?.get(j)?.nama_pasal
-//                        itemView.txt_pasal_lp.text = "Pasal : $namaPasal1"
-//                    }
-//                    val namaPasal2 = data.listPasal?.get(i)?.nama_pasal
-//                    itemView.txt_pasal_lp.text = "Pasal : $namaPasal2"
-//                }
-//                itemView.txt_pasal_lp.text = "Pasal : ${namaPasal} \n"
-//                    val namaSaksi = data.listSaksi?.get(i)?.nama_saksi
-//                    itemView.txt_saksi_lp.text = "Saksi : $namaSaksi \n"
-
-//                    if(data.alatBukti?.contains("\n")!!){
-//                        itemView.txt_alat_bukti_lp.text= "Alat Bukti : ${data.alatBukti}"
-//                    }
-//                }
 
             }
 
@@ -163,40 +146,6 @@ class LpActivity : BaseActivity() {
             }
 
         }
-//        adapterLp.adapterCallback(callbackLp)
-//            .filterable().isVerticalView()
-//            .addData(abc)
-//            .setLayout(R.layout.item_lp)
-//            .build(rv_lp)
-
-        /*
-        adapterLpDisiplin = ReusableAdapter(this)
-        adapterCallbackLpDisiplin = object : AdapterCallback<LpDisiplinModel> {
-            override fun initComponent(itemView: View, data: LpDisiplinModel, itemIndex: Int) {
-                itemView.txt_no_lp.text = data.no_lp
-                itemView.txt_nama_lp_dilapor.text = data.nama_personel
-                itemView.txt_nrp_pangkat_lp_dilapor.text =
-                    "Pangkat: ${data.pangkat_personel}    NRP: ${data.nrp_personel}"
-//                itemView.txt_hukuman_lp.text = data.hukuman
-                itemView.txt_pasal_lp.text = data.pasal
-                itemView.txt_kesatuan_lp_dilapor.text = data.kesatuan
-                itemView.txt_jabatan_lp_dilapor.text = data.jabatan
-            }
-
-            override fun onItemClicked(itemView: View, data: LpDisiplinModel, itemIndex: Int) {
-                val intent = Intent(this@LpActivity, DetailLpActivity::class.java)
-                intent.putExtra(DetailLpActivity.DETAIL_LP, data)
-                startActivity(intent)
-            }
-        }
-        adapterLpDisiplin.filterable()
-            .adapterCallback(adapterCallbackLpDisiplin)
-            .setLayout(R.layout.item_lp)
-            .isVerticalView()
-//            .addData(abc)
-            .build(rv_lp)
-
-         */
 
         rv_lp.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterLp = LpAdapter(this, abc, object : LpAdapter.OnCLickLp {

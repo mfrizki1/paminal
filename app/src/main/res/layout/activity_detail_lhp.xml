@@ -247,7 +247,7 @@
                     android:id="@+id/rl_no_data_saksi"
                     layout="@layout/view_no_data"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/txt_2"
                     android:visibility="gone" />
 
@@ -440,6 +440,7 @@
             <TextView
                 android:id="@+id/txt_kesimpulan_detail"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/space_8dp"
                 android:layout_height="wrap_content"
                 android:text="Detail kesimpulan" />
 
@@ -457,6 +458,7 @@
                 android:id="@+id/txt_rekomendasi_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
                 android:text="Detail rekomendasi" />
 
             <include layout="@layout/layout_separator" />
@@ -474,6 +476,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Terbukti"
+                android:layout_marginTop="@dimen/space_8dp"
                 android:textStyle="bold" />
 
             <include layout="@layout/layout_separator" />
@@ -498,8 +501,56 @@
                 android:id="@+id/btn_edit_lhp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Data" />
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Edit Data"
+                android:textStyle="bold" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_lidik_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Data Personel Penyelidik"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_saksi_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Data Keterangan Saksi"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_surat_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Data Surat"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_petunjuk_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Data Petunjuk"
+                android:textStyle="bold" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_barang_buki_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Data Barang Bukti"
+                android:textStyle="bold" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_ket_terlapor_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Data Keterangan Terlapor"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_analisa_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Data Analisa"
+                android:textStyle="bold" />
         </LinearLayout>
 
 

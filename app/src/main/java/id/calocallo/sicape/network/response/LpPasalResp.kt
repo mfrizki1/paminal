@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class LpPasalResp(
     var id: Int?,
     var nama_pasal: String?,
+    var detail_pasal: String?,
     var created_at:String?,
     var updated_at:String?,
     var deleted_at: String?

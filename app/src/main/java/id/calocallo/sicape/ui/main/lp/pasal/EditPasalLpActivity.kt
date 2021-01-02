@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.lp.pasal
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.attachTextChangeAnimator

@@ -19,7 +19,7 @@ class LhpAdapter(
             with(itemView) {
                 var terbukti = ""
                 txt_no_lhp.text = lhpModel.no_lhp
-                txt_ketua_tim.text = lhpModel.nama_ketua_tim
+//                txt_ketua_tim.text = lhpModel.nama_ketua_tim
                 if(lhpModel.isTerbukti == 0){
                     terbukti = "Terbukti"
                 }else{

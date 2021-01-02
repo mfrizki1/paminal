@@ -1,12 +1,10 @@
 package id.calocallo.sicape.ui.main.lp.pasal
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.response.LpPasalResp
-import id.calocallo.sicape.network.response.LpResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.EditLpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -18,22 +16,42 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickPasalLpEditActivity : BaseActivity() {
     private val listPasal = arrayListOf(
-        LpPasalResp(1, "Pasal 1", "", "", ""),
-        LpPasalResp(2, "Pasal 2", "", "", ""),
-        LpPasalResp(3, "Pasal 3", "", "", "")
+        LpPasalResp(1, "Pasal 1", "", "", "", ""),
+        LpPasalResp(2, "Pasal 2", "", "", "", ""),
+        LpPasalResp(3, "Pasal 3", "", "", "", "")
     )
     private lateinit var sessionManager: SessionManager
     private lateinit var adapterPasalEdit: ReusableAdapter<LpPasalResp>
     private lateinit var callbackPasalEdit: AdapterCallback<LpPasalResp>
     private var jenisPelanggaran: String? = null
+
+    companion object {
+        const val EDIT_PASAL_PIDANA = "EDIT_PASAL_PIDANA"
+        const val EDIT_PASAL_KKE = "EDIT_PASAL_KKE"
+        const val EDIT_PASAL_DISIPLIN = "EDIT_PASAL_DISIPLIN"
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_pasal_lp_edit)
         sessionManager = SessionManager(this)
         adapterPasalEdit = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
+        val pidana = intent.extras?.getParcelable<LpPidanaResp>(EDIT_PASAL_PIDANA)
+        val kodeEtik = intent.extras?.getParcelable<LpKodeEtikResp>(EDIT_PASAL_KKE)
+        val disiplin = intent.extras?.getParcelable<LpDisiplinResp>(EDIT_PASAL_DISIPLIN)
         val detailLp = intent.extras?.getParcelable<LpResp>(EditLpActivity.EDIT_LP)
         jenisPelanggaran = detailLp?.jenis
+        if(pidana != null){
+            supportActionBar?.title = "Edit Data Laporan Polisi Pidana"
+        }else if(kodeEtik != null){
+            supportActionBar?.title = "Edit Data Laporan Polisi Kode Etik"
+        }else if(disiplin != null){
+            supportActionBar?.title = "Edit Data Laporan Polisi Disiplin"
+        }else{
+            supportActionBar?.title = "Edit Data Laporan Polisi"
+        }
 
         when (detailLp?.jenis) {
             "pidana" -> supportActionBar?.title = "Edit Data Laporan Pidana"

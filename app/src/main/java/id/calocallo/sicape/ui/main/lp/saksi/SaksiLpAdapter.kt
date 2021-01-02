@@ -20,7 +20,6 @@ class SaksiLpAdapter internal constructor(
         fun getItemDetails():ItemDetailsLookup.ItemDetails<LpSaksiResp> =
             object: ItemDetailsLookup.ItemDetails<LpSaksiResp>(){
                 override fun getSelectionKey(): LpSaksiResp? =saksiItems[position]
-
                 override fun getPosition(): Int= adapterPosition
             }
         fun setSaksi(
