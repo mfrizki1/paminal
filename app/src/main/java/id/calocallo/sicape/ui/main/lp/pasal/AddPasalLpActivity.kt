@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
@@ -46,6 +47,7 @@ class AddPasalLpActivity : BaseActivity() {
         }
         Handler(Looper.getMainLooper()).postDelayed({
             btn_save_single_pasal.hideDrawable(R.string.save)
+            Log.e("add_pasal", "$pasalReq")
         }, 3000)
     }
 }

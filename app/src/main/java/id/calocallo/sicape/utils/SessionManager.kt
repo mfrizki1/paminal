@@ -633,62 +633,133 @@ class SessionManager(context: Context) {
         return prefsLP.getString("NO_LP", null)
     }
 
-    fun setTglBuatLp(tgl: String){
+    fun setTglBuatLp(tgl: String) {
         val editor = prefsLP.edit()
         editor.putString("TGL_LP", tgl)
         editor.apply()
     }
-    fun getTglBuatLp():String?{
+
+    fun getTglBuatLp(): String? {
         return prefsLP.getString("TGL_LP", null)
     }
 
-    fun setKotaBuatLp(kota: String){
+    fun setKotaBuatLp(kota: String) {
         val editor = prefsLP.edit()
         editor.putString("KOTA_LP", kota)
         editor.apply()
     }
 
-    fun getKotaBuatLp():String?{
+    fun getKotaBuatLp(): String? {
         return prefsLP.getString("KOTA_LP", null)
     }
 
-    fun setNamaPimpBidLp(namaPimp: String){
+    fun setNamaPelapor(nama_pelapor: String) {
+        val editor = prefsLP.edit()
+        editor.putString("NAMA_PELAPOR", nama_pelapor)
+        editor.apply()
+    }
+
+    fun getNamaPelapor(): String? {
+        return prefsLP.getString("NAMA_PELAPOR", null)
+    }
+
+    fun setAgamaPelapor(agama_pelapor: String) {
+        val editor = prefsLP.edit()
+        editor.putString("AGAMA_PELAPOR", agama_pelapor)
+        editor.apply()
+    }
+
+    fun getAgamaPelapor(): String? {
+        return prefsLP.getString("AGAMA_PELAPOR", null)
+    }
+
+    fun setPekerjaanPelapor(pekerjaan_pelapor: String) {
+        val editor = prefsLP.edit()
+        editor.putString("PEKERJAAN_PELAPOR", pekerjaan_pelapor)
+        editor.apply()
+    }
+
+    fun getPekerjaanPelapor(): String? {
+        return prefsLP.getString("PEKERJAAN_PELAPOR", null)
+    }
+
+    fun setKwgPelapor(kwg_pelapor: String) {
+        val editor = prefsLP.edit()
+        editor.putString("KWG_PELAPOR", kwg_pelapor)
+        editor.apply()
+    }
+
+    fun getKwgPelapor(): String? {
+        return prefsLP.getString("KWG_PELAPOR", null)
+    }
+
+    fun setAlamatPelapor(alamat_pelapor: String) {
+        val editor = prefsLP.edit()
+        editor.putString("ALAMAT_PELAPOR", alamat_pelapor)
+        editor.apply()
+    }
+
+    fun getAlamatPelapor(): String? {
+        return prefsLP.getString("ALAMAT_PELAPOR", null)
+    }
+
+    fun setNoTelpPelapor(notelp_pelapor: String) {
+        val editor = prefsLP.edit()
+        editor.putString("NOTELP_PELAPOR", notelp_pelapor)
+        editor.apply()
+    }
+
+    fun getNoTelpPelapor(): String? {
+        return prefsLP.getString("NOTELP_PELAPOR", null)
+    }
+
+    fun setNIKPelapor(nik_pelapor: String) {
+        val editor = prefsLP.edit()
+        editor.putString("NIK_PELAPOR", nik_pelapor)
+        editor.apply()
+    }
+
+    fun getNIKPelapor(): String? {
+        return prefsLP.getString("NIK_PELAPOR", null)
+    }
+
+    fun setNamaPimpBidLp(namaPimp: String) {
         val editor = prefsLP.edit()
         editor.putString("NAMAPIMP_LP", namaPimp)
         editor.apply()
     }
 
-    fun getNamaPimpBidLp():String?{
+    fun getNamaPimpBidLp(): String? {
         return prefsLP.getString("NAMAPIMP_LP", null)
     }
 
-    fun setPangkatPimpBidLp(pangkatPimp: String){
+    fun setPangkatPimpBidLp(pangkatPimp: String) {
         val editor = prefsLP.edit()
         editor.putString("PANGKATPIMP_LP", pangkatPimp)
         editor.apply()
     }
 
-    fun getPangkatPimpBidLp():String?{
+    fun getPangkatPimpBidLp(): String? {
         return prefsLP.getString("PANGKATPIMP_LP", null)
     }
 
-    fun setJabatanPimpBidLp(jabatanPimp: String){
+    fun setJabatanPimpBidLp(jabatanPimp: String) {
         val editor = prefsLP.edit()
         editor.putString("JABATANPIMP_LP", jabatanPimp)
         editor.apply()
     }
 
-    fun getJabatanPimpBidLp():String?{
+    fun getJabatanPimpBidLp(): String? {
         return prefsLP.getString("JABATANPIMP_LP", null)
     }
 
-    fun setNrpPimpBidLp(nrpPimp: String){
+    fun setNrpPimpBidLp(nrpPimp: String) {
         val editor = prefsLP.edit()
         editor.putString("NRPPIMP_LP", nrpPimp)
         editor.apply()
     }
 
-    fun getNrpPimpBidLp():String?{
+    fun getNrpPimpBidLp(): String? {
         return prefsLP.getString("NRPPIMP_LP", null)
     }
 
@@ -734,7 +805,7 @@ class SessionManager(context: Context) {
 
     fun setAlatBuktiLP(alat_bukti: String) {
         val editor = prefsLP.edit()
-        editor.putString("ALAT_BUKI", alat_bukti)
+        editor.putString("ALAT_BUKTI", alat_bukti)
         editor.apply()
     }
 
@@ -768,24 +839,24 @@ class SessionManager(context: Context) {
         )
     }
 
-    fun setIdPasal(id_pasal: Int){
+    fun setIdPasal(id_pasal: Int) {
         val editor = prefsLP.edit()
         editor.putInt("ID_PASAL", id_pasal)
         editor.apply()
     }
 
-    fun getIdPasal(): Int?{
+    fun getIdPasal(): Int? {
         return prefsLP.getInt("ID_PASAL", 0)
     }
 
-    fun setListSaksiLP(listSaksi: ArrayList<LpSaksiResp>){
+    fun setListSaksiLP(listSaksi: ArrayList<LpSaksiResp>) {
         val editor = prefsLP.edit()
         val json = Gson().toJson(listSaksi)
         editor.putString("LIST_SAKSI", json)
         editor.commit()
     }
 
-    fun getListSaksi():ArrayList<LpSaksiResp>{
+    fun getListSaksi(): ArrayList<LpSaksiResp> {
         val emptyJson = Gson().toJson(ArrayList<LpSaksiResp>())
         return Gson().fromJson(
             prefsLP.getString("LIST_SAKSI", emptyJson),
@@ -794,75 +865,80 @@ class SessionManager(context: Context) {
     }
 
 
-    fun setPelapor(pelapor: String){
+    fun setPelapor(pelapor: String) {
         val editor = prefsLP.edit()
         editor.putString("PELAPOR_LP", pelapor)
         editor.apply()
     }
-    fun getPelapor():String?{
+
+    fun getPelapor(): String? {
         return prefsLP.getString("PELAPOR_LP", null)
     }
 
-    fun setIsiLapLP(isi_laporan: String){
+    fun setIsiLapLP(isi_laporan: String) {
         val editor = prefsLP.edit()
         editor.putString("ISI_LAPORAN_LP", isi_laporan)
         editor.apply()
     }
-    fun getIsiLapLP():String?{
+
+    fun getIsiLapLP(): String? {
         return prefsLP.getString("ISI_LAPORAN_LP", null)
     }
-    fun setPembukaanLapLP(pembukaan: String){
+
+    fun setPembukaanLapLP(pembukaan: String) {
         val editor = prefsLP.edit()
         editor.putString("PEMBUAKAAN_LAPORAN", pembukaan)
         editor.apply()
     }
-    fun getPembukaanLpLP():String?{
+
+    fun getPembukaanLpLP(): String? {
         return prefsLP.getString("PEMBUAKAAN_LAPORAN", null)
     }
 
 
-    fun setMacamPelanggaranLP(macam: String){
+    fun setMacamPelanggaranLP(macam: String) {
         val editor = prefsLP.edit()
         editor.putString("MACAM_LP", macam)
         editor.apply()
     }
 
-    fun getMacamPelanggaranLP():String?{
+    fun getMacamPelanggaranLP(): String? {
         return prefsLP.getString("MACAM_LP", null)
     }
 
-    fun setKetPelaporLP(ket_pelapor: String){
+    fun setKetPelaporLP(ket_pelapor: String) {
         val editor = prefsLP.edit()
         editor.putString("KET_PELAPOR_LP", ket_pelapor)
         editor.apply()
     }
 
-    fun getKetPelaporLP():String?{
+    fun getKetPelaporLP(): String? {
         return prefsLP.getString("KET_PELAPOR_LP", null)
     }
 
 
-    fun setKronologisPelapor(kronologis: String){
+    fun setKronologisPelapor(kronologis: String) {
         val editor = prefsLP.edit()
         editor.putString("KRONOLOGIS", kronologis)
         editor.apply()
     }
-    fun getKronologisPelapor():String?{
+
+    fun getKronologisPelapor(): String? {
         return prefsLP.getString("KRONOLOGIS", null)
     }
 
-    fun setRincianDisiplin(rincian: String){
+    fun setRincianDisiplin(rincian: String) {
         val editor = prefsLP.edit()
         editor.putString("RINCIAN", rincian)
         editor.apply()
     }
 
-    fun getRincianDisiplin():String?{
+    fun getRincianDisiplin(): String? {
         return prefsLP.getString("RINCIAN", null)
     }
 
 
-    fun clearLP(){
+    fun clearLP() {
         val editor = prefsLP.edit()
         editor.clear()
         editor.commit()

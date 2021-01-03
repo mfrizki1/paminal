@@ -29,10 +29,10 @@ class LpPidanaAdapter(
             with(itemView) {
                 if (lpPidanaResp.status_pelapor == "sipil") {
                     itemView.ll_sipil_pidana.visible()
-                    itemView.ll_personel_pidana.gone()
+                    itemView.ll_personel_pelapor.gone()
                 } else if(lpPidanaResp.status_pelapor == "polisi") {
                     itemView.ll_sipil_pidana.gone()
-                    itemView.ll_personel_pidana.visible()
+                    itemView.ll_personel_pelapor.visible()
                 }
                 //general
                 txt_no_lp_pidana.text = lpPidanaResp.no_lp

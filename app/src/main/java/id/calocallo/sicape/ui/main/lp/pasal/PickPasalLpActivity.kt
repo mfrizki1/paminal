@@ -8,14 +8,15 @@ import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.zanyastudios.test.PasalDetailsLookup
+import com.zanyastudios.test.PasalTesDetailsLookup
 import com.zanyastudios.test.PasalItem
-import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalItemKeyProvider
-import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalAdapter
+import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
+import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.LpKodeEtikReq
 import id.calocallo.sicape.network.request.LpPidanaReq
 import id.calocallo.sicape.network.response.LpPasalResp
+import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal_lp.*
@@ -33,7 +34,7 @@ class PickPasalLpActivity : BaseActivity() {
 
     //    private lateinit var adapterPasal: PasalAdapter1
 //    private lateinit var adapterPasal2: PasalAdapter2
-    private lateinit var adapterPasal: PasalAdapter
+    private lateinit var adapterPasalTes: PasalTesAdapter
     private val listPasal = arrayListOf<PasalItem>()
 
     private var tracker: SelectionTracker<PasalItem>? = null
@@ -49,7 +50,10 @@ class PickPasalLpActivity : BaseActivity() {
         when (sessionManager.getJenisLP()) {
             "pidana" -> supportActionBar?.title = "Tambah Data Laporan Pidana"
             "disiplin" -> supportActionBar?.title = "Tambah Data Laporan Disiplin"
-            "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Kode Etik"
+            "kode_etik" -> {
+                supportActionBar?.title = "Tambah Data Laporan Kode Etik"
+                btn_save_lp_all_pidana.text = resources.getString(R.string.next)
+            }
         }
 
         getPasal()
@@ -58,12 +62,16 @@ class PickPasalLpActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
-        btn_save_lp_all.setOnClickListener {
-            addAllLp(sessionManager.getJenisLP())
-//            sessionManager.setListPasalLP(selectedIdPasal as ArrayList<LpPasalResp>)
-//            val intent = Intent(this@PickPasalLpActivity, PickSaksiLpActivity::class.java)
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//            startActivity(intent)
+        btn_save_lp_all_pidana.setOnClickListener {
+            if (sessionManager.getJenisLP() != "kode_etik") {
+                addAllLp(sessionManager.getJenisLP())
+            } else {
+                sessionManager.setListPasalLP(selectedIdPasal as ArrayList<LpPasalResp>)
+                val intent = Intent(this@PickPasalLpActivity, PickSaksiLpActivity::class.java)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                startActivity(intent)
+            }
+
         }
 
 
@@ -80,7 +88,7 @@ class PickPasalLpActivity : BaseActivity() {
         when (jenisLP) {
             "pidana" -> {
                 lpPidanaReq.no_lp = sessionManager.getNoLP()
-                lpPidanaReq.id_pelanggaran = sessionManager.getIdPelanggaran()
+//                lpPidanaReq.id_pelanggaran = sessionManager.getIdPelanggaran()
                 lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
                 lpPidanaReq.kategori = jenisLP
                 lpPidanaReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
@@ -97,7 +105,6 @@ class PickPasalLpActivity : BaseActivity() {
             }
             "kode_etik" -> {
                 lpKKeReq.no_lp = sessionManager.getNoLP()
-                lpKKeReq.id_pelanggaran = sessionManager.getIdPelanggaran()
                 lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
                 lpKKeReq.kategori = jenisLP
                 lpKKeReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
@@ -129,23 +136,24 @@ class PickPasalLpActivity : BaseActivity() {
         listPasal.add(
             PasalItem(3, "Pasal 3", "")
         )
-        rv_list_pasal.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterPasal = PasalAdapter(this, listPasal)
-        rv_list_pasal.adapter = adapterPasal
+        rv_list_pasal.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapterPasalTes = PasalTesAdapter(this, listPasal)
+        rv_list_pasal.adapter = adapterPasalTes
 
         tracker = SelectionTracker.Builder<PasalItem>(
             "pasalSelection",
             rv_list_pasal,
-            PasalItemKeyProvider(adapterPasal),
-            PasalDetailsLookup(rv_list_pasal),
+            PasalTesItemKeyProvider(adapterPasalTes),
+            PasalTesDetailsLookup(rv_list_pasal),
             StorageStrategy.createParcelableStorage(PasalItem::class.java)
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
         ).build()
-        adapterPasal.tracker = tracker
+        adapterPasalTes.tracker = tracker
 
         tracker?.addObserver(
-            object : SelectionTracker.SelectionObserver<LpPasalResp>() {
+            object : SelectionTracker.SelectionObserver<Long>() {
                 override fun onSelectionChanged() {
                     super.onSelectionChanged()
                     tracker?.let {

@@ -4,13 +4,13 @@ import androidx.recyclerview.selection.ItemKeyProvider
 import com.zanyastudios.test.PasalItem
 
 
-class PasalItemKeyProvider(private val adapter: PasalAdapter) :
+class PasalTesItemKeyProvider(private val tesAdapter: PasalTesAdapter) :
     ItemKeyProvider<PasalItem>(SCOPE_CACHED) {
     override fun getKey(position: Int): PasalItem? {
-        return adapter.getItem(position)
+        return tesAdapter.getItem(position)
     }
 
     override fun getPosition(key: PasalItem): Int {
-        return adapter.getPosition(key.nama_pasal!!)
+        return tesAdapter.getPosition(key.nama_pasal!!)
     }
 }

@@ -3,9 +3,8 @@ package id.calocallo.sicape.network.response
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-
 @Parcelize
-data class LpDisiplinResp (
+data class LpKkeResp(
     var id: Int?,
     var no_lp: String?,
     var kategori: String?,
@@ -19,9 +18,10 @@ data class LpDisiplinResp (
     var jabatan_yang_mengetahui: String?,
     var id_personel_operator: Int?,
 
-    var macam_pelanggaran: String?,
-    var keterangan_terlapor: String?,
-    var kronologis_dari_pelapor: String?,
-    var rincian_pelanggaran_disiplin: String?,
-    var listPasal: ArrayList<LpPasalResp>?
-    ): Parcelable
+    val alat_bukti: String?,
+    val isi_laporan: String?,
+    var listPasal: ArrayList<LpPasalResp>?,
+    var listSaksi: MutableList<LpSaksiResp>?
+
+
+) : Parcelable

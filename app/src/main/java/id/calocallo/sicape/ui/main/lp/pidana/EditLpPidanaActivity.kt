@@ -2,12 +2,16 @@ package id.calocallo.sicape.ui.main.lp.pidana
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
@@ -19,9 +23,6 @@ import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_catpers.*
-import kotlinx.android.synthetic.main.activity_add_lp_pidana.*
-import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.activity_edit_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -38,6 +39,8 @@ class EditLpPidanaActivity : BaseActivity() {
 
     }
 
+    private var changedIdPelapor: Int? = null
+    private var changedIdTerlapor: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_lp_pidana)
@@ -58,30 +61,42 @@ class EditLpPidanaActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivityForResult(intent, REQ_TERLAPOR)
         }
-
-
-
+        btn_save_edit_lp_pidana.attachTextChangeAnimator()
+        bindProgressButton(btn_save_edit_lp_pidana)
         btn_save_edit_lp_pidana.setOnClickListener {
-            updateLpPidana()
+            val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+            val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
+            animatedDrawable.setBounds(0, 0, size, size)
+            btn_save_edit_lp_pidana.showProgress {
+                progressColor = Color.WHITE
+            }
+            btn_save_edit_lp_pidana.showDrawable(animatedDrawable) {
+                textMarginRes = R.dimen.space_10dp
+                buttonTextRes = R.string.data_updated
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                btn_save_edit_lp_pidana.hideDrawable(R.string.save)
+            }, 3000)
+            updateLpPidana(pidana, changedIdTerlapor, changedIdPelapor)
         }
 
+//        btn_sipil_edit.setOnClickListener {
+        materialAlertDialogBuilder =
+            MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
         btn_sipil_edit.setOnClickListener {
-            materialAlertDialogBuilder =
-                MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
-            btn_sipil_add.setOnClickListener {
-                sipilAlertDialog = LayoutInflater.from(this)
-                    .inflate(R.layout.item_sipil_pidana, null, false)
-                launchSipilView()
-            }
+            sipilAlertDialog = LayoutInflater.from(this)
+                .inflate(R.layout.item_sipil_pidana, null, false)
+            launchSipilView()
+//            }
         }
 
 
     }
 
-    private fun updateLpPidana() {
+    private fun updateLpPidana(pidana: LpPidanaResp?, changedIdTerlapor: Int?, changedIdPelapor: Int?) {
         lpPidanaReq.no_lp = edt_no_lp_pidana_edit.text.toString()
         lpPidanaReq.pembukaan_laporan = edt_pembukaan_laporan_pidana_edit.text.toString()
-        lpPidanaReq.isi_laporan =edt_isi_laporan_pidana_edit.text.toString()
+        lpPidanaReq.isi_laporan = edt_isi_laporan_pidana_edit.text.toString()
         lpPidanaReq.kota_buat_laporan = edt_kota_buat_edit_lp.text.toString()
         lpPidanaReq.tanggal_buat_laporan = edt_tgl_buat_edit.text.toString()
         lpPidanaReq.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit.text.toString()
@@ -89,7 +104,29 @@ class EditLpPidanaActivity : BaseActivity() {
         lpPidanaReq.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
         lpPidanaReq.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
         lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
+        lpPidanaReq.kategori = sessionManager.getJenisLP().toString().toLowerCase()
 
+        if(changedIdPelapor == null) {
+            lpPidanaReq.id_personel_pelapor = pidana?.id_personel_pelapor
+        }else{
+            lpPidanaReq.id_personel_pelapor = changedIdPelapor
+        }
+
+        if(changedIdTerlapor == null) {
+            lpPidanaReq.id_personel_terlapor = pidana?.id_personel_terlapor
+        }else{
+            lpPidanaReq.id_personel_terlapor = changedIdTerlapor
+        }
+
+        if (lpPidanaReq.pelapor == "sipil") {
+            lpPidanaReq.nama_pelapor = txt_nama_sipil_pidana_lp_edit.text.toString()
+            lpPidanaReq.agama_pelapor = txt_agama_sipil_pidana_lp_edit.text.toString()
+            lpPidanaReq.pekerjaan_pelapor = txt_pekerjaan_sipil_pidana_lp_edit.text.toString()
+            lpPidanaReq.kewarganegaraan_pelapor = txt_kwg_sipil_pidana_lp_edit.text.toString()
+            lpPidanaReq.alamat_pelapor = txt_alamat_sipil_pidana_lp_edit.text.toString()
+            lpPidanaReq.no_telp_pelapor = txt_no_telp_sipil_pidana_lp_edit.text.toString()
+            lpPidanaReq.nik_pelapor = txt_nik_ktp_sipil_pidana_lp_edit.text.toString()
+        }
         Log.e("update", "$lpPidanaReq")
     }
 
@@ -114,6 +151,7 @@ class EditLpPidanaActivity : BaseActivity() {
             ll_sipil_edit.visible()
             ll_personel_edit.gone()
             rb_sipil_pidana_edit.isChecked = true
+            lpPidanaReq.pelapor = "sipil"
             txt_nama_sipil_pidana_lp_edit.text = "Nama :  ${pidana?.nama_pelapor}"
             txt_agama_sipil_pidana_lp_edit.text = "Agama : ${pidana?.agama_pelapor}"
             txt_pekerjaan_sipil_pidana_lp_edit.text = "Pekerjaan : ${pidana?.pekerjaan_pelapor}"
@@ -126,6 +164,8 @@ class EditLpPidanaActivity : BaseActivity() {
             ll_sipil_edit.gone()
             ll_personel_edit.visible()
             rb_polisi_pidana_edit.isChecked = true
+            lpPidanaReq.pelapor = "polisi"
+            lpPidanaReq.id_personel_pelapor = pidana?.id_personel_pelapor
             txt_nama_pelapor_pidana_lp_edit.text =
                 "Nama : ${pidana?.id_personel_pelapor.toString()}"
             txt_pangkat_pelapor_pidana_lp_edit.text =
@@ -149,132 +189,136 @@ class EditLpPidanaActivity : BaseActivity() {
                     ll_personel_edit.visible()
                 }
             }
-
-            //personel terlapor
-            txt_nama_terlapor_lp_edit.text = "Nama : ${pidana?.id_personel_terlapor.toString()}"
-            txt_pangkat_terlapor_lp_edit.text =
-                "Pangkat : ${pidana?.id_personel_terlapor.toString()}"
-            txt_nrp_terlapor_lp_edit.text = "NRP : ${pidana?.id_personel_terlapor.toString()}"
-            txt_jabatan_terlapor_lp_edit.text =
-                "Jabatan : ${pidana?.id_personel_terlapor.toString()}"
-            txt_kesatuan_terlapor_lp_edit.text =
-                "Kesatuan : ${pidana?.id_personel_terlapor.toString()}"
         }
+
+        //personel terlapor
+        lpPidanaReq.id_personel_terlapor = pidana?.id_personel_terlapor
+        txt_nama_terlapor_lp_edit.text = "Nama : ${pidana?.id_personel_terlapor.toString()}"
+        txt_pangkat_terlapor_lp_edit.text =
+            "Pangkat : ${pidana?.id_personel_terlapor.toString()}"
+        txt_nrp_terlapor_lp_edit.text = "NRP : ${pidana?.id_personel_terlapor.toString()}"
+        txt_jabatan_terlapor_lp_edit.text =
+            "Jabatan : ${pidana?.id_personel_terlapor.toString()}"
+        txt_kesatuan_terlapor_lp_edit.text =
+            "Kesatuan : ${pidana?.id_personel_terlapor.toString()}"
     }
-        private fun launchSipilView() {
-            val spAgama =
-                sipilAlertDialog.findViewById<AutoCompleteTextView>(R.id.spinner_agama_sipil)
-            val namaSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nama_sipil)
-            val pekerjaanSipil =
-                sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_pekerjaan_sipil)
-            val kwgSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_kwg_sipil)
-            val alamatSipil =
-                sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_alamat_sipil)
-            val noTelpSipil =
-                sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_no_telp_sipil)
-            val nikSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nik_sipil)
 
-            val ll = sipilAlertDialog.findViewById<LinearLayout>(R.id.ll_add_sipil)
-            val pb = sipilAlertDialog.findViewById<RelativeLayout>(R.id.rl_pb)
+    private fun launchSipilView() {
+        val spAgama =
+            sipilAlertDialog.findViewById<AutoCompleteTextView>(R.id.spinner_agama_sipil)
+        val namaSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nama_sipil)
+        val pekerjaanSipil =
+            sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_pekerjaan_sipil)
+        val kwgSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_kwg_sipil)
+        val alamatSipil =
+            sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_alamat_sipil)
+        val noTelpSipil =
+            sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_no_telp_sipil)
+        val nikSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nik_sipil)
 
-            //NetworkConfig().getService().
-            //add Sipil
-            //muncul pb
-            //jika sudah berhasil menambahkan maka muncul id sipil_terlapor dan pb hilang
-            //jika gagal maka logcat error ada error
+        val ll = sipilAlertDialog.findViewById<LinearLayout>(R.id.ll_add_sipil)
+        val pb = sipilAlertDialog.findViewById<RelativeLayout>(R.id.rl_pb)
 
-            val agamaItem =
-                listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu")
-            val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
-            spAgama.setAdapter(adapterAgama)
-            spAgama.setOnItemClickListener { parent, view, position, id ->
-                when (position) {
-                    0 -> {
-                        lpPidanaReq.agama_pelapor = "islam"
-                        txt_agama_sipil_pidana_lp_add.text = "Islam"
-                    }
-                    1 -> {
-                        lpPidanaReq.agama_pelapor = "katolik"
-                        txt_agama_sipil_pidana_lp_add.text = "Katolik"
-                    }
-                    2 -> {
-                        lpPidanaReq.agama_pelapor = "protestan"
-                        txt_agama_sipil_pidana_lp_add.text = "Protestan"
-                    }
-                    3 -> {
-                        lpPidanaReq.agama_pelapor = "buddha"
-                        txt_agama_sipil_pidana_lp_add.text = "Buddha"
-                    }
-                    4 -> {
-                        lpPidanaReq.agama_pelapor = "hindu"
-                        txt_agama_sipil_pidana_lp_add.text = "Hindu"
-                    }
-                    5 -> {
-                        lpPidanaReq.agama_pelapor = "konghuchu"
-                        txt_agama_sipil_pidana_lp_add.text = "Konghuchu"
-                    }
+        //NetworkConfig().getService().
+        //add Sipil
+        //muncul pb
+        //jika sudah berhasil menambahkan maka muncul id sipil_terlapor dan pb hilang
+        //jika gagal maka logcat error ada error
+
+        val agamaItem =
+            listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu")
+        val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
+        spAgama.setAdapter(adapterAgama)
+        spAgama.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> {
+                    lpPidanaReq.agama_pelapor = "islam"
+                    txt_agama_sipil_pidana_lp_edit.text = "Agama : Islam"
+                }
+                1 -> {
+                    lpPidanaReq.agama_pelapor = "katolik"
+                    txt_agama_sipil_pidana_lp_edit.text = "Agama : Katolik"
+                }
+                2 -> {
+                    lpPidanaReq.agama_pelapor = "protestan"
+                    txt_agama_sipil_pidana_lp_edit.text = "Agama : Protestan"
+                }
+                3 -> {
+                    lpPidanaReq.agama_pelapor = "buddha"
+                    txt_agama_sipil_pidana_lp_edit.text = "Agama : Buddha"
+                }
+                4 -> {
+                    lpPidanaReq.agama_pelapor = "hindu"
+                    txt_agama_sipil_pidana_lp_edit.text = "Agama : Hindu"
+                }
+                5 -> {
+                    lpPidanaReq.agama_pelapor = "konghuchu"
+                    txt_agama_sipil_pidana_lp_edit.text = "Agama : Konghuchu"
                 }
             }
-            materialAlertDialogBuilder.setView(sipilAlertDialog)
-                .setTitle("Tambah Data Sipil")
+        }
+        materialAlertDialogBuilder.setView(sipilAlertDialog)
+            .setTitle("Tambah Data Sipil")
 //            .setMessage("Masukkan Data Sipil")
-                .setPositiveButton("Tambah") { dialog, _ ->
-                    lpPidanaReq.nama_pelapor = namaSipil.text.toString()
-                    txt_nama_sipil_pidana_lp_add.text = namaSipil.text.toString()
+            .setPositiveButton("Tambah") { dialog, _ ->
+                lpPidanaReq.nama_pelapor = namaSipil.text.toString()
+                txt_nama_sipil_pidana_lp_edit.text = "Nama : ${namaSipil.text.toString()}"
 
-                    lpPidanaReq.pekerjaan_pelapor = pekerjaanSipil.text.toString()
-                    txt_pekerjaan_sipil_pidana_lp_add.text = pekerjaanSipil.text.toString()
+                lpPidanaReq.pekerjaan_pelapor = pekerjaanSipil.text.toString()
+                txt_pekerjaan_sipil_pidana_lp_edit.text =
+                    "Pekerjaan : ${pekerjaanSipil.text.toString()}"
 
-                    lpPidanaReq.kewarganegaraan_pelapor = kwgSipil.text.toString()
-                    txt_kwg_sipil_pidana_lp_add.text = kwgSipil.text.toString()
+                lpPidanaReq.kewarganegaraan_pelapor = kwgSipil.text.toString()
+                txt_kwg_sipil_pidana_lp_edit.text = "Kewarganegaraan : ${kwgSipil.text.toString()}"
 
-                    lpPidanaReq.alamat_pelapor = alamatSipil.text.toString()
-                    txt_alamat_sipil_pidana_lp_add.text = alamatSipil.text.toString()
+                lpPidanaReq.alamat_pelapor = alamatSipil.text.toString()
+                txt_alamat_sipil_pidana_lp_edit.text = "Alamat : ${alamatSipil.text.toString()}"
 
-                    lpPidanaReq.no_telp_pelapor = noTelpSipil.text.toString()
-                    txt_no_telp_sipil_pidana_lp_add.text = noTelpSipil.text.toString()
+                lpPidanaReq.no_telp_pelapor = noTelpSipil.text.toString()
+                txt_no_telp_sipil_pidana_lp_edit.text =
+                    "No Telepon : ${noTelpSipil.text.toString()}"
 
-                    lpPidanaReq.nik_pelapor = nikSipil.text.toString()
-                    txt_nik_ktp_sipil_pidana_lp_add.text = nikSipil.text.toString()
+                lpPidanaReq.nik_pelapor = nikSipil.text.toString()
+                txt_nik_ktp_sipil_pidana_lp_edit.text = "NIK KTP : ${nikSipil.text.toString()}"
 
 //                dialog.dismiss()
 
-                }
-                .setNegativeButton("Batal") { dialog, _ ->
+            }
+            .setNegativeButton("Batal") { dialog, _ ->
 //                displayMessage("Operation cancelled!")
 //                dialog.dismiss()
-                }
-                .show()
+            }
+            .show()
 
-        }
+    }
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
-            when (resultCode) {
-                Activity.RESULT_OK -> {
-                    when (requestCode) {
-                        REQ_TERLAPOR -> {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                when (requestCode) {
+                    REQ_TERLAPOR -> {
 //                            personel?.id?.let { sessionManager.setIDPersonelTerlapor(it) }
-                            lpPidanaReq.id_personel_terlapor = personel?.id
-                            txt_nama_terlapor_lp_edit.text = personel?.nama
-                            txt_pangkat_terlapor_lp_edit.text = personel?.pangkat
-                            txt_nrp_terlapor_lp_edit.text = personel?.nrp
-                            txt_jabatan_terlapor_lp_edit.text = personel?.jabatan
-                            txt_kesatuan_terlapor_lp_edit.text = personel?.satuan_kerja?.kesatuan
-                        }
-                        REQ_PELAPOR -> {
+                        changedIdTerlapor = personel?.id
+                        txt_nama_terlapor_lp_edit.text = personel?.nama
+                        txt_pangkat_terlapor_lp_edit.text = personel?.pangkat
+                        txt_nrp_terlapor_lp_edit.text = personel?.nrp
+                        txt_jabatan_terlapor_lp_edit.text = personel?.jabatan
+                        txt_kesatuan_terlapor_lp_edit.text = personel?.satuan_kerja?.kesatuan
+                    }
+                    REQ_PELAPOR -> {
 //                            personel?.id?.let { sessionManager.setIDPersonelPelapor(it) }
-                            lpPidanaReq.id_personel_pelapor = personel?.id
-                            txt_nama_pelapor_pidana_lp_edit.text = personel?.nama
-                            txt_pangkat_pelapor_pidana_lp_edit.text = personel?.pangkat
-                            txt_nrp_pelapor_pidana_lp_edit.text = personel?.nrp
-                            txt_jabatan_pelapor_pidana_lp_edit.text = personel?.jabatan
-                            txt_kesatuan_pelapor_pidana_lp_edit.text =
-                                personel?.satuan_kerja?.kesatuan
-                        }
+                        changedIdPelapor = personel?.id
+                        txt_nama_pelapor_pidana_lp_edit.text = personel?.nama
+                        txt_pangkat_pelapor_pidana_lp_edit.text = personel?.pangkat
+                        txt_nrp_pelapor_pidana_lp_edit.text = personel?.nrp
+                        txt_jabatan_pelapor_pidana_lp_edit.text = personel?.jabatan
+                        txt_kesatuan_pelapor_pidana_lp_edit.text =
+                            personel?.satuan_kerja?.kesatuan
                     }
                 }
             }
         }
     }
+}

@@ -39,10 +39,10 @@ class PickPasalLpEditActivity : BaseActivity() {
         adapterPasalEdit = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
         val pidana = intent.extras?.getParcelable<LpPidanaResp>(EDIT_PASAL_PIDANA)
-        val kodeEtik = intent.extras?.getParcelable<LpKodeEtikResp>(EDIT_PASAL_KKE)
+        val kodeEtik = intent.extras?.getParcelable<LpKkeResp>(EDIT_PASAL_KKE)
         val disiplin = intent.extras?.getParcelable<LpDisiplinResp>(EDIT_PASAL_DISIPLIN)
         val detailLp = intent.extras?.getParcelable<LpResp>(EditLpActivity.EDIT_LP)
-        jenisPelanggaran = detailLp?.jenis
+        jenisPelanggaran = sessionManager.getJenisLP()
         if(pidana != null){
             supportActionBar?.title = "Edit Data Laporan Polisi Pidana"
         }else if(kodeEtik != null){
@@ -53,11 +53,11 @@ class PickPasalLpEditActivity : BaseActivity() {
             supportActionBar?.title = "Edit Data Laporan Polisi"
         }
 
-        when (detailLp?.jenis) {
-            "pidana" -> supportActionBar?.title = "Edit Data Laporan Pidana"
-            "disiplin" -> supportActionBar?.title = "Edit Data Laporan Disiplin"
-            "kode_etik" -> supportActionBar?.title = "Edit Data Laporan Kode Etik"
-        }
+//        when (detailLp?.jenis) {
+//            "pidana" -> supportActionBar?.title = "Edit Data Laporan Pidana"
+//            "disiplin" -> supportActionBar?.title = "Edit Data Laporan Disiplin"
+//            "kode_etik" -> supportActionBar?.title = "Edit Data Laporan Kode Etik"
+//        }
 
         getPasalEdit()
         btn_add_single_pasal_edit.setOnClickListener {

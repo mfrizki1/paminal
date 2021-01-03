@@ -27,6 +27,7 @@ class ListLpPidanaActivity : BaseActivity() {
         sessionManager = SessionManager(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data Laporan Polisi Pidana"
+        sessionManager.setJenisLP("pidana")
 
         val hak = sessionManager.fetchHakAkses()
         if(hak =="operator"){

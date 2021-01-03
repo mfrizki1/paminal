@@ -6,7 +6,7 @@ data class LpDisiplinReq(
     var no_lp: String?,
     var kategori: String?,
     var id_personel_terlapor: Int?,
-    var id_pelanggaran: Int?,
+    var id_personel_pelapor: Int?,
     var kota_buat_laporan: String?,
     var tanggal_buat_laporan: String?,
     var nama_yang_mengetahui: String?,
@@ -20,5 +20,10 @@ data class LpDisiplinReq(
     var kronologis_dari_pelapor: String?,
     var rincian_pelanggaran_disiplin: String?,
     var listPasal: ArrayList<LpPasalResp>?
-
-)
+) {
+    constructor() : this(
+        "", "",  0,0, "", "",
+        "", "", "", "", 0, "",
+        "", "", "", ArrayList()
+    )
+}

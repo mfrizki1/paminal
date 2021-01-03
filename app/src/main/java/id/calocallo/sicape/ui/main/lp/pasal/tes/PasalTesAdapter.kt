@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zanyastudios.test.PasalItem
 import id.calocallo.sicape.R
 
-class PasalAdapter internal constructor(
+class PasalTesAdapter internal constructor(
     private val context: Context,
     private val pasalItem: ArrayList<PasalItem>
-) : RecyclerView.Adapter<PasalAdapter.PasalHolder>() {
+) : RecyclerView.Adapter<PasalTesAdapter.PasalHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     var tracker: SelectionTracker<PasalItem>? = null

@@ -11,7 +11,8 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.request.SipilPelaporReq
 import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpActivity
+import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
+import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.ID_PELAPOR
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -24,6 +25,7 @@ class AddLpPidanaActivity : BaseActivity() {
     private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
     private lateinit var sipilAlertDialog: View
     private var sipilPelaporReq = SipilPelaporReq()
+    private var idPelapor: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_lp_pidana)
@@ -38,15 +40,14 @@ class AddLpPidanaActivity : BaseActivity() {
         }
         btn_choose_personel_pelapor_lp_add_pidana.setOnClickListener {
             val intent = Intent(this, ChoosePersonelActivity::class.java)
-            startActivityForResult(intent,
-                REQ_PELAPOR
-            )
+            startActivityForResult(intent, REQ_PELAPOR)
         }
 
         btn_next_lp_pidana.setOnClickListener {
             sessionManager.setPembukaanLapLP(edt_pembukaan_laporan_pidana.text.toString())
             sessionManager.setIsiLapLP(edt_isi_laporan_pidana.text.toString())
-            val intent = Intent(this, PickPasalLpActivity::class.java)
+            val intent = Intent(this, PickPasalActivity::class.java)
+            intent.putExtra(ID_PELAPOR, idPelapor)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
@@ -102,27 +103,28 @@ class AddLpPidanaActivity : BaseActivity() {
         spAgama.setOnItemClickListener { parent, view, position, id ->
             when (position) {
                 0 -> {
-                    sipilPelaporReq.agama_sipil = "islam"
+                    sessionManager.setAgamaPelapor("islam")
                     txt_agama_sipil_pidana_lp_add.text = "Islam"
                 }
                 1 -> {
-                    sipilPelaporReq.agama_sipil = "katolik"
+                    sessionManager.setAgamaPelapor("katolik")
                     txt_agama_sipil_pidana_lp_add.text = "Katolik"
                 }
                 2 -> {
+                    sessionManager.setAgamaPelapor("protestan")
                     sipilPelaporReq.agama_sipil = "protestan"
                     txt_agama_sipil_pidana_lp_add.text = "Protestan"
                 }
                 3 -> {
-                    sipilPelaporReq.agama_sipil = "buddha"
+                    sessionManager.setAgamaPelapor("buddha")
                     txt_agama_sipil_pidana_lp_add.text = "Buddha"
                 }
                 4 -> {
-                    sipilPelaporReq.agama_sipil = "hindu"
+                    sessionManager.setAgamaPelapor("hindu")
                     txt_agama_sipil_pidana_lp_add.text = "Hindu"
                 }
                 5 -> {
-                    sipilPelaporReq.agama_sipil = "konghuchu"
+                    sessionManager.setAgamaPelapor("konghuchu")
                     txt_agama_sipil_pidana_lp_add.text = "Konghuchu"
                 }
             }
@@ -131,22 +133,22 @@ class AddLpPidanaActivity : BaseActivity() {
             .setTitle("Tambah Data Sipil")
 //            .setMessage("Masukkan Data Sipil")
             .setPositiveButton("Tambah") { dialog, _ ->
-                sipilPelaporReq.nama_sipil = namaSipil.text.toString()
+                sessionManager.setNamaPelapor(namaSipil.text.toString())
                 txt_nama_sipil_pidana_lp_add.text = namaSipil.text.toString()
 
-                sipilPelaporReq.pekerjaan_sipil = pekerjaanSipil.text.toString()
+                sessionManager.setPekerjaanPelapor(pekerjaanSipil.text.toString())
                 txt_pekerjaan_sipil_pidana_lp_add.text = pekerjaanSipil.text.toString()
 
-                sipilPelaporReq.kewarganegaraan_sipil = kwgSipil.text.toString()
+                sessionManager.setKwgPelapor(kwgSipil.text.toString())
                 txt_kwg_sipil_pidana_lp_add.text = kwgSipil.text.toString()
 
-                sipilPelaporReq.alamat_sipil = alamatSipil.text.toString()
+                sessionManager.setAlamatPelapor(alamatSipil.text.toString())
                 txt_alamat_sipil_pidana_lp_add.text = alamatSipil.text.toString()
 
-                sipilPelaporReq.no_telp_sipil = noTelpSipil.text.toString()
+                sessionManager.setNoTelpPelapor(noTelpSipil.text.toString())
                 txt_no_telp_sipil_pidana_lp_add.text = noTelpSipil.text.toString()
 
-                sipilPelaporReq.nik_sipil = nikSipil.text.toString()
+                sessionManager.setNIKPelapor(nikSipil.text.toString())
                 txt_nik_ktp_sipil_pidana_lp_add.text = nikSipil.text.toString()
 
 //                dialog.dismiss()
@@ -167,7 +169,8 @@ class AddLpPidanaActivity : BaseActivity() {
             RESULT_OK ->
                 when (requestCode) {
                     REQ_PELAPOR -> {
-                        personel?.id?.let { sessionManager.setIDPersonelPelapor(it) }
+                        idPelapor = personel?.id
+//                        personel?.id?.let { sessionManager.setIDPersonelPelapor(it) }
                         txt_nama_pelapor_pidana_lp_add.text = personel?.nama
                         txt_pangkat_pelapor_pidana_lp_add.text = personel?.pangkat
                         txt_nrp_pelapor_pidana_lp_add.text = personel?.nrp

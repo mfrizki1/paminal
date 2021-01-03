@@ -51,6 +51,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_12dp"
             android:layout_weight="1"
             android:hint="Tanggal Lahir Saksi">
 
@@ -58,8 +59,8 @@
                 android:id="@+id/edt_tanggal_lahir_saksi_single"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number"
-                android:maxLength="4" />
+                android:inputType="datetime"
+                android:maxLength="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

@@ -13,6 +13,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.SaksiReq
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_add_lhp.*
 import kotlinx.android.synthetic.main.activity_add_pasal_lp.*
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -39,10 +40,12 @@ class AddSaksiLpActivity : BaseActivity() {
         saksiLpReq.tanggal_lahir = edt_tanggal_lahir_saksi_single.text.toString()
         saksiLpReq.pekerjaan = edt_pekerjaan_saksi_single.text.toString()
         saksiLpReq.alamat = edt_alamat_saksi_single.text.toString()
-        rg_korban_saksi.setOnCheckedChangeListener { group, checkedId ->
-            val radio = findViewById<RadioButton>(checkedId)
-            if(radio.isChecked) Log.e("korban", radio.text.toString())
+        val id: Int = rg_korban_saksi.checkedRadioButtonId
+        if (id != -1) {
+            val radio: RadioButton = findViewById(id)
+            saksiLpReq.isKorban  = radio.text.toString().toLowerCase()
         }
+
         val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
         val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animatedDrawable.setBounds(0, 0, size, size)
@@ -56,6 +59,7 @@ class AddSaksiLpActivity : BaseActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             btn_save_add_saksi.hideDrawable(R.string.save)
+            Log.e("add_saksi", "$saksiLpReq")
         }, 3000)
     }
 }

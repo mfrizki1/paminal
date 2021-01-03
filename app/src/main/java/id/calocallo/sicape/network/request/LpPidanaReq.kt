@@ -6,7 +6,7 @@ data class LpPidanaReq(
     var no_lp: String?,
     var kategori: String?,
     var id_personel_terlapor: Int?,
-    var id_pelanggaran: Int?,
+//    var id_pelanggaran: Int?,
     var kota_buat_laporan: String?,
     var tanggal_buat_laporan: String?,
     var nama_yang_mengetahui: String?,
@@ -32,7 +32,7 @@ data class LpPidanaReq(
 
 ) {
     constructor() : this(
-        "",  "", 0, 0,
+        "",  "",  0,
         "", "", "", "",
         "", "", 0, "", "",
         "", 0, ArrayList(),"",

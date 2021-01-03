@@ -20,10 +20,14 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickSaksiLpEditActivity : BaseActivity() {
+    companion object {
+        const val EDIT_SAKSI_KKE = "EDIT_SAKSI_KKE"
+    }
+
     private val listSaksi = arrayListOf(
-        LpSaksiResp(1,"Utuh","","",""),
-        LpSaksiResp(2,"Galuh","","",""),
-        LpSaksiResp(3,"Dulak","","","")
+        LpSaksiResp(1, "Utuh", "bjm", "12-12-2000", "polisi", "jl xxx", "korban", "", "", ""),
+        LpSaksiResp(2, "Galuh", "bjm", "20-02-2002", "konfing", "jl avx","saksi","","",""),
+        LpSaksiResp(3, "Dulak", "bjb", "20-02-2002", "cafe", "jl 123","saksi","","","")
     )
     private lateinit var sessionManager: SessionManager
     private lateinit var adapterSaksiEdit: ReusableAdapter<LpSaksiResp>
@@ -35,14 +39,16 @@ class PickSaksiLpEditActivity : BaseActivity() {
         setContentView(R.layout.activity_pick_saksi_lp_edit)
         sessionManager = SessionManager(this)
         adapterSaksiEdit = ReusableAdapter(this)
-        val detailLp = intent.extras?.getParcelable<LpResp>(EditLpActivity.EDIT_LP)
-        jenisPelanggaran = detailLp?.jenis
+//        val detailLp = intent.extras?.getParcelable<LpResp>(EditLpActivity.EDIT_LP)
+//        jenisPelanggaran = detailLp?.jenis
+        jenisPelanggaran =sessionManager.getJenisLP()
         setupActionBarWithBackButton(toolbar)
-        when (detailLp?.jenis) {
-            "pidana" -> supportActionBar?.title = "Edit Data Laporan Pidana"
-            "disiplin" -> supportActionBar?.title = "Edit Data Laporan Disiplin"
-            "kode_etik" -> supportActionBar?.title = "Edit Data Laporan Kode Etik"
-        }
+        supportActionBar?.title = "Edit Data Laporan Kode Etik"
+//        when (detailLp?.jenis) {
+//            "pidana" -> supportActionBar?.title = "Edit Data Laporan Pidana"
+//            "disiplin" -> supportActionBar?.title = "Edit Data Laporan Disiplin"
+//            "kode_etik" -> supportActionBar?.title = "Edit Data Laporan Kode Etik"
+
 
         getSaksiEdit()
 
@@ -56,7 +62,7 @@ class PickSaksiLpEditActivity : BaseActivity() {
 
     private fun getSaksiEdit() {
 //        NetworkConfig().getService()
-        callbackSaksiEdit = object :AdapterCallback<LpSaksiResp>{
+        callbackSaksiEdit = object : AdapterCallback<LpSaksiResp> {
             override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
                 itemView.txt_edit_pendidikan.text = data.nama_saksi
             }
@@ -70,7 +76,8 @@ class PickSaksiLpEditActivity : BaseActivity() {
             }
         }
         adapterSaksiEdit.adapterCallback(callbackSaksiEdit)
-            .isVerticalView().addData(listSaksi).setLayout(R.layout.layout_edit_1_text).build(rv_list_saksi_edit)
+            .isVerticalView().addData(listSaksi).setLayout(R.layout.layout_edit_1_text)
+            .build(rv_list_saksi_edit)
     }
 
 }

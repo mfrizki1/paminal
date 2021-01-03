@@ -20,7 +20,7 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
         android:hint="Nama Saksi">
@@ -32,6 +32,101 @@
             android:inputType="textMultiLine" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_weight="1"
+            android:hint="Tempat Lahir Saksi">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_tempat_lahir_saksi_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/space_12dp"
+            android:hint="Tanggal Lahir Saksi">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_tanggal_lahir_saksi_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:maxLength="10" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:hint="Pekerjaan Saksi">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_pekerjaan_saksi_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:hint="Alamat Saksi">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_alamat_saksi_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Apakah Saksi Korban ?" />
+
+    <RadioGroup
+        android:id="@+id/rg_korban_saksi_edit"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/space_half"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/space_12dp">
+
+        <RadioButton
+            android:id="@+id/rb_korban_saksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Korban" />
+
+        <RadioButton
+            android:id="@+id/rb_saksi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tidak" />
+    </RadioGroup>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save_edit_saksi_lp"

@@ -13,6 +13,7 @@ import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
+import id.calocallo.sicape.network.request.LpKodeEtikReq
 import id.calocallo.sicape.network.request.LpPidanaReq
 import id.calocallo.sicape.network.request.LpReq
 import id.calocallo.sicape.network.response.LpSaksiResp
@@ -22,17 +23,21 @@ import kotlinx.android.synthetic.main.activity_pick_saksi_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class PickSaksiLpActivity : BaseActivity() {
+    companion object{
+        const val ID_PELAPOR_SAKSI = "JENIS_LP_SAKSI"
+    }
     //    private lateinit var callbackSaksiLp: AdapterCallback<LpSaksiResp>
     private var lpReq = LpReq()
     private var lpPidanaReq = LpPidanaReq()
     private lateinit var sessionManager: SessionManager
     private lateinit var adapterSaksiLp: SaksiLpAdapter
+    private var lpKKeReq = LpKodeEtikReq()
     private var selectedSaksi: MutableList<LpSaksiResp> = mutableListOf()
     private var tracker: SelectionTracker<LpSaksiResp>? = null
     private var listSaksi = arrayListOf(
-        LpSaksiResp(1, "Utuh", "", "", ""),
-        LpSaksiResp(2, "Galuh", "", "", ""),
-        LpSaksiResp(3, "Dulak", "", "", "")
+        LpSaksiResp(1, "Utuh", "", "", "","","","","",""),
+        LpSaksiResp(2, "Galuh", "", "", "","" ,"","","",""),
+        LpSaksiResp(3, "Dulak", "", "", "","","","","","")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +66,7 @@ class PickSaksiLpActivity : BaseActivity() {
             }
             "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Kode Etik"
         }
+        val idPelaporSaksi = intent.extras?.getInt(ID_PELAPOR_SAKSI)
         getSaksiLp()
 
         btn_add_single_saksi.setOnClickListener {
@@ -70,7 +76,7 @@ class PickSaksiLpActivity : BaseActivity() {
         btn_save_lp_add.attachTextChangeAnimator()
         btn_save_lp_add.setOnClickListener {
             sessionManager.setListSaksiLP(selectedSaksi as ArrayList<LpSaksiResp>)
-            addAllLp(sessionManager.getJenisLP())
+            addAllLp(sessionManager.getJenisLP(), idPelaporSaksi)
 
             val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
             val drawableSize = R.dimen.space_25dp
@@ -86,22 +92,14 @@ class PickSaksiLpActivity : BaseActivity() {
             Handler(Looper.getMainLooper()).postDelayed({
                 btn_save_lp_add.hideDrawable(R.string.data_saved)
             }, 3000)
-            Log.e(
-                "LP",
-                "NoLP :${sessionManager.getNoLP()}," + "IDDilapor ${sessionManager.getIDPersonelPelapor()}," +
-                        " IDTerlapor ${sessionManager.getIDPersonelTerlapor()}, Jenis : ${sessionManager.getJenisLP()}" +
-                        "IDPelanggaran ${sessionManager.getIdPelanggaran()}, ket ${sessionManager.getKetLP()}" +
-                        "id_pasal ${sessionManager.getListPasalLP()}, alat bukti ${sessionManager.getAlatBukiLP()}" +
-                        "id_saksi $selectedSaksi"
-            )
         }
     }
 
-    private fun addAllLp(jenisLP: String?) {
+    private fun addAllLp(jenisLP: String?, idPelaporSaksi: Int?) {
         when (jenisLP) {
             "pidana" -> {
                 lpPidanaReq.no_lp = sessionManager.getNoLP()
-                lpPidanaReq.id_pelanggaran = sessionManager.getIdPelanggaran()
+//                lpPidanaReq.id_pelanggaran = sessionManager.getIdPelanggaran()
                 lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
                 lpPidanaReq.kategori = jenisLP
                 lpPidanaReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
@@ -122,7 +120,24 @@ class PickSaksiLpActivity : BaseActivity() {
                 },2000)
             }
             "kode_etik" -> {
+                lpKKeReq.no_lp = sessionManager.getNoLP()
+                lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
+                lpKKeReq.kategori = jenisLP
+                lpKKeReq.kota_buat_laporan = sessionManager.getKotaBuatLp()
+                lpKKeReq.tanggal_buat_laporan = sessionManager.getTglBuatLp()
+                lpKKeReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
+                lpKKeReq.id_personel_pelapor = idPelaporSaksi
+//                lpKKeReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
+                lpKKeReq.nama_yang_mengetahui = sessionManager.getNamaPimpBidLp()
+                lpKKeReq.pangkat_yang_mengetahui = sessionManager.getPangkatPimpBidLp()
+                lpKKeReq.nrp_yang_mengetahui = sessionManager.getNrpPimpBidLp()
+                lpKKeReq.jabatan_yang_mengetahui = sessionManager.getJabatanPimpBidLp()
+                lpKKeReq.alat_bukti = sessionManager.getAlatBukiLP()
+                lpKKeReq.isi_laporan = sessionManager.getIsiLapLP()
+                lpKKeReq.listPasal = sessionManager.getListPasalLP()
+                lpKKeReq.listSaksi = selectedSaksi as ArrayList<LpSaksiResp>
 
+                Log.e("KKE", "${lpKKeReq}")
             }
             "disiplin" -> {
 

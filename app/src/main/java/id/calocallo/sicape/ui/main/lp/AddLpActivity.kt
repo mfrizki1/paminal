@@ -48,11 +48,6 @@ class AddLpActivity : BaseActivity() {
         }
         sessionManager = SessionManager(this)
 
-//        btn_choose_pelanggaran_lp_add.setOnClickListener {
-//            val intent = Intent(this, PickPelanggaranActivity::class.java)
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//            startActivityForResult(intent, REQ_PELANGGARAN)
-//        }
 
         btn_choose_personel_terlapor_lp_add.setOnClickListener {
             val intent = Intent(this, ChoosePersonelActivity::class.java)
