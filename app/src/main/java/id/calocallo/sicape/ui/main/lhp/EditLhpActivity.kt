@@ -4,14 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_lhp.*
 import kotlinx.android.synthetic.main.activity_edit_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -80,13 +78,13 @@ class EditLhpActivity : BaseActivity() {
     private fun getViewLhpEdit(editLHP: LhpModel?) {
         Log.e("isTerbukti", "${editLHP?.isTerbukti}")
         edt_no_lhp_edit.setText(editLHP?.no_lhp)
-        edt_isi_pengaduan_lhp_edit.setText(editLHP?.isi_pengaduan)
-        edt_no_sp_lhp_edit.setText(editLHP?.no_sp)
+        edt_isi_pengaduan_lhp_edit.setText(editLHP?.tentang)
+        edt_no_sp_lhp_edit.setText(editLHP?.no_surat_perintah_penyelidikan)
         edt_waktu_penugasan_lhp_edit.setText(editLHP?.waktu_penugasan)
         edt_tempat_penyelidikan_lhp_edit.setText(editLHP?.daerah_penyelidikan)
         edt_tugas_pokok_lhp_edit.setText(editLHP?.tugas_pokok)
-        edt_rencana_pelaksanaan_lhp_edit.setText(editLHP?.rencana_pelaksanaan_penyelidikan)
-        edt_pelaksanaan_lhp_edit.setText(editLHP?.pelaksanan)
+//        edt_rencana_pelaksanaan_lhp_edit.setText(editLHP?.rencana_pelaksanaan_penyelidikan)
+//        edt_pelaksanaan_lhp_edit.setText(editLHP?.pelaksanan)
         edt_pokok_permasalahan_lhp_edit.setText(editLHP?.pokok_permasalahan)
         edt_keterangan_ahli_lhp_edit.setText(editLHP?.keterangan_ahli)
         edt_kesimpulan_lhp_edit.setText(editLHP?.kesimpulan)

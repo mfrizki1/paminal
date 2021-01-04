@@ -12,7 +12,6 @@ import id.calocallo.sicape.ui.main.lp.LpKkePasalAdapter
 import id.calocallo.sicape.utils.ext.visible
 import kotlinx.android.synthetic.main.item_lp_kke.view.*
 import kotlinx.android.synthetic.main.item_lp_kke.view.ll_personel_pelapor
-import kotlinx.android.synthetic.main.item_lp_kke.view.*
 
 class LpKkeAdapter(
     val context: Context,
@@ -35,23 +34,23 @@ class LpKkeAdapter(
 
                 //personel pelapor
                 txt_nama_lp_kke_pelapor.text =
-                    "Nama : ${lpKkeResp.id_personel_pelapor.toString()}"
+                    "Nama : ${lpKkeResp.personel_pelapor?.nama}"
                 txt_nrp_pangkat_lp_kke_pelapor.text =
-                    "Pangkat : ${lpKkeResp.id_personel_pelapor.toString()}, NRP : ${lpKkeResp.id_personel_pelapor.toString()}"
+                    "Pangkat : ${lpKkeResp.personel_pelapor?.pangkat}, NRP : ${lpKkeResp.personel_pelapor?.nrp}"
                 txt_jabatan_lp_kke_terlapor.text =
-                    "Jabatan : ${lpKkeResp.id_personel_pelapor.toString()}"
+                    "Jabatan : ${lpKkeResp.personel_pelapor?.jabatan}"
                 txt_kesatuan_lp_kke_terlapor.text =
-                    "Kesatuan : ${lpKkeResp.id_personel_pelapor.toString()}"
+                    "Kesatuan : ${lpKkeResp.personel_pelapor?.kesatuan}"
 
                 //personel terlapor
                 txt_nama_lp_kke_terlapor.text =
-                    "Nama : ${lpKkeResp.id_personel_terlapor.toString()}"
+                    "Nama : ${lpKkeResp.personel_terlapor?.nama}"
                 txt_nrp_pangkat_lp_kke_terlapor.text =
-                    "Pangkat : ${lpKkeResp.id_personel_terlapor.toString()}, NRP : ${lpKkeResp.id_personel_terlapor.toString()}"
+                    "Pangkat : ${lpKkeResp.personel_terlapor?.pangkat}, NRP : ${lpKkeResp.personel_terlapor?.nrp}"
                 txt_jabatan_lp_kke_terlapor.text =
-                    "Jabatan : ${lpKkeResp.id_personel_terlapor.toString()}"
+                    "Jabatan : ${lpKkeResp.personel_terlapor?.jabatan}"
                 txt_kesatuan_lp_kke_terlapor.text =
-                    "Kesatuan : ${lpKkeResp.id_personel_terlapor.toString()}"
+                    "Kesatuan : ${lpKkeResp.personel_terlapor?.kesatuan}"
 
                 //set pasal layout and adapter
                 itemView.rv_pasal_lp_kke.apply {

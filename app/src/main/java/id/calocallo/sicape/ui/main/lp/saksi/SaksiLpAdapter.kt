@@ -35,14 +35,14 @@ class SaksiLpAdapter internal constructor(
                     itemView.isActivated = false
                     txt_1_clickable.setTextColor(resources.getColor(R.color.onyx))
                 }
-                txt_1_clickable.text= lpSaksiResp.nama_saksi
+                txt_1_clickable.text= lpSaksiResp.nama
             }
         }
 
     }
 
     fun getItem(position: Int)= saksiItems[position]
-    fun getPosition(name: String) = saksiItems.indexOfFirst{it.nama_saksi == name}
+    fun getPosition(name: String) = saksiItems.indexOfFirst{it.nama == name}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SaksiLpHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_1_text_clickable, parent, false)

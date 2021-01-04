@@ -128,20 +128,20 @@ class AddLhpActivity : BaseActivity() {
 
             Log.e("NO_LHP", "LHP ${edt_no_lhp.text.toString()}")
             lhp.no_lhp = edt_no_lhp.text.toString()
-            lhp.listLidik = listLidik
-            lhp.listSaksi = listSaksi
-            lhp.listSurat = listSurat
-            lhp.listAnalisa = listAnalisa
-            lhp.listBukti = listBukti
-            lhp.listPetunjuk = listPetunjuk
-            lhp.listTerlapor = listTerlapor
-            lhp.no_sp = edt_no_sp_lhp.text.toString()
-            lhp.isi_pengaduan = edt_isi_pengaduan_lhp.text.toString()
+//            lhp. listLidik = listLidik
+//            lhp.listSaksi = listSaksi
+//            lhp.listSurat = listSurat
+//            lhp.listAnalisa = listAnalisa
+//            lhp.listBukti = listBukti
+//            lhp.listPetunjuk = listPetunjuk
+//            lhp.listTerlapor = listTerlapor
+            lhp.no_surat_perintah_penyelidikan = edt_no_sp_lhp.text.toString()
+            lhp.tentang = edt_isi_pengaduan_lhp.text.toString()
             lhp.waktu_penugasan = edt_waktu_penugasan_lhp.text.toString()
             lhp.daerah_penyelidikan = edt_tempat_penyelidikan_lhp.text.toString()
             lhp.tugas_pokok = edt_tugas_pokok_lhp.text.toString()
-            lhp.rencana_pelaksanaan_penyelidikan = edt_rencana_pelaksanaan_lhp.text.toString()
-            lhp.pelaksanan = edt_pelaksanaan_lhp.text.toString()
+//            lhp.rencana_pelaksanaan_penyelidikan = edt_rencana_pelaksanaan_lhp.text.toString()
+//            lhp.pelaksanan = edt_pelaksanaan_lhp.text.toString()
             lhp.pokok_permasalahan = edt_pokok_permasalahan_lhp.text.toString()
             lhp.keterangan_ahli = edt_keterangan_ahli_lhp.text.toString()
             lhp.kesimpulan = edt_kesimpulan_lhp.text.toString()

@@ -38,6 +38,7 @@ class AddLpKodeEtikActivity : BaseActivity() {
         btn_next_lp_kke.setOnClickListener {
             sessionManager.setIsiLapLP(edt_isi_laporan_kke.text.toString())
             sessionManager.setAlatBuktiLP(edt_alat_bukti_kke.text.toString())
+            sessionManager.setUraianPelanggaranLP(edt_uraian_pelanggaran_kke.text.toString())
 //            val intent = Intent(this, PickPasalLpActivity::class.java)
             val intent = Intent(this, PickPasalActivity::class.java)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

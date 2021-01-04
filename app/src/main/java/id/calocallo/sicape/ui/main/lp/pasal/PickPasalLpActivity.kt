@@ -13,7 +13,7 @@ import com.zanyastudios.test.PasalItem
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.request.LpKodeEtikReq
+import id.calocallo.sicape.network.request.LpKkeReq
 import id.calocallo.sicape.network.request.LpPidanaReq
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity
@@ -30,7 +30,7 @@ class PickPasalLpActivity : BaseActivity() {
     private var selectedIdPasal: MutableList<PasalItem> = mutableListOf()
     private lateinit var sessionManager: SessionManager
     private var lpPidanaReq = LpPidanaReq()
-    private var lpKKeReq = LpKodeEtikReq()
+    private var lpKKeReq = LpKkeReq()
 
     //    private lateinit var adapterPasal: PasalAdapter1
 //    private lateinit var adapterPasal2: PasalAdapter2
@@ -89,8 +89,8 @@ class PickPasalLpActivity : BaseActivity() {
             "pidana" -> {
                 lpPidanaReq.no_lp = sessionManager.getNoLP()
 //                lpPidanaReq.id_pelanggaran = sessionManager.getIdPelanggaran()
-                lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
-                lpPidanaReq.kategori = jenisLP
+//                lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
+//                lpPidanaReq.id_satuan_kerja = jenisLP
                 lpPidanaReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
                 lpPidanaReq.id_personel_pelapor = sessionManager.getIDPersonelPelapor()
 //                lpPidanaReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
@@ -98,15 +98,15 @@ class PickPasalLpActivity : BaseActivity() {
                 lpPidanaReq.pangkat_yang_mengetahui = sessionManager.getPangkatPimpBidLp()
                 lpPidanaReq.nrp_yang_mengetahui = sessionManager.getNrpPimpBidLp()
                 lpPidanaReq.jabatan_yang_mengetahui = sessionManager.getJabatanPimpBidLp()
-                lpPidanaReq.pelapor = sessionManager.getPelapor()
+                lpPidanaReq.status_pelapor = sessionManager.getPelapor()
                 lpPidanaReq.pembukaan_laporan = sessionManager.getPembukaanLpLP()
                 lpPidanaReq.isi_laporan = sessionManager.getIsiLapLP()
-                lpPidanaReq.listPasal = selectedIdPasal as ArrayList<LpPasalResp>
+                lpPidanaReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
             }
             "kode_etik" -> {
                 lpKKeReq.no_lp = sessionManager.getNoLP()
-                lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
-                lpKKeReq.kategori = jenisLP
+//                lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
+                lpKKeReq.uraian_pelanggaran = jenisLP
                 lpKKeReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
                 lpKKeReq.id_personel_pelapor = sessionManager.getIDPersonelPelapor()
 //                lpKKeReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
@@ -116,7 +116,7 @@ class PickPasalLpActivity : BaseActivity() {
                 lpKKeReq.jabatan_yang_mengetahui = sessionManager.getJabatanPimpBidLp()
                 lpKKeReq.alat_bukti = sessionManager.getAlatBukiLP()
                 lpKKeReq.isi_laporan = sessionManager.getIsiLapLP()
-                lpPidanaReq.listPasal = selectedIdPasal as ArrayList<LpPasalResp>
+                lpPidanaReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
 
             }
             "disiplin" -> {

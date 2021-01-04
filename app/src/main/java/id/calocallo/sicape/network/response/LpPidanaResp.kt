@@ -1,21 +1,22 @@
 package id.calocallo.sicape.network.response
 
 import android.os.Parcelable
+import id.calocallo.sicape.model.PersonelLapor
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LpPidanaResp(
     var id: Int?,
     var no_lp: String?,
-    var kategori: String?,
-    var id_personel_terlapor: Int?,
+    var satuan_kerja: SatKerResp?,
+    var personel_terlapor: PersonelLapor?,
+    var uraian_pelanggaran: String?,
     var kota_buat_laporan: String?,
     var tanggal_buat_laporan: String?,
     var nama_yang_mengetahui: String?,
     var pangkat_yang_mengetahui: String?,
     var nrp_yang_mengetahui: String?,
     var jabatan_yang_mengetahui: String?,
-    var id_personel_operator: Int?,
 
     var status_pelapor: String?,
     var nama_pelapor: String?,
@@ -25,17 +26,20 @@ data class LpPidanaResp(
     var alamat_pelapor: String?,
     var no_telp_pelapor: String?,
     var nik_ktp_pelapor: String?,
-    var id_personel_pelapor: Int?,
+    var personel_pelapor: PersonelLapor?,
 
     var isi_laporan: String?,
     var pembukaan_laporan: String?,
-    var listPasal: ArrayList<LpPasalResp>?
-):Parcelable {
+    var pasal_dilanggar: ArrayList<LpPasalResp>?,
+    var created_at: String?,
+    var updated_at: String?,
+    var deleted_at: String?
+) : Parcelable {
     constructor() : this(
-        0, "", "", 0, "", "",
+        0, "",SatKerResp(), PersonelLapor(), "", "", "",
         "", "", "",
-        "", 0, "", "", "",
-        "", "", "","","",
-        0,"","",ArrayList()
+        "",  "", "", "",
+        "", "", "", "", "",
+        PersonelLapor(), "", "", ArrayList(), "", "", ""
     )
 }

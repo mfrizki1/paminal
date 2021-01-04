@@ -32,13 +32,13 @@ class EditPasalLpActivity : BaseActivity() {
         }
 //        supportActionBar?.title = namaJenis
         edt_pasal_lp_edit.setText(pasal?.nama_pasal)
-        edt_detail_pasal_lp_edit.setText(pasal?.detail_pasal)
+        edt_detail_pasal_lp_edit.setText(pasal?.isi_pasal)
 
         btn_save_single_pasal_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_single_pasal_edit)
         btn_save_single_pasal_edit.setOnClickListener {
             pasalReq.nama_pasal = edt_pasal_lp_edit.text.toString()
-            pasalReq.detail_pasal = edt_detail_pasal_lp_edit.text.toString()
+            pasalReq.isi_pasal = edt_detail_pasal_lp_edit.text.toString()
             val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
             val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
             animatedDrawable.setBounds(0, 0, size, size)

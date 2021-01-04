@@ -1,8 +1,6 @@
 package id.calocallo.sicape.network.request
 
-import id.calocallo.sicape.network.response.LpPasalResp
-
-data class LpDisiplinReq(
+data class EditLpDisiplinReq (
     var no_lp: String?,
     var uraian_pelanggaran: String?,
     var id_personel_terlapor: Int?,
@@ -18,12 +16,11 @@ data class LpDisiplinReq(
     var macam_pelanggaran: String?,
     var keterangan_pelapor: String?,
     var kronologis_dari_pelapor: String?,
-    var rincian_pelanggaran_disiplin: String?,
-    var pasal_dilanggar: ArrayList<LpPasalResp>?
-) {
+    var rincian_pelanggaran_disiplin: String?
+){
     constructor() : this(
         "", "",  0,0, "", "",
         "", "", "", "", 0, "",
-        "", "", "", ArrayList()
+        "", "", ""
     )
 }

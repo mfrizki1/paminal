@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.LpDisiplinResp
-import id.calocallo.sicape.network.response.LpKkeResp
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 
 class LpDisiplinPasalAdapter(
@@ -26,12 +25,12 @@ class LpDisiplinPasalAdapter(
     }
 
     override fun getItemCount(): Int {
-        return pasalDisiplinItem.listPasal!!.size
+        return pasalDisiplinItem.pasal_dilanggar!!.size
 
     }
 
     override fun onBindViewHolder(holder: LpDisiplinHolder, position: Int) {
-        holder.txtItem1.text = pasalDisiplinItem.listPasal!![position].nama_pasal
+        holder.txtItem1.text = pasalDisiplinItem.pasal_dilanggar!![position].nama_pasal
 
     }
 }

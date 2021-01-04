@@ -937,7 +937,16 @@ class SessionManager(context: Context) {
         return prefsLP.getString("RINCIAN", null)
     }
 
+    fun setUraianPelanggaranLP(uraian: String){
+        val editor = prefsLP.edit()
+        editor.putString("URAIAN", uraian)
+        editor.apply()
+    }
 
+    fun getUraianPelanggaranLP():String?{
+        return prefsLP.getString("URAIAN", null)
+
+    }
     fun clearLP() {
         val editor = prefsLP.edit()
         editor.clear()

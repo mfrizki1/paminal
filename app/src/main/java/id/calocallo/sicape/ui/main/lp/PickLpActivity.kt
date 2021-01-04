@@ -35,5 +35,12 @@ class PickLpActivity : BaseActivity() {
 //            intent.putExtra(LpActivity.JENIS, "Kode Etik")
             startActivity(intent)
         }
+
+        btn_lp_tind_disiplin.setOnClickListener {
+            val intent = Intent(this, ListTindDispLpActivity::class.java)
+//            intent.putExtra(LpActivity.TYPEVIEW, 1)
+//            intent.putExtra(LpActivity.JENIS, "Kode Etik")
+            startActivity(intent)
+        }
     }
 }

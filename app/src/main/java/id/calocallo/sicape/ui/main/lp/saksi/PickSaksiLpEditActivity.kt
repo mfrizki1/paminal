@@ -1,18 +1,12 @@
 package id.calocallo.sicape.ui.main.lp.saksi
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.network.response.LpSaksiResp
-import id.calocallo.sicape.ui.main.lp.EditLpActivity
-import id.calocallo.sicape.ui.main.lp.pasal.AddPasalLpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_pick_pasal_lp_edit.*
 import kotlinx.android.synthetic.main.activity_pick_saksi_lp_edit.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -64,7 +58,7 @@ class PickSaksiLpEditActivity : BaseActivity() {
 //        NetworkConfig().getService()
         callbackSaksiEdit = object : AdapterCallback<LpSaksiResp> {
             override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
-                itemView.txt_edit_pendidikan.text = data.nama_saksi
+                itemView.txt_edit_pendidikan.text = data.nama
             }
 
             override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 class LpSaksiAdapter(val saksiLpItems: LpResp): RecyclerView.Adapter<LpSaksiAdapter.LpSaksiHolder>() {
     inner class LpSaksiHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(lpSaksiResp: LpSaksiResp) {
-            itemView.txt_item_1.text = saksiLpItems.listSaksi!![adapterPosition].nama_saksi
+            itemView.txt_item_1.text = saksiLpItems.listSaksi!![adapterPosition].nama
         }
 
     }

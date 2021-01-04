@@ -1,15 +1,16 @@
 package id.calocallo.sicape.network.response
 
 import android.os.Parcelable
+import id.calocallo.sicape.model.PersonelLapor
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LpKkeResp(
     var id: Int?,
     var no_lp: String?,
-    var kategori: String?,
-    var id_personel_terlapor: Int?,
-    var id_personel_pelapor: Int?,
+    var uraian_pelanggaran: String?,
+    var personel_terlapor: PersonelLapor?,
+    var personel_pelapor: PersonelLapor?,
     var kota_buat_laporan: String?,
     var tanggal_buat_laporan: String?,
     var nama_yang_mengetahui: String?,
@@ -20,8 +21,10 @@ data class LpKkeResp(
 
     val alat_bukti: String?,
     val isi_laporan: String?,
-    var listPasal: ArrayList<LpPasalResp>?,
-    var listSaksi: MutableList<LpSaksiResp>?
-
+    var pasal_dilanggar: ArrayList<LpPasalResp>?,
+    var saksi_kode_etik: MutableList<LpSaksiResp>?,
+    var created_at: String?,
+    var updated_at: String?,
+    var deleted_at: String?
 
 ) : Parcelable

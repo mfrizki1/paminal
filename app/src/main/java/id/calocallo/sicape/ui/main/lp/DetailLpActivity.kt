@@ -98,7 +98,7 @@ class DetailLpActivity : BaseActivity() {
     private fun getSaksiDetail(listSaksi: ArrayList<LpSaksiResp>?) {
         callbackDetailSaksi = object : AdapterCallback<LpSaksiResp> {
             override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
-                itemView.txt_item_1.text = data.nama_saksi
+                itemView.txt_item_1.text = data.nama
 
             }
 

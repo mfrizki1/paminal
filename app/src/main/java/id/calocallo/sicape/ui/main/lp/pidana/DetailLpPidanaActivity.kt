@@ -84,18 +84,18 @@ class DetailLpPidanaActivity : BaseActivity() {
         txt_detail_jabatan_pimpinan_pidana.text = "Jabatan : ${pidana?.jabatan_yang_mengetahui}"
 
         //terlapor
-        txt_detail_nama_terlapor.text = "Nama : ${pidana?.id_personel_terlapor}"
+        txt_detail_nama_terlapor.text = "Nama : ${pidana?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor.text =
-            "Pangkat : ${pidana?.id_personel_terlapor}, NRP : ${pidana?.id_personel_terlapor}"
-        txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana?.id_personel_terlapor}"
-        txt_detail_kesatuan_terlapor.text = "Kesatuan : ${pidana?.id_personel_terlapor}"
+            "Pangkat : ${pidana?.personel_terlapor?.pangkat}, NRP : ${pidana?.personel_terlapor?.nrp}"
+        txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
+        txt_detail_kesatuan_terlapor.text = "Kesatuan : ${pidana?.personel_terlapor?.kesatuan}"
 
         //pelapor
-        txt_detail_nama_pelapor.text = "Nama : ${pidana?.id_personel_pelapor}"
+        txt_detail_nama_pelapor.text = "Nama : ${pidana?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor.text =
-            "Pangkat : ${pidana?.id_personel_pelapor}, NRP : ${pidana?.id_personel_pelapor}"
-        txt_detail_jabatan_pelapor.text = "Jabatan : ${pidana?.id_personel_pelapor}"
-        txt_detail_kesatuan_pelapor.text = "Kesatuan : ${pidana?.id_personel_pelapor}"
+            "Pangkat : ${pidana?.personel_pelapor?.pangkat}, NRP : ${pidana?.personel_pelapor?.nrp}"
+        txt_detail_jabatan_pelapor.text = "Jabatan : ${pidana?.personel_pelapor?.jabatan}"
+        txt_detail_kesatuan_pelapor.text = "Kesatuan : ${pidana?.personel_pelapor?.kesatuan}"
 
         //sipil
         txt_detail_nama_sipil.text = "Nama :  ${pidana?.nama_pelapor}"
@@ -115,7 +115,7 @@ class DetailLpPidanaActivity : BaseActivity() {
             override fun onItemClicked(itemView: View, data: LpPasalResp, itemIndex: Int) {
             }
         }
-        pidana?.listPasal?.let {
+        pidana?.pasal_dilanggar?.let {
             adapterDetailPasal.adapterCallback(callbackDetailPasal)
                 .isVerticalView().addData(it)
                 .setLayout(R.layout.item_pasal_lp).build(rv_detail_lp_pidana_pasal)

@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.lp.kke
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -68,10 +67,11 @@ class DetailLpKkeActivity : BaseActivity() {
 
         //EDIT LP KKE (PASAL)
         btn_edit_pasal_kke.setOnClickListener {
-            val intent =Intent(this, PickPasalLpEditActivity::class.java)
+            val intent = Intent(this, PickPasalLpEditActivity::class.java)
             intent.putExtra(PickPasalLpEditActivity.EDIT_PASAL_KKE, detailKKe)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            startActivity(intent)}
+            startActivity(intent)
+        }
 
     }
 
@@ -81,18 +81,19 @@ class DetailLpKkeActivity : BaseActivity() {
         txt_detail_isi_laporan_kke.text = detailKKe?.isi_laporan
 
         //terlapor
-        txt_detail_nama_terlapor_kke.text = "Nama : ${detailKKe?.id_personel_terlapor.toString()}"
+        txt_detail_nama_terlapor_kke.text = "Nama : ${detailKKe?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_kke.text =
-            "Pangkat : ${detailKKe?.id_personel_terlapor}, NRP : ${detailKKe?.id_personel_terlapor}"
-        txt_detail_jabatan_terlapor_kke.text = "Jabatan : ${detailKKe?.id_personel_terlapor}"
-        txt_detail_kesatuan_terlapor_kke.text = "Kesatuan : ${detailKKe?.id_personel_terlapor}"
+            "Pangkat : ${detailKKe?.personel_terlapor?.pangkat}, NRP : ${detailKKe?.personel_terlapor?.nrp}"
+        txt_detail_jabatan_terlapor_kke.text = "Jabatan : ${detailKKe?.personel_terlapor?.jabatan}"
+        txt_detail_kesatuan_terlapor_kke.text =
+            "Kesatuan : ${detailKKe?.personel_terlapor?.kesatuan}"
 
         //pelapor
-        txt_detail_jabatan_pelapor_kke.text = "Nama : ${detailKKe?.id_personel_pelapor.toString()}"
+        txt_detail_nama_pelapor_kke.text = "Nama : ${detailKKe?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_kke.text =
-            "Pangkat : ${detailKKe?.id_personel_pelapor}, NRP : ${detailKKe?.id_personel_pelapor}"
-        txt_detail_jabatan_pelapor_kke.text = "Jabatan : ${detailKKe?.id_personel_pelapor}"
-        txt_detail_kesatuan_pelapor_kke.text = "Kesatuan : ${detailKKe?.id_personel_pelapor}"
+            "Pangkat : ${detailKKe?.personel_pelapor?.pangkat}, NRP : ${detailKKe?.personel_pelapor?.nrp}"
+        txt_detail_jabatan_pelapor_kke.text = "Jabatan : ${detailKKe?.personel_pelapor?.jabatan}"
+        txt_detail_kesatuan_pelapor_kke.text = "Kesatuan : ${detailKKe?.personel_pelapor?.kesatuan}"
 
         txt_detail_alat_bukti_kke.text = detailKKe?.alat_bukti
         txt_detail_kota_buat_kke.text = "Kota : ${detailKKe?.kota_buat_laporan}"
@@ -111,7 +112,7 @@ class DetailLpKkeActivity : BaseActivity() {
             override fun onItemClicked(itemView: View, data: LpPasalResp, itemIndex: Int) {
             }
         }
-        detailKKe?.listPasal?.let {
+        detailKKe?.pasal_dilanggar?.let {
             adapterDetailPasalKke.adapterCallback(callbackDetailPasalKke)
                 .isVerticalView().addData(it).setLayout(R.layout.item_pasal_lp)
                 .build(rv_detail_pasal_kke)
@@ -120,8 +121,8 @@ class DetailLpKkeActivity : BaseActivity() {
         //saksi
         callbackDetailSaksiKke = object : AdapterCallback<LpSaksiResp> {
             override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
-                itemView.txt_detail_1.text = data.nama_saksi
-                when (data.isKorban) {
+                itemView.txt_detail_1.text = data.nama
+                when (data.is_korban) {
                     "korban" -> itemView.txt_detail_2.text = "Korban"
                     "saksi" -> itemView.txt_detail_2.text = "Saksi"
                 }
@@ -131,7 +132,7 @@ class DetailLpKkeActivity : BaseActivity() {
             override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {
             }
         }
-        detailKKe?.listSaksi?.let {
+        detailKKe?.saksi_kode_etik?.let {
             adapterDetailSaksiKke.adapterCallback(callbackDetailSaksiKke)
                 .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
                 .build(rv_detail_saksi_kke)

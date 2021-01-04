@@ -13,6 +13,7 @@ import id.calocallo.sicape.network.request.SipilPelaporReq
 import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.ID_PELAPOR
+import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.SIPIL
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -26,6 +27,14 @@ class AddLpPidanaActivity : BaseActivity() {
     private lateinit var sipilAlertDialog: View
     private var sipilPelaporReq = SipilPelaporReq()
     private var idPelapor: Int? = null
+    private var agamaSipil: String? = null
+    private var namaSipil: String? = null
+    private var pekerjaanSipil: String? = null
+    private var alamatSipil: String? = null
+    private var notelpSipil: String? = null
+    private var nikSipil: String? = null
+    private var kwgSipil: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_lp_pidana)
@@ -46,8 +55,21 @@ class AddLpPidanaActivity : BaseActivity() {
         btn_next_lp_pidana.setOnClickListener {
             sessionManager.setPembukaanLapLP(edt_pembukaan_laporan_pidana.text.toString())
             sessionManager.setIsiLapLP(edt_isi_laporan_pidana.text.toString())
+            sessionManager.setUraianPelanggaranLP(edt_uraian_pelanggaran_pidana.text.toString())
+            sipilPelaporReq.nama_sipil = namaSipil
+            sipilPelaporReq.agama_sipil = agamaSipil
+            sipilPelaporReq.alamat_sipil = alamatSipil
+            sipilPelaporReq.kewarganegaraan_sipil = kwgSipil
+            sipilPelaporReq.nik_sipil = nikSipil
+            sipilPelaporReq.no_telp_sipil = notelpSipil
+            sipilPelaporReq.pekerjaan_sipil = pekerjaanSipil
             val intent = Intent(this, PickPasalActivity::class.java)
-            intent.putExtra(ID_PELAPOR, idPelapor)
+            if(idPelapor == null || idPelapor == 0){
+                intent.putExtra(SIPIL, sipilPelaporReq)
+            }else{
+                intent.putExtra(ID_PELAPOR, idPelapor!!)
+
+            }
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
@@ -77,15 +99,15 @@ class AddLpPidanaActivity : BaseActivity() {
     private fun launchSipilView() {
         val spAgama =
             sipilAlertDialog.findViewById<AutoCompleteTextView>(R.id.spinner_agama_sipil)
-        val namaSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nama_sipil)
-        val pekerjaanSipil =
+        val namaSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nama_sipil)
+        val pekerjaanSipilView =
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_pekerjaan_sipil)
-        val kwgSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_kwg_sipil)
-        val alamatSipil =
+        val kwgSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_kwg_sipil)
+        val alamatSipilView =
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_alamat_sipil)
-        val noTelpSipil =
+        val noTelpSipilView =
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_no_telp_sipil)
-        val nikSipil = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nik_sipil)
+        val nikSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nik_sipil)
 
         val ll = sipilAlertDialog.findViewById<LinearLayout>(R.id.ll_add_sipil)
         val pb = sipilAlertDialog.findViewById<RelativeLayout>(R.id.rl_pb)
@@ -103,28 +125,28 @@ class AddLpPidanaActivity : BaseActivity() {
         spAgama.setOnItemClickListener { parent, view, position, id ->
             when (position) {
                 0 -> {
-                    sessionManager.setAgamaPelapor("islam")
+                    agamaSipil = "islam"
                     txt_agama_sipil_pidana_lp_add.text = "Islam"
                 }
                 1 -> {
-                    sessionManager.setAgamaPelapor("katolik")
+                    agamaSipil = "katolik"
                     txt_agama_sipil_pidana_lp_add.text = "Katolik"
                 }
                 2 -> {
-                    sessionManager.setAgamaPelapor("protestan")
+                    agamaSipil="protestan"
                     sipilPelaporReq.agama_sipil = "protestan"
                     txt_agama_sipil_pidana_lp_add.text = "Protestan"
                 }
                 3 -> {
-                    sessionManager.setAgamaPelapor("buddha")
+                    agamaSipil="buddha"
                     txt_agama_sipil_pidana_lp_add.text = "Buddha"
                 }
                 4 -> {
-                    sessionManager.setAgamaPelapor("hindu")
+                    agamaSipil="hindu"
                     txt_agama_sipil_pidana_lp_add.text = "Hindu"
                 }
                 5 -> {
-                    sessionManager.setAgamaPelapor("konghuchu")
+                    agamaSipil="konghuchu"
                     txt_agama_sipil_pidana_lp_add.text = "Konghuchu"
                 }
             }
@@ -133,23 +155,23 @@ class AddLpPidanaActivity : BaseActivity() {
             .setTitle("Tambah Data Sipil")
 //            .setMessage("Masukkan Data Sipil")
             .setPositiveButton("Tambah") { dialog, _ ->
-                sessionManager.setNamaPelapor(namaSipil.text.toString())
-                txt_nama_sipil_pidana_lp_add.text = namaSipil.text.toString()
+                namaSipil = namaSipilView.text.toString()
+                txt_nama_sipil_pidana_lp_add.text = namaSipilView.text.toString()
 
-                sessionManager.setPekerjaanPelapor(pekerjaanSipil.text.toString())
-                txt_pekerjaan_sipil_pidana_lp_add.text = pekerjaanSipil.text.toString()
+                pekerjaanSipil = pekerjaanSipilView.text.toString()
+                txt_pekerjaan_sipil_pidana_lp_add.text = pekerjaanSipilView.text.toString()
 
-                sessionManager.setKwgPelapor(kwgSipil.text.toString())
-                txt_kwg_sipil_pidana_lp_add.text = kwgSipil.text.toString()
+                kwgSipil = kwgSipilView.text.toString()
+                txt_kwg_sipil_pidana_lp_add.text = kwgSipilView.text.toString()
 
-                sessionManager.setAlamatPelapor(alamatSipil.text.toString())
-                txt_alamat_sipil_pidana_lp_add.text = alamatSipil.text.toString()
+                alamatSipil = alamatSipilView.text.toString()
+                txt_alamat_sipil_pidana_lp_add.text = alamatSipilView.text.toString()
 
-                sessionManager.setNoTelpPelapor(noTelpSipil.text.toString())
-                txt_no_telp_sipil_pidana_lp_add.text = noTelpSipil.text.toString()
+                notelpSipil = noTelpSipilView.text.toString()
+                txt_no_telp_sipil_pidana_lp_add.text = noTelpSipilView.text.toString()
 
-                sessionManager.setNIKPelapor(nikSipil.text.toString())
-                txt_nik_ktp_sipil_pidana_lp_add.text = nikSipil.text.toString()
+                nikSipil = nikSipilView.text.toString()
+                txt_nik_ktp_sipil_pidana_lp_add.text = nikSipilView.text.toString()
 
 //                dialog.dismiss()
 

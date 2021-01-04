@@ -40,14 +40,14 @@ class DetailLhpActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Laporan Hasil Penyelidikan"
 
-        val dataLhp = intent.extras?.getParcelable<LhpModel>("LHP")
+        val dataLhp = intent.extras?.getParcelable<LhpModel>(DETAIL_LHP)
         txt_no_lhp_detail.text = dataLhp?.no_lhp
         txt_kesimpulan_detail.text = dataLhp?.kesimpulan
         txt_rekomendasi_detail.text = dataLhp?.rekomendasi
-        txt_pelaksanaan_detail.text = dataLhp?.pelaksanan
-        txt_rencana_penyelidikan_detail.text = dataLhp?.rencana_pelaksanaan_penyelidikan
-        txt_pengaduan_detail.text = dataLhp?.isi_pengaduan
-        txt_no_sp_detail.text = dataLhp?.no_sp
+//        txt_pelaksanaan_detail.text = dataLhp?.pelaksanan
+//        txt_rencana_penyelidikan_detail.text = dataLhp?.rencana_pelaksanaan_penyelidikan
+        txt_pengaduan_detail.text = dataLhp?.tentang
+        txt_no_sp_detail.text = dataLhp?.no_surat_perintah_penyelidikan
         txt_waktu_penugasan_detail.text = dataLhp?.waktu_penugasan
         txt_tempat_penyelidikan_detail.text = dataLhp?.daerah_penyelidikan
         txt_tugas_pokok_detail.text = dataLhp?.tugas_pokok
@@ -55,40 +55,41 @@ class DetailLhpActivity : BaseActivity() {
         txt_ket_ahli_detail.text = dataLhp?.keterangan_ahli
 
 
-        val listLdkDetail = dataLhp?.listLidik
-        val listSaksiDetail = dataLhp?.listSaksi
-        val listSuratDetail = dataLhp?.listSurat
-        val listPetunjukDetail = dataLhp?.listPetunjuk
-        val listBuktiDetail = dataLhp?.listBukti
-        val listAnalisaDetail = dataLhp?.listAnalisa
-        val listTerlaporDetail = dataLhp?.listTerlapor
+//        val listLdkDetail = dataLhp?.listLidik
+//        val listSaksiDetail = dataLhp?.listSaksi
+//        val listSuratDetail = dataLhp?.listSurat
+//        val listPetunjukDetail = dataLhp?.listPetunjuk
+//        val listBuktiDetail = dataLhp?.listBukti
+//        val listAnalisaDetail = dataLhp?.listAnalisa
+//        val listTerlaporDetail = dataLhp?.listTerlapor
 
-        if(listLdkDetail?.isEmpty()!!) rl_no_data_lidik.visible()
-        if(listSaksiDetail?.isEmpty()!!) rl_no_data_saksi.visible()
-        if(listSuratDetail?.isEmpty()!!) rl_no_data_surat.visible()
-        if(listPetunjukDetail?.isEmpty()!!) rl_no_data_petunjuk.visible()
-        if(listBuktiDetail?.isEmpty()!!) rl_no_data_bukti.visible()
-        if(listAnalisaDetail?.isEmpty()!!) rl_no_data_analisa.visible()
-        if(listTerlaporDetail?.isEmpty()!!) rl_no_data_terlapor.visible()
+//        if (listLdkDetail?.isEmpty()!!) rl_no_data_lidik.visible()
+//        if (listSaksiDetail?.isEmpty()!!) rl_no_data_saksi.visible()
+//        if (listSuratDetail?.isEmpty()!!) rl_no_data_surat.visible()
+//        if (listPetunjukDetail?.isEmpty()!!) rl_no_data_petunjuk.visible()
+//        if (listBuktiDetail?.isEmpty()!!) rl_no_data_bukti.visible()
+//        if (listAnalisaDetail?.isEmpty()!!) rl_no_data_analisa.visible()
+//        if (listTerlaporDetail?.isEmpty()!!) rl_no_data_terlapor.visible()
 
-        initRV(
-            listLdkDetail, listSaksiDetail, listSuratDetail, listPetunjukDetail, listBuktiDetail,
-            listAnalisaDetail, listTerlaporDetail
-        )
+//        initRV(
+//            listLdkDetail, listSaksiDetail, listSuratDetail, listPetunjukDetail, listBuktiDetail,
+//            listAnalisaDetail, listTerlaporDetail
+//        )
 
-        if (dataLhp.isTerbukti == 0) {
-            terbukti = "Terbukti"
+        terbukti = if (dataLhp?.isTerbukti == 0) {
+            "Terbukti"
         } else {
-            terbukti = "Tidak Terbukti"
+            "Tidak Terbukti"
         }
         txt_isTerbukti_detail.text = terbukti
 //        val ketuaTim = "${dataLhp.nama_ketua_tim}\t ${dataLhp.pangkat_ketua_tim}\t ${dataLhp.nrp_ketua_tim}"
 //        val lidik = dataLhp.listLidik?.filter { it.status_penyelidik =="ketua_tim" }
-        val lidik = dataLhp.listLidik?.find { it.status_penyelidik =="ketua_tim" }
-        txt_ketua_tim_detail.text ="${lidik?.nama_lidik} \t Pangkat : ${lidik?.pangkat_lidik} \t ${lidik?.nrp_lidik}"
+        val lidik = dataLhp?.personel_penyelidik?.find { it.is_ketua == "ketua_tim" }
+        txt_ketua_tim_detail.text =
+            "Nama : ${lidik?.nama} \t Pangkat : ${lidik?.pangkat} \t ${lidik?.nrp}"
 
         val hakAkses = sessionManager.fetchHakAkses()
-        if(hakAkses == "operator"){
+        if (hakAkses == "operator") {
             btn_edit_lhp.toggleVisibility()
             btn_edit_lidik_lhp.toggleVisibility()
             btn_edit_saksi_lhp.toggleVisibility()
@@ -152,33 +153,40 @@ class DetailLhpActivity : BaseActivity() {
         analisa: ArrayList<ListAnalisa>?,
         terlapor: ArrayList<ListTerlapor>?
     ) {
-        rv_detail_lidik.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_detail_lidik.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterLidik =
             DetailLidikAdapter(this, lidik)
         rv_detail_lidik.adapter = adapterLidik
 
-        rv_saksi_detail.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_saksi_detail.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterSaksi = DetailSaksiAdapter(this, saksi)
         rv_saksi_detail.adapter = adapterSaksi
 
-        rv_surat_detail.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_surat_detail.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterSurat = DetailSuratAdapter(this, surat)
         rv_surat_detail.adapter = adapterSurat
 
-        rv_petunjuk_detail.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_petunjuk_detail.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterPetunjuk = DetailPetunjukAdapter(this, petunjuk)
         rv_petunjuk_detail.adapter = adapterPetunjuk
 
-        rv_bukti_detail.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_bukti_detail.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterBukti = DetailBuktiAdapter(this, bukti)
         rv_bukti_detail.adapter = adapterBukti
 
-        rv_analisa_detail.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_analisa_detail.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterAnalisa = DetailAnalisaAdapter(this, analisa)
         rv_analisa_detail.adapter = adapterAnalisa
 
-        rv_ket_terlapor_detail.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterTerlapor= DetailTerlaporAdapter(this, terlapor)
+        rv_ket_terlapor_detail.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapterTerlapor = DetailTerlaporAdapter(this, terlapor)
         rv_ket_terlapor_detail.adapter = adapterTerlapor
     }
 
@@ -206,5 +214,9 @@ class DetailLhpActivity : BaseActivity() {
             negativeButton("Tidak") {
             }
         }.show()
+    }
+
+    companion object {
+        const val DETAIL_LHP = "DETAIL_LHP"
     }
 }

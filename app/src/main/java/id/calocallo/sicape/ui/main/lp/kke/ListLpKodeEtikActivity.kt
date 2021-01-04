@@ -1,10 +1,10 @@
 package id.calocallo.sicape.ui.main.lp.kke
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
+import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.response.LpKkeResp
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.network.response.LpSaksiResp
@@ -22,6 +22,8 @@ class ListLpKodeEtikActivity : BaseActivity() {
     private var listKke = arrayListOf<LpKkeResp>()
     private var listPasal = arrayListOf<LpPasalResp>()
     private var listSaksi = arrayListOf<LpSaksiResp>()
+    private var personelTerLapor = PersonelLapor()
+    private var personelPeLapor = PersonelLapor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,43 +48,47 @@ class ListLpKodeEtikActivity : BaseActivity() {
     }
 
     private fun getListKke() {
+        personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", "polda kalsel")
+        personelPeLapor =
+            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987", "polresta banjarmasin")
+
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
 
-        listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "","","","","","",""))
-        listSaksi.add(LpSaksiResp(2, "Akbar", "saksi", "","","","","","",""))
-        listSaksi.add(LpSaksiResp(3, "Wahyu", "saksi", "","","","","","",""))
+        listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", "", "", "", ""))
+        listSaksi.add(LpSaksiResp(2, "Akbar", "saksi", "", "", "", "", "", "", ""))
+        listSaksi.add(LpSaksiResp(3, "Wahyu", "saksi", "", "", "", "", "", "", ""))
         listKke.add(
             LpKkeResp(
-                1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", 4,
-                5, "Banjarbaru", "12-12-2000", "Budi",
+                1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
+                personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
                 "IPDA", "9090", "KOMBES",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
-                listPasal, listSaksi
+                listPasal, listSaksi,"","",""
             )
         )
 
         listKke.add(
             LpKkeResp(
-                2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", 4,
-                5, "Banjarbaru", "12-12-2000", "Budi",
+                2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
+                personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
                 "IPDA", "9090", "KOMBES",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
-                listPasal, listSaksi
+                listPasal, listSaksi,"","",""
             )
         )
         listKke.add(
             LpKkeResp(
-                3, "LP/KKE2/2019/BIDPROPAM", "kode_etik", 4,
-                5, "Banjarbaru", "12-12-2000", "Budi",
+                3, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
+                personelPeLapor,"Banjarbaru", "12-12-2000", "Budi",
                 "IPDA", "9090", "KOMBES",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
-                listPasal, listSaksi
+                listPasal, listSaksi,"","",""
             )
         )
         rv_lp_kke.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterLpKKe = LpKkeAdapter(this, listKke, object : LpKkeAdapter.OnCLickKke{
+        adapterLpKKe = LpKkeAdapter(this, listKke, object : LpKkeAdapter.OnCLickKke {
             override fun onClick(position: Int) {
                 val intent = Intent(this@ListLpKodeEtikActivity, DetailLpKkeActivity::class.java)
                 intent.putExtra(DETAIL_KKE, listKke[position])

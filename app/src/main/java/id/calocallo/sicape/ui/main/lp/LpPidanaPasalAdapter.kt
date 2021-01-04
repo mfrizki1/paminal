@@ -35,7 +35,7 @@ class LpPidanaPasalAdapter(
 //            return pasalLpItemKKe[position].listPasal!!.size
 //        }else{
 //            return pasalLpItemDisiplin[position].listPasal!!.size
-        return pasalLpItem.listPasal!!.size
+        return pasalLpItem.pasal_dilanggar!!.size
     }
 
 
@@ -47,7 +47,7 @@ class LpPidanaPasalAdapter(
 //        }else{
 //            holder.txtItem1.text = pasalLpItemDisiplin[position].listPasal!![position].nama_pasal
 //        }
-            holder.txtItem1.text = pasalLpItem.listPasal!![position].nama_pasal
+            holder.txtItem1.text = pasalLpItem.pasal_dilanggar!![position].nama_pasal
 
     }
 }

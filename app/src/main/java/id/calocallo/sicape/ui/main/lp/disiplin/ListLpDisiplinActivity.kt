@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
+import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpPasalResp
+import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.ui.main.lp.AddLpActivity
 import id.calocallo.sicape.ui.main.lp.disiplin.DetailLpDisiplinActivity.Companion.DETAIL_DISIPLIN
 import id.calocallo.sicape.utils.SessionManager
@@ -18,6 +20,10 @@ class ListLpDisiplinActivity : BaseActivity() {
     private lateinit var adapterListLDisiplin: LpDisiplinAdapter
     private var listDisiplin = arrayListOf<LpDisiplinResp>()
     private var listPasal = arrayListOf<LpPasalResp>()
+    private var personelTerLapor = PersonelLapor()
+    private var personelPeLapor = PersonelLapor()
+    private var satKerResp = SatKerResp()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_lp_disiplin)
@@ -36,6 +42,11 @@ class ListLpDisiplinActivity : BaseActivity() {
     }
 
     private fun getListDisiplin() {
+        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
+        personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", "polda kalsel")
+        personelPeLapor =
+            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987", "polresta banjarmasin")
+
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
@@ -43,33 +54,33 @@ class ListLpDisiplinActivity : BaseActivity() {
         listDisiplin.add(
             LpDisiplinResp(
                 1, "LP/DISIPLIN1",
-                "disiplin", 4, 5,
+                "disiplin", personelTerLapor, personelPeLapor,
                 "Banjarmasin", "12-01-20", "Budi",
                 "IPDA", "87654321", "KOMBES",
-                sessionManager.fetchUser()?.id, "macam_pelanggaran", "keterangan terlapor",
-                "kronologis", "rincian", listPasal
+                 "macam_pelanggaran", "keterangan terlapor",
+                "kronologis", "rincian", listPasal, satKerResp, "",""
             )
         )
 
         listDisiplin.add(
             LpDisiplinResp(
                 2, "LP/DISIPLIN2",
-                "disiplin", 4, 5,
+                "disiplin", personelTerLapor, personelPeLapor,
                 "Banjarmasin", "12-01-20", "Budi",
                 "IPDA", "87654321", "KOMBES",
-                sessionManager.fetchUser()?.id, "macam_pelanggaran", "keterangan terlapor",
-                "kronologis", "rincian", listPasal
+                 "macam_pelanggaran", "keterangan terlapor",
+                "kronologis", "rincian", listPasal,satKerResp,"",""
             )
         )
 
         listDisiplin.add(
             LpDisiplinResp(
-                2, "LP/DISIPLIN1",
-                "disiplin", 4, 5,
+                3, "LP/DISIPLIN3",
+                "disiplin", personelTerLapor, personelPeLapor,
                 "Banjarmasin", "12-01-20", "Budi",
                 "IPDA", "87654321", "KOMBES",
-                sessionManager.fetchUser()?.id, "macam_pelanggaran", "keterangan terlapor",
-                "kronologis", "rincian", listPasal
+                 "macam_pelanggaran", "keterangan terlapor",
+                "kronologis", "rincian", listPasal,satKerResp,"",""
             )
         )
         rv_lp_disiplin.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

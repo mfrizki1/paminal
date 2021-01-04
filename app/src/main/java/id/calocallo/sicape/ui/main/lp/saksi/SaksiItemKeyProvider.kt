@@ -10,6 +10,6 @@ ItemKeyProvider<LpSaksiResp>(SCOPE_CACHED){
     }
 
     override fun getPosition(key: LpSaksiResp): Int {
-        return adapter.getPosition(key.nama_saksi!!)
+        return adapter.getPosition(key.nama!!)
     }
 }

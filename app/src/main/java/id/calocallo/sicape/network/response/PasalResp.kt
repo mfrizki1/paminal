@@ -4,11 +4,10 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LpPasalResp(
+data class PasalResp(
     var id: Int?,
     var nama_pasal: String?,
-    var isi_pasal: String?,
-    var created_at:String?,
-    var updated_at:String?,
-    var deleted_at: String?
-):Parcelable
+    var isi_pasal: String?
+):Parcelable{
+    constructor():this(0,"","")
+}

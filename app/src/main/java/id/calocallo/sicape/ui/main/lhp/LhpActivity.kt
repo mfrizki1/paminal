@@ -11,6 +11,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
+import id.calocallo.sicape.network.response.KetTerlaporLhpResp
+import id.calocallo.sicape.network.response.PersonelPenyelidikResp
+import id.calocallo.sicape.network.response.RefPenyelidikanResp
+import id.calocallo.sicape.network.response.SaksiLhpResp
+import id.calocallo.sicape.ui.main.lhp.DetailLhpActivity.Companion.DETAIL_LHP
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lhp.*
 import kotlinx.android.synthetic.main.activity_personel.*
@@ -21,13 +26,10 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class LhpActivity : BaseActivity() {
     private lateinit var list: ArrayList<LhpModel>
-    private lateinit var listLidik: ArrayList<ListLidik>
-    private lateinit var listSaksi: ArrayList<ListSaksi>
-    private lateinit var listSurat: ArrayList<ListSurat>
-    private lateinit var listPetunjuk: ArrayList<ListPetunjuk>
-    private lateinit var listBukti: ArrayList<ListBukti>
-    private lateinit var listAnalisa: ArrayList<ListAnalisa>
-    private lateinit var listTerlapor: ArrayList<ListTerlapor>
+    private var refPenyelidikan = ArrayList<RefPenyelidikanResp>()
+    private var personelPenyelidikan = ArrayList<PersonelPenyelidikResp>()
+    private var saksiLhp = ArrayList<SaksiLhpResp>()
+    private var ketTerlaporLhpResp = ArrayList<KetTerlaporLhpResp>()
 
     //    private lateinit var adapterLhp: LhpAdapter
     private lateinit var adapterLhp: ReusableAdapter<LhpModel>
@@ -37,62 +39,118 @@ class LhpActivity : BaseActivity() {
         setContentView(R.layout.activity_lhp)
 
         list = ArrayList()
-        listLidik = ArrayList()
-        listSaksi = ArrayList()
-        listSurat = ArrayList()
-        listBukti = ArrayList()
-        listPetunjuk = ArrayList()
-        listAnalisa = ArrayList()
-        listTerlapor = ArrayList()
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Laporan Hasil Penyelidikan"
 
-        listLidik.add(ListLidik("Utuh", "Briptu", "987655123", "ketua_tim"))
-        listLidik.add(ListLidik("Galuh", "Bripda", "1345678", "anggota"))
-        listLidik.add(ListLidik("Julak", "Jenderal", "2121124", "anggota"))
+        getListLHP()
 
-        listSaksi.add(ListSaksi("Saksi 1", "Uraian Saksi 1"))
-        listSaksi.add(ListSaksi("Saksi 2", "Uraian Saksi 2"))
+        btn_lhp_add.setOnClickListener {
+            startActivity(Intent(this, AddLhpActivity::class.java))
+        }
 
-        listSurat.add(ListSurat("Surat a"))
-        listSurat.add(ListSurat("Surat B"))
-        listSurat.add(ListSurat("Surat cdr"))
+    }
 
-        listPetunjuk.add(ListPetunjuk("abc"))
-        listPetunjuk.add(ListPetunjuk("detpvfdnssd"))
-        listPetunjuk.add(ListPetunjuk("saduhasnfeslffojfd"))
+    private fun getListLHP() {
+        //list ref penyelidikan
+        refPenyelidikan.add(RefPenyelidikanResp(1, 1, "LP/KODEETIK1/2020/BIDPROPAM"))
+        refPenyelidikan.add(RefPenyelidikanResp(2, 4, "LP/KODEETIK4/2019/BIDPROPAM"))
+        refPenyelidikan.add(RefPenyelidikanResp(3, 2, "LP/KODEETIK2/2019/BIDPROPAM"))
 
-        listBukti.add(ListBukti("asdv"))
-        listBukti.add(ListBukti("acdftre"))
+        //listpenyelidik
+        personelPenyelidikan.add(
+            PersonelPenyelidikResp(
+                1, 4, "Faisal", "BRIPDA", "POLAIR",
+                "1234567", 2, "Polresta Banjarmasin", "ketua_tim"
+            )
+        )
+        personelPenyelidikan.add(
+            PersonelPenyelidikResp(
+                1, 5, "Rizki", "KOMBES", "POLAIR",
+                "1234567", 2, "Polresta Banjarmasin", "anggota"
+            )
+        )
+        personelPenyelidikan.add(
+            PersonelPenyelidikResp(
+                1, 12, "Ahmad", "IPDA", "POLAIR",
+                "1234567", 2, "Polresta Banjarmasin", "anggota"
+            )
+        )
 
-        listAnalisa.add(ListAnalisa("Analisa 1 dibuktikan bahwa pelaku melakukan abc dan meninggalkan tempat pada xxx "))
+        //saksi LHP
+        saksiLhp.add(
+            SaksiLhpResp(
+                1, "KETERANGAN INI\nadalah", "polisi",
+                "Utuh", 10, "BRIPDA", "POLAIR",
+                "123456", 2, "Polresta Banjarmasin",
+                "", "", "", "", "", ""
+            )
+        )
 
-        listTerlapor.add(ListTerlapor("Hariyanto", "Melakukan Samting samting"))
-        listTerlapor.add(ListTerlapor("Sri Wahyuni", "Sedang tidur pada posko"))
+        saksiLhp.add(
+            SaksiLhpResp(
+                1, "KETERANGAN INI\nadalah", "sipil", "Ghoni",
+                null, "", "", "123456", null, "",
+                "Banjarmasin", "12-12-2008", "Buruh", "Jl xxx",
+                "", ""
+            )
+        )
 
+        //keterangan terlapor
+        ketTerlaporLhpResp.add(
+            KetTerlaporLhpResp(
+                1,
+                20,
+                "Faisal Rizki",
+                "IPDA",
+                "POLAIR",
+                "09876",
+                2,
+                "Polresta Banjarmasin",
+                "isi\nterlapor"
+            )
+        )
+
+        //list lhp
         list.add(
             LhpModel(
-                "NO LHP 124/xx/2020/BIDPROPAM", "22", "INI PENGADUAN", 1, listLidik, "",
-                "", "", "", "",
-                "", listSaksi, listSurat, "", listPetunjuk,
-                listBukti, listTerlapor, listAnalisa, "", "", 0
+                1, "LHP 1/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
+                ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
+                "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
+                "Banjarbaru", "12-08-1999", "", "",
+                "surat\nsurat1\nsurat2",
+                "ptunjuk1\npetunjuk2\n3",
+                "bukti1\nbukti2\n3",
+                "analisa\nini adalah analisa", 1,
+                "dari tanggal 12 agustus 2020 sampai 18 agustus 2020", "Banjarmasin"
+
             )
         )
         list.add(
             LhpModel(
-                "124567", "22123", "INI ASDNJDSNJS", 2, listLidik,
-                "", "", "", "",
-                "", "", ArrayList(), ArrayList(), "",
-                ArrayList(), ArrayList(), ArrayList(), ArrayList(), "", "", 1
+                2, "LHP 2/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
+                ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
+                "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
+                "Banjarbaru", "12-08-1999", "", "",
+                "surat\nsurat1\nsurat2",
+                "ptunjuk1\npetunjuk2\n3",
+                "bukti1\nbukti2\n3",
+                "analisa\nini adalah analisa", 0,
+                "dari tanggal 12 agustus 2020 sampai 18 agustus 2020", "Banjarmasin"
+
             )
         )
 
         list.add(
             LhpModel(
-                "123/BIDPROPAM", "22123", "INI ASDNJDSNJS", 3, listLidik,
-                "", "", "", "",
-                "", "", ArrayList(), ArrayList(), "",
-                ArrayList(), ArrayList(), ArrayList(), ArrayList(), "", "", 1
+                2, "LHP 3/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
+                ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
+                "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
+                "Banjarbaru", "12-08-1999", "", "",
+                "surat\nsurat1\nsurat2",
+                "ptunjuk1\npetunjuk2\n3",
+                "bukti1\nbukti2\n3",
+                "analisa\nini adalah analisa", 1,
+                "dari tanggal 12 agustus 2020 sampai 18 agustus 2020", "Banjarmasin"
             )
         )
 
@@ -102,27 +160,25 @@ class LhpActivity : BaseActivity() {
         adapterCallbackLhp = object : AdapterCallback<LhpModel> {
             override fun initComponent(itemView: View, data: LhpModel, itemIndex: Int) {
 //                val lidik = data.listLidik?.filter { it.status_penyelidik == "ketua_tim" }
-                val lidik = data.listLidik?.find { it.status_penyelidik == "ketua_tim" }
+                val lidik = data.personel_penyelidik?.find { it.is_ketua == "ketua_tim" }
                 Log.e("lidik", "$lidik")
 //                for(i in 0 ..data.listLidik?.size!!){
 //                    if(lidik?.get(i)?.status_penyelidik == "ketua_tim"){
-                itemView.txt_ketua_tim.text = lidik?.nama_lidik
+                itemView.txt_ketua_tim.text = lidik?.is_ketua
 //                    }
 //                }
-                var terbukti: String
                 itemView.txt_no_lhp.text = data.no_lhp
-                if (data.isTerbukti == 0) {
-                    terbukti = "TIdak Terbukti"
+                var terbukti: String = if (data.isTerbukti == 0) {
+                    "TIdak Terbukti"
                 } else {
-                    terbukti = "Terbukti"
-
+                    "Terbukti"
                 }
                 itemView.txt_isTerbukti.text = terbukti
             }
 
             override fun onItemClicked(itemView: View, data: LhpModel, itemIndex: Int) {
                 val intent = Intent(this@LhpActivity, DetailLhpActivity::class.java)
-                intent.putExtra("LHP", data)
+                intent.putExtra(DETAIL_LHP, data)
                 startActivity(intent)
             }
         }
@@ -132,24 +188,6 @@ class LhpActivity : BaseActivity() {
             .isVerticalView()
             .addData(list)
             .build(rv_lhp)
-
-        /*
-        rv_lhp.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterLhp = LhpAdapter(this, list, object : LhpAdapter.OnClickLhp {
-            override fun onClick(position: Int) {
-                val intent = Intent(this@LhpActivity, DetailLhpActivity::class.java)
-                intent.putExtra("LHP", list[position])
-                startActivity(intent)
-            }
-        })
-        rv_lhp.adapter = adapterLhp
-
-         */
-
-        btn_lhp_add.setOnClickListener {
-            startActivity(Intent(this, AddLhpActivity::class.java))
-        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

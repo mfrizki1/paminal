@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
-import id.calocallo.sicape.network.request.LpDisiplinReq
+import id.calocallo.sicape.network.request.EditLpDisiplinReq
 import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.utils.SessionManager
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditLpDisiplinActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private var lpDisiplinReq = LpDisiplinReq()
+    private var editLpDisiplinReq = EditLpDisiplinReq()
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,15 +76,15 @@ class EditLpDisiplinActivity : BaseActivity() {
         changedIdTerlapor: Int?,
         changedIdPelapor: Int?
     ) {
-        lpDisiplinReq.no_lp = edt_no_lp_disiplin_edit.text.toString()
-        lpDisiplinReq.macam_pelanggaran = edt_macam_pelanggaran_disiplin_edit.text.toString()
+        editLpDisiplinReq.no_lp = edt_no_lp_disiplin_edit.text.toString()
+        editLpDisiplinReq.macam_pelanggaran = edt_macam_pelanggaran_disiplin_edit.text.toString()
 //        txt_nama_terlapor_lp_disiplin_edit.text.toString()
 //        txt_pangkat_terlapor_lp_disiplin_edit.text.toString()
 //        txt_nrp_terlapor_lp_disiplin_edit.text.toString()
 //        txt_jabatan_terlapor_lp_disiplin_edit.text.toString()
 //        txt_kesatuan_terlapor_lp_disiplin_edit.text.toString()
 
-        lpDisiplinReq.keterangan_pelapor = edt_ket_pelapor_disiplin_edit.text.toString()
+        editLpDisiplinReq.keterangan_pelapor = edt_ket_pelapor_disiplin_edit.text.toString()
 
 //        lpDisiplinReq. = txt_nama_pelapor_disiplin_lp_add.text.toString()
 //        lpDisiplinReq. = txt_pangkat_pelapor_disiplin_lp_add.text.toString()
@@ -92,40 +92,43 @@ class EditLpDisiplinActivity : BaseActivity() {
 //        lpDisiplinReq. = txt_jabatan_pelapor_disiplin_lp_add.text.toString()
 //        lpDisiplinReq. = txt_kesatuan_pelapor_disiplin_lp_add.text.toString()
 
-        lpDisiplinReq.kronologis_dari_pelapor = edt_kronologis_pelapor_disiplin_edit.text.toString()
-        lpDisiplinReq.rincian_pelanggaran_disiplin =
+        editLpDisiplinReq.kronologis_dari_pelapor =
+            edt_kronologis_pelapor_disiplin_edit.text.toString()
+        editLpDisiplinReq.rincian_pelanggaran_disiplin =
             edt_rincian_pelanggaran_disiplin.text.toString()
 
-        lpDisiplinReq.kota_buat_laporan = edt_kota_buat_edit_lp_disiplin.text.toString()
-        lpDisiplinReq.tanggal_buat_laporan = edt_tgl_buat_edit_lp_disiplin.text.toString()
-        lpDisiplinReq.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit_disiplin.text.toString()
-        lpDisiplinReq.pangkat_yang_mengetahui =
+        editLpDisiplinReq.kota_buat_laporan = edt_kota_buat_edit_lp_disiplin.text.toString()
+        editLpDisiplinReq.tanggal_buat_laporan = edt_tgl_buat_edit_lp_disiplin.text.toString()
+        editLpDisiplinReq.nama_yang_mengetahui =
+            edt_nama_pimpinan_bidang_edit_disiplin.text.toString()
+        editLpDisiplinReq.pangkat_yang_mengetahui =
             edt_pangkat_pimpinan_bidang_edit_disiplin.text.toString()
-        lpDisiplinReq.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit_disiplin.text.toString()
-        lpDisiplinReq.jabatan_yang_mengetahui =
+        editLpDisiplinReq.nrp_yang_mengetahui =
+            edt_nrp_pimpinan_bidang_edit_disiplin.text.toString()
+        editLpDisiplinReq.jabatan_yang_mengetahui =
             edt_jabatan_pimpinan_bidang_edit_disiplin.text.toString()
-        lpDisiplinReq.kategori = sessionManager.getJenisLP()
-        lpDisiplinReq.id_personel_operator = sessionManager.fetchUser()?.id
-        lpDisiplinReq.id_personel_pelapor = disiplin?.id_personel_pelapor
-        lpDisiplinReq.id_personel_terlapor = disiplin?.id_personel_terlapor
+        editLpDisiplinReq.uraian_pelanggaran = sessionManager.getJenisLP()
+        editLpDisiplinReq.id_personel_operator = sessionManager.fetchUser()?.id
+        editLpDisiplinReq.id_personel_pelapor = disiplin?.personel_pelapor?.id
+        editLpDisiplinReq.id_personel_terlapor = disiplin?.personel_terlapor?.id
 //        lpDisiplinReq.id_personel_pelapor = this.changedIdPelapor
 
-        if(changedIdPelapor == null){
-            lpDisiplinReq.id_personel_pelapor = disiplin?.id_personel_pelapor
-        }else{
-            lpDisiplinReq.id_personel_pelapor = changedIdPelapor
+        if (changedIdPelapor == null) {
+            editLpDisiplinReq.id_personel_pelapor = disiplin?.personel_pelapor?.id
+        } else {
+            editLpDisiplinReq.id_personel_pelapor = changedIdPelapor
         }
-        if(changedIdTerlapor == null){
-            lpDisiplinReq.id_personel_terlapor = disiplin?.id_personel_terlapor
-        }else{
-            lpDisiplinReq.id_personel_terlapor = changedIdTerlapor
+        if (changedIdTerlapor == null) {
+            editLpDisiplinReq.id_personel_terlapor = disiplin?.personel_terlapor?.id
+        } else {
+            editLpDisiplinReq.id_personel_terlapor = changedIdTerlapor
         }
 
-        Log.e("is same", "${lpDisiplinReq.id_personel_pelapor == disiplin?.id_personel_pelapor}")
+//        Log.e("is same", "${lpDisiplinReq.id_personel_pelapor == disiplin?.personel_pelapor}")
 //        if(lpDisiplinReq.id_personel_pelapor != disiplin?.id_personel_pelapor) {
 //            lpDisiplinReq.id_personel_pelapor = this.changedIdPelapor
 //        }
-        Log.e("edit Disiplin", "$lpDisiplinReq")
+        Log.e("edit Disiplin", "$editLpDisiplinReq")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -136,22 +139,22 @@ class EditLpDisiplinActivity : BaseActivity() {
                 when (requestCode) {
                     REQ_PELAPOR -> {
                         changedIdPelapor = personel?.id
-                        txt_nama_pelapor_disiplin_lp_add.text = personel?.nama
-                        txt_pangkat_pelapor_disiplin_lp_add.text = personel?.pangkat
-                        txt_nrp_pelapor_disiplin_lp_add.text = personel?.nrp
-                        txt_jabatan_pelapor_disiplin_lp_add.text = personel?.jabatan
-                        txt_kesatuan_pelapor_disiplin_lp_add.text = personel?.satuan_kerja?.kesatuan
+                        txt_nama_pelapor_disiplin_lp_add.text = " Nama : ${personel?.nama}"
+                        txt_pangkat_pelapor_disiplin_lp_add.text = " Pangkat : ${personel?.pangkat}"
+                        txt_nrp_pelapor_disiplin_lp_add.text = " NRP : ${personel?.nrp}"
+                        txt_jabatan_pelapor_disiplin_lp_add.text = " Jabatan : ${personel?.jabatan}"
+                        txt_kesatuan_pelapor_disiplin_lp_add.text = " Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
                         Log.e("id pelapor", "$changedIdPelapor")
 
                     }
                     REQ_TERLAPOR -> {
                         changedIdTerlapor = personel?.id
-                        txt_nama_terlapor_lp_disiplin_edit.text = personel?.nama
-                        txt_pangkat_terlapor_lp_disiplin_edit.text = personel?.pangkat
-                        txt_nrp_terlapor_lp_disiplin_edit.text = personel?.nrp
-                        txt_jabatan_terlapor_lp_disiplin_edit.text = personel?.jabatan
+                        txt_nama_terlapor_lp_disiplin_edit.text = "Nama : ${personel?.nama}"
+                        txt_pangkat_terlapor_lp_disiplin_edit.text = "Pangkat : ${personel?.pangkat}"
+                        txt_nrp_terlapor_lp_disiplin_edit.text = "NRP : ${personel?.nrp}"
+                        txt_jabatan_terlapor_lp_disiplin_edit.text = "Jabatan : ${personel?.jabatan}"
                         txt_kesatuan_terlapor_lp_disiplin_edit.text =
-                            personel?.satuan_kerja?.kesatuan
+                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
                         Log.e("id terlapor", "$changedIdTerlapor")
 
                     }
@@ -163,19 +166,20 @@ class EditLpDisiplinActivity : BaseActivity() {
     private fun getViewEditDisipilin(disiplin: LpDisiplinResp?) {
         edt_no_lp_disiplin_edit.setText(disiplin?.no_lp)
         edt_macam_pelanggaran_disiplin_edit.setText(disiplin?.macam_pelanggaran)
-        txt_nama_terlapor_lp_disiplin_edit.text = disiplin?.id_personel_terlapor.toString()
-        txt_pangkat_terlapor_lp_disiplin_edit.text = disiplin?.id_personel_terlapor.toString()
-        txt_nrp_terlapor_lp_disiplin_edit.text = disiplin?.id_personel_terlapor.toString()
-        txt_jabatan_terlapor_lp_disiplin_edit.text = disiplin?.id_personel_terlapor.toString()
-        txt_kesatuan_terlapor_lp_disiplin_edit.text = disiplin?.id_personel_terlapor.toString()
+
+        txt_nama_terlapor_lp_disiplin_edit.text = "Nama : ${disiplin?.personel_terlapor?.nama}"
+        txt_pangkat_terlapor_lp_disiplin_edit.text = "Pangkat : ${disiplin?.personel_terlapor?.pangkat}"
+        txt_nrp_terlapor_lp_disiplin_edit.text = "NRP : ${disiplin?.personel_terlapor?.nrp}"
+        txt_jabatan_terlapor_lp_disiplin_edit.text = "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
+        txt_kesatuan_terlapor_lp_disiplin_edit.text = "Kesatuan : ${disiplin?.personel_terlapor?.kesatuan}"
 
         edt_ket_pelapor_disiplin_edit.setText(disiplin?.keterangan_terlapor)
 
-        txt_nama_pelapor_disiplin_lp_add.text = disiplin?.id_personel_pelapor.toString()
-        txt_pangkat_pelapor_disiplin_lp_add.text = disiplin?.id_personel_pelapor.toString()
-        txt_nrp_pelapor_disiplin_lp_add.text = disiplin?.id_personel_pelapor.toString()
-        txt_jabatan_pelapor_disiplin_lp_add.text = disiplin?.id_personel_pelapor.toString()
-        txt_kesatuan_pelapor_disiplin_lp_add.text = disiplin?.id_personel_pelapor.toString()
+        txt_nama_pelapor_disiplin_lp_add.text ="Nama : ${disiplin?.personel_pelapor?.nama}"
+        txt_pangkat_pelapor_disiplin_lp_add.text ="Pangkat : ${disiplin?.personel_pelapor?.pangkat}"
+        txt_nrp_pelapor_disiplin_lp_add.text ="NRP : ${disiplin?.personel_pelapor?.nrp}"
+        txt_jabatan_pelapor_disiplin_lp_add.text ="Jabatan : ${disiplin?.personel_pelapor?.jabatan}"
+        txt_kesatuan_pelapor_disiplin_lp_add.text ="Kesatuan : ${disiplin?.personel_pelapor?.kesatuan}"
 
         edt_kronologis_pelapor_disiplin_edit.setText(disiplin?.kronologis_dari_pelapor)
         edt_rincian_pelanggaran_disiplin.setText(disiplin?.rincian_pelanggaran_disiplin)

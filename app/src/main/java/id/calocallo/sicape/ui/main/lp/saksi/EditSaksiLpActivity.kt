@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.lp.saksi
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -61,15 +60,15 @@ class EditSaksiLpActivity : BaseActivity() {
     }
 
     private fun getViewSaksi(saksi: LpSaksiResp?) {
-        edt_saksi_edit.setText(saksi?.nama_saksi)
+        edt_saksi_edit.setText(saksi?.nama)
         edt_tempat_lahir_saksi_edit.setText(saksi?.tempat_lahir)
         edt_tanggal_lahir_saksi_edit.setText(saksi?.tanggal_lahir)
         edt_pekerjaan_saksi_edit.setText(saksi?.pekerjaan)
         edt_alamat_saksi_edit.setText(saksi?.alamat)
-        if(saksi?.isKorban =="korban"){
+        if(saksi?.is_korban =="korban"){
             rb_korban_saksi.isChecked =true
             saksiReq.isKorban=rb_korban_saksi.text.toString().toLowerCase()
-        }else if(saksi?.isKorban == "saksi"){
+        }else if(saksi?.is_korban == "saksi"){
             rb_saksi.isChecked =true
             saksiReq.isKorban = rb_saksi.text.toString().toLowerCase()
         }

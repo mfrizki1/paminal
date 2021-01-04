@@ -1,53 +1,50 @@
-package id.calocallo.sicape.ui.main.lp.saksi
+package id.calocallo.sicape.ui.main.lp.pasal
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.razir.progressbutton.*
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.showDrawable
+import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
+import id.calocallo.sicape.network.request.LpDisiplinReq
 import id.calocallo.sicape.network.request.LpKkeReq
 import id.calocallo.sicape.network.request.LpPidanaReq
-import id.calocallo.sicape.network.request.LpReq
 import id.calocallo.sicape.network.response.LpSaksiResp
 import id.calocallo.sicape.ui.main.lp.pidana.tes.SelectedSaksiAdapter
 import id.calocallo.sicape.ui.main.lp.pidana.tes.SelectedSaksiDetailsLookup
 import id.calocallo.sicape.ui.main.lp.pidana.tes.SelectedSaksiItemKeyProvider
+import id.calocallo.sicape.ui.main.lp.saksi.AddSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_pick_saksi_lp.*
+import kotlinx.android.synthetic.main.activity_pick_saksi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
-class PickSaksiLpActivity : BaseActivity() {
-    companion object{
-        const val ID_PELAPOR_SAKSI = "JENIS_LP_SAKSI"
-    }
+class PickSaksiActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private lateinit var adapterSaksiLp: SelectedSaksiAdapter
-    private var lpPidanaReq = LpPidanaReq()
-    private var lpKKeReq = LpKkeReq()
+    private val listSaksi = mutableListOf<LpSaksiResp>()
+    private lateinit var adapterSaksi: SelectedSaksiAdapter
     private var selectedSaksi: MutableList<LpSaksiResp> = mutableListOf()
     private var tracker: SelectionTracker<LpSaksiResp>? = null
-    private var listSaksi = arrayListOf(
-        LpSaksiResp(1, "Utuh", "", "", "","","korban","","",""),
-        LpSaksiResp(2, "Galuh", "", "", "","" ,"saksi","","",""),
-        LpSaksiResp(3, "Dulak", "", "", "","","saksi","","","")
-    )
+
+    //req
+    private var lpPidanaReq = LpPidanaReq()
+    private var lpKKeReq = LpKkeReq()
+    private var lpDisiplinReq = LpDisiplinReq()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pick_saksi_lp)
-        sessionManager = SessionManager(this)
-//        adapterSaksiLp = ReusableAdapter(this)
+        setContentView(R.layout.activity_pick_saksi)
         setupActionBarWithBackButton(toolbar)
-//        supportActionBar?.title = "Pilih Saksi"
+        sessionManager = SessionManager(this)
+
         when (sessionManager.getJenisLP()) {
             "pidana" -> {
                 supportActionBar?.title = "Tambah Data Laporan Pidana"
@@ -57,36 +54,76 @@ class PickSaksiLpActivity : BaseActivity() {
             }
             "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Kode Etik"
         }
+        listSaksi.add(
+            LpSaksiResp(1, "Utuh", "", "", "", "", "korban", "", "", "")
+        )
+        listSaksi.add(
+            LpSaksiResp(2, "Galuh", "", "", "", "", "saksi", "", "", "")
+        )
+        listSaksi.add(
+            LpSaksiResp(3, "Dulak", "", "", "", "", "saksi", "", "", "")
+        )
+
+        getListSaksi(listSaksi)
+
         val idPelaporSaksi = intent.extras?.getInt(ID_PELAPOR_SAKSI)
-        getSaksiLp()
 
-        btn_add_single_saksi.setOnClickListener {
-            startActivity(Intent(this, AddSaksiLpActivity::class.java))
-        }
-        bindProgressButton(btn_save_lp_add)
-        btn_save_lp_add.attachTextChangeAnimator()
-        btn_save_lp_add.setOnClickListener {
-            sessionManager.setListSaksiLP(selectedSaksi as ArrayList<LpSaksiResp>)
-            addAllLp(sessionManager.getJenisLP(), idPelaporSaksi)
-
+        bindProgressButton(btn_save_lp_all_2)
+        btn_save_lp_all_2.attachTextChangeAnimator()
+        btn_save_lp_all_2.setOnClickListener {
             val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
             val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
             animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
 
-            btn_save_lp_add.showProgress {
+            addAllLp(sessionManager.getJenisLP(), idPelaporSaksi)
+            btn_save_lp_all_2.showProgress {
                 progressColor = Color.WHITE
             }
-            btn_save_lp_add.showDrawable(animatedDrawable) {
+            btn_save_lp_all_2.showDrawable(animatedDrawable) {
                 buttonTextRes = R.string.data_saved
                 textMarginRes = R.dimen.space_10dp
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                btn_save_lp_add.hideDrawable(R.string.data_saved)
-            }, 3000)
         }
+
+        btn_add_single_saksi_2.setOnClickListener {
+            val intent = Intent(this, AddSaksiLpActivity::class.java)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            startActivity(intent)
+        }
+
     }
 
-    private fun addAllLp(jenisLP: String?, idPelaporSaksi: Int?) {
+    private fun getListSaksi(listSaksi: MutableList<LpSaksiResp>) {
+        rv_list_saksi_2.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapterSaksi = SelectedSaksiAdapter(this, listSaksi as ArrayList<LpSaksiResp>)
+        rv_list_saksi_2.adapter = adapterSaksi
+
+        tracker = SelectionTracker.Builder<LpSaksiResp>(
+            "pasalSelection",
+            rv_list_saksi_2,
+            SelectedSaksiItemKeyProvider(adapterSaksi),
+            SelectedSaksiDetailsLookup(rv_list_saksi_2),
+            StorageStrategy.createParcelableStorage(LpSaksiResp::class.java)
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+        adapterSaksi.tracker = tracker
+
+        tracker?.addObserver(
+            object : SelectionTracker.SelectionObserver<Long>() {
+                override fun onSelectionChanged() {
+                    super.onSelectionChanged()
+                    tracker?.let {
+                        selectedSaksi = it.selection.toMutableList()
+                        Log.e("idPasal", "$selectedSaksi")
+                    }
+                }
+            }
+        )
+    }
+
+    private fun addAllLp(jenisLP: String?, idPelapor: Int?) {
         when (jenisLP) {
             "kode_etik" -> {
                 lpKKeReq.no_lp = sessionManager.getNoLP()
@@ -95,7 +132,7 @@ class PickSaksiLpActivity : BaseActivity() {
                 lpKKeReq.kota_buat_laporan = sessionManager.getKotaBuatLp()
                 lpKKeReq.tanggal_buat_laporan = sessionManager.getTglBuatLp()
                 lpKKeReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
-                lpKKeReq.id_personel_pelapor = idPelaporSaksi
+                lpKKeReq.id_personel_pelapor = idPelapor
 //                lpKKeReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
                 lpKKeReq.nama_yang_mengetahui = sessionManager.getNamaPimpBidLp()
                 lpKKeReq.pangkat_yang_mengetahui = sessionManager.getPangkatPimpBidLp()
@@ -110,39 +147,10 @@ class PickSaksiLpActivity : BaseActivity() {
                 Log.e("KKE", "${lpKKeReq}")
             }
         }
+
     }
 
-    private fun getSaksiLp() {
-//        NetworkConfig().getService()
-        rv_list_saksi.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterSaksiLp = SelectedSaksiAdapter(this, listSaksi)
-        rv_list_saksi.adapter = adapterSaksiLp
-
-        tracker = SelectionTracker.Builder<LpSaksiResp>(
-            "saksiSelection",
-            rv_list_saksi,
-            SelectedSaksiItemKeyProvider(adapterSaksiLp),
-            SelectedSaksiDetailsLookup(rv_list_saksi),
-            StorageStrategy.createParcelableStorage(LpSaksiResp::class.java)
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build()
-        adapterSaksiLp.tracker = tracker
-        tracker?.addObserver(
-            object : SelectionTracker.SelectionObserver<Long>() {
-                override fun onSelectionChanged() {
-                    super.onSelectionChanged()
-                    tracker?.let {
-                        selectedSaksi = it.selection.toMutableList()
-                        Log.e("idSaksi", "$selectedSaksi")
-                    }
-                }
-            }
-        )
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getSaksiLp()
+    companion object {
+        const val ID_PELAPOR_SAKSI = "JENIS_LP_SAKSI"
     }
 }

@@ -48,23 +48,23 @@ class LpPidanaAdapter(
 
                 //personel pelapor
                 txt_nama_lp_pidana_pelapor.text =
-                    "Nama : ${lpPidanaResp.id_personel_pelapor.toString()}"
+                    "Nama : ${lpPidanaResp.personel_pelapor?.nama}"
                 txt_nrp_pangkat_lp_pidana_pelapor.text =
-                    "Pangkat : ${lpPidanaResp.id_personel_pelapor.toString()}, NRP : ${lpPidanaResp.id_personel_pelapor.toString()}"
+                    "Pangkat : ${lpPidanaResp.personel_pelapor?.pangkat}, NRP : ${lpPidanaResp.personel_pelapor?.nrp}"
                 txt_jabatan_lp_pidana_terlapor.text =
-                    "Jabatan : ${lpPidanaResp.id_personel_pelapor.toString()}"
+                    "Jabatan : ${lpPidanaResp.personel_pelapor?.jabatan}"
                 txt_kesatuan_lp_pidana_terlapor.text =
-                    "Kesatuan : ${lpPidanaResp.id_personel_pelapor.toString()}"
+                    "Kesatuan : ${lpPidanaResp.personel_pelapor?.kesatuan}"
 
                 //personel terlapor
                 txt_nama_lp_pidana_terlapor.text =
-                    "Nama : ${lpPidanaResp.id_personel_terlapor.toString()}"
+                    "Nama : ${lpPidanaResp.personel_terlapor?.nama}"
                 txt_nrp_pangkat_lp_pidana_terlapor.text =
-                    "Pangkat : ${lpPidanaResp.id_personel_terlapor.toString()}, NRP : ${lpPidanaResp.id_personel_terlapor.toString()}"
+                    "Pangkat : ${lpPidanaResp.personel_terlapor?.pangkat}, NRP : ${lpPidanaResp.personel_terlapor?.nrp}"
                 txt_jabatan_lp_pidana_terlapor.text =
-                    "Jabatan : ${lpPidanaResp.id_personel_terlapor.toString()}"
+                    "Jabatan : ${lpPidanaResp.personel_terlapor?.jabatan}"
                 txt_kesatuan_lp_pidana_terlapor.text =
-                    "Kesatuan : ${lpPidanaResp.id_personel_terlapor.toString()}"
+                    "Kesatuan : ${lpPidanaResp.personel_terlapor?.kesatuan}"
 
                 //set pasal Layout and adapter
                 itemView.rv_pasal_lp_pidana.apply {

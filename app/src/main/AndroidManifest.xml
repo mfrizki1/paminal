@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.lp.pasal.PickPasalActivity"></activity>
+        <activity android:name=".ui.main.lp.ListTindDispLpActivity"></activity>
+        <activity android:name=".ui.main.lp.pasal.PickPasalActivity" />
+        <activity android:name=".ui.main.lp.pasal.PickSaksiActivity" />
         <activity android:name=".ui.main.lp.pidana.EditLpPidanaActivity" />
         <activity android:name=".ui.main.lp.kke.EditLpKkeActivity" />
         <activity android:name=".ui.main.lp.disiplin.EditLpDisiplinActivity" />

@@ -34,7 +34,7 @@ class AddPasalLpActivity : BaseActivity() {
 
     private fun addPasal() {
         pasalReq.nama_pasal = edt_pasal_lp.text.toString()
-        pasalReq.detail_pasal = edt_detail_pasal_lp.text.toString()
+        pasalReq.isi_pasal = edt_detail_pasal_lp.text.toString()
         val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
         val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animatedDrawable.setBounds(0, 0, size, size)

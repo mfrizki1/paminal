@@ -71,19 +71,19 @@ class DetailLpDisiplinActivity : BaseActivity() {
         txt_detail_jabatan_pimpinan_disiplin.text = "Jabatan : ${disiplin?.jabatan_yang_mengetahui}"
 
         //terlapor
-        txt_detail_nama_terlapor_disiplin.text = "Nama : ${disiplin?.id_personel_terlapor}"
+        txt_detail_nama_terlapor_disiplin.text = "Nama : ${disiplin?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_disiplin.text =
-            "Pangkat : ${disiplin?.id_personel_terlapor}, NRP : ${disiplin?.id_personel_terlapor}"
-        txt_detail_jabatan_terlapor_disiplin.text = "Jabatan : ${disiplin?.id_personel_terlapor}"
-        txt_detail_kesatuan_terlapor_disiplin.text = "Kesatuan : ${disiplin?.id_personel_terlapor}"
+            "Pangkat : ${disiplin?.personel_terlapor?.pangkat}, NRP : ${disiplin?.personel_terlapor?.nrp}"
+        txt_detail_jabatan_terlapor_disiplin.text = "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
+        txt_detail_kesatuan_terlapor_disiplin.text = "Kesatuan : ${disiplin?.personel_terlapor?.kesatuan}"
 
         //pelapor
-        txt_detail_nama_pelapor_disiplin.text = "Nama : ${disiplin?.id_personel_pelapor}"
+        txt_detail_nama_pelapor_disiplin.text = "Nama : ${disiplin?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_disiplin.text =
-            "Pangkat : ${disiplin?.id_personel_pelapor}, NRP : ${disiplin?.id_personel_pelapor}"
+            "Pangkat : ${disiplin?.personel_pelapor?.pangkat}, NRP : ${disiplin?.personel_pelapor?.nrp}"
 
-        txt_detail_jabatan_pelapor_disiplin.text = "Jabatan : ${disiplin?.id_personel_pelapor}"
-        txt_detail_kesatuan_pelapor_disiplin.text = "Kesatuan : ${disiplin?.id_personel_pelapor}"
+        txt_detail_jabatan_pelapor_disiplin.text = "Jabatan : ${disiplin?.personel_pelapor?.jabatan}"
+        txt_detail_kesatuan_pelapor_disiplin.text = "Kesatuan : ${disiplin?.personel_pelapor?.kesatuan}"
         txt_detail_keterangan_pelapor_disiplin.text = disiplin?.keterangan_terlapor
         txt_detail_kronologis_pelapor_disiplin.text = disiplin?.kronologis_dari_pelapor
 
@@ -97,7 +97,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
             override fun onItemClicked(itemView: View, data: LpPasalResp, itemIndex: Int) {
             }
         }
-        disiplin?.listPasal?.let {
+        disiplin?.pasal_dilanggar?.let {
             adapterDetailPasalDisiplin.adapterCallback(callbackDetailPasalDisiplin)
                 .isVerticalView().addData(it).setLayout(R.layout.item_pasal_lp)
                 .build(rv_detail_pasal_disiplin)

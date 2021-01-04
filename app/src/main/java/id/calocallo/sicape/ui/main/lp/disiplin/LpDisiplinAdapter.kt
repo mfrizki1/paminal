@@ -31,23 +31,23 @@ class LpDisiplinAdapter(
 
                 //personel pelapor
                 txt_nama_lp_kke_pelapor.text =
-                    "Nama : ${lpDisiplinResp.id_personel_pelapor.toString()}"
+                    "Nama : ${lpDisiplinResp.personel_pelapor?.nama}"
                 txt_nrp_pangkat_lp_kke_pelapor.text =
-                    "Pangkat : ${lpDisiplinResp.id_personel_pelapor.toString()}, NRP : ${lpDisiplinResp.id_personel_pelapor.toString()}"
+                    "Pangkat : ${lpDisiplinResp.personel_pelapor?.pangkat}, NRP : ${lpDisiplinResp.personel_pelapor?.nrp}"
                 txt_jabatan_lp_kke_terlapor.text =
-                    "Jabatan : ${lpDisiplinResp.id_personel_pelapor.toString()}"
+                    "Jabatan : ${lpDisiplinResp.personel_pelapor?.jabatan}"
                 txt_kesatuan_lp_kke_terlapor.text =
-                    "Kesatuan : ${lpDisiplinResp.id_personel_pelapor.toString()}"
+                    "Kesatuan : ${lpDisiplinResp.personel_pelapor?.kesatuan}"
 
                 //personel terlapor
                 txt_nama_lp_kke_terlapor.text =
-                    "Nama : ${lpDisiplinResp.id_personel_terlapor.toString()}"
+                    "Nama : ${lpDisiplinResp.personel_terlapor?.nama}"
                 txt_nrp_pangkat_lp_kke_terlapor.text =
-                    "Pangkat : ${lpDisiplinResp.id_personel_terlapor.toString()}, NRP : ${lpDisiplinResp.id_personel_terlapor.toString()}"
+                    "Pangkat : ${lpDisiplinResp.personel_terlapor?.pangkat}, NRP : ${lpDisiplinResp.personel_terlapor?.nrp}"
                 txt_jabatan_lp_kke_terlapor.text =
-                    "Jabatan : ${lpDisiplinResp.id_personel_terlapor.toString()}"
+                    "Jabatan : ${lpDisiplinResp.personel_terlapor?.jabatan}"
                 txt_kesatuan_lp_kke_terlapor.text =
-                    "Kesatuan : ${lpDisiplinResp.id_personel_terlapor.toString()}"
+                    "Kesatuan : ${lpDisiplinResp.personel_terlapor?.kesatuan}"
 
                 //set pasal layout and adapter
                 itemView.rv_pasal_lp_kke.apply {

@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
-import id.calocallo.sicape.network.request.LpKodeEtikReq
+import id.calocallo.sicape.network.request.EditLpKkeReq
 import id.calocallo.sicape.network.response.LpKkeResp
 import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.utils.SessionManager
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditLpKkeActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private var lpKodeEtikReq = LpKodeEtikReq()
+    private var editLpKkeReq = EditLpKkeReq()
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,36 +53,32 @@ class EditLpKkeActivity : BaseActivity() {
 
     }
 
-    private fun updateKke(
-        kke: LpKkeResp?,
-        changedIdTerlapor: Int?,
-        changedIdPelapor: Int?
-    ) {
-        lpKodeEtikReq.no_lp = edt_no_lp_kke_edit.text.toString()
-        lpKodeEtikReq.isi_laporan = edt_isi_laporan_kke_edit.text.toString()
-        lpKodeEtikReq.alat_bukti = edt_alat_bukti_kke_edit.text.toString()
-        lpKodeEtikReq.kota_buat_laporan = edt_kota_buat_edit_lp.text.toString()
-        lpKodeEtikReq.tanggal_buat_laporan = edt_tgl_buat_edit.text.toString()
-        lpKodeEtikReq.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit.text.toString()
-        lpKodeEtikReq.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
-        lpKodeEtikReq.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
-        lpKodeEtikReq.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
-        lpKodeEtikReq.id_personel_operator = sessionManager.fetchUser()?.id
-        lpKodeEtikReq.id_personel_terlapor = kke?.id_personel_terlapor
-        lpKodeEtikReq.id_personel_pelapor = kke?.id_personel_pelapor
-        lpKodeEtikReq.kategori = sessionManager.getJenisLP()
+    private fun updateKke(kke: LpKkeResp?, changedIdTerlapor: Int?, changedIdPelapor: Int?) {
+        editLpKkeReq.no_lp = edt_no_lp_kke_edit.text.toString()
+        editLpKkeReq.isi_laporan = edt_isi_laporan_kke_edit.text.toString()
+        editLpKkeReq.alat_bukti = edt_alat_bukti_kke_edit.text.toString()
+        editLpKkeReq.kota_buat_laporan = edt_kota_buat_edit_lp.text.toString()
+        editLpKkeReq.tanggal_buat_laporan = edt_tgl_buat_edit.text.toString()
+        editLpKkeReq.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit.text.toString()
+        editLpKkeReq.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
+        editLpKkeReq.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
+        editLpKkeReq.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
+//        lpKodeEtikReq.id_personel_operator = sessionManager.fetchUser()?.id
+        editLpKkeReq.id_personel_terlapor = kke?.personel_terlapor?.id
+        editLpKkeReq.id_personel_pelapor = kke?.personel_pelapor?.id
+        editLpKkeReq.uraian_pelanggaran = sessionManager.getJenisLP()
 
         if(changedIdTerlapor == null){
-            lpKodeEtikReq.id_personel_terlapor = kke?.id_personel_terlapor
+            editLpKkeReq.id_personel_terlapor = kke?.personel_terlapor?.id
         }else{
-            lpKodeEtikReq.id_personel_terlapor = changedIdTerlapor
+            editLpKkeReq.id_personel_terlapor = changedIdTerlapor
         }
         if(changedIdPelapor == null){
-            lpKodeEtikReq.id_personel_pelapor = kke?.id_personel_pelapor
+            editLpKkeReq.id_personel_pelapor = kke?.personel_pelapor?.id
         }else{
-            lpKodeEtikReq.id_personel_pelapor = changedIdPelapor
+            editLpKkeReq.id_personel_pelapor = changedIdPelapor
         }
-        Log.e("edit_kke","$lpKodeEtikReq")
+        Log.e("edit_kke","$editLpKkeReq")
     }
 
     private fun getViewKKeEdit(kke: LpKkeResp?) {
@@ -102,22 +98,22 @@ class EditLpKkeActivity : BaseActivity() {
             val intent = Intent(this, ChoosePersonelActivity::class.java)
             startActivityForResult(intent, REQ_TERLAPOR)
         }
-        txt_nama_terlapor_lp_edit.text = "Nama : ${kke?.id_personel_terlapor}"
-        txt_pangkat_terlapor_lp_edit.text = "Pangkat : ${kke?.id_personel_terlapor}"
-        txt_nrp_terlapor_lp_edit.text = "NRP : ${kke?.id_personel_terlapor}"
-        txt_jabatan_terlapor_lp_edit.text = "Jabatan : ${kke?.id_personel_terlapor}"
-        txt_kesatuan_terlapor_lp_edit.text = "Kesatuan : ${kke?.id_personel_terlapor}"
+        txt_nama_terlapor_lp_edit.text = "Nama : ${kke?.personel_terlapor?.nama}"
+        txt_pangkat_terlapor_lp_edit.text = "Pangkat : ${kke?.personel_terlapor?.pangkat}"
+        txt_nrp_terlapor_lp_edit.text = "NRP : ${kke?.personel_terlapor?.nrp}"
+        txt_jabatan_terlapor_lp_edit.text = "Jabatan : ${kke?.personel_terlapor?.jabatan}"
+        txt_kesatuan_terlapor_lp_edit.text = "Kesatuan : ${kke?.personel_terlapor?.kesatuan}"
 
         //pelapor
         btn_choose_personel_pelapor_kke_edit.setOnClickListener {
             val intent = Intent(this, ChoosePersonelActivity::class.java)
             startActivityForResult(intent, REQ_PELAPOR)
         }
-        txt_nama_pelapor_kke_lp_edit.text = "Nama : ${kke?.id_personel_pelapor}"
-        txt_pangkat_pelapor_kke_lp_edit.text = "Pangkat : ${kke?.id_personel_pelapor}"
-        txt_nrp_pelapor_kke_lp_edit.text = "NRP : ${kke?.id_personel_pelapor}"
-        txt_jabatan_pelapor_kke_lp_edit.text = "Jabatan : ${kke?.id_personel_pelapor}"
-        txt_kesatuan_pelapor_kke_lp_edit.text = "Kesatuan : ${kke?.id_personel_pelapor}"
+        txt_nama_pelapor_kke_lp_edit.text = "Nama : ${kke?.personel_pelapor?.nama}"
+        txt_pangkat_pelapor_kke_lp_edit.text = "Pangkat : ${kke?.personel_pelapor?.pangkat}"
+        txt_nrp_pelapor_kke_lp_edit.text = "NRP : ${kke?.personel_pelapor?.nrp}"
+        txt_jabatan_pelapor_kke_lp_edit.text = "Jabatan : ${kke?.personel_pelapor?.jabatan}"
+        txt_kesatuan_pelapor_kke_lp_edit.text = "Kesatuan : ${kke?.personel_pelapor?.kesatuan}"
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
