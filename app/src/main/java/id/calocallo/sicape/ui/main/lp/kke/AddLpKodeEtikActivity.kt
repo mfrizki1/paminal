@@ -41,9 +41,9 @@ class AddLpKodeEtikActivity : BaseActivity() {
             sessionManager.setUraianPelanggaranLP(edt_uraian_pelanggaran_kke.text.toString())
 //            val intent = Intent(this, PickPasalLpActivity::class.java)
             val intent = Intent(this, PickPasalActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             intent.putExtra(PickPasalActivity.ID_PELAPOR, idPelapor)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }

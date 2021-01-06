@@ -70,8 +70,8 @@ class AddLpPidanaActivity : BaseActivity() {
                 intent.putExtra(ID_PELAPOR, idPelapor!!)
 
             }
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         rg_pidana.setOnCheckedChangeListener { group, checkedId ->
             val radio = findViewById<RadioButton>(checkedId)

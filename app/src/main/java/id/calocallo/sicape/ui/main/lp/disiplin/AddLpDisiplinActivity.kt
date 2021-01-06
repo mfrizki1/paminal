@@ -43,8 +43,8 @@ class AddLpDisiplinActivity : BaseActivity() {
             sessionManager.setRincianDisiplin(edt_rincian_pelanggaran_disiplin.text.toString())
             val intent = Intent(this, PickPasalActivity::class.java)
             intent.putExtra(PickPasalActivity.ID_PELAPOR, idPelapor)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
 

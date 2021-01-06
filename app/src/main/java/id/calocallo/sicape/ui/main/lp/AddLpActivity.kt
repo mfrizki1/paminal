@@ -93,21 +93,21 @@ class AddLpActivity : BaseActivity() {
                 when (jenis) {
                     "pidana" -> {
                         val intent = Intent(this, AddLpPidanaActivity::class.java)
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                         intent.putExtra(JENIS_PIDANA, jenis)
                         startActivity(intent)
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     }
                     "kode_etik" -> {
                         val intent = Intent(this, AddLpKodeEtikActivity::class.java)
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                         intent.putExtra(JENIS_KKE, jenis)
                         startActivity(intent)
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     }
                     "disiplin" -> {
                         val intent = Intent(this, AddLpDisiplinActivity::class.java)
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                         intent.putExtra(JENIS_DISIPLIN, jenis)
                         startActivity(intent)
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     }
                 }
 //                val intent = Intent(this, PickPasalLpActivity::class.java)

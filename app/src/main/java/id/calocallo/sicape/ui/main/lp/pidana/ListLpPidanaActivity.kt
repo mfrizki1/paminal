@@ -44,6 +44,7 @@ class ListLpPidanaActivity : BaseActivity() {
             val intent = Intent(this, AddLpActivity::class.java)
             intent.putExtra("JENIS_LP", "pidana")
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         getList()
