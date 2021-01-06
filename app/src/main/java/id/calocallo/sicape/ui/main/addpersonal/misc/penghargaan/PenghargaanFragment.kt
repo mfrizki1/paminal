@@ -55,6 +55,7 @@ class PenghargaanFragment : Fragment() {
             //gagal -> TOAST
 
             startActivity(Intent(activity, AddPasanganActivity::class.java))
+            activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

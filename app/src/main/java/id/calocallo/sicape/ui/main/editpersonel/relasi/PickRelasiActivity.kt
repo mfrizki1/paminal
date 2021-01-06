@@ -56,8 +56,8 @@ class PickRelasiActivity : BaseActivity() {
                 intent.putExtra("PERSONEL", detailPersonel)
                 intent.putExtra("RELASI", data)
                 intent.putExtra("JENIS_RELASI", jenisRelasi)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
         spinner_jenis_relasi.setText("Dalam Negeri")
@@ -84,8 +84,8 @@ class PickRelasiActivity : BaseActivity() {
         btn_add_single_relasi.setOnClickListener {
             val intent = Intent(this@PickRelasiActivity, AddSingleRelasiActivity::class.java)
             intent.putExtra("PERSONEL", detailPersonel)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }

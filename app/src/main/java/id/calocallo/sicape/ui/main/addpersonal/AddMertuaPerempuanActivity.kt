@@ -69,6 +69,7 @@ class AddMertuaPerempuanActivity : BaseActivity() {
             sessionManager.setMertuaPerempuan(mertuaPerempuanReq)
             Log.e("mertuaPerempuan", "${sessionManager.getMertuaPerempuan()}")
             startActivity(Intent(this, AddAnakActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

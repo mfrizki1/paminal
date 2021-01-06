@@ -33,7 +33,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:hint="NO LP">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -118,22 +118,22 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-<!--            <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/btn_choose_pelanggaran_lp_add"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/space_8dp"-->
-<!--                android:text="Pilih Pelanggaran"-->
-<!--                android:textStyle="bold" />-->
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/btn_choose_pelanggaran_lp_add"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                android:text="Pilih Pelanggaran"-->
+            <!--                android:textStyle="bold" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/txt_pelanggaran_lp_add"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/space_8dp"-->
-<!--                android:text="Pelanggaran"-->
-<!--                android:textSize="@dimen/text_18"-->
-<!--                android:textStyle="bold" />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/txt_pelanggaran_lp_add"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/space_8dp"-->
+            <!--                android:text="Pelanggaran"-->
+            <!--                android:textSize="@dimen/text_18"-->
+            <!--                android:textStyle="bold" />-->
 
             <include layout="@layout/layout_separator" />
 
@@ -195,11 +195,6 @@
                 android:layout_marginTop="@dimen/space_8dp"
                 android:hint="Nama Pimpinan Bidang">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_nama_pimpinan_bidang_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -262,6 +257,12 @@
                 android:layout_marginVertical="@dimen/space_8dp"
                 android:text="@string/next"
                 android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_nama_pimpinan_bidang_add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
 
 
         </LinearLayout>

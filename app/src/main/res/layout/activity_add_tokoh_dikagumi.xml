@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
+                android:textStyle="bold"
                 android:text="@string/tambah"
                 app:icon="@android:drawable/ic_input_add"
                 app:iconGravity="textStart" />
@@ -44,6 +45,7 @@
                 android:id="@+id/btn_next_tokoh_dikagumi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:text="@string/next" />

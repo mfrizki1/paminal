@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.editpersonel.sahabat.AddSingleSahabatActivity">
 
     <include layout="@layout/layout_toolbar_white" />
@@ -23,7 +23,7 @@
             android:id="@+id/edt_nama_single_sahabat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text" />
+            android:inputType="text|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,8 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        app:suffixText="Tahun"
-        android:hint="Umur">
+        android:hint="Umur"
+        app:suffixText="Tahun">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_umur_single_sahabat"
@@ -59,10 +59,11 @@
             android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
         android:hint="Alamat">
@@ -71,9 +72,11 @@
             android:id="@+id/edt_alamat_single_sahabat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
@@ -86,7 +89,7 @@
             android:id="@+id/edt_pekerjaan_single_sahabat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:inputType="text|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +105,8 @@
             android:id="@+id/edt_alasan_single_sahabat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

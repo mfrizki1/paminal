@@ -32,6 +32,8 @@
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:text="@string/tambah"
+                android:textStyle="bold"
+                app:iconGravity="textStart"
                 app:icon="@android:drawable/ic_input_add"
                 app:iconTint="@color/white" />
 
@@ -39,6 +41,7 @@
                 android:id="@+id/btn_next_pend_dinas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:text="@string/next" />
 

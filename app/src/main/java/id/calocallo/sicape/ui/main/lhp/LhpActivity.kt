@@ -1,14 +1,10 @@
 package id.calocallo.sicape.ui.main.lhp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.response.KetTerlaporLhpResp
@@ -16,24 +12,24 @@ import id.calocallo.sicape.network.response.PersonelPenyelidikResp
 import id.calocallo.sicape.network.response.RefPenyelidikanResp
 import id.calocallo.sicape.network.response.SaksiLhpResp
 import id.calocallo.sicape.ui.main.lhp.DetailLhpActivity.Companion.DETAIL_LHP
+import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lhp.*
-import kotlinx.android.synthetic.main.activity_personel.*
 import kotlinx.android.synthetic.main.item_lhp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class LhpActivity : BaseActivity() {
-    private lateinit var list: ArrayList<LhpModel>
+    private lateinit var list: ArrayList<LhpResp>
     private var refPenyelidikan = ArrayList<RefPenyelidikanResp>()
     private var personelPenyelidikan = ArrayList<PersonelPenyelidikResp>()
     private var saksiLhp = ArrayList<SaksiLhpResp>()
     private var ketTerlaporLhpResp = ArrayList<KetTerlaporLhpResp>()
 
     //    private lateinit var adapterLhp: LhpAdapter
-    private lateinit var adapterLhp: ReusableAdapter<LhpModel>
-    private lateinit var adapterCallbackLhp: AdapterCallback<LhpModel>
+    private lateinit var adapterLhp: ReusableAdapter<LhpResp>
+    private lateinit var adapterCallbackLhp: AdapterCallback<LhpResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lhp)
@@ -46,6 +42,7 @@ class LhpActivity : BaseActivity() {
 
         btn_lhp_add.setOnClickListener {
             startActivity(Intent(this, AddLhpActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }
@@ -60,19 +57,19 @@ class LhpActivity : BaseActivity() {
         personelPenyelidikan.add(
             PersonelPenyelidikResp(
                 1, 4, "Faisal", "BRIPDA", "POLAIR",
-                "1234567", 2, "Polresta Banjarmasin", "ketua_tim"
+                "1234567", 2, "Polresta Banjarmasin", 1
             )
         )
         personelPenyelidikan.add(
             PersonelPenyelidikResp(
                 1, 5, "Rizki", "KOMBES", "POLAIR",
-                "1234567", 2, "Polresta Banjarmasin", "anggota"
+                "1234567", 2, "Polresta Banjarmasin", 0
             )
         )
         personelPenyelidikan.add(
             PersonelPenyelidikResp(
                 1, 12, "Ahmad", "IPDA", "POLAIR",
-                "1234567", 2, "Polresta Banjarmasin", "anggota"
+                "1234567", 2, "Polresta Banjarmasin", 0
             )
         )
 
@@ -112,7 +109,7 @@ class LhpActivity : BaseActivity() {
 
         //list lhp
         list.add(
-            LhpModel(
+            LhpResp(
                 1, "LHP 1/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
                 ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
                 "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
@@ -126,7 +123,7 @@ class LhpActivity : BaseActivity() {
             )
         )
         list.add(
-            LhpModel(
+            LhpResp(
                 2, "LHP 2/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
                 ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
                 "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
@@ -141,7 +138,7 @@ class LhpActivity : BaseActivity() {
         )
 
         list.add(
-            LhpModel(
+            LhpResp(
                 2, "LHP 3/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
                 ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
                 "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
@@ -157,16 +154,11 @@ class LhpActivity : BaseActivity() {
 
         //adapterLibrary
         adapterLhp = ReusableAdapter(this)
-        adapterCallbackLhp = object : AdapterCallback<LhpModel> {
-            override fun initComponent(itemView: View, data: LhpModel, itemIndex: Int) {
-//                val lidik = data.listLidik?.filter { it.status_penyelidik == "ketua_tim" }
-                val lidik = data.personel_penyelidik?.find { it.is_ketua == "ketua_tim" }
-                Log.e("lidik", "$lidik")
-//                for(i in 0 ..data.listLidik?.size!!){
-//                    if(lidik?.get(i)?.status_penyelidik == "ketua_tim"){
-                itemView.txt_ketua_tim.text = lidik?.is_ketua
-//                    }
-//                }
+        adapterCallbackLhp = object : AdapterCallback<LhpResp> {
+            override fun initComponent(itemView: View, data: LhpResp, itemIndex: Int) {
+                val lidik = data.personel_penyelidik?.find { it.is_ketua == 1 }
+                if (lidik?.is_ketua == 1) itemView.txt_ketua_tim.text =
+                    "Ketua Tim : ${lidik.nama}"
                 itemView.txt_no_lhp.text = data.no_lhp
                 var terbukti: String = if (data.isTerbukti == 0) {
                     "TIdak Terbukti"
@@ -176,7 +168,7 @@ class LhpActivity : BaseActivity() {
                 itemView.txt_isTerbukti.text = terbukti
             }
 
-            override fun onItemClicked(itemView: View, data: LhpModel, itemIndex: Int) {
+            override fun onItemClicked(itemView: View, data: LhpResp, itemIndex: Int) {
                 val intent = Intent(this@LhpActivity, DetailLhpActivity::class.java)
                 intent.putExtra(DETAIL_LHP, data)
                 startActivity(intent)

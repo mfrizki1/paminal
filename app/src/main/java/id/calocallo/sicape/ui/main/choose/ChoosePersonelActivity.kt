@@ -10,6 +10,7 @@ import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -52,14 +53,25 @@ class ChoosePersonelActivity : BaseActivity() {
             override fun onItemClicked(itemView: View, data: PersonelModel, itemIndex: Int) {
                 itemView.img_choose_personel.visible()
                 val intent = Intent()
-                intent.putExtra("ID_PERSONEL",data)
+                intent.putExtra("ID_PERSONEL", data)
                 setResult(RESULT_OK, intent)
                 finish()
             }
 
         }
 
+        /*set ketTerlapor*/
+//        val terlapor = intent.extras?.getString(ListKetTerlaporLhpActivity.KET_TERLAPOR)
+//        if(terlapor == null) {
         getPersonel()
+//        }else{
+//            getPersonelByTerlapor()
+//        }
+    }
+
+    private fun getPersonelByTerlapor() {
+        rl_pb.visible()
+        rv_list_choose_personel.gone()
     }
 
     private fun getPersonel() {

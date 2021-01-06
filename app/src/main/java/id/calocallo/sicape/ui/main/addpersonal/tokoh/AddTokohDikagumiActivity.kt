@@ -36,22 +36,24 @@ class AddTokohDikagumiActivity : BaseActivity() {
             sessionManager.setTokoh(list)
             Log.e("size Tokoh", sessionManager.getTokoh().size.toString())
             startActivity(Intent(this, AddKawanDekatActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
     private fun initRecycler() {
         val tokoh = sessionManager.getTokoh()
-        if(tokoh.size == 1){
-            for(i in 0 until tokoh.size){
-                list.add(i, TokohReq(
-                    tokoh[i].nama,
-                    tokoh[i].asal_negara,
-                    tokoh[i].alasan,
-                    tokoh[i].keterangan
-                )
+        if (tokoh.size == 1) {
+            for (i in 0 until tokoh.size) {
+                list.add(
+                    i, TokohReq(
+                        tokoh[i].nama,
+                        tokoh[i].asal_negara,
+                        tokoh[i].alasan,
+                        tokoh[i].keterangan
+                    )
                 )
             }
-        }else {
+        } else {
             list.add(TokohReq())
         }
         rv_tokoh_dikagumi.layoutManager =

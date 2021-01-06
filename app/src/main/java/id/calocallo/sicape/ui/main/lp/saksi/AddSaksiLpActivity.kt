@@ -43,7 +43,12 @@ class AddSaksiLpActivity : BaseActivity() {
         val id: Int = rg_korban_saksi.checkedRadioButtonId
         if (id != -1) {
             val radio: RadioButton = findViewById(id)
-            saksiLpReq.isKorban  = radio.text.toString().toLowerCase()
+            if (radio.text == "Korban") {
+                saksiLpReq.isKorban = 1
+            } else {
+                saksiLpReq.isKorban = 0
+
+            }
         }
 
         val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
@@ -54,7 +59,7 @@ class AddSaksiLpActivity : BaseActivity() {
         }
         btn_save_add_saksi.showDrawable(animatedDrawable) {
             buttonTextRes = R.string.data_saved
-            textMarginRes = R.dimen.space_10dp 
+            textMarginRes = R.dimen.space_10dp
         }
 
         Handler(Looper.getMainLooper()).postDelayed({

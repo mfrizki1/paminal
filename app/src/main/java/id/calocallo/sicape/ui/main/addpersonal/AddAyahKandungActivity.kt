@@ -67,6 +67,7 @@ class AddAyahKandungActivity : BaseActivity() {
 
 //            Log.e("ayah_kandung_activity", "$stts_kerja, $stts_hidup")
             startActivity(Intent(this, AddAyahTiriActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

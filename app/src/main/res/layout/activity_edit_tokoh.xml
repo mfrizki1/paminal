@@ -23,7 +23,7 @@
             android:id="@+id/edt_nama_tokoh_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text" />
+            android:inputType="text|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,14 +39,14 @@
             android:id="@+id/edt_asal_negara_tokoh_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text" />
+            android:inputType="text|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
         android:hint="Alasan">
@@ -55,7 +55,8 @@
             android:id="@+id/edt_alasan_tokoh_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:gravity="top|start"
+android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +72,8 @@
             android:id="@+id/edt_ket_tokoh_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:gravity="top|start"
+android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -4,34 +4,43 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
-import id.calocallo.sicape.ui.main.lhp.edit.analisa.PickAnalisaLhpActivity
-import id.calocallo.sicape.ui.main.lhp.edit.barangbukti.PickBarBuktiLhpActivity
+import id.calocallo.sicape.network.response.KetTerlaporLhpResp
+import id.calocallo.sicape.network.response.PersonelPenyelidikResp
+import id.calocallo.sicape.network.response.RefPenyelidikanResp
+import id.calocallo.sicape.network.response.SaksiLhpResp
+import id.calocallo.sicape.ui.main.lhp.add.ReferensiPenyelidikanLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.ListDetailRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.PickLidikLhpActivity
-import id.calocallo.sicape.ui.main.lhp.edit.petunjuk.PickPetunjukActivity
-import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickSaksiLhpActivity
-import id.calocallo.sicape.ui.main.lhp.edit.surat.PickSuratLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.toggleVisibility
-import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lhp.*
+import kotlinx.android.synthetic.main.item_2_text.view.*
+import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
+import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import java.util.ArrayList
 
 class DetailLhpActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private lateinit var adapterLidik: DetailLidikAdapter
-    private lateinit var adapterSaksi: DetailSaksiAdapter
-    private lateinit var adapterSurat: DetailSuratAdapter
-    private lateinit var adapterPetunjuk: DetailPetunjukAdapter
-    private lateinit var adapterBukti: DetailBuktiAdapter
-    private lateinit var adapterAnalisa: DetailAnalisaAdapter
-    private lateinit var adapterTerlapor: DetailTerlaporAdapter
+
+    private var adapterRefLP = ReusableAdapter<RefPenyelidikanResp>(this)
+    private lateinit var callbackRefLP: AdapterCallback<RefPenyelidikanResp>
+
+    private var adapterLidik = ReusableAdapter<PersonelPenyelidikResp>(this)
+    private lateinit var callbackLidk: AdapterCallback<PersonelPenyelidikResp>
+
+    private var adapterSaksi = ReusableAdapter<SaksiLhpResp>(this)
+    private lateinit var callbackSaksi: AdapterCallback<SaksiLhpResp>
+    private var adapterketTerlapor = ReusableAdapter<KetTerlaporLhpResp>(this)
+    private lateinit var callbackketTerlapor: AdapterCallback<KetTerlaporLhpResp>
     var terbukti = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +49,54 @@ class DetailLhpActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Laporan Hasil Penyelidikan"
 
-        val dataLhp = intent.extras?.getParcelable<LhpModel>(DETAIL_LHP)
+        val dataLhp = intent.extras?.getParcelable<LhpResp>(DETAIL_LHP)
+        getDetailLHP(dataLhp)
+
+
+        val hakAkses = sessionManager.fetchHakAkses()
+        if (hakAkses == "operator") {
+            btn_edit_lhp.toggleVisibility()
+            btn_edit_lidik_lhp.toggleVisibility()
+            btn_edit_saksi_lhp.toggleVisibility()
+            btn_edit_ket_terlapor_lhp.toggleVisibility()
+        }
+        btn_edit_lhp.setOnClickListener {
+            val intent = Intent(this, EditLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        btn_edit_lidik_lhp.setOnClickListener {
+            val intent = Intent(this, PickLidikLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+        btn_edit_saksi_lhp.setOnClickListener {
+            val intent = Intent(this, PickEditSaksiLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        btn_edit_ket_terlapor_lhp.setOnClickListener {
+            val intent = Intent(this, PickTerlaporLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        btn_edit_ref_lp_lhp.setOnClickListener {
+            val intent = Intent(this, ListDetailRefPenyelidikanActivity::class.java)
+            intent.putExtra(DETAIL_REF, dataLhp)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+    }
+
+    private fun getDetailLHP(dataLhp: LhpResp?) {
         txt_no_lhp_detail.text = dataLhp?.no_lhp
         txt_kesimpulan_detail.text = dataLhp?.kesimpulan
         txt_rekomendasi_detail.text = dataLhp?.rekomendasi
@@ -48,147 +104,125 @@ class DetailLhpActivity : BaseActivity() {
 //        txt_rencana_penyelidikan_detail.text = dataLhp?.rencana_pelaksanaan_penyelidikan
         txt_pengaduan_detail.text = dataLhp?.tentang
         txt_no_sp_detail.text = dataLhp?.no_surat_perintah_penyelidikan
-        txt_waktu_penugasan_detail.text = dataLhp?.waktu_penugasan
+        txt_waktu_penugasan_detail.text = dataLhp?.tanggal_mulai_penyelidikan
         txt_tempat_penyelidikan_detail.text = dataLhp?.daerah_penyelidikan
         txt_tugas_pokok_detail.text = dataLhp?.tugas_pokok
         txt_pokok_permasalahan_detail.text = dataLhp?.pokok_permasalahan
         txt_ket_ahli_detail.text = dataLhp?.keterangan_ahli
-
-
-//        val listLdkDetail = dataLhp?.listLidik
-//        val listSaksiDetail = dataLhp?.listSaksi
-//        val listSuratDetail = dataLhp?.listSurat
-//        val listPetunjukDetail = dataLhp?.listPetunjuk
-//        val listBuktiDetail = dataLhp?.listBukti
-//        val listAnalisaDetail = dataLhp?.listAnalisa
-//        val listTerlaporDetail = dataLhp?.listTerlapor
-
-//        if (listLdkDetail?.isEmpty()!!) rl_no_data_lidik.visible()
-//        if (listSaksiDetail?.isEmpty()!!) rl_no_data_saksi.visible()
-//        if (listSuratDetail?.isEmpty()!!) rl_no_data_surat.visible()
-//        if (listPetunjukDetail?.isEmpty()!!) rl_no_data_petunjuk.visible()
-//        if (listBuktiDetail?.isEmpty()!!) rl_no_data_bukti.visible()
-//        if (listAnalisaDetail?.isEmpty()!!) rl_no_data_analisa.visible()
-//        if (listTerlaporDetail?.isEmpty()!!) rl_no_data_terlapor.visible()
-
-//        initRV(
-//            listLdkDetail, listSaksiDetail, listSuratDetail, listPetunjukDetail, listBuktiDetail,
-//            listAnalisaDetail, listTerlaporDetail
-//        )
-
-        terbukti = if (dataLhp?.isTerbukti == 0) {
-            "Terbukti"
-        } else {
-            "Tidak Terbukti"
+        when (dataLhp?.isTerbukti) {
+            0 -> txt_isTerbukti_detail.text = "Tidak Terbukti"
+            1 -> txt_isTerbukti_detail.text = "Terbukti"
         }
-        txt_isTerbukti_detail.text = terbukti
-//        val ketuaTim = "${dataLhp.nama_ketua_tim}\t ${dataLhp.pangkat_ketua_tim}\t ${dataLhp.nrp_ketua_tim}"
-//        val lidik = dataLhp.listLidik?.filter { it.status_penyelidik =="ketua_tim" }
-        val lidik = dataLhp?.personel_penyelidik?.find { it.is_ketua == "ketua_tim" }
+        val lidik = dataLhp?.personel_penyelidik?.find { it.is_ketua == 1 }
         txt_ketua_tim_detail.text =
-            "Nama : ${lidik?.nama} \t Pangkat : ${lidik?.pangkat} \t ${lidik?.nrp}"
-
-        val hakAkses = sessionManager.fetchHakAkses()
-        if (hakAkses == "operator") {
-            btn_edit_lhp.toggleVisibility()
-            btn_edit_lidik_lhp.toggleVisibility()
-            btn_edit_saksi_lhp.toggleVisibility()
-            btn_edit_surat_lhp.toggleVisibility()
-            btn_edit_petunjuk_lhp.toggleVisibility()
-            btn_edit_barang_buki_lhp.toggleVisibility()
-            btn_edit_ket_terlapor_lhp.toggleVisibility()
-            btn_edit_analisa_lhp.toggleVisibility()
-        }
-        btn_edit_lhp.setOnClickListener {
-            val intent = Intent(this, EditLhpActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-        }
-
-        btn_edit_lidik_lhp.setOnClickListener {
-            val intent = Intent(this, PickLidikLhpActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-        }
-        btn_edit_saksi_lhp.setOnClickListener {
-            val intent = Intent(this, PickSaksiLhpActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-        }
-        btn_edit_surat_lhp.setOnClickListener {
-            val intent = Intent(this, PickSuratLhpActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-        }
-        btn_edit_petunjuk_lhp.setOnClickListener {
-            val intent = Intent(this, PickPetunjukActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-        }
-
-        btn_edit_barang_buki_lhp.setOnClickListener {
-            val intent = Intent(this, PickBarBuktiLhpActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-        }
-        btn_edit_ket_terlapor_lhp.setOnClickListener {
-            val intent = Intent(this, PickTerlaporLhpActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-        }
-        btn_edit_analisa_lhp.setOnClickListener {
-            val intent = Intent(this, PickAnalisaLhpActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-        }
+            "Nama : ${lidik?.nama}\nPangkat : ${lidik?.pangkat} \t ${lidik?.nrp}"
+        txt_surat_detail_lhp.text = dataLhp?.surat
+        txt_petunjuk_detail_lhp.text = dataLhp?.petunjuk
+        txt_analisa_detail_lhp.text = dataLhp?.analisa
+        txt_barbukti_detail_lhp.text = dataLhp?.barang_bukti
+        txt_kota_buat_lhp.text = "Kota : ${dataLhp?.kota_buat_laporan}"
+        txt_tanggal_buat_lhp.text = "Tanggal : ${dataLhp?.tanggal_buat_laporan}"
+        listOfRefLP(dataLhp?.referensi_penyelidikan)
+        listOfLidik(dataLhp?.personel_penyelidik)
+        listOfSaksi(dataLhp?.saksi)
+        listOfKetTerlapor(dataLhp?.keterangan_terlapor)
 
     }
 
-    private fun initRV(
-        lidik: ArrayList<ListLidik>?,
-        saksi: ArrayList<ListSaksi>?,
-        surat: ArrayList<ListSurat>?,
-        petunjuk: ArrayList<ListPetunjuk>?,
-        bukti: ArrayList<ListBukti>?,
-        analisa: ArrayList<ListAnalisa>?,
-        terlapor: ArrayList<ListTerlapor>?
-    ) {
-        rv_detail_lidik.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterLidik =
-            DetailLidikAdapter(this, lidik)
-        rv_detail_lidik.adapter = adapterLidik
+    private fun listOfKetTerlapor(listTerlapor: ArrayList<KetTerlaporLhpResp>?) {
+        callbackketTerlapor = object : AdapterCallback<KetTerlaporLhpResp> {
+            override fun initComponent(itemView: View, data: KetTerlaporLhpResp, itemIndex: Int) {
+                itemView.txt_item_1.text = data.nama
+            }
 
-        rv_saksi_detail.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterSaksi = DetailSaksiAdapter(this, saksi)
-        rv_saksi_detail.adapter = adapterSaksi
-
-        rv_surat_detail.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterSurat = DetailSuratAdapter(this, surat)
-        rv_surat_detail.adapter = adapterSurat
-
-        rv_petunjuk_detail.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterPetunjuk = DetailPetunjukAdapter(this, petunjuk)
-        rv_petunjuk_detail.adapter = adapterPetunjuk
-
-        rv_bukti_detail.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterBukti = DetailBuktiAdapter(this, bukti)
-        rv_bukti_detail.adapter = adapterBukti
-
-        rv_analisa_detail.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterAnalisa = DetailAnalisaAdapter(this, analisa)
-        rv_analisa_detail.adapter = adapterAnalisa
-
-        rv_ket_terlapor_detail.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterTerlapor = DetailTerlaporAdapter(this, terlapor)
-        rv_ket_terlapor_detail.adapter = adapterTerlapor
+            override fun onItemClicked(itemView: View, data: KetTerlaporLhpResp, itemIndex: Int) {
+            }
+        }
+        listTerlapor?.let {
+            adapterketTerlapor.adapterCallback(callbackketTerlapor)
+                .isVerticalView()
+                .addData(it)
+                .build(rv_ket_terlapor_detail)
+                .setLayout(R.layout.item_pasal_lp)
+        }
     }
+
+    private fun listOfSaksi(saksi: ArrayList<SaksiLhpResp>?) {
+        callbackSaksi = object : AdapterCallback<SaksiLhpResp> {
+            override fun initComponent(itemView: View, data: SaksiLhpResp, itemIndex: Int) {
+                itemView.txt_detail_1.textSize = 14F
+                itemView.txt_detail_2.textSize = 12F
+                itemView.txt_detail_1.text = data.nama
+                if (data.status_saksi == "sipil") {
+                    itemView.txt_detail_2.text = "Sipil"
+                } else {
+                    itemView.txt_detail_2.text = "Polisi"
+                }
+            }
+
+            override fun onItemClicked(itemView: View, data: SaksiLhpResp, itemIndex: Int) {
+            }
+        }
+        saksi?.let {
+            adapterSaksi.adapterCallback(callbackSaksi)
+                .isVerticalView()
+                .addData(it)
+                .setLayout(R.layout.item_2_text)
+                .build(rv_saksi_detail)
+        }
+    }
+
+    private fun listOfLidik(listLidik: ArrayList<PersonelPenyelidikResp>?) {
+        callbackLidk = object : AdapterCallback<PersonelPenyelidikResp> {
+            override fun initComponent(
+                itemView: View,
+                data: PersonelPenyelidikResp,
+                itemIndex: Int
+            ) {
+                itemView.txt_detail_1.textSize = 14F
+                itemView.txt_detail_2.textSize = 12F
+                itemView.txt_detail_1.text = data.nama
+                if (data.is_ketua == 1) {
+                    itemView.txt_detail_2.text = "Ketua Tim"
+                } else {
+                    itemView.txt_detail_2.text = "Anggota"
+                }
+            }
+
+            override fun onItemClicked(
+                itemView: View,
+                data: PersonelPenyelidikResp,
+                itemIndex: Int
+            ) {
+            }
+        }
+        listLidik?.let {
+            adapterLidik.adapterCallback(callbackLidk)
+                .isVerticalView()
+                .addData(it)
+                .setLayout(R.layout.item_2_text)
+                .build(rv_detail_lidik)
+        }
+    }
+
+    private fun listOfRefLP(referensiPenyelidikan: ArrayList<RefPenyelidikanResp>?) {
+        callbackRefLP = object : AdapterCallback<RefPenyelidikanResp> {
+            override fun initComponent(itemView: View, data: RefPenyelidikanResp, itemIndex: Int) {
+                itemView.txt_item_1.text = data.no_lp
+            }
+
+            override fun onItemClicked(itemView: View, data: RefPenyelidikanResp, itemIndex: Int) {
+            }
+        }
+        referensiPenyelidikan?.let {
+            adapterRefLP.adapterCallback(callbackRefLP)
+                .isVerticalView()
+                .addData(it)
+                .setLayout(R.layout.item_pasal_lp)
+                .build(rv_detail_ref)
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
@@ -218,5 +252,6 @@ class DetailLhpActivity : BaseActivity() {
 
     companion object {
         const val DETAIL_LHP = "DETAIL_LHP"
+        const val DETAIL_REF = "DETAIL_REF"
     }
 }

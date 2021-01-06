@@ -66,6 +66,7 @@ class PendidikanLainFragment : Fragment() {
             sessionManager.setPendOther(listOther)
             val intent = Intent(activity, PekerjaanPersonelActivity::class.java)
             startActivity(intent)
+            activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             /*
             NetworkConfig().getService().addPendMany(
                 "Bearer ${sessionManager.fetchAuthToken()},",

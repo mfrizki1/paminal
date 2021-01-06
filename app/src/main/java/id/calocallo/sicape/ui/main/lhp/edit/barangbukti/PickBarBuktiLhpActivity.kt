@@ -1,11 +1,10 @@
 package id.calocallo.sicape.ui.main.lhp.edit.barangbukti
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LhpModel
+import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListBukti
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.barangbukti.AddBarBuktiLhpActivity.Companion.ADD_BARBUKTI
@@ -29,7 +28,7 @@ class PickBarBuktiLhpActivity : BaseActivity() {
         sessionManager = SessionManager(this)
         adapterBarBukti = ReusableAdapter(this)
 
-        val detailLhp = intent.extras?.getParcelable<LhpModel>(EditLhpActivity.EDIT_LHP)
+        val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Data Petunjuk"
         btn_add_single_bar_bukti.setOnClickListener {

@@ -35,6 +35,7 @@ class AddOrgDiseganiAdatActivity : BaseActivity() {
             sessionManager.setOrangDisegani(list)
             Log.e("diseganiSize", sessionManager.getOrangDisegani().size.toString())
             startActivity(Intent(this, AddTokohDikagumiActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

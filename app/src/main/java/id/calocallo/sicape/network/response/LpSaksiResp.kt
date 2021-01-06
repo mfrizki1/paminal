@@ -11,7 +11,7 @@ data class LpSaksiResp(
     var tanggal_lahir: String?,
     var pekerjaan: String?,
     var alamat: String?,
-    var is_korban: String?,
+    var is_korban: Int?,
     var created_at:String?,
     var updated_at:String?,
     var deleted_at: String?

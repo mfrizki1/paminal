@@ -34,7 +34,8 @@
                 android:id="@+id/edt_isi_laporan_kke"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -55,7 +56,9 @@
                 android:id="@+id/edt_alat_bukti_kke"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -160,16 +163,18 @@
                 android:id="@+id/edt_uraian_pelanggaran_kke"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_marginTop="@dimen/space_8dp"
             android:id="@+id/btn_next_lp_kke"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Button"
-            android:text="@string/next"/>
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="@string/next" />
 
 
     </LinearLayout>

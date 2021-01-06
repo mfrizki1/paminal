@@ -120,32 +120,32 @@ class DetailPersonelActivity : BaseActivity() {
         btn_edit_personel.setOnClickListener {
             val intent = Intent(this, EditPersonelActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_pendidikan.setOnClickListener {
             val intent = Intent(this, EditPendidikanActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_pekerjaan.setOnClickListener {
             val intent = Intent(this, EditPekerjaanActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_alamat.setOnClickListener {
             val intent = Intent(this, PickAlamatActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_organisasi_dll.setOnClickListener {
             val intent = Intent(this, PickMenuOrganisasiDllActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 //        btn_edit_perjuangan.setOnClickListener {
 //            Toast.makeText(this, "Perjuangan Menggapai Cita-cita", Toast.LENGTH_SHORT).show()
@@ -156,70 +156,70 @@ class DetailPersonelActivity : BaseActivity() {
         btn_edit_pasangan.setOnClickListener {
             val intent = Intent(this, EditPasanganActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_ayah_kandung.setOnClickListener {
             val intent = Intent(this, EditKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             intent.putExtra("KELUARGA", "ayah_kandung")
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_ayah_tiri.setOnClickListener {
             val intent = Intent(this, EditKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             intent.putExtra("KELUARGA", "ayah_tiri")
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_ibu_kandung.setOnClickListener {
             val intent = Intent(this, EditKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             intent.putExtra("KELUARGA", "ibu_kandung")
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_ibu_tiri.setOnClickListener {
             val intent = Intent(this, EditKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             intent.putExtra("KELUARGA", "ibu_tiri")
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_mertua_laki.setOnClickListener {
             val intent = Intent(this, EditKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             intent.putExtra("KELUARGA", "mertua_laki_laki")
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_mertua_perempuan.setOnClickListener {
             val intent = Intent(this, EditKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             intent.putExtra("KELUARGA", "mertua_perempuan")
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_edit_anak.setOnClickListener {
             val intent = Intent(this, PickAnakActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Anak", Toast.LENGTH_SHORT).show()
         }
         btn_edit_saudara.setOnClickListener {
             val intent = Intent(this, PickSaudaraActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Saudara", Toast.LENGTH_SHORT).show()
         }
         btn_edit_orang_berjasa.setOnClickListener {
             val intent = Intent(this, PickOrangsActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Orang Berjasa", Toast.LENGTH_SHORT).show()
         }
 //        btn_edit_orang_disegani.setOnClickListener {
@@ -228,57 +228,57 @@ class DetailPersonelActivity : BaseActivity() {
         btn_edit_tokoh.setOnClickListener {
             val intent = Intent(this, PickTokohActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Tokoh", Toast.LENGTH_SHORT).show()
         }
         btn_edit_kawan.setOnClickListener {
             val intent = Intent(this, PickSahabatActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Sahabat", Toast.LENGTH_SHORT).show()
         }
         btn_edit_media_informasi.setOnClickListener {
             val intent = Intent(this, PickMedInfoActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Media Informasi", Toast.LENGTH_SHORT).show()
         }
         btn_edit_medsos.setOnClickListener {
             val intent = Intent(this, PickMedSosActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Media Sosial", Toast.LENGTH_SHORT).show()
         }
         btn_edit_foto.setOnClickListener {
             val intent = Intent(this, EditFotoActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "FOto", Toast.LENGTH_SHORT).show()
         }
         btn_edit_signalement.setOnClickListener {
             val intent = Intent(this, EditSignalementActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Signalement", Toast.LENGTH_SHORT).show()
         }
         btn_edit_relasi.setOnClickListener {
             val intent = Intent(this, PickRelasiActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
         }
         btn_edit_pernah_dihukum.setOnClickListener {
             val intent = Intent(this, PickPernahDihukumActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
         }
 //        btn_edit_catpers.setOnClickListener {

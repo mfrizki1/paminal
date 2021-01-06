@@ -9,7 +9,7 @@ import id.calocallo.sicape.network.response.SaksiLhpResp
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LhpModel(
+data class LhpResp(
     var id: Int?,
     var no_lhp: String?,
     var referensi_penyelidikan: ArrayList<RefPenyelidikanResp>?,
@@ -34,7 +34,7 @@ data class LhpModel(
     var barang_bukti: String?,
     var analisa: String?,
     var isTerbukti: Int?,
-    var waktu_penugasan: String?,
+    var tanggal_mulai_penyelidikan: String?,
     var daerah_penyelidikan: String?
 
 

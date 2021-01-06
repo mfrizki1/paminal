@@ -28,7 +28,7 @@
             android:id="@+id/txt_ketua_tim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_quarter"
+            android:layout_marginTop="@dimen/space_half"
             android:text="Nama Ketua Tim"
             android:textSize="@dimen/text_14" />
 
@@ -36,7 +36,7 @@
             android:id="@+id/txt_isTerbukti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_quarter"
+            android:layout_marginTop="@dimen/space_half"
             android:text="Terbukti / Tidak Terbukti"
             android:textSize="@dimen/text_14"
             android:textStyle="bold" />

@@ -50,14 +50,15 @@
                     android:id="@+id/edt_pembukaan_laporan_pidana"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textMultiLine" />
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 style="@style/TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pilih Salah satu Pelapor" />
+                android:text="Pilih Salah Satu Pelapor" />
 
             <RadioGroup
                 android:id="@+id/rg_pidana"
@@ -286,7 +287,8 @@
                     android:id="@+id/edt_isi_laporan_pidana"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textMultiLine" />
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -308,7 +310,8 @@
                     android:id="@+id/edt_uraian_pelanggaran_pidana"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textMultiLine" />
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton

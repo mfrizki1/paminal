@@ -6,7 +6,7 @@ data class SaksiReq (
     var tanggal_lahir: String?,
     var pekerjaan: String?,
     var alamat: String?,
-    var isKorban: String?
+    var isKorban: Int?
 ){
-    constructor():this("","","","","","")
+    constructor():this("","","","","",null)
 }

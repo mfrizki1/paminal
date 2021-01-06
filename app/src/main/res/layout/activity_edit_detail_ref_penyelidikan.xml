@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.lhp.edit.EditDetailRefPenyelidikanActivity">
+
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
+
+    <TextView
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No Laporan Polisi" />
+
+    <TextView
+        android:id="@+id/txt_no_lp_ref_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_half"
+        android:text="LP /12/12/12"
+        android:textSize="@dimen/text_16" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_change_lp_ref_penyelidikan"
+        style="@style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="Pilih Laporan Polisi" />
+
+    <include layout="@layout/layout_separator"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:layout_width="match_parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_update_ref_penyelidikan"
+        style="@style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="@string/save" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete_ref_penyelidikan"
+        style="@style/UnselectedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="@string/delete" />
+</LinearLayout>

@@ -36,9 +36,9 @@ class PickSaksiLpActivity : BaseActivity() {
     private var selectedSaksi: MutableList<LpSaksiResp> = mutableListOf()
     private var tracker: SelectionTracker<LpSaksiResp>? = null
     private var listSaksi = arrayListOf(
-        LpSaksiResp(1, "Utuh", "", "", "","","korban","","",""),
-        LpSaksiResp(2, "Galuh", "", "", "","" ,"saksi","","",""),
-        LpSaksiResp(3, "Dulak", "", "", "","","saksi","","","")
+        LpSaksiResp(1, "Utuh", "", "", "","",1,"","",""),
+        LpSaksiResp(2, "Galuh", "", "", "","" ,0,"","",""),
+        LpSaksiResp(3, "Dulak", "", "", "","",0,"","","")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

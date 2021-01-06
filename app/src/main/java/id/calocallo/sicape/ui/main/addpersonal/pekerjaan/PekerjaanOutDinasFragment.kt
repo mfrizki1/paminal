@@ -59,6 +59,7 @@ class PekerjaanOutDinasFragment : Fragment() {
 //            Log.e("dataODINAS2", parent.parentList[1].instansi.toString())
 //            Log.e("dataODINAS2", parent.parentList[2].nama_pkrjan.toString())
             startActivity(Intent(activity, AddAlamatActivity::class.java))
+            activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

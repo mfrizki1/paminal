@@ -25,7 +25,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="No LP">
@@ -34,10 +34,10 @@
                 android:id="@+id/edt_no_lp_kke_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:inputType="text|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        isi laporan-->
+        <!--        isi laporan-->
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
@@ -56,10 +56,11 @@
                 android:id="@+id/edt_isi_laporan_kke_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        alat bukti-->
+        <!--        alat bukti-->
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
@@ -78,7 +79,8 @@
                 android:id="@+id/edt_alat_bukti_kke_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!--button for choose personel terlapor-->
@@ -269,7 +271,7 @@
                     android:id="@+id/edt_kota_buat_edit_lp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text" />
+                    android:inputType="text|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -308,7 +310,7 @@
                 android:id="@+id/edt_nama_pimpinan_bidang_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="text|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -330,7 +332,7 @@
                     android:id="@+id/edt_pangkat_pimpinan_bidang_edit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text" />
+                    android:inputType="text|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -344,7 +346,7 @@
                     android:id="@+id/edt_nrp_pimpinan_bidang_edit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text" />
+                    android:inputType="text|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -361,7 +363,7 @@
                 android:id="@+id/edt_jabatan_pimpinan_bidang_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:inputType="text|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -370,7 +372,7 @@
             style="@style/Widget.Button"
             android:layout_marginBottom="@dimen/space_8dp"
             android:text="@string/save"
-            android:id="@+id/btn_save_edit_lp_kke"/>
+            android:id="@+id/btn_save_edit_lp_kke" />
 
     </LinearLayout>
 </ScrollView>

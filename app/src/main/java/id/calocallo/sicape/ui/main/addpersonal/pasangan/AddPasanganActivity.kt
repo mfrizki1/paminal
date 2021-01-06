@@ -115,6 +115,7 @@ class AddPasanganActivity : BaseActivity() {
             //berhasil -> GO
             //GAGAL -> TOAST
             startActivity(Intent(this, AddAyahKandungActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         }
     }

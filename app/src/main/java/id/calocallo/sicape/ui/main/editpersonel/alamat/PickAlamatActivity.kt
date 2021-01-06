@@ -48,7 +48,7 @@ class PickAlamatActivity : BaseActivity() {
                 val intent = Intent(this@PickAlamatActivity, EditAlamatActivity::class.java)
                 intent.putExtra("PERSONEL", detailPersonel)
                 intent.putExtra("ALAMAT", data)
-               startActivity(intent)
+                startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
             }
@@ -60,8 +60,8 @@ class PickAlamatActivity : BaseActivity() {
         btn_add_edit_alamat.setOnClickListener {
             val intent = Intent(this, AddSingleAlamatActivity::class.java)
             intent.putExtra("PERSONEL", detailPersonel)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }

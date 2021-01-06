@@ -13,5 +13,7 @@ data class PersonelPenyelidikResp(
     var nrp: String?,
     var id_satuan_kerja: Int?,
     var kesatuan: String?,
-    var is_ketua: String?
-):Parcelable
+    var is_ketua: Int?
+) : Parcelable {
+    constructor() : this(0, 0, "", "", "", "", 0, "", null)
+}

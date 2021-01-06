@@ -36,7 +36,8 @@
                 android:id="@+id/edt_macam_pelanggaran_disiplin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -141,7 +142,8 @@
                 android:id="@+id/edt_ket_pelapor_disiplin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -162,7 +164,8 @@
                 android:id="@+id/edt_kronologis_pelapor_disiplin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -183,7 +186,8 @@
                 android:id="@+id/edt_rincian_pelanggaran_disiplin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

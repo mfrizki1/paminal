@@ -6,16 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.main.editpersonel.pernah_dihukum.AddSinglePernahDihukumActivity">
-    <include layout="@layout/layout_toolbar_white"/>
-    <include layout="@layout/view_separator"/>
+
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/space_8dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_8dp"
         android:text="Tambah Data Pernah Dihukum"
         android:textSize="@dimen/text_18"
-        android:textStyle="bold"
-        android:layout_marginHorizontal="@dimen/space_12dp"/>
+        android:textStyle="bold" />
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
@@ -28,23 +32,18 @@
             android:id="@+id/edt_perkara_hukum"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:background="@color/grey" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_single_pernah_dihukum"
+        style="@style/Widget.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.Button"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:text="@string/save"
-        android:id="@+id/btn_save_single_pernah_dihukum"/>
+        android:text="@string/save" />
 
 </LinearLayout>

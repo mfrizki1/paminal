@@ -55,13 +55,13 @@ class PickSaksiActivity : BaseActivity() {
             "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Kode Etik"
         }
         listSaksi.add(
-            LpSaksiResp(1, "Utuh", "", "", "", "", "korban", "", "", "")
+            LpSaksiResp(1, "Utuh", "", "", "", "", 0, "", "", "")
         )
         listSaksi.add(
-            LpSaksiResp(2, "Galuh", "", "", "", "", "saksi", "", "", "")
+            LpSaksiResp(2, "Galuh", "", "", "", "", 0, "", "", "")
         )
         listSaksi.add(
-            LpSaksiResp(3, "Dulak", "", "", "", "", "saksi", "", "", "")
+            LpSaksiResp(3, "Dulak", "", "", "", "", 1, "", "", "")
         )
 
         getListSaksi(listSaksi)

@@ -42,9 +42,9 @@ class PickSaudaraActivity : BaseActivity() {
 
         btn_add_pick_single_saudara.setOnClickListener {
             val intent = Intent(this, AddSingleSaudaraActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             intent.putExtra("PERSONEL", detailPersonel)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         getSaudara()
@@ -106,12 +106,12 @@ class PickSaudaraActivity : BaseActivity() {
                                     )
                                 intent.putExtra("NAMA_PERSONEL", namaPersonel)
                                 intent.putExtra("SAUDARA", data)
+
+                                startActivity(intent)
                                 overridePendingTransition(
                                     R.anim.slide_in_right,
                                     R.anim.slide_out_left
-                                )
-                                startActivity(intent)
-                            }
+                                )}
 
                         }
                         saudaraAdapter.adapterCallback(saudaraCallback)

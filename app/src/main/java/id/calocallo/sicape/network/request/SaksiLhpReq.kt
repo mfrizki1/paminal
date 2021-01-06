@@ -1,5 +1,9 @@
 package id.calocallo.sicape.network.request
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class SaksiLhpReq(
     var status_saksi: String?,
     var id_personel: Int?,
@@ -9,7 +13,7 @@ data class SaksiLhpReq(
     var pekerjaan: String?,
     var alamat: String?,
     var isi_keterangan_saksi: String?
-) {
+):Parcelable {
     constructor() : this(
         "", 0, "",
         "", "", "", "", ""

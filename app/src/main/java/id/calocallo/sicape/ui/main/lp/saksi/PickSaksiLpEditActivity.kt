@@ -19,9 +19,9 @@ class PickSaksiLpEditActivity : BaseActivity() {
     }
 
     private val listSaksi = arrayListOf(
-        LpSaksiResp(1, "Utuh", "bjm", "12-12-2000", "polisi", "jl xxx", "korban", "", "", ""),
-        LpSaksiResp(2, "Galuh", "bjm", "20-02-2002", "konfing", "jl avx","saksi","","",""),
-        LpSaksiResp(3, "Dulak", "bjb", "20-02-2002", "cafe", "jl 123","saksi","","","")
+        LpSaksiResp(1, "Utuh", "bjm", "12-12-2000", "polisi", "jl xxx", 1, "", "", ""),
+        LpSaksiResp(2, "Galuh", "bjm", "20-02-2002", "konfing", "jl avx",0,"","",""),
+        LpSaksiResp(3, "Dulak", "bjb", "20-02-2002", "cafe", "jl 123",0,"","","")
     )
     private lateinit var sessionManager: SessionManager
     private lateinit var adapterSaksiEdit: ReusableAdapter<LpSaksiResp>

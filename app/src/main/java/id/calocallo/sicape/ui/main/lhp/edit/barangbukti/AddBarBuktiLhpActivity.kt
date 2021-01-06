@@ -1,19 +1,17 @@
 package id.calocallo.sicape.ui.main.lhp.edit.barangbukti
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LhpModel
+import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListBukti
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_bar_bukti_lhp.*
-import kotlinx.android.synthetic.main.activity_edit_petunjuk_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddBarBuktiLhpActivity : BaseActivity() {
@@ -23,7 +21,7 @@ class AddBarBuktiLhpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_bar_bukti_lhp)
         sessionManager = SessionManager(this)
-        val detailLhp = intent.extras?.getParcelable<LhpModel>(ADD_BARBUKTI)
+        val detailLhp = intent.extras?.getParcelable<LhpResp>(ADD_BARBUKTI)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Barang Bukti"
 

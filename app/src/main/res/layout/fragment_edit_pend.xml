@@ -103,7 +103,7 @@
                 android:id="@+id/edt_tempat_edit_pend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="text|textCapSentences" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,7 +119,7 @@
                 android:id="@+id/edt_membiayai_edit_pend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="text|textCapSentences" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,7 +135,8 @@
                 android:id="@+id/edt_ket_edit_pend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="textMultiLine" />
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -150,6 +151,7 @@
             android:id="@+id/btn_save_edit_pend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:text="@string/save" />

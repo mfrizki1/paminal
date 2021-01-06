@@ -38,6 +38,7 @@ class AddSignalementActivity : BaseActivity() {
             sessionManager.setSignalement(signalementReq)
             Log.e("signalement Size", "${sessionManager.getSignalement()}")
             startActivity(Intent(this, AddRelasiActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 }

@@ -65,8 +65,8 @@ class PickOrangsActivity : BaseActivity() {
             val intent = Intent(this@PickOrangsActivity, AddSingleOrangsActivity::class.java)
             intent.putExtra("ORANGS", menu)
             intent.putExtra("PERSONEL", personel)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
@@ -118,8 +118,8 @@ class PickOrangsActivity : BaseActivity() {
                 intent.putExtra("NAMA_PERSONEL", namaPersonel)
                 intent.putExtra("ORANGS", data)
                 intent.putExtra("MENU", menu)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
         }

@@ -52,16 +52,16 @@ class PickPernahDihukumActivity : BaseActivity() {
                     Intent(this@PickPernahDihukumActivity, EditPernahDihukumActivity::class.java)
                 intent.putExtra("PERSONEL", detailPersonel)
                 intent.putExtra("DIHUKUM", data)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
 
         btn_add_single_pernah_dihukum.setOnClickListener {
             val intent = Intent(this, AddSinglePernahDihukumActivity::class.java)
             intent.putExtra("PERSONEL", detailPersonel)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

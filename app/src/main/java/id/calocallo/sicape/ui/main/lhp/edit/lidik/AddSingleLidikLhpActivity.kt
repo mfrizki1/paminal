@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.lhp.edit.lidik
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,12 +10,11 @@ import com.github.razir.progressbutton.hideDrawable
 import com.github.razir.progressbutton.showDrawable
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LhpModel
+import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListLidik
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_lidik_lhp.*
-import kotlinx.android.synthetic.main.activity_edit_lidik_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddSingleLidikLhpActivity : BaseActivity() {
@@ -27,7 +25,7 @@ class AddSingleLidikLhpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_lidik_lhp)
         sessionManager = SessionManager(this)
-        val detailLhp = intent.extras?.getParcelable<LhpModel>(ADD_LIDIK)
+        val detailLhp = intent.extras?.getParcelable<LhpResp>(ADD_LIDIK)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Personel Penyelidik"
 
@@ -46,7 +44,7 @@ class AddSingleLidikLhpActivity : BaseActivity() {
 
     }
 
-    private fun addLidik(detailLhp: LhpModel?) {
+    private fun addLidik(detailLhp: LhpResp?) {
         val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
         val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animatedDrawable.setBounds(0, 0, size, size)

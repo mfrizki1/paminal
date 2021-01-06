@@ -2,13 +2,20 @@ package id.calocallo.sicape.ui.main.lhp
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.widget.RadioButton
+import androidx.core.content.ContextCompat
+import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
+import id.calocallo.sicape.network.request.EditLhpReq
 import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
+import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -22,6 +29,7 @@ class EditLhpActivity : BaseActivity() {
     private lateinit var adapterBukti: BuktiAdapter
     private lateinit var adapterTerlapor: TerlaporAdapter
     private lateinit var adapterAnalisa: AnalisaAdapter
+    private var editLhpReq = EditLhpReq()
 
     companion object {
         const val EDIT_LHP = "EDIT_LHP"
@@ -35,67 +43,85 @@ class EditLhpActivity : BaseActivity() {
         sessionManager = SessionManager(this)
 
         val bundle = intent.extras
-        val editLHP = bundle?.getParcelable<LhpModel>(EDIT_LHP)
+        val editLHP = bundle?.getParcelable<LhpResp>(EDIT_LHP)
 
         getViewLhpEdit(editLHP)
         val hak = sessionManager.fetchHakAkses()
-        if(hak =="operator"){
-
+        if (hak == "operator") {
+            btn_save_lhp_edit.gone()
         }
 
-        btn_choose_lp_lhp_edit.setOnClickListener {
-            val intent = Intent(this, ChooseLpActivity::class.java)
-            startActivityForResult(intent, AddLhpActivity.REQ_LP)
-
+        bindProgressButton(btn_save_lhp_edit)
+        btn_save_lhp_edit.attachTextChangeAnimator()
+        btn_save_lhp_edit.setOnClickListener {
+            updateLhp(editLHP)
         }
+
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val lp = data?.getParcelableExtra<LpResp>(AddLhpActivity.DATA_LP)
-        when (resultCode) {
-            Activity.RESULT_OK -> {
-                when (requestCode) {
-                    AddLhpActivity.REQ_LP -> {
-                        when (lp?.jenis) {
-                            "pidana" -> txt_jenis_lp_lhp_edit.text = "Laporan Polisi Pidana"
-                            "kode_etik" -> txt_jenis_lp_lhp_edit.text = "Laporan Polisi Kode Etik"
-                            "disiplin" -> txt_jenis_lp_lhp_edit.text = "Laporan Polisi Disiplin"
-                        }
-                        txt_no_lp_lhp_edit.text = lp?.no_lp
-                        txt_nama_personel_lhp_edit.text = lp?.id_personel_terlapor.toString()
-                        txt_pangkat_nrp_personel_lhp_edit.text =
-                            "Pangkat ${lp?.id_personel_terlapor}, NRP : ${lp?.id_personel_terlapor}"
-                        txt_jabatan_personel_lhp_edit.text = lp?.id_personel_terlapor.toString()
-                        txt_kesatuan_personel_lhp_edit.text = lp?.id_personel_terlapor.toString()
-                    }
-                }
+    private fun updateLhp(editLHP: LhpResp?) {
+        val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animated.setBounds(0, 0, size, size)
+
+        btn_save_lhp_edit.showProgress {
+            progressColor = Color.WHITE
+        }
+        btn_save_lhp_edit.showDrawable(animated) {
+            textMarginRes = R.dimen.space_10dp
+            buttonTextRes = R.string.data_updated
+        }
+        btn_save_lhp_edit.hideDrawable(R.string.save)
+        editLhpReq.no_lhp = edt_no_lhp_edit.text.toString()
+        editLhpReq.tentang = edt_isi_pengaduan_lhp_edit.text.toString()
+        editLhpReq.no_surat_perintah_penyelidikan = edt_no_sp_lhp_edit.text.toString()
+        editLhpReq.tanggal_mulai_penyelidikan = edt_waktu_penugasan_lhp_edit.text.toString()
+        editLhpReq.daerah_penyelidikan = edt_tempat_penyelidikan_lhp_edit.text.toString()
+        editLhpReq.tugas_pokok = edt_tugas_pokok_lhp_edit.text.toString()
+        editLhpReq.pokok_permasalahan = edt_pokok_permasalahan_lhp_edit.text.toString()
+        editLhpReq.keterangan_ahli = edt_keterangan_ahli_lhp_edit.text.toString()
+        editLhpReq.kesimpulan = edt_kesimpulan_lhp_edit.text.toString()
+        editLhpReq.rekomendasi = edt_rekomendasi_lhp_edit.text.toString()
+        editLhpReq.kota_buat_laporan = edt_kota_buat_edit_lhp.text.toString()
+        editLhpReq.tanggal_buat_laporan = edt_tgl_buat_edit_lhp.text.toString()
+        editLhpReq.surat = edt_surat_lhp_edit.text.toString()
+        editLhpReq.petunjuk = edt_petunjuk_lhp_edit.text.toString()
+        editLhpReq.barang_bukti = edt_barbukti_lhp_edit.text.toString()
+        editLhpReq.analisa = edt_analisa_lhp_edit.text.toString()
+        rg_terbukti_edit.setOnCheckedChangeListener { group, checkedId ->
+            val radio: RadioButton = findViewById(checkedId)
+            if (radio.isChecked && radio.text == "Terbukti") {
+                editLhpReq.isTerbukti = 1
+            } else {
+                editLhpReq.isTerbukti = 0
             }
-
         }
+        Log.e("updateLHP", "$editLhpReq")
     }
 
-    private fun getViewLhpEdit(editLHP: LhpModel?) {
-        Log.e("isTerbukti", "${editLHP?.isTerbukti}")
+    private fun getViewLhpEdit(editLHP: LhpResp?) {
         edt_no_lhp_edit.setText(editLHP?.no_lhp)
         edt_isi_pengaduan_lhp_edit.setText(editLHP?.tentang)
         edt_no_sp_lhp_edit.setText(editLHP?.no_surat_perintah_penyelidikan)
-        edt_waktu_penugasan_lhp_edit.setText(editLHP?.waktu_penugasan)
+        edt_waktu_penugasan_lhp_edit.setText(editLHP?.tanggal_mulai_penyelidikan)
         edt_tempat_penyelidikan_lhp_edit.setText(editLHP?.daerah_penyelidikan)
         edt_tugas_pokok_lhp_edit.setText(editLHP?.tugas_pokok)
-//        edt_rencana_pelaksanaan_lhp_edit.setText(editLHP?.rencana_pelaksanaan_penyelidikan)
-//        edt_pelaksanaan_lhp_edit.setText(editLHP?.pelaksanan)
         edt_pokok_permasalahan_lhp_edit.setText(editLHP?.pokok_permasalahan)
         edt_keterangan_ahli_lhp_edit.setText(editLHP?.keterangan_ahli)
         edt_kesimpulan_lhp_edit.setText(editLHP?.kesimpulan)
         edt_rekomendasi_lhp_edit.setText(editLHP?.rekomendasi)
-//        edt_nama_ketua_tim_lhp_edit.setText(editLHP?.nama_ketua_tim)
-//        edt_pangkat_ketua_tim_lhp_edit.setText(editLHP?.pangkat_ketua_tim)
-//        edt_nrp_ketua_tim_lhp_edit.setText(editLHP?.nrp_ketua_tim)
-        if(editLHP?.isTerbukti == 0){
+        edt_kota_buat_edit_lhp.setText(editLHP?.kota_buat_laporan)
+        edt_tgl_buat_edit_lhp.setText(editLHP?.tanggal_buat_laporan)
+        edt_surat_lhp_edit.setText(editLHP?.surat)
+        edt_petunjuk_lhp_edit.setText(editLHP?.petunjuk)
+        edt_barbukti_lhp_edit.setText(editLHP?.barang_bukti)
+        edt_analisa_lhp_edit.setText(editLHP?.analisa)
+        if (editLHP?.isTerbukti == 0) {
             rb_tidak_terbukti_edit.isChecked = true
-        }else{
+            editLhpReq.isTerbukti = 0
+        } else {
             rb_terbukti_edit.isChecked = true
+            editLhpReq.isTerbukti = 1
         }
         /*
         val listLidik = editLHP?.listLidik

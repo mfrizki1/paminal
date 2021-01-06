@@ -46,8 +46,8 @@ class PickMedInfoActivity : BaseActivity() {
         btn_add_single_med_info.setOnClickListener {
             val intent = Intent(this, AddSingleMedInfoActivity::class.java)
             intent.putExtra("PERSONEL", detailPersonel)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         medInfoAdapter = ReusableAdapter(this)
         medInfoCallbak = object :AdapterCallback<MedInfoResp>{
@@ -60,8 +60,8 @@ class PickMedInfoActivity : BaseActivity() {
                 val intent = Intent(this@PickMedInfoActivity, EditMedInfoActivity::class.java)
                 intent.putExtra("PERSONEL", detailPersonel)
                 intent.putExtra("MED_INFO", data)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
             }
 

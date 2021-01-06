@@ -99,6 +99,7 @@ class AddAyahTiriActivity : BaseActivity() {
             sessionManager.setAyahTiri(ayahTiriReq)
             Log.e("ayahTiri","${sessionManager.getAyahTiri()}")
             startActivity(Intent(this, AddIbuKandungActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
 

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txt_item_1"
         android:text="abc"
-        android:layout_marginTop="@dimen/half"
+        android:layout_marginTop="@dimen/space_half"
         android:textSize="@dimen/text_14" />
 
 </LinearLayout>

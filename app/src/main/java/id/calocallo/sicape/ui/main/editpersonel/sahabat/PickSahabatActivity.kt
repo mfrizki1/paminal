@@ -51,17 +51,17 @@ class PickSahabatActivity : BaseActivity() {
 
             override fun onItemClicked(itemView: View, data: SahabatResp, itemIndex: Int) {
                 val intent = Intent(this@PickSahabatActivity, EditSahabatActivity::class.java)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 intent.putExtra("NAMA_PERSONEL", namaPersonel)
                 intent.putExtra("SAHABAT", data)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
         btn_add_single_sahabat.setOnClickListener {
             val intent = Intent(this@PickSahabatActivity, AddSingleSahabatActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             intent.putExtra("PERSONEL", detailPersonel)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         ApiSahabat()

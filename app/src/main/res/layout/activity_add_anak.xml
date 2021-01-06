@@ -8,6 +8,7 @@
     tools:context=".ui.main.addpersonal.anak.AddAnakActivity">
 
     <include layout="@layout/layout_toolbar_white" />
+
     <include layout="@layout/view_separator" />
 
     <RelativeLayout
@@ -37,6 +38,7 @@
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:text="@string/tambah"
+                android:textStyle="bold"
                 app:icon="@android:drawable/ic_input_add"
                 app:iconGravity="textStart" />
 
@@ -45,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
+                android:textStyle="bold"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:text="@string/next" />
 

@@ -37,6 +37,7 @@ class AddMedsosActivity : BaseActivity() {
             sessionManager.setMedsos(list)
             Log.e("size Medsos", sessionManager.getMedsos().size.toString())
             startActivity(Intent(this, AddFotoActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

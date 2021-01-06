@@ -30,7 +30,12 @@ class SelectedSaksiAdapter internal constructor(
 
         fun setSaksi(saksiItem: LpSaksiResp, selected: Boolean) {
             txtSaksi.text = saksiItem.nama
-            txtIsKorban.text = saksiItem.is_korban
+            if(saksiItem.is_korban == 1){
+                txtIsKorban.text = "Korban"
+            }else{
+                txtIsKorban.text = "Saksi"
+            }
+//            txtIsKorban.text = saksiItem.is_korban
             itemView.isActivated = selected
 
         }

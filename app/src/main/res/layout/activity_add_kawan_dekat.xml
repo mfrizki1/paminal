@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.addpersonal.kawan.AddKawanDekatActivity">
 
     <include layout="@layout/layout_toolbar_white" />
@@ -37,6 +37,7 @@
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:text="@string/tambah"
+                android:textStyle="bold"
                 app:icon="@android:drawable/ic_input_add"
                 app:iconGravity="textStart" />
 
@@ -46,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:text="@string/next" />
+                android:text="@string/next"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

@@ -29,32 +29,32 @@ class AddAlamatActivity : BaseActivity() {
 //        parentList = ParentListAlamat(list)
 
         //personel
-        val personel = sessionManager.getPersonel()
-        Log.e("personel", personel.nama.toString())
-
-        //umum
-        val umum = sessionManager.getPendUmum()
-        Log.e("umum", umum.size.toString())
-
-        //dinas
-        val dinas = sessionManager.getPendDinas()
-        Log.e("dinas", dinas.size.toString())
-
-        //lain
-        val lain = sessionManager.getPendOther()
-        Log.e("lain", lain.size.toString())
-
-        //pekerjaan
-        val pkrjn = sessionManager.getPekerjaan()
-        Log.e("pkrjan", pkrjn.size.toString())
-
-        //diluar dinas
-        val pkrjnDinas = sessionManager.getPekerjaanDiluar()
-        Log.e("diluar", pkrjnDinas.size.toString())
+//        val personel = sessionManager.getPersonel()
+//        Log.e("personel", personel.nama.toString())
+//
+//        //umum
+//        val umum = sessionManager.getPendUmum()
+//        Log.e("umum", umum.size.toString())
+//
+//        //dinas
+//        val dinas = sessionManager.getPendDinas()
+//        Log.e("dinas", dinas.size.toString())
+//
+//        //lain
+//        val lain = sessionManager.getPendOther()
+//        Log.e("lain", lain.size.toString())
+//
+//        //pekerjaan
+//        val pkrjn = sessionManager.getPekerjaan()
+//        Log.e("pkrjan", pkrjn.size.toString())
+//
+//        //diluar dinas
+//        val pkrjnDinas = sessionManager.getPekerjaanDiluar()
+//        Log.e("diluar", pkrjnDinas.size.toString())
 
         initRecycler(rv_alamat)
         btn_next_alamat.setOnClickListener {
-            if(list.size == 0){
+            if (list.size == 0) {
                 list.clear()
             }
 
@@ -64,6 +64,7 @@ class AddAlamatActivity : BaseActivity() {
 //            Log.e("namalamat", parentList.parenListAlamat[0].alamat.toString())
 //            parentList.parenListAlamat[0].dalam_rangka?.let { it1 -> Log.e("rangkaalamat", it1) }
             startActivity(Intent(this, MiscenaousActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

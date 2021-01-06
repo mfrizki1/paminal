@@ -43,7 +43,7 @@
             android:id="@+id/edt_nama_pekerjaan_custom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text" />
+            android:inputType="text|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,7 +59,7 @@
             android:id="@+id/edt_pangkat_pekerjaan_custom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text" />
+            android:inputType="textCapCharacters" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,7 +75,7 @@
             android:id="@+id/edt_kesatuan_pekerjaan_custom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="text" />
+            android:inputType="textCapCharacters" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,7 +108,7 @@
             android:id="@+id/edt_ket_pekerjaan_custom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

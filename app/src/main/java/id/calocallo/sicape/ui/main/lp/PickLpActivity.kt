@@ -20,6 +20,8 @@ class PickLpActivity : BaseActivity() {
         btn_lp_pidana.setOnClickListener {
             val intent = Intent(this, ListLpPidanaActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
         }
 
         btn_lp_disiplin.setOnClickListener {
@@ -27,6 +29,7 @@ class PickLpActivity : BaseActivity() {
 //            intent.putExtra(LpActivity.TYPEVIEW, 1)
 //            intent.putExtra(LpActivity.JENIS, "Disiplin")
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         btn_lp_kkep.setOnClickListener {
@@ -34,13 +37,8 @@ class PickLpActivity : BaseActivity() {
 //            intent.putExtra(LpActivity.TYPEVIEW, 1)
 //            intent.putExtra(LpActivity.JENIS, "Kode Etik")
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        btn_lp_tind_disiplin.setOnClickListener {
-            val intent = Intent(this, ListTindDispLpActivity::class.java)
-//            intent.putExtra(LpActivity.TYPEVIEW, 1)
-//            intent.putExtra(LpActivity.JENIS, "Kode Etik")
-            startActivity(intent)
-        }
     }
 }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.lhp.add.AddPersonelLidikActivity">
+
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
+
+    <TextView
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tambah Data Personel Penyelidik" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_choose_personel_lidik"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="Pilih Data Personel" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_personel_lidik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_8dp"
+        app:cardCornerRadius="8dp"
+        app:strokeColor="@color/colorPrimary"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/space_8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Personel"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:id="@+id/txt_nama_lidik_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Nama Personel "
+                android:textSize="@dimen/text_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_pangkat_lidik_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Pangkat Personel "
+                android:textSize="@dimen/text_14" />
+
+            <TextView
+                android:id="@+id/txt_nrp_lidik_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="NRP Personel "
+                android:textSize="@dimen/text_14" />
+
+            <TextView
+                android:id="@+id/txt_jabatan_lidik_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Jabatan Personel "
+                android:textSize="@dimen/text_14" />
+
+            <TextView
+                android:id="@+id/txt_kesatuan_lidik_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Kesatuan Personel "
+                android:textSize="@dimen/text_14" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih Status Personel Penyelidik" />
+
+    <RadioGroup
+        android:id="@+id/rg_lidik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:paddingHorizontal="@dimen/space_12dp">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ketua Tim" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Anggota"/>
+    </RadioGroup>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Button"
+        android:text="@string/save"
+        android:id="@+id/btn_save_single_lidik"/>
+
+</LinearLayout>

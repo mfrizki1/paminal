@@ -1,13 +1,12 @@
 package id.calocallo.sicape.ui.main.lhp.edit.terlapor
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.se.omapi.Session
 import android.view.View
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LhpModel
+import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListTerlapor
+import id.calocallo.sicape.network.response.KetTerlaporLhpResp
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.AddTerlaporLhpActivity.Companion.ADD_TERLAPOR
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.EditTerlaporLhpActivity.Companion.EDIT_TERLAPOR
@@ -21,44 +20,44 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickTerlaporLhpActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private lateinit var adapterTerlapor: ReusableAdapter<ListTerlapor>
-    private lateinit var callbackTerlapor: AdapterCallback<ListTerlapor>
-    private var listTerlapor = arrayListOf<ListTerlapor>()
+    private lateinit var adapterTerlapor: ReusableAdapter<KetTerlaporLhpResp>
+    private lateinit var callbackTerlapor: AdapterCallback<KetTerlaporLhpResp>
+
+    //    private var listTerlapor = arrayListOf<ListTerlapor>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_terlapor_lhp)
         sessionManager = SessionManager(this)
         adapterTerlapor = ReusableAdapter(this)
-        val detailLhp = intent.extras?.getParcelable<LhpModel>(EditLhpActivity.EDIT_LHP)
+        val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Data Terlapor"
 
-        getListTerlapor()
+        getListTerlapor(detailLhp)
         btn_add_single_terlapor.setOnClickListener {
             val intent = Intent(this, AddTerlaporLhpActivity::class.java)
-            intent.putExtra(ADD_TERLAPOR, detailLhp)
+//            intent.putExtra(ADD_TERLAPOR, ADD_TERLAPOR)
             startActivity(intent)
         }
     }
 
-    private fun getListTerlapor() {
-        listTerlapor.add(ListTerlapor("Hariyanto", "Melakukan Samting samting"))
-        listTerlapor.add(ListTerlapor("Sri Wahyuni", "Sedang tidur pada posko"))
-        listTerlapor.add(ListTerlapor("Faisal", "XXXXXXXXXXXXXX"))
-        callbackTerlapor = object : AdapterCallback<ListTerlapor> {
-            override fun initComponent(itemView: View, data: ListTerlapor, itemIndex: Int) {
-                itemView.txt_edit_pendidikan.text = data.nama_terlapor
+    private fun getListTerlapor(detailLhp: LhpResp?) {
+        callbackTerlapor = object : AdapterCallback<KetTerlaporLhpResp> {
+            override fun initComponent(itemView: View, data: KetTerlaporLhpResp, itemIndex: Int) {
+                itemView.txt_edit_pendidikan.text = data.nama
             }
 
-            override fun onItemClicked(itemView: View, data: ListTerlapor, itemIndex: Int) {
+            override fun onItemClicked(itemView: View, data: KetTerlaporLhpResp, itemIndex: Int) {
                 val intent =
                     Intent(this@PickTerlaporLhpActivity, EditTerlaporLhpActivity::class.java)
                 intent.putExtra(EDIT_TERLAPOR, data)
                 startActivity(intent)
             }
         }
-        adapterTerlapor.adapterCallback(callbackTerlapor)
-            .isVerticalView().addData(listTerlapor).setLayout(R.layout.layout_edit_1_text)
-            .build(rv_list_terlapor)
+        detailLhp?.keterangan_terlapor?.let {
+            adapterTerlapor.adapterCallback(callbackTerlapor)
+                .isVerticalView().addData(it).setLayout(R.layout.layout_edit_1_text)
+                .build(rv_list_terlapor)
+        }
     }
 }

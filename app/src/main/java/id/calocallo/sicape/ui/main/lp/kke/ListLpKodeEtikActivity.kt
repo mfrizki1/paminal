@@ -42,6 +42,7 @@ class ListLpKodeEtikActivity : BaseActivity() {
             val intent = Intent(this, AddLpActivity::class.java)
             intent.putExtra("JENIS_LP", "kode_etik")
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         getListKke()
 
@@ -56,9 +57,9 @@ class ListLpKodeEtikActivity : BaseActivity() {
         listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
 
-        listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", "", "", "", ""))
-        listSaksi.add(LpSaksiResp(2, "Akbar", "saksi", "", "", "", "", "", "", ""))
-        listSaksi.add(LpSaksiResp(3, "Wahyu", "saksi", "", "", "", "", "", "", ""))
+        listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))
+        listSaksi.add(LpSaksiResp(2, "Akbar", "saksi", "", "", "", 0, "", "", ""))
+        listSaksi.add(LpSaksiResp(3, "Wahyu", "saksi", "", "", "", 0, "", "", ""))
         listKke.add(
             LpKkeResp(
                 1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,

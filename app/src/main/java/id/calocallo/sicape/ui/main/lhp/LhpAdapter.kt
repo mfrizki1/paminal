@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LhpModel
+import id.calocallo.sicape.model.LhpResp
 import kotlinx.android.synthetic.main.item_lhp.view.*
 
 class LhpAdapter(
     val context: Context,
-    val list: ArrayList<LhpModel>,
+    val list: ArrayList<LhpResp>,
     val onCLickLhp: OnClickLhp
 ) : RecyclerView.Adapter<LhpAdapter.LhpHolder>() {
     inner class LhpHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(lhpModel: LhpModel) {
+        fun bind(lhpModel: LhpResp) {
             with(itemView) {
                 var terbukti = ""
                 txt_no_lhp.text = lhpModel.no_lhp

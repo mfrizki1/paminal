@@ -99,8 +99,8 @@ class PenghargaanAdapter(
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     }
                 })
-                edt_ket_penghargaan.visibility = if(adapterPosition == 0) View.GONE else View.VISIBLE
-                edt_ket_penghargaan.setOnClickListener {
+                btn_delete_penghargaan.visibility = if(adapterPosition == 0) View.GONE else View.VISIBLE
+                btn_delete_penghargaan.setOnClickListener {
                     if(adapterPosition!= RecyclerView.NO_POSITION){
                         onClick.onDelete(adapterPosition)
                     }

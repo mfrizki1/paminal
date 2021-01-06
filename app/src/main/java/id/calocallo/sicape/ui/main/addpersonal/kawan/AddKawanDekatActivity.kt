@@ -37,6 +37,7 @@ class AddKawanDekatActivity : BaseActivity() {
             sessionManager.setSahabat(list)
             Log.e("size Sahabat", sessionManager.getSahabat().size.toString())
             startActivity(Intent(this, AddMedianfoActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

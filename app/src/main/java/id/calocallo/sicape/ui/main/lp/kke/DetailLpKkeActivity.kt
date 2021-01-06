@@ -123,8 +123,8 @@ class DetailLpKkeActivity : BaseActivity() {
             override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
                 itemView.txt_detail_1.text = data.nama
                 when (data.is_korban) {
-                    "korban" -> itemView.txt_detail_2.text = "Korban"
-                    "saksi" -> itemView.txt_detail_2.text = "Saksi"
+                    1 -> itemView.txt_detail_2.text = "Korban"
+                    0 -> itemView.txt_detail_2.text = "Saksi"
                 }
 
             }

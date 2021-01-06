@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/kop"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <include layout="@layout/layout_separator" />
 
@@ -49,6 +50,40 @@
                 android:layout_marginTop="@dimen/space_8dp"
                 android:text="12345"
                 android:textSize="@dimen/text_14" />
+
+            <include layout="@layout/layout_separator" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_ref"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8dp"
+                    android:text="Referensi Penyelidikan"
+                    android:textSize="@dimen/text_16"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_detail_ref"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_ref"
+                    android:layout_marginHorizontal="@dimen/space_8dp"
+                    tools:listitem="@layout/item_pasal_lp" />
+
+                <include
+                    android:id="@+id/rl_no_data_lidik"
+                    layout="@layout/view_no_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_ref"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
 
             <include layout="@layout/layout_separator" />
 
@@ -105,7 +140,8 @@
                     android:id="@+id/rv_detail_lidik"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_1" />
+                    android:layout_below="@+id/txt_1"
+                    android:layout_marginTop="@dimen/space_8dp" />
 
                 <include
                     android:id="@+id/rl_no_data_lidik"
@@ -171,42 +207,6 @@
 
             <include layout="@layout/layout_separator" />
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:text="Rencana Pelaksanaan Penyelidikan"
-                android:textSize="@dimen/text_16"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_rencana_penyelidikan_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:text="Loreoakfnenf afmaeifejnfsjbfs nfai fnaefnaufnasf" />
-
-            <include layout="@layout/layout_separator" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:text="Pelaksanaan"
-                android:textSize="@dimen/text_16"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_pelaksanaan_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:text="LFinfjsHNDSfnsdnfnsd jfi dnaifo" />
-
-            <include layout="@layout/layout_separator" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -241,7 +241,9 @@
                     android:id="@+id/rv_saksi_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_2" />
+                    android:layout_below="@+id/txt_2"
+                    android:layout_marginHorizontal="@dimen/space_8dp"
+                    android:layout_marginTop="@dimen/space_8dp" />
 
                 <include
                     android:id="@+id/rl_no_data_saksi"
@@ -256,34 +258,23 @@
 
             <include layout="@layout/layout_separator" />
 
-            <RelativeLayout
+
+            <TextView
+                android:id="@+id/txt_3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Surat"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_8dp"
-                    android:text="Surat"
-                    android:textSize="@dimen/text_16"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txt_surat_detail_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_surat_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_3" />
-
-                <include
-                    android:id="@+id/rl_no_data_surat"
-                    layout="@layout/view_no_data"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_3"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
 
             <include layout="@layout/layout_separator" />
 
@@ -304,67 +295,41 @@
 
             <include layout="@layout/layout_separator" />
 
-            <RelativeLayout
+
+            <TextView
+                android:id="@+id/txt_petunjuk_1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Petunjuk"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_petunjuk_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_8dp"
-                    android:text="Petunjuk"
-                    android:textSize="@dimen/text_16"
-                    android:textStyle="bold" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_petunjuk_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_petunjuk_1" />
-
-
-                <include
-                    android:id="@+id/rl_no_data_petunjuk"
-                    layout="@layout/view_no_data"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_petunjuk_1"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
-
+            <TextView
+                android:id="@+id/txt_petunjuk_detail_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
 
             <include layout="@layout/layout_separator" />
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/txt_4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Barang Bukti"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_8dp"
-                    android:text="Barang Bukti"
-                    android:textSize="@dimen/text_16"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txt_barbukti_detail_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_bukti_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_4" />
-
-                <include
-                    android:id="@+id/rl_no_data_bukti"
-                    layout="@layout/view_no_data"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_4"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
 
             <include layout="@layout/layout_separator" />
 
@@ -385,7 +350,9 @@
                     android:id="@+id/rv_ket_terlapor_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_5" />
+                    android:layout_below="@+id/txt_5"
+                    android:layout_marginHorizontal="@dimen/space_8dp"
+                    android:layout_marginTop="@dimen/space_8dp" />
 
 
                 <include
@@ -399,33 +366,23 @@
 
             <include layout="@layout/layout_separator" />
 
-            <RelativeLayout
+
+            <TextView
+                android:id="@+id/txt_6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Analisa"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_8dp"
-                    android:text="Analisa"
-                    android:textSize="@dimen/text_16"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txt_analisa_detail_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_analisa_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_6" />
-
-                <include
-                    android:id="@+id/rl_no_data_analisa"
-                    layout="@layout/view_no_data"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_6"
-                    android:visibility="gone" />
-            </RelativeLayout>
 
             <include layout="@layout/layout_separator" />
 
@@ -440,8 +397,8 @@
             <TextView
                 android:id="@+id/txt_kesimpulan_detail"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/space_8dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
                 android:text="Detail kesimpulan" />
 
             <include layout="@layout/layout_separator" />
@@ -475,8 +432,8 @@
                 android:id="@+id/txt_isTerbukti_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Terbukti"
                 android:layout_marginTop="@dimen/space_8dp"
+                android:text="Terbukti"
                 android:textStyle="bold" />
 
             <include layout="@layout/layout_separator" />
@@ -493,7 +450,32 @@
                 android:id="@+id/txt_ketua_tim_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
                 android:text="Faisal Rizki \t Briptu \t 970987" />
+
+            <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Dibuat Laporan"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_kota_buat_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="BANJARMASIN" />
+
+            <TextView
+                android:id="@+id/txt_tanggal_buat_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="BANJARMASIN" />
 
             <include layout="@layout/layout_separator" />
 
@@ -503,6 +485,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:text="Edit Data"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_ref_lp_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Data Referensi Penyelidikan"
                 android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
@@ -520,37 +509,12 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_edit_surat_lhp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit Data Surat"
-                android:textStyle="bold" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_edit_petunjuk_lhp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit Data Petunjuk"
-                android:textStyle="bold" />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_edit_barang_buki_lhp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit Data Barang Bukti"
-                android:textStyle="bold" />
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_edit_ket_terlapor_lhp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Edit Data Keterangan Terlapor"
                 android:textStyle="bold" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_edit_analisa_lhp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit Data Analisa"
-                android:textStyle="bold" />
         </LinearLayout>
 
 

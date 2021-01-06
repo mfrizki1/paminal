@@ -1,11 +1,10 @@
 package id.calocallo.sicape.ui.main.lhp.edit.surat
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LhpModel
+import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListSurat
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.surat.AddSingleSuratLhpActivity.Companion.ADD_SURAT
@@ -28,7 +27,7 @@ class PickSuratLhpActivity : BaseActivity() {
         setContentView(R.layout.activity_pick_surat_lhp)
         sessionManager = SessionManager(this)
         adapterSurat = ReusableAdapter(this)
-        val detailLhp = intent.extras?.getParcelable<LhpModel>(EditLhpActivity.EDIT_LHP)
+        val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Data Surat"
 

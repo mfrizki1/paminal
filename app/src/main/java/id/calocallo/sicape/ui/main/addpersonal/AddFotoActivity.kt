@@ -79,6 +79,7 @@ class AddFotoActivity : BaseActivity() {
              */
 
             startActivity(Intent(this, AddSignalementActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

@@ -43,6 +43,7 @@ class AddSaudaraActivity : BaseActivity() {
 //            Log.e("data 1 jk saudara", parentList.parentList[0].jenis_kelamin.toString())
 //            Log.e("data 2 jk saudara", parentList.parentList[1].jenis_kelamin.toString())
             startActivity(Intent(this, AddOrgSelainOrtuActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

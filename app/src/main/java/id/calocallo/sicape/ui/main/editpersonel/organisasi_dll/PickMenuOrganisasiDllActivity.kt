@@ -40,7 +40,8 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
     private val PERJUANGAN = "perjuangan"
     private val PENGHARGAAN = "penghargaan"
     private var tempJenis = ""
-//    private lateinit var personel: PersonelModel
+
+    //    private lateinit var personel: PersonelModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_menu_organisasi_dll)
@@ -60,12 +61,12 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
         btn_add_edit_organisasi_dll.setOnClickListener {
             val intent = Intent(this, AddSingleOrganisasiActivity::class.java)
             intent.putExtra("MISC", tempJenis)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         OrgSP()
         sp_jenis_organisasi_dll.setText("Organisasi")
-    tempJenis = ORGANISASI
+        tempJenis = ORGANISASI
         ApiOrgDll(tempJenis)
 
     }
@@ -236,8 +237,8 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                     Intent(this@PickMenuOrganisasiDllActivity, EditPenghargaanActivity::class.java)
                 intent.putExtra("PENGHARGAAN", data)
                 intent.putExtra("PERSONEL", personel)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
         }

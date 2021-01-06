@@ -36,6 +36,7 @@ class AddMedianfoActivity : BaseActivity() {
             sessionManager.setMediaInfo(list)
             Log.e("size Media Info", sessionManager.getMediaInfo().size.toString())
             startActivity(Intent(this, AddMedsosActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

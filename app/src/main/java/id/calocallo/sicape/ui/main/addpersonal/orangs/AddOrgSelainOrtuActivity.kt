@@ -35,6 +35,7 @@ class AddOrgSelainOrtuActivity : BaseActivity() {
             sessionManager.setOrangBerjasa(list)
             Log.e("JasaSize", sessionManager.getOrangBerjasa().size.toString())
             startActivity(Intent(this, AddOrgDiseganiAdatActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

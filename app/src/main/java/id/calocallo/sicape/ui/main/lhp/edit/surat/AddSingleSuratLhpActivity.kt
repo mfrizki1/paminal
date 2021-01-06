@@ -1,14 +1,13 @@
 package id.calocallo.sicape.ui.main.lhp.edit.surat
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LhpModel
+import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListSurat
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -25,7 +24,7 @@ class AddSingleSuratLhpActivity : BaseActivity() {
         sessionManager = SessionManager(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Surat"
-        val detailLhp = intent.extras?.getParcelable<LhpModel>(ADD_SURAT)
+        val detailLhp = intent.extras?.getParcelable<LhpResp>(ADD_SURAT)
 
         btn_add_surat_single.attachTextChangeAnimator()
         bindProgressButton(btn_add_surat_single)

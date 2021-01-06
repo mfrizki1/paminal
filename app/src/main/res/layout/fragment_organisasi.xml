@@ -23,9 +23,9 @@
                 android:id="@+id/rv_organisasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/btn_container"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:layout_above="@+id/btn_container"
                 tools:listitem="@layout/layout_organisasi" />
 
             <LinearLayout
@@ -42,6 +42,7 @@
                     android:layout_marginHorizontal="@dimen/space_12dp"
                     android:layout_marginTop="@dimen/space_8dp"
                     android:text="@string/tambah"
+                    android:textStyle="bold"
                     app:icon="@android:drawable/ic_input_add"
                     app:iconGravity="textStart" />
 
@@ -50,6 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:textStyle="bold"
                     android:layout_marginTop="@dimen/space_8dp"
                     android:text="@string/next" />
 

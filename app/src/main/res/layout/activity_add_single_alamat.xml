@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.editpersonel.alamat.AddSingleAlamatActivity">
-    
-    <include layout="@layout/layout_toolbar_white"/>
-    <include layout="@layout/view_separator"/>
+
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
 
     <TextView
         android:id="@+id/txt_pekerjaan_luar"
@@ -23,16 +24,17 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_8dp"
         android:hint="Alamat">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_alamat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +91,7 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
         android:hint="Rangka">
@@ -98,7 +100,8 @@
             android:id="@+id/edt_rangka_alamat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,7 +117,8 @@
             android:id="@+id/edt_ket_alamat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textMultiLine" />
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,6 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:text="@string/save" />
+        android:text="@string/save"
+        android:textStyle="bold" />
 
 </LinearLayout>

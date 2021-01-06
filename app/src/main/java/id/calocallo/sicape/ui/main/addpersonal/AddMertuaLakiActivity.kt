@@ -79,13 +79,13 @@ class AddMertuaLakiActivity : BaseActivity() {
             mertuaLakiReq.aliran_kepercayaan_dianut = edt_aliran_dianut_mertua_laki.text.toString()
             mertuaLakiReq.ras = edt_suku_mertua_laki.text.toString()
             mertuaLakiReq.kewarganegaran = edt_kwg_mertua_laki.text.toString()
-            mertuaLakiReq.cara_peroleh_kewarganegaraan= edt_how_to_kwg_mertua_laki.text.toString()
-            mertuaLakiReq.alamat_rumah= edt_almt_skrg_mertua_laki.text.toString()
-            mertuaLakiReq.no_telp_rumah= edt_no_telp_mertua_laki.text.toString()
+            mertuaLakiReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_mertua_laki.text.toString()
+            mertuaLakiReq.alamat_rumah = edt_almt_skrg_mertua_laki.text.toString()
+            mertuaLakiReq.no_telp_rumah = edt_no_telp_mertua_laki.text.toString()
             mertuaLakiReq.alamat_rumah_sebelumnya = edt_almt_rmh_sblm_mertua_laki.text.toString()
 
             mertuaLakiReq.status_kerja = stts_kerja
-            mertuaLakiReq.pekerjaan_terakhir= edt_pekerjaan_mertua_laki.text.toString()
+            mertuaLakiReq.pekerjaan_terakhir = edt_pekerjaan_mertua_laki.text.toString()
             mertuaLakiReq.alasan_pensiun = edt_alsn_berhenti_mertua_laki.text.toString()
             mertuaLakiReq.tahun_pensiun = edt_thn_berhenti_mertua_laki.text.toString()
 
@@ -104,6 +104,7 @@ class AddMertuaLakiActivity : BaseActivity() {
             sessionManager.setMertuaLaki(mertuaLakiReq)
             Log.e("mertuaLaki", "${sessionManager.getMertuaLaki()}")
             startActivity(Intent(this, AddMertuaPerempuanActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

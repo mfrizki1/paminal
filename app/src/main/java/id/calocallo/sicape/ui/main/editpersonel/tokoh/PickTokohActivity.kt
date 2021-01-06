@@ -50,17 +50,17 @@ class PickTokohActivity : BaseActivity() {
 
             override fun onItemClicked(itemView: View, data: TokohResp, itemIndex: Int) {
                 val intent = Intent(this@PickTokohActivity, EditTokohActivity::class.java)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 intent.putExtra("NAMA_PERSONEL", namaPersonel)
                 intent.putExtra("TOKOH", data)
                 startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
         btn_add_single_tokoh.setOnClickListener {
             val intent = Intent(this@PickTokohActivity, AddSingleTokohActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             intent.putExtra("PERSONEL", detailPersonel)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         ApiTokoh()
     }

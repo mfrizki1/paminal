@@ -98,6 +98,7 @@ class AddIbuTiriActivity : BaseActivity() {
             sessionManager.setIbuTiri(ibuTiriReq)
             Log.e("ibutTiri", "${sessionManager.getIbuTiri()}")
             startActivity(Intent(this, AddMertuaLakiActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

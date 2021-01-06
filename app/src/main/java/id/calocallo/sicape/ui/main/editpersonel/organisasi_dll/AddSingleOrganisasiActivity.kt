@@ -208,7 +208,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         penghargaanReq.penghargaan = edt_nama_single_penghargaan.text.toString()
         penghargaanReq.diterima_dari = edt_diterima_single_penghargaan.text.toString()
         penghargaanReq.dalam_rangka = edt_rangka_single_penghargaan.text.toString()
-        penghargaanReq.tahun = edt_tgl_single_penghargaan.text.toString()
+        penghargaanReq.tahun = edt_thn_single_penghargaan.text.toString()
         penghargaanReq.keterangan = edt_ket_single_penghargaan.text.toString()
         NetworkConfig().getService().addPenghargaanSingle(
             "Bearer ${sessionManager.fetchAuthToken()}",

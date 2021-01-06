@@ -98,6 +98,7 @@ class AddIbuKandungActivity : BaseActivity() {
             sessionManager.setIbu(ibuReq)
             Log.e("ibu", "${sessionManager.getIbu()}")
             startActivity(Intent(this, AddIbuTiriActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }

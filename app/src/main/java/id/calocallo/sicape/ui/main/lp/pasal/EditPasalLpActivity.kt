@@ -11,6 +11,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.PasalReq
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_pasal_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -56,5 +57,18 @@ class EditPasalLpActivity : BaseActivity() {
             }, 3000)
 
         }
+
+        btn_delete_single_pasal_edit.setOnClickListener {
+            alert ("Yakin Hapus Data?"){
+                positiveButton("Iya"){
+                    deletePasal()
+                }
+                negativeButton("Tidak")
+            }.show()
+        }
+    }
+
+    private fun deletePasal() {
+
     }
 }
