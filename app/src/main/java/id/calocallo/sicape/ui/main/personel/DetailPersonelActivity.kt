@@ -81,7 +81,7 @@ class DetailPersonelActivity : BaseActivity() {
             val nama = detail?.nama
             val alias = detail?.nama_alias
             val jabatan = detail?.jabatan
-            val pangkat = detail?.pangkat
+            val pangkat = detail?.pangkat.toString().toUpperCase()
             val nrp = detail?.nrp
             val tgl_lhr = detail?.tanggal_lahir
             val tmpt_lhr = detail?.tempat_lahir

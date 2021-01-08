@@ -3,7 +3,9 @@ package id.calocallo.sicape.ui.main.choose.lhp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
+import android.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.network.response.KetTerlaporLhpResp
@@ -143,5 +145,25 @@ class ChooseLhpActivity : BaseActivity() {
             .addData(list)
             .setLayout(R.layout.layout_1_text_clickable)
             .build(rv_choose_lhp)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_bar, menu)
+        val item = menu?.findItem(R.id.action_search)
+        val searchView = item?.actionView as SearchView
+        searchView.queryHint = "Cari LHP"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterChooseLhp.filter.filter(newText)
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 }

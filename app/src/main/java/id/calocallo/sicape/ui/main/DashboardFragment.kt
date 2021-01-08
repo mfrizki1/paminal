@@ -14,6 +14,7 @@ import id.calocallo.sicape.model.FiturModel
 import id.calocallo.sicape.ui.main.lhp.LhpActivity
 import id.calocallo.sicape.ui.main.lp.PickLpActivity
 import id.calocallo.sicape.ui.main.personel.PersonelActivity
+import id.calocallo.sicape.ui.main.rehab.PickRehabActivity
 import id.calocallo.sicape.ui.main.skhd.PickSkhdActivity
 import id.calocallo.sicape.ui.main.skhd.SkhdActivity
 import id.calocallo.sicape.utils.SessionManager
@@ -62,28 +63,37 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
         when (listFitur[position].nameFitur) {
             "Personel" -> {
                 startActivity(Intent(activity, PersonelActivity::class.java))
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
             }
             "Laporan Polisi" -> {
                 startActivity(Intent(activity, PickLpActivity::class.java))
 //                Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "Laporan Hasil Penyelidikan" -> {
                 startActivity(Intent(activity, LhpActivity::class.java))
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "SKHD" -> {
                 startActivity(Intent(activity, PickSkhdActivity::class.java))
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "CATPERS" -> {
                 Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "REHAB" -> {
-                Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+                startActivity(Intent(activity, PickRehabActivity::class.java))
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "Laporan Bulanan" -> {
                 Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "Analisa" -> {
                 Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
             else -> {

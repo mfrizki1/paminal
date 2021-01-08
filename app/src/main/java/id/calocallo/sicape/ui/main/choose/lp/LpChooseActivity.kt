@@ -3,7 +3,9 @@ package id.calocallo.sicape.ui.main.choose.lp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.response.*
@@ -70,7 +72,27 @@ class LpChooseActivity : BaseActivity() {
         getListLpChoose(tempJenis)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_bar, menu)
+        val item = menu?.findItem(R.id.action_search)
+        val searchView = item?.actionView as SearchView
+        searchView.queryHint = "Cari LP Disiplin"
 
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterLpDisiplinChoose.filter.filter(newText)
+                adapterLpKkeChoose.filter.filter(newText)
+                adapterLpPidanaChoose.filter.filter(newText)
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
     private fun getListLpChoose(jenis: String?) {
         Log.e("jenisLPCHOOSE", jenis.toString())
             satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
@@ -289,5 +311,6 @@ class LpChooseActivity : BaseActivity() {
             }
         }
     }
+
 }
 
