@@ -4,14 +4,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.razir.progressbutton.*
-import com.zanyastudios.test.PasalItem
+import id.calocallo.sicape.network.response.PasalResp
 import com.zanyastudios.test.PasalTesDetailsLookup
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.LpDisiplinReq
@@ -21,7 +20,6 @@ import id.calocallo.sicape.network.request.SipilPelaporReq
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
-import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity.Companion.ID_PELAPOR_SAKSI
 import id.calocallo.sicape.utils.SessionManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -30,10 +28,10 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class PickPasalActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private val listPasal = mutableListOf<PasalItem>()
+    private val listPasal = mutableListOf<PasalResp>()
     private lateinit var adapterPasalTes: PasalTesAdapter
-    private var selectedIdPasal: MutableList<PasalItem> = mutableListOf()
-    private var tracker: SelectionTracker<PasalItem>? = null
+    private var selectedIdPasal: MutableList<PasalResp> = mutableListOf()
+    private var tracker: SelectionTracker<PasalResp>? = null
 
     //req
     private var lpPidanaReq = LpPidanaReq()
@@ -55,10 +53,34 @@ class PickPasalActivity : BaseActivity() {
             }
             "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Kode Etik"
         }
-        listPasal.add(PasalItem(1, "Pasal 1", "xxxx"))
-        listPasal.add(PasalItem(2, "Pasal 2", "xxxx"))
-        listPasal.add(PasalItem(3, "Pasal 3", "xxxx"))
-        listPasal.add(PasalItem(4, "Pasal 4", "xxxx"))
+        listPasal.add(
+            PasalResp(
+                1,
+                "Pasal 1",
+                "xxxx"
+            )
+        )
+        listPasal.add(
+            PasalResp(
+                2,
+                "Pasal 2",
+                "xxxx"
+            )
+        )
+        listPasal.add(
+            PasalResp(
+                3,
+                "Pasal 3",
+                "xxxx"
+            )
+        )
+        listPasal.add(
+            PasalResp(
+                4,
+                "Pasal 4",
+                "xxxx"
+            )
+        )
         getListPasal(listPasal)
 
         //getSipil if not empty
@@ -90,18 +112,18 @@ class PickPasalActivity : BaseActivity() {
 
     }
 
-    private fun getListPasal(listPasal: MutableList<PasalItem>) {
+    private fun getListPasal(listPasal: MutableList<PasalResp>) {
         rv_list_pasal_2.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterPasalTes = PasalTesAdapter(this, listPasal as ArrayList<PasalItem>)
+        adapterPasalTes = PasalTesAdapter(this, listPasal as ArrayList<PasalResp>)
         rv_list_pasal_2.adapter = adapterPasalTes
 
-        tracker = SelectionTracker.Builder<PasalItem>(
+        tracker = SelectionTracker.Builder<PasalResp>(
             "pasalSelection",
             rv_list_pasal_2,
             PasalTesItemKeyProvider(adapterPasalTes),
             PasalTesDetailsLookup(rv_list_pasal_2),
-            StorageStrategy.createParcelableStorage(PasalItem::class.java)
+            StorageStrategy.createParcelableStorage(PasalResp::class.java)
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
         ).build()

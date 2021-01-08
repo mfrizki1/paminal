@@ -89,7 +89,6 @@ class AddIbuKandungActivity : BaseActivity() {
             ibuReq.no_telp_kantor = edt_no_telp_kntr_ibu.text.toString()
             ibuReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_ibu.text.toString()
             ibuReq.pendidikan_terakhir = edt_pend_trkhr_ibu.text.toString()
-            ibuReq.pernikahan_brp = edt_pernikahan_brp_ibu.text.toString()
 
             ibuReq.status_kehidupan = stts_hidup
             ibuReq.tahun_kematian = edt_tahun_kematian_ibu.text.toString()

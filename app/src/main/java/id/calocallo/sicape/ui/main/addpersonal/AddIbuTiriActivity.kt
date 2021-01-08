@@ -88,7 +88,6 @@ class AddIbuTiriActivity : BaseActivity() {
             ibuTiriReq.no_telp_kantor = edt_no_telp_kntr_ibu_tiri.text.toString()
             ibuTiriReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_ibu_tiri.text.toString()
             ibuTiriReq.pendidikan_terakhir = edt_pend_trkhr_ibu_tiri.text.toString()
-            ibuTiriReq.pernikahan_brp = edt_pernikahan_brp_ibu_tiri.text.toString()
 
             ibuTiriReq.status_kehidupan = stts_hidup
             ibuTiriReq.tahun_kematian = edt_tahun_kematian_ibu_tiri.text.toString()

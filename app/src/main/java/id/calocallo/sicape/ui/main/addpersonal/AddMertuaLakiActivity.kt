@@ -94,7 +94,6 @@ class AddMertuaLakiActivity : BaseActivity() {
             mertuaLakiReq.no_telp_kantor = edt_no_telp_kntr_mertua_laki.text.toString()
             mertuaLakiReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_mertua_laki.text.toString()
             mertuaLakiReq.pendidikan_terakhir = edt_pend_trkhr_mertua_laki.text.toString()
-            mertuaLakiReq.pernikahan_brp = edt_pernikahan_brp_mertua_laki.text.toString()
 
             mertuaLakiReq.status_kehidupan = stts_hidup
             mertuaLakiReq.tahun_kematian = edt_tahun_kematian_mertua_laki.text.toString()

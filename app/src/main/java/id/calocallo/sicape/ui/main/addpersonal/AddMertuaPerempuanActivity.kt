@@ -60,7 +60,6 @@ class AddMertuaPerempuanActivity : BaseActivity() {
             mertuaPerempuanReq.no_telp_kantor = edt_no_telp_kntr_mertua_perempuan.text.toString()
             mertuaPerempuanReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_mertua_perempuan.text.toString()
             mertuaPerempuanReq.pendidikan_terakhir = edt_pend_trkhr_mertua_perempuan.text.toString()
-            mertuaPerempuanReq.pernikahan_brp = edt_pernikahan_brp_mertua_perempuan.text.toString()
 
             mertuaPerempuanReq.status_kehidupan = stts_hidup
             mertuaPerempuanReq.tahun_kematian = edt_tahun_kematian_mertua_perempuan.text.toString()

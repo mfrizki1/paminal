@@ -11,7 +11,6 @@ import id.calocallo.sicape.network.response.KetTerlaporLhpResp
 import id.calocallo.sicape.network.response.PersonelPenyelidikResp
 import id.calocallo.sicape.network.response.RefPenyelidikanResp
 import id.calocallo.sicape.network.response.SaksiLhpResp
-import id.calocallo.sicape.ui.main.lhp.add.ReferensiPenyelidikanLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.ListDetailRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.PickLidikLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
@@ -105,7 +104,7 @@ class DetailLhpActivity : BaseActivity() {
         txt_pengaduan_detail.text = dataLhp?.tentang
         txt_no_sp_detail.text = dataLhp?.no_surat_perintah_penyelidikan
         txt_waktu_penugasan_detail.text = dataLhp?.tanggal_mulai_penyelidikan
-        txt_tempat_penyelidikan_detail.text = dataLhp?.daerah_penyelidikan
+        txt_tempat_penyelidikan_detail.text = dataLhp?.wilayah_hukum_penyelidikan
         txt_tugas_pokok_detail.text = dataLhp?.tugas_pokok
         txt_pokok_permasalahan_detail.text = dataLhp?.pokok_permasalahan
         txt_ket_ahli_detail.text = dataLhp?.keterangan_ahli

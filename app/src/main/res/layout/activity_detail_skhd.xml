@@ -15,15 +15,242 @@
 
         <include layout="@layout/view_separator" />
 
-        <LinearLayout
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Surat Keputusan Hasil Disiplin" />
+
+        <TextView
+            android:id="@+id/txt_no_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="No SKHD/ / / "
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Laporan Hasil Penyelidikan" />
+
+        <TextView
+            android:id="@+id/txt_no_lhp_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="No LHP/ / / "
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Laporan Polisi" />
+
+        <TextView
+            android:id="@+id/txt_no_lp_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="No LP/ / / "
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Satuan Kerja" />
+
+        <TextView
+            android:id="@+id/txt_bidang_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="BIDDOKES"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Berkas Perkara" />
+
+        <TextView
+            android:id="@+id/txt_berkas_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="DP3"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hasil Pemeriksaan Saksi" />
+
+        <TextView
+            android:id="@+id/txt_berkas_pemeriksaan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/paragraf"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hukuman" />
+
+        <TextView
+            android:id="@+id/txt_hukuman_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="hukuman\nhukumna\nhukuman"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Disampaikan Ke Terlapor" />
+
+        <TextView
+            android:id="@+id/txt_tanggal_disampaikan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="12-08-2020"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Waktu Disampaikan Ke Terlapor" />
+
+        <TextView
+            android:id="@+id/txt_waktu_disampaikan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Pukul 12:34 WITA"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kota Penetapan" />
+
+        <TextView
+            android:id="@+id/txt_kota_penetapan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Banjarmasin"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Penetapan" />
+
+        <TextView
+            android:id="@+id/txt_tanggal_penetapan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="12-12-2000"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pimpinan" />
+
+        <TextView
+            android:id="@+id/txt_nama_pimpinan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="12-12-2000"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            android:id="@+id/txt_pangkat_nrp_pimpinan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Pangkat: NRP:"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            android:id="@+id/txt_jabatan_pimpinan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Jabatan:"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tembusan" />
+
+        <TextView
+            android:id="@+id/txt_tembusan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="tembusan\ntembusan"
+            android:textSize="@dimen/text_14" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_skhd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="vertical">
-
-
-        </LinearLayout>
+            android:text="Edit Data"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

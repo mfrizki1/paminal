@@ -66,8 +66,8 @@ class AddPersonelLidikActivity : BaseActivity() {
         //set Pick Personel
         btn_choose_personel_lidik.setOnClickListener {
             val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivityForResult(intent, REQ_LIDIK)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 

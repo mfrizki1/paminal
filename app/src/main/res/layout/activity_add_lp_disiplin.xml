@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"
-android:inputType="textMultiLine|textCapSentences" />
+                android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -143,7 +143,7 @@ android:inputType="textMultiLine|textCapSentences" />
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"
-android:inputType="textMultiLine|textCapSentences" />
+                android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -165,7 +165,7 @@ android:inputType="textMultiLine|textCapSentences" />
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"
-android:inputType="textMultiLine|textCapSentences" />
+                android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -187,15 +187,15 @@ android:inputType="textMultiLine|textCapSentences" />
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"
-android:inputType="textMultiLine|textCapSentences" />
+                android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_next_lp_displin"
             style="@style/Widget.Button"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/space_8dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp"
             android:text="@string/next" />
     </LinearLayout>
 

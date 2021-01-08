@@ -8,27 +8,27 @@ import android.widget.TextView
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
-import com.zanyastudios.test.PasalItem
+import id.calocallo.sicape.network.response.PasalResp
 import id.calocallo.sicape.R
 
 class PasalTesAdapter internal constructor(
     private val context: Context,
-    private val pasalItem: ArrayList<PasalItem>
+    private val pasalResp: ArrayList<PasalResp>
 ) : RecyclerView.Adapter<PasalTesAdapter.PasalHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    var tracker: SelectionTracker<PasalItem>? = null
+    var tracker: SelectionTracker<PasalResp>? = null
 
     inner class PasalHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtPasal = itemView.findViewById<TextView>(R.id.txt_1_clickable)
-        fun getItemDetails(): ItemDetailsLookup.ItemDetails<PasalItem> =
-            object : ItemDetailsLookup.ItemDetails<PasalItem>() {
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<PasalResp> =
+            object : ItemDetailsLookup.ItemDetails<PasalResp>() {
                 override fun getPosition(): Int = adapterPosition
-                override fun getSelectionKey(): PasalItem? = pasalItem[position]
+                override fun getSelectionKey(): PasalResp? = pasalResp[position]
             }
 
-        fun setPasal(pasalItem: PasalItem, selected: Boolean) {
-            txtPasal.text = pasalItem.nama_pasal
+        fun setPasal(pasalResp: PasalResp, selected: Boolean) {
+            txtPasal.text = pasalResp.nama_pasal
             itemView.isActivated = selected
 
         }
@@ -41,16 +41,16 @@ class PasalTesAdapter internal constructor(
     }
 
     override fun getItemCount(): Int {
-        return pasalItem.size
+        return pasalResp.size
     }
 
     override fun onBindViewHolder(holder: PasalHolder, position: Int) {
         tracker?.let {
-            holder.setPasal(pasalItem[position], it.isSelected(pasalItem[position]))
+            holder.setPasal(pasalResp[position], it.isSelected(pasalResp[position]))
         }
     }
 
-    fun getItem(position: Int): PasalItem = pasalItem[position]
+    fun getItem(position: Int): PasalResp = pasalResp[position]
 
-    fun getPosition(name: String) = pasalItem.indexOfFirst { it.nama_pasal == name }
+    fun getPosition(name: String) = pasalResp.indexOfFirst { it.nama_pasal == name }
 }

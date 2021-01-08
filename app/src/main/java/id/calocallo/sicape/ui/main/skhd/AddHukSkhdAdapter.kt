@@ -8,15 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.ListHukumanSkhd
 import kotlinx.android.synthetic.main.layout_hukuman_skhd.view.*
 
 class AddHukSkhdAdapter(
     val context: Context,
-    val list: ArrayList<ListHukumanSkhd>,
+//    val list: ArrayList<ListHukumanSkhd>,
     val onClickHukSkhd: OnClickHukSKHD
 ) : RecyclerView.Adapter<AddHukSkhdAdapter.HukHolder>() {
     inner class HukHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        /*
         fun bind(HukSkhd: ListHukumanSkhd) {
             with(itemView) {
                 edt_hukuman_skhd.addTextChangedListener(object : TextWatcher {
@@ -55,6 +55,8 @@ class AddHukSkhdAdapter(
             }
         }
 
+         */
+
     }
 
     interface OnClickHukSKHD {
@@ -69,10 +71,10 @@ class AddHukSkhdAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return 0
     }
 
     override fun onBindViewHolder(holder: HukHolder, position: Int) {
-        holder.bind(list[position])
+//        holder.bind(list[position])
     }
 }

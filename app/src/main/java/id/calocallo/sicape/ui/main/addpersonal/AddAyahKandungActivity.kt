@@ -53,7 +53,6 @@ class AddAyahKandungActivity : BaseActivity() {
             ayahReq.no_telp_kantor = edt_no_telp_kntr_ayah.text.toString()
             ayahReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_ayah.text.toString()
             ayahReq.pendidikan_terakhir = edt_pend_trkhr_ayah.text.toString()
-            ayahReq.pernikahan_brp = edt_pernikahan_brp_ayah.text.toString()
 
             ayahReq.status_kehidupan = stts_hidup
             ayahReq.tahun_kematian = edt_tahun_kematian_ayah.text.toString()

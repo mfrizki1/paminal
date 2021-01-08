@@ -63,7 +63,6 @@ class DetailLpDisiplinActivity : BaseActivity() {
         txt_detail_kota_buat_disiplin.text = "Kota : ${disiplin?.kota_buat_laporan}"
         txt_detail_tgl_buat_disiplin.text = "Tanggal : ${disiplin?.tanggal_buat_laporan}"
         txt_detail_rincian_pelanggaran_disiplin.text = disiplin?.rincian_pelanggaran_disiplin
-
         //pimpinan
         txt_detail_nama_pimpinan_disiplin.text = "Nama : ${disiplin?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_disiplin.text =

@@ -49,7 +49,7 @@ class OtherAddLhpActivity : BaseActivity() {
         lhpReq.tentang = lhpDataManager.getTentangLHP()
         lhpReq.no_surat_perintah_penyelidikan = lhpDataManager.getSPLHP()
         lhpReq.tanggal_mulai_penyelidikan = lhpDataManager.getWaktuLHP()
-        lhpReq.daerah_penyelidikan = lhpDataManager.getDaerahLHP()
+        lhpReq.wilayah_hukum_penyelidikan = lhpDataManager.getDaerahLHP()
         lhpReq.pokok_permasalahan = lhpDataManager.getPokokPermasalahanLHP()
         lhpReq.keterangan_ahli = lhpDataManager.getKetAhliLHP()
         lhpReq.kesimpulan = lhpDataManager.getKesimpulanLHP()

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main.skhd.tinddisiplin.EditTindDisiplinSkhdActivity">
+
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
+    <LinearLayout
+        android:id="@+id/ll_personel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_choose_personel_tind_disiplin_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pilih Personel Pelapor"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_personel_pelapor_pidana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/space_8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Personel Pelapor"
+                    android:textSize="@dimen/text_18"
+                    android:textStyle="bold" />
+
+                <include layout="@layout/layout_separator" />
+
+                <TextView
+                    android:id="@+id/txt_nama_personel_tind_disiplin_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8dp"
+                    android:text="Nama Personel Pelapor"
+                    android:textSize="@dimen/text_14"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_pangkat_personel_tind_disiplin_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_half"
+                    android:text="Pangkat Personel Pelapor"
+                    android:textSize="@dimen/text_14" />
+
+                <TextView
+                    android:id="@+id/txt_nrp_personel_tind_disiplin_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_half"
+                    android:text="NRP Personel Pelapor"
+                    android:textSize="@dimen/text_14" />
+
+                <TextView
+                    android:id="@+id/txt_jabatan_personel_tind_disiplin_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_half"
+                    android:text="Jabatan Personel Pelapor"
+                    android:textSize="@dimen/text_14" />
+
+                <TextView
+                    android:id="@+id/txt_kesatuan_personel_tind_disiplin_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_half"
+                    android:text="Kesatuan Personel Pelapor"
+                    android:textSize="@dimen/text_14" />
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Pilih Tindakan Disiplin">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinner_tind_disiplin_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_tind_disiplin_edit"
+        style="@style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="@string/save" />
+</LinearLayout>

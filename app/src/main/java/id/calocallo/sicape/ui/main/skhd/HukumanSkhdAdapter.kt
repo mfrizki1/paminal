@@ -6,19 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.ListHukumanSkhd
 import kotlinx.android.synthetic.main.item_1_text.view.*
 
 class HukumanSkhdAdapter(
-    val context: Context,
-    val list: ArrayList<ListHukumanSkhd>?
+    val context: Context
+//    val list: ArrayList<ListHukumanSkhd>?
 ) : RecyclerView.Adapter<HukumanSkhdAdapter.HukSkhdHolder>() {
     inner class HukSkhdHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(hukSkhd: ListHukumanSkhd?) {
-            with(itemView){
-                txt_item_detail_lhp.text = hukSkhd?.hukuman
-            }
-        }
+//        fun bind(hukSkhd: ListHukumanSkhd?) {
+//            with(itemView){
+//                txt_item_detail_lhp.text = hukSkhd?.hukuman
+//            }
+//        }
 
     }
 
@@ -27,9 +26,9 @@ class HukumanSkhdAdapter(
         return HukSkhdHolder(view)
     }
 
-    override fun getItemCount(): Int = list?.size!!
+    override fun getItemCount(): Int = 0
 
     override fun onBindViewHolder(holderHuk: HukSkhdHolder, position: Int) {
-        holderHuk.bind(list?.get(position))
+//        holderHuk.bind(list?.get(position))
     }
 }

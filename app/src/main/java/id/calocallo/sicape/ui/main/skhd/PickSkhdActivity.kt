@@ -1,9 +1,10 @@
 package id.calocallo.sicape.ui.main.skhd
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import id.calocallo.sicape.R
+import id.calocallo.sicape.ui.main.putkke.ListPutKkeActivity
+import id.calocallo.sicape.ui.main.skhd.tinddisiplin.SkhdTindDisiplinActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -19,21 +20,25 @@ class PickSkhdActivity : BaseActivity() {
             val intent = Intent(this, SkhdActivity::class.java)
             intent.putExtra(SkhdActivity.SKHD, "Pidana")
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         btn_skhd_disiplin.setOnClickListener {
             val intent = Intent(this, SkhdActivity::class.java)
             intent.putExtra(SkhdActivity.SKHD, "Disiplin")
             startActivity(intent)
-        }
-        btn_skhd_kkep.setOnClickListener {
-            val intent = Intent(this, SkhdActivity::class.java)
-            intent.putExtra(SkhdActivity.SKHD, "KKEP")
-            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         btn_skhd_tind_disp.setOnClickListener {
             startActivity(Intent(this, SkhdTindDisiplinActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        btn_skhd_kkep.setOnClickListener {
+            val intent = Intent(this, ListPutKkeActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 }

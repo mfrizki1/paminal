@@ -90,7 +90,6 @@ class AddAyahTiriActivity : BaseActivity() {
             ayahTiriReq.no_telp_kantor = edt_no_telp_kntr_ayah_tiri.text.toString()
             ayahTiriReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_ayah_tiri.text.toString()
             ayahTiriReq.pendidikan_terakhir = edt_pend_trkhr_ayah_tiri.text.toString()
-            ayahTiriReq.pernikahan_brp = edt_pernikahan_brp_ayah_tiri.text.toString()
 
             ayahTiriReq.tahun_kematian = edt_tahun_kematian_ayah_tiri.text.toString()
             ayahTiriReq.lokasi_kematian = edt_dimana_ayah_tiri.text.toString()

@@ -33,7 +33,7 @@ data class LhpReq(
     var analisa: String?,
     var isTerbukti: Int?,
     var tanggal_mulai_penyelidikan: String?,
-    var daerah_penyelidikan: String?
+    var wilayah_hukum_penyelidikan: String?
 ) : Parcelable {
     constructor() : this(
         "",

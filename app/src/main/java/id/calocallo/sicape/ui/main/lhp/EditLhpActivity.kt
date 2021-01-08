@@ -1,7 +1,5 @@
 package id.calocallo.sicape.ui.main.lhp
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +9,6 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.request.EditLhpReq
-import id.calocallo.sicape.network.response.LpResp
-import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -104,7 +99,7 @@ class EditLhpActivity : BaseActivity() {
         edt_isi_pengaduan_lhp_edit.setText(editLHP?.tentang)
         edt_no_sp_lhp_edit.setText(editLHP?.no_surat_perintah_penyelidikan)
         edt_waktu_penugasan_lhp_edit.setText(editLHP?.tanggal_mulai_penyelidikan)
-        edt_tempat_penyelidikan_lhp_edit.setText(editLHP?.daerah_penyelidikan)
+        edt_tempat_penyelidikan_lhp_edit.setText(editLHP?.wilayah_hukum_penyelidikan)
         edt_tugas_pokok_lhp_edit.setText(editLHP?.tugas_pokok)
         edt_pokok_permasalahan_lhp_edit.setText(editLHP?.pokok_permasalahan)
         edt_keterangan_ahli_lhp_edit.setText(editLHP?.keterangan_ahli)

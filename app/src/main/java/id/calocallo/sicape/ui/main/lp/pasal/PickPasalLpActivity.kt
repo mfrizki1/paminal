@@ -9,7 +9,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zanyastudios.test.PasalTesDetailsLookup
-import com.zanyastudios.test.PasalItem
+import id.calocallo.sicape.network.response.PasalResp
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 import id.calocallo.sicape.R
@@ -27,7 +27,7 @@ class PickPasalLpActivity : BaseActivity() {
         const val LIST_PASAL = "LIST_PASAL"
     }
 
-    private var selectedIdPasal: MutableList<PasalItem> = mutableListOf()
+    private var selectedIdPasal: MutableList<PasalResp> = mutableListOf()
     private lateinit var sessionManager: SessionManager
     private var lpPidanaReq = LpPidanaReq()
     private var lpKKeReq = LpKkeReq()
@@ -35,9 +35,9 @@ class PickPasalLpActivity : BaseActivity() {
     //    private lateinit var adapterPasal: PasalAdapter1
 //    private lateinit var adapterPasal2: PasalAdapter2
     private lateinit var adapterPasalTes: PasalTesAdapter
-    private val listPasal = arrayListOf<PasalItem>()
+    private val listPasal = arrayListOf<PasalResp>()
 
-    private var tracker: SelectionTracker<PasalItem>? = null
+    private var tracker: SelectionTracker<PasalResp>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,25 +128,25 @@ class PickPasalLpActivity : BaseActivity() {
     private fun getPasal() {
         //        NetworkConfig().getService()
         listPasal.add(
-            PasalItem(1, "Pasal 1", "")
+            PasalResp(1, "Pasal 1", "")
         )
         listPasal.add(
-            PasalItem(2, "Pasal 2", "")
+            PasalResp(2, "Pasal 2", "")
         )
         listPasal.add(
-            PasalItem(3, "Pasal 3", "")
+            PasalResp(3, "Pasal 3", "")
         )
         rv_list_pasal.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterPasalTes = PasalTesAdapter(this, listPasal)
         rv_list_pasal.adapter = adapterPasalTes
 
-        tracker = SelectionTracker.Builder<PasalItem>(
+        tracker = SelectionTracker.Builder<PasalResp>(
             "pasalSelection",
             rv_list_pasal,
             PasalTesItemKeyProvider(adapterPasalTes),
             PasalTesDetailsLookup(rv_list_pasal),
-            StorageStrategy.createParcelableStorage(PasalItem::class.java)
+            StorageStrategy.createParcelableStorage(PasalResp::class.java)
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
         ).build()

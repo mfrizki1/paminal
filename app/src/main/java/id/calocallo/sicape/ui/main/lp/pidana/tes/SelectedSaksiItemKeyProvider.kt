@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.lp.pidana.tes
 
 import androidx.recyclerview.selection.ItemKeyProvider
-import com.zanyastudios.test.PasalItem
 import id.calocallo.sicape.network.response.LpSaksiResp
 
 
