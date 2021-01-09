@@ -82,8 +82,8 @@ class AddSinglePekerjaanFragment : Fragment() {
         if (pekerjaan == "pekerjaan") {
 
             singlePekerjaanReq.keterangan = edt_ket_pekerjaan_add_single.text.toString()
-            singlePekerjaanReq.instansi = edt_kesatuan_pekerjaan_add_single.text.toString()
-            singlePekerjaanReq.golongan = edt_pangkat_pekerjaan_add_single.text.toString()
+            singlePekerjaanReq.instansi = edt_kesatuan_pekerjaan_add_single.text.toString().toUpperCase()
+            singlePekerjaanReq.golongan = edt_pangkat_pekerjaan_add_single.text.toString().toUpperCase()
             singlePekerjaanReq.pekerjaan = edt_nama_pekerjaan_add_single.text.toString()
             singlePekerjaanReq.berapa_tahun = edt_lama_thn_pekerjaan_add_single.text.toString()
 

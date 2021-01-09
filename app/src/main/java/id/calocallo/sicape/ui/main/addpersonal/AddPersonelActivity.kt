@@ -275,27 +275,27 @@ class AddPersonelActivity : BaseActivity() {
             }
         }
 
-        val listSatker = listOf(
-            "POLRESTA BANJARMASIN",
-            "POLRES BANJARBARU",
-            "POLRES BANJAR",
-            "POLRES TAPIN",
-            "POLRES HULU SUNGAI SELATAN",
-            "POLRES HULU SUNGAI TENGAH",
-            "POLRES HULU SUNGAI UTARA",
-            "POLRES BALANGAN",
-            "POLRES TABALONG",
-            "POLRES TANAH LAUT",
-            "POLRES TANAH BUMBU",
-            "POLRES KOTABARU",
-            "POLRES BATOLA",
-            "SAT BRIMOB",
-            "SAT POLAIR",
-            "SPN BANJARBARU",
-            "POLDA KALSEL",
-            "SARPRAS"
-        )
-        val adapterSatker = ArrayAdapter(this, R.layout.item_spinner, listSatker)
+//        val listSatker = listOf(
+//            "POLRESTA BANJARMASIN",
+//            "POLRES BANJARBARU",
+//            "POLRES BANJAR",
+//            "POLRES TAPIN",
+//            "POLRES HULU SUNGAI SELATAN",
+//            "POLRES HULU SUNGAI TENGAH",
+//            "POLRES HULU SUNGAI UTARA",
+//            "POLRES BALANGAN",
+//            "POLRES TABALONG",
+//            "POLRES TANAH LAUT",
+//            "POLRES TANAH BUMBU",
+//            "POLRES KOTABARU",
+//            "POLRES BATOLA",
+//            "SAT BRIMOB",
+//            "SAT POLAIR",
+//            "SPN BANJARBARU",
+//            "POLDA KALSEL",
+//            "SARPRAS"
+//        )
+        val adapterSatker = ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))
         spinnerSatkerAdd.setAdapter(adapterSatker)
         spinnerSatkerAdd.setOnItemClickListener { parent, view, position, id ->
             when (position) {

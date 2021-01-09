@@ -40,7 +40,7 @@
                     android:id="@+id/edt_no_lp_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text" />
+                    android:inputType="text|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -138,10 +138,12 @@
             <include layout="@layout/layout_separator" />
 
             <TextView
-                style="@style/TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dibuat Laporan" />
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Dibuat Laporan"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -162,7 +164,7 @@
                         android:id="@+id/edt_kota_buat_add_lp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text" />
+                        android:inputType="text|textCapSentences" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -183,10 +185,12 @@
             </LinearLayout>
 
             <TextView
-                style="@style/TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pimpinan Bidang" />
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Pimpinan Bidang"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -194,6 +198,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:hint="Nama Pimpinan Bidang">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_nama_pimpinan_bidang_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textCapSentences" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -215,7 +225,7 @@
                         android:id="@+id/edt_pangkat_pimpinan_bidang_add"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text" />
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -229,11 +239,10 @@
                         android:id="@+id/edt_nrp_pimpinan_bidang_add"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -247,7 +256,22 @@
                     android:id="@+id/edt_jabatan_pimpinan_bidang_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textMultiLine" />
+                    android:inputType="text|textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Kesatuan Pimpinan Bidang">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_kesatuan_lp_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -257,12 +281,6 @@
                 android:layout_marginVertical="@dimen/space_8dp"
                 android:text="@string/next"
                 android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_nama_pimpinan_bidang_add"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text" />
 
 
         </LinearLayout>

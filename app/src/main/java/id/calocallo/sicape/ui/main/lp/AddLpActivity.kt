@@ -3,6 +3,8 @@ package id.calocallo.sicape.ui.main.lp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.ArrayAdapter
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.response.PelanggaranResp
@@ -23,11 +25,6 @@ class AddLpActivity : BaseActivity() {
         const val REQ_DILAPOR = 111
         const val REQ_TERLAPOR = 222
         const val REQ_PELANGGARAN = 333
-        const val NO_LP = "NO_LP"
-        const val KET_LP = "KET_LP"
-        const val ID_TERLAPOR = "ID_TERLAPOR"
-        const val ID_DILAPOR = "ID_DILAPOR"
-        const val ID_PELANGGARAN = "ID_PELANGGARAN"
         const val LP = "LP"
     }
 
@@ -110,28 +107,15 @@ class AddLpActivity : BaseActivity() {
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     }
                 }
-//                val intent = Intent(this, PickPasalLpActivity::class.java)
-//                val intent = Intent(this, AddLpPidanaActivity::class.java)
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//                val bundle = Bundle()
-//                startActivity(intent)
-
-
-//                sessionManager.setKetLP(edt_ket_lp_add.text.toString())
-//                sessionManager.setAlatBuktiLP(edt_alat_bukti_lp_add.text.toString())
-//                idPersonelDilapor?.let { it1 -> sessionManager.setIDPersonelDilapor(it1) }
-//            edt_pasal_lp_add.text.toString()
-//            Toast.makeText(this, "Berhasil Masuk", Toast.LENGTH_SHORT).show()
-//                Log.e(
-//                    "addLP", "$jenis, ${edt_no_lp_add.text.toString()}," +
-//                            "${txt_pelanggaran_lp_add.text.toString()}," +
-//                            "TErlapor : $idPersonelTerlapor, Dilapor: $idPersonelDilapor, $idPelanggaran"
-//                )
             }
 
         }
 
-
+        val adapterSatker = ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))
+        spinner_kesatuan_lp_add.setAdapter(adapterSatker)
+        spinner_kesatuan_lp_add.setOnItemClickListener { parent, view, position, id ->
+            sessionManager.setKesatuanPimpBidLp(parent.getItemAtPosition(position) as String)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

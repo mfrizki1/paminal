@@ -114,7 +114,9 @@ class DetailLhpActivity : BaseActivity() {
         }
         val lidik = dataLhp?.personel_penyelidik?.find { it.is_ketua == 1 }
         txt_ketua_tim_detail.text =
-            "Nama : ${lidik?.nama}\nPangkat : ${lidik?.pangkat} \t ${lidik?.nrp}"
+            "Nama : ${lidik?.nama}\nPangkat : ${lidik?.pangkat.toString()
+                .toUpperCase()}\nNRP : ${lidik?.nrp}\nKesatuan : ${lidik?.kesatuan.toString()
+                .toUpperCase()}"
         txt_surat_detail_lhp.text = dataLhp?.surat
         txt_petunjuk_detail_lhp.text = dataLhp?.petunjuk
         txt_analisa_detail_lhp.text = dataLhp?.analisa

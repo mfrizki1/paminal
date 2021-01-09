@@ -62,14 +62,14 @@ class AddPutKkeActivity : BaseActivity() {
         putKkeReq.sanksi_rekomendasi = edt_sanksi_rekomendasi_put_kke_add.text.toString()
         putKkeReq.sanksi_hasil_keputusan = edt_sanksi_hasil_putusan_put_kke_add.text.toString()
         putKkeReq.nama_ketua_komisi = edt_nama_ketua_komisi_put_kke_add.text.toString()
-        putKkeReq.pangkat_ketua_komisi = edt_pangkat_ketua_komisi_put_kke_add.text.toString()
+        putKkeReq.pangkat_ketua_komisi = edt_pangkat_ketua_komisi_put_kke_add.text.toString().toUpperCase()
         putKkeReq.nrp_ketua_komisi = edt_nrp_ketua_komisi_put_kke_add.text.toString()
         putKkeReq.nama_wakil_ketua_komisi = edt_nama_wakil_ketua_komisi_put_kke_add.text.toString()
         putKkeReq.pangkat_wakil_ketua_komisi =
-            edt_pangkat_wakil_ketua_komisi_put_kke_add.text.toString()
+            edt_pangkat_wakil_ketua_komisi_put_kke_add.text.toString().toUpperCase()
         putKkeReq.nrp_wakil_ketua_komisi = edt_nrp_wakil_ketua_komisi_put_kke_add.text.toString()
         putKkeReq.nama_anggota_komisi = edt_nama_anggota_komisi_put_kke_add.text.toString()
-        putKkeReq.pangkat_anggota_komisi = edt_pangkat_anggota_komisi_put_kke_add.text.toString()
+        putKkeReq.pangkat_anggota_komisi = edt_pangkat_anggota_komisi_put_kke_add.text.toString().toUpperCase()
         putKkeReq.nrp_anggota_komisi = edt_nrp_anggota_komisi_put_kke_add.text.toString()
         putKkeReq.id_lhp = idLhp
         putKkeReq.id_lp = idLp

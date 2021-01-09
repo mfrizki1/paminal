@@ -184,7 +184,7 @@ class EditPersonelActivity : BaseActivity() {
         edt_kebiasaan_edit.setText(detail?.kebiasaan)
         edt_kwg_edit.setText(detail?.kewarganegaraan)
         edt_nrp_edit.setText(detail?.nrp)
-        edt_pangkat_edit.setText(detail?.pangkat)
+        edt_pangkat_edit.setText(detail?.pangkat.toString().toUpperCase())
         edt_pekerjaan_edit.setText(detail?.jabatan)
         edt_suku_edit.setText(detail?.ras)
         edt_jmlh_anak_edit.setText(detail?.jumlah_anak)

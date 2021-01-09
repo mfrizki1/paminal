@@ -763,4 +763,5 @@ interface Api {
         @Path("id_personel") id_personel: String,
         @Body editFotoReq: EditFotoReq
     ): Call<BaseResp>
+
 }

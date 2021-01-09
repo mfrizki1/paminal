@@ -153,10 +153,10 @@ class AddSingleSaksiLhpActivity : BaseActivity() {
             saksiReqLhp.nama = personelSaksi?.nama
             saksiReqLhp.id_personel = personelSaksi?.id
             txt_nama_saksi_edit.text = "Nama : ${personelSaksi?.nama}"
-            txt_pangkat_saksi_edit.text = "Pangkat : ${personelSaksi?.pangkat}"
+            txt_pangkat_saksi_edit.text = "Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
             txt_nrp_saksi_edit.text = "NRP : ${personelSaksi?.nrp}"
             txt_jabatan_saksi_edit.text = "Jabatan : ${personelSaksi?.jabatan}"
-            txt_kesatuan_saksi_edit.text = "Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan}"
+            txt_kesatuan_saksi_edit.text = "Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
         }
     }
 

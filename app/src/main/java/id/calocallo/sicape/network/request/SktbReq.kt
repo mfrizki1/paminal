@@ -16,14 +16,12 @@ data class SktbReq(
     var nama_yang_menetapkan: String?,
     var pangkat_yang_menetapkan: String?,
     var nrp_yang_menetapkan: String?,
-    var tembusan: String?,
-    var created_at: String?,
-    var updated_at: String?
+    var tembusan: String?
 ) {
     constructor() : this(
         null, null, null, null,
         null, null, null, null,
         null, null, null,
-        null, null, null
+        null
     )
 }

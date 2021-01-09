@@ -143,8 +143,8 @@ class PickSaksiActivity : BaseActivity() {
                 lpKKeReq.uraian_pelanggaran = sessionManager.getUraianPelanggaranLP()
                 lpKKeReq.pasal_dilanggar = sessionManager.getListPasalLP()
                 lpKKeReq.saksi_kode_etik = selectedSaksi as ArrayList<LpSaksiResp>
-
-                Log.e("KKE", "${lpKKeReq}")
+                lpKKeReq.kesatuan_yang_mengetahui = sessionManager.getKesatuanPimpBidLp()
+                Log.e("KKE", "$lpKKeReq")
             }
         }
 

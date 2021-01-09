@@ -72,20 +72,20 @@ class EditTerlaporLhpActivity : BaseActivity() {
             idPersonelTerlapor = personelTerlapor?.id
             namaPersonelTerlapor = personelTerlapor?.nama
             txt_nama_terlapor_edit.text = personelTerlapor?.nama
-            txt_pangkat_terlapor_edit.text = personelTerlapor?.pangkat
+            txt_pangkat_terlapor_edit.text = personelTerlapor?.pangkat.toString().toUpperCase()
             txt_nrp_terlapor_edit.text = personelTerlapor?.nrp
             txt_jabatan_terlapor_edit.text = personelTerlapor?.jabatan
-            txt_kesatuan_terlapor_edit.text = personelTerlapor?.satuan_kerja?.kesatuan
+            txt_kesatuan_terlapor_edit.text = personelTerlapor?.satuan_kerja?.kesatuan.toString().toUpperCase()
         }
     }
 
     private fun getViewTerlapor(terlapor: KetTerlaporLhpResp?) {
         edt_ket_terlapor_edit.setText(terlapor?.isi_keterangan_terlapor)
         txt_nama_terlapor_edit.text = terlapor?.nama
-        txt_pangkat_terlapor_edit.text = terlapor?.pangkat
+        txt_pangkat_terlapor_edit.text = terlapor?.pangkat.toString().toUpperCase()
         txt_nrp_terlapor_edit.text = terlapor?.nrp
         txt_jabatan_terlapor_edit.text = terlapor?.jabatan
-        txt_kesatuan_terlapor_edit.text = terlapor?.kesatuan
+        txt_kesatuan_terlapor_edit.text = terlapor?.kesatuan.toString().toUpperCase()
     }
 
     private fun updateTerlapor(terlapor: KetTerlaporLhpResp?) {

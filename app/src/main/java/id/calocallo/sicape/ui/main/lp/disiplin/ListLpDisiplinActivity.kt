@@ -1,3 +1,4 @@
+
 package id.calocallo.sicape.ui.main.lp.disiplin
 
 import android.content.Intent
@@ -67,7 +68,7 @@ class ListLpDisiplinActivity : BaseActivity() {
                 1, "LP/DISIPLIN1",
                 "disiplin", personelTerLapor, personelPeLapor,
                 "Banjarmasin", "12-01-20", "Budi",
-                "IPDA", "87654321", "KOMBES",
+                "IPDA", "87654321", "KOMBES","POLDA kALSEL",
                 "macam_pelanggaran", "keterangan terlapor",
                 "kronologis", "rincian", listPasal, satKerResp, "", ""
             )
@@ -78,7 +79,7 @@ class ListLpDisiplinActivity : BaseActivity() {
                 2, "LP/DISIPLIN2",
                 "disiplin", personelTerLapor, personelPeLapor,
                 "Banjarmasin", "12-01-20", "Budi",
-                "IPDA", "87654321", "KOMBES",
+                "IPDA", "87654321", "KOMBES","POLDA kALSEL",
                 "macam_pelanggaran", "keterangan terlapor",
                 "kronologis", "rincian", listPasal, satKerResp, "", ""
             )
@@ -89,7 +90,7 @@ class ListLpDisiplinActivity : BaseActivity() {
                 3, "LP/DISIPLIN3",
                 "disiplin", personelTerLapor, personelPeLapor,
                 "Banjarmasin", "12-01-20", "Budi",
-                "IPDA", "87654321", "KOMBES",
+                "IPDA", "87654321", "KOMBES","POLDA kALSEL",
                 "macam_pelanggaran", "keterangan terlapor",
                 "kronologis", "rincian", listPasal, satKerResp, "", ""
             )
@@ -101,20 +102,20 @@ class ListLpDisiplinActivity : BaseActivity() {
                 itemView.txt_no_lp_kke.text = data.no_lp
                 itemView.txt_nama_lp_kke_pelapor.text = "Nama : ${data.personel_pelapor?.nama}"
                 itemView.txt_nrp_pangkat_lp_kke_pelapor.text =
-                    "Pangkat : ${data.personel_pelapor?.pangkat}, NRP : ${data.personel_pelapor?.nrp}"
-                itemView.txt_jabatan_lp_kke_terlapor.text =
+                    "Pangkat : ${data.personel_pelapor?.pangkat.toString().toUpperCase()}, NRP : ${data.personel_pelapor?.nrp}"
+                itemView.txt_jabatan_lp_kke_pelapor.text =
                     "Jabatan : ${data.personel_pelapor?.jabatan}"
-                itemView.txt_kesatuan_lp_kke_terlapor.text =
-                    "Kesatuan : ${data.personel_pelapor?.kesatuan}"
+                itemView.txt_kesatuan_lp_kke_pelapor.text =
+                    "Kesatuan : ${data.personel_pelapor?.kesatuan.toString().toUpperCase()}"
 
                 itemView.txt_nama_lp_kke_terlapor.text =
                     "Nama : ${data.personel_terlapor?.nama}"
                 itemView.txt_nrp_pangkat_lp_kke_terlapor.text =
-                    "Pangkat : ${data.personel_terlapor?.pangkat}, NRP : ${data.personel_terlapor?.nrp}"
+                    "Pangkat : ${data.personel_terlapor?.pangkat.toString().toUpperCase()}, NRP : ${data.personel_terlapor?.nrp}"
                 itemView.txt_jabatan_lp_kke_terlapor.text =
                     "Jabatan : ${data.personel_terlapor?.jabatan}"
                 itemView.txt_kesatuan_lp_kke_terlapor.text =
-                    "Kesatuan : ${data.personel_terlapor?.kesatuan}"
+                    "Kesatuan : ${data.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
                 itemView.rv_pasal_lp_kke.apply {
                     layoutManager = LinearLayoutManager(

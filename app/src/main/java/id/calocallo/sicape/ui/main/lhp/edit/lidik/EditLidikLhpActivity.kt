@@ -84,10 +84,10 @@ class EditLidikLhpActivity : BaseActivity() {
         }
 
         txt_nama_lidik_edit.text = lhp?.nama
-        txt_pangkat_lidik_edit.text = lhp?.pangkat
+        txt_pangkat_lidik_edit.text = lhp?.pangkat.toString().toUpperCase()
         txt_nrp_lidik_edit.text = lhp?.nrp
         txt_jabatan_lidik_edit.text = lhp?.jabatan
-        txt_kesatuan_lidik_edit.text = lhp?.kesatuan
+        txt_kesatuan_lidik_edit.text = lhp?.kesatuan.toString().toUpperCase()
 
 //        edt_nama_lidik_edit.setText(lhp?.nama)
 //        edt_pangkat_lidik_edit.setText(lhp?.pangkat)

@@ -9,7 +9,7 @@ data class RpphResp(
     var id: Int?,
     var putkke: PutKkeOnRpphModel?,
     var no_rpph: String?,
-    var dasar_pg: String?,
+    var dasar_ph: String?,
     var isi_rekomendasi: String?,
     var tanggal_penetapan: String?,
     var kota_penetapan: String?,

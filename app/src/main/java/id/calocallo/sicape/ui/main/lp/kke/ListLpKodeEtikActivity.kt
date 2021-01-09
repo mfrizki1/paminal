@@ -74,7 +74,7 @@ class ListLpKodeEtikActivity : BaseActivity() {
             LpKkeResp(
                 1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES",
+                "IPDA", "9090", "KOMBES","POLRES BANJAR",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
@@ -84,7 +84,7 @@ class ListLpKodeEtikActivity : BaseActivity() {
             LpKkeResp(
                 2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES",
+                "IPDA", "9090", "KOMBES","POLRES BANJAR",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
@@ -93,7 +93,7 @@ class ListLpKodeEtikActivity : BaseActivity() {
             LpKkeResp(
                 3, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES",
+                "IPDA", "9090", "KOMBES","POLRES BANJAR",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
@@ -106,21 +106,21 @@ class ListLpKodeEtikActivity : BaseActivity() {
                 itemView.txt_nama_lp_kke_pelapor.text =
                     "Nama : ${data.personel_pelapor?.nama}"
                 itemView.txt_nrp_pangkat_lp_kke_pelapor.text =
-                    "Pangkat : ${data.personel_pelapor?.pangkat}, NRP : ${data.personel_pelapor?.nrp}"
-                itemView.txt_jabatan_lp_kke_terlapor.text =
+                    "Pangkat : ${data.personel_pelapor?.pangkat.toString().toUpperCase()}, NRP : ${data.personel_pelapor?.nrp}"
+                itemView.txt_jabatan_lp_kke_pelapor.text =
                     "Jabatan : ${data.personel_pelapor?.jabatan}"
-                itemView.txt_kesatuan_lp_kke_terlapor.text =
-                    "Kesatuan : ${data.personel_pelapor?.kesatuan}"
+                itemView.txt_kesatuan_lp_kke_pelapor.text =
+                    "Kesatuan : ${data.personel_pelapor?.kesatuan.toString().toUpperCase()}"
 
                 //personel terlapor
                 itemView.txt_nama_lp_kke_terlapor.text =
                     "Nama : ${data.personel_terlapor?.nama}"
                 itemView.txt_nrp_pangkat_lp_kke_terlapor.text =
-                    "Pangkat : ${data.personel_terlapor?.pangkat}, NRP : ${data.personel_terlapor?.nrp}"
+                    "Pangkat : ${data.personel_terlapor?.pangkat.toString().toUpperCase()}, NRP : ${data.personel_terlapor?.nrp}"
                 itemView.txt_jabatan_lp_kke_terlapor.text =
                     "Jabatan : ${data.personel_terlapor?.jabatan}"
                 itemView.txt_kesatuan_lp_kke_terlapor.text =
-                    "Kesatuan : ${data.personel_terlapor?.kesatuan}"
+                    "Kesatuan : ${data.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
                 //set pasal layout and adapter
                 itemView.rv_pasal_lp_kke.apply {
@@ -151,7 +151,7 @@ class ListLpKodeEtikActivity : BaseActivity() {
         menuInflater.inflate(R.menu.search_bar, menu)
         val item = menu?.findItem(R.id.action_search)
         val searchView = item?.actionView as SearchView
-        searchView.queryHint = "Cari LP Disiplin"
+        searchView.queryHint = "Cari LP Kode Etik"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

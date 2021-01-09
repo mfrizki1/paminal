@@ -18,6 +18,7 @@ data class LpDisiplinResp(
     var pangkat_yang_mengetahui: String?,
     var nrp_yang_mengetahui: String?,
     var jabatan_yang_mengetahui: String?,
+    var kesatuan_yang_mengetahui: String?,
 //    var id_personel_operator: Int?,
 
     var macam_pelanggaran: String?,

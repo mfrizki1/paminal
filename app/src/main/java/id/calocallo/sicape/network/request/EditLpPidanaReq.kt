@@ -13,7 +13,7 @@ data class EditLpPidanaReq (
     var pangkat_yang_mengetahui: String?,
     var nrp_yang_mengetahui: String?,
     var jabatan_yang_mengetahui: String?,
-    var id_personel_operator: Int?,
+    var kesatuan_yang_mengetahui: String?,
 
     var status_pelapor: String?,
     var isi_laporan: String?,
@@ -32,7 +32,7 @@ data class EditLpPidanaReq (
     constructor() : this(
         "",  0,
         "", "", "", "",
-        "", "", 0, "", "",
+        "", "", "", "", "",
         "", 0, "",
         "","","","",
         "","",""

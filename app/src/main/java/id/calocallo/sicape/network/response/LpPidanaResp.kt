@@ -17,6 +17,7 @@ data class LpPidanaResp(
     var pangkat_yang_mengetahui: String?,
     var nrp_yang_mengetahui: String?,
     var jabatan_yang_mengetahui: String?,
+    var kesatuan_yang_mengetahui: String?,
 
     var status_pelapor: String?,
     var nama_pelapor: String?,
@@ -36,9 +37,9 @@ data class LpPidanaResp(
     var deleted_at: String?
 ) : Parcelable {
     constructor() : this(
-        0, "",SatKerResp(), PersonelLapor(), "", "", "",
+        0, "", SatKerResp(), PersonelLapor(), "", "", "",
         "", "", "",
-        "",  "", "", "",
+        "", "", "", "", "",
         "", "", "", "", "",
         PersonelLapor(), "", "", ArrayList(), "", "", ""
     )

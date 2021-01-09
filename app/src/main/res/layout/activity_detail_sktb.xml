@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.rehab.sktb.DetailSktbActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar_white" />
+
+        <include layout="@layout/view_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKTB" />
+
+        <TextView
+            android:id="@+id/txt_no_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKTB" />
+
+        <TextView
+            android:id="@+id/txt_title_skhd_putkke_sktb_detail"
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKHD / PUT KKE" />
+
+        <TextView
+            android:id="@+id/txt_no_skhd_putkke_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKHD / PUT KKE" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Menimbang" />
+
+        <TextView
+            android:id="@+id/txt_menimbang_p2_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="lorem\nipsum\ndolow" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mengingat" />
+
+        <TextView
+            android:id="@+id/txt_mengingat_p5_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="lorem\nipsum\ndolow" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Penetapan" />
+
+        <TextView
+            android:id="@+id/txt_kota_penetapan_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kota" />
+
+        <TextView
+            android:id="@+id/txt_tanggal_penetapan_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kota" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pimpinan" />
+
+        <TextView
+            android:id="@+id/txt_nama_pimpinan_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama " />
+
+        <TextView
+            android:id="@+id/txt_pangkat_nrp_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PAngkat: NRP" />
+
+        <TextView
+            android:id="@+id/txt_jabatan_pimpinan_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jabatan " />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tembusan" />
+
+        <TextView
+            android:id="@+id/txt_tembusan_sktb_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama " />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_sktb_detail"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="Edit Data" />
+
+    </LinearLayout>
+</ScrollView>

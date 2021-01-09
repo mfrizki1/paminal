@@ -62,7 +62,7 @@ class AddSkhdActivity : BaseActivity() {
         val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animated.setBounds(0, 0, size, size)
         skhdReq.no_skhd = edt_no_skhd_add.text.toString()
-        skhdReq.bidang = edt_satker_skhd_add.text.toString()
+        skhdReq.bidang = edt_satker_skhd_add.text.toString().toUpperCase()
         skhdReq.menimbang_p2 = edt_berkas_perkara_skhd_add.text.toString()
         skhdReq.memperlihatkan = edt_memperlihat_skhd_add.text.toString()
         skhdReq.hukuman = edt_hukuman_skhd_add.text.toString()
@@ -72,7 +72,7 @@ class AddSkhdActivity : BaseActivity() {
         skhdReq.tanggal_penetapan = edt_tgl_dibuat_skhd_add.text.toString()
         skhdReq.nama_yang_menetapkan = edt_nama_bidang_skhd_add.text.toString()
         skhdReq.jabatan_yang_menetapkan = edt_jabatan_kepala_bidang_skhd_add.text.toString()
-        skhdReq.pangkat_yang_menetapkan = edt_pangkat_bidang_skhd_add.text.toString()
+        skhdReq.pangkat_yang_menetapkan = edt_pangkat_bidang_skhd_add.text.toString().toUpperCase()
         skhdReq.nrp_yang_menetapkan = edt_nrp_bidang_skhd_add.text.toString()
         skhdReq.tembusan = edt_tembusan_skhd_add.text.toString()
         skhdReq.id_lp = idLp

@@ -75,7 +75,7 @@ class ListLpPidanaActivity : BaseActivity() {
                 1, "LP/PIDANA/2020/BIDPROPAM", satKerResp, personelTerLapor, "Uraian Pelanggaran",
                 "Banjarmasin", "12-12-2000",
                 "Rojak Ahmad", "Kombes", "12345678",
-                "Polair", "polisi",
+                "Polair","polda Kalsel", "polisi",
                 "", "", "", "",
                 "", "", "", personelPeLapor,
                 resources.getString(R.string.paragraf), resources.getString(R.string.paragraf),
@@ -87,7 +87,7 @@ class ListLpPidanaActivity : BaseActivity() {
             LpPidanaResp(
                 2, "LP/PIDANA2/2020/BIDPROPAM", satKerResp, personelTerLapor, "Uraian Pelanggaran",
                 "Banjarmasin", "12-12-2000",
-                "Rojak Ahmad", "Kombes", "12345678",
+                "Rojak Ahmad","polda Kalsel", "Kombes", "12345678",
                 "Polair", "sipil",
                 "sipil", "islam", "pekerjaan", "Indonesia",
                 "jl xxx", "081212", "123456", null,
@@ -101,7 +101,7 @@ class ListLpPidanaActivity : BaseActivity() {
                 3, "LP/PIDANA3/2020/BIDPROPAM", satKerResp, personelTerLapor, "Uraian Pelanggaran",
                 "Banjarmasin", "12-12-2000",
                 "Rojak Ahmad", "Kombes", "12345678",
-                "Polair", "polisi",
+                "Polair","polda Kalsel", "polisi",
                 "", "", "", "",
                 "", "", "", personelPeLapor,
                 resources.getString(R.string.paragraf), resources.getString(R.string.paragraf),
@@ -145,10 +145,10 @@ class ListLpPidanaActivity : BaseActivity() {
                     "Nama : ${data.personel_pelapor?.nama}"
                 itemView.txt_nrp_pangkat_lp_pidana_pelapor.text =
                     "Pangkat : ${data.personel_pelapor?.pangkat}, NRP : ${data.personel_pelapor?.nrp}"
-                itemView.txt_jabatan_lp_pidana_terlapor.text =
-                    "Jabatan : ${data.personel_pelapor?.jabatan}"
-                itemView.txt_kesatuan_lp_pidana_terlapor.text =
-                    "Kesatuan : ${data.personel_pelapor?.kesatuan}"
+                itemView.txt_jabatan_lp_pidana_pelapor.text =
+                    "Jabatan : ${data.personel_pelapor?.jabatan.toString().toUpperCase()}"
+                itemView.txt_kesatuan_lp_pidana_pelapor.text =
+                    "Kesatuan : ${data.personel_pelapor?.kesatuan.toString().toUpperCase()}"
 
                 //personel terlapor
                 itemView.txt_nama_lp_pidana_terlapor.text =
@@ -156,9 +156,9 @@ class ListLpPidanaActivity : BaseActivity() {
                 itemView.txt_nrp_pangkat_lp_pidana_terlapor.text =
                     "Pangkat : ${data.personel_terlapor?.pangkat}, NRP : ${data.personel_terlapor?.nrp}"
                 itemView.txt_jabatan_lp_pidana_terlapor.text =
-                    "Jabatan : ${data.personel_terlapor?.jabatan}"
+                    "Jabatan : ${data.personel_terlapor?.jabatan.toString().toUpperCase()}"
                 itemView.txt_kesatuan_lp_pidana_terlapor.text =
-                    "Kesatuan : ${data.personel_terlapor?.kesatuan}"
+                    "Kesatuan : ${data.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
                 //set pasal Layout and adapter
                 itemView.rv_pasal_lp_pidana.apply {
@@ -187,11 +187,12 @@ class ListLpPidanaActivity : BaseActivity() {
             .build(rv_list_pidana)
             .filterable()
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_bar, menu)
         val item = menu?.findItem(R.id.action_search)
         val searchView = item?.actionView as SearchView
-        searchView.queryHint = "Cari LP Disiplin"
+        searchView.queryHint = "Cari LP Pidana"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

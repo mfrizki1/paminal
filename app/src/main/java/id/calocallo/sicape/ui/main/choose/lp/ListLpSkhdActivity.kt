@@ -82,6 +82,7 @@ class ListLpSkhdActivity : BaseActivity() {
                 "Kombes",
                 "12345678",
                 "Polair",
+                "polda Kalsel",
                 "polisi",
                 "",
                 "",
@@ -113,6 +114,7 @@ class ListLpSkhdActivity : BaseActivity() {
                 "Kombes",
                 "12345678",
                 "Polair",
+                "polda Kalsel",
                 "sipil",
                 "sipil",
                 "islam",
@@ -154,7 +156,7 @@ class ListLpSkhdActivity : BaseActivity() {
                 1, "LP/DISIPLIN1",
                 "disiplin", personelTerLapor, personelPeLapor,
                 "Banjarmasin", "12-01-20", "Budi",
-                "IPDA", "87654321", "KOMBES",
+                "IPDA", "87654321", "KOMBES","polda kALSEEL",
                 "macam_pelanggaran", "keterangan terlapor",
                 "kronologis", "rincian", listPasal, satKerResp, "", ""
             )

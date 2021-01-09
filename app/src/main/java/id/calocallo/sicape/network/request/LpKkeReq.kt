@@ -13,6 +13,7 @@ data class LpKkeReq(
     var pangkat_yang_mengetahui: String?,
     var nrp_yang_mengetahui: String?,
     var jabatan_yang_mengetahui: String?,
+    var kesatuan_yang_mengetahui: String?,
 //    var id_personel_operator: Int?,
 
     var isi_laporan: String?,
@@ -22,8 +23,8 @@ data class LpKkeReq(
     var saksi_kode_etik: ArrayList<LpSaksiResp>?
 ) {
     constructor() : this(
-        "",  "", 0,
+        "", "", 0,
         "", "", "", "", "",
-        "", "", "", 0, ArrayList(), ArrayList()
+        "", "", "", "", 0, ArrayList(), ArrayList()
     )
 }

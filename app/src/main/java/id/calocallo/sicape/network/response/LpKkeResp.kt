@@ -17,6 +17,7 @@ data class LpKkeResp(
     var pangkat_yang_mengetahui: String?,
     var nrp_yang_mengetahui: String?,
     var jabatan_yang_mengetahui: String?,
+    var kesatuan_yang_mengetahui: String?,
     var id_personel_operator: Int?,
 
     val alat_bukti: String?,

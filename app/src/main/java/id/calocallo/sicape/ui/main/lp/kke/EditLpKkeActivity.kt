@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
@@ -24,6 +25,7 @@ class EditLpKkeActivity : BaseActivity() {
     private var editLpKkeReq = EditLpKkeReq()
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
+    private var namaSatker: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_lp_kke)
@@ -51,6 +53,17 @@ class EditLpKkeActivity : BaseActivity() {
             }, 3000)
         }
 
+        spinner_kesatuan_lp_kke_edit.setAdapter(
+            ArrayAdapter(
+                this,
+                R.layout.item_spinner,
+                resources.getStringArray(R.array.satker)
+            )
+        )
+        spinner_kesatuan_lp_kke_edit.setOnItemClickListener { parent, view, position, id ->
+            namaSatker = parent.getItemAtPosition(position) as String?
+        }
+
     }
 
     private fun updateKke(kke: LpKkeResp?, changedIdTerlapor: Int?, changedIdPelapor: Int?) {
@@ -63,22 +76,23 @@ class EditLpKkeActivity : BaseActivity() {
         editLpKkeReq.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
         editLpKkeReq.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
         editLpKkeReq.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
+        editLpKkeReq.kesatuan_yang_mengetahui = namaSatker
 //        lpKodeEtikReq.id_personel_operator = sessionManager.fetchUser()?.id
         editLpKkeReq.id_personel_terlapor = kke?.personel_terlapor?.id
         editLpKkeReq.id_personel_pelapor = kke?.personel_pelapor?.id
         editLpKkeReq.uraian_pelanggaran = sessionManager.getJenisLP()
 
-        if(changedIdTerlapor == null){
+        if (changedIdTerlapor == null) {
             editLpKkeReq.id_personel_terlapor = kke?.personel_terlapor?.id
-        }else{
+        } else {
             editLpKkeReq.id_personel_terlapor = changedIdTerlapor
         }
-        if(changedIdPelapor == null){
+        if (changedIdPelapor == null) {
             editLpKkeReq.id_personel_pelapor = kke?.personel_pelapor?.id
-        }else{
+        } else {
             editLpKkeReq.id_personel_pelapor = changedIdPelapor
         }
-        Log.e("edit_kke","$editLpKkeReq")
+        Log.e("edit_kke", "$editLpKkeReq")
     }
 
     private fun getViewKKeEdit(kke: LpKkeResp?) {
@@ -89,20 +103,21 @@ class EditLpKkeActivity : BaseActivity() {
         edt_kota_buat_edit_lp.setText(kke?.kota_buat_laporan)
         edt_tgl_buat_edit.setText(kke?.tanggal_buat_laporan)
         edt_nama_pimpinan_bidang_edit.setText(kke?.nama_yang_mengetahui)
-        edt_pangkat_pimpinan_bidang_edit.setText(kke?.pangkat_yang_mengetahui)
+        edt_pangkat_pimpinan_bidang_edit.setText(kke?.pangkat_yang_mengetahui.toString().toUpperCase())
         edt_nrp_pimpinan_bidang_edit.setText(kke?.nrp_yang_mengetahui)
         edt_jabatan_pimpinan_bidang_edit.setText(kke?.jabatan_yang_mengetahui)
-
+        spinner_kesatuan_lp_kke_edit.setText(kke?.kesatuan_yang_mengetahui.toString().toUpperCase())
+        namaSatker = kke?.kesatuan_yang_mengetahui
         //terlapor
         btn_choose_personel_terlapor_kke_edit.setOnClickListener {
             val intent = Intent(this, ChoosePersonelActivity::class.java)
             startActivityForResult(intent, REQ_TERLAPOR)
         }
         txt_nama_terlapor_lp_edit.text = "Nama : ${kke?.personel_terlapor?.nama}"
-        txt_pangkat_terlapor_lp_edit.text = "Pangkat : ${kke?.personel_terlapor?.pangkat}"
+        txt_pangkat_terlapor_lp_edit.text = "Pangkat : ${kke?.personel_terlapor?.pangkat.toString().toUpperCase()}"
         txt_nrp_terlapor_lp_edit.text = "NRP : ${kke?.personel_terlapor?.nrp}"
         txt_jabatan_terlapor_lp_edit.text = "Jabatan : ${kke?.personel_terlapor?.jabatan}"
-        txt_kesatuan_terlapor_lp_edit.text = "Kesatuan : ${kke?.personel_terlapor?.kesatuan}"
+        txt_kesatuan_terlapor_lp_edit.text = "Kesatuan : ${kke?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
         //pelapor
         btn_choose_personel_pelapor_kke_edit.setOnClickListener {
@@ -110,10 +125,10 @@ class EditLpKkeActivity : BaseActivity() {
             startActivityForResult(intent, REQ_PELAPOR)
         }
         txt_nama_pelapor_kke_lp_edit.text = "Nama : ${kke?.personel_pelapor?.nama}"
-        txt_pangkat_pelapor_kke_lp_edit.text = "Pangkat : ${kke?.personel_pelapor?.pangkat}"
+        txt_pangkat_pelapor_kke_lp_edit.text = "Pangkat : ${kke?.personel_pelapor?.pangkat.toString().toUpperCase()}"
         txt_nrp_pelapor_kke_lp_edit.text = "NRP : ${kke?.personel_pelapor?.nrp}"
         txt_jabatan_pelapor_kke_lp_edit.text = "Jabatan : ${kke?.personel_pelapor?.jabatan}"
-        txt_kesatuan_pelapor_kke_lp_edit.text = "Kesatuan : ${kke?.personel_pelapor?.kesatuan}"
+        txt_kesatuan_pelapor_kke_lp_edit.text = "Kesatuan : ${kke?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -127,22 +142,22 @@ class EditLpKkeActivity : BaseActivity() {
                         changedIdPelapor = personel?.id
 
                         txt_nama_pelapor_kke_lp_edit.text = "Nama : ${personel?.nama}"
-                        txt_pangkat_pelapor_kke_lp_edit.text = "Pangkat : ${personel?.pangkat}"
+                        txt_pangkat_pelapor_kke_lp_edit.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
                         txt_nrp_pelapor_kke_lp_edit.text = "NRP : ${personel?.nrp}"
                         txt_jabatan_pelapor_kke_lp_edit.text = "Jabatan : ${personel?.jabatan}"
                         txt_kesatuan_pelapor_kke_lp_edit.text =
-                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
                     }
                     REQ_TERLAPOR -> {
                         //req set id
                         changedIdTerlapor = personel?.id
 
                         txt_nama_terlapor_lp_edit.text = "Nama : ${personel?.nama}"
-                        txt_pangkat_terlapor_lp_edit.text = "Pangkat : ${personel?.pangkat}"
+                        txt_pangkat_terlapor_lp_edit.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
                         txt_nrp_terlapor_lp_edit.text = "NRP : ${personel?.nrp}"
                         txt_jabatan_terlapor_lp_edit.text = "Jabatan : ${personel?.jabatan}"
                         txt_kesatuan_terlapor_lp_edit.text =
-                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
 
                     }
                 }

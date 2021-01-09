@@ -66,23 +66,24 @@ class DetailLpDisiplinActivity : BaseActivity() {
         //pimpinan
         txt_detail_nama_pimpinan_disiplin.text = "Nama : ${disiplin?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_disiplin.text =
-            "Pangkat : ${disiplin?.pangkat_yang_mengetahui}, NRP : ${disiplin?.nrp_yang_mengetahui}"
+            "Pangkat : ${disiplin?.pangkat_yang_mengetahui.toString().toUpperCase()}, NRP : ${disiplin?.nrp_yang_mengetahui}"
         txt_detail_jabatan_pimpinan_disiplin.text = "Jabatan : ${disiplin?.jabatan_yang_mengetahui}"
+        txt_detail_kesatuan_pimpinan_disiplin.text = "Kesatuan : ${disiplin?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
         //terlapor
         txt_detail_nama_terlapor_disiplin.text = "Nama : ${disiplin?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_disiplin.text =
-            "Pangkat : ${disiplin?.personel_terlapor?.pangkat}, NRP : ${disiplin?.personel_terlapor?.nrp}"
+            "Pangkat : ${disiplin?.personel_terlapor?.pangkat.toString().toUpperCase()}, NRP : ${disiplin?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor_disiplin.text = "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
-        txt_detail_kesatuan_terlapor_disiplin.text = "Kesatuan : ${disiplin?.personel_terlapor?.kesatuan}"
+        txt_detail_kesatuan_terlapor_disiplin.text = "Kesatuan : ${disiplin?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
         //pelapor
         txt_detail_nama_pelapor_disiplin.text = "Nama : ${disiplin?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_disiplin.text =
-            "Pangkat : ${disiplin?.personel_pelapor?.pangkat}, NRP : ${disiplin?.personel_pelapor?.nrp}"
+            "Pangkat : ${disiplin?.personel_pelapor?.pangkat.toString().toUpperCase()}, NRP : ${disiplin?.personel_pelapor?.nrp}"
 
         txt_detail_jabatan_pelapor_disiplin.text = "Jabatan : ${disiplin?.personel_pelapor?.jabatan}"
-        txt_detail_kesatuan_pelapor_disiplin.text = "Kesatuan : ${disiplin?.personel_pelapor?.kesatuan}"
+        txt_detail_kesatuan_pelapor_disiplin.text = "Kesatuan : ${disiplin?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
         txt_detail_keterangan_pelapor_disiplin.text = disiplin?.keterangan_terlapor
         txt_detail_kronologis_pelapor_disiplin.text = disiplin?.kronologis_dari_pelapor
 

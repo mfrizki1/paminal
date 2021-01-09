@@ -273,6 +273,14 @@
             android:layout_marginTop="@dimen/space_half"
             android:text="Jabatan : "
             android:textSize="@dimen/text_16" />
+        <TextView
+            android:id="@+id/txt_detail_kesatuan_pimpinan_disiplin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:text="Kesatuan : "
+            android:textSize="@dimen/text_16" />
 
         <include layout="@layout/layout_separator" />
 

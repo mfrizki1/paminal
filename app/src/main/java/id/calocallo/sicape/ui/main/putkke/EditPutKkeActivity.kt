@@ -69,13 +69,13 @@ class EditPutKkeActivity : BaseActivity() {
         edt_sanksi_rekomendasi_put_kke_edit.setText(detailPutKke?.sanksi_rekomendasi)
         edt_sanksi_hasil_putusan_put_kke_edit.setText(detailPutKke?.sanksi_hasil_keputusan)
         edt_nama_ketua_komisi_put_kke_edit.setText(detailPutKke?.nama_ketua_komisi)
-        edt_pangkat_ketua_komisi_put_kke_edit.setText(detailPutKke?.pangkat_ketua_komisi)
+        edt_pangkat_ketua_komisi_put_kke_edit.setText(detailPutKke?.pangkat_ketua_komisi.toString().toUpperCase())
         edt_nrp_ketua_komisi_put_kke_edit.setText(detailPutKke?.nrp_ketua_komisi)
         edt_nama_wakil_ketua_komisi_put_kke_edit.setText(detailPutKke?.nama_wakil_ketua_komisi)
-        edt_pangkat_wakil_ketua_komisi_put_kke_edit.setText(detailPutKke?.pangkat_wakil_ketua_komisi)
+        edt_pangkat_wakil_ketua_komisi_put_kke_edit.setText(detailPutKke?.pangkat_wakil_ketua_komisi.toString().toUpperCase())
         edt_nrp_wakil_ketua_komisi_put_kke_edit.setText(detailPutKke?.nrp_wakil_ketua_komisi)
         edt_nama_anggota_komisi_put_kke_edit.setText(detailPutKke?.nama_anggota_komisi)
-        edt_pangkat_anggota_komisi_put_kke_edit.setText(detailPutKke?.pangkat_anggota_komisi)
+        edt_pangkat_anggota_komisi_put_kke_edit.setText(detailPutKke?.pangkat_anggota_komisi.toString().toUpperCase())
         edt_nrp_anggota_komisi_put_kke_edit.setText(detailPutKke?.nrp_anggota_komisi)
         txt_lhp_put_kke_edit.text = detailPutKke?.lhp?.no_lhp
         txt_lp_put_kke_edit.text = detailPutKke?.lp?.no_lp
@@ -95,14 +95,14 @@ class EditPutKkeActivity : BaseActivity() {
         putKkeReq.sanksi_rekomendasi = edt_sanksi_rekomendasi_put_kke_edit.text.toString()
         putKkeReq.sanksi_hasil_keputusan = edt_sanksi_hasil_putusan_put_kke_edit.text.toString()
         putKkeReq.nama_ketua_komisi = edt_nama_ketua_komisi_put_kke_edit.text.toString()
-        putKkeReq.pangkat_ketua_komisi = edt_pangkat_ketua_komisi_put_kke_edit.text.toString()
+        putKkeReq.pangkat_ketua_komisi = edt_pangkat_ketua_komisi_put_kke_edit.text.toString().toUpperCase()
         putKkeReq.nrp_ketua_komisi = edt_nrp_ketua_komisi_put_kke_edit.text.toString()
         putKkeReq.nama_wakil_ketua_komisi = edt_nama_wakil_ketua_komisi_put_kke_edit.text.toString()
         putKkeReq.pangkat_wakil_ketua_komisi =
-            edt_pangkat_wakil_ketua_komisi_put_kke_edit.text.toString()
+            edt_pangkat_wakil_ketua_komisi_put_kke_edit.text.toString().toUpperCase()
         putKkeReq.nrp_wakil_ketua_komisi = edt_nrp_wakil_ketua_komisi_put_kke_edit.text.toString()
         putKkeReq.nama_anggota_komisi = edt_nama_anggota_komisi_put_kke_edit.text.toString()
-        putKkeReq.pangkat_anggota_komisi = edt_pangkat_anggota_komisi_put_kke_edit.text.toString()
+        putKkeReq.pangkat_anggota_komisi = edt_pangkat_anggota_komisi_put_kke_edit.text.toString().toUpperCase()
         putKkeReq.nrp_anggota_komisi = edt_nrp_anggota_komisi_put_kke_edit.text.toString()
         putKkeReq.id_lhp = idLhp
         putKkeReq.id_lp = idLp

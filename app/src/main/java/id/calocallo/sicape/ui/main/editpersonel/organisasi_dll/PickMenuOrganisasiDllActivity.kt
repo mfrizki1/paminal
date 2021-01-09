@@ -61,6 +61,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
         btn_add_edit_organisasi_dll.setOnClickListener {
             val intent = Intent(this, AddSingleOrganisasiActivity::class.java)
             intent.putExtra("MISC", tempJenis)
+            intent.putExtra("PERSONEL_DETAIL", personel)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }

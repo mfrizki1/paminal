@@ -183,7 +183,8 @@ class PickPasalActivity : BaseActivity() {
                 lpPidanaReq.nik_ktp_pelapor = sipil?.nik_sipil
                 lpPidanaReq.no_telp_pelapor = sipil?.no_telp_sipil
                 lpPidanaReq.uraian_pelanggaran = sessionManager.getUraianPelanggaranLP()
-                Log.e("pidanaAll", "${lpPidanaReq}")
+                lpPidanaReq.kesatuan_yang_mengetahui = sessionManager.getKesatuanPimpBidLp()
+                Log.e("pidanaAll", "$lpPidanaReq")
             }
             "disiplin" -> {
                 lpDisiplinReq.no_lp = sessionManager.getNoLP()
@@ -202,7 +203,7 @@ class PickPasalActivity : BaseActivity() {
                 lpDisiplinReq.kronologis_dari_pelapor = sessionManager.getKronologisPelapor()
                 lpDisiplinReq.rincian_pelanggaran_disiplin = sessionManager.getRincianDisiplin()
                 lpDisiplinReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
-
+                lpDisiplinReq.kesatuan_yang_mengetahui = sessionManager.getKesatuanPimpBidLp()
                 Log.e("add_disiplin", "$lpDisiplinReq")
 
             }

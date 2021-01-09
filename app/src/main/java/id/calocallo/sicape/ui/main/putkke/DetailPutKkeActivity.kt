@@ -51,17 +51,20 @@ class DetailPutKkeActivity : BaseActivity() {
 
         txt_nama_ketua_komisi_put_kke_detail.text = "Nama : ${detailPutKke?.nama_ketua_komisi}"
         txt_pangkat_nrp_ketua_komisi_put_kke_detail.text =
-            "Pangkat : ${detailPutKke?.pangkat_ketua_komisi}, NRP : ${detailPutKke?.nrp_ketua_komisi}"
+            "Pangkat : ${detailPutKke?.pangkat_ketua_komisi.toString()
+                .toUpperCase()}, NRP : ${detailPutKke?.nrp_ketua_komisi}"
 
         txt_nama_wakil_ketua_komisi_put_kke_detail.text =
             "Nama : ${detailPutKke?.nama_wakil_ketua_komisi}"
         txt_pangkat_nrp_wakil_ketua_komisi_put_kke_detail.text =
-            "Pangkat : ${detailPutKke?.pangkat_wakil_ketua_komisi}, NRP : ${detailPutKke?.nrp_wakil_ketua_komisi}"
+            "Pangkat : ${detailPutKke?.pangkat_wakil_ketua_komisi.toString()
+                .toUpperCase()}, NRP : ${detailPutKke?.nrp_wakil_ketua_komisi}"
 
 
         txt_nama_anggota_komisi_put_kke_detail.text = "Nama : ${detailPutKke?.nama_anggota_komisi}"
         txt_pangkat_nrp_anggota_komisi_put_kke_detail.text =
-            "Pangkat : ${detailPutKke?.pangkat_anggota_komisi}, NRP : ${detailPutKke?.nrp_anggota_komisi}"
+            "Pangkat : ${detailPutKke?.pangkat_anggota_komisi.toString()
+                .toUpperCase()}, NRP : ${detailPutKke?.nrp_anggota_komisi}"
 
 
         txt_kota_putusan_put_kke_detail.text = "Kota : ${detailPutKke?.kota_putusan}"

@@ -78,21 +78,21 @@ class AddPersonelLidikActivity : BaseActivity() {
 //            lidikReq.id = personel?.id
             penyelidikResp.nrp = personel?.nrp
             penyelidikResp.id_satuan_kerja = personel?.id_satuan_kerja
-            penyelidikResp.pangkat = personel?.pangkat
+            penyelidikResp.pangkat = personel?.pangkat.toString().toUpperCase()
             penyelidikResp.id_personel = personel?.id
             penyelidikResp.nama = personel?.nama
             penyelidikResp.jabatan = personel?.jabatan
-            penyelidikResp.kesatuan = personel?.satuan_kerja?.kesatuan
+            penyelidikResp.kesatuan = personel?.satuan_kerja?.kesatuan.toString().toUpperCase()
             idPersonel = personel?.id
 
 //set lidik req
             lidikReq.id_personel = penyelidikResp.id_personel
 
             txt_nama_lidik_add.text = "Nama : ${personel?.nama}"
-            txt_pangkat_lidik_add.text = "Pangkat : ${personel?.pangkat}"
+            txt_pangkat_lidik_add.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
             txt_nrp_lidik_add.text = "NRP : ${personel?.nrp}"
             txt_jabatan_lidik_add.text = "Jabatan : ${personel?.jabatan}"
-            txt_kesatuan_lidik_add.text = "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+            txt_kesatuan_lidik_add.text = "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
         }
     }
 

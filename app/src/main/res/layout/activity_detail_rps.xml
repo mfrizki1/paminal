@@ -51,7 +51,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nota Dinas" />
+            android:text="Dasar RPS" />
 
         <TextView
             android:id="@+id/txt_dasar_pe_rps_detail"

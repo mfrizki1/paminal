@@ -41,6 +41,7 @@ class EditLpPidanaActivity : BaseActivity() {
 
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
+    private var namaSatker: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_lp_pidana)
@@ -89,11 +90,22 @@ class EditLpPidanaActivity : BaseActivity() {
             launchSipilView()
 //            }
         }
+        val adapterSatker =
+            ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))
+        spinner_kesatuan_pimpinan_bidang_edit.setAdapter(adapterSatker)
+        spinner_kesatuan_pimpinan_bidang_edit.setOnItemClickListener { parent, view, position, id ->
+            namaSatker = parent.getItemAtPosition(position) as String?
+
+        }
 
 
     }
 
-    private fun updateLpPidana(pidana: LpPidanaResp?, changedIdTerlapor: Int?, changedIdPelapor: Int?) {
+    private fun updateLpPidana(
+        pidana: LpPidanaResp?,
+        changedIdTerlapor: Int?,
+        changedIdPelapor: Int?
+    ) {
         editLpPidana.no_lp = edt_no_lp_pidana_edit.text.toString()
         editLpPidana.pembukaan_laporan = edt_pembukaan_laporan_pidana_edit.text.toString()
         editLpPidana.isi_laporan = edt_isi_laporan_pidana_edit.text.toString()
@@ -103,18 +115,19 @@ class EditLpPidanaActivity : BaseActivity() {
         editLpPidana.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
         editLpPidana.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
         editLpPidana.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
+        editLpPidana.kesatuan_yang_mengetahui = namaSatker
 //        lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
 //        lpPidanaReq.id_satuan_kerja = sessionManager.getJenisLP().toString().toLowerCase()
 
-        if(changedIdPelapor == null) {
+        if (changedIdPelapor == null) {
             editLpPidana.id_personel_pelapor = pidana?.personel_pelapor?.id
-        }else{
+        } else {
             editLpPidana.id_personel_pelapor = changedIdPelapor
         }
 
-        if(changedIdTerlapor == null) {
+        if (changedIdTerlapor == null) {
             editLpPidana.id_personel_terlapor = pidana?.personel_pelapor?.id
-        }else{
+        } else {
             editLpPidana.id_personel_terlapor = changedIdTerlapor
         }
 
@@ -144,8 +157,13 @@ class EditLpPidanaActivity : BaseActivity() {
         edt_nama_pimpinan_bidang_edit.setText(pidana?.nama_yang_mengetahui)
         edt_pangkat_pimpinan_bidang_edit.setText(pidana?.pangkat_yang_mengetahui)
         edt_nrp_pimpinan_bidang_edit.setText(pidana?.nrp_yang_mengetahui)
-        edt_jabatan_pimpinan_bidang_edit.setText(pidana?.jabatan_yang_mengetahui)
-
+        edt_jabatan_pimpinan_bidang_edit.setText(
+            pidana?.jabatan_yang_mengetahui.toString().toUpperCase()
+        )
+        spinner_kesatuan_pimpinan_bidang_edit.setText(
+            pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()
+        )
+        namaSatker = pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()
         //set radiobutton apakah dia pelapor sipil atau bukan
         if (pidana?.status_pelapor == "sipil") {
             ll_sipil_edit.visible()
@@ -169,12 +187,12 @@ class EditLpPidanaActivity : BaseActivity() {
             txt_nama_pelapor_pidana_lp_edit.text =
                 "Nama : ${pidana?.personel_pelapor?.nama}"
             txt_pangkat_pelapor_pidana_lp_edit.text =
-                "Pangkat : ${pidana?.personel_pelapor?.pangkat}"
+                "Pangkat : ${pidana?.personel_pelapor?.pangkat.toString().toUpperCase()}"
             txt_nrp_pelapor_pidana_lp_edit.text = "NRP :  ${pidana?.personel_pelapor?.nrp}"
             txt_jabatan_pelapor_pidana_lp_edit.text =
                 "Jabatan :  ${pidana?.personel_pelapor?.jabatan}"
             txt_kesatuan_pelapor_pidana_lp_edit.text =
-                "Kesatuan :  ${pidana?.personel_pelapor?.kesatuan}"
+                "Kesatuan :  ${pidana?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
         }
         rg_pelapor_edit.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
@@ -195,12 +213,12 @@ class EditLpPidanaActivity : BaseActivity() {
 //        lpPidanaReq.id_personel_terlapor = pidana?.personel_terlapor
         txt_nama_terlapor_lp_edit.text = "Nama : ${pidana?.personel_terlapor?.nama}"
         txt_pangkat_terlapor_lp_edit.text =
-            "Pangkat : ${pidana?.personel_terlapor?.pangkat}"
+            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}"
         txt_nrp_terlapor_lp_edit.text = "NRP : ${pidana?.personel_terlapor?.nrp}"
         txt_jabatan_terlapor_lp_edit.text =
             "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
         txt_kesatuan_terlapor_lp_edit.text =
-            "Kesatuan : ${pidana?.personel_terlapor?.kesatuan}"
+            "Kesatuan : ${pidana?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
         //uraiain
         edt_uraian_pelanggaran_pidana_edit.setText(pidana?.uraian_pelanggaran)
@@ -305,20 +323,25 @@ class EditLpPidanaActivity : BaseActivity() {
 //                            personel?.id?.let { sessionManager.setIDPersonelTerlapor(it) }
                         changedIdTerlapor = personel?.id
                         txt_nama_terlapor_lp_edit.text = "Nama : ${personel?.nama}"
-                        txt_pangkat_terlapor_lp_edit.text = "Pangkat : ${personel?.pangkat}"
+                        txt_pangkat_terlapor_lp_edit.text =
+                            "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
                         txt_nrp_terlapor_lp_edit.text = "NRP : ${personel?.nrp}"
                         txt_jabatan_terlapor_lp_edit.text = "Jabatan : ${personel?.jabatan}"
-                        txt_kesatuan_terlapor_lp_edit.text = "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+                        txt_kesatuan_terlapor_lp_edit.text =
+                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString()
+                                .toUpperCase()}"
                     }
                     REQ_PELAPOR -> {
 //                            personel?.id?.let { sessionManager.setIDPersonelPelapor(it) }
                         changedIdPelapor = personel?.id
                         txt_nama_pelapor_pidana_lp_edit.text = "Nama : ${personel?.nama}"
-                        txt_pangkat_pelapor_pidana_lp_edit.text = "Pangkat : ${personel?.pangkat}"
+                        txt_pangkat_pelapor_pidana_lp_edit.text =
+                            "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
                         txt_nrp_pelapor_pidana_lp_edit.text = "NRP : ${personel?.nrp}"
                         txt_jabatan_pelapor_pidana_lp_edit.text = "Jabatan : ${personel?.jabatan}"
                         txt_kesatuan_pelapor_pidana_lp_edit.text =
-                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString()
+                                .toUpperCase()}"
                     }
                 }
             }

@@ -95,10 +95,10 @@ class AddTerlaporLhpActivity : BaseActivity() {
             idTerlapor = personel?.id
             namaTerlapor = personel?.nama
             txt_nama_terlapor_add.text = "Nama : ${personel?.nama}"
-            txt_pangkat_terlapor_add.text = "Pangkat : ${personel?.pangkat}"
+            txt_pangkat_terlapor_add.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
             txt_nrp_terlapor_add.text = "NRP : ${personel?.nrp}"
             txt_jabatan_terlapor_add.text = "Jabatan : ${personel?.jabatan}"
-            txt_kesatuan_terlapor_add.text = "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+            txt_kesatuan_terlapor_add.text = "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
         }
     }
 

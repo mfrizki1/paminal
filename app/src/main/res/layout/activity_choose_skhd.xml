@@ -14,10 +14,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <include
+            layout="@layout/view_no_data"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/layout_progress_dialog"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_choose_skhd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/layout_edit_1_text"
-            android:id="@+id/rv_choose_skhd"/>
+            tools:listitem="@layout/layout_edit_1_text" />
     </RelativeLayout>
 </LinearLayout>

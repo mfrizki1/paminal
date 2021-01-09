@@ -58,7 +58,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
             LpKkeResp(
                 1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES",
+                "IPDA", "9090", "KOMBES","POLDA KALSEL",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
@@ -68,7 +68,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
             LpKkeResp(
                 2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES",
+                "IPDA", "9090", "KOMBES","POLDA KALSEL",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )

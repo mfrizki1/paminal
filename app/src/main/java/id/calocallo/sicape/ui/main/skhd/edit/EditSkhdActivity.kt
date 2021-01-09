@@ -80,7 +80,7 @@ class EditSkhdActivity : BaseActivity() {
         animated.setBounds(0, 0, size, size)
 
         skhdReq.no_skhd = edt_no_skhd_edit.text.toString()
-        skhdReq.bidang = edt_satker_skhd_edit.text.toString()
+        skhdReq.bidang = edt_satker_skhd_edit.text.toString().toUpperCase()
         skhdReq.menimbang_p2 = edt_berkas_perkara_skhd_edit.text.toString()
         skhdReq.memperlihatkan = edt_memperlihat_skhd_edit.text.toString()
         skhdReq.hukuman = edt_hukuman_skhd_edit.text.toString()
@@ -89,9 +89,9 @@ class EditSkhdActivity : BaseActivity() {
         skhdReq.kota_penetapan = edt_kota_dibuat_skhd_edit.text.toString()
         skhdReq.tanggal_penetapan = edt_tgl_dibuat_skhd_edit.text.toString()
         skhdReq.nama_yang_menetapkan = edt_nama_bidang_skhd_edit.text.toString()
-        skhdReq.jabatan_yang_menetapkan = edt_pangkat_bidang_skhd_edit.text.toString()
-        skhdReq.pangkat_yang_menetapkan = edt_nrp_bidang_skhd_edit.text.toString()
-        skhdReq.nrp_yang_menetapkan = edt_jabatan_kepala_bidang_skhd_edit.text.toString()
+        skhdReq.jabatan_yang_menetapkan = edt_jabatan_kepala_bidang_skhd_edit.text.toString().toUpperCase()
+        skhdReq.pangkat_yang_menetapkan = edt_pangkat_bidang_skhd_edit.text.toString()
+        skhdReq.nrp_yang_menetapkan = edt_nrp_bidang_skhd_edit.text.toString()
         skhdReq.tembusan = edt_tembusan_skhd_edit.text.toString()
         skhdReq.id_lhp = idLhp
         skhdReq.id_lp = idLp
@@ -119,7 +119,7 @@ class EditSkhdActivity : BaseActivity() {
         edt_kota_dibuat_skhd_edit.setText(detailSkhd?.kota_penetapan)
         edt_tgl_dibuat_skhd_edit.setText(detailSkhd?.tanggal_penetapan)
         edt_nama_bidang_skhd_edit.setText(detailSkhd?.nama_yang_menetapkan)
-        edt_pangkat_bidang_skhd_edit.setText(detailSkhd?.pangkat_yang_menetapkan)
+        edt_pangkat_bidang_skhd_edit.setText(detailSkhd?.pangkat_yang_menetapkan.toString().toUpperCase())
         edt_nrp_bidang_skhd_edit.setText(detailSkhd?.nrp_yang_menetapkan)
         edt_jabatan_kepala_bidang_skhd_edit.setText(detailSkhd?.jabatan_yang_menetapkan)
         edt_tembusan_skhd_edit.setText(detailSkhd?.tembusan)

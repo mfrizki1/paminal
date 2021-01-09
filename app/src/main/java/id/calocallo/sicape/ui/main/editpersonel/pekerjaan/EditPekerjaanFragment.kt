@@ -50,8 +50,8 @@ class EditPekerjaanFragment : Fragment() {
         val pekerjaan = arguments?.getParcelable<PekerjaanModel>("PEKERJAAN")
         edt_nama_pekerjaan_edit.setText(pekerjaan?.pekerjaan)
         edt_lama_thn_pekerjaan_edit.setText(pekerjaan?.berapa_tahun.toString())
-        edt_pangkat_pekerjaan_edit.setText(pekerjaan?.golongan)
-        edt_kesatuan_pekerjaan_edit.setText(pekerjaan?.instansi)
+        edt_pangkat_pekerjaan_edit.setText(pekerjaan?.golongan.toString().toUpperCase())
+        edt_kesatuan_pekerjaan_edit.setText(pekerjaan?.instansi.toString().toUpperCase())
         edt_ket_pekerjaan_edit.setText(pekerjaan?.keterangan)
 
         btn_save_edit_pekerjaan.attachTextChangeAnimator()

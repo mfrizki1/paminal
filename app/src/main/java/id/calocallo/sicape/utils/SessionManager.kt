@@ -753,6 +753,16 @@ class SessionManager(context: Context) {
         return prefsLP.getString("JABATANPIMP_LP", null)
     }
 
+    fun setKesatuanPimpBidLp(jabatanPimp: String) {
+        val editor = prefsLP.edit()
+        editor.putString("KESATUAN_PIM_LP", jabatanPimp)
+        editor.apply()
+    }
+
+    fun getKesatuanPimpBidLp(): String? {
+        return prefsLP.getString("KESATUAN_PIM_LP", null)
+    }
+
     fun setNrpPimpBidLp(nrpPimp: String) {
         val editor = prefsLP.edit()
         editor.putString("NRPPIMP_LP", nrpPimp)

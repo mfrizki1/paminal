@@ -53,21 +53,30 @@ class PickLidikLhpActivity : BaseActivity() {
     private fun getListLidik(detailLhp: LhpResp?) {
 
         callbackLidik = object : AdapterCallback<PersonelPenyelidikResp> {
-            override fun initComponent(itemView: View, data: PersonelPenyelidikResp, itemIndex: Int) {
+            override fun initComponent(
+                itemView: View,
+                data: PersonelPenyelidikResp,
+                itemIndex: Int
+            ) {
                 when (data.is_ketua) {
                     1 -> itemView.ttx_status_lidik.text = "Ketua Tim"
                     0 -> itemView.ttx_status_lidik.text = "Anggota"
                 }
                 itemView.txt_nama_lidik.text = data.nama
                 itemView.txt_pangkat_nrp_lidik.text =
-                    "Pangkat ${data.pangkat}, NRP: ${data.nrp}"
-
+                    "Pangkat ${data.pangkat.toString()
+                        .toUpperCase()}\nNRP: ${data.nrp}\nKesatuan : ${data.kesatuan.toString()
+                        .toUpperCase()}"
             }
 
-            override fun onItemClicked(itemView: View, data: PersonelPenyelidikResp, itemIndex: Int) {
-                    val intent = Intent(this@PickLidikLhpActivity, EditLidikLhpActivity::class.java)
-                    intent.putExtra(EDIT_LIDIK, data)
-                    startActivity(intent)
+            override fun onItemClicked(
+                itemView: View,
+                data: PersonelPenyelidikResp,
+                itemIndex: Int
+            ) {
+                val intent = Intent(this@PickLidikLhpActivity, EditLidikLhpActivity::class.java)
+                intent.putExtra(EDIT_LIDIK, data)
+                startActivity(intent)
             }
         }
         detailLhp?.personel_penyelidik?.let {

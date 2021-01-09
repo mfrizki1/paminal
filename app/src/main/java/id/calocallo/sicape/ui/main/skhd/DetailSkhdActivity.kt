@@ -57,7 +57,7 @@ class DetailSkhdActivity : BaseActivity() {
         txt_tanggal_penetapan_skhd_detail.text = "Tanggal : ${detailSKHD?.tanggal_penetapan}"
         txt_nama_pimpinan_skhd_detail.text = "Nama : ${detailSKHD?.nama_yang_menetapkan}"
         txt_pangkat_nrp_pimpinan_skhd_detail.text =
-            "Pangkat : ${detailSKHD?.pangkat_yang_menetapkan}, NRP : ${detailSKHD?.nrp_yang_menetapkan}"
+            "Pangkat : ${detailSKHD?.pangkat_yang_menetapkan.toString().toUpperCase()}, NRP : ${detailSKHD?.nrp_yang_menetapkan}"
         txt_jabatan_pimpinan_skhd_detail.text = "Jabatan : ${detailSKHD?.jabatan_yang_menetapkan}"
         txt_tembusan_skhd_detail.text = detailSKHD?.tembusan
     }

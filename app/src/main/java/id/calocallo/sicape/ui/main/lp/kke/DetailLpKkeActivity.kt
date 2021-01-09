@@ -83,25 +83,26 @@ class DetailLpKkeActivity : BaseActivity() {
         //terlapor
         txt_detail_nama_terlapor_kke.text = "Nama : ${detailKKe?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_kke.text =
-            "Pangkat : ${detailKKe?.personel_terlapor?.pangkat}, NRP : ${detailKKe?.personel_terlapor?.nrp}"
+            "Pangkat : ${detailKKe?.personel_terlapor?.pangkat.toString().toUpperCase()}, NRP : ${detailKKe?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor_kke.text = "Jabatan : ${detailKKe?.personel_terlapor?.jabatan}"
         txt_detail_kesatuan_terlapor_kke.text =
-            "Kesatuan : ${detailKKe?.personel_terlapor?.kesatuan}"
+            "Kesatuan : ${detailKKe?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
         //pelapor
         txt_detail_nama_pelapor_kke.text = "Nama : ${detailKKe?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_kke.text =
-            "Pangkat : ${detailKKe?.personel_pelapor?.pangkat}, NRP : ${detailKKe?.personel_pelapor?.nrp}"
+            "Pangkat : ${detailKKe?.personel_pelapor?.pangkat.toString().toUpperCase()}, NRP : ${detailKKe?.personel_pelapor?.nrp}"
         txt_detail_jabatan_pelapor_kke.text = "Jabatan : ${detailKKe?.personel_pelapor?.jabatan}"
-        txt_detail_kesatuan_pelapor_kke.text = "Kesatuan : ${detailKKe?.personel_pelapor?.kesatuan}"
+        txt_detail_kesatuan_pelapor_kke.text = "Kesatuan : ${detailKKe?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
 
         txt_detail_alat_bukti_kke.text = detailKKe?.alat_bukti
         txt_detail_kota_buat_kke.text = "Kota : ${detailKKe?.kota_buat_laporan}"
         txt_detail_tgl_buat_kke.text = "Tanggal : ${detailKKe?.tanggal_buat_laporan}"
         txt_detail_nama_pimpinan_kke.text = "Nama : ${detailKKe?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_kke.text =
-            "Pangkat : ${detailKKe?.pangkat_yang_mengetahui}, NRP : ${detailKKe?.nrp_yang_mengetahui}"
-        txt_detail_jabatan_pimpinan_kke.text = "Jabatan : ${detailKKe?.jabatan_yang_mengetahui}"
+            "Pangkat : ${detailKKe?.pangkat_yang_mengetahui.toString().toUpperCase()}, NRP : ${detailKKe?.nrp_yang_mengetahui}"
+        txt_detail_kesatuan_pimpinan_kke.text = "Kesatuan : ${detailKKe?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
+        txt_detail_jabatan_pimpinan_kke.text = "Jabatan : ${detailKKe?.jabatan_yang_mengetahui.toString().toUpperCase()}"
 
         //pasal
         callbackDetailPasalKke = object : AdapterCallback<LpPasalResp> {

@@ -5,7 +5,7 @@ import id.calocallo.sicape.model.PutKkeOnRpphModel
 data class RpphReq(
     var id_putkke: Int?,
     var no_rpph: String?,
-    var dasar_pg: String?,
+    var dasar_ph: String?,
     var isi_rekomendasi: String?,
     var tanggal_penetapan: String?,
     var kota_penetapan: String?,

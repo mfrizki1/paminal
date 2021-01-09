@@ -82,20 +82,21 @@ class DetailLpPidanaActivity : BaseActivity() {
         txt_detail_pangkat_nrp_pimpinan_pidana.text =
             "Pangkat : ${pidana?.pangkat_yang_mengetahui.toString().toUpperCase()}, NRP : ${pidana?.nrp_yang_mengetahui}"
         txt_detail_jabatan_pimpinan_pidana.text = "Jabatan : ${pidana?.jabatan_yang_mengetahui}"
+        txt_detail_kesatuan_pimpinan_pidana.text = "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
         //terlapor
         txt_detail_nama_terlapor.text = "Nama : ${pidana?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor.text =
             "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}, NRP : ${pidana?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
-        txt_detail_kesatuan_terlapor.text = "Kesatuan : ${pidana?.personel_terlapor?.kesatuan}"
+        txt_detail_kesatuan_terlapor.text = "Kesatuan : ${pidana?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
         //pelapor
         txt_detail_nama_pelapor.text = "Nama : ${pidana?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor.text =
             "Pangkat : ${pidana?.personel_pelapor?.pangkat.toString().toUpperCase()}, NRP : ${pidana?.personel_pelapor?.nrp}"
         txt_detail_jabatan_pelapor.text = "Jabatan : ${pidana?.personel_pelapor?.jabatan}"
-        txt_detail_kesatuan_pelapor.text = "Kesatuan : ${pidana?.personel_pelapor?.kesatuan}"
+        txt_detail_kesatuan_pelapor.text = "Kesatuan : ${pidana?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
 
         //sipil
         txt_detail_nama_sipil.text = "Nama :  ${pidana?.nama_pelapor}"

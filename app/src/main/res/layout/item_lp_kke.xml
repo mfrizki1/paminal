@@ -220,7 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_quarter"
-                    android:text="Polda BJM"
+                    android:text="Polda"
                     android:textSize="@dimen/text_14" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

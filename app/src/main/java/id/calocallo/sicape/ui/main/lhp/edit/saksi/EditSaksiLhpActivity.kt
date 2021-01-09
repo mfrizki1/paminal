@@ -134,10 +134,10 @@ class EditSaksiLhpActivity : BaseActivity() {
             ll_sipil_saksi_edit.gone()
             ll_personel_saksi_edit.visible()
             txt_nama_saksi_edit.text = saksi.nama
-            txt_pangkat_saksi_edit.text = saksi.pangkat
+            txt_pangkat_saksi_edit.text = saksi.pangkat.toString().toUpperCase()
             txt_nrp_saksi_edit.text = saksi.nrp
             txt_jabatan_saksi_edit.text = saksi.jabatan
-            txt_kesatuan_saksi_edit.text = saksi.kesatuan
+            txt_kesatuan_saksi_edit.text = saksi.kesatuan.toString().toUpperCase()
             tempStatusSaksi = "polisi"
 //            idPersonelSaksi = saksi.id_personel
 
@@ -220,10 +220,10 @@ class EditSaksiLhpActivity : BaseActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_SAKSI_LHP) {
             idPersonelSaksi = personelSaksi?.id
             txt_nama_saksi_edit.text = personelSaksi?.nama
-            txt_pangkat_saksi_edit.text = personelSaksi?.pangkat
+            txt_pangkat_saksi_edit.text = personelSaksi?.pangkat.toString().toUpperCase()
             txt_nrp_saksi_edit.text = personelSaksi?.nrp
             txt_jabatan_saksi_edit.text = personelSaksi?.jabatan
-            txt_kesatuan_saksi_edit.text = personelSaksi?.satuan_kerja?.kesatuan
+            txt_kesatuan_saksi_edit.text = personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()
         }
     }
 

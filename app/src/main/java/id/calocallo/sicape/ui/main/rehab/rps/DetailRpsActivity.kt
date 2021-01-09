@@ -2,8 +2,11 @@ package id.calocallo.sicape.ui.main.rehab.rps
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.RpsResp
+import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_rps.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -39,6 +42,32 @@ class DetailRpsActivity : BaseActivity() {
                 .toUpperCase()}, NRP : ${dataRPS?.nrp_yang_menetapkan}"
         txt_jabatan_pimpinan_rps_detail.text = "Jabatan : ${dataRPS?.jabatan_yang_menetapkan}"
         txt_tembusan_rps_detail.text = dataRPS?.tembusan
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.toolbar_delete, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.btn_delete_item -> {
+                alertDialogDelete()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun alertDialogDelete() {
+        this.alert("Yakin Hapus Data?") {
+            positiveButton("Iya") {
+//                ApiDelete()
+                finish()
+            }
+            negativeButton("Tidak") {
+            }
+        }.show()
     }
 
     companion object {

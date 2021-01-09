@@ -121,6 +121,7 @@ class LpChooseActivity : BaseActivity() {
                     "Kombes",
                     "12345678",
                     "Polair",
+                    "polda Kalsel",
                     "polisi",
                     "",
                     "",
@@ -152,6 +153,7 @@ class LpChooseActivity : BaseActivity() {
                     "Kombes",
                     "12345678",
                     "Polair",
+                    "polda Kalsel",
                     "sipil",
                     "sipil",
                     "islam",
@@ -175,7 +177,7 @@ class LpChooseActivity : BaseActivity() {
                     1, "LP/DISIPLIN1",
                     "disiplin", personelTerLapor, personelPeLapor,
                     "Banjarmasin", "12-01-20", "Budi",
-                    "IPDA", "87654321", "KOMBES",
+                    "IPDA", "87654321", "KOMBES","polda kALSEEL",
                     "macam_pelanggaran", "keterangan terlapor",
                     "kronologis", "rincian", listPasal, satKerResp, "", ""
                 )
@@ -186,7 +188,7 @@ class LpChooseActivity : BaseActivity() {
                     2, "LP/DISIPLIN2",
                     "disiplin", personelTerLapor, personelPeLapor,
                     "Banjarmasin", "12-01-20", "Budi",
-                    "IPDA", "87654321", "KOMBES",
+                    "IPDA", "87654321", "KOMBES","polda kALSEEL",
                     "macam_pelanggaran", "keterangan terlapor",
                     "kronologis", "rincian", listPasal, satKerResp, "", ""
                 )
@@ -196,7 +198,7 @@ class LpChooseActivity : BaseActivity() {
                 LpKkeResp(
                     1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                     personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                    "IPDA", "9090", "KOMBES",
+                    "IPDA", "9090", "KOMBES","POLDA KALSEL",
                     sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                     listPasal, listSaksi, "", "", ""
                 )
@@ -206,7 +208,7 @@ class LpChooseActivity : BaseActivity() {
                 LpKkeResp(
                     2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                     personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                    "IPDA", "9090", "KOMBES",
+                    "IPDA", "9090", "KOMBES","POLDA KALSEL",
                     sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                     listPasal, listSaksi, "", "", ""
                 )

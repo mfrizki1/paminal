@@ -57,4 +57,26 @@
     <string name="tanggal_dihukum">Tanggal Dihukum</string>
     <string name="tempat_dihukum">Tempat Dihukum</string>
     <string name="paragraf">lorem ipsum dolor lorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolor</string>
+
+
+    <string-array name="satker">
+        <item>"POLRESTA BANJARMASIN"</item>
+        <item>"POLRES BANJARBARU""</item>
+        <item>"POLRES BANJAR""</item>
+        <item>"POLRES TAPIN""</item>
+        <item>"POLRES HULU SUNGAI SELATAN""</item>
+        <item>"POLRES HULU SUNGAI TENGAH""</item>
+        <item>"POLRES HULU SUNGAI UTARA""</item>
+        <item>"POLRES BALANGAN""</item>
+        <item>"POLRES TABALONG""</item>
+        <item>"POLRES TANAH LAUT""</item>
+        <item>"POLRES TANAH BUMBU""</item>
+        <item>"POLRES KOTABARU""</item>
+        <item>"POLRES BATOLA""</item>
+        <item>"SAT BRIMOB""</item>
+        <item>"SAT POLAIR""</item>
+        <item>"SPN BANJARBARU""</item>
+        <item>"POLDA KALSEL""</item>
+        <item>"SARPRAS""</item>
+    </string-array>
 </resources>

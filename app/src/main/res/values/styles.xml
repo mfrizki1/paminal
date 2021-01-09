@@ -68,7 +68,7 @@
     </style>
 
     <style name="JustText" parent="TextAppearance.App.TextView">
-        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:textSize">@dimen/text_16</item>
         <item name="android:layout_marginTop">@dimen/space_8dp</item>
         <item name="android:layout_marginLeft">@dimen/space_12dp</item>
         <item name="android:layout_marginRight">@dimen/space_12dp</item>

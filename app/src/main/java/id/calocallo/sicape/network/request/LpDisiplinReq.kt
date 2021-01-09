@@ -13,6 +13,7 @@ data class LpDisiplinReq(
     var pangkat_yang_mengetahui: String?,
     var nrp_yang_mengetahui: String?,
     var jabatan_yang_mengetahui: String?,
+    var kesatuan_yang_mengetahui: String?,
     var id_personel_operator: Int?,
 
     var macam_pelanggaran: String?,
@@ -22,8 +23,8 @@ data class LpDisiplinReq(
     var pasal_dilanggar: ArrayList<LpPasalResp>?
 ) {
     constructor() : this(
-        "", "",  0,0, "", "",
-        "", "", "", "", 0, "",
+        "", "", 0, 0, "", "",
+        "", "", "", "", "", 0, "",
         "", "", "", ArrayList()
     )
 }
