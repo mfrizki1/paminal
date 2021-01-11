@@ -3,7 +3,9 @@ package id.calocallo.sicape.ui.main.rehab.sktb
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.SktbResp
@@ -79,5 +81,25 @@ class ListSktbActivity : BaseActivity() {
         })
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_bar, menu)
+        val item = menu?.findItem(R.id.action_search)
+        val searchView = item?.actionView as SearchView
+        searchView.queryHint = "Cari SKTB"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterSktb.filter.filter(newText)
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 }

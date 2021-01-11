@@ -1,9 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.rehab.sp3.DetailSp3Activity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar_white" />
+
+        <include layout="@layout/view_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SP3" />
+
+        <TextView
+            android:id="@+id/txt_no_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SP3" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            android:id="@+id/txt_title_sktb_sktt__sp3_detail"
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKTB/SKTT" />
+
+        <TextView
+            android:id="@+id/txt_no_sktb_sktt_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKTB/SKTT" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mengingat Point 4" />
+
+        <TextView
+            android:id="@+id/txt_mengingat_p4_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mengingat Point 4" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mengingat Point 5" />
+
+        <TextView
+            android:id="@+id/txt_mengingat_p5_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mengingat Point 5" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Menetapkan Point 1" />
+
+        <TextView
+            android:id="@+id/txt_menetapkan_p1_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Menetapkan Point 1" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dikeluarkan Surat" />
+
+        <TextView
+            android:id="@+id/txt_kota_keluar_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kota" />
+
+        <TextView
+            android:id="@+id/txt_tanggal_keluar_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Akreditor" />
+
+        <TextView
+            android:id="@+id/txt_nama_akreditor_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama" />
+
+        <TextView
+            android:id="@+id/txt_pangkat_nrp_akreditor_sp3_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal" />
+
+        <include layout="@layout/line_separator" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_sp3_detail"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="Edit Data" />
+    </LinearLayout>
+</ScrollView>

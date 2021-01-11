@@ -42,12 +42,14 @@ class ChooseSkhdActivity : BaseActivity() {
     private lateinit var callbackPutKkeOnRpph: AdapterCallback<PutKkeOnRpphModel>
 
     private var putkke: String? = null
+    private var isSp3: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_skhd)
         setupActionBarWithBackButton(toolbar)
 
         sessionManager = SessionManager(this)
+        /*set for put kke*/
         putkke = intent.extras?.getString(PUT_KKE)
         if (putkke == null) {
             getListChooseSkhd()

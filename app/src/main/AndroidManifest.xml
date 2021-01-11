@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.rehab.sp3.DetailSp3Activity"></activity>
+        <activity android:name=".ui.main.choose.ChooseSktbSkttActivity"></activity>
+        <activity android:name=".ui.main.rehab.sp3.DetailSp3Activity" />
         <activity android:name=".ui.main.rehab.sp3.EditSp3Activity" />
         <activity android:name=".ui.main.rehab.sp3.AddSp3Activity" />
         <activity android:name=".ui.main.rehab.sktt.DetailSkttActivity" />

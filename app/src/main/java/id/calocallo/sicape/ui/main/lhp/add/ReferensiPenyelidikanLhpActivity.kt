@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
+import id.calocallo.sicape.network.response.LpCustomResp
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.utils.LhpDataManager
@@ -87,16 +88,25 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
 
      */
     private fun addLpOnLhp(currRefLp: ArrayList<RefPenyelidikanReq>) {
-        if(currRefLp.isNullOrEmpty()){
+        if (currRefLp.isNullOrEmpty()) {
             rl_no_data.visible()
             rv_list_add_lp.gone()
-        }else{
+        } else {
             callbackRefLpReq = object : AdapterCallback<RefPenyelidikanReq> {
-                override fun initComponent(itemView: View, data: RefPenyelidikanReq, itemIndex: Int) {
+                override fun initComponent(
+                    itemView: View,
+                    data: RefPenyelidikanReq,
+                    itemIndex: Int
+                ) {
                     itemView.txt_edit_pendidikan.text = data.no_lp
                 }
 
-                override fun onItemClicked(itemView: View, data: RefPenyelidikanReq, itemIndex: Int) {}
+                override fun onItemClicked(
+                    itemView: View,
+                    data: RefPenyelidikanReq,
+                    itemIndex: Int
+                ) {
+                }
 
             }
             adapteRefLpReq.adapterCallback(callbackRefLpReq)
@@ -104,7 +114,7 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
                 .addData(currRefLp)
                 .setLayout(R.layout.layout_edit_1_text)
                 .build(rv_list_add_lp)
-            }
+        }
     }
 
 
@@ -115,11 +125,16 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
             Activity.RESULT_OK -> {
                 when (requestCode) {
                     REQ_LP -> {
-                        idLP?.let { refLp.add(it) }
+//                        idLP?.let { refLp.add(it) }
                         //add dinamic to
+//                        currRefLp = refLp
+//                        addLpOnLhp(currRefLp)
+                        val getLp = data?.getParcelableExtra<RefPenyelidikanReq>(GET_LP_FROM_CHOOSE_LP)
+                        getLp?.let { refLp.add(it) }
                         currRefLp = refLp
                         addLpOnLhp(currRefLp)
                     }
+
                 }
             }
         }
@@ -129,5 +144,6 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
     companion object {
         const val LHP_ADD = "LHP_ADD"
         const val REQ_LP = 200
+        const val GET_LP_FROM_CHOOSE_LP = "GET_LP_FROM_CHOOSE_LP"
     }
 }

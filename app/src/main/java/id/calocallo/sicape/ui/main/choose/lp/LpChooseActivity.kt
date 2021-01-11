@@ -8,17 +8,25 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
+import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
-import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity.Companion.LIST_KET_TERLAPOR
+import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lp_choose.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
+import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LpChooseActivity : BaseActivity() {
     companion object {
@@ -45,6 +53,8 @@ class LpChooseActivity : BaseActivity() {
 
     private lateinit var adapterLpDisiplinChoose: ReusableAdapter<LpDisiplinResp>
     private lateinit var callbackLpDisiplinChoose: AdapterCallback<LpDisiplinResp>
+    private var adapterLpAll = ReusableAdapter<LpCustomResp>(this)
+    private lateinit var callbackLpAll: AdapterCallback<LpCustomResp>
     private var tempJenis: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,14 +79,132 @@ class LpChooseActivity : BaseActivity() {
             }
         }
         /*set jika ada ket_terlapor*/
-        getListLpChoose(tempJenis)
+
+
+        /*sktt*/
+        val sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)
+        if (sktt == null) {
+            getListLpChoose(tempJenis)
+        } else {
+            getListLpWithoutSktbPutkkeSktt(tempJenis)
+        }
+        Log.e("sktt", "$sktt")
+    }
+
+    private fun getListLpWithoutSktbPutkkeSktt(tempJenis: String?) {
+        rl_pb.visible()
+        NetworkDummy().getService().getLpNotHaveSktbPutkkeSktt()
+            .enqueue(object : Callback<ArrayList<LpCustomResp>> {
+                override fun onFailure(call: Call<ArrayList<LpCustomResp>>, t: Throwable) {
+                    rl_pb.gone()
+                    rl_no_data.visible()
+                    rv_list_lp_choose.gone()
+                }
+
+                override fun onResponse(
+                    call: Call<ArrayList<LpCustomResp>>,
+                    response: Response<ArrayList<LpCustomResp>>
+                ) {
+                    if (response.isSuccessful) {
+                        rl_pb.gone()
+                        val listLpWithoutSktbDll =
+                            response.body()?.filter { it.jenis_pelanggaran == tempJenis }
+                        callbackLpAll = object : AdapterCallback<LpCustomResp> {
+                            override fun initComponent(
+                                itemView: View,
+                                data: LpCustomResp,
+                                itemIndex: Int
+                            ) {
+                                itemView.txt_1_clickable.text = data.no_lp
+                            }
+
+                            override fun onItemClicked(
+                                itemView: View,
+                                data: LpCustomResp,
+                                itemIndex: Int
+                            ) {
+                                itemView.img_clickable.toggleVisibility()
+                                val intent = Intent()
+                                intent.putExtra(ChooseLpActivity.GET_LP_WITHOUT_SKTBB_DLL, data)
+                                setResult(ChooseLpActivity.RES_LP_CHOOSE, intent)
+                                finish()
+                            }
+                        }
+                        listLpWithoutSktbDll?.let {
+                            adapterLpAll.adapterCallback(callbackLpAll)
+                                .isVerticalView().filterable()
+                                .addData(it)
+                                .setLayout(R.layout.layout_1_text_clickable)
+                                .build(rv_list_lp_choose)
+                        }
+                    } else {
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                        rv_list_lp_choose.gone()
+                    }
+                }
+            })
+    }
+
+    private fun getListLpChoose(jenis: String?) {
+        rl_pb.visible()
+        NetworkDummy().getService().getLpNotHaveLhp().enqueue(object :
+            Callback<ArrayList<LpCustomResp>> {
+            override fun onFailure(call: Call<ArrayList<LpCustomResp>>, t: Throwable) {
+                rl_no_data.visible()
+                rv_list_lp_choose.gone()
+                rl_pb.gone()
+            }
+
+            override fun onResponse(
+                call: Call<ArrayList<LpCustomResp>>,
+                response: Response<ArrayList<LpCustomResp>>
+            ) {
+                rl_pb.gone()
+                if (response.isSuccessful) {
+                    val listLpWithoutLhp = response.body()?.filter { it.jenis_pelanggaran == jenis }
+                    callbackLpAll = object : AdapterCallback<LpCustomResp> {
+                        override fun initComponent(
+                            itemView: View,
+                            data: LpCustomResp,
+                            itemIndex: Int
+                        ) {
+                            itemView.txt_1_clickable.text = data.no_lp
+                        }
+
+                        override fun onItemClicked(
+                            itemView: View,
+                            data: LpCustomResp,
+                            itemIndex: Int
+                        ) {
+                            itemView.img_clickable.toggleVisibility()
+                            val intent = Intent()
+                            intent.putExtra(DATA_LP, data)
+                            setResult(ChooseLpActivity.RES_LP_CHOOSE, intent)
+                            finish()
+                        }
+                    }
+                    listLpWithoutLhp?.let {
+                        adapterLpAll.adapterCallback(callbackLpAll)
+                            .isVerticalView().filterable()
+                            .setLayout(R.layout.layout_1_text_clickable)
+                            .build(rv_list_lp_choose)
+                            .addData(it)
+                    }
+                } else {
+                    rl_no_data.visible()
+                    rv_list_lp_choose.gone()
+                }
+
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_bar, menu)
         val item = menu?.findItem(R.id.action_search)
         val searchView = item?.actionView as SearchView
-        searchView.queryHint = "Cari LP Disiplin"
+        searchView.queryHint = "Cari LP"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -84,235 +212,16 @@ class LpChooseActivity : BaseActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                adapterLpDisiplinChoose.filter.filter(newText)
-                adapterLpKkeChoose.filter.filter(newText)
-                adapterLpPidanaChoose.filter.filter(newText)
+                adapterLpAll.filter.filter(newText)
+//                adapterLpKkeChoose.filter.filter(newText)
+//                adapterLpPidanaChoose.filter.filter(newText)
                 return true
             }
 
         })
         return super.onCreateOptionsMenu(menu)
     }
-    private fun getListLpChoose(jenis: String?) {
-        Log.e("jenisLPCHOOSE", jenis.toString())
-            satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
-            personelTerLapor =
-                PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", "polda kalsel")
-            personelPeLapor =
-                PersonelLapor(2, "utuh", "ipda", "jabatan", "0987", "polresta banjarmasin")
 
-
-            listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
-            listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
-            listPasal.add(LpPasalResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
-            listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))
-            listSaksi.add(LpSaksiResp(2, "Akbar", "saksi", "", "", "", 0, "", "", ""))
-            listSaksi.add(LpSaksiResp(3, "Wahyu", "saksi", "", "", "", 0, "", "", ""))
-            listPidanaLP.add(
-                LpPidanaResp(
-                    1,
-                    "LP/PIDANA/2020/BIDPROPAM",
-                    satKerResp,
-                    personelTerLapor,
-                    "Uraian Pelanggaran",
-                    "Banjarmasin",
-                    "12-12-2000",
-                    "Rojak Ahmad",
-                    "Kombes",
-                    "12345678",
-                    "Polair",
-                    "polda Kalsel",
-                    "polisi",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    personelPeLapor,
-                    resources.getString(R.string.paragraf),
-                    resources.getString(R.string.paragraf),
-                    listPasal,
-                    "",
-                    "",
-                    ""
-                )
-            )
-
-            listPidanaLP.add(
-                LpPidanaResp(
-                    2,
-                    "LP/PIDANA2/2020/BIDPROPAM",
-                    satKerResp,
-                    personelTerLapor,
-                    "Uraian Pelanggaran",
-                    "Banjarmasin",
-                    "12-12-2000",
-                    "Rojak Ahmad",
-                    "Kombes",
-                    "12345678",
-                    "Polair",
-                    "polda Kalsel",
-                    "sipil",
-                    "sipil",
-                    "islam",
-                    "pekerjaan",
-                    "Indonesia",
-                    "jl xxx",
-                    "081212",
-                    "123456",
-                    null,
-                    resources.getString(R.string.paragraf),
-                    resources.getString(R.string.paragraf),
-                    listPasal,
-                    "",
-                    "",
-                    ""
-                )
-            )
-
-            listDisiplinLP.add(
-                LpDisiplinResp(
-                    1, "LP/DISIPLIN1",
-                    "disiplin", personelTerLapor, personelPeLapor,
-                    "Banjarmasin", "12-01-20", "Budi",
-                    "IPDA", "87654321", "KOMBES","polda kALSEEL",
-                    "macam_pelanggaran", "keterangan terlapor",
-                    "kronologis", "rincian", listPasal, satKerResp, "", ""
-                )
-            )
-
-            listDisiplinLP.add(
-                LpDisiplinResp(
-                    2, "LP/DISIPLIN2",
-                    "disiplin", personelTerLapor, personelPeLapor,
-                    "Banjarmasin", "12-01-20", "Budi",
-                    "IPDA", "87654321", "KOMBES","polda kALSEEL",
-                    "macam_pelanggaran", "keterangan terlapor",
-                    "kronologis", "rincian", listPasal, satKerResp, "", ""
-                )
-            )
-
-            listkkeLP.add(
-                LpKkeResp(
-                    1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
-                    personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                    "IPDA", "9090", "KOMBES","POLDA KALSEL",
-                    sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
-                    listPasal, listSaksi, "", "", ""
-                )
-            )
-
-            listkkeLP.add(
-                LpKkeResp(
-                    2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
-                    personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                    "IPDA", "9090", "KOMBES","POLDA KALSEL",
-                    sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
-                    listPasal, listSaksi, "", "", ""
-                )
-            )
-
-        //jika jenis = pidana
-        when (jenis) {
-            "pidana" -> {
-
-
-                callbackLpPidanaChoose = object : AdapterCallback<LpPidanaResp> {
-                    override fun initComponent(
-                        itemView: View,
-                        data: LpPidanaResp,
-                        itemIndex: Int
-                    ) {
-                        itemView.txt_1_clickable.text = data.no_lp
-                        itemView.setOnClickListener {
-                        }
-                    }
-
-                    override fun onItemClicked(
-                        itemView: View,
-                        data: LpPidanaResp,
-                        itemIndex: Int
-                    ) {
-                        itemView.img_clickable.visible()
-                        val intent = Intent()
-                        intent.putExtra(DATA_LP, data)
-                        setResult(999, intent)
-                        finish()
-
-                    }
-                }
-                adapterLpPidanaChoose.adapterCallback(callbackLpPidanaChoose)
-                    .isVerticalView()
-                    .addData(listPidanaLP)
-                    .setLayout(R.layout.layout_1_text_clickable)
-                    .build(rv_list_lp_choose)
-            }
-            "kode_etik" -> {
-                callbackLpKkeChoose = object : AdapterCallback<LpKkeResp> {
-                    override fun initComponent(
-                        itemView: View,
-                        data: LpKkeResp,
-                        itemIndex: Int
-                    ) {
-                        itemView.txt_1_clickable.text = data.no_lp
-                        itemView.setOnClickListener {
-                        }
-                    }
-
-                    override fun onItemClicked(
-                        itemView: View,
-                        data: LpKkeResp,
-                        itemIndex: Int
-                    ) {
-                        itemView.img_clickable.visible()
-                        val intent = Intent()
-                        intent.putExtra(DATA_LP, data)
-                        setResult(888, intent)
-                        finish()
-
-                    }
-                }
-                adapterLpKkeChoose.adapterCallback(callbackLpKkeChoose)
-                    .isVerticalView()
-                    .addData(listkkeLP)
-                    .setLayout(R.layout.layout_1_text_clickable)
-                    .build(rv_list_lp_choose)
-
-            }
-            else -> {
-                callbackLpDisiplinChoose = object : AdapterCallback<LpDisiplinResp> {
-                    override fun initComponent(
-                        itemView: View,
-                        data: LpDisiplinResp,
-                        itemIndex: Int
-                    ) {
-                        itemView.txt_1_clickable.text = data.no_lp
-                        itemView.setOnClickListener {
-                        }
-                    }
-
-                    override fun onItemClicked(
-                        itemView: View, data: LpDisiplinResp, itemIndex: Int
-                    ) {
-                        itemView.img_clickable.visible()
-                        val intent = Intent()
-                        intent.putExtra(DATA_LP, data)
-                        setResult(777, intent)
-                        finish()
-
-                    }
-                }
-                adapterLpDisiplinChoose.adapterCallback(callbackLpDisiplinChoose)
-                    .isVerticalView()
-                    .addData(listDisiplinLP)
-                    .setLayout(R.layout.layout_1_text_clickable)
-                    .build(rv_list_lp_choose)
-
-            }
-        }
-    }
 
 }
 
