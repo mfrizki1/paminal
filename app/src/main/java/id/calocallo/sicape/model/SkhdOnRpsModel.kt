@@ -7,7 +7,8 @@ import kotlinx.android.parcel.Parcelize
 data class SkhdOnRpsModel(
     var id: Int?,
     var no_skhd: String?,
-    var jenis_skhd : String?
-) : Parcelable{
-    constructor():this(null,null, null)
+    var jenis_skhd: String?,
+    var hukuman: String?
+) : Parcelable {
+    constructor() : this(null, null, null, null)
 }

@@ -55,9 +55,9 @@ class ListLpDisiplinActivity : BaseActivity() {
 
     private fun getListDisiplin() {
         satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
-        personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", "polda kalsel")
+        personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234",1, "polda kalsel")
         personelPeLapor =
-            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987", "polresta banjarmasin")
+            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987",1, "polresta banjarmasin")
 
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))

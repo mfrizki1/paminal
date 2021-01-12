@@ -10,19 +10,19 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.CatpersModel
 import kotlinx.android.synthetic.main.activity_add_catpers.view.*
 import kotlinx.android.synthetic.main.item_catpers.view.*
-import kotlinx.android.synthetic.main.item_catpers.view.txt_pasal
 
-class CatpersAdapter(val context:Context, val listCatpers: ArrayList<CatpersModel>, val listener: CatpersListener): RecyclerView.Adapter<CatpersAdapter.CatpersHolder>() {
+
+class CatpersAdapter(val context:Context, val listener: CatpersListener): RecyclerView.Adapter<CatpersAdapter.CatpersHolder>() {
     inner class CatpersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(catpersModel: CatpersModel) {
             with(itemView){
-                txt_no_catpers.text = catpersModel.no_lp
-                txt_name.text = catpersModel.name
-                txt_nrp.text = catpersModel.pangkat_nrp
-                txt_jns_pelanggaran.text = catpersModel.jenis_pelanggaran
-                txt_pasal.text = catpersModel.pasal
-                txt_putusan.text = catpersModel.putusan
-                txt_keterangan.text = catpersModel.ket
+//                txt_no_catpers.text = catpersModel.no_lp
+//                txt_name.text = catpersModel.name
+//                txt_nrp.text = catpersModel.pangkat_nrp
+//                txt_jns_pelanggaran.text = catpersModel.jenis_pelanggaran
+//                txt_pasal.text = catpersModel.pasal
+//                txt_putusan.text = catpersModel.putusan
+//                txt_keterangan.text = catpersModel.ket
 
                 itemView.setOnClickListener {
                     listener.onClick(adapterPosition)
@@ -39,12 +39,12 @@ class CatpersAdapter(val context:Context, val listCatpers: ArrayList<CatpersMode
     }
 
     override fun getItemCount(): Int {
-        Log.e("size", listCatpers.size.toString())
-        return listCatpers.size
+//        Log.e("size", listCatpers.size.toString())
+        return 5
     }
 
     override fun onBindViewHolder(holder: CatpersHolder, position: Int) {
-        holder.bind(listCatpers[position])
+//        holder.bind(listCatpers[position])
     }
     interface CatpersListener{
         fun onClick(position: Int)

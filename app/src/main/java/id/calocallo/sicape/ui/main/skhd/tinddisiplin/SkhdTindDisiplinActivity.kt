@@ -40,7 +40,7 @@ class SkhdTindDisiplinActivity : BaseActivity() {
 
     private fun getListTindDisiplin() {
         personelTerlapor =
-            PersonelLapor(1, "Gusti", "bripda", "jabtan 1", "123456", "Polda Kalimantasn Selatan")
+            PersonelLapor(1, "Gusti", "bripda", "jabtan 1", "123456",1, "Polda Kalimantasn Selatan")
 
         listTindDisiplin.add(
             TindDisiplinResp(1, personelTerlapor, "Lari", null, null)
@@ -54,6 +54,7 @@ class SkhdTindDisiplinActivity : BaseActivity() {
                     "bripda",
                     "jabtan 1",
                     "123456",
+                    2,
                     "Polda Kalimantasn Selatan"
                 ),
                 "Lari",

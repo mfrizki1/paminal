@@ -75,7 +75,7 @@
                     tools:listitem="@layout/item_pasal_lp" />
 
                 <include
-                    android:id="@+id/rl_no_data_lidik"
+                    android:id="@+id/rl_no_data_ref_lp"
                     layout="@layout/view_no_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

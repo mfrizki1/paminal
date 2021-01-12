@@ -48,9 +48,9 @@ class ListLpKkePutKkeActivity : BaseActivity() {
     private fun getListKke() {
         satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
         personelTerLapor =
-            PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", "polda kalsel")
+            PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", 1,"polda kalsel")
         personelPeLapor =
-            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987", "polresta banjarmasin")
+            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987",2, "polresta banjarmasin")
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))
 

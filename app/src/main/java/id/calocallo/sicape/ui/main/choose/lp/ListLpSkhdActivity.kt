@@ -41,7 +41,7 @@ class ListLpSkhdActivity : BaseActivity() {
 
         /*set idLHP for getlist lp*/
         val idLhp = intent.extras?.getInt(ChooseLpSkhdActivity.ID_LHP_FOR_LP)
-        Log.e("ListLpSkhd","$idLhp")
+        Log.e("ListLpSkhd", "$idLhp")
         when (jenisLPFromSkhd) {
             "pidana" -> {
                 supportActionBar?.title = "Data Laporan Polisi Pidana"
@@ -55,9 +55,9 @@ class ListLpSkhdActivity : BaseActivity() {
 
         satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
         personelTerLapor =
-            PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", "polda kalsel")
+            PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", 1, "polda kalsel")
         personelPeLapor =
-            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987", "polresta banjarmasin")
+            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987", 2, "polresta banjarmasin")
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
@@ -141,7 +141,7 @@ class ListLpSkhdActivity : BaseActivity() {
                 itemView.img_clickable.toggleVisibility()
                 val intent = Intent()
                 intent.putExtra(PIDANA, data)
-                setResult(999,intent)
+                setResult(999, intent)
                 finish()
             }
         }
@@ -156,12 +156,12 @@ class ListLpSkhdActivity : BaseActivity() {
                 1, "LP/DISIPLIN1",
                 "disiplin", personelTerLapor, personelPeLapor,
                 "Banjarmasin", "12-01-20", "Budi",
-                "IPDA", "87654321", "KOMBES","polda kALSEEL",
+                "IPDA", "87654321", "KOMBES", "polda kALSEEL",
                 "macam_pelanggaran", "keterangan terlapor",
                 "kronologis", "rincian", listPasal, satKerResp, "", ""
             )
         )
-        callbackLpDisiplinChoose = object :AdapterCallback<LpDisiplinResp>{
+        callbackLpDisiplinChoose = object : AdapterCallback<LpDisiplinResp> {
             override fun initComponent(itemView: View, data: LpDisiplinResp, itemIndex: Int) {
                 itemView.txt_1_clickable.text = data.no_lp
 
@@ -171,7 +171,7 @@ class ListLpSkhdActivity : BaseActivity() {
                 itemView.img_clickable.toggleVisibility()
                 val intent = Intent()
                 intent.putExtra(DISIPLIN, data)
-                setResult(888,intent)
+                setResult(888, intent)
                 finish()
             }
         }

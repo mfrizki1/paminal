@@ -10,7 +10,8 @@ data class PersonelLapor(
     var pangkat: String?,
     var jabatan: String?,
     var nrp: String?,
+    var id_satuan_kerja: Int?,
     var kesatuan: String?
 ):Parcelable{
-    constructor(): this(0,"","","","","")
+    constructor(): this(0,"","","","",null,"")
 }

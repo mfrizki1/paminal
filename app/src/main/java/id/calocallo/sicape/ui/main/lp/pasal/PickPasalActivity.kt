@@ -56,6 +56,7 @@ class PickPasalActivity : BaseActivity() {
         listPasal.add(
             PasalResp(
                 1,
+                5,
                 "Pasal 1",
                 "xxxx"
             )
@@ -63,6 +64,7 @@ class PickPasalActivity : BaseActivity() {
         listPasal.add(
             PasalResp(
                 2,
+                4,
                 "Pasal 2",
                 "xxxx"
             )
@@ -70,6 +72,7 @@ class PickPasalActivity : BaseActivity() {
         listPasal.add(
             PasalResp(
                 3,
+                17,
                 "Pasal 3",
                 "xxxx"
             )
@@ -77,6 +80,7 @@ class PickPasalActivity : BaseActivity() {
         listPasal.add(
             PasalResp(
                 4,
+                12,
                 "Pasal 4",
                 "xxxx"
             )

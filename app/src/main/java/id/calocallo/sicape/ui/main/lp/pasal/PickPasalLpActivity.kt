@@ -128,13 +128,13 @@ class PickPasalLpActivity : BaseActivity() {
     private fun getPasal() {
         //        NetworkConfig().getService()
         listPasal.add(
-            PasalResp(1, "Pasal 1", "")
+            PasalResp(1, 1, "Pasal 1", "")
         )
         listPasal.add(
-            PasalResp(2, "Pasal 2", "")
+            PasalResp(2, 2, "Pasal 2", "")
         )
         listPasal.add(
-            PasalResp(3, "Pasal 3", "")
+            PasalResp(3, 3, "Pasal 3", "")
         )
         rv_list_pasal.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
