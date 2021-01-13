@@ -128,12 +128,6 @@
             android:textSize="@dimen/text_14" />
 
         <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tanggal Disampaikan Ke Terlapor" />
-
-        <TextView
             android:id="@+id/txt_tanggal_disampaikan_skhd_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -249,7 +243,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="Edit Data"
+            android:text="@string/edit_data"
+            android:textStyle="bold" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_generate_skhd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="@string/generate_dokumen"
             android:textStyle="bold" />
 
     </LinearLayout>

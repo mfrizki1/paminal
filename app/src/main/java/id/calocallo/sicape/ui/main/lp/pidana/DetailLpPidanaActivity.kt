@@ -1,10 +1,17 @@
 package id.calocallo.sicape.ui.main.lp.pidana
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.network.response.LpPidanaResp
@@ -13,6 +20,7 @@ import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpEditActivity.Companion.ED
 import id.calocallo.sicape.ui.main.lp.pidana.EditLpPidanaActivity.Companion.EDIT_PIDANA
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
+import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -60,6 +68,25 @@ class DetailLpPidanaActivity : BaseActivity() {
             startActivity(intent)
 
         }
+        btn_generate_pidana.attachTextChangeAnimator()
+        bindProgressButton(btn_generate_pidana)
+        btn_generate_pidana.setOnClickListener {
+            btn_generate_pidana.showProgress {
+                progressColor = Color.WHITE
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                btn_generate_pidana.hideProgress(R.string.success_generate_doc)
+                alert(R.string.download) {
+                    positiveButton(R.string.iya) {
+                        btn_generate_pidana.hideProgress(R.string.generate_dokumen)
+
+                    }
+                    negativeButton(R.string.tidak) {
+                        btn_generate_pidana.hideProgress(R.string.generate_dokumen)
+                    }
+                }.show()
+            }, 2000)
+        }
     }
 
     private fun getDetailPidana(pidana: LpPidanaResp?) {
@@ -75,28 +102,35 @@ class DetailLpPidanaActivity : BaseActivity() {
         txt_detail_pembukaan_laporan_pidana.text = pidana?.pembukaan_laporan
         txt_detail_isi_laporan_pidana.text = pidana?.isi_laporan
         txt_detail_kota_buat_pidana.text = "Kota : ${pidana?.kota_buat_laporan}"
-        txt_detail_tgl_buat_pidana.text = "Tanggal : ${pidana?.tanggal_buat_laporan}"
+        txt_detail_tgl_buat_pidana.text =
+            "Tanggal : ${formatterTanggal(pidana?.tanggal_buat_laporan)}"
 
         //pimpinan
         txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_pidana.text =
-            "Pangkat : ${pidana?.pangkat_yang_mengetahui.toString().toUpperCase()}, NRP : ${pidana?.nrp_yang_mengetahui}"
+            "Pangkat : ${pidana?.pangkat_yang_mengetahui.toString()
+                .toUpperCase()}, NRP : ${pidana?.nrp_yang_mengetahui}"
         txt_detail_jabatan_pimpinan_pidana.text = "Jabatan : ${pidana?.jabatan_yang_mengetahui}"
-        txt_detail_kesatuan_pimpinan_pidana.text = "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
+        txt_detail_kesatuan_pimpinan_pidana.text =
+            "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
         //terlapor
         txt_detail_nama_terlapor.text = "Nama : ${pidana?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor.text =
-            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}, NRP : ${pidana?.personel_terlapor?.nrp}"
+            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString()
+                .toUpperCase()}, NRP : ${pidana?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
-        txt_detail_kesatuan_terlapor.text = "Kesatuan : ${pidana?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
+        txt_detail_kesatuan_terlapor.text =
+            "Kesatuan : ${pidana?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
         //pelapor
         txt_detail_nama_pelapor.text = "Nama : ${pidana?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor.text =
-            "Pangkat : ${pidana?.personel_pelapor?.pangkat.toString().toUpperCase()}, NRP : ${pidana?.personel_pelapor?.nrp}"
+            "Pangkat : ${pidana?.personel_pelapor?.pangkat.toString()
+                .toUpperCase()}, NRP : ${pidana?.personel_pelapor?.nrp}"
         txt_detail_jabatan_pelapor.text = "Jabatan : ${pidana?.personel_pelapor?.jabatan}"
-        txt_detail_kesatuan_pelapor.text = "Kesatuan : ${pidana?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
+        txt_detail_kesatuan_pelapor.text =
+            "Kesatuan : ${pidana?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
 
         //sipil
         txt_detail_nama_sipil.text = "Nama :  ${pidana?.nama_pelapor}"

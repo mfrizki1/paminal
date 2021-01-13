@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.rehab.sktt.DetailSkttActivity">
+    android:orientation="vertical"
+    tools:context=".ui.main.skhp.DetailSkhpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,14 +20,14 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No SKTT" />
+            android:text="No SKHP" />
 
         <TextView
-            android:id="@+id/txt_no_sktt_detail"
+            android:id="@+id/txt_no_skhp_detail"
             style="@style/JustText"
-            android:text="No SKTT"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="No SKHP" />
 
         <include layout="@layout/line_separator" />
 
@@ -34,14 +35,63 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No LHP" />
+            android:text="Personel" />
 
         <TextView
-            android:id="@+id/txt_no_lhp_sktt_detail"
+            android:id="@+id/txt_nama_personel_skhp_detail"
             style="@style/JustText"
-            android:text="No LHP"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Nama Personel" />
+
+        <TextView
+            android:id="@+id/txt_ttl_personel_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TTL" />
+
+        <TextView
+            android:id="@+id/txt_jk_personel_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jenis Kelamin" />
+
+        <TextView
+            android:id="@+id/txt_agama_personel_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agama" />
+
+        <TextView
+            android:id="@+id/txt_pangkat_nrp_personel_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pangkat / NRP Personel" />
+
+        <TextView
+            android:id="@+id/txt_jabatan_personel_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jabatan Personel" />
+
+        <TextView
+            android:id="@+id/txt_kesatuan_personel_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kesatuan Personel" />
+
+        <TextView
+            android:id="@+id/txt_alamat_kantor_personel_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alamat Kantor" />
 
         <include layout="@layout/line_separator" />
 
@@ -49,14 +99,33 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No LHP" />
+            android:text="Memiliki Catatan Pelanggaran" />
 
         <TextView
-            android:id="@+id/txt_no_lp_sktt_detail"
+            android:id="@+id/txt_memiliki_pidana_skhp_detail"
             style="@style/JustText"
-            android:text="No LP"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Pidana : Memiliki / Tidak" /> <TextView
+            android:id="@+id/txt_memiliki_kke_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kode Etik : Memiliki / Tidak" />
+
+        <TextView
+            android:id="@+id/txt_memiliki_disiplin_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Disiplin : Memiliki / Tidak" />
+
+        <TextView
+            android:id="@+id/txt_status_cat_pelangg_skhp_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Selesai / Tidak" />
 
         <include layout="@layout/line_separator" />
 
@@ -64,14 +133,14 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Menimbang" />
+            android:text="Isi" />
 
         <TextView
-            android:id="@+id/txt_menimbang_sktt_detail"
+            android:id="@+id/txt_isi_skhp_detail"
             style="@style/JustText"
-            android:text="Menimbang\nmnimbang"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Memenuhi Syarat / Tidak" />
 
         <include layout="@layout/line_separator" />
 
@@ -79,32 +148,17 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mengingat" />
+            android:text="Dikeluarkan Surat" />
 
         <TextView
-            android:id="@+id/txt_mengingat_p5_sktt_detail"
-            style="@style/JustText"
-            android:text="Mengingat\Mengingat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <include layout="@layout/line_separator" />
-
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Penetapan" />
-
-        <TextView
-            android:id="@+id/txt_kota_penetapan_sktt_detail"
+            android:id="@+id/txt_kota_keluar_skhp_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Kota" />
 
         <TextView
-            android:id="@+id/txt_tanggal_penetapan_sktt_detail"
+            android:id="@+id/txt_tanggal_keluar_skhp_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,25 +173,25 @@
             android:text="Pimpinan" />
 
         <TextView
-            android:id="@+id/txt_nama_pimpinan_sktt_detail"
+            android:id="@+id/txt_nama_pimpinan_skhp_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nama Pimpinan" />
 
         <TextView
-            android:id="@+id/txt_pangkat_nrp_pimpinan_sktt_detail"
+            android:id="@+id/txt_pangkat_nrp_pimpinan_skhp_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pangkat : NRP :  " />
+            android:text="Pangkat / NRP Pimpinan " />
 
         <TextView
-            android:id="@+id/txt_jabatan_pimpinan_sktt_detail"
+            android:id="@+id/txt_jabatan_pimpinan_skhp_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jabatan  " />
+            android:text="Jabatan Pimpinan " />
 
         <include layout="@layout/line_separator" />
 
@@ -145,30 +199,31 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tembusan" />
+            android:text="Kepada" />
 
         <TextView
-            android:id="@+id/txt_tembusan_sktt_detail"
+            android:id="@+id/txt_kepada_skhp_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tmbusan\ntembunasan" />
-
-        <include layout="@layout/line_separator" />
+            android:text="KARO SDM POLDA KALSEL" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_edit_sktt"
+            android:id="@+id/btn_edit_skhp_detail"
             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="@string/edit_data" />
+            android:text="Edit Data" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_generate_sktt"
+            android:id="@+id/btn_generate_skhp_detail"
             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/generate_dokumen" />
+            android:text="Generate Dokumen" />
+
+
     </LinearLayout>
+
 </ScrollView>

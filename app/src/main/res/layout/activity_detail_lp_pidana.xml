@@ -343,6 +343,13 @@
             style="@style/Widget.Button"
             android:text="Edit Data Pasal"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_generate_pidana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Button"
+            android:text="@string/generate_dokumen"/>
+
 
     </LinearLayout>
 

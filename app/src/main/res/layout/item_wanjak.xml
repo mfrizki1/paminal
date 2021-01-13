@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/space_8dp"
+    android:layout_marginTop="@dimen/space_8dp"
+    android:paddingTop="@dimen/space_8dp"
+    app:strokeColor="@color/colorPrimary"
+    app:strokeWidth="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_8dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personel" />
+
+        <TextView
+            android:id="@+id/txt_nama_personel_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Personel" />
+
+        <TextView
+            android:id="@+id/txt_pangkat_nrp_personel_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pangkat / NRP Personel" />
+
+        <TextView
+            android:id="@+id/txt_jabatan_personel_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jabatan Personel" />
+
+        <TextView
+            android:id="@+id/txt_kesatuan_personel_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kesatuan Personel" />
+
+        <include layout="@layout/layout_separator" />
+
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kasus" />
+
+        <TextView
+            android:id="@+id/txt_no_lp_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No LP" />
+
+        <TextView
+            android:id="@+id/txt_no_skhd_putkke_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKHD/PUTKKE" />
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rehab" />
+        <TextView
+            android:id="@+id/txt_no_rps_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No RPS" />
+        <TextView
+            android:id="@+id/txt_no_rpph_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No RPPH" />
+        <TextView
+            android:id="@+id/txt_no_sktb_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKTB" />
+        <TextView
+            android:id="@+id/txt_no_sktt_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKTT" />
+        <TextView
+            android:id="@+id/txt_no_s4_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SP4" />
+
+        <TextView
+            android:id="@+id/txt_stts_terlapor_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Terlapor : diduga, bersalah, tidak_bersalah, tidak_terbukti" />
+
+        <TextView
+            android:id="@+id/txt_stts_kasus_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Kasus: proses/dalam_masa_hukuman/selesai" />
+
+        <include layout="@layout/layout_separator" />
+
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pernah Tersangkut Kasus" />
+
+        <TextView
+            android:id="@+id/txt_pernah_tersangkut_kasus_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ya / TIdak" />
+
+        <include layout="@layout/layout_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Kasus" />
+
+        <TextView
+            android:id="@+id/txt_total_kasus_bersalah_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kasus Bersalah : xxx" />
+
+        <TextView
+            android:id="@+id/txt_total_kasus_tidak_bersalah_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kasus Tidak Bersalah : xxx" />
+
+        <TextView
+            android:id="@+id/txt_total_kasus_tidak_terbukti_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kasus Tidak Terbukti : xxx" />
+
+        <TextView
+            android:id="@+id/txt_total_kasus_berjalan_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kasus Sedang Berjalan : xxx" />
+
+        <TextView
+            android:id="@+id/txt_total_kasus_selesai_wanjak"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kasus Selesai : xxx" />
+
+        <include layout="@layout/layout_separator" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

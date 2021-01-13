@@ -24,6 +24,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
     companion object {
         const val DATA_KKE = "DATA_KKE"
     }
+
     private lateinit var sessionManager: SessionManager
     private var listLpKke = arrayListOf<LpKkeResp>()
     private var adapterKke = ReusableAdapter<LpKkeResp>(this)
@@ -48,9 +49,24 @@ class ListLpKkePutKkeActivity : BaseActivity() {
     private fun getListKke() {
         satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
         personelTerLapor =
-            PersonelLapor(1, "faisal", "bripda", "jabatan", "1234", 1,"polda kalsel")
+            PersonelLapor(
+                1,
+                "faisal",
+                "bripda",
+                "jabatan",
+                "1234",
+                1,
+                "polda kalsel",
+                "Jl Banjarmasin",
+                "islam",
+                "laki_laki",
+                "Batola", "12-01-2000"
+            )
         personelPeLapor =
-            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987",2, "polresta banjarmasin")
+            PersonelLapor(
+                2, "utuh", "ipda", "jabatan", "0987", 2, "polresta banjarmasin",
+                "Jl Banjarmasin", "islam", "laki_laki", "Batola", "12-01-2000"
+            )
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))
 
@@ -58,7 +74,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
             LpKkeResp(
                 1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES","POLDA KALSEL",
+                "IPDA", "9090", "KOMBES", "POLDA KALSEL",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
@@ -68,7 +84,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
             LpKkeResp(
                 2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES","POLDA KALSEL",
+                "IPDA", "9090", "KOMBES", "POLDA KALSEL",
                 sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
@@ -92,7 +108,6 @@ class ListLpKkePutKkeActivity : BaseActivity() {
             .setLayout(R.layout.layout_1_text_clickable)
             .build(rv_lp_kke_put_kke)
     }
-
 
 
 }

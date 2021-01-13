@@ -1,16 +1,24 @@
 package id.calocallo.sicape.ui.main.lp.disiplin
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpEditActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
+import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
@@ -53,6 +61,25 @@ class DetailLpDisiplinActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
+        btn_generate_disiplin.attachTextChangeAnimator()
+        bindProgressButton(btn_generate_disiplin)
+        btn_generate_disiplin.setOnClickListener {
+            btn_generate_disiplin.showProgress {
+                progressColor = Color.WHITE
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                btn_generate_disiplin.hideProgress(R.string.success_generate_doc)
+                alert(R.string.download) {
+                    positiveButton(R.string.iya) {
+                        btn_generate_disiplin.hideProgress(R.string.generate_dokumen)
+
+                    }
+                    negativeButton(R.string.tidak) {
+                        btn_generate_disiplin.hideProgress(R.string.generate_dokumen)
+                    }
+                }.show()
+            }, 2000)
+        }
     }
 
 
@@ -61,29 +88,38 @@ class DetailLpDisiplinActivity : BaseActivity() {
         txt_detail_no_lp_disiplin.text = disiplin?.no_lp
         txt_detail_macam_pelanggaran_disiplin.text = disiplin?.macam_pelanggaran
         txt_detail_kota_buat_disiplin.text = "Kota : ${disiplin?.kota_buat_laporan}"
-        txt_detail_tgl_buat_disiplin.text = "Tanggal : ${disiplin?.tanggal_buat_laporan}"
+        txt_detail_tgl_buat_disiplin.text =
+            "Tanggal : ${formatterTanggal(disiplin?.tanggal_buat_laporan)}"
         txt_detail_rincian_pelanggaran_disiplin.text = disiplin?.rincian_pelanggaran_disiplin
         //pimpinan
         txt_detail_nama_pimpinan_disiplin.text = "Nama : ${disiplin?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_disiplin.text =
-            "Pangkat : ${disiplin?.pangkat_yang_mengetahui.toString().toUpperCase()}, NRP : ${disiplin?.nrp_yang_mengetahui}"
+            "Pangkat : ${disiplin?.pangkat_yang_mengetahui.toString()
+                .toUpperCase()}, NRP : ${disiplin?.nrp_yang_mengetahui}"
         txt_detail_jabatan_pimpinan_disiplin.text = "Jabatan : ${disiplin?.jabatan_yang_mengetahui}"
-        txt_detail_kesatuan_pimpinan_disiplin.text = "Kesatuan : ${disiplin?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
+        txt_detail_kesatuan_pimpinan_disiplin.text =
+            "Kesatuan : ${disiplin?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
         //terlapor
         txt_detail_nama_terlapor_disiplin.text = "Nama : ${disiplin?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_disiplin.text =
-            "Pangkat : ${disiplin?.personel_terlapor?.pangkat.toString().toUpperCase()}, NRP : ${disiplin?.personel_terlapor?.nrp}"
-        txt_detail_jabatan_terlapor_disiplin.text = "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
-        txt_detail_kesatuan_terlapor_disiplin.text = "Kesatuan : ${disiplin?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
+            "Pangkat : ${disiplin?.personel_terlapor?.pangkat.toString()
+                .toUpperCase()}, NRP : ${disiplin?.personel_terlapor?.nrp}"
+        txt_detail_jabatan_terlapor_disiplin.text =
+            "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
+        txt_detail_kesatuan_terlapor_disiplin.text =
+            "Kesatuan : ${disiplin?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
         //pelapor
         txt_detail_nama_pelapor_disiplin.text = "Nama : ${disiplin?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_disiplin.text =
-            "Pangkat : ${disiplin?.personel_pelapor?.pangkat.toString().toUpperCase()}, NRP : ${disiplin?.personel_pelapor?.nrp}"
+            "Pangkat : ${disiplin?.personel_pelapor?.pangkat.toString()
+                .toUpperCase()}, NRP : ${disiplin?.personel_pelapor?.nrp}"
 
-        txt_detail_jabatan_pelapor_disiplin.text = "Jabatan : ${disiplin?.personel_pelapor?.jabatan}"
-        txt_detail_kesatuan_pelapor_disiplin.text = "Kesatuan : ${disiplin?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
+        txt_detail_jabatan_pelapor_disiplin.text =
+            "Jabatan : ${disiplin?.personel_pelapor?.jabatan}"
+        txt_detail_kesatuan_pelapor_disiplin.text =
+            "Kesatuan : ${disiplin?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
         txt_detail_keterangan_pelapor_disiplin.text = disiplin?.keterangan_terlapor
         txt_detail_kronologis_pelapor_disiplin.text = disiplin?.kronologis_dari_pelapor
 

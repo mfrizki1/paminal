@@ -8,6 +8,8 @@ import android.widget.EditText
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 fun EditText.onFocusChanged(hasFocus: (Boolean) -> Unit) {
@@ -68,6 +70,12 @@ fun View.toggleVisibility(): View {
         View.VISIBLE
     }
     return this
+}
+
+fun formatterTanggal(tgl: String?): String {
+    val tanggalFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+    val tanggal = tanggalFormatter.parse(tgl)
+    return DateTimeFormatter.ofPattern("dd MMM yyyy", Locale("id", "ID")).format(tanggal)
 }
 
 

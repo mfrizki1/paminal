@@ -23,7 +23,7 @@
             android:id="@+id/btn_choose_personel_tind_disiplin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pilih Personel Pelapor"
+            android:text="Pilih Personel Terlapor"
             android:textStyle="bold" />
 
         <com.google.android.material.card.MaterialCardView
@@ -43,7 +43,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Personel Pelapor"
+                    android:text="Personel Terlapor"
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
 
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_8dp"
-                    android:text="Nama Personel Pelapor"
+                    android:text="Nama Personel Terlapor"
                     android:textSize="@dimen/text_14"
                     android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Pangkat Personel Pelapor"
+                    android:text="Pangkat Personel Terlapor"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="NRP Personel Pelapor"
+                    android:text="NRP Personel Terlapor"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
@@ -79,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Jabatan Personel Pelapor"
+                    android:text="Jabatan Personel Terlapor"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Kesatuan Personel Pelapor"
+                    android:text="Kesatuan Personel Terlapor"
                     android:textSize="@dimen/text_14" />
             </LinearLayout>
 

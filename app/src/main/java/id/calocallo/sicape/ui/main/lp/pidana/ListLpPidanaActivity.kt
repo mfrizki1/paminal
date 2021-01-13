@@ -62,9 +62,19 @@ class ListLpPidanaActivity : BaseActivity() {
 
     private fun getList() {
         satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
-        personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234",1, "polda kalsel")
+        personelTerLapor = PersonelLapor(
+            1, "faisal", "bripda", "jabatan", "1234", 1, "polda kalsel", "Jl Banjarmasin",
+            "islam",
+            "laki_laki",
+            "Batola", "12-01-2000"
+        )
         personelPeLapor =
-            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987", 1,"polresta banjarmasin")
+            PersonelLapor(
+                2, "utuh", "ipda", "jabatan", "0987", 1, "polresta banjarmasin", "Jl Banjarmasin",
+                "islam",
+                "laki_laki",
+                "Batola", "12-01-2000"
+            )
 
 
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
@@ -75,7 +85,7 @@ class ListLpPidanaActivity : BaseActivity() {
                 1, "LP/PIDANA/2020/BIDPROPAM", satKerResp, personelTerLapor, "Uraian Pelanggaran",
                 "Banjarmasin", "12-12-2000",
                 "Rojak Ahmad", "Kombes", "12345678",
-                "Polair","polda Kalsel", "polisi",
+                "Polair", "polda Kalsel", "polisi",
                 "", "", "", "",
                 "", "", "", personelPeLapor,
                 resources.getString(R.string.paragraf), resources.getString(R.string.paragraf),
@@ -87,7 +97,7 @@ class ListLpPidanaActivity : BaseActivity() {
             LpPidanaResp(
                 2, "LP/PIDANA2/2020/BIDPROPAM", satKerResp, personelTerLapor, "Uraian Pelanggaran",
                 "Banjarmasin", "12-12-2000",
-                "Rojak Ahmad","polda Kalsel", "Kombes", "12345678",
+                "Rojak Ahmad", "polda Kalsel", "Kombes", "12345678",
                 "Polair", "sipil",
                 "sipil", "islam", "pekerjaan", "Indonesia",
                 "jl xxx", "081212", "123456", null,
@@ -101,7 +111,7 @@ class ListLpPidanaActivity : BaseActivity() {
                 3, "LP/PIDANA3/2020/BIDPROPAM", satKerResp, personelTerLapor, "Uraian Pelanggaran",
                 "Banjarmasin", "12-12-2000",
                 "Rojak Ahmad", "Kombes", "12345678",
-                "Polair","polda Kalsel", "polisi",
+                "Polair", "polda Kalsel", "polisi",
                 "", "", "", "",
                 "", "", "", personelPeLapor,
                 resources.getString(R.string.paragraf), resources.getString(R.string.paragraf),

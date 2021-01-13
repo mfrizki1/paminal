@@ -8,7 +8,8 @@ data class SkhdOnRpsModel(
     var id: Int?,
     var no_skhd: String?,
     var jenis_skhd: String?,
-    var hukuman: String?
+    var hukuman: String?,
+    var tanggal_penetapan: String?
 ) : Parcelable {
-    constructor() : this(null, null, null, null)
+    constructor() : this(null, null, null, null, null)
 }

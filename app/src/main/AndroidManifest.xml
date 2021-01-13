@@ -12,7 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.catpers.EditCatpersActivity"></activity>
+        <activity android:name=".ui.main.wanjak.ListWanjakActivity"></activity>
+        <activity android:name=".ui.main.skhp.DetailSkhpActivity" />
+        <activity android:name=".ui.main.skhp.EditSkhpActivity" />
+        <activity android:name=".ui.main.skhp.AddSkhpActivity" />
+        <activity android:name=".ui.main.skhp.ListSkhpActivity" />
+        <activity android:name=".ui.main.catpers.EditCatpersActivity" />
         <activity android:name=".ui.main.catpers.DetailCatpersActivity" />
         <activity android:name=".ui.main.choose.ChooseSktbSkttActivity" />
         <activity android:name=".ui.main.rehab.sp3.DetailSp3Activity" />

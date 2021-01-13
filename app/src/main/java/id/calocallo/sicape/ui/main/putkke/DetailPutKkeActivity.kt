@@ -1,13 +1,21 @@
 package id.calocallo.sicape.ui.main.putkke
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.PutKkeResp
 import id.calocallo.sicape.utils.ext.alert
+import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_put_kke.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -28,6 +36,26 @@ class DetailPutKkeActivity : BaseActivity() {
             intent.putExtra(EDIT_PUT_KKE, detailPutKke)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+        btn_generate_put_kke_detail.attachTextChangeAnimator()
+        bindProgressButton(btn_generate_put_kke_detail)
+        btn_generate_put_kke_detail.setOnClickListener {
+            btn_generate_put_kke_detail.showProgress {
+                progressColor = Color.WHITE
+                Handler(Looper.getMainLooper()).postDelayed({
+                    btn_generate_put_kke_detail.hideProgress(R.string.success_generate_doc)
+                    alert(R.string.download) {
+                        positiveButton(R.string.iya) {
+                            btn_generate_put_kke_detail.hideProgress(R.string.generate_dokumen)
+
+                        }
+                        negativeButton(R.string.tidak) {
+                            btn_generate_put_kke_detail.hideProgress(R.string.generate_dokumen)
+
+                        }
+                    }.show()
+                }, 2000)
+            }
         }
     }
 
@@ -68,7 +96,8 @@ class DetailPutKkeActivity : BaseActivity() {
 
 
         txt_kota_putusan_put_kke_detail.text = "Kota : ${detailPutKke?.kota_putusan}"
-        txt_tanggal_putusan_put_kke_detail.text = "Tanggal : ${detailPutKke?.tanggal_putusan}"
+        txt_tanggal_putusan_put_kke_detail.text =
+            "Tanggal : ${formatterTanggal(detailPutKke?.tanggal_putusan)}"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

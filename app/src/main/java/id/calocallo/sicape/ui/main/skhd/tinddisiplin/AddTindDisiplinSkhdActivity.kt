@@ -62,7 +62,7 @@ class AddTindDisiplinSkhdActivity : BaseActivity() {
                 val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
                 idPersonel = personel?.id
                 txt_nama_personel_tind_disiplin_add.text = "Nama : ${personel?.nama}"
-                txt_pangkat_personel_tind_disiplin_add.text = "Pangkat ${personel?.pangkat}: "
+                txt_pangkat_personel_tind_disiplin_add.text = "Pangkat ${personel?.pangkat.toString().toUpperCase()}: "
                 txt_nrp_personel_tind_disiplin_add.text = "NRP : ${personel?.nrp}"
                 txt_jabatan_personel_tind_disiplin_add.text = "Jabatan : ${personel?.jabatan}"
                 txt_kesatuan_personel_tind_disiplin_add.text =

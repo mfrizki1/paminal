@@ -78,46 +78,6 @@ class ListRpsActivity : BaseActivity() {
                 }
             }
         })
-        /*
-        listRps.add(
-            RpsResp(
-                1,
-                SkhdOnRpsModel(1, "SKHD/1/2020/BIDDOKES"),
-                "RPS1/2020/xxx",
-                "dasarPe",
-                resources.getString(R.string.paragraf),
-                "01-01-2000",
-                "Banjarmasin",
-                "Jabatan1",
-                "Rizki",
-                "bripda",
-                "123123",
-                "tembuasan\nsadnsadsadd\nasdisdas",
-                null,
-                null
-            )
-        )
-
-        listRps.add(
-            RpsResp(
-                2,
-                SkhdOnRpsModel(2, "SKHD/2/2020/BIDDOKES"),
-                "RPS2/2020/xxx",
-                "dasarPe2",
-                resources.getString(R.string.paragraf),
-                "01-01-2020",
-                "Banjarmasin",
-                "Jabatan1",
-                "Rizki",
-                "bripda",
-                "123123",
-                "tembuasan\nsadnsadsadd\nasdisdas",
-                null,
-                null
-            )
-        )
-
-         */
 
     }
 

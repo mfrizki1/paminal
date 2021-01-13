@@ -1,10 +1,17 @@
 package id.calocallo.sicape.ui.main.lhp
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.response.KetTerlaporLhpResp
@@ -17,6 +24,7 @@ import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
+import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lhp.*
@@ -92,6 +100,26 @@ class DetailLhpActivity : BaseActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
+        btn_generate_lhp.attachTextChangeAnimator()
+        bindProgressButton(btn_generate_lhp)
+        btn_generate_lhp.setOnClickListener {
+            btn_generate_lhp.showProgress {
+                progressColor = Color.WHITE
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                btn_generate_lhp.hideProgress(R.string.success_generate_doc)
+                alert(R.string.download) {
+                    positiveButton(R.string.iya) {
+                        btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+
+                    }
+                    negativeButton(R.string.tidak) {
+                        btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+
+                    }
+                }.show()
+            }, 2000)
+        }
 
     }
 
@@ -122,7 +150,7 @@ class DetailLhpActivity : BaseActivity() {
         txt_analisa_detail_lhp.text = dataLhp?.analisa
         txt_barbukti_detail_lhp.text = dataLhp?.barang_bukti
         txt_kota_buat_lhp.text = "Kota : ${dataLhp?.kota_buat_laporan}"
-        txt_tanggal_buat_lhp.text = "Tanggal : ${dataLhp?.tanggal_buat_laporan}"
+        txt_tanggal_buat_lhp.text = "Tanggal : ${formatterTanggal(dataLhp?.tanggal_buat_laporan)}"
         listOfRefLP(dataLhp?.referensi_penyelidikan)
         listOfLidik(dataLhp?.personel_penyelidik)
         listOfSaksi(dataLhp?.saksi)

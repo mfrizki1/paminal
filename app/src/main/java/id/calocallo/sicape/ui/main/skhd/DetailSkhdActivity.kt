@@ -1,15 +1,23 @@
 package id.calocallo.sicape.ui.main.skhd
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.SkhdResp
 import id.calocallo.sicape.ui.main.skhd.edit.EditSkhdActivity
 import id.calocallo.sicape.utils.ext.alert
+import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -39,6 +47,27 @@ class DetailSkhdActivity : BaseActivity() {
 
         }
 
+        btn_generate_skhd.attachTextChangeAnimator()
+        bindProgressButton(btn_generate_skhd)
+        btn_generate_skhd.setOnClickListener {
+            btn_generate_skhd.showProgress {
+                progressColor = Color.WHITE
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                btn_generate_skhd.hideProgress(R.string.success_generate_doc)
+                alert(R.string.download) {
+                    positiveButton(R.string.iya) {
+                        btn_generate_skhd.hideProgress(R.string.generate_dokumen)
+
+                    }
+                    negativeButton(R.string.tidak) {
+                        btn_generate_skhd.hideProgress(R.string.generate_dokumen)
+
+                    }
+                }.show()
+            }, 2000)
+        }
+
     }
 
     private fun getDetailSkhd(detailSKHD: SkhdResp?) {
@@ -50,14 +79,15 @@ class DetailSkhdActivity : BaseActivity() {
         txt_berkas_pemeriksaan_skhd_detail.text = detailSKHD?.memperlihatkan
         txt_hukuman_skhd_detail.text = detailSKHD?.hukuman
         txt_tanggal_disampaikan_skhd_detail.text =
-            "Tanggal : ${detailSKHD?.tanggal_disampaikan_ke_terhukum}"
+            "Tanggal : ${formatterTanggal(detailSKHD?.tanggal_disampaikan_ke_terhukum)}"
         txt_waktu_disampaikan_skhd_detail.text =
             "Pukul : ${detailSKHD?.waktu_disampaikan_ke_terhukum}"
         txt_kota_penetapan_skhd_detail.text = "Kota : ${detailSKHD?.kota_penetapan}"
         txt_tanggal_penetapan_skhd_detail.text = "Tanggal : ${detailSKHD?.tanggal_penetapan}"
         txt_nama_pimpinan_skhd_detail.text = "Nama : ${detailSKHD?.nama_yang_menetapkan}"
         txt_pangkat_nrp_pimpinan_skhd_detail.text =
-            "Pangkat : ${detailSKHD?.pangkat_yang_menetapkan.toString().toUpperCase()}, NRP : ${detailSKHD?.nrp_yang_menetapkan}"
+            "Pangkat : ${detailSKHD?.pangkat_yang_menetapkan.toString()
+                .toUpperCase()}, NRP : ${detailSKHD?.nrp_yang_menetapkan}"
         txt_jabatan_pimpinan_skhd_detail.text = "Jabatan : ${detailSKHD?.jabatan_yang_menetapkan}"
         txt_tembusan_skhd_detail.text = detailSKHD?.tembusan
     }

@@ -120,6 +120,12 @@
             android:layout_marginTop="@dimen/space_8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Data" />
+            android:text="@string/edit_data" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_generate_dok_rpph_detail"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/generate_dokumen" />
     </LinearLayout>
 </ScrollView>

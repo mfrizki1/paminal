@@ -40,7 +40,20 @@ class SkhdTindDisiplinActivity : BaseActivity() {
 
     private fun getListTindDisiplin() {
         personelTerlapor =
-            PersonelLapor(1, "Gusti", "bripda", "jabtan 1", "123456",1, "Polda Kalimantasn Selatan")
+            PersonelLapor(
+                1,
+                "Gusti",
+                "bripda",
+                "jabtan 1",
+                "123456",
+                1,
+                "Polda Kalimantasn Selatan",
+                "Jl Banjarmasin",
+                "islam",
+                "laki_laki",
+                "Batola",
+                "12-01-2000"
+            )
 
         listTindDisiplin.add(
             TindDisiplinResp(1, personelTerlapor, "Lari", null, null)
@@ -55,7 +68,10 @@ class SkhdTindDisiplinActivity : BaseActivity() {
                     "jabtan 1",
                     "123456",
                     2,
-                    "Polda Kalimantasn Selatan"
+                    "Polda Kalimantasn Selatan", "Jl Banjarmasin",
+                    "islam",
+                    "laki_laki",
+                    "Batola", "12-01-2000"
                 ),
                 "Lari",
                 null,
@@ -69,7 +85,8 @@ class SkhdTindDisiplinActivity : BaseActivity() {
             }
 
             override fun onItemClicked(itemView: View, data: TindDisiplinResp, itemIndex: Int) {
-                val intent = Intent(this@SkhdTindDisiplinActivity, DetailTindDisiplinActivity::class.java)
+                val intent =
+                    Intent(this@SkhdTindDisiplinActivity, DetailTindDisiplinActivity::class.java)
                 intent.putExtra(EDIT_TIND_DISIPLIN, data)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -101,7 +118,8 @@ class SkhdTindDisiplinActivity : BaseActivity() {
         })
         return super.onCreateOptionsMenu(menu)
     }
-    companion object{
+
+    companion object {
         const val EDIT_TIND_DISIPLIN = "EDIT_TIND_DISIPLIN"
     }
 }

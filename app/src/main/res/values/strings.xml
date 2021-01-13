@@ -57,6 +57,13 @@
     <string name="tanggal_dihukum">Tanggal Dihukum</string>
     <string name="tempat_dihukum">Tempat Dihukum</string>
     <string name="paragraf">lorem ipsum dolor lorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolor</string>
+    <string name="edit_data">Edit Data</string>
+    <string name="generate_dokumen">Generate Dokumen</string>
+    <string name="download">Download</string>
+    <string name="success_generate_doc">Berhasil Generate Dokumen</string>
+    <string name="iya">Iya</string>
+    <string name="tidak">Tidak</string>
+    <string name="memiliki">Memiliki</string>
 
 
     <string-array name="satker">

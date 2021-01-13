@@ -55,9 +55,15 @@ class ListLpDisiplinActivity : BaseActivity() {
 
     private fun getListDisiplin() {
         satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
-        personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234",1, "polda kalsel")
+        personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234",1, "polda kalsel","Jl Banjarmasin",
+            "islam",
+            "laki_laki",
+            "Batola","12-01-2000")
         personelPeLapor =
-            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987",1, "polresta banjarmasin")
+            PersonelLapor(2, "utuh", "ipda", "jabatan", "0987",1, "polresta banjarmasin","Jl Banjarmasin",
+                "islam",
+                "laki_laki",
+                "Batola","12-01-2000")
 
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
@@ -67,7 +73,7 @@ class ListLpDisiplinActivity : BaseActivity() {
             LpDisiplinResp(
                 1, "LP/DISIPLIN1",
                 "disiplin", personelTerLapor, personelPeLapor,
-                "Banjarmasin", "12-01-20", "Budi",
+                "Banjarmasin", "12-01-2001", "Budi",
                 "IPDA", "87654321", "KOMBES","POLDA kALSEL",
                 "macam_pelanggaran", "keterangan terlapor",
                 "kronologis", "rincian", listPasal, satKerResp, "", ""
@@ -78,7 +84,7 @@ class ListLpDisiplinActivity : BaseActivity() {
             LpDisiplinResp(
                 2, "LP/DISIPLIN2",
                 "disiplin", personelTerLapor, personelPeLapor,
-                "Banjarmasin", "12-01-20", "Budi",
+                "Banjarmasin", "12-01-2021", "Budi",
                 "IPDA", "87654321", "KOMBES","POLDA kALSEL",
                 "macam_pelanggaran", "keterangan terlapor",
                 "kronologis", "rincian", listPasal, satKerResp, "", ""
@@ -89,7 +95,7 @@ class ListLpDisiplinActivity : BaseActivity() {
             LpDisiplinResp(
                 3, "LP/DISIPLIN3",
                 "disiplin", personelTerLapor, personelPeLapor,
-                "Banjarmasin", "12-01-20", "Budi",
+                "Banjarmasin", "12-01-2019", "Budi",
                 "IPDA", "87654321", "KOMBES","POLDA kALSEL",
                 "macam_pelanggaran", "keterangan terlapor",
                 "kronologis", "rincian", listPasal, satKerResp, "", ""

@@ -18,6 +18,8 @@ import id.calocallo.sicape.ui.main.personel.PersonelActivity
 import id.calocallo.sicape.ui.main.rehab.PickRehabActivity
 import id.calocallo.sicape.ui.main.skhd.PickSkhdActivity
 import id.calocallo.sicape.ui.main.skhd.SkhdActivity
+import id.calocallo.sicape.ui.main.skhp.ListSkhpActivity
+import id.calocallo.sicape.ui.main.wanjak.ListWanjakActivity
 import id.calocallo.sicape.utils.SessionManager
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
@@ -79,6 +81,9 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
             "SKHD" -> {
                 startActivity(Intent(activity, PickSkhdActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }"SKHP" -> {
+            startActivity(Intent(activity, ListSkhpActivity::class.java))
+            activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "CATPERS" -> {
                 startActivity(Intent(activity, CatpersActivity::class.java))
@@ -87,6 +92,10 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
             }
             "REHAB" -> {
                 startActivity(Intent(activity, PickRehabActivity::class.java))
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+            "WANJAK" -> {
+                startActivity(Intent(activity, ListWanjakActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "Laporan Bulanan" -> {

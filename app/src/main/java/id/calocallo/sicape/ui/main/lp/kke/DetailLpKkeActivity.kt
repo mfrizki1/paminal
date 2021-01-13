@@ -1,10 +1,17 @@
 package id.calocallo.sicape.ui.main.lp.kke
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.LpKkeResp
 import id.calocallo.sicape.network.response.LpPasalResp
@@ -15,9 +22,11 @@ import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpEditActivity
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpEditActivity.Companion.EDIT_SAKSI_KKE
 import id.calocallo.sicape.utils.SessionManager
 import id.calocallo.sicape.utils.ext.alert
+import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_kke.*
+import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -73,6 +82,26 @@ class DetailLpKkeActivity : BaseActivity() {
             startActivity(intent)
         }
 
+        btn_generate_kke.attachTextChangeAnimator()
+        bindProgressButton(btn_generate_kke)
+        btn_generate_kke.setOnClickListener {
+            btn_generate_kke.showProgress {
+                progressColor = Color.WHITE
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                btn_generate_kke.hideProgress(R.string.success_generate_doc)
+                alert(R.string.download) {
+                    positiveButton(R.string.iya) {
+                        btn_generate_kke.hideProgress(R.string.generate_dokumen)
+
+                    }
+                    negativeButton(R.string.tidak) {
+                        btn_generate_kke.hideProgress(R.string.generate_dokumen)
+                    }
+                }.show()
+            }, 2000)
+        }
+
     }
 
     private fun getViewKke(detailKKe: LpKkeResp?) {
@@ -83,7 +112,8 @@ class DetailLpKkeActivity : BaseActivity() {
         //terlapor
         txt_detail_nama_terlapor_kke.text = "Nama : ${detailKKe?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_kke.text =
-            "Pangkat : ${detailKKe?.personel_terlapor?.pangkat.toString().toUpperCase()}, NRP : ${detailKKe?.personel_terlapor?.nrp}"
+            "Pangkat : ${detailKKe?.personel_terlapor?.pangkat.toString()
+                .toUpperCase()}, NRP : ${detailKKe?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor_kke.text = "Jabatan : ${detailKKe?.personel_terlapor?.jabatan}"
         txt_detail_kesatuan_terlapor_kke.text =
             "Kesatuan : ${detailKKe?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
@@ -91,18 +121,24 @@ class DetailLpKkeActivity : BaseActivity() {
         //pelapor
         txt_detail_nama_pelapor_kke.text = "Nama : ${detailKKe?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_kke.text =
-            "Pangkat : ${detailKKe?.personel_pelapor?.pangkat.toString().toUpperCase()}, NRP : ${detailKKe?.personel_pelapor?.nrp}"
+            "Pangkat : ${detailKKe?.personel_pelapor?.pangkat.toString()
+                .toUpperCase()}, NRP : ${detailKKe?.personel_pelapor?.nrp}"
         txt_detail_jabatan_pelapor_kke.text = "Jabatan : ${detailKKe?.personel_pelapor?.jabatan}"
-        txt_detail_kesatuan_pelapor_kke.text = "Kesatuan : ${detailKKe?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
+        txt_detail_kesatuan_pelapor_kke.text =
+            "Kesatuan : ${detailKKe?.personel_pelapor?.kesatuan.toString().toUpperCase()}"
 
         txt_detail_alat_bukti_kke.text = detailKKe?.alat_bukti
         txt_detail_kota_buat_kke.text = "Kota : ${detailKKe?.kota_buat_laporan}"
-        txt_detail_tgl_buat_kke.text = "Tanggal : ${detailKKe?.tanggal_buat_laporan}"
+        txt_detail_tgl_buat_kke.text =
+            "Tanggal : ${formatterTanggal(detailKKe?.tanggal_buat_laporan)}"
         txt_detail_nama_pimpinan_kke.text = "Nama : ${detailKKe?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_kke.text =
-            "Pangkat : ${detailKKe?.pangkat_yang_mengetahui.toString().toUpperCase()}, NRP : ${detailKKe?.nrp_yang_mengetahui}"
-        txt_detail_kesatuan_pimpinan_kke.text = "Kesatuan : ${detailKKe?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
-        txt_detail_jabatan_pimpinan_kke.text = "Jabatan : ${detailKKe?.jabatan_yang_mengetahui.toString().toUpperCase()}"
+            "Pangkat : ${detailKKe?.pangkat_yang_mengetahui.toString()
+                .toUpperCase()}, NRP : ${detailKKe?.nrp_yang_mengetahui}"
+        txt_detail_kesatuan_pimpinan_kke.text =
+            "Kesatuan : ${detailKKe?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
+        txt_detail_jabatan_pimpinan_kke.text =
+            "Jabatan : ${detailKKe?.jabatan_yang_mengetahui.toString().toUpperCase()}"
 
         //pasal
         callbackDetailPasalKke = object : AdapterCallback<LpPasalResp> {

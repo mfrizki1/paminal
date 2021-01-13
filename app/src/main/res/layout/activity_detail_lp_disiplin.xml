@@ -297,5 +297,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Edit Data Pasal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_generate_disiplin"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/generate_dokumen" />
     </LinearLayout>
 </ScrollView>
