@@ -52,7 +52,7 @@ class SkhdTindDisiplinActivity : BaseActivity() {
                 "islam",
                 "laki_laki",
                 "Batola",
-                "12-01-2000"
+                "12-01-2000", "081212"
             )
 
         listTindDisiplin.add(
@@ -71,7 +71,7 @@ class SkhdTindDisiplinActivity : BaseActivity() {
                     "Polda Kalimantasn Selatan", "Jl Banjarmasin",
                     "islam",
                     "laki_laki",
-                    "Batola", "12-01-2000"
+                    "Batola", "12-01-2000", "081212"
                 ),
                 "Lari",
                 null,

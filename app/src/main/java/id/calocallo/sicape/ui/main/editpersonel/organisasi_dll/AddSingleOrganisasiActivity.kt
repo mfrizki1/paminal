@@ -28,12 +28,10 @@ import retrofit2.Response
 
 class AddSingleOrganisasiActivity : BaseActivity() {
     private lateinit var sessionManager: SessionManager
-    private val organisasiReq =
-        OrganisasiReq()
-    private val penghargaanReq =
-        PenghargaanReq()
-    private val perjuanganCitaReq =
-        PerjuanganCitaReq()
+    private val organisasiReq = OrganisasiReq()
+    private val penghargaanReq = PenghargaanReq()
+    private val perjuanganCitaReq = PerjuanganCitaReq()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_organisasi)

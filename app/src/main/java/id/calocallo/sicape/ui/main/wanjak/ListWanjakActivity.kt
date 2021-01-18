@@ -38,21 +38,6 @@ class ListWanjakActivity : BaseActivity() {
 
         getListWanjak()
 
-        txt_nama_personel_wanjak
-        txt_pangkat_nrp_personel_wanjak
-        txt_jabatan_personel_wanjak
-        txt_kesatuan_personel_wanjak
-        txt_no_lp_wanjak
-        txt_no_skhd_putkke_wanjak
-        txt_no_rps_wanjak
-        txt_stts_terlapor_wanjak
-        txt_stts_kasus_wanjak
-        txt_pernah_tersangkut_kasus_wanjak
-        txt_total_kasus_bersalah_wanjak
-        txt_total_kasus_tidak_bersalah_wanjak
-        txt_total_kasus_tidak_terbukti_wanjak
-        txt_total_kasus_berjalan_wanjak
-        txt_total_kasus_selesai_wanjak
     }
 
     private fun getListWanjak() {

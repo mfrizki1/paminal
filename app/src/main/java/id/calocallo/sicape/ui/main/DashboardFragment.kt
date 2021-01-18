@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.FiturModel
+import id.calocallo.sicape.ui.main.anev.AnevActivity
 import id.calocallo.sicape.ui.main.catpers.CatpersActivity
+import id.calocallo.sicape.ui.main.lapbul.ListLapbulActivity
 import id.calocallo.sicape.ui.main.lhp.LhpActivity
 import id.calocallo.sicape.ui.main.lp.PickLpActivity
 import id.calocallo.sicape.ui.main.personel.PersonelActivity
@@ -99,11 +101,11 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "Laporan Bulanan" -> {
-                Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+                startActivity(Intent(activity, ListLapbulActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "Analisa" -> {
-                Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+                startActivity(Intent(activity, AnevActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 

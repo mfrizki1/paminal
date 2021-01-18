@@ -16,10 +16,11 @@ data class PersonelLapor(
     var agama_sekarang: String?,
     var jenis_kelamin: String?,
     var tempat_lahir: String?,
-    var tanggal_lahir: String?
+    var tanggal_lahir: String?,
+    var no_telp_kantor: String?
 ) : Parcelable {
     constructor() : this(
         0, "", "", "", "", null, "", null,
-        null, null, null,null
+        null, null, null,null,null
     )
 }

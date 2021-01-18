@@ -58,12 +58,12 @@ class ListLpDisiplinActivity : BaseActivity() {
         personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234",1, "polda kalsel","Jl Banjarmasin",
             "islam",
             "laki_laki",
-            "Batola","12-01-2000")
+            "Batola","12-01-2000", "081212")
         personelPeLapor =
             PersonelLapor(2, "utuh", "ipda", "jabatan", "0987",1, "polresta banjarmasin","Jl Banjarmasin",
                 "islam",
                 "laki_laki",
-                "Batola","12-01-2000")
+                "Batola","12-01-2000", "081212")
 
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))

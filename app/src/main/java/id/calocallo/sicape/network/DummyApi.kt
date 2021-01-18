@@ -57,5 +57,18 @@ interface DummyApi {
     @GET("v1/491bcab8")
     fun getWanjak(): Call<ArrayList<WanjakResp>>
 
+    @GET("v1/953c2a3e")
+    fun getLapbul(): Call<ArrayList<LapBulResp>>
 
+    @GET("v1/ab70f006")
+    fun getAnev(): Call<ArrayList<AnevResp>>
+
+    @GET("v1/4a245c34")
+    fun getFilterKesatuan(): Call<ArrayList<AnevResp>>
+
+    @GET("v1/0af80f7f")
+    fun getFilterPangkat(): Call<ArrayList<FilterPangkatResp>>
+
+    @GET("v1/911a895e")
+    fun getFilterPelanggaran(): Call<ArrayList<FilterPelanggaranResp>>
 }

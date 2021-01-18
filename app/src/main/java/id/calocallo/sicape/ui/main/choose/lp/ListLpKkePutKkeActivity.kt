@@ -60,12 +60,14 @@ class ListLpKkePutKkeActivity : BaseActivity() {
                 "Jl Banjarmasin",
                 "islam",
                 "laki_laki",
-                "Batola", "12-01-2000"
+                "Batola", "12-01-2000",
+                "081212"
             )
         personelPeLapor =
             PersonelLapor(
                 2, "utuh", "ipda", "jabatan", "0987", 2, "polresta banjarmasin",
-                "Jl Banjarmasin", "islam", "laki_laki", "Batola", "12-01-2000"
+                "Jl Banjarmasin", "islam", "laki_laki", "Batola", "12-01-2000", "081212"
+
             )
         listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))

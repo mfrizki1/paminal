@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/space_8dp"
+    android:layout_marginTop="@dimen/space_8dp"
+    android:paddingTop="@dimen/space_8dp"
+    app:strokeColor="@color/colorPrimary"
+    app:strokeWidth="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_8dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personel" />
+
+        <TextView
+            android:id="@+id/txt_nama_personel_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Personel" />
+
+        <TextView
+            android:id="@+id/txt_pangkat_nrp_personel_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pangkat / NRP Personel" />
+
+        <TextView
+            android:id="@+id/txt_jabatan_personel_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jabatan Personel" />
+
+        <TextView
+            android:id="@+id/txt_kesatuan_personel_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kesatuan Personel" />
+
+        <include layout="@layout/layout_separator" />
+
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kasus" />
+
+        <TextView
+            android:id="@+id/txt_no_lp_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No LP" />
+
+        <TextView
+            android:id="@+id/txt_no_skhd_putkke_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKHD/PUTKKE" />
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rehab" />
+        <TextView
+            android:id="@+id/txt_no_rps_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No RPS" />
+        <TextView
+            android:id="@+id/txt_no_rpph_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No RPPH" />
+        <TextView
+            android:id="@+id/txt_no_sktb_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKTB" />
+        <TextView
+            android:id="@+id/txt_no_sktt_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SKTT" />
+        <TextView
+            android:id="@+id/txt_no_s4_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No SP4" />
+
+
+        <TextView
+            android:id="@+id/txt_stts_kasus_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Kasus: proses/dalam_masa_hukuman/selesai" />
+
+        <include layout="@layout/layout_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pasal Dilanggar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_pasal_lp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:id="@+id/rv_pasal_lapbul"/>
+
+
+        <include layout="@layout/layout_separator" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
