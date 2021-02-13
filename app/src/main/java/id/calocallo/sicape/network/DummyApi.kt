@@ -71,4 +71,24 @@ interface DummyApi {
 
     @GET("v1/911a895e")
     fun getFilterPelanggaran(): Call<ArrayList<FilterPelanggaranResp>>
+
+    @GET("v1/b5ae1dad")
+    fun getAdmin(): Call<ArrayList<AdminResp>>
+
+    @GET("v1/af0598a5")
+    fun getOperator(): Call<ArrayList<OperatorResp>>
+
+    @GET("v1/cbbe4742")
+    fun getPolresAll(): Call<ArrayList<PolresResp>>
+
+    @GET("v1/ab0e07a3")
+    fun getSatResBjm(): Call<ArrayList<SatPolresResp>>
+
+    @GET("v1/7512d391")
+    fun getUnitSekBjm(): Call<ArrayList<UnitPolsekResp>>
+
+    @GET("v1/3691308f")
+    fun getPolsek(): Call<ArrayList<PolsekResp>>
+
+
 }

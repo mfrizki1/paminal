@@ -22,7 +22,7 @@ import id.calocallo.sicape.ui.main.lhp.edit.ListDetailRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.PickLidikLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.toggleVisibility
@@ -36,7 +36,7 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import java.util.ArrayList
 
 class DetailLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
 
     private var adapterRefLP = ReusableAdapter<RefPenyelidikanResp>(this)
     private lateinit var callbackRefLP: AdapterCallback<RefPenyelidikanResp>
@@ -52,7 +52,7 @@ class DetailLhpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Laporan Hasil Penyelidikan"
 
@@ -60,7 +60,7 @@ class DetailLhpActivity : BaseActivity() {
         getDetailLHP(dataLhp)
 
 
-        val hakAkses = sessionManager.fetchHakAkses()
+        val hakAkses = sessionManager1.fetchHakAkses()
         if (hakAkses == "operator") {
             btn_edit_lhp.toggleVisibility()
             btn_edit_lidik_lhp.toggleVisibility()

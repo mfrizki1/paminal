@@ -6,19 +6,19 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.RadioButton
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.request.PersonelPenyelidikReq
+import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.PersonelPenyelidikResp
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.AddSingleLidikLhpActivity
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.LhpDataManager
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_personel_lidik.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddPersonelLidikActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var lhpDataManager: LhpDataManager
     private var idPersonel: Int? = null
     private var penyelidikResp = PersonelPenyelidikResp()
@@ -27,7 +27,7 @@ class AddPersonelLidikActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_personel_lidik)
         setupActionBarWithBackButton(toolbar)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         lhpDataManager = LhpDataManager(this)
 
         val addLidik = intent.extras?.getString(AddSingleLidikLhpActivity.ADD_LIDIK)
@@ -65,7 +65,8 @@ class AddPersonelLidikActivity : BaseActivity() {
 
         //set Pick Personel
         btn_choose_personel_lidik.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_LIDIK)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -73,11 +74,11 @@ class AddPersonelLidikActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_LIDIK) {
 //            lidikReq.id = personel?.id
             penyelidikResp.nrp = personel?.nrp
-            penyelidikResp.id_satuan_kerja = personel?.id_satuan_kerja
+            penyelidikResp.id_satuan_kerja = personel?.satuan_kerja?.id
             penyelidikResp.pangkat = personel?.pangkat.toString().toUpperCase()
             penyelidikResp.id_personel = personel?.id
             penyelidikResp.nama = personel?.nama

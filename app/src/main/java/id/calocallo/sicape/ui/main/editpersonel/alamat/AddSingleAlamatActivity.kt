@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.editpersonel.alamat
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,15 +8,14 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AlamatReq
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_alamat.*
-import kotlinx.android.synthetic.main.activity_edit_keluarga.*
-import kotlinx.android.synthetic.main.activity_edit_tokoh.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,19 +26,19 @@ class AddSingleAlamatActivity : BaseActivity() {
     //    val number = 1
 //    var bcd = "data a"
     private val alamatReq = AlamatReq()
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_alamat)
 
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
 
 //        number = 2
 //        bcd = "SDDSFNSIDASNDI"
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         bindProgressButton(btn_save_alamat)
         btn_save_alamat.attachTextChangeAnimator()
         btn_save_alamat.setOnClickListener {
@@ -60,9 +58,9 @@ class AddSingleAlamatActivity : BaseActivity() {
             }
 
             NetworkConfig().getService().addAlamatSingle(
-                "Bearer ${sessionManager.fetchAuthToken()}",
+                "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4",
-                sessionManager.fetchID().toString(),
+                sessionManager1.fetchID().toString(),
                 alamatReq
             ).enqueue(object : Callback<BaseResp> {
 

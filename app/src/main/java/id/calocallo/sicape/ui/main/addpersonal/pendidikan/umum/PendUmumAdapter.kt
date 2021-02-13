@@ -20,6 +20,7 @@ class PendUmumAdapter(
     inner class UmumHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(addPendidikanModel: AddPendidikanModel) {
             with(itemView) {
+                addPendidikanModel.jenis ="umum"
                 edt_nama_umum_custom.addTextChangedListener(object :TextWatcher{
                     override fun afterTextChanged(s: Editable?) {
                         addPendidikanModel.pendidikan = s.toString()
@@ -33,12 +34,7 @@ class PendUmumAdapter(
                     ) {
                     }
 
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     }
                 })
                 edt_thn_awal_umum_custom.addTextChangedListener(object:TextWatcher{
@@ -125,6 +121,27 @@ class PendUmumAdapter(
                     ) {
                     }
                 })
+                edt_ket_umum_custom.addTextChangedListener(object:TextWatcher{
+                    override fun afterTextChanged(s: Editable?) {
+                        addPendidikanModel.keterangan = s.toString()
+                    }
+
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                    }
+                })
                 btn_delete_umum_custom.visibility = if(adapterPosition == 0)View.GONE
                 else View.VISIBLE
                 btn_delete_umum_custom.setOnClickListener {
@@ -151,6 +168,14 @@ class PendUmumAdapter(
 
     override fun onBindViewHolder(holder: UmumHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.itemView.edt_nama_umum_custom.setText(data.pendidikan)
+        holder.itemView.edt_thn_awal_umum_custom.setText(data.tahun_awal)
+        holder.itemView.edt_thn_akhir_umum_custom.setText(data.tahun_akhir)
+        holder.itemView.edt_tempat_umum_custom.setText(data.kota)
+        holder.itemView.edt_membiayai_umum_custom.setText(data.yang_membiayai)
+        holder.itemView.edt_ket_umum_custom.setText(data.keterangan)
+
     }
 
 }

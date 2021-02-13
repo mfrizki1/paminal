@@ -18,12 +18,11 @@ class TokohAdapter(
 ) : RecyclerView.Adapter<TokohAdapter.TokohHolder>() {
     inner class TokohHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val etNama = itemView.edt_nama_tokoh_dikagumi
-        val etAsalNegara = itemView.edt_alasan_tokoh_dikagumi
+        val etAsalNegara = itemView.edt_asal_negara_tokoh_dikagumi
         val etAlasan = itemView.edt_alasan_tokoh_dikagumi
         val etKet = itemView.edt_ket_tokoh_dikagumi
         val btnDelete = itemView.btn_delete_tokoh_dikagumi
 
-      
 
         fun bind(tokohReq: TokohReq) {
             with(itemView) {
@@ -137,6 +136,10 @@ class TokohAdapter(
 
     override fun onBindViewHolder(holder: TokohHolder, position: Int) {
         holder.bind(list[position])
-
+        val data = list[position]
+        holder.etNama.setText(data.nama)
+        holder.etAsalNegara.setText(data.asal_negara)
+        holder.etAlasan.setText(data.alasan)
+        holder.etKet.setText(data.keterangan)
     }
 }

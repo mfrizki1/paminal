@@ -10,10 +10,11 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.MedInfoReq
 import id.calocallo.sicape.network.response.MedInfoResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,21 +25,21 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditMedInfoActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var medInfoReq = MedInfoReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_med_info)
 
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
+        sessionManager1 = SessionManager1(this)
 
         val medInfo = intent.extras?.getParcelable<MedInfoResp>("MED_INFO")
-
-        sessionManager = SessionManager(this)
-        val hak = sessionManager.fetchHakAkses()
+        apiDetailMedInfo(medInfo)
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_med_info_edit.gone()
             btn_delete_med_info_edit.gone()
@@ -58,7 +59,31 @@ class EditMedInfoActivity : BaseActivity() {
                 negativeButton("Tidak") {}
             }.show()
         }
-        getMedInfo(medInfo)
+//        getMedInfo(medInfo)
+    }
+
+    private fun apiDetailMedInfo(medInfo: MedInfoResp?) {
+        NetworkConfig().getService()
+            .getDetailMedInfo("Bearer ${sessionManager1.fetchAuthToken()}", medInfo?.id.toString())
+            .enqueue(object : Callback<MedInfoResp> {
+                override fun onFailure(call: Call<MedInfoResp>, t: Throwable) {
+                    Toast.makeText(this@EditMedInfoActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(call: Call<MedInfoResp>, response: Response<MedInfoResp>) {
+                    if (response.isSuccessful) {
+                        getMedInfo(response.body())
+                    } else {
+                        Toast.makeText(
+                            this@EditMedInfoActivity,
+                            "Error Koneksi",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                }
+            })
     }
 
     private fun getMedInfo(medInfo: MedInfoResp?) {
@@ -84,7 +109,7 @@ class EditMedInfoActivity : BaseActivity() {
         medInfoReq.keterangan = edt_ket_med_info_edit.text.toString()
 
         NetworkConfig().getService().updateMedInfoSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             medInfo?.id.toString(),
             medInfoReq
         ).enqueue(object : Callback<BaseResp> {
@@ -106,7 +131,7 @@ class EditMedInfoActivity : BaseActivity() {
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_med_info_edit.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_med_info_edit.hideDrawable(R.string.not_update)
                 }
             }
@@ -115,7 +140,7 @@ class EditMedInfoActivity : BaseActivity() {
 
     private fun doDeleteMedIfo(medInfo: MedInfoResp?) {
         NetworkConfig().getService().deleteMedInfo(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             medInfo?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

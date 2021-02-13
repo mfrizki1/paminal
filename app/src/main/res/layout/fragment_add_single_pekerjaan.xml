@@ -152,7 +152,7 @@
                         android:id="@+id/edt_nama_pekerjaan_luar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text" />
+                        android:inputType="textCapSentences" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,7 +168,7 @@
                         android:id="@+id/edt_instansi_pekerjaan_luar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text" />
+                        android:inputType="textCapSentences" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -230,7 +230,7 @@
                         android:id="@+id/edt_rangka_pekerjaan_luar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text" />
+                        android:inputType="textCapSentences" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -241,13 +241,14 @@
                     android:layout_height="100dp"
                     android:layout_marginHorizontal="@dimen/space_12dp"
                     android:layout_marginTop="@dimen/space_8dp"
+                    android:gravity="start|top"
                     android:hint="@string/keterangan_optional">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_ket_pekerjaan_luar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textCapSentences" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>

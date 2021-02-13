@@ -8,13 +8,23 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="12dp"
         android:src="@drawable/ic_paminal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        tools:layout_editor_absoluteX="12dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txt_layout_username"
@@ -24,8 +34,9 @@
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="12dp"
         android:hint="Masukkan Username"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:startIconDrawable="@drawable/ic_person_black_18dp">
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:startIconDrawable="@drawable/ic_person_black_18dp"
+        tools:layout_editor_absoluteX="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_username"
@@ -60,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="12dp"
+        android:textStyle="bold"
         android:text="@string/login"
         app:layout_constraintTop_toBottomOf="@+id/txt_layout_password" />
 

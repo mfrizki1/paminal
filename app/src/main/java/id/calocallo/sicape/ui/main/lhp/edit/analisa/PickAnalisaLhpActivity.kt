@@ -9,7 +9,7 @@ import id.calocallo.sicape.model.ListAnalisa
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.analisa.AddAnalisaLhpActivity.Companion.ADD_ANALISA
 import id.calocallo.sicape.ui.main.lhp.edit.analisa.EditAnalisaLhpActivity.Companion.EDIT_ANALISA
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_analisa_lhp.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -18,14 +18,14 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickAnalisaLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterAnalisa: ReusableAdapter<ListAnalisa>
     private lateinit var callbackAnalisa: AdapterCallback<ListAnalisa>
     private var listAnalisa = arrayListOf<ListAnalisa>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_analisa_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterAnalisa = ReusableAdapter(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)

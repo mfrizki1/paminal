@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.AlamatResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_alamat.*
-import kotlinx.android.synthetic.main.item_1_text.view.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -25,14 +25,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickAlamatActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterAlamat: ReusableAdapter<AlamatResp>
     private lateinit var callbackAlamat: AdapterCallback<AlamatResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_alamat)
-        sessionManager = SessionManager(this)
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        sessionManager1 = SessionManager1(this)
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama
 
@@ -53,7 +53,7 @@ class PickAlamatActivity : BaseActivity() {
 
             }
         }
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_add_edit_alamat.gone()
         }
@@ -69,9 +69,9 @@ class PickAlamatActivity : BaseActivity() {
     private fun ApiAlamat() {
         rl_pb.visible()
         NetworkConfig().getService().showAlamat(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4"
-            sessionManager.fetchID().toString()
+            sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<AlamatResp>> {
             override fun onFailure(call: Call<ArrayList<AlamatResp>>, t: Throwable) {
                 Toast.makeText(this@PickAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()

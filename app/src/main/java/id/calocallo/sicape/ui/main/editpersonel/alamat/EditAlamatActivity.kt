@@ -8,45 +8,42 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AlamatReq
 import id.calocallo.sicape.network.response.AlamatResp
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.network.response.DetailAlamatResp
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_alamat.*
-import kotlinx.android.synthetic.main.activity_edit_keluarga.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class EditAlamatActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private val alamatReq = AlamatReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_alamat)
-        sessionManager = SessionManager(this)
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        sessionManager1 = SessionManager1(this)
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
         val alamat = intent.extras?.getParcelable<AlamatResp>("ALAMAT")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_alamat_edit.gone()
             btn_delete_alamat_edit.gone()
         }
+        getDetail(alamat)
 
-        edt_alamat_edit.setText(alamat?.alamat)
-        edt_thn_awal_alamat_edit.setText(alamat?.tahun_awal)
-        edt_thn_akhir_alamat_edit.setText(alamat?.tahun_akhir)
-        edt_rangka_alamat_edit.setText(alamat?.dalam_rangka)
-        edt_ket_alamat_edit.setText(alamat?.keterangan)
 
         btn_save_alamat_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_alamat_edit)
@@ -69,9 +66,38 @@ class EditAlamatActivity : BaseActivity() {
         }
     }
 
+    private fun getDetail(alamat: AlamatResp?) {
+        NetworkConfig().getService()
+            .getDetailAlamat("Bearer ${sessionManager1.fetchAuthToken()}", alamat?.id.toString())
+            .enqueue(object : Callback<DetailAlamatResp> {
+                override fun onFailure(call: Call<DetailAlamatResp>, t: Throwable) {
+                    Toast.makeText(this@EditAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(
+                    call: Call<DetailAlamatResp>,
+                    response: Response<DetailAlamatResp>
+                ) {
+                    if (response.isSuccessful) {
+                        val data = response.body()
+                        edt_alamat_edit.setText(data?.alamat)
+                        edt_thn_awal_alamat_edit.setText(data?.tahun_awal)
+                        edt_thn_akhir_alamat_edit.setText(data?.tahun_akhir)
+                        edt_rangka_alamat_edit.setText(data?.dalam_rangka)
+                        edt_ket_alamat_edit.setText(data?.keterangan)
+                    } else {
+                        Toast.makeText(this@EditAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
+
+    }
+
     private fun doDeletePekerjaan(alamat: AlamatResp) {
         NetworkConfig().getService().deleteAlamat(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             alamat.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -106,7 +132,7 @@ class EditAlamatActivity : BaseActivity() {
         }
 
         NetworkConfig().getService().updateAlamatSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             alamat?.id.toString(),
             alamatReq
         ).enqueue(object : Callback<BaseResp> {
@@ -127,7 +153,7 @@ class EditAlamatActivity : BaseActivity() {
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_alamat_edit.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_alamat_edit.hideDrawable(R.string.not_update)
                 }
             }

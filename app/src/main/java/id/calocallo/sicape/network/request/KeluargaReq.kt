@@ -1,6 +1,7 @@
 package id.calocallo.sicape.network.request
 
 data class KeluargaReq(
+    var status_hubungan: String?,
     var nama: String?,
     var nama_alias: String?,
     var tempat_lahir: String?,
@@ -38,16 +39,16 @@ data class KeluargaReq(
     var status_kehidupan: Int?,
     var tahun_kematian: String?,
     var lokasi_kematian: String?,
-    var sebab_kematian: String
+    var sebab_kematian: String?
 ) {
     constructor() : this(
-        "", "", "", "", "", "", "",
-        "", "", "", "",
-        "", 0, "", "", "",
-        "", "", "", "", "",
-        "", "", "",
-        "",  "",
-        "", "",
-        "", 0, "", "", ""
+        null,null, null, null, null, null, null, null,
+        null, null, null, null,
+        null, 0, null, null, null,
+        null, null, null, null, null,
+        null, null, null,
+        null,  null,
+        null, null,
+        null, 0, null, null, null
     )
 }

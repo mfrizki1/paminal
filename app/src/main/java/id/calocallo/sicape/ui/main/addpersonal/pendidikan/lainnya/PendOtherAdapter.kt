@@ -21,7 +21,7 @@ class PendOtherAdapter(
     inner class OtherHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(addPendidikanModel: AddPendidikanModel) {
             with(itemView) {
-
+                addPendidikanModel.jenis ="lain_lain"
                 edt_nama_others_custom.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
 //                    Log.e("nameAfter", s.toString())
@@ -127,7 +127,7 @@ class PendOtherAdapter(
                     }
                 })
 
-                edt_ket_others_custom.addTextChangedListener(object : TextWatcher {
+                edt_membiayai_others_custom.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
 //                    Log.e("org", s.toString())
                         addPendidikanModel.yang_membiayai = s.toString()
@@ -202,6 +202,13 @@ class PendOtherAdapter(
 
     override fun onBindViewHolder(holder: OtherHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.itemView.edt_nama_others_custom.setText(data.pendidikan)
+        holder.itemView.edt_thn_awal_others_custom.setText(data.tahun_awal)
+        holder.itemView.edt_thn_akhir_others_custom.setText(data.tahun_akhir)
+        holder.itemView.edt_tempat_others_custom.setText(data.kota)
+        holder.itemView.edt_membiayai_others_custom.setText(data.yang_membiayai)
+        holder.itemView.edt_ket_others_custom.setText(data.keterangan)
     }
 
     interface OnCLickOther {

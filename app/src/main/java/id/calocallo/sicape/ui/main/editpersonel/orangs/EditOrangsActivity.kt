@@ -13,7 +13,7 @@ import id.calocallo.sicape.network.request.OrangsReq
 import id.calocallo.sicape.network.response.OrangsResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,34 +24,27 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditOrangsActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var orangsReq = OrangsReq()
+    private var menu = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_orangs)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         val namaPersonel = intent.extras?.getString("NAMA_PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = namaPersonel
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_orangs_edit.gone()
             btn_delete_orangs_edit.gone()
         }
+
         val orangs = intent.extras?.getParcelable<OrangsResp>("ORANGS")
-        when (orangs?.jenis_kelamin) {
-            "laki_laki" -> {
-                orangsReq.jenis_kelamin = "laki_laki"
-                spinner_jk_orangs_edit.setText("Laki-Laki")
-            }
-            "perempuan" -> {
-                orangsReq.jenis_kelamin = "perempuan"
-                spinner_jk_orangs_edit.setText("Perempuan")
-            }
-        }
-        var menu = intent.extras?.getString("MENU")
+
+        menu = intent.extras?.getString("MENU").toString()
         when (menu) {
             "berjasa" -> {
                 menu = "berjasa"
@@ -62,6 +55,9 @@ class EditOrangsActivity : BaseActivity() {
                 spinner_orangs_edit.setText("Orang Disegani Karena Adat")
             }
         }
+
+        apiDetailOrangs(orangs, menu)
+
         btn_save_orangs_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_orangs_edit)
         btn_save_orangs_edit.setOnClickListener {
@@ -77,6 +73,11 @@ class EditOrangsActivity : BaseActivity() {
             }.show()
         }
 
+        initSp()
+
+    }
+
+    private fun initSp() {
         val item = listOf("Orang Berjasa Selain Orang Tua", "Orang Disegani Karena Adat")
 //        spinner_orangs.setText(currMenu)
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
@@ -97,8 +98,26 @@ class EditOrangsActivity : BaseActivity() {
                 1 -> orangsReq.jenis_kelamin = "perempuan"
             }
         }
-        getOrangs(orangs)
+    }
 
+    private fun apiDetailOrangs(orangs: OrangsResp?, menu: String?) {
+        NetworkConfig().getService().getDetailOrang(
+            "Bearer ${sessionManager1.fetchAuthToken()}", menu.toString(), orangs?.id.toString()
+        ).enqueue(object : Callback<OrangsResp> {
+            override fun onFailure(call: Call<OrangsResp>, t: Throwable) {
+                Toast.makeText(this@EditOrangsActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<OrangsResp>, response: Response<OrangsResp>) {
+                if (response.isSuccessful) {
+                    getOrangs(response.body())
+                } else {
+                    Toast.makeText(this@EditOrangsActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+
+                }
+            }
+        })
     }
 
     private fun getOrangs(data: OrangsResp?) {
@@ -107,6 +126,18 @@ class EditOrangsActivity : BaseActivity() {
         edt_alamat_orangs_edit.setText(data?.alamat)
         edt_pekerjaan_orangs_edit.setText(data?.pekerjaan)
         edt_ket_orangs_edit.setText(data?.keterangan)
+        orangsReq.jenis_kelamin = data?.jenis_kelamin
+        /*2*/
+        when (data?.jenis_kelamin) {
+            "laki_laki" -> {
+                spinner_jk_orangs_edit.setText("Laki-Laki")
+            }
+            "perempuan" -> {
+                spinner_jk_orangs_edit.setText("Perempuan")
+            }
+        }
+        initSp()
+
     }
 
     private fun doUpdateOrangs(data: OrangsResp?, menu: String?) {
@@ -125,7 +156,7 @@ class EditOrangsActivity : BaseActivity() {
         orangsReq.pekerjaan = edt_pekerjaan_orangs_edit.text.toString()
         orangsReq.keterangan = edt_ket_orangs_edit.text.toString()
         NetworkConfig().getService().updateOrangsSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             menu.toString(),
             data?.id.toString(),
             orangsReq
@@ -148,7 +179,7 @@ class EditOrangsActivity : BaseActivity() {
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_orangs_edit.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_orangs_edit.hideDrawable(R.string.not_update)
                 }
             }
@@ -157,7 +188,7 @@ class EditOrangsActivity : BaseActivity() {
 
     private fun doDeleteOrangs(data: OrangsResp?, menu: String?) {
         NetworkConfig().getService().deleteOrangs(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             menu.toString(),
             data?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.lp.saksi
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,15 +10,13 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.SaksiReq
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_lhp.*
-import kotlinx.android.synthetic.main.activity_add_pasal_lp.*
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddSaksiLpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var saksiLpReq = SaksiReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

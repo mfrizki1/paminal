@@ -1,3 +1,8 @@
 package id.calocallo.sicape.network.response
 
-data class AddPersonelResp(val status: Int, val message: String, val id: Int)
+import android.os.Parcelable
+import id.calocallo.sicape.model.AllPersonelModel1
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class AddPersonelResp(val personel: AllPersonelModel1) : Parcelable

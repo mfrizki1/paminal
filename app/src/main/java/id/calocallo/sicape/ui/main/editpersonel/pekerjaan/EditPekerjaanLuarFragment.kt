@@ -15,12 +15,11 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.PekerjaanODinasReq
 import id.calocallo.sicape.network.response.BaseResp
+import id.calocallo.sicape.network.response.DetailPekerjaanLuar
 import id.calocallo.sicape.network.response.PekerjaanLuarResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
-import kotlinx.android.synthetic.main.activity_edit_tokoh.*
-import kotlinx.android.synthetic.main.fragment_edit_pekerjaan.*
 import kotlinx.android.synthetic.main.fragment_edit_pekerjaan.view.*
 import kotlinx.android.synthetic.main.fragment_edit_pekerjaan_luar.*
 import kotlinx.android.synthetic.main.fragment_edit_pekerjaan_luar.view.*
@@ -30,8 +29,8 @@ import retrofit2.Response
 
 
 class EditPekerjaanLuarFragment : Fragment() {
-    private val pekerjaanLuarReq = PekerjaanODinasReq("", "", "", "", "", "")
-    private lateinit var sessionManager: SessionManager
+    private val pekerjaanLuarReq = PekerjaanODinasReq()
+    private lateinit var sessionManager1: SessionManager1
 
 
     override fun onCreateView(
@@ -44,18 +43,13 @@ class EditPekerjaanLuarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
-        if (sessionManager.fetchHakAkses() == "operator") {
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
+        if (sessionManager1.fetchHakAkses() == "operator") {
             view.btn_save_pekerjaan_luar_edit.gone()
             view.btn_delete_edit_pekerjaan.gone()
         }
         val pekerjaan = arguments?.getParcelable<PekerjaanLuarResp>("PEKERJAAN")
-        edt_nama_pekerjaan_luar_edit.setText(pekerjaan?.pekerjaan)
-        edt_thn_awal_pekerjaan_luar_edit.setText(pekerjaan?.tahun_awal.toString())
-        edt_thn_akhir_pekerjaan_luar_edit.setText(pekerjaan?.tahun_akhir.toString())
-        edt_instansi_pekerjaan_luar_edit.setText(pekerjaan?.instansi)
-        edt_rangka_pekerjaan_luar_edit.setText(pekerjaan?.dalam_rangka)
-        edt_ket_pekerjaan_luar_edit.setText(pekerjaan?.keterangan)
+        apiDetail(pekerjaan)
 
         btn_save_pekerjaan_luar_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_pekerjaan_luar_edit)
@@ -77,9 +71,37 @@ class EditPekerjaanLuarFragment : Fragment() {
 
     }
 
+    private fun apiDetail(pekerjaan: PekerjaanLuarResp?) {
+        NetworkConfig().getService().getDetailPekerjaanLuar("Bearer ${sessionManager1.fetchAuthToken()}",
+        pekerjaan?.id.toString()).enqueue(object :Callback<DetailPekerjaanLuar>{
+            override fun onFailure(call: Call<DetailPekerjaanLuar>, t: Throwable) {
+                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(
+                call: Call<DetailPekerjaanLuar>,
+                response: Response<DetailPekerjaanLuar>
+            ) {
+                if(response.isSuccessful){
+                    val data  =response.body()
+                    edt_nama_pekerjaan_luar_edit.setText(data?.pekerjaan)
+                    edt_thn_awal_pekerjaan_luar_edit.setText(data?.tahun_awal.toString())
+                    edt_thn_akhir_pekerjaan_luar_edit.setText(data?.tahun_akhir.toString())
+                    edt_instansi_pekerjaan_luar_edit.setText(data?.instansi)
+                    edt_rangka_pekerjaan_luar_edit.setText(data?.dalam_rangka)
+                    edt_ket_pekerjaan_luar_edit.setText(data?.keterangan)
+                }else{
+                    Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+
+    }
+
     private fun doDeletePekerjaan(pekerjaan: PekerjaanLuarResp?) {
         NetworkConfig().getService().deletePekerjaanLuar(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -118,7 +140,7 @@ class EditPekerjaanLuarFragment : Fragment() {
         }
 
         NetworkConfig().getService().updatePekerjaanLuar(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString(),
             pekerjaanLuarReq
         ).enqueue(object : Callback<BaseResp> {

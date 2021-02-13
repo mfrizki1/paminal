@@ -6,9 +6,10 @@ import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.PernahDihukumResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,20 +25,20 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickPernahDihukumActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterDihukum: ReusableAdapter<PernahDihukumResp>
     private lateinit var callbackDihukum: AdapterCallback<PernahDihukumResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_pernah_dihukum)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama
         adapterDihukum = ReusableAdapter(this)
         getPernahDihukumList()
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if(hak == "operator"){
             btn_add_single_pernah_dihukum.gone()
         }
@@ -70,8 +71,8 @@ class PickPernahDihukumActivity : BaseActivity() {
         rv_list_pernah_dihukum.gone()
 
         NetworkConfig().getService().showDihukum(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString()
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<PernahDihukumResp>> {
             override fun onFailure(call: Call<ArrayList<PernahDihukumResp>>, t: Throwable) {
                 Toast.makeText(

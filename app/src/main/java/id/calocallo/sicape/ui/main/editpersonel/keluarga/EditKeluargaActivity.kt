@@ -13,10 +13,11 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.KeluargaReq
 import id.calocallo.sicape.network.response.KeluargaResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.network.response.KeluargaMinResp
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -27,30 +28,29 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditKeluargaActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var status_agama: String? = null
     private var status_hidup: String? = null
     private var status_kerja: String? = null
     private var keluargaReq = KeluargaReq()
     private var isEmptyKeluarga: Boolean? = null
+    private var status_hub: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_keluarga)
-        sessionManager = SessionManager(this)
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        sessionManager1 = SessionManager1(this)
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama.toString()
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_keluarga_edit.gone()
             btn_delete_keluarga_edit.gone()
         }
-
-
-        val keluarga = intent.extras?.getString("KELUARGA")
+        val keluarga = intent.getParcelableExtra<KeluargaMinResp>("KELUARGA")
         var title_keluarga = ""
         //untuk endpoint(status_keluarga)
-        when (keluarga) {
+        when (keluarga?.status_hubungan) {
             "ayah_kandung" -> title_keluarga = "Ayah Kandung"
             "ayah_tiri" -> title_keluarga = "Ayah Tiri"
             "ibu_kandung" -> title_keluarga = "Ibu Kandung"
@@ -59,28 +59,43 @@ class EditKeluargaActivity : BaseActivity() {
             "mertua_perempuan" -> title_keluarga = "Mertua Perempuan"
         }
         txt_keluarga_edit.text = "Edit Data $title_keluarga"
+        spinner_status_hubungan_keluarga_edit.setText(title_keluarga)
 
+        status_hub = keluarga?.status_hubungan
         bindProgressButton(btn_save_keluarga_edit)
         btn_save_keluarga_edit.attachTextChangeAnimator()
-        getKeluarga(keluarga)
-        if (isEmptyKeluarga == true) {
+        /*ADD*/
+        val isAdd = intent.getBooleanExtra("ADD_KELUARGA", false)
+        if (isAdd) {
+            txt_keluarga_edit.text = "Tambah Data Keluarga"
             btn_save_keluarga_edit.setOnClickListener {
-                addKeluarga(keluarga)
-
+                addKeluarga(detailPersonel)
             }
         } else {
+            getKeluarga(keluarga)
             btn_save_keluarga_edit.setOnClickListener {
                 doUpdateKeluarga(keluarga)
-
             }
         }
+
+
+
+       /* if (isEmptyKeluarga == true) {
+            btn_save_keluarga_edit.setOnClickListener {
+                addKeluarga(keluarga)
+            }
+        } else {
+
+        }*/
+
+        /*Delete*/
         btn_delete_keluarga_edit.setOnClickListener {
             alert("Yakin Hapus Data ?") {
                 positiveButton("Iya") {
                     NetworkConfig().getService().deleteKeluarga(
-                        "Bearer ${sessionManager.fetchAuthToken()}",
-                        sessionManager.fetchID().toString(),
-                        keluarga.toString()
+                        "Bearer ${sessionManager1.fetchAuthToken()}",
+//                        sessionManager1.fetchID().toString()
+                        keluarga?.id.toString()
                     ).enqueue(object : Callback<BaseResp> {
                         override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                             Toast.makeText(
@@ -115,170 +130,15 @@ class EditKeluargaActivity : BaseActivity() {
             }.show()
         }
 
+        initSP()
     }
 
-    private fun doUpdateKeluarga(keluarga: String?) {
-        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
-        //Defined bounds are required for your drawable
-        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
-        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
 
-        btn_save_keluarga_edit.showProgress {
-            progressColor = Color.WHITE
-        }
-
-        keluargaReq.nama = edt_nama_lngkp_keluarga_edit.text.toString()
-        keluargaReq.nama_alias = edt_alias_keluarga_edit.text.toString()
-        keluargaReq.tempat_lahir = edt_tmpt_ttl_keluarga_edit.text.toString()
-        keluargaReq.tanggal_lahir = edt_tgl_ttl_keluarga_edit.text.toString()
-        keluargaReq.ras = edt_suku_keluarga_edit.text.toString()
-        keluargaReq.kewarganegaraan = edt_kwg_keluarga_edit.text.toString()
-        keluargaReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_keluarga_edit.text.toString()
-        keluargaReq.aliran_kepercayaan_dianut = edt_aliran_dianut_keluarga_edit.text.toString()
-        keluargaReq.alamat_rumah = edt_almt_skrg_keluarga_edit.text.toString()
-        keluargaReq.no_telp_rumah = edt_no_telp_keluarga_edit.text.toString()
-        keluargaReq.alamat_rumah_sebelumnya = edt_almt_rmh_sblm_keluarga_edit.text.toString()
-        keluargaReq.tahun_pensiun = edt_thn_berhenti_keluarga_edit.text.toString()
-        keluargaReq.alasan_pensiun = edt_alsn_berhenti_keluarga_edit.text.toString()
-        keluargaReq.nama_kantor = edt_nama_kntr_keluarga_edit.text.toString()
-        keluargaReq.alamat_kantor = edt_almt_kntr_keluarga_edit.text.toString()
-        keluargaReq.no_telp_kantor = edt_no_telp_kntr_keluarga_edit.text.toString()
-        keluargaReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_keluarga_edit.text.toString()
-        keluargaReq.pendidikan_terakhir = edt_pend_trkhr_keluarga_edit.text.toString()
-        keluargaReq.pekerjaan_terakhir = edt_pekerjaan_keluarga_edit.text.toString()
-        keluargaReq.kedudukan_organisasi_saat_ini =
-            edt_kddkn_org_diikuti_keluarga_edit.text.toString()
-        keluargaReq.tahun_bergabung_organisasi_saat_ini =
-            edt_thn_org_diikuti_keluarga_edit.text.toString()
-        keluargaReq.alasan_bergabung_organisasi_saat_ini =
-            edt_alasan_org_diikuti_keluarga_edit.text.toString()
-        keluargaReq.alamat_organisasi_saat_ini = edt_almt_org_diikuti_keluarga_edit.text.toString()
-        keluargaReq.kedudukan_organisasi_sebelumnya =
-            edt_kddkn_org_prnh_keluarga_edit.text.toString()
-        keluargaReq.tahun_bergabung_organisasi_sebelumnya =
-            edt_thn_org_prnh_keluarga_edit.text.toString()
-        keluargaReq.alasan_bergabung_organisasi_sebelumnya =
-            edt_alasan_org_prnh_keluarga_edit.text.toString()
-        keluargaReq.alamat_organisasi_sebelumnya = edt_almt_org_prnh_keluarga_edit.text.toString()
-        keluargaReq.tahun_kematian = edt_tahun_kematian_keluarga_edit.text.toString()
-        keluargaReq.lokasi_kematian = edt_dimana_keluarga_edit.text.toString()
-        keluargaReq.sebab_kematian = edt_penyebab_keluarga_edit.text.toString()
-        Log.e("keluarga", "$keluargaReq")
-
-        NetworkConfig().getService().updateKeluargaSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
-            keluarga.toString(),
-            keluargaReq
-        ).enqueue(object : Callback<BaseResp> {
-            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditKeluargaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if (response.isSuccessful) {
-                    btn_save_keluarga_edit.showDrawable(animatedDrawable) {
-                        buttonTextRes = R.string.data_updated
-                        textMarginRes = R.dimen.space_10dp
-                    }
-//                    Toast.makeText(this@EditKeluargaActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
-                } else {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        btn_save_keluarga_edit.hideDrawable(R.string.save)
-                    }, 3000)
-                    btn_save_keluarga_edit.hideDrawable(R.string.not_update)
-//                    Toast.makeText(this@EditKeluargaActivity, "Error", Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-    }
-
-    private fun addKeluarga(keluarga: String?) {
-        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
-        //Defined bounds are required for your drawable
-        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
-        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
-
-        btn_save_keluarga_edit.showProgress {
-            progressColor = Color.WHITE
-        }
-
-        keluargaReq.nama = edt_nama_lngkp_keluarga_edit.text.toString()
-        keluargaReq.nama_alias = edt_alias_keluarga_edit.text.toString()
-        keluargaReq.tempat_lahir = edt_tmpt_ttl_keluarga_edit.text.toString()
-        keluargaReq.tanggal_lahir = edt_tgl_ttl_keluarga_edit.text.toString()
-        keluargaReq.ras = edt_suku_keluarga_edit.text.toString()
-        keluargaReq.kewarganegaraan = edt_kwg_keluarga_edit.text.toString()
-        keluargaReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_keluarga_edit.text.toString()
-        keluargaReq.aliran_kepercayaan_dianut = edt_aliran_dianut_keluarga_edit.text.toString()
-        keluargaReq.alamat_rumah = edt_almt_skrg_keluarga_edit.text.toString()
-        keluargaReq.no_telp_rumah = edt_no_telp_keluarga_edit.text.toString()
-        keluargaReq.alamat_rumah_sebelumnya = edt_almt_rmh_sblm_keluarga_edit.text.toString()
-        keluargaReq.tahun_pensiun = edt_thn_berhenti_keluarga_edit.text.toString()
-        keluargaReq.alasan_pensiun = edt_alsn_berhenti_keluarga_edit.text.toString()
-        keluargaReq.nama_kantor = edt_nama_kntr_keluarga_edit.text.toString()
-        keluargaReq.alamat_kantor = edt_almt_kntr_keluarga_edit.text.toString()
-        keluargaReq.no_telp_kantor = edt_no_telp_kntr_keluarga_edit.text.toString()
-        keluargaReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_keluarga_edit.text.toString()
-        keluargaReq.pendidikan_terakhir = edt_pend_trkhr_keluarga_edit.text.toString()
-        keluargaReq.pekerjaan_terakhir = edt_pekerjaan_keluarga_edit.text.toString()
-        keluargaReq.kedudukan_organisasi_saat_ini =
-            edt_kddkn_org_diikuti_keluarga_edit.text.toString()
-        keluargaReq.tahun_bergabung_organisasi_saat_ini =
-            edt_thn_org_diikuti_keluarga_edit.text.toString()
-        keluargaReq.alasan_bergabung_organisasi_saat_ini =
-            edt_alasan_org_diikuti_keluarga_edit.text.toString()
-        keluargaReq.alamat_organisasi_saat_ini = edt_almt_org_diikuti_keluarga_edit.text.toString()
-        keluargaReq.kedudukan_organisasi_sebelumnya =
-            edt_kddkn_org_prnh_keluarga_edit.text.toString()
-        keluargaReq.tahun_bergabung_organisasi_sebelumnya =
-            edt_thn_org_prnh_keluarga_edit.text.toString()
-        keluargaReq.alasan_bergabung_organisasi_sebelumnya =
-            edt_alasan_org_prnh_keluarga_edit.text.toString()
-        keluargaReq.alamat_organisasi_sebelumnya = edt_almt_org_prnh_keluarga_edit.text.toString()
-        keluargaReq.tahun_kematian = edt_tahun_kematian_keluarga_edit.text.toString()
-        keluargaReq.lokasi_kematian = edt_dimana_keluarga_edit.text.toString()
-        keluargaReq.sebab_kematian = edt_penyebab_keluarga_edit.text.toString()
-
-        NetworkConfig().getService().addKeluargaSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
-            keluarga.toString(),
-            keluargaReq
-        ).enqueue(object : Callback<BaseResp> {
-            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditKeluargaActivity, R.string.error_conn, Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if (response.isSuccessful) {
-                    btn_save_keluarga_edit.showDrawable(animatedDrawable) {
-                        buttonTextRes = R.string.data_saved
-                        textMarginRes = R.dimen.space_10dp
-                    }
-//                    Toast.makeText(this@EditKeluargaActivity, R.string.data_saved, Toast.LENGTH_SHORT).show()
-//                    btn_save_keluarga_edit.hideProgress(R.string.save)
-                } else {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        btn_save_keluarga_edit.hideDrawable(R.string.save)
-                    }, 3000)
-                    btn_save_keluarga_edit.hideDrawable(R.string.not_save)
-//                    btn_save_keluarga_edit.hideDrawable(R.string.not_save)
-//                    btn_save_keluarga_edit.hideDrawable(R.string.save)
-//                    Toast.makeText(this@EditKeluargaActivity, R.string.error, Toast.LENGTH_SHORT).show()
-                }
-            }
-
-        })
-    }
-
-    private fun getKeluarga(keluarga: String?) {
-        NetworkConfig().getService().showKeluarga(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
-            keluarga.toString()
+    private fun getKeluarga(keluarga: KeluargaMinResp?) {
+        NetworkConfig().getService().getDetailKeluarga(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+//            sessionManager1.fetchID().toString(),
+            keluarga?.id.toString()
         ).enqueue(object : Callback<KeluargaResp> {
             override fun onFailure(call: Call<KeluargaResp>, t: Throwable) {
                 Toast.makeText(this@EditKeluargaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
@@ -302,6 +162,7 @@ class EditKeluargaActivity : BaseActivity() {
     }
 
     private fun viewKeluarga(data: KeluargaResp) {
+
         edt_nama_lngkp_keluarga_edit.setText(data.nama)
         edt_alias_keluarga_edit.setText(data.nama_alias)
         edt_tmpt_ttl_keluarga_edit.setText(data.tempat_lahir)
@@ -341,37 +202,42 @@ class EditKeluargaActivity : BaseActivity() {
         //spinner
         when (data.status_kehidupan) {
             0 -> {
-                status_hidup = "Tidak"
+                spinner_stts_hidup_keluarga_edit.setText("Tidak")
                 txt_layout_penyebab_keluarga_edit.visibility = View.VISIBLE
                 txt_layout_bagaimana_stts_keluarga_edit.visibility = View.VISIBLE
                 txt_layout_dimana_keluarga_edit.visibility = View.VISIBLE
             }
             1 -> {
-                status_hidup = "Ya"
+                spinner_stts_hidup_keluarga_edit.setText("Ya")
                 txt_layout_penyebab_keluarga_edit.visibility = View.GONE
                 txt_layout_bagaimana_stts_keluarga_edit.visibility = View.GONE
                 txt_layout_dimana_keluarga_edit.visibility = View.GONE
+                edt_penyebab_keluarga_edit.text = null
+                edt_tahun_kematian_keluarga_edit.text = null
+                edt_dimana_keluarga_edit.text = null
             }
         }
         when (data.status_kerja) {
             0 -> {
-                txt_layout_pekerjaan_keluarga_edit.visibility = View.GONE
+                spinner_pekerjaan_keluarga_edit.setText("Tidak")
                 txt_layout_nama_kantor_keluarga_edit.visibility = View.GONE
                 txt_layout_alamat_kantor_keluarga_edit.visibility = View.GONE
                 txt_layout_no_telp_kantor_keluarga_edit.visibility = View.GONE
                 txt_layout_thn_berhenti_keluarga_edit.visibility = View.VISIBLE
                 txt_layout_alsn_berhenti_keluarga_edit.visibility = View.VISIBLE
-                status_kerja = "Tidak"
-
+                edt_nama_kntr_keluarga_edit.text = null
+                edt_almt_kntr_keluarga_edit.text = null
+                edt_no_telp_kntr_keluarga_edit.text = null
             }
             1 -> {
-
+                spinner_pekerjaan_keluarga_edit.setText("Masih")
                 txt_layout_nama_kantor_keluarga_edit.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_keluarga_edit.visibility = View.VISIBLE
                 txt_layout_no_telp_kantor_keluarga_edit.visibility = View.VISIBLE
                 txt_layout_thn_berhenti_keluarga_edit.visibility = View.GONE
                 txt_layout_alsn_berhenti_keluarga_edit.visibility = View.GONE
-                status_kerja = "Masih"
+                edt_thn_berhenti_keluarga_edit.text = null
+                edt_alsn_berhenti_keluarga_edit.text = null
             }
         }
         when (data.agama) {
@@ -382,8 +248,171 @@ class EditKeluargaActivity : BaseActivity() {
             "hindu" -> status_agama = "Hindu"
             "konghuchu" -> status_agama = "Konghuchu"
         }
-        val agama = listOf("Islam", "Katolik", "Protestan", "Buddha", "Hindu", "Konghuchu")
         sp_agama_keluarga_edit.setText(status_agama)
+
+
+    }
+
+    private fun addKeluarga(keluarga: AllPersonelModel1?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_keluarga_edit.showProgress {
+            progressColor = Color.WHITE
+        }
+        keluargaReq.status_hubungan = status_hub
+        keluargaReq.nama = edt_nama_lngkp_keluarga_edit.text.toString()
+        keluargaReq.nama_alias = edt_alias_keluarga_edit.text.toString()
+        keluargaReq.tempat_lahir = edt_tmpt_ttl_keluarga_edit.text.toString()
+        keluargaReq.tanggal_lahir = edt_tgl_ttl_keluarga_edit.text.toString()
+        keluargaReq.ras = edt_suku_keluarga_edit.text.toString()
+        keluargaReq.kewarganegaraan = edt_kwg_keluarga_edit.text.toString()
+        keluargaReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_keluarga_edit.text.toString()
+        keluargaReq.aliran_kepercayaan_dianut = edt_aliran_dianut_keluarga_edit.text.toString()
+        keluargaReq.alamat_rumah = edt_almt_skrg_keluarga_edit.text.toString()
+        keluargaReq.no_telp_rumah = edt_no_telp_keluarga_edit.text.toString()
+        keluargaReq.alamat_rumah_sebelumnya = edt_almt_rmh_sblm_keluarga_edit.text.toString()
+        keluargaReq.tahun_pensiun = edt_thn_berhenti_keluarga_edit.text.toString()
+        keluargaReq.alasan_pensiun = edt_alsn_berhenti_keluarga_edit.text.toString()
+        keluargaReq.nama_kantor = edt_nama_kntr_keluarga_edit.text.toString()
+        keluargaReq.alamat_kantor = edt_almt_kntr_keluarga_edit.text.toString()
+        keluargaReq.no_telp_kantor = edt_no_telp_kntr_keluarga_edit.text.toString()
+        keluargaReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_keluarga_edit.text.toString()
+        keluargaReq.pendidikan_terakhir = edt_pend_trkhr_keluarga_edit.text.toString()
+        keluargaReq.pekerjaan_terakhir = edt_pekerjaan_keluarga_edit.text.toString()
+        keluargaReq.kedudukan_organisasi_saat_ini =
+            edt_kddkn_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.tahun_bergabung_organisasi_saat_ini =
+            edt_thn_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.alasan_bergabung_organisasi_saat_ini =
+            edt_alasan_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.alamat_organisasi_saat_ini = edt_almt_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.kedudukan_organisasi_sebelumnya =
+            edt_kddkn_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.tahun_bergabung_organisasi_sebelumnya =
+            edt_thn_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.alasan_bergabung_organisasi_sebelumnya =
+            edt_alasan_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.alamat_organisasi_sebelumnya = edt_almt_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.tahun_kematian = edt_tahun_kematian_keluarga_edit.text.toString()
+        keluargaReq.lokasi_kematian = edt_dimana_keluarga_edit.text.toString()
+        keluargaReq.sebab_kematian = edt_penyebab_keluarga_edit.text.toString()
+
+        NetworkConfig().getService().addKeluargaSingle(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            keluarga?.id.toString(),
+            keluargaReq
+        ).enqueue(object : Callback<BaseResp> {
+            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                Toast.makeText(this@EditKeluargaActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                if (response.isSuccessful) {
+                    btn_save_keluarga_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_saved
+                        textMarginRes = R.dimen.space_10dp
+                    }
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    },500)
+                } else {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_keluarga_edit.hideDrawable(R.string.save)
+                    }, 3000)
+                    btn_save_keluarga_edit.hideDrawable(R.string.not_save)
+                }
+            }
+
+        })
+    }
+
+    private fun doUpdateKeluarga(keluarga: KeluargaMinResp?) {
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        //Defined bounds are required for your drawable
+        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+
+        btn_save_keluarga_edit.showProgress {
+            progressColor = Color.WHITE
+        }
+        keluargaReq.status_hubungan = status_hub
+        keluargaReq.nama = edt_nama_lngkp_keluarga_edit.text.toString()
+        keluargaReq.nama_alias = edt_alias_keluarga_edit.text.toString()
+        keluargaReq.tempat_lahir = edt_tmpt_ttl_keluarga_edit.text.toString()
+        keluargaReq.tanggal_lahir = edt_tgl_ttl_keluarga_edit.text.toString()
+        keluargaReq.ras = edt_suku_keluarga_edit.text.toString()
+        keluargaReq.kewarganegaraan = edt_kwg_keluarga_edit.text.toString()
+        keluargaReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_keluarga_edit.text.toString()
+        keluargaReq.aliran_kepercayaan_dianut = edt_aliran_dianut_keluarga_edit.text.toString()
+        keluargaReq.alamat_rumah = edt_almt_skrg_keluarga_edit.text.toString()
+        keluargaReq.no_telp_rumah = edt_no_telp_keluarga_edit.text.toString()
+        keluargaReq.alamat_rumah_sebelumnya = edt_almt_rmh_sblm_keluarga_edit.text.toString()
+        keluargaReq.tahun_pensiun = edt_thn_berhenti_keluarga_edit.text.toString()
+        keluargaReq.alasan_pensiun = edt_alsn_berhenti_keluarga_edit.text.toString()
+        keluargaReq.nama_kantor = edt_nama_kntr_keluarga_edit.text.toString()
+        keluargaReq.alamat_kantor = edt_almt_kntr_keluarga_edit.text.toString()
+        keluargaReq.no_telp_kantor = edt_no_telp_kntr_keluarga_edit.text.toString()
+        keluargaReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_keluarga_edit.text.toString()
+        keluargaReq.pendidikan_terakhir = edt_pend_trkhr_keluarga_edit.text.toString()
+        keluargaReq.pekerjaan_terakhir = edt_pekerjaan_keluarga_edit.text.toString()
+        keluargaReq.kedudukan_organisasi_saat_ini =
+            edt_kddkn_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.tahun_bergabung_organisasi_saat_ini =
+            edt_thn_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.alasan_bergabung_organisasi_saat_ini =
+            edt_alasan_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.alamat_organisasi_saat_ini = edt_almt_org_diikuti_keluarga_edit.text.toString()
+        keluargaReq.kedudukan_organisasi_sebelumnya =
+            edt_kddkn_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.tahun_bergabung_organisasi_sebelumnya =
+            edt_thn_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.alasan_bergabung_organisasi_sebelumnya =
+            edt_alasan_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.alamat_organisasi_sebelumnya = edt_almt_org_prnh_keluarga_edit.text.toString()
+        keluargaReq.tahun_kematian = edt_tahun_kematian_keluarga_edit.text.toString()
+        keluargaReq.lokasi_kematian = edt_dimana_keluarga_edit.text.toString()
+        keluargaReq.sebab_kematian = edt_penyebab_keluarga_edit.text.toString()
+        Log.e("keluarga", "$keluargaReq")
+
+        NetworkConfig().getService().updateKeluargaSingle(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+//            sessionManager1.fetchID().toString(),
+            keluarga?.id.toString(),
+            keluargaReq
+        ).enqueue(object : Callback<BaseResp> {
+            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                Toast.makeText(this@EditKeluargaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                if (response.isSuccessful) {
+                    btn_save_keluarga_edit.showDrawable(animatedDrawable) {
+                        buttonTextRes = R.string.data_updated
+                        textMarginRes = R.dimen.space_10dp
+                    }
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        finish()
+                    }, 500)
+//                    Toast.makeText(this@EditKeluargaActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
+                } else {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_keluarga_edit.hideDrawable(R.string.save)
+                    }, 3000)
+                    btn_save_keluarga_edit.hideDrawable(R.string.not_update)
+//                    Toast.makeText(this@EditKeluargaActivity, "Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun initSP() {
+        val agama = listOf("Islam", "Katolik", "Protestan", "Buddha", "Hindu", "Konghuchu")
+
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agama)
         sp_agama_keluarga_edit.setAdapter(adapterAgama)
         sp_agama_keluarga_edit.setOnItemClickListener { parent, view, position, id ->
@@ -410,18 +439,24 @@ class EditKeluargaActivity : BaseActivity() {
         }
 
         val kerja = listOf("Masih", "Tidak")
-        spinner_pekerjaan_keluarga_edit.setText(status_kerja)
+
         val adapterKerja = ArrayAdapter(this, R.layout.item_spinner, kerja)
         spinner_pekerjaan_keluarga_edit.setAdapter(adapterKerja)
         spinner_pekerjaan_keluarga_edit.setOnItemClickListener { parent, view, position, id ->
             when (position) {
+                /*masih*/
                 0 -> {
+                    txt_layout_nama_kantor_keluarga_edit.visibility = View.VISIBLE
                     txt_layout_alamat_kantor_keluarga_edit.visibility = View.VISIBLE
                     txt_layout_no_telp_kantor_keluarga_edit.visibility = View.VISIBLE
                     txt_layout_thn_berhenti_keluarga_edit.visibility = View.GONE
                     txt_layout_alsn_berhenti_keluarga_edit.visibility = View.GONE
                     keluargaReq.status_kerja = 1
+                    edt_nama_kntr_keluarga_edit.text = null
+                    edt_almt_kntr_keluarga_edit.text = null
+                    edt_no_telp_kntr_keluarga_edit.text = null
                 }
+                /*tidak*/
                 1 -> {
                     txt_layout_nama_kantor_keluarga_edit.visibility = View.GONE
                     txt_layout_alamat_kantor_keluarga_edit.visibility = View.GONE
@@ -429,13 +464,15 @@ class EditKeluargaActivity : BaseActivity() {
                     txt_layout_thn_berhenti_keluarga_edit.visibility = View.VISIBLE
                     txt_layout_alsn_berhenti_keluarga_edit.visibility = View.VISIBLE
                     keluargaReq.status_kerja = 0
+                    edt_thn_berhenti_keluarga_edit.text = null
+                    edt_alsn_berhenti_keluarga_edit.text = null
                 }
 //
             }
         }
 
         val hidup = listOf("Ya", "Tidak")
-        spinner_stts_hidup_keluarga_edit.setText(status_hidup)
+
         val adapterHidup = ArrayAdapter(this, R.layout.item_spinner, hidup)
         spinner_stts_hidup_keluarga_edit.setAdapter(adapterHidup)
         spinner_stts_hidup_keluarga_edit.setOnItemClickListener { parent, view, position, id ->
@@ -455,5 +492,22 @@ class EditKeluargaActivity : BaseActivity() {
             }
         }
 
+        val item = listOf(
+            "Ayah Kandung", "Ayah Tiri", "Ibu Kandung", "Ibu Tiri",
+            "Mertua Laki-Laki", "Mertua Perempuan"
+        )
+        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
+        spinner_status_hubungan_keluarga_edit.setAdapter(adapter)
+        spinner_status_hubungan_keluarga_edit.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> status_hub = "ayah_kandung"
+                1 -> status_hub = "ayah_tiri"
+                2 -> status_hub = "ibu_kandung"
+                3 -> status_hub = "ibu_tiri"
+                4 -> status_hub = "mertua_laki_laki"
+                5 -> status_hub = "mertua_perempuan"
+            }
+        }
     }
+
 }

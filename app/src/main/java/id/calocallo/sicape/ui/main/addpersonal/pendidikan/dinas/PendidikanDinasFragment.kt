@@ -2,6 +2,7 @@ package id.calocallo.sicape.ui.main.addpersonal.pendidikan.dinas
 
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,14 +16,14 @@ import id.calocallo.sicape.model.ParentListPendDinas
 import id.calocallo.sicape.model.ParentListPendUmum
 import id.calocallo.sicape.model.AddPendidikanModel
 import id.calocallo.sicape.ui.main.addpersonal.pendidikan.lainnya.PendidikanLainFragment
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.fragment_pendidikan_dinas.*
 
 
 class PendidikanDinasFragment : Fragment() {
     private lateinit var sheenValidator: SheenValidator
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
 //    private lateinit var parentPendidikan: ViewGroup
 
     private lateinit var list: ArrayList<AddPendidikanModel>
@@ -42,7 +43,7 @@ class PendidikanDinasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
         list = ArrayList()
 //        comunicator = activity as Comunicator
         sheenValidator = activity?.let { SheenValidator(it) }!!
@@ -54,8 +55,8 @@ class PendidikanDinasFragment : Fragment() {
             if(list.size == 1 && list[0].pendidikan == ""){
                 list.clear()
             }
-            sessionManager.setPendDinas(list)
-
+            sessionManager1.setPendDinas(list)
+            Log.e("pendDinas", "${sessionManager1.getPendDinas()}")
             sheenValidator.validate()
             val pendOtherFrag = PendidikanLainFragment()
                 .apply {
@@ -77,9 +78,9 @@ class PendidikanDinasFragment : Fragment() {
     private fun setAdapter() {
         rv_pend_dinas.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val dinasCreated = sessionManager.getPendDinas()
+        val dinasCreated = sessionManager1.getPendDinas()
         if (dinasCreated.size == 0) {
-            list.add(AddPendidikanModel("", "", "", "", "", ""))
+            list.add(AddPendidikanModel())
         }
         adapter = activity?.let {
             PendDinasAdapter(it, list, object : PendDinasAdapter.OnClickDinas {
@@ -93,7 +94,7 @@ class PendidikanDinasFragment : Fragment() {
 
         btn_add_pend_dinas.setOnClickListener {
             val position = if (list.isEmpty()) 0 else list.size - 1
-            list.add(AddPendidikanModel("", "", "", "", "", ""))
+            list.add(AddPendidikanModel())
             adapter.notifyItemInserted(position)
             adapter.notifyDataSetChanged()
         }
@@ -109,11 +110,12 @@ class PendidikanDinasFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val dinas = sessionManager.getPendDinas()
+        val dinas = sessionManager1.getPendDinas()
         for (i in 0 until dinas.size) {
             list.add(
                 i, AddPendidikanModel(
                     dinas[i].pendidikan,
+                    dinas[i].jenis,
                     dinas[i].tahun_awal,
                     dinas[i].tahun_akhir,
                     dinas[i].kota,

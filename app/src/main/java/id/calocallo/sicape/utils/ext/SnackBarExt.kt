@@ -11,7 +11,8 @@ import com.google.android.material.snackbar.Snackbar
  * @param length Duration of the Snackbar
  * @param f Action of the Snackbar
  */
-fun View.showSnackbar(@StringRes messageRes: Int, length: Int = Snackbar.LENGTH_LONG, f: Snackbar.() -> Unit) {
+
+fun View.showSnackbar(@StringRes messageRes: Int, length: Int = Snackbar.LENGTH_INDEFINITE, f: Snackbar.() -> Unit) {
     val snackBar = Snackbar.make(this, resources.getString(messageRes), length)
     snackBar.f()
     snackBar.show()

@@ -12,18 +12,18 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListAnalisa
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_analisa_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddAnalisaLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var analisaReq = ListAnalisa()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_analisa_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Analisa"

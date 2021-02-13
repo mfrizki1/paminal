@@ -12,10 +12,13 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.OrganisasiReq
 import id.calocallo.sicape.network.request.PenghargaanReq
 import id.calocallo.sicape.network.request.PerjuanganCitaReq
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.AddOrganisasiResp
+import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -27,7 +30,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddSingleOrganisasiActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private val organisasiReq = OrganisasiReq()
     private val penghargaanReq = PenghargaanReq()
     private val perjuanganCitaReq = PerjuanganCitaReq()
@@ -36,9 +39,9 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_organisasi)
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val bundle = intent.extras
-        val detail = bundle?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val detail = bundle?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         val misc = bundle?.getString("MISC")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detail?.nama.toString()
@@ -152,9 +155,9 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         perjuanganCitaReq.dalam_rangka = edt_single_rangka_perjuangan.text.toString()
         perjuanganCitaReq.keterangan = edt_ket_single_perjuangan.text.toString()
         NetworkConfig().getService().addPerjuanganSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
-            sessionManager.fetchID().toString(),
+            sessionManager1.fetchID().toString(),
             perjuanganCitaReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -209,9 +212,9 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         penghargaanReq.tahun = edt_thn_single_penghargaan.text.toString()
         penghargaanReq.keterangan = edt_ket_single_penghargaan.text.toString()
         NetworkConfig().getService().addPenghargaanSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
-            sessionManager.fetchID().toString(),
+            sessionManager1.fetchID().toString(),
             penghargaanReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -272,12 +275,12 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         }
 
         NetworkConfig().getService().addOrganisasiSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
-            sessionManager.fetchID().toString(),
+            sessionManager1.fetchID().toString(),
             organisasiReq
-        ).enqueue(object : Callback<BaseResp> {
-            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+        ).enqueue(object : Callback<Base1Resp<AddOrganisasiResp>> {
+            override fun onFailure(call: Call<Base1Resp<AddOrganisasiResp>>, t: Throwable) {
                 btn_save_single_organisasi.hideDrawable(R.string.save)
                 Toast.makeText(
                     this@AddSingleOrganisasiActivity,
@@ -289,7 +292,10 @@ class AddSingleOrganisasiActivity : BaseActivity() {
 
             }
 
-            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+            override fun onResponse(
+                call: Call<Base1Resp<AddOrganisasiResp>>,
+                response: Response<Base1Resp<AddOrganisasiResp>>
+            ) {
                 if (response.isSuccessful) {
                     btn_save_single_organisasi.showDrawable(animatedDrawable) {
                         buttonTextRes = R.string.data_saved
@@ -300,6 +306,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 500)
+
 
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({

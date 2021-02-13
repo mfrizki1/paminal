@@ -110,7 +110,7 @@ class MedSosAdapter(
                     ) {
                     }
                 })
-                btnDelete.visibility = if(adapterPosition==0)View.GONE else View.VISIBLE
+                btnDelete.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
                 btnDelete.setOnClickListener {
                     onClickMedsos.onDelete(adapterPosition)
                 }
@@ -135,5 +135,10 @@ class MedSosAdapter(
 
     override fun onBindViewHolder(holder: MedsosHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.etNama.setText(data.nama_medsos)
+        holder.etNamaAcc.setText(data.nama_akun)
+        holder.etAlasan.setText(data.alasan)
+        holder.etKet.setText(data.keterangan)
     }
 }

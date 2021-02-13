@@ -15,14 +15,14 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.request.PerjuanganCitaReq
 import id.calocallo.sicape.ui.main.addpersonal.misc.penghargaan.PenghargaanFragment
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.fragment_perjuangan_cita.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 
 class PerjuanganCitaFragment : Fragment() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<PerjuanganCitaReq>
     private lateinit var parentList: ParentListPerjuanganCita
     private lateinit var adapter: PerjuanganAdapter
@@ -37,7 +37,7 @@ class PerjuanganCitaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
 
         (activity as BaseActivity).setupActionBarWithBackButton(toolbar)
         (activity as BaseActivity).supportActionBar?.title = "Perjuangan Mencapai Cita-Cita"
@@ -50,8 +50,8 @@ class PerjuanganCitaFragment : Fragment() {
             if (list.size == 1 && list[0].peristiwa == "") {
                 list.clear()
             }
-            sessionManager.setPerjuanganCita(list)
-            Log.e("size", "size perjuangan ${sessionManager.getPerjuanganCita().size}}")
+            sessionManager1.setPerjuanganCita(list)
+            Log.e("size", "size perjuangan ${sessionManager1.getPerjuanganCita()}}")
 //            Log.e("peristiwa", parentList.parentList[0].peristiwa.toString())
 //            Log.e("peristiwa", parentList.parentList[0].tmpt_peristiwa.toString())
 //            Log.e("peristiwa", parentList.parentList[1].peristiwa.toString())
@@ -69,7 +69,7 @@ class PerjuanganCitaFragment : Fragment() {
     }
 
     private fun initRecycler(rv: RecyclerView) {
-        val perjuangan = sessionManager.getPerjuanganCita()
+        val perjuangan = sessionManager1.getPerjuanganCita()
         Log.e("size", "size perjuangan ${perjuangan.size}}")
 
         if (perjuangan.size == 0) {
@@ -116,7 +116,7 @@ class PerjuanganCitaFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val perjuangan = sessionManager.getPerjuanganCita()
+        val perjuangan = sessionManager1.getPerjuanganCita()
         for (i in 0 until perjuangan.size) {
             list.add(
                 i, PerjuanganCitaReq(

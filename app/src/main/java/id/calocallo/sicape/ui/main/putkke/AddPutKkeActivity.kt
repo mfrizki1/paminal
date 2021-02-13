@@ -14,13 +14,13 @@ import id.calocallo.sicape.network.response.LpKkeResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
 import id.calocallo.sicape.ui.main.choose.lp.ListLpKkePutKkeActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_put_kke.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddPutKkeActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var idLhp: Int? = null
     private var idLp: Int? = null
     private var putKkeReq = PutKkeReq()
@@ -29,7 +29,7 @@ class AddPutKkeActivity : BaseActivity() {
         setContentView(R.layout.activity_add_put_kke)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Putusan Kode Etik"
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         btn_save_put_kke.attachTextChangeAnimator()
         bindProgressButton(btn_save_put_kke)

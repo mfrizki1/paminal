@@ -9,10 +9,11 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.MedInfoReq
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_med_info.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -21,14 +22,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddSingleMedInfoActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var medInfoReq = MedInfoReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_med_info)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
@@ -56,8 +57,8 @@ class AddSingleMedInfoActivity : BaseActivity() {
 
 
         NetworkConfig().getService().addMedInfoSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString(),
             medInfoReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

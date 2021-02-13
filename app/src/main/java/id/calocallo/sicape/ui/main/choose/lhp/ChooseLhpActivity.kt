@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.choose.lhp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -12,7 +11,7 @@ import id.calocallo.sicape.network.response.KetTerlaporLhpResp
 import id.calocallo.sicape.network.response.PersonelPenyelidikResp
 import id.calocallo.sicape.network.response.RefPenyelidikanResp
 import id.calocallo.sicape.network.response.SaksiLhpResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_choose_lhp.*
@@ -22,7 +21,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class ChooseLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var list = arrayListOf<LhpResp>()
     private var refPenyelidikan = ArrayList<RefPenyelidikanResp>()
     private var personelPenyelidikan = ArrayList<PersonelPenyelidikResp>()
@@ -33,7 +32,7 @@ class ChooseLhpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Data LHP"
         getListLhp()

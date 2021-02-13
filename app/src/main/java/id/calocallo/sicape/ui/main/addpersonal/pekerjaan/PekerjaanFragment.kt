@@ -7,25 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.ParentListPekerjaan
-import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.request.AddPekerjaanReq
 import id.calocallo.sicape.network.request.AddSinglePekerjaanReq
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.Constants
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import kotlinx.android.synthetic.main.fragment_pekerjaan.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class PekerjaanFragment : Fragment() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<AddSinglePekerjaanReq>
     private lateinit var adapter: PekerjaanAdapter
 
@@ -42,7 +33,7 @@ class PekerjaanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
 //        sessionManager.clearPekerjaan()
         list = ArrayList()
 //        parentListPekerjaan = AddPekerjaanReq(list)
@@ -53,7 +44,7 @@ class PekerjaanFragment : Fragment() {
                 list.clear()
             }
 //            initAPI()
-            sessionManager.setPekerjaan(list)
+            sessionManager1.setPekerjaan(list)
             val pkrjanOutDinas = PekerjaanOutDinasFragment()
                 .apply {
                     enterTransition = Slide(Gravity.END)
@@ -71,7 +62,7 @@ class PekerjaanFragment : Fragment() {
     private fun initRecycler() {
         rv_pekerjaan.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val pekerjaanCreated = sessionManager.getPekerjaan()
+        val pekerjaanCreated = sessionManager1.getPekerjaan()
         if (pekerjaanCreated.size == 0) {
             list.add(
                 AddSinglePekerjaanReq()
@@ -101,7 +92,7 @@ class PekerjaanFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val pekerjaan = sessionManager.getPekerjaan()
+        val pekerjaan = sessionManager1.getPekerjaan()
         for (i in 0 until pekerjaan.size) {
             list.add(
                 i, AddSinglePekerjaanReq(

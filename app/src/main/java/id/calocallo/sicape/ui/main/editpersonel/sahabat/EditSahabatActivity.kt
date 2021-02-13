@@ -15,7 +15,7 @@ import id.calocallo.sicape.network.request.SahabatReq
 import id.calocallo.sicape.network.response.SahabatResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -26,26 +26,26 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditSahabatActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var sahabatReq = SahabatReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_sahabat)
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val namaPersonel = intent.extras?.getString("NAMA_PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = namaPersonel
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_sahabat_edit.gone()
             btn_delete_sahabat_edit.gone()
         }
 
         val sahabat = intent.extras?.getParcelable<SahabatResp>("SAHABAT")
-
-        getSahabat(sahabat)
+        apiDetailSahabat(sahabat)
+//        getSahabat(sahabat)
         btn_save_sahabat_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_sahabat_edit)
         btn_save_sahabat_edit.setOnClickListener {
@@ -59,6 +59,10 @@ class EditSahabatActivity : BaseActivity() {
                 negativeButton("Tidak") {}
             }.show()
         }
+        initSp()
+    }
+
+    private fun initSp() {
         val jk = listOf("Laki-Laki", "Perempuan")
         val adapterJK = ArrayAdapter(this, R.layout.item_spinner, jk)
         spinner_jk_sahabat_edit.setAdapter(adapterJK)
@@ -68,6 +72,31 @@ class EditSahabatActivity : BaseActivity() {
                 1 -> sahabatReq.jenis_kelamin = "perempuan"
             }
         }
+
+    }
+
+    private fun apiDetailSahabat(sahabat: SahabatResp?) {
+        NetworkConfig().getService()
+            .getDetailSahabat("Bearer ${sessionManager1.fetchAuthToken()}", sahabat?.id.toString())
+            .enqueue(object : Callback<SahabatResp> {
+                override fun onFailure(call: Call<SahabatResp>, t: Throwable) {
+                    Toast.makeText(this@EditSahabatActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(call: Call<SahabatResp>, response: Response<SahabatResp>) {
+                    if (response.isSuccessful) {
+                        getSahabat(response.body())
+                    } else {
+                        Toast.makeText(
+                            this@EditSahabatActivity,
+                            "Error Koneksi",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+            })
 
     }
 
@@ -88,6 +117,9 @@ class EditSahabatActivity : BaseActivity() {
         edt_alamat_sahabat_edit.setText(sahabat?.alamat)
         edt_pekerjaan_sahabat_edit.setText(sahabat?.pekerjaan)
         edt_alasan_sahabat_edit.setText(sahabat?.alasan)
+
+        initSp()
+
     }
 
     private fun doUpdateSahabat(sahabat: SahabatResp?) {
@@ -102,7 +134,7 @@ class EditSahabatActivity : BaseActivity() {
         sahabatReq.pekerjaan = edt_pekerjaan_sahabat_edit.text.toString()
         sahabatReq.alasan = edt_alasan_sahabat_edit.text.toString()
         NetworkConfig().getService().updateSahabatSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             sahabat?.id.toString(),
             sahabatReq
         ).enqueue(object : Callback<BaseResp> {
@@ -124,14 +156,16 @@ class EditSahabatActivity : BaseActivity() {
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_sahabat_edit.hideDrawable(R.string.save)
-                    },3000)
-                    btn_save_sahabat_edit.hideDrawable(R.string.not_update)                }
+                    }, 3000)
+                    btn_save_sahabat_edit.hideDrawable(R.string.not_update)
+                }
             }
         })
     }
-    private fun doDeleteSahabat(sahabat: SahabatResp?){
+
+    private fun doDeleteSahabat(sahabat: SahabatResp?) {
         NetworkConfig().getService().deleteSahabat(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             sahabat?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -140,7 +174,11 @@ class EditSahabatActivity : BaseActivity() {
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@EditSahabatActivity, "Berhasil Hapus Data Sahabat", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditSahabatActivity,
+                        "Berhasil Hapus Data Sahabat",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
                 } else {
                     Toast.makeText(this@EditSahabatActivity, "Error", Toast.LENGTH_SHORT).show()

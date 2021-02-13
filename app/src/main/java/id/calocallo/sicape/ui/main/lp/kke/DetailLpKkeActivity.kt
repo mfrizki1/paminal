@@ -20,13 +20,12 @@ import id.calocallo.sicape.ui.main.lp.kke.EditLpKkeActivity.Companion.EDIT_KKE
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpEditActivity
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpEditActivity
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpEditActivity.Companion.EDIT_SAKSI_KKE
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_kke.*
-import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -34,7 +33,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class DetailLpKkeActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var adapterDetailPasalKke = ReusableAdapter<LpPasalResp>(this)
     private lateinit var callbackDetailPasalKke: AdapterCallback<LpPasalResp>
 
@@ -48,11 +47,11 @@ class DetailLpKkeActivity : BaseActivity() {
         supportActionBar?.title = "Detail Data Laporan Polisi Kode Etik"
         val detailKKe = intent.extras?.getParcelable<LpKkeResp>(DETAIL_KKE)
         getViewKke(detailKKe)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 //        adapterDetailPasalKke = ReusableAdapter(this)
 //        adapterDetailSaksiKke = ReusableAdapter(this)
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_pasal_kke.gone()
             btn_edit_saksi_kke.gone()

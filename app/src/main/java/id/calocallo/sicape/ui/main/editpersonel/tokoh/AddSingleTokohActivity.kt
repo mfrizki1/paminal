@@ -8,11 +8,12 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.request.TokohReq
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_tokoh.*
@@ -22,19 +23,19 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddSingleTokohActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var tokohReq = TokohReq()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_tokoh)
 
-        sessionManager = SessionManager(this)
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        sessionManager1 = SessionManager1(this)
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_single_tokoh.gone()
         }
@@ -55,8 +56,8 @@ class AddSingleTokohActivity : BaseActivity() {
             }
 
             NetworkConfig().getService().addTokohSingle(
-                "Bearer ${sessionManager.fetchAuthToken()}",
-                sessionManager.fetchID().toString(),
+                "Bearer ${sessionManager1.fetchAuthToken()}",
+                sessionManager1.fetchID().toString(),
                 tokohReq
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {

@@ -83,7 +83,7 @@ class AddAlamatAdapter(
                     ) {
                     }
                 })
-                edt_thn_akhir_alamat.addTextChangedListener(object : TextWatcher {
+                edt_rangka_alamat.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
                         alamatReq.dalam_rangka = s.toString()
                     }
@@ -153,5 +153,11 @@ class AddAlamatAdapter(
 
     override fun onBindViewHolder(holder: AlamatHolder, position: Int) {
         holder.bind(list[position])
+        val data =list[position]
+        holder.itemView.edt_alamat.setText(data.alamat)
+        holder.itemView.edt_thn_awal_alamat.setText(data.tahun_awal)
+        holder.itemView.edt_thn_akhir_alamat.setText(data.tahun_akhir)
+        holder.itemView.edt_rangka_alamat.setText(data.dalam_rangka)
+        holder.itemView.edt_ket_alamat.setText(data.keterangan)
     }
 }

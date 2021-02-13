@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.LpSaksiResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_saksi_lp_edit.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -23,7 +23,7 @@ class PickSaksiLpEditActivity : BaseActivity() {
         LpSaksiResp(2, "Galuh", "bjm", "20-02-2002", "konfing", "jl avx",0,"","",""),
         LpSaksiResp(3, "Dulak", "bjb", "20-02-2002", "cafe", "jl 123",0,"","","")
     )
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterSaksiEdit: ReusableAdapter<LpSaksiResp>
     private lateinit var callbackSaksiEdit: AdapterCallback<LpSaksiResp>
     private var jenisPelanggaran: String? = null
@@ -31,11 +31,11 @@ class PickSaksiLpEditActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_saksi_lp_edit)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterSaksiEdit = ReusableAdapter(this)
 //        val detailLp = intent.extras?.getParcelable<LpResp>(EditLpActivity.EDIT_LP)
 //        jenisPelanggaran = detailLp?.jenis
-        jenisPelanggaran =sessionManager.getJenisLP()
+        jenisPelanggaran =sessionManager1.getJenisLP()
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Laporan Kode Etik"
 //        when (detailLp?.jenis) {

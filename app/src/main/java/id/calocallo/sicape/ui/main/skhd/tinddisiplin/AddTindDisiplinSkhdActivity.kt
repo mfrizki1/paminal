@@ -2,15 +2,13 @@ package id.calocallo.sicape.ui.main.skhd.tinddisiplin
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.TindDisiplinReq
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.ui.main.lhp.add.AddPersonelLidikActivity
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_tind_disiplin_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -49,7 +47,8 @@ class AddTindDisiplinSkhdActivity : BaseActivity() {
         }
 
         btn_choose_personel_tind_disiplin.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PERSONEL_TIND)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -59,7 +58,7 @@ class AddTindDisiplinSkhdActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_PERSONEL_TIND) {
             if (resultCode == Activity.RESULT_OK) {
-                val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+                val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
                 idPersonel = personel?.id
                 txt_nama_personel_tind_disiplin_add.text = "Nama : ${personel?.nama}"
                 txt_pangkat_personel_tind_disiplin_add.text = "Pangkat ${personel?.pangkat.toString().toUpperCase()}: "

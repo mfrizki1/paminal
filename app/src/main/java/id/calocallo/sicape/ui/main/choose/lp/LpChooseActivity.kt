@@ -12,7 +12,7 @@ import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
@@ -44,7 +44,7 @@ class LpChooseActivity : BaseActivity() {
     private var listPasal = arrayListOf<LpPasalResp>()
     private var listSaksi = arrayListOf<LpSaksiResp>()
 
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterLpPidanaChoose: ReusableAdapter<LpPidanaResp>
     private lateinit var callbackLpPidanaChoose: AdapterCallback<LpPidanaResp>
 
@@ -60,7 +60,7 @@ class LpChooseActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lp_choose)
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterLpPidanaChoose = ReusableAdapter(this)
         adapterLpDisiplinChoose = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)

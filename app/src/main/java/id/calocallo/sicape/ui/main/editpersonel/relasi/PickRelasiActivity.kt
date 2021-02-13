@@ -6,14 +6,16 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.response.RelasiResp
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_relasi.*
+import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -25,21 +27,21 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickRelasiActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterRelasi: ReusableAdapter<RelasiResp>
     private lateinit var callbackRelasi: AdapterCallback<RelasiResp>
     private var jenisRelasi: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_relasi)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama
 
-        val hak = sessionManager.fetchHakAkses()
-        if(hak == "operator"){
+        val hak = sessionManager1.fetchHakAkses()
+        if (hak == "operator") {
             btn_add_single_relasi.gone()
         }
 
@@ -47,36 +49,22 @@ class PickRelasiActivity : BaseActivity() {
 
         callbackRelasi = object : AdapterCallback<RelasiResp> {
             override fun initComponent(itemView: View, data: RelasiResp, itemIndex: Int) {
-                itemView.txt_edit_pendidikan.text = data.nama
+                itemView.txt_detail_1.text = data.nama
+                when (data.lokasi) {
+                    "dalam_negeri" -> itemView.txt_detail_2.text = "Dalam Negeri"
+                    "luar_negeri" -> itemView.txt_detail_2.text = "Luar Negeri"
+                }
+
 
             }
 
             override fun onItemClicked(itemView: View, data: RelasiResp, itemIndex: Int) {
                 val intent = Intent(this@PickRelasiActivity, EditRelasiActivity::class.java)
-                intent.putExtra("PERSONEL", detailPersonel)
                 intent.putExtra("RELASI", data)
-                intent.putExtra("JENIS_RELASI", jenisRelasi)
+//                intent.putExtra("PERSONEL", detailPersonel)
+//                intent.putExtra("JENIS_RELASI", jenisRelasi)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-        }
-        spinner_jenis_relasi.setText("Dalam Negeri")
-        jenisRelasi = "dalam_negeri"
-
-        val item = listOf("Dalam Negeri", "Luar Negeri")
-        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
-        spinner_jenis_relasi.setAdapter(adapter)
-        spinner_jenis_relasi.setOnItemClickListener { parent, view, position, id ->
-            when (position) {
-                0 -> {
-                    jenisRelasi = "dalam_negeri"
-                    getListRelasi(jenisRelasi)
-
-                }
-                1 -> {
-                    jenisRelasi = "luar_negeri"
-                    getListRelasi(jenisRelasi)
-                }
             }
         }
 
@@ -94,9 +82,8 @@ class PickRelasiActivity : BaseActivity() {
         rl_pb.visible()
         rv_list_relasi.gone()
         NetworkConfig().getService().showRelasi(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
-            jenis.toString()
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<RelasiResp>> {
             override fun onFailure(call: Call<ArrayList<RelasiResp>>, t: Throwable) {
                 rl_no_data.visible()
@@ -121,7 +108,7 @@ class PickRelasiActivity : BaseActivity() {
                         adapterRelasi.adapterCallback(callbackRelasi)
                             .isVerticalView()
                             .addData(response.body()!!)
-                            .setLayout(R.layout.layout_edit_1_text)
+                            .setLayout(R.layout.item_2_text)
                             .build(rv_list_relasi)
                     }
                 } else {

@@ -7,9 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.AnakResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -25,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickAnakActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var anakAdapter: ReusableAdapter<AnakResp>
     private lateinit var anakCallback: AdapterCallback<AnakResp>
     private var tempStts = "kandung"
@@ -35,9 +36,9 @@ class PickAnakActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_anak)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         anakAdapter = ReusableAdapter(this)
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama
         namaPersonel = detailPersonel?.nama.toString()
@@ -79,8 +80,8 @@ class PickAnakActivity : BaseActivity() {
          */
         rl_pb.visible()
         NetworkConfig().getService().showAnak(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString()
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<AnakResp>> {
             override fun onFailure(call: Call<ArrayList<AnakResp>>, t: Throwable) {
                 rl_pb.gone()
@@ -118,9 +119,7 @@ class PickAnakActivity : BaseActivity() {
                             }
 
                             override fun onItemClicked(
-                                itemView: View,
-                                data: AnakResp,
-                                itemIndex: Int
+                                itemView: View, data: AnakResp, itemIndex: Int
                             ) {
                                 val intent =
                                     Intent(this@PickAnakActivity, EditAnakActivity::class.java)

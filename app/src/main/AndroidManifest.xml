@@ -6,12 +6,35 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launch"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.main.editpersonel.keluarga.PickPasanganActivity"></activity>
+        <activity android:name=".ui.main.editpersonel.keluarga.PickKeluargaActivity" />
+        <activity android:name=".ui.manajemen.sipil.EditSipilOperatorActivity" />
+        <activity android:name=".ui.manajemen.admin.AddAdminPersonelActivity" />
+        <activity android:name=".ui.manajemen.sipil.DetailSipilOperatorActivity" />
+        <activity android:name=".ui.manajemen.sipil.ListSipilOperatorActivity" />
+        <activity android:name=".ui.manajemen.admin.EditAdminPersonelActivity" />
+        <activity android:name=".ui.manajemen.admin.DetailAdminPersonelActivity" />
+        <activity android:name=".ui.manajemen.admin.ListAdminPersonelActivity" />
+        <activity android:name=".ui.manajemen.DetailOperatorActivity" />
+        <activity android:name=".ui.login.ChangePassActivity" />
+        <activity android:name=".ui.login.KatUserActivity" />
+        <activity android:name=".ui.manajemen.sipil.AddSipilOperatorActivity" />
+        <activity android:name=".ui.manajemen.KatOperatorActivity" />
+        <activity android:name=".ui.main.personel.KatPersonelActivity" />
+        <activity android:name=".ui.kesatuan.polda.PoldaActivity" />
+        <activity android:name=".ui.kesatuan.polres.SatPolresActivity" />
+        <activity android:name=".ui.kesatuan.polres.PolresActivity" />
+        <activity android:name=".ui.kesatuan.polsek.SatPolsekActivity" />
+        <activity android:name=".ui.kesatuan.polsek.PolsekActivity" />
+        <activity android:name=".ui.manajemen.EditOperatorActivity" />
+        <activity android:name=".ui.manajemen.AddOperatorActivity" />
+        <activity android:name=".ui.manajemen.ManajemenOperatorActivity" />
         <activity android:name=".ui.main.lapbul.ListLapbulActivity" />
         <activity android:name=".ui.main.wanjak.ListWanjakActivity" />
         <activity android:name=".ui.main.skhp.DetailSkhpActivity" />
@@ -169,7 +192,6 @@
         <activity android:name=".ui.main.addpersonal.AddCatPersActivity" />
         <activity android:name=".ui.main.addpersonal.AddFotoActivity" />
         <activity android:name=".ui.main.addpersonal.AddSignalementActivity" />
-        <activity android:name=".ui.main.addpersonal.AddPersonelActivity" />
         <activity android:name=".ui.main.addpersonal.medsos.AddMedsosActivity" />
         <activity android:name=".ui.main.addpersonal.mediainfo.AddMedianfoActivity" />
         <activity android:name=".ui.main.addpersonal.kawan.AddKawanDekatActivity" />
@@ -196,8 +218,9 @@
         <activity android:name=".ui.main.catpers.CatpersActivity" />
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.main.addpersonal.pasangan.AddPasanganActivity" />
-        <activity android:name=".ui.splash.SplashActivity" />
-        <activity android:name=".ui.main.anev.AnevActivity">
+        <activity android:name=".ui.main.anev.AnevActivity" />
+        <activity android:name=".ui.main.addpersonal.AddPersonelActivity" />
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

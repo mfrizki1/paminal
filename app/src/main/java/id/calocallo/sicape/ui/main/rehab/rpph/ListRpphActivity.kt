@@ -1,18 +1,15 @@
 package id.calocallo.sicape.ui.main.rehab.rpph
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.Adapter
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PutKkeOnRpphModel
-import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.RpphResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -28,7 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ListRpphActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var listRpph = arrayListOf<RpphResp>()
     private var adapterRpph = ReusableAdapter<RpphResp>(this)
     private lateinit var callbackRpph: AdapterCallback<RpphResp>

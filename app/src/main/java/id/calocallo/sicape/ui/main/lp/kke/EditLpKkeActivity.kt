@@ -11,17 +11,17 @@ import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.EditLpKkeReq
 import id.calocallo.sicape.network.response.LpKkeResp
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_lp_kke.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditLpKkeActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var editLpKkeReq = EditLpKkeReq()
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
@@ -33,7 +33,7 @@ class EditLpKkeActivity : BaseActivity() {
         supportActionBar?.title = "Edit Data Laporan Polisi Kode Etik"
         val kke = intent.extras?.getParcelable<LpKkeResp>(EDIT_KKE)
         getViewKKeEdit(kke)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         bindProgressButton(btn_save_edit_lp_kke)
         btn_save_edit_lp_kke.attachTextChangeAnimator()
         btn_save_edit_lp_kke.setOnClickListener {
@@ -80,7 +80,7 @@ class EditLpKkeActivity : BaseActivity() {
 //        lpKodeEtikReq.id_personel_operator = sessionManager.fetchUser()?.id
         editLpKkeReq.id_personel_terlapor = kke?.personel_terlapor?.id
         editLpKkeReq.id_personel_pelapor = kke?.personel_pelapor?.id
-        editLpKkeReq.uraian_pelanggaran = sessionManager.getJenisLP()
+        editLpKkeReq.uraian_pelanggaran = sessionManager1.getJenisLP()
 
         if (changedIdTerlapor == null) {
             editLpKkeReq.id_personel_terlapor = kke?.personel_terlapor?.id
@@ -110,8 +110,10 @@ class EditLpKkeActivity : BaseActivity() {
         namaSatker = kke?.kesatuan_yang_mengetahui
         //terlapor
         btn_choose_personel_terlapor_kke_edit.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_TERLAPOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         txt_nama_terlapor_lp_edit.text = "Nama : ${kke?.personel_terlapor?.nama}"
         txt_pangkat_terlapor_lp_edit.text = "Pangkat : ${kke?.personel_terlapor?.pangkat.toString().toUpperCase()}"
@@ -121,8 +123,10 @@ class EditLpKkeActivity : BaseActivity() {
 
         //pelapor
         btn_choose_personel_pelapor_kke_edit.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PELAPOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         txt_nama_pelapor_kke_lp_edit.text = "Nama : ${kke?.personel_pelapor?.nama}"
         txt_pangkat_pelapor_kke_lp_edit.text = "Pangkat : ${kke?.personel_pelapor?.pangkat.toString().toUpperCase()}"
@@ -133,7 +137,7 @@ class EditLpKkeActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.extras?.getParcelable<PersonelModel>("ID_PERSONEL")
+        val personel = data?.extras?.getParcelable<AllPersonelModel>("ID_PERSONEL")
         when (resultCode) {
             Activity.RESULT_OK -> {
                 when (requestCode) {

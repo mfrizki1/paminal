@@ -9,7 +9,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.PersonelPenyelidikReq
 import id.calocallo.sicape.network.response.PersonelPenyelidikResp
 import id.calocallo.sicape.utils.LhpDataManager
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_personel_penyelidik.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
@@ -18,7 +18,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickPersonelPenyelidikActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var lhpDataManager: LhpDataManager
     private var adapterLidik = ReusableAdapter<PersonelPenyelidikResp>(this)
     private lateinit var callbackLidik: AdapterCallback<PersonelPenyelidikResp>
@@ -30,7 +30,7 @@ class PickPersonelPenyelidikActivity : BaseActivity() {
         setContentView(R.layout.activity_pick_personel_penyelidik)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Laporan Hasil Penyelidikan"
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         lhpDataManager = LhpDataManager(this)
 
 

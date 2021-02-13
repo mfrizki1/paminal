@@ -9,7 +9,7 @@ import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.network.request.KetTerlaporReq
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.AddTerlaporLhpActivity
 import id.calocallo.sicape.utils.LhpDataManager
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_ket_terlapor_lhp.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -19,7 +19,7 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class ListKetTerlaporLhpActivity : BaseActivity() {
     private lateinit var lhpDataManager: LhpDataManager
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var listKetTerlaporReq = ArrayList<KetTerlaporReq>()
     private var lhpRespAll = LhpResp()
 
@@ -29,7 +29,7 @@ class ListKetTerlaporLhpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_ket_terlapor_lhp)
         lhpDataManager = LhpDataManager(this)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Laporan Hasil Penyelidikan"
 

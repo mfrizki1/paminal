@@ -15,11 +15,11 @@ import com.github.razir.progressbutton.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.EditLpPidanaReq
 import id.calocallo.sicape.network.response.LpPidanaResp
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_edit_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditLpPidanaActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
     private lateinit var sipilAlertDialog: View
     private var editLpPidana = EditLpPidanaReq()
@@ -45,22 +45,24 @@ class EditLpPidanaActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_lp_pidana)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Laporan Polisi Pidana"
         val pidana = intent.extras?.getParcelable<LpPidanaResp>(EDIT_PIDANA)
         getViewEditPidana(pidana)
 
         btn_choose_personel_pelapor_pidana_edit.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PELAPOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         btn_choose_personel_terlapor_pidana_edit.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_TERLAPOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_save_edit_lp_pidana.attachTextChangeAnimator()
         bindProgressButton(btn_save_edit_lp_pidana)
@@ -315,7 +317,7 @@ class EditLpPidanaActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         when (resultCode) {
             Activity.RESULT_OK -> {
                 when (requestCode) {

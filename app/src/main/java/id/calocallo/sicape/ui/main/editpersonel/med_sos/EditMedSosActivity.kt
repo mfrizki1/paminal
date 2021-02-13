@@ -10,10 +10,11 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.MedSosReq
 import id.calocallo.sicape.network.response.MedSosResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,23 +25,24 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditMedSosActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var medSosReq = MedSosReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_med_sos)
 
-        sessionManager = SessionManager(this)
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        sessionManager1 = SessionManager1(this)
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_medsos_edit.gone()
             btn_delete_medsos_edit.gone()
         }
 
         val medsos = intent.extras?.getParcelable<MedSosResp>("MEDSOS")
+        apiDetailSos(medsos)
         btn_save_medsos_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_medsos_edit)
         btn_save_medsos_edit.setOnClickListener {
@@ -50,14 +52,34 @@ class EditMedSosActivity : BaseActivity() {
         bindProgressButton(btn_delete_medsos_edit)
         btn_delete_medsos_edit.setOnClickListener {
             alert("Yakin Hapus Data?") {
-                positiveButton("Iya"){
+                positiveButton("Iya") {
                     deleteMedsos(medsos)
                 }
-                negativeButton("Tidak"){}
+                negativeButton("Tidak") {}
             }.show()
         }
-        getMedsos(medsos)
+//        getMedsos(medsos)
 
+    }
+
+    private fun apiDetailSos(medsos: MedSosResp?) {
+        NetworkConfig().getService()
+            .getDetailMedSos("Bearer ${sessionManager1.fetchAuthToken()}", medsos?.id.toString())
+            .enqueue(object : Callback<MedSosResp> {
+                override fun onFailure(call: Call<MedSosResp>, t: Throwable) {
+                    Toast.makeText(this@EditMedSosActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(call: Call<MedSosResp>, response: Response<MedSosResp>) {
+                    if (response.isSuccessful) {
+                        getMedsos(response.body())
+                    } else {
+                        Toast.makeText(this@EditMedSosActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
     }
 
     private fun getMedsos(medsos: MedSosResp?) {
@@ -67,7 +89,7 @@ class EditMedSosActivity : BaseActivity() {
         edt_ket_medsos_edit.setText(medsos?.keterangan)
     }
 
-    private fun updateMedsos(medsos: MedSosResp?){
+    private fun updateMedsos(medsos: MedSosResp?) {
         btn_save_medsos_edit.showProgress {
             progressColor = Color.WHITE
         }
@@ -81,29 +103,30 @@ class EditMedSosActivity : BaseActivity() {
         medSosReq.alasan = edt_alasan_medsos_edit.text.toString()
         medSosReq.keterangan = edt_ket_medsos_edit.text.toString()
         NetworkConfig().getService().updateMedSosSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             medsos?.id.toString(),
             medSosReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_medsos_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditMedSosActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditMedSosActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                    .show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    btn_save_medsos_edit.showDrawable(animatedDrawable){
+                if (response.isSuccessful) {
+                    btn_save_medsos_edit.showDrawable(animatedDrawable) {
                         buttonTextRes = R.string.data_updated
                         textMarginRes = R.dimen.space_10dp
                     }
 //                    Toast.makeText(this@EditMedSosActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
-                    },500)
-                }else{
+                    }, 500)
+                } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_medsos_edit.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_medsos_edit.hideDrawable(R.string.not_update)
                 }
             }
@@ -111,23 +134,30 @@ class EditMedSosActivity : BaseActivity() {
         })
 
     }
-    private fun deleteMedsos(medsos: MedSosResp?){
+
+    private fun deleteMedsos(medsos: MedSosResp?) {
         NetworkConfig().getService().deleteMedSos(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             medsos?.id.toString()
-        ).enqueue(object :Callback<BaseResp>{
+        ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditMedSosActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditMedSosActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                    .show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    Toast.makeText(this@EditMedSosActivity, R.string.data_deleted, Toast.LENGTH_SHORT).show()
+                if (response.isSuccessful) {
+                    Toast.makeText(
+                        this@EditMedSosActivity,
+                        R.string.data_deleted,
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
-                    },500)
-                }else{
-                    Toast.makeText(this@EditMedSosActivity, R.string.error, Toast.LENGTH_SHORT).show()
+                    }, 500)
+                } else {
+                    Toast.makeText(this@EditMedSosActivity, R.string.error, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 

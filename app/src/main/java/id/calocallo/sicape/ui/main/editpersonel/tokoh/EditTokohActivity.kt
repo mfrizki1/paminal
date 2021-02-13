@@ -12,7 +12,7 @@ import id.calocallo.sicape.network.request.TokohReq
 import id.calocallo.sicape.network.response.TokohResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -23,26 +23,27 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditTokohActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var tokohReq = TokohReq()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_tokoh)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val namaPersonel = intent.extras?.getString("NAMA_PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = namaPersonel
 
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_tokoh_edit.gone()
             btn_delete_tokoh_edit.gone()
         }
 
         val tokoh = intent.extras?.getParcelable<TokohResp>("TOKOH")
-        getTokoh(tokoh)
+        apiDetailTokoh(tokoh)
+//        getTokoh(tokoh)
         bindProgressButton(btn_save_tokoh_edit)
         btn_save_tokoh_edit.attachTextChangeAnimator()
         btn_save_tokoh_edit.setOnClickListener {
@@ -57,6 +58,26 @@ class EditTokohActivity : BaseActivity() {
                 negativeButton("Tidak") {}
             }.show()
         }
+    }
+
+    private fun apiDetailTokoh(tokoh: TokohResp?) {
+        NetworkConfig().getService()
+            .getDetailTokoh("Bearer ${sessionManager1.fetchAuthToken()}", tokoh?.id.toString())
+            .enqueue(object : Callback<TokohResp> {
+                override fun onFailure(call: Call<TokohResp>, t: Throwable) {
+                    Toast.makeText(this@EditTokohActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(call: Call<TokohResp>, response: Response<TokohResp>) {
+                    if (response.isSuccessful) {
+                        getTokoh(response.body())
+                    } else {
+                        Toast.makeText(this@EditTokohActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
     }
 
     private fun getTokoh(tokoh: TokohResp?) {
@@ -82,7 +103,7 @@ class EditTokohActivity : BaseActivity() {
         }
 
         NetworkConfig().getService().updateTokohSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             tokoh?.id.toString(),
             tokohReq
         ).enqueue(object : Callback<BaseResp> {
@@ -94,7 +115,7 @@ class EditTokohActivity : BaseActivity() {
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
 
-                    btn_save_tokoh_edit.showDrawable(animatedDrawable){
+                    btn_save_tokoh_edit.showDrawable(animatedDrawable) {
                         textMarginRes = R.dimen.space_10dp
                         buttonTextRes = R.string.data_updated
                     }
@@ -105,7 +126,7 @@ class EditTokohActivity : BaseActivity() {
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_tokoh_edit.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_tokoh_edit.hideDrawable(R.string.not_save)
                 }
             }
@@ -114,7 +135,7 @@ class EditTokohActivity : BaseActivity() {
 
     private fun doDeleteTokoh(tokoh: TokohResp?) {
         NetworkConfig().getService().deleteTokoh(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             tokoh?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

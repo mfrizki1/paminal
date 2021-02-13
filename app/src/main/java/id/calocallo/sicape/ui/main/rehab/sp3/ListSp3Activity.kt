@@ -8,7 +8,7 @@ import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.Sp3Resp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -26,12 +26,12 @@ import retrofit2.Response
 class ListSp3Activity : BaseActivity() {
     private lateinit var callbackSp3: AdapterCallback<Sp3Resp>
     private var adapterSp3 = ReusableAdapter<Sp3Resp>(this)
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_sp3)
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data SP3"
 

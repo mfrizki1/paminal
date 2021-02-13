@@ -16,7 +16,7 @@ data class AlamatResp(
     val deleted_at: String?
 
 ) : Parcelable {
-    constructor() : this(0, 0, "", "", "", "", "", "", "", "")
+    constructor() : this(null, null, null, null, null, null, null, null, null, null)
     constructor(source: Parcel) : this(
         source.readValue(Int::class.java.classLoader) as Int?,
         source.readValue(Int::class.java.classLoader) as Int?,

@@ -21,7 +21,7 @@ class PendDinasAdapter(
 
         fun bind(addPendidikanModel: AddPendidikanModel) {
             with(itemView) {
-
+                addPendidikanModel.jenis ="kedinasan"
                 edt_nama_kedinasan_custom.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
                         addPendidikanModel.pendidikan = s.toString()
@@ -197,7 +197,13 @@ class PendDinasAdapter(
 
     override fun onBindViewHolder(holder: PendDinasAdapter.DinasHolder, position: Int) {
         holder.bind(list[position])
-
+        val data = list[position]
+        holder.itemView.edt_nama_kedinasan_custom.setText(data.pendidikan)
+        holder.itemView.edt_thn_awal_kedinasan_custom.setText(data.tahun_awal)
+        holder.itemView.edt_thn_akhir_kedinasan_custom.setText(data.tahun_akhir)
+        holder.itemView.edt_tempat_kedinasan_custom.setText(data.kota)
+        holder.itemView.edt_membiayai_kedinasan_custom.setText(data.yang_membiayai)
+        holder.itemView.edt_ket_kedinasan_custom.setText(data.keterangan)
     }
 
     interface OnClickDinas {

@@ -1,72 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.editpersonel.relasi.AddSingleRelasiActivity">
 
-    <include layout="@layout/layout_toolbar_white"/>
-    <include layout="@layout/view_separator"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:layout_height="wrap_content"
-        android:text="Tambah Data Relasi"
-        android:textSize="@dimen/text_18"
-        android:textStyle="bold"
-        android:layout_marginHorizontal="@dimen/space_12dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Jenis Relasi">
+        android:orientation="vertical">
 
-        <AutoCompleteTextView
-            android:id="@+id/spinner_jenis_relasi_single"
+        <include layout="@layout/layout_toolbar_white" />
+
+        <include layout="@layout/view_separator" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="none" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="Tambah Data Relasi"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Nama Relasi">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_nama_relasi_single"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text|textCapSentences" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Jenis Relasi">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <AutoCompleteTextView
+                android:id="@+id/spinner_jenis_relasi_single"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:background="@color/grey" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.Button"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:text="@string/save"
-        android:id="@+id/btn_save_single_relasi"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Nama Relasi">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_nama_relasi_single"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text|textCapSentences" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:background="@color/grey" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_single_relasi"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="@string/save" />
+
+    </LinearLayout>
 
 
-
-</LinearLayout>
+</ScrollView>

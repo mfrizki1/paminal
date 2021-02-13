@@ -16,11 +16,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.SaksiLhpReq
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.lhp.add.PickSaksiAddLhpActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -30,12 +30,12 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 class AddSingleSaksiLhpActivity : BaseActivity() {
     private lateinit var mAlerDBuilder: MaterialAlertDialogBuilder
     private lateinit var sipilAlertD: View
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var saksiReqLhp = SaksiLhpReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_saksi_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(ADD_SAKSI_LHP)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Saksi LHP"
@@ -87,9 +87,10 @@ class AddSingleSaksiLhpActivity : BaseActivity() {
 
                 //set button for add personel saksi
                 btn_choose_personel_saksi.setOnClickListener {
-                    val intent = Intent(this, ChoosePersonelActivity::class.java)
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                    val intent = Intent(this, KatPersonelActivity::class.java)
+                    intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
                     startActivityForResult(intent, REQ_POLISI)
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 }
 
             }
@@ -148,7 +149,7 @@ class AddSingleSaksiLhpActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personelSaksi = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personelSaksi = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_POLISI) {
             saksiReqLhp.nama = personelSaksi?.nama
             saksiReqLhp.id_personel = personelSaksi?.id

@@ -2,16 +2,14 @@ package id.calocallo.sicape.ui.main.choose.lp
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.response.LpKkeResp
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.network.response.LpSaksiResp
 import id.calocallo.sicape.network.response.SatKerResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_lp_kke_put_kke.*
@@ -25,7 +23,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
         const val DATA_KKE = "DATA_KKE"
     }
 
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var listLpKke = arrayListOf<LpKkeResp>()
     private var adapterKke = ReusableAdapter<LpKkeResp>(this)
     private lateinit var callbackKke: AdapterCallback<LpKkeResp>
@@ -40,14 +38,14 @@ class ListLpKkePutKkeActivity : BaseActivity() {
         setContentView(R.layout.activity_list_lp_kke_put_kke)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Data Laporan Polisi Kode Etik"
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         getListKke()
 
     }
 
     private fun getListKke() {
-        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
+        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "")
         personelTerLapor =
             PersonelLapor(
                 1,
@@ -77,7 +75,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
                 1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
                 "IPDA", "9090", "KOMBES", "POLDA KALSEL",
-                sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
+                sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
         )
@@ -87,7 +85,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
                 2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
                 personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
                 "IPDA", "9090", "KOMBES", "POLDA KALSEL",
-                sessionManager.fetchUser()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
+                sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
         )

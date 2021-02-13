@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
-import id.calocallo.sicape.network.response.LpCustomResp
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.utils.LhpDataManager
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -22,7 +21,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class ReferensiPenyelidikanLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var adapteRefLpReq = ReusableAdapter<RefPenyelidikanReq>(this)
     private lateinit var callbackRefLpReq: AdapterCallback<RefPenyelidikanReq>
     private var currRefLp = ArrayList<RefPenyelidikanReq>()
@@ -31,7 +30,7 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_referensi_penyelidikan_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         lhpDataManager = LhpDataManager(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Laporan Hasil Penyelidikan"

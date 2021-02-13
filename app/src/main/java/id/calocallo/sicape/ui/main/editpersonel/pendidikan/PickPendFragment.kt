@@ -12,11 +12,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.razir.progressbutton.bindProgressButton
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PendidikanModel
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import kotlinx.android.synthetic.main.fragment_pick_pend.*
@@ -28,7 +27,7 @@ import retrofit2.Response
 
 
 class PickPendFragment : Fragment() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<PendidikanModel>
     private lateinit var adapter: EditPendAdapter
     private var jenis: String? = null
@@ -44,9 +43,9 @@ class PickPendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
 
-        val hakAkses = sessionManager.fetchHakAkses()
+        val hakAkses = sessionManager1.fetchHakAkses()
 
         jenis = "umum"
         list = ArrayList()
@@ -71,10 +70,10 @@ class PickPendFragment : Fragment() {
     private fun initAPI(nama_jenis: String) {
         rl_pb.visible()
         NetworkConfig().getService().showPendByJenis(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
-            sessionManager.fetchID().toString(), //Constants.ID_PERSONEL
-            nama_jenis
+            sessionManager1.fetchID().toString()//Constants.ID_PERSONEL
+//            nama_jenis
         ).enqueue(object : Callback<ArrayList<PendidikanModel>> {
             override fun onFailure(call: Call<ArrayList<PendidikanModel>>, t: Throwable) {
                 rl_pb.gone()
@@ -94,7 +93,7 @@ class PickPendFragment : Fragment() {
                         rl_no_data.visible()
                         rv_edit_pendidikan.gone()
                     } else {
-                        initRV(list)
+                        initRV(list, jenis)
                         rl_no_data.gone()
                         rv_edit_pendidikan.visible()
                     }
@@ -107,14 +106,17 @@ class PickPendFragment : Fragment() {
     }
 
 
-    private fun initRV(list: ArrayList<PendidikanModel>?) {
+    private fun initRV(
+        list: ArrayList<PendidikanModel>?, jenis: String?) {
+        val filteredList = list?.filter { it.jenis == jenis }
+        Log.e("filteredList","$filteredList")
         rv_edit_pendidikan.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = activity?.let {
-            EditPendAdapter(it, list, object : EditPendAdapter.OnClickEditPend {
+            EditPendAdapter(it, filteredList as ArrayList<PendidikanModel>?, object : EditPendAdapter.OnClickEditPend {
                 override fun onClick(position: Int) {
                     Log.e("ini data edit", this@PickPendFragment.list[0].id.toString())
-                    goToEditPend(this@PickPendFragment.list[position])
+                    filteredList?.get(position)?.let { it1 -> goToEditPend(it1) }
                 }
             })
         }!!

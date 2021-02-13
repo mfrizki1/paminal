@@ -7,10 +7,9 @@ import com.google.gson.reflect.TypeToken
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.request.*
-import id.calocallo.sicape.network.response.LpPasalResp
-import id.calocallo.sicape.network.response.LpSaksiResp
+import id.calocallo.sicape.network.response.*
 
-class SessionManager(context: Context) {
+class SessionManager1(context: Context) {
     private lateinit var parentListPendUmum: ParentListPendUmum
     private lateinit var parentListPendDinas: ParentListPendDinas
     private lateinit var listUmum: ArrayList<AddPendidikanModel>
@@ -26,6 +25,7 @@ class SessionManager(context: Context) {
         const val USER_TOKEN = "user_token"
         const val HAK_AKSES = "hak_akses"
         const val USER = "user"
+        const val SIPIL = "sipil"
         const val ID_PERSONEL = "id_personel"
         const val isUserLogin = "userLogin"
 
@@ -97,7 +97,7 @@ class SessionManager(context: Context) {
         return prefs.getString(HAK_AKSES, null)
     }
 
-    fun saveUser(obj: PersonelModel?) {
+    fun saveUserPersonel(obj: HakAksesPersonel1?) {
         val editor = prefs.edit()
         val gson = Gson()
         val json = gson.toJson(obj)
@@ -105,12 +105,40 @@ class SessionManager(context: Context) {
         editor.commit()
     }
 
-    fun fetchUser(): PersonelModel? {
-        val emptyUser = Gson().toJson(PersonelModel)
+    fun fetchUserPersonel(): HakAksesPersonel1? {
+        val emptyUser = Gson().toJson(HakAksesPersonel1)
         return Gson().fromJson(
             prefs.getString(USER, emptyUser),
-            object : TypeToken<PersonelModel>() {}.type
+            object : TypeToken<HakAksesPersonel1>() {}.type
         )
+    }
+
+    fun clearUserPersonel() {
+        val editor = prefs.edit()
+        editor.remove(USER)
+        editor.commit()
+    }
+
+    fun saveUserSipil(obj: HakAksesSipil?) {
+        val editor = prefs.edit()
+        val gson = Gson()
+        val json = gson.toJson(obj)
+        editor.putString(SIPIL, json)
+        editor.commit()
+    }
+
+    fun fetchUserSipil(): HakAksesSipil? {
+        val emptyUser = Gson().toJson(HakAksesSipil)
+        return Gson().fromJson(
+            prefs.getString(SIPIL, emptyUser),
+            object : TypeToken<HakAksesSipil>() {}.type
+        )
+    }
+
+    fun clearUserSipil() {
+        val editor = prefs.edit()
+        editor.remove(SIPIL)
+        editor.commit()
     }
 
     fun getUserLogin(): Boolean {
@@ -310,109 +338,146 @@ class SessionManager(context: Context) {
         )
     }
 
-    fun setPasangan(obj: PasanganReq) {
+    fun setPasangan(obj: ArrayList<PasanganReq>) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(PASANGAN, json)
         editor.commit()
     }
 
-    fun getPasangan(): PasanganReq {
-        val emptyJson = Gson().toJson(PasanganReq())
+    fun getPasangan(): ArrayList<PasanganReq> {
+        val emptyJson = Gson().toJson(ArrayList<PasanganReq>())
         return Gson().fromJson(
             prefsPers.getString(PASANGAN, emptyJson),
-            object : TypeToken<PasanganReq>() {}.type
+            object : TypeToken<ArrayList<PasanganReq>>() {}.type
         )
     }
 
-    fun setAyahKandung(obj: AyahReq) {
+    fun setAyahKandung(obj: KeluargaReq) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(AYAH, json)
         editor.commit()
     }
 
-    fun getAyahKandung(): AyahReq {
-        val emptyJson = Gson().toJson(AyahReq())
+    fun getAyahKandung(): KeluargaReq {
+        val emptyJson = Gson().toJson(KeluargaReq())
         return Gson().fromJson(
             prefsPers.getString(AYAH, emptyJson),
-            object : TypeToken<AyahReq>() {}.type
+            object : TypeToken<KeluargaReq>() {}.type
         )
     }
 
-    fun setAyahTiri(obj: AyahTiriReq) {
+    fun setAyahTiri(obj: KeluargaReq) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(AYAH_TIRI, json)
         editor.commit()
     }
 
-    fun getAyahTiri(): AyahTiriReq {
-        val emptyJson = Gson().toJson(AyahTiriReq())
+    fun getAyahTiri(): KeluargaReq {
+        val emptyJson = Gson().toJson(KeluargaReq())
         return Gson().fromJson(
             prefsPers.getString(AYAH_TIRI, emptyJson),
-            object : TypeToken<AyahTiriReq>() {}.type
+            object : TypeToken<KeluargaReq>() {}.type
         )
     }
 
-    fun setIbu(obj: IbuReq) {
+    fun setIbu(obj: KeluargaReq) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(IBU, json)
         editor.commit()
     }
 
-    fun getIbu(): IbuReq {
-        val emptyJson = Gson().toJson(IbuReq())
+    fun getIbu(): KeluargaReq {
+        val emptyJson = Gson().toJson(KeluargaReq())
         return Gson().fromJson(
             prefsPers.getString(IBU, emptyJson),
-            object : TypeToken<IbuReq>() {}.type
+            object : TypeToken<KeluargaReq>() {}.type
         )
     }
 
-    fun setIbuTiri(obj: IbuTiriReq) {
+    fun setIbuTiri(obj: KeluargaReq) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(IBU_TIRI, json)
         editor.commit()
     }
 
-    fun getIbuTiri(): IbuTiriReq {
-        val emptyJson = Gson().toJson(IbuTiriReq())
+    fun getIbuTiri(): KeluargaReq {
+        val emptyJson = Gson().toJson(KeluargaReq())
         return Gson().fromJson(
             prefsPers.getString(IBU_TIRI, emptyJson),
-            object : TypeToken<IbuTiriReq>() {}.type
+            object : TypeToken<KeluargaReq>() {}.type
         )
     }
 
-    fun setMertuaLaki(obj: MertuaLakiReq) {
+    fun setMertuaLaki(obj: KeluargaReq) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(MERTUA_LAKI, json)
         editor.commit()
     }
 
-    fun getMertuaLaki(): MertuaLakiReq {
-        val emptyJson = Gson().toJson(MertuaLakiReq())
+    fun getMertuaLaki(): KeluargaReq {
+        val emptyJson = Gson().toJson(KeluargaReq())
         return Gson().fromJson(
             prefsPers.getString(MERTUA_LAKI, emptyJson),
-            object : TypeToken<MertuaLakiReq>() {}.type
+            object : TypeToken<KeluargaReq>() {}.type
         )
     }
 
-    fun setMertuaPerempuan(obj: MertuaPerempuanReq) {
+    fun setMertuaPerempuan(obj: KeluargaReq) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(MERTUA_PEREMPUAN, json)
         editor.commit()
     }
 
-    fun getMertuaPerempuan(): MertuaPerempuanReq {
-        val emptyJson = Gson().toJson(MertuaPerempuanReq())
+
+    fun getMertuaPerempuan(): KeluargaReq {
+        val emptyJson = Gson().toJson(KeluargaReq())
         return Gson().fromJson(
             prefsPers.getString(MERTUA_PEREMPUAN, emptyJson),
-            object : TypeToken<MertuaPerempuanReq>() {}.type
+            object : TypeToken<KeluargaReq>() {}.type
         )
+    }
+
+    fun clearAyahKandung() {
+        val editor = prefsPers.edit()
+        editor.remove(AYAH)
+        editor.commit()
+    }
+
+    fun clearAyahTiri() {
+        val editor = prefsPers.edit()
+        editor.remove(AYAH_TIRI)
+        editor.commit()
+    }
+
+    fun clearIbuKandung() {
+        val editor = prefsPers.edit()
+        editor.remove(IBU)
+        editor.commit()
+    }
+
+    fun clearIbuTiri() {
+        val editor = prefsPers.edit()
+        editor.remove(IBU_TIRI)
+        editor.commit()
+    }
+
+    fun clearMertuaLaki() {
+        val editor = prefsPers.edit()
+        editor.remove(MERTUA_LAKI)
+        editor.commit()
+    }
+
+    fun clearMertuaPerempuan() {
+        val editor = prefsPers.edit()
+        editor.remove(MERTUA_PEREMPUAN)
+        editor.commit()
     }
 
     fun setAnak(obj: ArrayList<AnakReq>) {
@@ -550,18 +615,63 @@ class SessionManager(context: Context) {
         )
     }
 
-    fun setFoto(obj: FotoReq) {
+    fun setIdFoto(obj: FotoReq) {
         val editor = prefsPers.edit()
         val json = Gson().toJson(obj)
         editor.putString(FOTO, json)
         editor.commit()
     }
 
-    fun getFoto(): FotoReq {
+    fun getIdFoto(): FotoReq {
         val emptyJson = Gson().toJson(FotoReq())
         return Gson().fromJson(
             prefsPers.getString(FOTO, emptyJson),
             object : TypeToken<FotoReq>() {}.type
+        )
+    }
+
+    fun setAllDepanFoto(obj: FotoResp) {
+        val editor = prefsPers.edit()
+        val json = Gson().toJson(obj)
+        editor.putString("FOTO", json)
+        editor.commit()
+    }
+
+    fun getAllDepanFoto(): FotoResp {
+        val emptyJson = Gson().toJson(FotoResp())
+        return Gson().fromJson(
+            prefsPers.getString("FOTO", emptyJson),
+            object : TypeToken<FotoResp>() {}.type
+        )
+    }
+
+    fun setAllKananFoto(obj: FotoResp) {
+        val editor = prefsPers.edit()
+        val json = Gson().toJson(obj)
+        editor.putString("FOTO", json)
+        editor.commit()
+    }
+
+    fun getAllKananFoto(): FotoResp {
+        val emptyJson = Gson().toJson(FotoResp())
+        return Gson().fromJson(
+            prefsPers.getString("FOTO", emptyJson),
+            object : TypeToken<FotoResp>() {}.type
+        )
+    }
+
+    fun setAllKiriFoto(obj: FotoResp) {
+        val editor = prefsPers.edit()
+        val json = Gson().toJson(obj)
+        editor.putString("FOTO", json)
+        editor.commit()
+    }
+
+    fun getAllKiriFoto(): FotoResp {
+        val emptyJson = Gson().toJson(FotoResp())
+        return Gson().fromJson(
+            prefsPers.getString("FOTO", emptyJson),
+            object : TypeToken<FotoResp>() {}.type
         )
     }
 
@@ -947,16 +1057,17 @@ class SessionManager(context: Context) {
         return prefsLP.getString("RINCIAN", null)
     }
 
-    fun setUraianPelanggaranLP(uraian: String){
+    fun setUraianPelanggaranLP(uraian: String) {
         val editor = prefsLP.edit()
         editor.putString("URAIAN", uraian)
         editor.apply()
     }
 
-    fun getUraianPelanggaranLP():String?{
+    fun getUraianPelanggaranLP(): String? {
         return prefsLP.getString("URAIAN", null)
 
     }
+
     fun clearLP() {
         val editor = prefsLP.edit()
         editor.clear()

@@ -12,19 +12,19 @@ import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListLidik
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_lidik_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddSingleLidikLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var lidikReq = ListLidik()
     private var statusLidik: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_lidik_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(ADD_LIDIK)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Personel Penyelidik"

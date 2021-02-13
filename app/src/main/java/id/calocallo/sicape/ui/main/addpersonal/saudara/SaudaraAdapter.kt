@@ -175,8 +175,12 @@ class SaudaraAdapter(
                 val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
                 spJK.setAdapter(adapter)
                 spJK.setOnItemClickListener { parent, view, position, id ->
-                    saudaraReq.jenis_kelamin =
-                        parent.getItemAtPosition(position).toString()
+                    when(position){
+                        0->saudaraReq.jenis_kelamin = "laki_laki"
+                        1->saudaraReq.jenis_kelamin = "perempuan"
+                    }
+//                    saudaraReq.jenis_kelamin =
+//                        parent.getItemAtPosition(position).toString()
                 }
                 btnDelete.visibility = if(adapterPosition == 0)View.GONE else View.VISIBLE
                 btnDelete.setOnClickListener {
@@ -203,7 +207,40 @@ class SaudaraAdapter(
 
     override fun onBindViewHolder(holder: SaudaraHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.etKet.setText(data.keterangan)
+        holder.etNama.setText(data.nama)
+        holder.spJK.setText(data.jenis_kelamin)
+        holder.etTmptLhr.setText(data.tempat_lahir)
+        holder.etTglLhr.setText(data.tanggal_lahir)
+        holder.etPekerjaan.setText(data.pekerjaan_atau_sekolah)
+        holder.etOrganisasi.setText(data.organisasi_yang_diikuti)
+        holder.spJenis.setText(data.status_ikatan)
 
+
+        val itemIkatan = listOf("Kandung", "Tiri", "Angkat")
+        val adapterIkatan = ArrayAdapter(context, R.layout.item_spinner, itemIkatan)
+        holder.spJenis.setAdapter(adapterIkatan)
+        holder.spJenis.setOnItemClickListener { parent, view, position, id ->
+            if (position == 0) {
+                data.status_ikatan = "kandung"
+            } else if (position == 1) {
+                data.status_ikatan = "tiri"
+            } else {
+                data.status_ikatan = "angkat"
+            }
+        }
+        val item = listOf("Laki-Laki", "Perempuan")
+        val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
+        holder.spJK.setAdapter(adapter)
+        holder.spJK.setOnItemClickListener { parent, view, position, id ->
+            when(position){
+                0->data.jenis_kelamin = "laki_laki"
+                1->data.jenis_kelamin = "perempuan"
+            }
+//                    saudaraReq.jenis_kelamin =
+//                        parent.getItemAtPosition(position).toString()
+        }
 
     }
 }

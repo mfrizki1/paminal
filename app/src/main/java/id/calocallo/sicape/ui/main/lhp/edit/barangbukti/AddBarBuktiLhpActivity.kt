@@ -9,18 +9,18 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListBukti
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_bar_bukti_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddBarBuktiLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var buktiReq = ListBukti()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_bar_bukti_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(ADD_BARBUKTI)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Barang Bukti"

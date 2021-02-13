@@ -7,7 +7,7 @@ import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.response.*
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_lp_skhd.*
@@ -17,7 +17,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class ListLpSkhdActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
 
     private var listPidanaLP = ArrayList<LpPidanaResp>()
     private var listDisiplinLP = ArrayList<LpDisiplinResp>()
@@ -34,7 +34,7 @@ class ListLpSkhdActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_lp_skhd)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         setupActionBarWithBackButton(toolbar)
         val jenisLPFromSkhd = intent.extras?.getString(ChooseLpSkhdActivity.CHOOSE_LP_SKHD)
@@ -53,7 +53,7 @@ class ListLpSkhdActivity : BaseActivity() {
             }
         }
 
-        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
+        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "")
         personelTerLapor =
             PersonelLapor(
                 1, "faisal", "bripda", "jabatan", "1234", 1, "polda kalsel", "Jl Banjarmasin",

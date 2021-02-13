@@ -135,5 +135,10 @@ class MediaInfoAdapter(
 
     override fun onBindViewHolder(holder: MedInfoHolder, position: Int) {
         holder.bind(list[position])
+        val data =list[position]
+        holder.etNama.setText(data.sumber)
+        holder.etTopik.setText(data.topik)
+        holder.etAlasan.setText(data.alasan)
+        holder.etKet.setText(data.keterangan)
     }
 }

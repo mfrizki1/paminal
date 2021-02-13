@@ -11,19 +11,19 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.SaksiReq
 import id.calocallo.sicape.network.response.LpSaksiResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_saksi_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditSaksiLpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var saksiReq = SaksiReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_saksi_lp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val namaJenis = intent.extras?.getString("NAMA_JENIS")
         val saksi = intent.extras?.getParcelable<LpSaksiResp>("SAKSI_EDIT")
         setupActionBarWithBackButton(toolbar)

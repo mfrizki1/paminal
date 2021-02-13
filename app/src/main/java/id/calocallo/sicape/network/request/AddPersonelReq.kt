@@ -1,6 +1,8 @@
 package id.calocallo.sicape.network.request
 
+
 data class AddPersonelReq(
+
     var nama: String?,
     var nama_alias: String?,
     var jenis_kelamin: String?,
@@ -18,26 +20,27 @@ data class AddPersonelReq(
     var kewarganegaraan: String?,
     var cara_peroleh_kewarganegaraan: String?,
     var agama_sekarang: String?,
-    var agama_sebelumnya: String?,
+    var agama_sebelumnya: String,
     var aliran_kepercayaan: String?,
     var status_perkawinan: Int?,
     var tempat_perkawinan: String?,
     var tanggal_perkawinan: String?,
-    var perkawinan_keberapa: String?,
+    var perkawinan_keberapa: Int?,
     var jumlah_anak: Int?,
     var alamat_sesuai_ktp: String?,
     var no_telp: String?,
     var no_ktp: String?,
     var hobi: String?,
     var kebiasaan: String?,
-    var bahasa: String?
+    var bahasa: String?,
+    var jenis_kesatuan:String?
 ) {
     constructor() : this(
-        "", "", "", "", "", "",
-        "", "", "", 0,"", "",
-        "", "", "", "",
-        "", 0, "","",
-        "",0,"","",
-        "","","",""
+        null,null,null,null,null,null,
+        null,null,null,null,null,null,
+        null,null,null,"",
+        null, null,null,null,
+        0,null,null,null,null,
+        null,null,null,null
     )
 }

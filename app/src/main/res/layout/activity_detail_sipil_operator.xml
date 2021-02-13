@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.manajemen.sipil.DetailSipilOperatorActivity">
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
+
+    <LinearLayout
+        android:id="@+id/ll_sipil_operator_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Sipil" />
+
+        <TextView
+            android:id="@+id/txt_nama_sipil_operator_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Sipil" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alamat Sipil" />
+
+        <TextView
+            android:id="@+id/txt_alamat_sipil_operator_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alamat Sipil" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_12dp">
+
+            <TextView
+                android:id="@+id/txt_username_sipil_operator_detail"
+                style="@style/JustText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Username" />
+
+            <ImageView
+                android:id="@+id/btn_copy_username_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/space_12dp"
+                android:src="@drawable/ic_copy" />
+        </RelativeLayout>
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bekerja Di" />
+
+        <TextView
+            android:id="@+id/txt_bekerja_sipil_operator_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Di XXX" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status" />
+
+    <TextView
+        android:id="@+id/txt_status_aktif_operator_detail"
+        style="@style/JustText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aktif / TIdak Aktif" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_personel_operator_sipil"
+        style="@style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="@string/edit_data" />
+</LinearLayout>

@@ -3,7 +3,6 @@ package id.calocallo.sicape.ui.main.putkke
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -16,21 +15,20 @@ import id.calocallo.sicape.network.response.PutKkeResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
 import id.calocallo.sicape.ui.main.choose.lp.ListLpKkePutKkeActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_edit_put_kke.*
 import kotlinx.android.synthetic.main.activity_edit_put_kke.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditPutKkeActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var idLhp: Int? = null
     private var idLp: Int? = null
     private var putKkeReq = PutKkeReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_put_kke)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Putusan Kode Etik"
 

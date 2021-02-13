@@ -64,6 +64,11 @@
     <string name="iya">Iya</string>
     <string name="tidak">Tidak</string>
     <string name="memiliki">Memiliki</string>
+    <string name="polsek">Polsek</string>
+    <string name="polres">Polres</string>
+    <string name="polda">Polda</string>
+    <string name="success_change_pass">Berhasil Ubah Password</string>
+    <string name="back">Kembali</string>
 
 
     <string-array name="satker">

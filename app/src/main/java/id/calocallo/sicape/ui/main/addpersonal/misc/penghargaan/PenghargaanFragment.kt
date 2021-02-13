@@ -13,14 +13,14 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ParentListPenghargaan
 import id.calocallo.sicape.network.request.PenghargaanReq
 import id.calocallo.sicape.ui.main.addpersonal.pasangan.AddPasanganActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.fragment_penghargaan.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 
 class PenghargaanFragment : Fragment() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<PenghargaanReq>
     private lateinit var parentList: ParentListPenghargaan
     private lateinit var adapter: PenghargaanAdapter
@@ -34,7 +34,7 @@ class PenghargaanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
         list = ArrayList()
         parentList = ParentListPenghargaan(list)
         (activity as BaseActivity).setupActionBarWithBackButton(toolbar)
@@ -45,8 +45,8 @@ class PenghargaanFragment : Fragment() {
             if (list.size == 1 && list[0].penghargaan == "") {
                 list.clear()
             }
-            sessionManager.setPenghargaan(list)
-            Log.e("size Penghargaan", sessionManager.getPenghargaan().size.toString())
+            sessionManager1.setPenghargaan(list)
+            Log.e("size Penghargaan", "${sessionManager1.getPenghargaan()}")
 //            Log.e("data penghargaan", parentList.parentList[0].penghargaan.toString())
 //            Log.e("data penghargaan", parentList.parentList[0].diterima_dari.toString())
 
@@ -60,7 +60,7 @@ class PenghargaanFragment : Fragment() {
     }
 
     private fun initRecycler(rv: RecyclerView) {
-        val penghargaanCreated = sessionManager.getPenghargaan()
+        val penghargaanCreated = sessionManager1.getPenghargaan()
         if (penghargaanCreated.size == 0) {
             list.add(
                 PenghargaanReq(
@@ -103,7 +103,7 @@ class PenghargaanFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val penghargaan = sessionManager.getPenghargaan()
+        val penghargaan = sessionManager1.getPenghargaan()
         for (i in 0 until penghargaan.size) {
             list.add(
                 i, PenghargaanReq(

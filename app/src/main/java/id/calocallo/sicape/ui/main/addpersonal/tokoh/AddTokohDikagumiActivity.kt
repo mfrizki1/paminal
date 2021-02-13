@@ -8,20 +8,20 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ParentListTokoh
 import id.calocallo.sicape.network.request.TokohReq
 import id.calocallo.sicape.ui.main.addpersonal.kawan.AddKawanDekatActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_tokoh_dikagumi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddTokohDikagumiActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<TokohReq>
     private lateinit var parentList: ParentListTokoh
     lateinit var adapter: TokohAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_tokoh_dikagumi)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tokoh Yang Dikagumi"
         list = ArrayList()
@@ -33,15 +33,15 @@ class AddTokohDikagumiActivity : BaseActivity() {
                 list.clear()
             }
 
-            sessionManager.setTokoh(list)
-            Log.e("size Tokoh", sessionManager.getTokoh().size.toString())
+            sessionManager1.setTokoh(list)
+            Log.e("size Tokoh", "${sessionManager1.getTokoh()}")
             startActivity(Intent(this, AddKawanDekatActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
     private fun initRecycler() {
-        val tokoh = sessionManager.getTokoh()
+        val tokoh = sessionManager1.getTokoh()
         if (tokoh.size == 1) {
             for (i in 0 until tokoh.size) {
                 list.add(

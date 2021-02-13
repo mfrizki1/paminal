@@ -13,17 +13,14 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.EditFotoReq
-import id.calocallo.sicape.model.FotoModel
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.network.response.FotoResp
 import id.calocallo.sicape.utils.IntentUtil
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_foto.*
 import kotlinx.android.synthetic.main.activity_edit_foto.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import okhttp3.MediaType
@@ -51,14 +48,14 @@ class EditFotoActivity : BaseActivity() {
     private var idKanan: Int? = null
     private var idKiri: Int? = null
 
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var editFotoReq = EditFotoReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_foto)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama.toString()
 
@@ -73,7 +70,7 @@ class EditFotoActivity : BaseActivity() {
         btn_edit_foto_kiri_edit.setOnClickListener {
             picker(KIRI)
         }
-        getFoto()
+        getFoto(detailPersonel)
         btn_save_foto_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_foto_edit)
         btn_save_foto_edit.setOnClickListener {
@@ -109,8 +106,8 @@ class EditFotoActivity : BaseActivity() {
         editFotoReq.id_foto_kiri = idKiri
         editFotoReq.id_foto_muka = idDepan
         NetworkConfig().getService().updateFoto(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString(),
             editFotoReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -153,49 +150,69 @@ class EditFotoActivity : BaseActivity() {
         }
     }
 
-    private fun getFoto() {
-        NetworkConfig().getService().getFoto(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString()
-        ).enqueue(object : Callback<FotoModel> {
-            override fun onFailure(call: Call<FotoModel>, t: Throwable) {
-                Toast.makeText(this@EditFotoActivity, R.string.error_conn, Toast.LENGTH_SHORT)
-                    .show()
-            }
+    private fun getFoto(personel: AllPersonelModel1?) {
+        /* NetworkConfig().getService().getFoto(
+             "Bearer ${sessionManager1.fetchAuthToken()}",
+             sessionManager1.fetchID().toString()
+         ).enqueue(object : Callback<FotoModel> {
+             override fun onFailure(call: Call<FotoModel>, t: Throwable) {
+                 Toast.makeText(this@EditFotoActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                     .show()
+             }
 
-            override fun onResponse(call: Call<FotoModel>, response: Response<FotoModel>) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.id_foto_kanan == null) {
-                        img_foto_kanan_null.visible()
-                        img_foto_kanan_edit.gone()
-                    }
-                    if (response.body()!!.id_foto_kiri == null) {
-                        img_foto_kiri_null.visible()
-                        img_foto_kiri_edit.gone()
-                    }
-                    if (response.body()!!.id_foto_muka == null) {
-                        img_foto_depan_null.visible()
-                        img_foto_depan_edit.gone()
-                    }
+             override fun onResponse(call: Call<FotoModel>, response: Response<FotoModel>) {
+                 if (response.isSuccessful) {
+                     if (response.body()!!.id_foto_kanan == null) {
+                         img_foto_kanan_null.visible()
+                         img_foto_kanan_edit.gone()
+                     }
+                     if (response.body()!!.id_foto_kiri == null) {
+                         img_foto_kiri_null.visible()
+                         img_foto_kiri_edit.gone()
+                     }
+                     if (response.body()!!.id_foto_muka == null) {
+                         img_foto_depan_null.visible()
+                         img_foto_depan_edit.gone()
+                     }
 
-                    response.body()!!.id_foto_muka?.let {
-                        idDepan = it.toInt()
-                        img_foto_depan_edit.setFromUrl(it)
-                    }
-                    response.body()!!.id_foto_kanan?.let {
-                        idKanan = it.toInt()
-                        img_foto_kanan_edit.setFromUrl(it)
-                    }
-                    response.body()!!.id_foto_kiri?.let {
-                        idKiri = it.toInt()
-                        img_foto_kiri_edit.setFromUrl(it)
-                    }
+                     response.body()!!.id_foto_muka?.let {
+                         idDepan = it.toInt()
+                         img_foto_depan_edit.setFromUrl(it)
+                     }
+                     response.body()!!.id_foto_kanan?.let {
+                         idKanan = it.toInt()
+                         img_foto_kanan_edit.setFromUrl(it)
+                     }
+                     response.body()!!.id_foto_kiri?.let {
+                         idKiri = it.toInt()
+                         img_foto_kiri_edit.setFromUrl(it)
+                     }
 
-                } else {
-                    Toast.makeText(this@EditFotoActivity, R.string.error, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
+                 } else {
+                     Toast.makeText(this@EditFotoActivity, R.string.error, Toast.LENGTH_SHORT).show()
+                 }
+             }
+         })*/
+
+        if (personel?.foto?.foto_kanan == null) {
+            img_foto_kanan_edit.gone()
+            img_foto_kanan_null.visible()
+        } else {
+            personel?.foto?.foto_kanan?.url?.let { img_foto_kanan_edit.setFromUrl(it) }
+        }
+
+        if (personel?.foto?.foto_kiri == null) {
+            img_foto_kiri_edit.gone()
+            img_foto_kiri_null.visible()
+        } else {
+            personel?.foto?.foto_kiri?.url?.let { img_foto_kiri_edit.setFromUrl(it) }
+        }
+        if (personel?.foto?.foto_muka == null) {
+            img_foto_depan_null.visible()
+            img_foto_depan_edit.gone()
+        } else {
+            personel?.foto?.foto_muka?.url?.let { img_foto_depan_edit.setFromUrl(it) }
+        }
 
     }
 
@@ -211,6 +228,7 @@ class EditFotoActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         if (resultCode == RESULT_OK) {
             Log.e("TAG", "Path:${ImagePicker.getFilePath(data)}")
             val file = ImagePicker.getFile(data)!!
@@ -223,41 +241,8 @@ class EditFotoActivity : BaseActivity() {
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mDepanFile!!.name, requestBody)
 //                    img_foto_depan_edit.setLocalImage(file, false)
-                    NetworkConfig().getService().uploadMuka(
-                        "Bearer ${sessionManager.fetchAuthToken()}",
-                        filePart
-                    ).enqueue(object : Callback<Base1Resp<FotoResp>> {
-                        override fun onFailure(call: Call<Base1Resp<FotoResp>>, t: Throwable) {
-                            Toast.makeText(
-                                this@EditFotoActivity,
-                                "Error Koneksi",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                        override fun onResponse(
-                            call: Call<Base1Resp<FotoResp>>,
-                            response: Response<Base1Resp<FotoResp>>
-                        ) {
-                            if (response.isSuccessful) {
-                                pb_foto_depan_edit.gone()
-                                img_foto_depan_null.gone()
-                                img_foto_depan_edit.visible()
-                                img_foto_depan_edit.setLocalImage(file, false)
-                                mDepanUrl = response.body()?.data?.url
-                                idDepan = response.body()?.data?.idStoredFile
-                            } else {
-                                Toast.makeText(
-                                    this@EditFotoActivity,
-                                    "Error Koneksi",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                pb_foto_depan_edit.gone()
-                                img_foto_depan_edit.visible()
-                            }
-                        }
-                    })
-//                    uploadFoto(mDepanFile)
+                    uploadEdit(detailPersonel, "foto_muka", filePart)
+                    //                    uploadFoto(mDepanFile)
                 }
                 KANAN -> {
                     mKananFile = file
@@ -267,11 +252,15 @@ class EditFotoActivity : BaseActivity() {
                     val requestBody = RequestBody.create(MediaType.parse("*/*"), mKananFile)
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mKananFile!!.name, requestBody)
-                    NetworkConfig().getService().uploadKanan(
-                        "Bearer ${sessionManager.fetchAuthToken()}",
+                    uploadEdit(detailPersonel, "foto_kanan", filePart)
+                    /*  NetworkConfig().getService().uploadKanan(
+                        "Bearer ${sessionManager1.fetchAuthToken()}",
                         filePart
-                    ).enqueue(object : Callback<Base1Resp<FotoResp>> {
-                        override fun onFailure(call: Call<Base1Resp<FotoResp>>, t: Throwable) {
+                    ).enqueue(object : Callback<Base1Resp<ArrayList<FotoResp>>> {
+                        override fun onFailure(
+                            call: Call<Base1Resp<ArrayList<FotoResp>>>,
+                            t: Throwable
+                        ) {
                             Toast.makeText(
                                 this@EditFotoActivity,
                                 "Error Koneksi",
@@ -280,16 +269,16 @@ class EditFotoActivity : BaseActivity() {
                         }
 
                         override fun onResponse(
-                            call: Call<Base1Resp<FotoResp>>,
-                            response: Response<Base1Resp<FotoResp>>
+                            call: Call<Base1Resp<ArrayList<FotoResp>>>,
+                            response: Response<Base1Resp<ArrayList<FotoResp>>>
                         ) {
                             if (response.isSuccessful) {
                                 img_foto_kanan_edit.setLocalImage(file, false)
                                 pb_foto_kanan_edit.gone()
                                 img_foto_kanan_edit.visible()
                                 img_foto_kanan_null.gone()
-                                mKananUrl = response.body()?.data?.url
-                                idKanan = response.body()?.data?.idStoredFile
+                                mKananUrl = response.body()?.data?.get(0)?.url
+                                idKanan = response.body()?.data?.get(0)?.id
                             } else {
                                 pb_foto_kanan_edit.gone()
                                 img_foto_kanan_edit.visible()
@@ -301,22 +290,27 @@ class EditFotoActivity : BaseActivity() {
                                 ).show()
                             }
                         }
-                    })
+                    })*/
 
                 }
                 KIRI -> {
                     mKiriFile = file
+//                    uploadFoto(mKiriFile)
                     pb_foto_kiri_edit.visible()
                     img_foto_kiri_edit.gone()
-//                    uploadFoto(mKiriFile)
                     val requestBody = RequestBody.create(MediaType.parse("*/*"), mKiriFile)
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mKiriFile!!.name, requestBody)
-                    NetworkConfig().getService().uploadKiri(
-                        "Bearer ${sessionManager.fetchAuthToken()}",
+                    uploadEdit(detailPersonel, "foto_kiri", filePart)
+
+                    /* NetworkConfig().getService().uploadKiri(
+                        "Bearer ${sessionManager1.fetchAuthToken()}",
                         filePart
-                    ).enqueue(object : Callback<Base1Resp<FotoResp>> {
-                        override fun onFailure(call: Call<Base1Resp<FotoResp>>, t: Throwable) {
+                    ).enqueue(object : Callback<Base1Resp<ArrayList<FotoResp>>> {
+                        override fun onFailure(
+                            call: Call<Base1Resp<ArrayList<FotoResp>>>,
+                            t: Throwable
+                        ) {
                             Toast.makeText(
                                 this@EditFotoActivity,
                                 "Error Koneksi",
@@ -325,16 +319,16 @@ class EditFotoActivity : BaseActivity() {
                         }
 
                         override fun onResponse(
-                            call: Call<Base1Resp<FotoResp>>,
-                            response: Response<Base1Resp<FotoResp>>
+                            call: Call<Base1Resp<ArrayList<FotoResp>>>,
+                            response: Response<Base1Resp<ArrayList<FotoResp>>>
                         ) {
                             if (response.isSuccessful) {
                                 img_foto_kiri_edit.setLocalImage(file, false)
                                 pb_foto_kiri_edit.gone()
                                 img_foto_kiri_edit.visible()
                                 img_foto_kiri_null.gone()
-                                mKiriUrl = response.body()?.data?.url
-                                idKiri = response.body()?.data?.idStoredFile
+                                mKiriUrl = response.body()?.data?.get(0)?.url
+                                idKiri = response.body()?.data?.get(0)?.id
                             } else {
                                 pb_foto_kiri.gone()
                                 img_foto_kiri.visible()
@@ -345,13 +339,98 @@ class EditFotoActivity : BaseActivity() {
                                 ).show()
                             }
                         }
-                    })
+                    })*/
                 }
             }
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun uploadEdit(
+        detailPersonel: AllPersonelModel1?, jenis: String, filePart: MultipartBody.Part
+    ) {
+
+        NetworkConfig().getService().uploadEditFoto(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            detailPersonel?.id.toString(),
+            jenis,
+            filePart
+        ).enqueue(object : Callback<Base1Resp<ArrayList<AllPersonelModel1>>> {
+            override fun onFailure(
+                call: Call<Base1Resp<ArrayList<AllPersonelModel1>>>, t: Throwable
+            ) {
+                Log.e("error", "$t")
+                Toast.makeText(
+                    this@EditFotoActivity,
+                    "Error Koneksi",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun onResponse(
+                call: Call<Base1Resp<ArrayList<AllPersonelModel1>>>,
+                response: Response<Base1Resp<ArrayList<AllPersonelModel1>>>
+            ) {
+                if (response.isSuccessful) {
+                    if(response.body()?.message == "Data foto personel updated succesfully") {
+                        setImg(jenis, response.body())
+                    }
+                   /* pb_foto_depan_edit.gone()
+                    img_foto_depan_null.gone()
+                    img_foto_depan_edit.visible()
+                    Log.e("depan", "${response.body()?.data?.foto}")
+//                                img_foto_depan_edit.setLocalImage(file, false)
+                    mDepanUrl = response.body()?.data?.foto?.foto_muka?.url
+                    mDepanUrl?.let { img_foto_depan_edit.setFromUrl(it, false) }*/
+//                                idDepan = response.body()?.data?.get(0)?.id
+                } else {
+                    Toast.makeText(
+                        this@EditFotoActivity,
+                        "Error Koneksi",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    pb_foto_depan_edit.gone()
+                    img_foto_depan_edit.visible()
+                }
+            }
+        })
+    }
+
+    private fun setImg(
+        jenis: String,
+        body: Base1Resp<ArrayList<AllPersonelModel1>>?
+    ) {
+        when (jenis){
+            "foto_muka"->{
+                pb_foto_depan_edit.gone()
+                img_foto_depan_null.gone()
+                img_foto_depan_edit.visible()
+                Log.e("depan", "${body?.data?.get(0)?.foto}")
+//                                img_foto_depan_edit.setLocalImage(file, false)
+                mDepanUrl = body?.data?.get(0)?.foto?.foto_muka?.url
+                mDepanUrl?.let { img_foto_depan_edit.setFromUrl(it, false) }
+            }
+            "foto_kanan"->{
+                pb_foto_kanan_edit.gone()
+                img_foto_kanan_null.gone()
+                img_foto_kanan_edit.visible()
+                Log.e("kanan", "${body?.data?.get(0)?.foto}")
+//                                img_foto_depan_edit.setLocalImage(file, false)
+                mKananUrl = body?.data?.get(0)?.foto?.foto_kanan?.url
+                mKananUrl?.let { img_foto_kanan_edit.setFromUrl(it, false) }
+            }
+            "foto_kiri"->{
+                pb_foto_kiri_edit.gone()
+                img_foto_kiri_null.gone()
+                img_foto_kiri_edit.visible()
+                Log.e("kiri", "${body?.data?.get(0)?.foto}")
+//                                img_foto_depan_edit.setLocalImage(file, false)
+                mKiriUrl = body?.data?.get(0)?.foto?.foto_kiri?.url
+                mKiriUrl?.let { img_foto_kiri_edit.setFromUrl(it, false) }
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ class PenghargaanAdapter(
 ) : RecyclerView.Adapter<PenghargaanAdapter.PenghargaanHolder>() {
     inner class PenghargaanHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(penghargaanReq: PenghargaanReq) {
-            with(itemView){
+            with(itemView) {
                 edt_nama_penghargaan.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
                         penghargaanReq.penghargaan = s.toString()
@@ -32,7 +32,12 @@ class PenghargaanAdapter(
                     ) {
                     }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
                     }
                 })
                 edt_diterima_penghargaan.addTextChangedListener(object : TextWatcher {
@@ -48,7 +53,12 @@ class PenghargaanAdapter(
                     ) {
                     }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
                     }
                 })
                 edt_rangka_penghargaan.addTextChangedListener(object : TextWatcher {
@@ -64,10 +74,15 @@ class PenghargaanAdapter(
                     ) {
                     }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
                     }
                 })
-                edt_tgl_penghargaan.addTextChangedListener(object : TextWatcher {
+                edt_tahun_penghargaan.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
                         penghargaanReq.tahun = s.toString()
                     }
@@ -80,7 +95,12 @@ class PenghargaanAdapter(
                     ) {
                     }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
                     }
                 })
                 edt_ket_penghargaan.addTextChangedListener(object : TextWatcher {
@@ -96,12 +116,18 @@ class PenghargaanAdapter(
                     ) {
                     }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
                     }
                 })
-                btn_delete_penghargaan.visibility = if(adapterPosition == 0) View.GONE else View.VISIBLE
+                btn_delete_penghargaan.visibility =
+                    if (adapterPosition == 0) View.GONE else View.VISIBLE
                 btn_delete_penghargaan.setOnClickListener {
-                    if(adapterPosition!= RecyclerView.NO_POSITION){
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
                         onClick.onDelete(adapterPosition)
                     }
                 }
@@ -125,6 +151,12 @@ class PenghargaanAdapter(
     }
 
     override fun onBindViewHolder(holder: PenghargaanHolder, position: Int) {
-       holder.bind(list[position])
+        holder.bind(list[position])
+        val data = list[position]
+        holder.itemView.edt_nama_penghargaan.setText(data.penghargaan)
+        holder.itemView.edt_diterima_penghargaan.setText(data.diterima_dari)
+        holder.itemView.edt_rangka_penghargaan.setText(data.dalam_rangka)
+        holder.itemView.edt_tahun_penghargaan.setText(data.tahun)
+        holder.itemView.edt_ket_penghargaan.setText(data.keterangan)
     }
 }

@@ -202,6 +202,14 @@ class OrganisasiAdapter(
 
     override fun onBindViewHolder(holder: OrgHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.etNama.setText(data.organisasi)
+        holder.etThnAwal.setText(data.tahun_awal)
+        holder.etThnAkhir.setText(data.tahun_akhir)
+        holder.etKedudukan.setText(data.jabatan)
+        holder.etThnIkut.setText(data.tahun_bergabung)
+        holder.etAlamat.setText(data.alamat)
+        holder.etKet.setText(data.keterangan)
     }
 
     interface OnCLickOrg {

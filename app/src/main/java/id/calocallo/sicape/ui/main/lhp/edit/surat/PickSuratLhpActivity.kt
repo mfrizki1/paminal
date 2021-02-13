@@ -9,7 +9,7 @@ import id.calocallo.sicape.model.ListSurat
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.surat.AddSingleSuratLhpActivity.Companion.ADD_SURAT
 import id.calocallo.sicape.ui.main.lhp.edit.surat.EditSuratLhpActivity.Companion.EDIT_SURAT
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_surat_lhp.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -18,14 +18,14 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickSuratLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterSurat: ReusableAdapter<ListSurat>
     private lateinit var callbackSurat: AdapterCallback<ListSurat>
     private var listSurat = arrayListOf<ListSurat>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_surat_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterSurat = ReusableAdapter(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)

@@ -9,14 +9,14 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.request.EditLhpReq
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterLidik: LidikAdapter
     private lateinit var adapterSaksi: SaksiAdapter
     private lateinit var adapterSurat: SuratAdapter
@@ -35,13 +35,13 @@ class EditLhpActivity : BaseActivity() {
         setContentView(R.layout.activity_edit_lhp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Laporan Hasil Penyelidikan"
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         val bundle = intent.extras
         val editLHP = bundle?.getParcelable<LhpResp>(EDIT_LHP)
 
         getViewLhpEdit(editLHP)
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_lhp_edit.gone()
         }

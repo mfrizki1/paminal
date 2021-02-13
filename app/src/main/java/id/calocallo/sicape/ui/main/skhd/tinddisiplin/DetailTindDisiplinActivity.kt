@@ -31,11 +31,11 @@ class DetailTindDisiplinActivity : BaseActivity() {
 
     private fun getDetailTindDisiplin(detailTindDisiplin: TindDisiplinResp?) {
         txt_tindakan_detail.text = detailTindDisiplin?.isi_tindakan_disiplin
-        txt_nama_personel_tind_disiplin_detail.text = detailTindDisiplin?.personel?.nama
-        txt_pangkat_personel_tind_disiplin_detail.text = detailTindDisiplin?.personel?.pangkat
-        txt_nrp_personel_tind_disiplin_detail.text = detailTindDisiplin?.personel?.nrp
-        txt_jabatan_personel_tind_disiplin_detail.text = detailTindDisiplin?.personel?.jabatan
-        txt_kesatuan_personel_tind_disiplin_detail.text = detailTindDisiplin?.personel?.kesatuan
+        txt_nama_personel_tind_disiplin_detail.text ="Nama : ${detailTindDisiplin?.personel?.nama}"
+        txt_pangkat_personel_tind_disiplin_detail.text ="Pangkat : ${detailTindDisiplin?.personel?.pangkat.toString().toUpperCase()}"
+        txt_nrp_personel_tind_disiplin_detail.text ="NRP : ${detailTindDisiplin?.personel?.nrp}"
+        txt_jabatan_personel_tind_disiplin_detail.text ="Jabatan : ${detailTindDisiplin?.personel?.jabatan}"
+        txt_kesatuan_personel_tind_disiplin_detail.text ="Kesatuan : ${detailTindDisiplin?.personel?.kesatuan}"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

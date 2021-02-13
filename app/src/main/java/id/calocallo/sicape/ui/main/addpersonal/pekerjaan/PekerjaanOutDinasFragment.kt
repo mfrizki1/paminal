@@ -2,6 +2,7 @@ package id.calocallo.sicape.ui.main.addpersonal.pekerjaan
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,7 @@ import id.calocallo.sicape.network.request.AddPekerjaanReq
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.ui.main.addpersonal.alamat.AddAlamatActivity
 import id.calocallo.sicape.utils.Constants
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import kotlinx.android.synthetic.main.fragment_pekerjaan_out_dinas.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +26,7 @@ import retrofit2.Response
 
 class PekerjaanOutDinasFragment : Fragment() {
     private var addPekerjaanReq = AddPekerjaanReq()
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<PekerjaanODinasReq>
     private lateinit var parent: ParentListPekerjaanODinas
     private lateinit var adapter: PekerjaanODinasAdapter
@@ -41,7 +42,7 @@ class PekerjaanOutDinasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
         list = ArrayList()
 //        parent = ParentListPekerjaanODinas(list)
 
@@ -50,7 +51,8 @@ class PekerjaanOutDinasFragment : Fragment() {
             if (list.size == 0) {
                 list.clear()
             }
-            sessionManager.setPekerjaanDiluar(list)
+            sessionManager1.setPekerjaanDiluar(list)
+            Log.e("pekerjaanLuar", "${sessionManager1.getPekerjaanDiluar()}")
 //            doPekerjaan()
             //berhasil -> GO
             //gagal -> TOAST
@@ -64,10 +66,10 @@ class PekerjaanOutDinasFragment : Fragment() {
     }
 
     private fun doPekerjaan() {
-        addPekerjaanReq.riwayat_pekerjaan = sessionManager.getPekerjaan()
+        addPekerjaanReq.riwayat_pekerjaan = sessionManager1.getPekerjaan()
         addPekerjaanReq.riwayat_pekerjaan_luar_dinas = list
         NetworkConfig().getService().addPekerjaanMany(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             Constants.ID_PERSONEL,
             addPekerjaanReq
         ).enqueue(object : Callback<BaseResp> {
@@ -94,7 +96,7 @@ class PekerjaanOutDinasFragment : Fragment() {
     private fun initRecycler() {
         rv_pekerjaan_ODinas.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val diluar = sessionManager.getPekerjaanDiluar()
+        val diluar = sessionManager1.getPekerjaanDiluar()
         if (diluar.size == 0) {
             list.add(
                 PekerjaanODinasReq(
@@ -142,7 +144,7 @@ class PekerjaanOutDinasFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val pkrjn_luar_dinas = sessionManager.getPekerjaanDiluar()
+        val pkrjn_luar_dinas = sessionManager1.getPekerjaanDiluar()
         for (i in 0 until pkrjn_luar_dinas.size) {
             list.add(
                 i, PekerjaanODinasReq(

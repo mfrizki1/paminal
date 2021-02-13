@@ -9,11 +9,12 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.PernahDihukumResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.HukumanReq
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_pernah_dihukum.*
@@ -23,17 +24,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditPernahDihukumActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var hukumanReq = HukumanReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_pernah_dihukum)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_edit_pernah_dihukum.gone()
             btn_delete_edit_pernah_dihukum.gone()
@@ -66,7 +67,7 @@ class EditPernahDihukumActivity : BaseActivity() {
         }
         hukumanReq.perkara = edt_perkara_hukum_edit.text.toString()
         NetworkConfig().getService().updateSingleDihukum(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             dihukum?.id.toString(),
             hukumanReq
         ).enqueue(object : Callback<BaseResp> {
@@ -101,7 +102,7 @@ class EditPernahDihukumActivity : BaseActivity() {
 
     private fun deleteDihukum(dihukum: PernahDihukumResp?) {
         NetworkConfig().getService().deleteSingleDihukum(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             dihukum?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

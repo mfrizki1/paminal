@@ -16,24 +16,21 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AddSinglePekerjaanReq
 import id.calocallo.sicape.network.request.PekerjaanODinasReq
+import id.calocallo.sicape.network.response.AddPekerjaanResp
+import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
-import kotlinx.android.synthetic.main.activity_edit_tokoh.*
 import kotlinx.android.synthetic.main.fragment_add_single_pekerjaan.*
 import kotlinx.android.synthetic.main.fragment_add_single_pekerjaan.view.*
-import kotlinx.android.synthetic.main.fragment_add_single_pend.*
-import kotlinx.android.synthetic.main.fragment_edit_pekerjaan_luar.*
-import kotlinx.android.synthetic.main.fragment_edit_pend.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AddSinglePekerjaanFragment : Fragment() {
     var pekerjaan = ""
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private val singlePekerjaanReq = AddSinglePekerjaanReq()
     private val pekerjaanLuarReq = PekerjaanODinasReq("", "", "", "", "", "")
 
@@ -47,7 +44,7 @@ class AddSinglePekerjaanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
         val item = listOf("Pekerjaan", "Pekerjaan Diluar Dinas")
         val adapter = activity?.let { ArrayAdapter(it, R.layout.item_spinner, item) }
         view.sp_pekerjaan_add_single.setAdapter(adapter)
@@ -80,7 +77,12 @@ class AddSinglePekerjaanFragment : Fragment() {
         animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
 
         if (pekerjaan == "pekerjaan") {
-
+            edt_nama_pekerjaan_luar.text = null
+            edt_thn_awal_pekerjaan_luar.text = null
+            edt_thn_akhir_pekerjaan_luar.text = null
+            edt_instansi_pekerjaan_luar.text = null
+            edt_rangka_pekerjaan_luar.text = null
+            edt_ket_pekerjaan_luar.text = null
             singlePekerjaanReq.keterangan = edt_ket_pekerjaan_add_single.text.toString()
             singlePekerjaanReq.instansi = edt_kesatuan_pekerjaan_add_single.text.toString().toUpperCase()
             singlePekerjaanReq.golongan = edt_pangkat_pekerjaan_add_single.text.toString().toUpperCase()
@@ -92,17 +94,17 @@ class AddSinglePekerjaanFragment : Fragment() {
             }
 
             NetworkConfig().getService().addPekerjaanSingle(
-                "Bearer ${sessionManager.fetchAuthToken()}",
+                "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4",
-                sessionManager.fetchID().toString(),
+                sessionManager1.fetchID().toString(),
                 singlePekerjaanReq
-            ).enqueue(object : Callback<BaseResp> {
-                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+            ).enqueue(object : Callback<Base1Resp<AddPekerjaanResp>> {
+                override fun onFailure(call: Call<Base1Resp<AddPekerjaanResp>>, t: Throwable) {
                     Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
                     btn_save_add_add_single.hideDrawable(R.string.save)
                 }
 
-                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                override fun onResponse(call: Call<Base1Resp<AddPekerjaanResp>>, response: Response<Base1Resp<AddPekerjaanResp>>) {
                     if (response.isSuccessful) {
                         Toast.makeText(activity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT)
                             .show()
@@ -126,7 +128,11 @@ class AddSinglePekerjaanFragment : Fragment() {
             })
 
         } else {
-
+            edt_ket_pekerjaan_add_single.text=  null
+            edt_kesatuan_pekerjaan_add_single.text=  null
+            edt_pangkat_pekerjaan_add_single.text=  null
+            edt_nama_pekerjaan_add_single.text=  null
+            edt_lama_thn_pekerjaan_add_single.text=  null
             pekerjaanLuarReq.pekerjaan = edt_nama_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.tahun_awal = edt_thn_awal_pekerjaan_luar.text.toString()
             pekerjaanLuarReq.tahun_akhir = edt_thn_akhir_pekerjaan_luar.text.toString()
@@ -139,9 +145,9 @@ class AddSinglePekerjaanFragment : Fragment() {
             }
 
             NetworkConfig().getService().addPekerjaanLuar(
-                "Bearer ${sessionManager.fetchAuthToken()}",
+                "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4",
-                sessionManager.fetchID().toString(),
+                sessionManager1.fetchID().toString(),
                 pekerjaanLuarReq
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {

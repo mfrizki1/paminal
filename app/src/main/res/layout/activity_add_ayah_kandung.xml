@@ -315,7 +315,7 @@
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_nama_almt_kntr_ayah"
+                android:id="@+id/edt_nama_kntr_ayah"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text|textCapSentences" />

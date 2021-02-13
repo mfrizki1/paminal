@@ -9,7 +9,7 @@ import id.calocallo.sicape.model.ListBukti
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.barangbukti.AddBarBuktiLhpActivity.Companion.ADD_BARBUKTI
 import id.calocallo.sicape.ui.main.lhp.edit.barangbukti.EditBarBuktiLhpActivity.Companion.EDIT_BARBUKTI
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_bar_bukti_lhp.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -18,14 +18,14 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickBarBuktiLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterBarBukti: ReusableAdapter<ListBukti>
     private lateinit var callbackBarBukti: AdapterCallback<ListBukti>
     private var listBukti = arrayListOf<ListBukti>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_bar_bukti_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterBarBukti = ReusableAdapter(this)
 
         val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)

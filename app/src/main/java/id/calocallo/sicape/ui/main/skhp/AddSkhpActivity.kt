@@ -5,11 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.SkhpReq
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.ui.main.skhd.tinddisiplin.AddTindDisiplinSkhdActivity
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -23,12 +24,50 @@ class AddSkhpActivity : BaseActivity() {
     private var isPidana: Int? = null
     private var isKke: Int? = null
     private var isDisiplin: Int? = null
+    private var kotaSkhp:String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_skhp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data SKHP"
 
+        radioGroupSkhp()
+
+        btn_choose_personel_skhp.setOnClickListener {
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
+            startActivityForResult(intent, AddTindDisiplinSkhdActivity.REQ_PERSONEL_TIND)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
+        var listKotaSkhp = listOf("Banjarmasin","Banjarbaru")
+        val adapterKota = ArrayAdapter(this, R.layout.item_spinner, listKotaSkhp)
+        edt_kota_keluar_skhp_add.setAdapter(adapterKota)
+        edt_kota_keluar_skhp_add.setOnItemClickListener { parent, view, position, id ->
+            kotaSkhp = parent.getItemAtPosition(position).toString()
+        }
+        btn_save_skhp_add.setOnClickListener {
+            skhpReq.no_skhp = edt_no_skhp_add.text.toString()
+            skhpReq.hasil_keputusan = edt_isi_skhp_add.text.toString()
+//            skhpReq.kota_keluar = edt_kota_keluar_skhp_add.text.toString()
+            skhpReq.kota_keluar = kotaSkhp
+            skhpReq.tanggal_keluar = edt_tanggal_keluar_skhp_add.text.toString()
+            skhpReq.nama_yang_mengeluarkan = edt_nama_pimpinan_skhp_add.text.toString()
+            skhpReq.pangkat_yang_mengeluarkan =
+                edt_pangkat_pimpinan_skhp_add.text.toString().toUpperCase()
+            skhpReq.nrp_yang_mengeluarkan = edt_nrp_pimpinan_skhp_add.text.toString()
+            skhpReq.jabatan_yang_mengeluarkan = edt_jabatan_pimpinan_skhp_add.text.toString()
+            skhpReq.kepada = edt_kepada_skhp_add.text.toString()
+            skhpReq.is_memiliki_pelanggaran_pidana = isPidana
+            skhpReq.is_memiliki_pelanggaran_kode_etik = isKke
+            skhpReq.is_memiliki_pelanggaran_disiplin = isDisiplin
+            skhpReq.is_status_selesai = tempSttsCatPelanggaran
+            skhpReq.id_personel = idPersonel
+            Log.e("add SKHP", "$skhpReq")
+        }
+    }
+
+    private fun radioGroupSkhp() {
         rg_memiliki_pidana.setOnCheckedChangeListener { group, checkedId ->
             val radio :RadioButton = findViewById(checkedId)
             isPidana = if(radio.isChecked && radio.text == "Memiliki"){
@@ -64,29 +103,6 @@ class AddSkhpActivity : BaseActivity() {
             }
 
         }
-        btn_choose_personel_skhp.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            startActivityForResult(intent, AddTindDisiplinSkhdActivity.REQ_PERSONEL_TIND)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-        btn_save_skhp_add.setOnClickListener {
-            skhpReq.no_skhp = edt_no_skhp_add.text.toString()
-            skhpReq.hasil_keputusan = edt_isi_skhp_add.text.toString()
-            skhpReq.kota_keluar = edt_kota_keluar_skhp_add.text.toString()
-            skhpReq.tanggal_keluar = edt_tanggal_keluar_skhp_add.text.toString()
-            skhpReq.nama_yang_mengeluarkan = edt_nama_pimpinan_skhp_add.text.toString()
-            skhpReq.pangkat_yang_mengeluarkan =
-                edt_pangkat_pimpinan_skhp_add.text.toString().toUpperCase()
-            skhpReq.nrp_yang_mengeluarkan = edt_nrp_pimpinan_skhp_add.text.toString()
-            skhpReq.jabatan_yang_mengeluarkan = edt_jabatan_pimpinan_skhp_add.text.toString()
-            skhpReq.kepada = edt_kepada_skhp_add.text.toString()
-            skhpReq.is_memiliki_pelanggaran_pidana = isPidana
-            skhpReq.is_memiliki_pelanggaran_kode_etik = isKke
-            skhpReq.is_memiliki_pelanggaran_disiplin = isDisiplin
-            skhpReq.is_status_selesai = tempSttsCatPelanggaran
-            skhpReq.id_personel = idPersonel
-            Log.e("add SKHP", "$skhpReq")
-        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -94,7 +110,7 @@ class AddSkhpActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AddTindDisiplinSkhdActivity.REQ_PERSONEL_TIND) {
             if (resultCode == Activity.RESULT_OK) {
-                val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+                val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
                 idPersonel = personel?.id
                 txt_nama_personel_skhp_add.text = "Nama : ${personel?.nama}"
                 txt_pangkat_personel_skhp_add.text =

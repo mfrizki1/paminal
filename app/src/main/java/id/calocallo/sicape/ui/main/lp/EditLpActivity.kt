@@ -9,20 +9,18 @@ import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LpDisiplinModel
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.LpReqEdit
 import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.network.response.PelanggaranResp
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.ui.main.pelanggaran.PickPelanggaranActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditLpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var idPersonelTerlapor: Int? = null
     private var idPersonelDilapor: Int? = null
     private var idPelanggaran: Int? = null
@@ -59,16 +57,17 @@ class EditLpActivity : BaseActivity() {
 //        }
 
         btn_choose_personel_terlapor_lp_add.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, AddLpActivity.REQ_DILAPOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        btn_choose_personel_terlapor_lp_add.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            startActivityForResult(intent, AddLpActivity.REQ_TERLAPOR)
-        }
+//        btn_choose_personel_terlapor_lp_add.setOnClickListener {
+//            val intent = Intent(this, ChoosePersonelActivity::class.java)
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+//            startActivityForResult(intent, AddLpActivity.REQ_TERLAPOR)
+//        }
 
         btn_next_lp_add.attachTextChangeAnimator()
         bindProgressButton(btn_next_lp_add)
@@ -146,7 +145,7 @@ class EditLpActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         val pelanggaran = data?.getParcelableExtra<PelanggaranResp>("PELANGGARAN")
         when (resultCode) {
             Activity.RESULT_OK -> {

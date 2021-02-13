@@ -12,7 +12,7 @@ import id.calocallo.sicape.network.response.RefPenyelidikanResp
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
 import id.calocallo.sicape.ui.main.lhp.DetailLhpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_detail_ref_penyelidikan.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -23,13 +23,13 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 class ListDetailRefPenyelidikanActivity : BaseActivity() {
     private var adapterRefPenyelidikan = ReusableAdapter<RefPenyelidikanResp>(this)
     private lateinit var callbackRefPenyelidikan: AdapterCallback<RefPenyelidikanResp>
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var refLpReq = RefPenyelidikanReq()
     private var lhpResp = LhpResp()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_detail_ref_penyelidikan)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data Referensi Penyelidikan"
 

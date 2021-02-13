@@ -8,7 +8,7 @@ import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListPetunjuk
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.petunjuk.AddPetunjukLhpActivity.Companion.ADD_PETUNJUK
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_petunjuk.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -17,14 +17,14 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickPetunjukActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterPetunjuk: ReusableAdapter<ListPetunjuk>
     private lateinit var callbackPetunjuk: AdapterCallback<ListPetunjuk>
     private var listPetunjuk = arrayListOf<ListPetunjuk>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_petunjuk)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterPetunjuk = ReusableAdapter(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)

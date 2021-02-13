@@ -16,7 +16,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpEditActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
@@ -28,13 +28,13 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class DetailLpDisiplinActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var adapterDetailPasalDisiplin = ReusableAdapter<LpPasalResp>(this)
     private lateinit var callbackDetailPasalDisiplin: AdapterCallback<LpPasalResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lp_disiplin)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterDetailPasalDisiplin = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Laporan Polisi Disiplin"
@@ -42,7 +42,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
         val disiplin = intent.extras?.getParcelable<LpDisiplinResp>(DETAIL_DISIPLIN)
         getViewDisiplin(disiplin)
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_disiplin.gone()
             btn_edit_pasal_disiplin.gone()

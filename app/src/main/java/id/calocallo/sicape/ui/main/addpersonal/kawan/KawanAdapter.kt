@@ -72,7 +72,7 @@ class KawanAdapter(
                 })
                 etUmur.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
-                        sahabatReq.alasan = s.toString()
+                        sahabatReq.umur = s.toString()
                     }
 
                     override fun beforeTextChanged(
@@ -138,8 +138,12 @@ class KawanAdapter(
                 val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
                 spJk.setAdapter(adapter)
                 spJk.setOnItemClickListener { parent, view, position, id ->
-                    sahabatReq.jenis_kelamin =
-                        parent.getItemAtPosition(position).toString()
+                    when(position){
+                        0->sahabatReq.jenis_kelamin = "laki_laki"
+                        1->sahabatReq.jenis_kelamin = "perempuan"
+                    }
+//                    sahabatReq.jenis_kelamin =
+//                        parent.getItemAtPosition(position).toString()
                 }
                 btnDelete.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
                 btnDelete.setOnClickListener {
@@ -167,5 +171,22 @@ class KawanAdapter(
 
     override fun onBindViewHolder(holder: KawanHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.etNama.setText(data.nama)
+        holder.spJk.setText(data.jenis_kelamin)
+        holder.etUmur.setText(data.umur)
+        holder.etPekerjaan.setText(data.pekerjaan)
+        holder.etAlamat.setText(data.alamat)
+        holder.etAlasan.setText(data.alamat)
+
+                val item = listOf("Laki-Laki", "Perempuan")
+        val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
+        holder.spJk.setAdapter(adapter)
+        holder.spJk.setOnItemClickListener { parent, view, position, id ->
+            when(position){
+                0->data.jenis_kelamin = "laki_laki"
+                1->data.jenis_kelamin = "perempuan"
+            }
+        }
     }
 }

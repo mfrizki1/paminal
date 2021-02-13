@@ -8,13 +8,13 @@ import android.widget.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.SipilPelaporReq
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.ID_PELAPOR
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.SIPIL
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_add_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddLpPidanaActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
     private lateinit var sipilAlertDialog: View
     private var sipilPelaporReq = SipilPelaporReq()
@@ -38,7 +38,7 @@ class AddLpPidanaActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_lp_pidana)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val jenis = intent.extras?.getString(JENIS_PIDANA)
         setupActionBarWithBackButton(toolbar)
 //        supportActionBar?.title = "Tambah Data Laporan Polisi"
@@ -48,14 +48,16 @@ class AddLpPidanaActivity : BaseActivity() {
             "disiplin" -> supportActionBar?.title = "Tambah Data Laporan Polisi Disiplin"
         }
         btn_choose_personel_pelapor_lp_add_pidana.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PELAPOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         btn_next_lp_pidana.setOnClickListener {
-            sessionManager.setPembukaanLapLP(edt_pembukaan_laporan_pidana.text.toString())
-            sessionManager.setIsiLapLP(edt_isi_laporan_pidana.text.toString())
-            sessionManager.setUraianPelanggaranLP(edt_uraian_pelanggaran_pidana.text.toString())
+            sessionManager1.setPembukaanLapLP(edt_pembukaan_laporan_pidana.text.toString())
+            sessionManager1.setIsiLapLP(edt_isi_laporan_pidana.text.toString())
+            sessionManager1.setUraianPelanggaranLP(edt_uraian_pelanggaran_pidana.text.toString())
             sipilPelaporReq.nama_sipil = namaSipil
             sipilPelaporReq.agama_sipil = agamaSipil
             sipilPelaporReq.alamat_sipil = alamatSipil
@@ -75,7 +77,7 @@ class AddLpPidanaActivity : BaseActivity() {
         }
         rg_pidana.setOnCheckedChangeListener { group, checkedId ->
             val radio = findViewById<RadioButton>(checkedId)
-            if (radio.isChecked) sessionManager.setPelapor(radio.text.toString().toLowerCase())
+            if (radio.isChecked) sessionManager1.setPelapor(radio.text.toString().toLowerCase())
             if (radio.text == "Polisi") {
                 ll_personel.visible()
                 ll_sipil.gone()
@@ -186,18 +188,18 @@ class AddLpPidanaActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         when (resultCode) {
             RESULT_OK ->
                 when (requestCode) {
                     REQ_PELAPOR -> {
                         idPelapor = personel?.id
 //                        personel?.id?.let { sessionManager.setIDPersonelPelapor(it) }
-                        txt_nama_pelapor_pidana_lp_add.text = personel?.nama
-                        txt_pangkat_pelapor_pidana_lp_add.text = personel?.pangkat
-                        txt_nrp_pelapor_pidana_lp_add.text = personel?.nrp
-                        txt_jabatan_pelapor_pidana_lp_add.text = personel?.jabatan
-                        txt_kesatuan_pelapor_pidana_lp_add.text = personel?.satuan_kerja?.kesatuan
+                        txt_nama_pelapor_pidana_lp_add.text ="Nama : ${personel?.nama}"
+                        txt_pangkat_pelapor_pidana_lp_add.text ="Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
+                        txt_nrp_pelapor_pidana_lp_add.text ="NRP : ${personel?.nrp}"
+                        txt_jabatan_pelapor_pidana_lp_add.text ="Jabatan : ${personel?.jabatan}"
+                        txt_kesatuan_pelapor_pidana_lp_add.text ="Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
                     }
                 }
         }

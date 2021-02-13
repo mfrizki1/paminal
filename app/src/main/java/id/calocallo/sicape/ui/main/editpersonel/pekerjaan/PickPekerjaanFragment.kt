@@ -15,13 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PekerjaanModel
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.request.PekerjaanODinasReq
 import id.calocallo.sicape.network.response.PekerjaanLuarResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import kotlinx.android.synthetic.main.fragment_pick_pekerjaan.*
-import kotlinx.android.synthetic.main.fragment_pick_pend.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.view_no_data.*
@@ -32,7 +30,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickPekerjaanFragment : Fragment() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapter: EditPkrjnAdapter
     private lateinit var list: ArrayList<PekerjaanModel>
     private lateinit var adapterPkrjnLuar: ReusableAdapter<PekerjaanLuarResp>
@@ -48,7 +46,7 @@ class PickPekerjaanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
         adapterPkrjnLuar = ReusableAdapter(activity!!)
         list = ArrayList()
         ApiPekerjaan("pekerjaan")
@@ -57,7 +55,7 @@ class PickPekerjaanFragment : Fragment() {
         Log.e("pekerjaanteal", pekerjaan)
         sp_jenis_pekerjaan.setText(R.string.pekerjaan)
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_add_edit_pekerjaan.gone()
         }
@@ -90,9 +88,9 @@ class PickPekerjaanFragment : Fragment() {
         rl_pb.visible()
         if (name == "pekerjaan") {
             NetworkConfig().getService().showPekerjaan(
-                "Bearer ${sessionManager.fetchAuthToken()}",
+                "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4"
-                sessionManager.fetchID().toString()
+                sessionManager1.fetchID().toString()
             ).enqueue(object : Callback<ArrayList<PekerjaanModel>> {
                 override fun onFailure(call: Call<ArrayList<PekerjaanModel>>, t: Throwable) {
                     rl_pb.gone()
@@ -124,9 +122,9 @@ class PickPekerjaanFragment : Fragment() {
             })
         } else if (name == "pekerjaan_luar_dinas") {
             NetworkConfig().getService().showPekerjaanLuar(
-                "Bearer ${sessionManager.fetchAuthToken()}",
+                "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4"
-                sessionManager.fetchID().toString()
+                sessionManager1.fetchID().toString()
             ).enqueue(object : Callback<ArrayList<PekerjaanLuarResp>> {
                 override fun onFailure(call: Call<ArrayList<PekerjaanLuarResp>>, t: Throwable) {
                     Toast.makeText(activity, "Eror Koneksi", Toast.LENGTH_SHORT).show()

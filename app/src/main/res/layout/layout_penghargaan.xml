@@ -88,14 +88,15 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Tanggal"
+        android:hint="Tahun"
         app:counterMaxLength="10">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_tgl_penghargaan"
+            android:id="@+id/edt_tahun_penghargaan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="date" />
+            android:maxLength="4"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

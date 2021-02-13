@@ -17,7 +17,7 @@ import id.calocallo.sicape.network.request.LpKkeReq
 import id.calocallo.sicape.network.request.LpPidanaReq
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -28,7 +28,7 @@ class PickPasalLpActivity : BaseActivity() {
     }
 
     private var selectedIdPasal: MutableList<PasalResp> = mutableListOf()
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var lpPidanaReq = LpPidanaReq()
     private var lpKKeReq = LpKkeReq()
 
@@ -43,11 +43,11 @@ class PickPasalLpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_pick_pasal_lp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 //        adapterPasal = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
 //        supportActionBar?.title = "Pilih Pasal"
-        when (sessionManager.getJenisLP()) {
+        when (sessionManager1.getJenisLP()) {
             "pidana" -> supportActionBar?.title = "Tambah Data Laporan Pidana"
             "disiplin" -> supportActionBar?.title = "Tambah Data Laporan Disiplin"
             "kode_etik" -> {
@@ -63,10 +63,10 @@ class PickPasalLpActivity : BaseActivity() {
             startActivity(intent)
         }
         btn_save_lp_all_pidana.setOnClickListener {
-            if (sessionManager.getJenisLP() != "kode_etik") {
-                addAllLp(sessionManager.getJenisLP())
+            if (sessionManager1.getJenisLP() != "kode_etik") {
+                addAllLp(sessionManager1.getJenisLP())
             } else {
-                sessionManager.setListPasalLP(selectedIdPasal as ArrayList<LpPasalResp>)
+                sessionManager1.setListPasalLP(selectedIdPasal as ArrayList<LpPasalResp>)
                 val intent = Intent(this@PickPasalLpActivity, PickSaksiLpActivity::class.java)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 startActivity(intent)
@@ -87,35 +87,35 @@ class PickPasalLpActivity : BaseActivity() {
     private fun addAllLp(jenisLP: String?) {
         when (jenisLP) {
             "pidana" -> {
-                lpPidanaReq.no_lp = sessionManager.getNoLP()
+                lpPidanaReq.no_lp = sessionManager1.getNoLP()
 //                lpPidanaReq.id_pelanggaran = sessionManager.getIdPelanggaran()
 //                lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
 //                lpPidanaReq.id_satuan_kerja = jenisLP
-                lpPidanaReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
-                lpPidanaReq.id_personel_pelapor = sessionManager.getIDPersonelPelapor()
+                lpPidanaReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
+                lpPidanaReq.id_personel_pelapor = sessionManager1.getIDPersonelPelapor()
 //                lpPidanaReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
-                lpPidanaReq.nama_yang_mengetahui = sessionManager.getNamaPimpBidLp()
-                lpPidanaReq.pangkat_yang_mengetahui = sessionManager.getPangkatPimpBidLp()
-                lpPidanaReq.nrp_yang_mengetahui = sessionManager.getNrpPimpBidLp()
-                lpPidanaReq.jabatan_yang_mengetahui = sessionManager.getJabatanPimpBidLp()
-                lpPidanaReq.status_pelapor = sessionManager.getPelapor()
-                lpPidanaReq.pembukaan_laporan = sessionManager.getPembukaanLpLP()
-                lpPidanaReq.isi_laporan = sessionManager.getIsiLapLP()
+                lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
+                lpPidanaReq.status_pelapor = sessionManager1.getPelapor()
+                lpPidanaReq.pembukaan_laporan = sessionManager1.getPembukaanLpLP()
+                lpPidanaReq.isi_laporan = sessionManager1.getIsiLapLP()
                 lpPidanaReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
             }
             "kode_etik" -> {
-                lpKKeReq.no_lp = sessionManager.getNoLP()
+                lpKKeReq.no_lp = sessionManager1.getNoLP()
 //                lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
                 lpKKeReq.uraian_pelanggaran = jenisLP
-                lpKKeReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
-                lpKKeReq.id_personel_pelapor = sessionManager.getIDPersonelPelapor()
+                lpKKeReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
+                lpKKeReq.id_personel_pelapor = sessionManager1.getIDPersonelPelapor()
 //                lpKKeReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
-                lpKKeReq.nama_yang_mengetahui = sessionManager.getNamaPimpBidLp()
-                lpKKeReq.pangkat_yang_mengetahui = sessionManager.getPangkatPimpBidLp()
-                lpKKeReq.nrp_yang_mengetahui = sessionManager.getNrpPimpBidLp()
-                lpKKeReq.jabatan_yang_mengetahui = sessionManager.getJabatanPimpBidLp()
-                lpKKeReq.alat_bukti = sessionManager.getAlatBukiLP()
-                lpKKeReq.isi_laporan = sessionManager.getIsiLapLP()
+                lpKKeReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpKKeReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpKKeReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpKKeReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
+                lpKKeReq.alat_bukti = sessionManager1.getAlatBukiLP()
+                lpKKeReq.isi_laporan = sessionManager1.getIsiLapLP()
                 lpPidanaReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
 
             }

@@ -74,6 +74,8 @@ class PernahHukumAdapter(
 
     override fun onBindViewHolder(holder: PernahHukumHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.itemView.edt_perkara_hukum.setText(data.perkara)
     }
 }
 

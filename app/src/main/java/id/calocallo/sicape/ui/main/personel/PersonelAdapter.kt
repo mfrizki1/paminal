@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import kotlinx.android.synthetic.main.item_personel.view.*
 
-class PersonelAdapter(val context: Context, val listPersonel: ArrayList<PersonelModel>, val listener: PersonelListener): RecyclerView.Adapter<PersonelAdapter.PersonelHolder>() {
+class PersonelAdapter(val context: Context, val listAllPersonel: ArrayList<AllPersonelModel>, val listener: PersonelListener): RecyclerView.Adapter<PersonelAdapter.PersonelHolder>() {
     inner class PersonelHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(personelModel: PersonelModel) {
+        fun bind(allPersonelModel: AllPersonelModel) {
             with(itemView){
-                txt_personel_nama.text = personelModel.nama
-                txt_personel_jabatan.text = personelModel.jabatan
+                txt_personel_nama.text = allPersonelModel.nama
+                txt_personel_jabatan.text = allPersonelModel.jabatan
 //                txt_personel_kesatuan.text = personelModel.id_satuan_kerja
-                txt_personel_nrp.text = personelModel.nrp
+                txt_personel_nrp.text = allPersonelModel.nrp
 
                 itemView.setOnClickListener {
                     listener.onCLick(adapterPosition)
@@ -35,11 +35,11 @@ class PersonelAdapter(val context: Context, val listPersonel: ArrayList<Personel
     }
 
     override fun getItemCount(): Int {
-        return listPersonel.size
+        return listAllPersonel.size
     }
 
     override fun onBindViewHolder(holder: PersonelAdapter.PersonelHolder, position: Int) {
-        holder.bind(listPersonel[position])
+        holder.bind(listAllPersonel[position])
     }
 
     interface PersonelListener{

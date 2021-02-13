@@ -1,19 +1,18 @@
 package id.calocallo.sicape.ui.main.addpersonal
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AddAllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.CatatanPersReq
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.ui.main.personel.DetailPersonelActivity
+import id.calocallo.sicape.network.response.AddPersonelResp
+import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.ui.main.personel.PersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,14 +23,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddCatPersActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var catpersReq = CatatanPersReq()
-    private var allPersonelModel = AllPersonelModel()
+    private var allPersonelModel = AddAllPersonelModel()
     var jenis_catper = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_cat_pers)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Catatan Personal"
 
@@ -44,8 +43,8 @@ class AddCatPersActivity : BaseActivity() {
             catpersReq.tempat_dihukum = edt_tmpt_dihukum_cat_pers.text.toString()
             catpersReq.tanggal_ditahan = edt_tgl_ditahan_cat_pers.text.toString()
             catpersReq.tempat_ditahan = edt_tmpt_ditahan_cat_pers.text.toString()
-            sessionManager.setCatpers(catpersReq)
-            Log.e("size Catpers", "${sessionManager.getCatpers()}")
+            sessionManager1.setCatpers(catpersReq)
+            Log.e("size Catpers", "${sessionManager1.getCatpers()}")
 
             doSavePersonel()
 
@@ -53,48 +52,48 @@ class AddCatPersActivity : BaseActivity() {
     }
 
     private fun doSavePersonel() {
-        allPersonelModel.personel = sessionManager.getPersonel()
-        allPersonelModel.signalement = sessionManager.getSignalement()
-        allPersonelModel.foto = sessionManager.getFoto()
-        allPersonelModel.relasi = sessionManager.getRelasi()
-        allPersonelModel.pernah_dihukum = sessionManager.getHukuman()
-        allPersonelModel.catatan_personel= sessionManager.getCatpers()
-        allPersonelModel.riwayat_pendidikan_umum= sessionManager.getPendUmum()
-        allPersonelModel.riwayat_pendidikan_kedinasan= sessionManager.getPendDinas()
-        allPersonelModel.riwayat_pendidikan_lain_lain= sessionManager.getPendOther()
-        allPersonelModel.riwayat_pekerjaan= sessionManager.getPekerjaan()
-        allPersonelModel.pekerjaan_diluar_dinas= sessionManager.getPekerjaanDiluar()
-        allPersonelModel.riwayat_alamat= sessionManager.getAlamat()
-        allPersonelModel.riwayat_organisasi= sessionManager.getOrganisasi()
-        allPersonelModel.riwayat_penghargaan= sessionManager.getPenghargaan()
-        allPersonelModel.riwayat_perjuangan= sessionManager.getPerjuanganCita()
-        allPersonelModel.pasangan= sessionManager.getPasangan()
-        allPersonelModel.ayah_kandung= sessionManager.getAyahKandung()
-        allPersonelModel.ayah_tiri= sessionManager.getAyahTiri()
-        allPersonelModel.ibu_kandung= sessionManager.getIbu()
-        allPersonelModel.ibu_tiri= sessionManager.getIbuTiri()
-        allPersonelModel.mertua_laki= sessionManager.getMertuaLaki()
-        allPersonelModel.mertua_perempuan= sessionManager.getMertuaPerempuan()
-        allPersonelModel.anak= sessionManager.getAnak()
-        allPersonelModel.saudara= sessionManager.getSaudara()
-        allPersonelModel.orang_berjasa= sessionManager.getOrangBerjasa()
-        allPersonelModel.orang_disegani= sessionManager.getOrangDisegani()
-        allPersonelModel.tokoh_dikagumi= sessionManager.getTokoh()
-        allPersonelModel.sahabat= sessionManager.getSahabat()
-        allPersonelModel.media_disenangi= sessionManager.getMediaInfo()
-        allPersonelModel.media_sosial= sessionManager.getMedsos()
+//        allPersonelModel.personel = sessionManager1.getPersonel()
+        allPersonelModel.signalement = sessionManager1.getSignalement()
+        allPersonelModel.foto = sessionManager1.getIdFoto()
+        allPersonelModel.relasi = sessionManager1.getRelasi()
+        allPersonelModel.pernah_dihukum = sessionManager1.getHukuman()
+//        allPersonelModel.catatan_personel= sessionManager1.getCatpers()
+        allPersonelModel.riwayat_pendidikan= sessionManager1.getPendUmum()
+//        allPersonelModel.riwayat_pendidikan_kedinasan= sessionManager1.getPendDinas()
+//        allPersonelModel.riwayat_pendidikan_lain_lain= sessionManager1.getPendOther()
+        allPersonelModel.riwayat_pekerjaan= sessionManager1.getPekerjaan()
+        allPersonelModel.pekerjaan_diluar_dinas= sessionManager1.getPekerjaanDiluar()
+        allPersonelModel.riwayat_alamat= sessionManager1.getAlamat()
+        allPersonelModel.riwayat_organisasi= sessionManager1.getOrganisasi()
+        allPersonelModel.riwayat_penghargaan= sessionManager1.getPenghargaan()
+        allPersonelModel.riwayat_perjuangan= sessionManager1.getPerjuanganCita()
+        allPersonelModel.pasangan= sessionManager1.getPasangan()
+//        allPersonelModel.ayah_kandung= sessionManager1.getAyahKandung()
+//        allPersonelModel.ayah_tiri= sessionManager1.getAyahTiri()
+//        allPersonelModel.ibu_kandung= sessionManager1.getIbu()
+//        allPersonelModel.ibu_tiri= sessionManager1.getIbuTiri()
+//        allPersonelModel.mertua_laki= sessionManager1.getMertuaLaki()
+//        allPersonelModel.mertua_perempuan= sessionManager1.getMertuaPerempuan()
+        allPersonelModel.anak= sessionManager1.getAnak()
+        allPersonelModel.saudara= sessionManager1.getSaudara()
+        allPersonelModel.orang_berjasa= sessionManager1.getOrangBerjasa()
+        allPersonelModel.orang_disegani= sessionManager1.getOrangDisegani()
+        allPersonelModel.tokoh_dikagumi= sessionManager1.getTokoh()
+        allPersonelModel.sahabat= sessionManager1.getSahabat()
+        allPersonelModel.media_disenangi= sessionManager1.getMediaInfo()
+        allPersonelModel.media_sosial= sessionManager1.getMedsos()
 
         NetworkConfig().getService().addAllPersonel(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             allPersonelModel
-        ).enqueue(object: Callback<BaseResp> {
-            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+        ).enqueue(object: Callback<Base1Resp<AddPersonelResp>> {
+            override fun onFailure(call: Call<Base1Resp<AddPersonelResp>>, t: Throwable) {
                 Toast.makeText(this@AddCatPersActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+            override fun onResponse(call: Call<Base1Resp<AddPersonelResp>>, response: Response<Base1Resp<AddPersonelResp>>) {
                 if(response.isSuccessful){
-                    sessionManager.clearAllPers()
+                    sessionManager1.clearAllPers()
                     btn_next_cat_pers.showSnackbar(R.string.data_saved) { action(R.string.next) {
                             startActivity(Intent(this@AddCatPersActivity, PersonelActivity::class.java))
                         }

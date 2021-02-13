@@ -17,7 +17,8 @@ class RelasiAdapter(
     val list: ArrayList<RelasiReq>,
     val onClickrelasi: OnClickRelasi
 ) : RecyclerView.Adapter<RelasiAdapter.RelasiHolder>() {
-    private var jenisRelasi :String? = null
+    private var jenisRelasi: String? = null
+
     interface OnClickRelasi {
         fun onDelete(position: Int)
         fun onAdd()
@@ -52,9 +53,9 @@ class RelasiAdapter(
                 sp_jenis_relasi.setAdapter(adapterJenis)
                 sp_jenis_relasi.setOnItemClickListener { parent, view, position, id ->
                     if (position == 0) {
-                        jenisRelasi =  "dalam_negeri"
+                        relasiReq.lokasi = "dalam_negeri"
                     } else {
-                        jenisRelasi = "luar_negeri"
+                        relasiReq.lokasi = "luar_negeri"
                     }
                 }
                 btn_delete_relasi.visibility = if (adapterPosition == 0) View.GONE
@@ -64,7 +65,7 @@ class RelasiAdapter(
                         onClickrelasi.onDelete(adapterPosition)
                     }
                 }
-                btn_add_relasi.setOnClickListener{
+                btn_add_relasi.setOnClickListener {
                     onClickrelasi.onAdd()
                 }
             }
@@ -84,6 +85,19 @@ class RelasiAdapter(
 
     override fun onBindViewHolder(holder: RelasiHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.itemView.edt_nama_relasi.setText(data.nama)
+        holder.itemView.sp_jenis_relasi.setText(data.lokasi)
+        val item = listOf("Dalam Negeri", "Luar Negeri")
+        val adapterJenis = ArrayAdapter(context, R.layout.item_spinner, item)
+        holder.itemView.sp_jenis_relasi.setAdapter(adapterJenis)
+        holder.itemView.sp_jenis_relasi.setOnItemClickListener { parent, view, position, id ->
+            if (position == 0) {
+                data.lokasi = "dalam_negeri"
+            } else {
+               data.lokasi = "luar_negeri"
+            }
+        }
     }
 
 }

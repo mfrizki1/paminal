@@ -4,17 +4,19 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.response.RelasiResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.RelasiReq
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -25,7 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditRelasiActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var relasiReq = RelasiReq()
     private var jenisRelasi: String? = null
 
@@ -33,22 +35,30 @@ class EditRelasiActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_relasi)
 
-        sessionManager = SessionManager(this)
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        sessionManager1 = SessionManager1(this)
+//        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
         setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title = personel?.nama
+//        supportActionBar?.title = personel?.nama
+        supportActionBar?.title = "Edit Relasi"
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_edit_relasi.gone()
             btn_delete_edit_relasi.gone()
         }
-        when (intent.extras?.getString("JENIS_RELASI")) {
+       /* when (intent.extras?.getString("JENIS_RELASI")) {
             "dalam_negeri" -> spinner_jenis_relasi_edit.setText("Dalam Negeri")
             "luar_negeri" -> spinner_jenis_relasi_edit.setText("Luar Negeri")
-        }
+        }*/
         val relasi = intent.extras?.getParcelable<RelasiResp>("RELASI")
+        Log.e("relasi","$relasi")
         edt_nama_relasi_edit.setText(relasi?.nama)
+        jenisRelasi = relasi?.lokasi
+        when(relasi?.lokasi){
+            "dalam_negeri"-> spinner_jenis_relasi_edit.setText("Dalam Negeri")
+            "luar_negeri"-> spinner_jenis_relasi_edit.setText("Luar Negeri")
+        }
+
         spRelasi()
 
         btn_save_edit_relasi.attachTextChangeAnimator()
@@ -80,8 +90,9 @@ class EditRelasiActivity : BaseActivity() {
         animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
 
         relasiReq.nama = edt_nama_relasi_edit.text.toString()
+        relasiReq.lokasi = jenisRelasi
         NetworkConfig().getService().updateSingleRelasi(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             relasi?.id.toString(),
             relasiReq
         ).enqueue(object : Callback<BaseResp> {
@@ -113,7 +124,7 @@ class EditRelasiActivity : BaseActivity() {
 
     private fun deleteRelasi(relasi: RelasiResp?) {
         NetworkConfig().getService().deleteSingleRelasi(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             relasi?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

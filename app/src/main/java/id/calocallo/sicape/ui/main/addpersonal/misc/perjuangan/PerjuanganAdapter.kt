@@ -188,5 +188,12 @@ class PerjuanganAdapter(
 
     override fun onBindViewHolder(holder: PerjuanganAdapter.PerjuanganHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.etPeristiwa.setText(data.peristiwa)
+        holder.etThnAwal.setText(data.tahun_awal)
+        holder.etThnAkhir.setText(data.tahun_akhir)
+        holder.etTmptPeristiwa.setText(data.lokasi)
+        holder.etRangka.setText(data.dalam_rangka)
+        holder.etKet.setText(data.keterangan)
     }
 }

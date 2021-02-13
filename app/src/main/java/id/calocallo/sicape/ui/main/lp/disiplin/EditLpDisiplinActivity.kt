@@ -11,17 +11,17 @@ import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.EditLpDisiplinReq
 import id.calocallo.sicape.network.response.LpDisiplinResp
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_lp_disiplin.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditLpDisiplinActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var editLpDisiplinReq = EditLpDisiplinReq()
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
@@ -30,22 +30,24 @@ class EditLpDisiplinActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_lp_disiplin)
         setupActionBarWithBackButton(toolbar)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         supportActionBar?.title = "Edit Data Laporan Polisi Disiplin"
         val disiplin = intent.extras?.getParcelable<LpDisiplinResp>(EDIT_DISIPLIN)
         getViewEditDisipilin(disiplin)
         //set terlapor
         btn_choose_personel_terlapor_disiplin_edit.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_TERLAPOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         //set terlapor
         btn_choose_personel_pelapor_lp_edit_disiplin.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PELAPOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         //update
@@ -70,13 +72,7 @@ class EditLpDisiplinActivity : BaseActivity() {
             updateLpDisiplin(disiplin, changedIdTerlapor, changedIdPelapor)
         }
 
-        spinner_kesatuan_pimpinan_bidang_edit_disiplin.setAdapter(
-            ArrayAdapter(
-                this,
-                R.layout.item_spinner,
-                resources.getStringArray(R.array.satker)
-            )
-        )
+        spinner_kesatuan_pimpinan_bidang_edit_disiplin.setAdapter(ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker)))
         spinner_kesatuan_pimpinan_bidang_edit_disiplin.setOnItemClickListener { parent, view, position, id ->
             namaSatker = parent.getItemAtPosition(position) as String?
         }
@@ -118,8 +114,8 @@ class EditLpDisiplinActivity : BaseActivity() {
             edt_nrp_pimpinan_bidang_edit_disiplin.text.toString()
         editLpDisiplinReq.jabatan_yang_mengetahui =
             edt_jabatan_pimpinan_bidang_edit_disiplin.text.toString()
-        editLpDisiplinReq.uraian_pelanggaran = sessionManager.getJenisLP()
-        editLpDisiplinReq.id_personel_operator = sessionManager.fetchUser()?.id
+        editLpDisiplinReq.uraian_pelanggaran = sessionManager1.getJenisLP()
+        editLpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id
         editLpDisiplinReq.id_personel_pelapor = disiplin?.personel_pelapor?.id
         editLpDisiplinReq.id_personel_terlapor = disiplin?.personel_terlapor?.id
         editLpDisiplinReq.kesatuan_yang_mengetahui = namaSatker
@@ -145,7 +141,7 @@ class EditLpDisiplinActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         when (resultCode) {
             Activity.RESULT_OK -> {
                 when (requestCode) {

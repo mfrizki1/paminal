@@ -21,13 +21,13 @@ import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity.Companion.ID_PELAPOR_SAKSI
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class PickPasalActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private val listPasal = mutableListOf<PasalResp>()
     private lateinit var adapterPasalTes: PasalTesAdapter
     private var selectedIdPasal: MutableList<PasalResp> = mutableListOf()
@@ -42,9 +42,9 @@ class PickPasalActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_pasal)
         setupActionBarWithBackButton(toolbar)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
-        when (sessionManager.getJenisLP()) {
+        when (sessionManager1.getJenisLP()) {
             "pidana" -> {
                 supportActionBar?.title = "Tambah Data Laporan Pidana"
             }
@@ -94,10 +94,10 @@ class PickPasalActivity : BaseActivity() {
         bindProgressButton(btn_save_lp_all)
         btn_save_lp_all.attachTextChangeAnimator()
         btn_save_lp_all.setOnClickListener {
-            if (sessionManager.getJenisLP() != "kode_etik") {
-                addAllLp(sessionManager.getJenisLP(), idPelapor, sipil)
+            if (sessionManager1.getJenisLP() != "kode_etik") {
+                addAllLp(sessionManager1.getJenisLP(), idPelapor, sipil)
             } else {
-                sessionManager.setListPasalLP(selectedIdPasal as ArrayList<LpPasalResp>)
+                sessionManager1.setListPasalLP(selectedIdPasal as ArrayList<LpPasalResp>)
                 val intent = Intent(this, PickSaksiActivity::class.java)
                 intent.putExtra(ID_PELAPOR_SAKSI, idPelapor)
                 startActivity(intent)
@@ -166,19 +166,19 @@ class PickPasalActivity : BaseActivity() {
 
         when (jenisLP) {
             "pidana" -> {
-                lpPidanaReq.no_lp = sessionManager.getNoLP()
-                lpPidanaReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
+                lpPidanaReq.no_lp = sessionManager1.getNoLP()
+                lpPidanaReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
                 lpPidanaReq.id_personel_pelapor = idPelapor
-                lpPidanaReq.nama_yang_mengetahui = sessionManager.getNamaPimpBidLp()
-                lpPidanaReq.pangkat_yang_mengetahui = sessionManager.getPangkatPimpBidLp()
-                lpPidanaReq.nrp_yang_mengetahui = sessionManager.getNrpPimpBidLp()
-                lpPidanaReq.jabatan_yang_mengetahui = sessionManager.getJabatanPimpBidLp()
-                lpPidanaReq.status_pelapor = sessionManager.getPelapor()
-                lpPidanaReq.pembukaan_laporan = sessionManager.getPembukaanLpLP()
-                lpPidanaReq.isi_laporan = sessionManager.getIsiLapLP()
+                lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
+                lpPidanaReq.status_pelapor = sessionManager1.getPelapor()
+                lpPidanaReq.pembukaan_laporan = sessionManager1.getPembukaanLpLP()
+                lpPidanaReq.isi_laporan = sessionManager1.getIsiLapLP()
                 lpPidanaReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
-                lpPidanaReq.kota_buat_laporan = sessionManager.getKotaBuatLp()
-                lpPidanaReq.tanggal_buat_laporan = sessionManager.getTglBuatLp()
+                lpPidanaReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
+                lpPidanaReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
                 lpPidanaReq.nama_pelapor = sipil?.nama_sipil
                 lpPidanaReq.agama_pelapor = sipil?.agama_sipil
                 lpPidanaReq.pekerjaan_pelapor = sipil?.pekerjaan_sipil
@@ -186,28 +186,28 @@ class PickPasalActivity : BaseActivity() {
                 lpPidanaReq.alamat_pelapor = sipil?.alamat_sipil
                 lpPidanaReq.nik_ktp_pelapor = sipil?.nik_sipil
                 lpPidanaReq.no_telp_pelapor = sipil?.no_telp_sipil
-                lpPidanaReq.uraian_pelanggaran = sessionManager.getUraianPelanggaranLP()
-                lpPidanaReq.kesatuan_yang_mengetahui = sessionManager.getKesatuanPimpBidLp()
+                lpPidanaReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
+                lpPidanaReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
                 Log.e("pidanaAll", "$lpPidanaReq")
             }
             "disiplin" -> {
-                lpDisiplinReq.no_lp = sessionManager.getNoLP()
+                lpDisiplinReq.no_lp = sessionManager1.getNoLP()
                 lpDisiplinReq.uraian_pelanggaran = jenisLP
-                lpDisiplinReq.id_personel_operator = sessionManager.fetchUser()?.id
-                lpDisiplinReq.id_personel_terlapor = sessionManager.getIDPersonelTerlapor()
-                lpDisiplinReq.kota_buat_laporan = sessionManager.getKotaBuatLp()
-                lpDisiplinReq.tanggal_buat_laporan = sessionManager.getTglBuatLp()
-                lpDisiplinReq.nama_yang_mengetahui = sessionManager.getNamaPimpBidLp()
-                lpDisiplinReq.pangkat_yang_mengetahui = sessionManager.getPangkatPimpBidLp()
-                lpDisiplinReq.nrp_yang_mengetahui = sessionManager.getNrpPimpBidLp()
-                lpDisiplinReq.jabatan_yang_mengetahui = sessionManager.getJabatanPimpBidLp()
+                lpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id
+                lpDisiplinReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
+                lpDisiplinReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
+                lpDisiplinReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
+                lpDisiplinReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpDisiplinReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpDisiplinReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpDisiplinReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
                 lpDisiplinReq.id_personel_pelapor = idPelapor
-                lpDisiplinReq.macam_pelanggaran = sessionManager.getMacamPelanggaranLP()
-                lpDisiplinReq.keterangan_pelapor = sessionManager.getKetPelaporLP()
-                lpDisiplinReq.kronologis_dari_pelapor = sessionManager.getKronologisPelapor()
-                lpDisiplinReq.rincian_pelanggaran_disiplin = sessionManager.getRincianDisiplin()
+                lpDisiplinReq.macam_pelanggaran = sessionManager1.getMacamPelanggaranLP()
+                lpDisiplinReq.keterangan_pelapor = sessionManager1.getKetPelaporLP()
+                lpDisiplinReq.kronologis_dari_pelapor = sessionManager1.getKronologisPelapor()
+                lpDisiplinReq.rincian_pelanggaran_disiplin = sessionManager1.getRincianDisiplin()
                 lpDisiplinReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
-                lpDisiplinReq.kesatuan_yang_mengetahui = sessionManager.getKesatuanPimpBidLp()
+                lpDisiplinReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
                 Log.e("add_disiplin", "$lpDisiplinReq")
 
             }

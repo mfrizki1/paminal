@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.manajemen.sipil.ListSipilOperatorActivity">
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/view_no_data"
+            android:visibility="gone"/>
+
+        <include layout="@layout/layout_progress_dialog"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_list_sipil_operator"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_add_single_sipil_operator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/space_12dp"
+            android:layout_marginBottom="@dimen/space_12dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_add"
+            android:tint="@color/white" />
+    </RelativeLayout>
+</LinearLayout>

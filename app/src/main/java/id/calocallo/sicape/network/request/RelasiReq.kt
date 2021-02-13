@@ -1,7 +1,8 @@
 package id.calocallo.sicape.network.request
 
 data class RelasiReq(
-    var nama: String?
+    var nama: String?,
+    var lokasi: String?
 ){
-    constructor():this("")
+    constructor():this(null, null)
 }

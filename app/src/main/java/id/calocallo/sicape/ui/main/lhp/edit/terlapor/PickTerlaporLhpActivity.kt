@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
-import id.calocallo.sicape.model.ListTerlapor
 import id.calocallo.sicape.network.response.KetTerlaporLhpResp
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
-import id.calocallo.sicape.ui.main.lhp.edit.terlapor.AddTerlaporLhpActivity.Companion.ADD_TERLAPOR
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.EditTerlaporLhpActivity.Companion.EDIT_TERLAPOR
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_terlapor_lhp.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -19,7 +17,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickTerlaporLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterTerlapor: ReusableAdapter<KetTerlaporLhpResp>
     private lateinit var callbackTerlapor: AdapterCallback<KetTerlaporLhpResp>
 
@@ -27,7 +25,7 @@ class PickTerlaporLhpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_terlapor_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterTerlapor = ReusableAdapter(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)

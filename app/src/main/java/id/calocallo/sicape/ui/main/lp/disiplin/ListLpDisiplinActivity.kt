@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
@@ -14,19 +13,17 @@ import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.ui.main.lp.AddLpActivity
-import id.calocallo.sicape.ui.main.lp.LpDisiplinPasalAdapter
 import id.calocallo.sicape.ui.main.lp.disiplin.DetailLpDisiplinActivity.Companion.DETAIL_DISIPLIN
-import id.calocallo.sicape.utils.SessionManager
-import id.calocallo.sicape.utils.ext.visible
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_lp_disiplin.*
-import kotlinx.android.synthetic.main.item_lp_kke.view.*
+import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class ListLpDisiplinActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var listDisiplin = arrayListOf<LpDisiplinResp>()
     private var listPasal = arrayListOf<LpPasalResp>()
     private var personelTerLapor = PersonelLapor()
@@ -40,8 +37,8 @@ class ListLpDisiplinActivity : BaseActivity() {
         setContentView(R.layout.activity_list_lp_disiplin)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data Laporan Polisi Disiplin"
-        sessionManager = SessionManager(this)
-        sessionManager.setJenisLP("disiplin")
+        sessionManager1 = SessionManager1(this)
+        sessionManager1.setJenisLP("disiplin")
 
         getListDisiplin()
 
@@ -54,7 +51,7 @@ class ListLpDisiplinActivity : BaseActivity() {
     }
 
     private fun getListDisiplin() {
-        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
+        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "")
         personelTerLapor = PersonelLapor(1, "faisal", "bripda", "jabatan", "1234",1, "polda kalsel","Jl Banjarmasin",
             "islam",
             "laki_laki",
@@ -104,6 +101,7 @@ class ListLpDisiplinActivity : BaseActivity() {
 
         callbackLpDisiplin = object : AdapterCallback<LpDisiplinResp> {
             override fun initComponent(itemView: View, data: LpDisiplinResp, itemIndex: Int) {
+                /*
                 itemView.ll_personel_pelapor.visible()
                 itemView.txt_no_lp_kke.text = data.no_lp
                 itemView.txt_nama_lp_kke_pelapor.text = "Nama : ${data.personel_pelapor?.nama}"
@@ -133,6 +131,9 @@ class ListLpDisiplinActivity : BaseActivity() {
                     setRecycledViewPool(viewPool)
 
                 }
+
+                 */
+                itemView.txt_edit_pendidikan.text = data.no_lp
             }
 
             override fun onItemClicked(itemView: View, data: LpDisiplinResp, itemIndex: Int) {
@@ -145,7 +146,7 @@ class ListLpDisiplinActivity : BaseActivity() {
         adapterLpDisiplin.adapterCallback(callbackLpDisiplin)
             .filterable()
             .isVerticalView().addData(listDisiplin)
-            .setLayout(R.layout.item_lp_kke)
+            .setLayout(R.layout.layout_edit_1_text)
             .build(rv_lp_disiplin)
     }
 

@@ -9,9 +9,10 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.OrganisasiResp
 import id.calocallo.sicape.network.response.PenghargaanResp
 import id.calocallo.sicape.network.response.PerjuanganResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -27,7 +28,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickMenuOrganisasiDllActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var orgAdapter: ReusableAdapter<OrganisasiResp>
     private lateinit var orgCallback: AdapterCallback<OrganisasiResp>
 
@@ -45,15 +46,15 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_menu_organisasi_dll)
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama.toString()
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         orgAdapter = ReusableAdapter(this)
         perjuanganAdapter = ReusableAdapter(this)
         penghargaanAdapter = ReusableAdapter(this)
-        val hakAkses = sessionManager.fetchHakAkses()
+        val hakAkses = sessionManager1.fetchHakAkses()
         if (hakAkses == "operator") {
             btn_add_edit_organisasi_dll.gone()
         }
@@ -100,9 +101,9 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
         when (name) {
             ORGANISASI -> {
                 NetworkConfig().getService().showOrganisasi(
-                    "Bearer ${sessionManager.fetchAuthToken()}",
+                    "Bearer ${sessionManager1.fetchAuthToken()}",
 //                    "4"
-                    sessionManager.fetchID().toString()
+                    sessionManager1.fetchID().toString()
                 ).enqueue(object : Callback<ArrayList<OrganisasiResp>> {
                     override fun onFailure(call: Call<ArrayList<OrganisasiResp>>, t: Throwable) {
                         rl_pb.gone()
@@ -141,9 +142,9 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
             }
             PERJUANGAN -> {
                 NetworkConfig().getService().showPerjuangan(
-                    "Bearer ${sessionManager.fetchAuthToken()}",
+                    "Bearer ${sessionManager1.fetchAuthToken()}",
 //                    "4"
-                    sessionManager.fetchID().toString()
+                    sessionManager1.fetchID().toString()
                 ).enqueue(object : Callback<ArrayList<PerjuanganResp>> {
                     override fun onFailure(call: Call<ArrayList<PerjuanganResp>>, t: Throwable) {
                         rl_pb.gone()
@@ -182,9 +183,9 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
             }
             PENGHARGAAN -> {
                 NetworkConfig().getService().showPenghargaan(
-                    "Bearer ${sessionManager.fetchAuthToken()}",
+                    "Bearer ${sessionManager1.fetchAuthToken()}",
 //                    "4"
-                    sessionManager.fetchID().toString()
+                    sessionManager1.fetchID().toString()
                 ).enqueue(object : Callback<ArrayList<PenghargaanResp>> {
                     override fun onFailure(call: Call<ArrayList<PenghargaanResp>>, t: Throwable) {
                         rl_pb.gone()
@@ -226,7 +227,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
     }
 
     private fun RVPenghargaan(list: ArrayList<PenghargaanResp>) {
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         penghargaanCallback = object : AdapterCallback<PenghargaanResp> {
             override fun initComponent(itemView: View, data: PenghargaanResp, itemIndex: Int) {
                 itemView.txt_edit_pendidikan.text = data.penghargaan
@@ -252,7 +253,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
 
 
     private fun RVPerjuangan(list: ArrayList<PerjuanganResp>) {
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         perjuanganCallback = object : AdapterCallback<PerjuanganResp> {
             override fun initComponent(itemView: View, data: PerjuanganResp, itemIndex: Int) {
                 itemView.txt_edit_pendidikan.text = data.peristiwa
@@ -280,7 +281,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
 
 
     private fun RVOrganisasi(list: ArrayList<OrganisasiResp>) {
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         orgCallback = object : AdapterCallback<OrganisasiResp> {
             override fun initComponent(itemView: View, data: OrganisasiResp, itemIndex: Int) {
                 itemView.txt_edit_pendidikan.text = data.organisasi

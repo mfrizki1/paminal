@@ -2,7 +2,6 @@ package id.calocallo.sicape.ui.main.lhp.edit.lidik
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
@@ -12,7 +11,7 @@ import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddPersonelLidikActivity
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.AddSingleLidikLhpActivity.Companion.ADD_LIDIK
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.EditLidikLhpActivity.Companion.EDIT_LIDIK
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_lidik_lhp.*
 import kotlinx.android.synthetic.main.item_lidik.view.*
@@ -21,7 +20,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class PickLidikLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterLidik: ReusableAdapter<PersonelPenyelidikResp>
     private lateinit var callbackLidik: AdapterCallback<PersonelPenyelidikResp>
     private lateinit var detailLhp: LhpResp
@@ -29,7 +28,7 @@ class PickLidikLhpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_lidik_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterLidik = ReusableAdapter(this)
 
         setupActionBarWithBackButton(toolbar)

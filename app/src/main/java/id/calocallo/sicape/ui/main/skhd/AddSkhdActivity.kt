@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
@@ -13,22 +12,21 @@ import id.calocallo.sicape.network.request.SkhdReq
 import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpPidanaResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
-import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddSkhdActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var skhdReq = SkhdReq()
     private var idLhp: Int? = null
     private var idLp: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_skhd)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data SKHD"

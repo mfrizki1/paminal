@@ -1,37 +1,61 @@
 package id.calocallo.sicape.ui.main.addpersonal
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
+import com.ajithvgiri.searchdialog.OnSearchItemSelected
+import com.ajithvgiri.searchdialog.SearchListItem
+import com.ajithvgiri.searchdialog.SearchableDialog
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.AddPersonelReq
+import id.calocallo.sicape.network.response.SatKerResp
+import id.calocallo.sicape.ui.kesatuan.polda.PoldaActivity
+import id.calocallo.sicape.ui.kesatuan.polres.PolresActivity
+import id.calocallo.sicape.ui.kesatuan.polres.SatPolresActivity
+import id.calocallo.sicape.ui.kesatuan.polsek.PolsekActivity
+import id.calocallo.sicape.ui.kesatuan.polsek.SatPolsekActivity
 import id.calocallo.sicape.ui.main.addpersonal.pendidikan.PendPersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.activity_add_personel.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import java.util.*
 
 
-class AddPersonelActivity : BaseActivity() {
+class AddPersonelActivity : BaseActivity(), OnSearchItemSelected {
+    companion object {
+        const val RES_POLRES = 121
+        const val RES_POLSEK = 122
+        const val RES_POLDA = 123
+
+        const val REQ_POLDA = 111
+        const val REQ_POLRES = 112
+        const val REQ_POLSEK = 113
+    }
+
     private lateinit var sheenValidator: SheenValidator
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
+    private lateinit var searchableDialog: SearchableDialog
     private var jk: String? = null
     private var agmNow: String? = null
-    private var agmBefore: String? = null
+    private var agmBefore = ""
     private var sttsKawin: Int? = null
     private var idSatker: Int? = null
     private val addPersonelReq = AddPersonelReq()
+    private var jenisKesatuan: String?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_personel)
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Personel"
         sheenValidator = SheenValidator(this)
@@ -40,8 +64,10 @@ class AddPersonelActivity : BaseActivity() {
         bindProgressButton(btn_next_personel)
 
 
-        initSpinner(spinner_jk, spinner_stts_kwn, sp_agm_now, sp_agm_before, spinner_satker_add)
-//        sheenValidator.registerAsRequired(edt_nama_lengkap)
+        initSpinner()
+        sheenValidator.registerAsRequired(edt_jmlh_anak)
+
+        /*
 //        sheenValidator.registerAsRequired(edt_nama_alias)
 //        sheenValidator.registerAsRequired(edt_tmpt_ttl)
 //        sheenValidator.registerAsRequired(edt_tgl_ttl)
@@ -62,154 +88,313 @@ class AddPersonelActivity : BaseActivity() {
 //        sheenValidator.registerAsRequired(edt_hobi)
 //        sheenValidator.registerAsRequired(edt_kebiasaan)
 //        sheenValidator.registerAsRequired(edt_bahasa)
+
+         */
+
+        btn_personel_add_polda.setOnClickListener {
+            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polda.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polres.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+            startActivityForResult(Intent(this, PoldaActivity::class.java), REQ_POLDA)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+            Log.e("polda text", "${txt_satker_polda.text}")
+            Log.e("polres text", "${txt_satker_polda.text}")
+            Log.e("polsek text", "${txt_satker_polda.text}")
+            txt_polres_add.gone()
+            txt_polres_add.text = ""
+
+            txt_sat_polres_add.gone()
+            txt_sat_polres_add.text = ""
+
+            txt_polsek_add.gone()
+            txt_polsek_add.text = ""
+
+            txt_sat_polsek_add.gone()
+            txt_sat_polsek_add.text = ""
+
+        }
+        btn_personel_add_polres.setOnClickListener {
+//            spinner_satker_add.hint = "Satker Polres"
+//            txt_layout_satker_personel_add.visible()
+
+            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polres.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polda.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+//            satker("polres")
+            startActivityForResult(Intent(this, PolresActivity::class.java), REQ_POLRES)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+            txt_satker_polda.gone()
+            txt_satker_polda.text = ""
+
+            txt_polsek_add.gone()
+            txt_polsek_add.text = ""
+
+            txt_sat_polsek_add.gone()
+            txt_sat_polsek_add.text = ""
+        }
+        btn_personel_add_polsek.setOnClickListener {
+//            spinner_satker_add.hint = "Satker Polsek"
+//            txt_layout_satker_personel_add.visible()
+
+            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polda.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polres.setTextColor(resources.getColor(R.color.colorPrimary))
+//            satker("polsek")
+//            intent.putExtra(PolresActivity.IS_POLSEK, PolresActivity.IS_POLSEK)
+            val intent = Intent(this, PolsekActivity::class.java)
+            startActivityForResult(intent, REQ_POLSEK)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+
+            txt_satker_polda.gone()
+            txt_satker_polda.text = ""
+
+            txt_polres_add.gone()
+            txt_polres_add.text = ""
+
+            txt_sat_polres_add.gone()
+            txt_sat_polres_add.text = ""
+        }
+
+
         btn_next_personel.setOnClickListener {
 
             sheenValidator.validate()
-            val namaLengkap = edt_nama_lengkap.text.toString()
-            val namaAlias = edt_nama_alias.text.toString()
-            val tmptLahir = edt_tmpt_ttl.text.toString()
-            val tglLahir = edt_tgl_ttl.text.toString()
-            val pekerjaann = edt_pekerjaan.text.toString()
-            val pangkat = edt_pangkat.text.toString()
-            val nrp = edt_nrp.text.toString()
 //            val kesatuan = edt_kesatuan.text.toString()
-            val almtKantor = edt_almt_kntr.text.toString()
-            val noTelpKantor = edt_no_telp_kntr.text.toString()
-            val almtRumah = edt_almt_rmh.text.toString()
-            val noTelpRumah = edt_no_telp_rmh.text.toString()
-            val kwg = edt_kwg.text.toString()
-            val howToKWG = edt_how_to_kwg.text.toString()
-            val tmptKawin = edt_tmpt_kwn.text.toString()
-            val tglKawin = edt_tgl_kwn.text.toString()
-            val almtKtp = edt_almt_ktp.text.toString()
-            val noKtp = edt_no_ktp.text.toString()
-            val hobi = edt_hobi.text.toString()
-            val kebiasaan = edt_kebiasaan.text.toString()
-            val bahasa = edt_bahasa.text.toString()
-            val suku = edt_suku.text.toString()
+//            val almtKantor = edt_almt_kntr.text.toString()
+//            val noTelpKantor = edt_no_telp_kntr.text.toString()
 //            val agama_skrg = sp_agm_now.text.toString()
 //            val agama_sblm = sp_agm_before.text.toString()
 //            val jmlh_anak = Integer.parseInt(edt_jmlh_anak.text.toString())
-            val jmlh_anak = edt_jmlh_anak.text.toString().toInt()
-            val kawin_keberapa = edt_kwin_berapa.text.toString()
-            val no_telp_pribadi = edt_no_telp_pribadi.text.toString()
-
+//            addPersonelReq.alamat_kantor = almtKantor
             addPersonelReq.agama_sebelumnya = agmBefore
             addPersonelReq.agama_sekarang = agmNow
-//            addPersonelReq.alamat_kantor = almtKantor
-            addPersonelReq.alamat_rumah = almtRumah
-            addPersonelReq.alamat_sesuai_ktp = almtKtp
-            addPersonelReq.aliran_kepercayaan = null
-            addPersonelReq.bahasa = bahasa
-            addPersonelReq.cara_peroleh_kewarganegaraan = howToKWG
-            addPersonelReq.hobi = hobi
-            addPersonelReq.jabatan = pekerjaann
             addPersonelReq.jenis_kelamin = jk
-            addPersonelReq.jumlah_anak = jmlh_anak
-            addPersonelReq.kebiasaan = kebiasaan
             addPersonelReq.id_satuan_kerja = idSatker
-            addPersonelReq.kewarganegaraan = kwg
-            addPersonelReq.nama = namaLengkap
-            addPersonelReq.nama_alias = namaAlias
-            addPersonelReq.no_ktp = noKtp
-            addPersonelReq.no_telp = no_telp_pribadi
-            addPersonelReq.no_telp_rumah = noTelpRumah
-//            addPersonelReq.no_telp_kantor = noTelpKantor
-            addPersonelReq.nrp = nrp
-            addPersonelReq.pangkat = pangkat.toUpperCase()
-            addPersonelReq.ras = suku
-            addPersonelReq.perkawinan_keberapa = kawin_keberapa
-            addPersonelReq.tanggal_lahir = tglLahir
-            addPersonelReq.tempat_lahir = tmptLahir
-            addPersonelReq.tanggal_perkawinan = tglKawin
-            addPersonelReq.tempat_perkawinan = tmptKawin
             addPersonelReq.status_perkawinan = sttsKawin
-            sessionManager.setPersonel(addPersonelReq)
-            Log.e("personel", "${sessionManager.getPersonel()}")
+            addPersonelReq.jenis_kesatuan = jenisKesatuan
+            addPersonelReq.alamat_rumah = edt_almt_rmh.text.toString()
+            addPersonelReq.alamat_sesuai_ktp = edt_almt_ktp.text.toString()
+            addPersonelReq.aliran_kepercayaan = null
+            addPersonelReq.bahasa = edt_bahasa.text.toString()
+            addPersonelReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg.text.toString()
+            addPersonelReq.hobi = edt_hobi.text.toString()
+            addPersonelReq.jabatan = edt_pekerjaan.text.toString()
+            addPersonelReq.jumlah_anak = edt_jmlh_anak.text.toString().toInt()
+            addPersonelReq.kebiasaan = edt_kebiasaan.text.toString()
+
+            addPersonelReq.kewarganegaraan = edt_kwg.text.toString()
+            addPersonelReq.nama = edt_nama_lengkap.text.toString()
+            addPersonelReq.nama_alias = edt_nama_alias.text.toString()
+            addPersonelReq.no_ktp = edt_no_ktp.text.toString()
+            addPersonelReq.no_telp = edt_no_telp_pribadi.text.toString()
+            addPersonelReq.no_telp_rumah = edt_no_telp_rmh.text.toString()
+//            addPersonelReq.no_telp_kantor = noTelpKantor
+            addPersonelReq.nrp = edt_nrp.text.toString()
+            addPersonelReq.pangkat = edt_pangkat.text.toString().toUpperCase(Locale.ROOT)
+            addPersonelReq.ras = edt_suku.text.toString()
+            addPersonelReq.perkawinan_keberapa = edt_kwin_berapa.text.toString().toInt()
+            addPersonelReq.tanggal_lahir = edt_tgl_ttl.text.toString()
+            addPersonelReq.tempat_lahir = edt_tmpt_ttl.text.toString()
+            addPersonelReq.tanggal_perkawinan = edt_tgl_kwn.text.toString()
+            addPersonelReq.tempat_perkawinan = edt_tmpt_kwn.text.toString()
+
+            sessionManager1.setPersonel(addPersonelReq)
+            Log.e("personel", "${sessionManager1.getPersonel()}")
             startActivity(Intent(this@AddPersonelActivity, PendPersonelActivity::class.java))
-
-            /*
-             *val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
-            //Defined bounds are required for your drawable
-            val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
-            animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
-
-
-            NetworkConfig().getService()
-                .addPersonel(
-                    tokenBearer = "Bearer ${sessionManager.fetchAuthToken()}",
-                    addPersonelRequest = addPersonelReq
-                )
-                .enqueue(object : Callback<AddPersonelResp> {
-                    override fun onFailure(call: Call<AddPersonelResp>, t: Throwable) {
-                        Toast.makeText(
-                            this@AddPersonelActivity,
-                            "Gagal Koneksi",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                    override fun onResponse(
-                        call: Call<AddPersonelResp>,
-                        response: Response<AddPersonelResp>
-                    ) {
-                        if (response.isSuccessful) {
-                            if (response.body()?.message == "Data personel saved succesfully") {
-                                btn_next_personel.showDrawable(animatedDrawable) {
-                                    buttonTextRes = R.string.save
-                                    textMarginRes = R.dimen.space_10dp
-                                }
-
-                                btn_next_personel.hideDrawable(R.string.save)
-                                val intent = Intent(
-                                    this@AddPersonelActivity,
-                                    PendPersonelActivity::class.java
-                                )
-                                Constants.ID_PERSONEL = response.body()!!.id.toString()
-                                startActivity(intent)
-
-                            } else {
-                                btn_next_personel.showDrawable(animatedDrawable) {
-                                    buttonTextRes = R.string.not_save
-                                    textMarginRes = R.dimen.space_10dp
-                                }
-                                btn_next_personel.hideDrawable(R.string.not_save)
-                                Toast.makeText(
-                                    this@AddPersonelActivity,
-                                    "Gagal Menyimpan",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
-
-                        } else {
-                            btn_next_personel.showDrawable(animatedDrawable) {
-                                buttonTextRes = R.string.not_save
-                                textMarginRes = R.dimen.space_10dp
-                            }
-                            btn_next_personel.hideDrawable(R.string.not_save)
-                            Toast.makeText(this@AddPersonelActivity, "Error", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-
-                })
-
-             */
-
-//            Log.e("add personel", "$addPersonelReq")
 
         }
 
     }
 
-    private fun initSpinner(
-        spinner_jk: AutoCompleteTextView,
-        stts_kawin: AutoCompleteTextView,
-        spAgmNow: AutoCompleteTextView,
-        spAgmBefore: AutoCompleteTextView,
-        spinnerSatkerAdd: AutoCompleteTextView
-    ) {
+    @SuppressLint("SetTextI18n")
+    private fun test(personel: AddPersonelReq) {
+        edt_almt_rmh.setText(personel.alamat_rumah)
+        edt_almt_ktp.setText(personel.alamat_sesuai_ktp)
+        edt_bahasa.setText(personel.bahasa)
+        edt_how_to_kwg.setText(personel.cara_peroleh_kewarganegaraan)
+        edt_hobi.setText(personel.hobi)
+        edt_pekerjaan.setText(personel.jabatan)
+        edt_jmlh_anak.setText(personel.jumlah_anak.toString())
+        edt_kebiasaan.setText(personel.kebiasaan)
+        edt_kwg.setText(personel.kewarganegaraan)
+        edt_nama_lengkap.setText(personel.nama)
+        edt_nama_alias.setText(personel.nama_alias)
+        edt_no_ktp.setText(personel.no_ktp)
+        edt_no_telp_pribadi.setText(personel.no_telp)
+        edt_no_telp_rmh.setText(personel.no_telp_rumah)
+        edt_nrp.setText(personel.nrp)
+        edt_pangkat.setText(personel.pangkat)
+        edt_suku.setText(personel.ras)
+        edt_kwin_berapa.setText(personel.perkawinan_keberapa.toString())
+        edt_tgl_ttl.setText(personel.tanggal_lahir)
+        edt_tmpt_ttl.setText(personel.tempat_lahir)
+        edt_tgl_kwn.setText(personel.tanggal_perkawinan)
+        edt_tmpt_kwn.setText(personel.tempat_perkawinan)
+        txt_satker_polda.visible()
+        txt_satker_polda.text = personel.id_satuan_kerja.toString()
+        idSatker = personel.id_satuan_kerja
+        jk = personel.jenis_kelamin
+        agmNow = personel.agama_sekarang
+        agmBefore = personel.agama_sebelumnya
+        sttsKawin= personel.status_perkawinan
+        when(personel.agama_sekarang){
+            "islam"->sp_agm_now.setText("Islam")
+            "katolik"->sp_agm_now.setText("katolik")
+            "protestan"->sp_agm_now.setText("protestan")
+            "buddha"->sp_agm_now.setText("buddha")
+            "hindu"->sp_agm_now.setText("hindu")
+            "konghuchu"->sp_agm_now.setText("konghuchu")
+        }
+
+        when(personel.agama_sebelumnya){
+            "islam"->sp_agm_before.setText("Islam")
+            "katolik"->sp_agm_before.setText("katolik")
+            "protestan"->sp_agm_before.setText("protestan")
+            "buddha"->sp_agm_before.setText("buddha")
+            "hindu"->sp_agm_before.setText("hindu")
+            "konghuchu"->sp_agm_before.setText("konghuchu")
+            else->sp_agm_before.setText("Tidak ada")
+        }
+        when(personel.jenis_kelamin){
+            "laki_laki"->spinner_jk.setText("Laki")
+            "perempuan"->spinner_jk.setText("perempuan")
+
+        }
+        when(personel.status_perkawinan){
+            0->{
+                spinner_stts_kwn.setText("Tidak")
+                txt_layout_kawin_berapa.visibility = View.GONE
+                cl_ttl_kawin.visibility = View.GONE
+            }
+            1->{
+                spinner_stts_kwn.setText("Ya")
+                txt_layout_kawin_berapa.visibility = View.VISIBLE
+                cl_ttl_kawin.visibility = View.VISIBLE
+            }
+
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            REQ_POLDA -> {
+                if (resultCode == RES_POLDA) {
+                    val polda = data?.getParcelableExtra<SatKerResp>(PoldaActivity.DATA_POLDA)
+                    Log.e("polda","$polda")
+                    txt_satker_polda.visible()
+                    txt_satker_polda.text = "Satuan Kerja : ${polda?.kesatuan}"
+                    jenisKesatuan = "polda"
+                    idSatker = polda?.id
+                }else{
+                    txt_satker_polda.gone()
+                }
+            }
+            REQ_POLRES -> {
+                if (resultCode == RES_POLRES) {
+                    val polres = data?.getParcelableExtra<SatKerResp>(SatPolresActivity.DATA_POLRES_SAT)
+                    Log.e("polres","$polres")
+
+                    txt_satker_polda.visible()
+                    txt_satker_polda.text = "Kepolisian Resort : ${polres?.kesatuan}"
+                    idSatker = polres?.id
+                }else{
+                    txt_sat_polres_add.gone()
+                    txt_polres_add.gone()
+                }
+            }
+            REQ_POLSEK -> {
+                if (resultCode == RES_POLSEK) {
+                    val polsek = data?.getParcelableExtra<SatKerResp>(SatPolsekActivity.UNIT_POLSEK)
+                    Log.e("polsek","$polsek")
+                    txt_satker_polda.visible()
+                    txt_satker_polda.text = "Kepolisian Sektor : ${polsek?.kesatuan}"
+                    idSatker = polsek?.id
+                }else{
+                    txt_sat_polsek_add.gone()
+                    txt_polsek_add.gone()
+                }
+            }
+        }
+    }
+
+    private fun satker(jenis: String) {
+        val list = arrayListOf<SearchListItem>()
+        when (jenis) {
+            "polda" -> {
+                list.add(SearchListItem(1, "Abc"))
+                list.add(SearchListItem(2, "Dce"))
+                list.add(SearchListItem(3, "Fgh"))
+                list.add(SearchListItem(4, "Fgh"))
+                list.add(SearchListItem(5, "Xxx"))
+                searchableDialog = SearchableDialog(this, list, getString(R.string.polda))
+                searchableDialog.setOnItemSelected(this)
+                spinner_satker_add.setOnClickListener { searchableDialog.show() }
+            }
+            "polres" -> {
+                for (i in 0..9) {
+                    val tempListRes = SearchListItem(i, "Res $i")
+                    list.add(tempListRes)
+                }
+                searchableDialog = SearchableDialog(this, list, getString(R.string.polres))
+                searchableDialog.setOnItemSelected(this)
+                spinner_satker_add.setOnClickListener { searchableDialog.show() }
+                if (spinner_satker_add.text!!.isNotEmpty()) {
+                    txt_layout_unit_sat_personel_add.visible()
+
+                    for (i in 0..9) {
+                        val tempListResSat = SearchListItem(i, "Sat $i")
+                        list.add(tempListResSat)
+                    }
+                    searchableDialog = SearchableDialog(this, list, getString(R.string.polres))
+                    searchableDialog.setOnItemSelected(this)
+                    spinner_unit_sat_add.setOnClickListener { searchableDialog.show() }
+                }
+            }
+            "polsek" -> {
+                for (i in 0..16) {
+                    val tempListSek = SearchListItem(i, "Sek $i")
+                    list.add(tempListSek)
+                }
+                searchableDialog = SearchableDialog(this, list, getString(R.string.polres))
+                searchableDialog.setOnItemSelected(this)
+                spinner_satker_add.setOnClickListener { searchableDialog.show() }
+                if (spinner_satker_add.text!!.isNotEmpty()) {
+                    txt_layout_unit_sat_personel_add.visible()
+
+                    for (i in 0..9) {
+                        val tempListSekSat = SearchListItem(i, "Unit $i")
+                        list.add(tempListSekSat)
+                    }
+                    searchableDialog = SearchableDialog(this, list, getString(R.string.polres))
+                    searchableDialog.setOnItemSelected(this)
+                    spinner_unit_sat_add.setOnClickListener { searchableDialog.show() }
+                }
+            }
+
+
+        }
+    }
+
+    private fun initSpinner() {
         val jkItems = listOf("Laki-Laki", "Perempuan")
         val adapterJk = ArrayAdapter(this, R.layout.item_spinner, jkItems)
         spinner_jk.setAdapter(adapterJk)
@@ -219,14 +404,12 @@ class AddPersonelActivity : BaseActivity() {
             } else {
                 jk = "perempuan"
             }
-//            jk = parent.getItemAtPosition(position).toString()
-//            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
         }
 
         val sttsKawinItem = listOf("Ya", "Tidak")
         val adapterSttusKawin = ArrayAdapter(this, R.layout.item_spinner, sttsKawinItem)
-        stts_kawin.setAdapter(adapterSttusKawin)
-        stts_kawin.setOnItemClickListener { parent, view, position, id ->
+        spinner_stts_kwn.setAdapter(adapterSttusKawin)
+        spinner_stts_kwn.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {  // YA
                 sttsKawin = 1
                 txt_layout_kawin_berapa.visibility = View.VISIBLE
@@ -236,14 +419,12 @@ class AddPersonelActivity : BaseActivity() {
                 txt_layout_kawin_berapa.visibility = View.GONE
                 cl_ttl_kawin.visibility = View.GONE
             }
-//            sttsKawin = parent.getItemAtPosition(position)
-//            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
         }
 
         val agamaItem = listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
-        spAgmNow.setAdapter(adapterAgama)
-        spAgmNow.setOnItemClickListener { parent, view, position, id ->
+        sp_agm_now.setAdapter(adapterAgama)
+        sp_agm_now.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 agmNow = "islam"
             } else if (position == 1) {
@@ -258,8 +439,8 @@ class AddPersonelActivity : BaseActivity() {
                 agmNow = "konghuchu"
             }
         }
-        spAgmBefore.setAdapter(adapterAgama)
-        spAgmBefore.setOnItemClickListener { parent, view, position, id ->
+        sp_agm_before.setAdapter(adapterAgama)
+        sp_agm_before.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 agmBefore = "islam"
             } else if (position == 1) {
@@ -267,7 +448,7 @@ class AddPersonelActivity : BaseActivity() {
             } else if (position == 2) {
                 agmBefore = "protestan"
             } else if (position == 3) {
-                agmBefore = "budha"
+                agmBefore = "buddha"
             } else if (position == 4) {
                 agmBefore = "hindu"
             } else {
@@ -275,27 +456,8 @@ class AddPersonelActivity : BaseActivity() {
             }
         }
 
-//        val listSatker = listOf(
-//            "POLRESTA BANJARMASIN",
-//            "POLRES BANJARBARU",
-//            "POLRES BANJAR",
-//            "POLRES TAPIN",
-//            "POLRES HULU SUNGAI SELATAN",
-//            "POLRES HULU SUNGAI TENGAH",
-//            "POLRES HULU SUNGAI UTARA",
-//            "POLRES BALANGAN",
-//            "POLRES TABALONG",
-//            "POLRES TANAH LAUT",
-//            "POLRES TANAH BUMBU",
-//            "POLRES KOTABARU",
-//            "POLRES BATOLA",
-//            "SAT BRIMOB",
-//            "SAT POLAIR",
-//            "SPN BANJARBARU",
-//            "POLDA KALSEL",
-//            "SARPRAS"
-//        )
-        val adapterSatker = ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))
+/*        val adapterSatker =
+            ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))
         spinnerSatkerAdd.setAdapter(adapterSatker)
         spinnerSatkerAdd.setOnItemClickListener { parent, view, position, id ->
             when (position) {
@@ -318,7 +480,105 @@ class AddPersonelActivity : BaseActivity() {
                 16 -> idSatker = 17
                 17 -> idSatker = 18
             }
+        }*/
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        btn_personel_add_polda.setOnClickListener {
+            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polda.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polres.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+            startActivityForResult(Intent(this, PoldaActivity::class.java), REQ_POLDA)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+            Log.e("polda text", "${txt_satker_polda.text}")
+            Log.e("polres text", "${txt_satker_polda.text}")
+            Log.e("polsek text", "${txt_satker_polda.text}")
+            txt_polres_add.gone()
+            txt_polres_add.text = ""
+
+            txt_sat_polres_add.gone()
+            txt_sat_polres_add.text = ""
+
+            txt_polsek_add.gone()
+            txt_polsek_add.text = ""
+
+            txt_sat_polsek_add.gone()
+            txt_sat_polsek_add.text = ""
+
         }
+        btn_personel_add_polres.setOnClickListener {
+//            spinner_satker_add.hint = "Satker Polres"
+//            txt_layout_satker_personel_add.visible()
+
+            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polres.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polda.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+//            satker("polres")
+            startActivityForResult(Intent(this, PolresActivity::class.java), REQ_POLRES)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+            txt_satker_polda.gone()
+            txt_satker_polda.text = ""
+
+            txt_polsek_add.gone()
+            txt_polsek_add.text = ""
+
+            txt_sat_polsek_add.gone()
+            txt_sat_polsek_add.text = ""
+        }
+        btn_personel_add_polsek.setOnClickListener {
+//            spinner_satker_add.hint = "Satker Polsek"
+//            txt_layout_satker_personel_add.visible()
+
+            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polda.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_add_polres.setTextColor(resources.getColor(R.color.colorPrimary))
+//            satker("polsek")
+//            intent.putExtra(PolresActivity.IS_POLSEK, PolresActivity.IS_POLSEK)
+            val intent = Intent(this, PolsekActivity::class.java)
+            startActivityForResult(intent, REQ_POLSEK)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+
+            txt_satker_polda.gone()
+            txt_satker_polda.text = ""
+
+            txt_polres_add.gone()
+            txt_polres_add.text = ""
+
+            txt_sat_polres_add.gone()
+            txt_sat_polres_add.text = ""
+        }
+
+        val personel = sessionManager1.getPersonel()
+        Log.e("getPersonel", "${sessionManager1.getPersonel()}")
+
+        if(personel !=null) {
+            Log.e("getPersonel", "${sessionManager1.getPersonel()}")
+//            test(sessionManager1.getPersonel())
+            initSpinner()
+        }
+    }
+
+    override fun onClick(position: Int, searchListItem: SearchListItem) {
+        searchableDialog.dismiss()
+        spinner_satker_add.setText(searchListItem.title)
+        addPersonelReq.id_satuan_kerja = searchListItem.id
     }
 
 }

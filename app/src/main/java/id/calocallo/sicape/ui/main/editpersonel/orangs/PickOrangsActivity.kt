@@ -7,9 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.OrangsResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -25,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickOrangsActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var orangsAdapter: ReusableAdapter<OrangsResp>
     private lateinit var orangsCallback: AdapterCallback<OrangsResp>
     private var menu: String? = null
@@ -34,31 +35,17 @@ class PickOrangsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_orangs)
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         orangsAdapter = ReusableAdapter(this)
 
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
         namaPersonel = personel?.nama.toString()
         spinner_orangs.setText("Orang Berjasa Selain Orang Tua")
         menu = "berjasa"
+        initSp()
 
-        val item = listOf("Orang Berjasa Selain Orang Tua", "Orang Disegani Karena Adat")
-        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
-        spinner_orangs.setAdapter(adapter)
-        spinner_orangs.setOnItemClickListener { parent, view, position, id ->
-            when (position) {
-                0 ->{
-                    menu = "berjasa"
-                    getOrangs(menu)
-                }
-                1 -> {
-                    menu = "disegani"
-                    getOrangs(menu)
-                }
-            }
-        }
         getOrangs(menu)
 
         btn_add_single_orangs.setOnClickListener {
@@ -70,12 +57,30 @@ class PickOrangsActivity : BaseActivity() {
         }
     }
 
+    private fun initSp() {
+        val item = listOf("Orang Berjasa Selain Orang Tua", "Orang Disegani Karena Adat")
+        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
+        spinner_orangs.setAdapter(adapter)
+        spinner_orangs.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> {
+                    menu = "berjasa"
+                    getOrangs(menu)
+                }
+                1 -> {
+                    menu = "disegani"
+                    getOrangs(menu)
+                }
+            }
+        }
+    }
+
     private fun getOrangs(menu: String?) {
         rl_pb.visible()
         rv_orangs.gone()
         NetworkConfig().getService().showOrangs(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString(),
             menu.toString()
         ).enqueue(object : Callback<ArrayList<OrangsResp>> {
             override fun onFailure(call: Call<ArrayList<OrangsResp>>, t: Throwable) {
@@ -86,29 +91,29 @@ class PickOrangsActivity : BaseActivity() {
                 call: Call<ArrayList<OrangsResp>>,
                 response: Response<ArrayList<OrangsResp>>
             ) {
-               if(response.isSuccessful){
-                   rl_pb.gone()
-                   if(response.body()!!.isEmpty()){
-                       rl_no_data.visible()
-                       rv_orangs.gone()
-                   }else{
-                       rl_no_data.gone()
-                       rv_orangs.visible()
-                       OrangsRV(response.body(), menu)
+                if (response.isSuccessful) {
+                    rl_pb.gone()
+                    if (response.body()!!.isEmpty()) {
+                        rl_no_data.visible()
+                        rv_orangs.gone()
+                    } else {
+                        rl_no_data.gone()
+                        rv_orangs.visible()
+                        OrangsRV(response.body(), menu)
 
-                   }
-               }else{
-                   rl_no_data.visible()
-                   Toast.makeText(this@PickOrangsActivity, "Error", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    rl_no_data.visible()
+                    Toast.makeText(this@PickOrangsActivity, "Error", Toast.LENGTH_SHORT).show()
 
 
-               }
+                }
             }
         })
     }
 
     private fun OrangsRV(list: ArrayList<OrangsResp>?, menu: String?) {
-        orangsCallback = object :AdapterCallback<OrangsResp>{
+        orangsCallback = object : AdapterCallback<OrangsResp> {
             override fun initComponent(itemView: View, data: OrangsResp, itemIndex: Int) {
                 itemView.txt_edit_pendidikan.text = data.nama
             }
@@ -132,6 +137,7 @@ class PickOrangsActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        initSp()
         getOrangs(menu)
     }
 }

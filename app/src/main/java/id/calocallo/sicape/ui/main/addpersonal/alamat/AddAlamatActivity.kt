@@ -9,24 +9,24 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.AlamatReq
 import id.calocallo.sicape.model.ParentListAlamat
 import id.calocallo.sicape.ui.main.addpersonal.misc.MiscenaousActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_alamat.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddAlamatActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapter: AddAlamatAdapter
     private lateinit var list: ArrayList<AlamatReq>
     private lateinit var parentList: ParentListAlamat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_alamat)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Alamat"
         list = ArrayList()
-//        parentList = ParentListAlamat(list)
+/*//        parentList = ParentListAlamat(list)
 
         //personel
 //        val personel = sessionManager.getPersonel()
@@ -50,7 +50,7 @@ class AddAlamatActivity : BaseActivity() {
 //
 //        //diluar dinas
 //        val pkrjnDinas = sessionManager.getPekerjaanDiluar()
-//        Log.e("diluar", pkrjnDinas.size.toString())
+//        Log.e("diluar", pkrjnDinas.size.toString())*/
 
         initRecycler(rv_alamat)
         btn_next_alamat.setOnClickListener {
@@ -58,8 +58,8 @@ class AddAlamatActivity : BaseActivity() {
                 list.clear()
             }
 
-            sessionManager.setAlamat(list)
-            Log.e("alamatSize", "alamat Size ${sessionManager.getAlamat().size}")
+            sessionManager1.setAlamat(list)
+            Log.e("alamatSize", "alamat Size ${sessionManager1.getAlamat()}")
             //initAPI(list)
 //            Log.e("namalamat", parentList.parenListAlamat[0].alamat.toString())
 //            parentList.parenListAlamat[0].dalam_rangka?.let { it1 -> Log.e("rangkaalamat", it1) }
@@ -70,30 +70,27 @@ class AddAlamatActivity : BaseActivity() {
 
     private fun initRecycler(rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val alamatCreated = sessionManager.getAlamat()
+        val alamatCreated = sessionManager1.getAlamat()
         Log.e("alamatSize", "alamat Size ${alamatCreated.size}")
-        for (i in 0 until alamatCreated.size) {
-            list.add(
-                i, AlamatReq(
-                    alamatCreated[i].alamat,
-                    alamatCreated[i].tahun_awal,
-                    alamatCreated[i].tahun_akhir,
-                    alamatCreated[i].dalam_rangka,
-                    alamatCreated[i].keterangan
-                )
-            )
-        }
+
         if (alamatCreated.size == 0) {
             list.add(
-                AlamatReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
+                AlamatReq()
             )
         }
+        /*else{
+            for (i in 0 until alamatCreated.size) {
+                list.add(
+                    i, AlamatReq(
+                        alamatCreated[i].alamat,
+                        alamatCreated[i].tahun_awal,
+                        alamatCreated[i].tahun_akhir,
+                        alamatCreated[i].dalam_rangka,
+                        alamatCreated[i].keterangan
+                    )
+                )
+            }
+        }*/
         adapter = AddAlamatAdapter(this, list, object : AddAlamatAdapter.OnClickAlamat {
             override fun onDelete(position: Int) {
                 list.removeAt(position)
@@ -112,22 +109,20 @@ class AddAlamatActivity : BaseActivity() {
         }
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        val alamat = sessionManager.getAlamat()
-//        if(alamat.size != 0) {
-//            for (i in 0 until alamat.size) {
-//
-//                list.add(
-//                    i, AlamatReq(
-//                        alamat[i].alamat,
-//                        alamat[i].tahun_awal,
-//                        alamat[i].tahun_akhir,
-//                        alamat[i].dalam_rangka,
-//                        alamat[i].keterangan
-//                    )
-//                )
-//            }
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        val alamat = sessionManager1.getAlamat()
+        for (i in 0 until alamat.size) {
+
+            list.add(
+                i, AlamatReq(
+                    alamat[i].alamat,
+                    alamat[i].tahun_awal,
+                    alamat[i].tahun_akhir,
+                    alamat[i].dalam_rangka,
+                    alamat[i].keterangan
+                )
+            )
+        }
+    }
 }

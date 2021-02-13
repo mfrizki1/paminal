@@ -13,7 +13,7 @@ import id.calocallo.sicape.network.request.AnakReq
 import id.calocallo.sicape.network.response.AnakResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,14 +24,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditAnakActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var anakReq = AnakReq()
     private var tempSttsIktn: String? = null
     private var tempJK: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_anak)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val namaPersonel = intent.extras?.getString("NAMA_PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = namaPersonel
@@ -40,11 +40,59 @@ class EditAnakActivity : BaseActivity() {
 
 
         //validasi
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_single_anak_edit.gone()
             btn_delete_single_anak_edit.gone()
         }
+        apiDetailAnak(anak)
+        btn_save_single_anak_edit.attachTextChangeAnimator()
+        bindProgressButton(btn_save_single_anak_edit)
+        btn_save_single_anak_edit.setOnClickListener {
+            doUpdateAnak(anak)
+        }
+        btn_delete_single_anak_edit.setOnClickListener {
+            alert("Yakin Hapus Data") {
+                positiveButton("Iya") {
+                    doDeleteAnak(anak)
+                }
+                negativeButton("Tidak") {}
+            }.show()
+        }
+    }
+
+    private fun apiDetailAnak(anak: AnakResp?) {
+        NetworkConfig().getService()
+            .getDetailAnak("Bearer ${sessionManager1.fetchAuthToken()}", anak?.id.toString())
+            .enqueue(object : Callback<AnakResp> {
+                override fun onFailure(call: Call<AnakResp>, t: Throwable) {
+                    Toast.makeText(this@EditAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(call: Call<AnakResp>, response: Response<AnakResp>) {
+                    if (response.isSuccessful) {
+                        viewDetailAnak(response.body())
+                    } else {
+                        Toast.makeText(this@EditAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
+
+
+    }
+
+    private fun viewDetailAnak(anak: AnakResp?) {
+        edt_nama_lengkap_anak_edit.setText(anak?.nama)
+        edt_tmpt_ttl_anak_edit.setText(anak?.tempat_lahir)
+        edt_tgl_ttl_anak_edit.setText(anak?.tanggal_lahir)
+        edt_pekerjaan_anak_edit.setText(anak?.pekerjaan_atau_sekolah)
+        edt_organisasi_anak_edit.setText(anak?.organisasi_yang_diikuti)
+        edt_ket_anak_edit.setText(anak?.keterangan)
+
+
+        /*2*/
         when (anak?.status_ikatan) {
             "kandung" -> tempSttsIktn = "Kandung"
             "angkat" -> tempSttsIktn = "Angkat"
@@ -65,15 +113,10 @@ class EditAnakActivity : BaseActivity() {
         sp_status_ikatan_edit.setAdapter(adapterStts)
         sp_status_ikatan_edit.setOnItemClickListener { parent, view, position, id ->
             when (position) {
-                0 -> {
-                    anakReq.status_ikatan = "kandung"
-                }
-                1 -> {
-                    anakReq.status_ikatan = "angkat"
-                }
-                2 -> {
-                    anakReq.status_ikatan = "tiri"
-                }
+                0 -> anakReq.status_ikatan = "kandung"
+                1 -> anakReq.status_ikatan = "angkat"
+                2 -> anakReq.status_ikatan = "tiri"
+
             }
         }
         val listJK = listOf("Laki-Laki", "Perempuan")
@@ -82,35 +125,12 @@ class EditAnakActivity : BaseActivity() {
         spinner_jk_anak_edit.setAdapter(adapterJK)
         spinner_jk_anak_edit.setOnItemClickListener { parent, view, position, id ->
             when (position) {
-                0 -> {
-                    anakReq.jenis_kelamin = "laki_laki"
-                }
-                1 -> {
-                    anakReq.jenis_kelamin = "perempuan"
-                }
+                0 -> anakReq.jenis_kelamin = "laki_laki"
+                1 -> anakReq.jenis_kelamin = "perempuan"
             }
         }
 
-        edt_nama_lengkap_anak_edit.setText(anak?.nama)
-        edt_tmpt_ttl_anak_edit.setText(anak?.tempat_lahir)
-        edt_tgl_ttl_anak_edit.setText(anak?.tanggal_lahir)
-        edt_pekerjaan_anak_edit.setText(anak?.pekerjaan_atau_sekolah)
-        edt_organisasi_anak_edit.setText(anak?.organisasi_yang_diikuti)
-        edt_ket_anak_edit.setText(anak?.keterangan)
 
-        btn_save_single_anak_edit.attachTextChangeAnimator()
-        bindProgressButton(btn_save_single_anak_edit)
-        btn_save_single_anak_edit.setOnClickListener {
-            doUpdateAnak(anak)
-        }
-        btn_delete_single_anak_edit.setOnClickListener {
-            alert("Yakin Hapus Data") {
-                positiveButton("Iya") {
-                    doDeleteAnak(anak)
-                }
-                negativeButton("Tidak") {}
-            }.show()
-        }
     }
 
     private fun doUpdateAnak(anak: AnakResp?) {
@@ -130,7 +150,7 @@ class EditAnakActivity : BaseActivity() {
         anakReq.keterangan = edt_ket_anak_edit.text.toString()
 
         NetworkConfig().getService().updateAnakSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             anak?.id.toString(),
             anakReq
         ).enqueue(object : Callback<BaseResp> {
@@ -152,7 +172,7 @@ class EditAnakActivity : BaseActivity() {
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_single_anak_edit.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_single_anak_edit.hideDrawable(R.string.not_update)
 
                 }
@@ -162,7 +182,7 @@ class EditAnakActivity : BaseActivity() {
 
     private fun doDeleteAnak(anak: AnakResp?) {
         NetworkConfig().getService().deleteAnak(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             anak?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

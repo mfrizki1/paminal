@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.rehab
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import id.calocallo.sicape.R
 import id.calocallo.sicape.ui.main.rehab.rpph.ListRpphActivity
@@ -21,7 +20,7 @@ class PickRehabActivity : BaseActivity() {
         supportActionBar?.title = "Pilih Menu Rehab"
 
         /*RPS*/
-        btn_rps.setOnClickListener {
+        btn_personel_polres.setOnClickListener {
             val intent = Intent(this, ListRpsActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

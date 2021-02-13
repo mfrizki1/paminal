@@ -9,5 +9,5 @@ data class OrganisasiReq(
     var alamat: String?,
     var keterangan: String?
 ){
-    constructor():this("","","","","","","")
+    constructor():this(null,null,null,null,null,null,null)
 }

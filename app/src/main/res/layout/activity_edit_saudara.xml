@@ -1,79 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.editpersonel.saudara.EditSaudaraActivity">
 
-    <include layout="@layout/layout_toolbar_white"/>
-    <include layout="@layout/view_separator"/>
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Status Ikatan">
+        android:orientation="vertical">
 
-        <AutoCompleteTextView
-            android:id="@+id/sp_ikatan_saudara_edit"
+        <include layout="@layout/layout_toolbar_white" />
+
+        <include layout="@layout/view_separator" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="none" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Status Ikatan">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <AutoCompleteTextView
+                android:id="@+id/sp_ikatan_saudara_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="@string/nama_lengkap">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_nama_lengkap_saudara_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text|textCapSentences" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="@string/jk">
-
-        <AutoCompleteTextView
-            android:id="@+id/spinner_jk_saudara_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="none" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_8dp">
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:hint="@string/insert_ttl"
-            app:layout_constraintEnd_toStartOf="@+id/textInputLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="@string/nama_lengkap">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_tmpt_ttl_saudara_edit"
+                android:id="@+id/edt_nama_lengkap_saudara_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text|textCapSentences" />
@@ -81,98 +49,138 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="175dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:hint="@string/tanggal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="@string/jk">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_tgl_ttl_saudara_edit"
+            <AutoCompleteTextView
+                android:id="@+id/spinner_jk_saudara_edit"
                 android:layout_width="match_parent"
-                android:maxLength="10"
                 android:layout_height="match_parent"
-                android:inputType="date" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>  <!-- ttl-->
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Pekerjaan">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_pekerjaan_saudara_edit"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text|textCapSentences" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:hint="@string/insert_ttl"
+                app:layout_constraintEnd_toStartOf="@+id/textInputLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Organisasi">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_tmpt_ttl_saudara_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textCapSentences" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_organisasi_saudara_edit"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:hint="@string/tanggal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_tgl_ttl_saudara_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="date"
+                    android:maxLength="10" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>  <!-- ttl-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top|start"
-android:inputType="textMultiLine|textCapSentences" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Pekerjaan">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_pekerjaan_saudara_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text|textCapSentences" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Keterangan">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_ket_saudara_edit"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top|start"
-android:inputType="textMultiLine|textCapSentences" />
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Organisasi">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_organisasi_saudara_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:background="@color/grey" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:layout_marginHorizontal="12dp"
-        style="@style/Widget.Button"
-        android:text="@string/save"
-        android:id="@+id/btn_save_saudara_edit"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Keterangan">
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        style="@style/UnselectedButton"
-        android:text="@string/delete"
-        android:id="@+id/btn_delete_saudara_edit"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_ket_saudara_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
 
-</LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:background="@color/grey" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_saudara_edit"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="@string/save" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete_saudara_edit"
+            style="@style/UnselectedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:text="@string/delete" />
+    </LinearLayout>
+
+</ScrollView>

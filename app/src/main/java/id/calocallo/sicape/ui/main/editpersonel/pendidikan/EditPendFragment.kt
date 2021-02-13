@@ -12,14 +12,16 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
+import id.calocallo.sicape.model.AddSinglePendResp
+import id.calocallo.sicape.model.DetailPendModel
 import id.calocallo.sicape.model.PendidikanModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SinglePendReq
+import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
-import kotlinx.android.synthetic.main.fragment_add_single_pend.*
 import kotlinx.android.synthetic.main.fragment_edit_pend.*
 import kotlinx.android.synthetic.main.fragment_edit_pend.view.*
 import retrofit2.Call
@@ -29,7 +31,7 @@ import retrofit2.Response
 
 class EditPendFragment : Fragment() {
     private val singlePendReq = SinglePendReq()
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,19 +43,14 @@ class EditPendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
 
-        if (sessionManager.fetchHakAkses() == "operator") {
+        if (sessionManager1.fetchHakAkses() == "operator") {
             view.btn_save_edit_pend.gone()
             view.btn_delete_edit_pend.gone()
         }
         val pendidikan = arguments?.getParcelable<PendidikanModel>("PENDIDIKAN")
-        edt_nama_edit_pend.setText(pendidikan?.pendidikan)
-        edt_thn_awal_edit_pend.setText(pendidikan?.tahun_awal)
-        edt_thn_akhir_edit_pend.setText(pendidikan?.tahun_akhir)
-        edt_membiayai_edit_pend.setText(pendidikan?.yang_membiayai)
-        edt_tempat_edit_pend.setText(pendidikan?.kota)
-        edt_ket_edit_pend.setText(pendidikan?.keterangan)
+        viewPendDetail(pendidikan)
         view.btn_save_edit_pend.attachTextChangeAnimator()
         bindProgressButton(view.btn_save_edit_pend)
         view.btn_save_edit_pend.setOnClickListener {
@@ -70,9 +67,39 @@ class EditPendFragment : Fragment() {
         }
     }
 
+    private fun viewPendDetail(pendidikan: PendidikanModel?) {
+        NetworkConfig().getService().getDetailPend(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            pendidikan?.id.toString()
+        ).enqueue(object : Callback<DetailPendModel> {
+            override fun onFailure(call: Call<DetailPendModel>, t: Throwable) {
+                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(
+                call: Call<DetailPendModel>,
+                response: Response<DetailPendModel>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    edt_nama_edit_pend.setText(data?.pendidikan)
+                    edt_thn_awal_edit_pend.setText(data?.tahun_awal)
+                    edt_thn_akhir_edit_pend.setText(data?.tahun_akhir)
+                    edt_tempat_edit_pend.setText(data?.kota)
+                    edt_membiayai_edit_pend.setText(data?.yang_membiayai)
+                    if (data?.keterangan.isNullOrBlank()) {
+                        edt_ket_edit_pend.setText("")
+                    } else {
+                        edt_ket_edit_pend.setText(data?.keterangan)
+                    }
+                }
+            }
+        })
+    }
+
     private fun doDelete(pendidikan: PendidikanModel?) {
         NetworkConfig().getService().deletePend(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             pendidikan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -81,7 +108,7 @@ class EditPendFragment : Fragment() {
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    if (response.body()?.message == "Data riwayat pendidikan removed succesfully") {
+                    if (response.body()?.message == "Data riwayat pendidikan personel removed succesfully") {
                         Toast.makeText(activity, "Berhasil Hapus", Toast.LENGTH_SHORT).show()
 //                        activity?.finish()
                         fragmentManager?.popBackStack()
@@ -103,6 +130,7 @@ class EditPendFragment : Fragment() {
         singlePendReq.tahun_akhir = edt_thn_akhir_edit_pend.text.toString()
         singlePendReq.keterangan = edt_ket_edit_pend.text.toString()
         singlePendReq.yang_membiayai = edt_membiayai_edit_pend.text.toString()
+        singlePendReq.jenis = pendidikan?.jenis
 
         val animatedDrawable =
             activity?.let { ContextCompat.getDrawable(it, R.drawable.animated_check) }!!
@@ -115,18 +143,21 @@ class EditPendFragment : Fragment() {
         }
 
         NetworkConfig().getService().updatePend(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             pendidikan?.id.toString(), //id
             singlePendReq
-        ).enqueue(object : Callback<BaseResp> {
-            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+        ).enqueue(object : Callback<Base1Resp<AddSinglePendResp>> {
+            override fun onFailure(call: Call<Base1Resp<AddSinglePendResp>>, t: Throwable) {
                 Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
                 btn_save_edit_pend.hideDrawable(R.string.save)
             }
 
-            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+            override fun onResponse(
+                call: Call<Base1Resp<AddSinglePendResp>>,
+                response: Response<Base1Resp<AddSinglePendResp>>
+            ) {
                 if (response.isSuccessful) {
-                    if (response.body()?.message == "Data riwayat pendidikan updated succesfully") {
+                    if (response.body()?.message == "Data riwayat pendidikan personel updated succesfully") {
                         Toast.makeText(activity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                         view?.btn_save_edit_pend?.showDrawable(animatedDrawable) {
                             buttonTextRes = R.string.data_updated
@@ -140,7 +171,7 @@ class EditPendFragment : Fragment() {
                     } else {
                         Handler(Looper.getMainLooper()).postDelayed({
                             btn_save_edit_pend.hideDrawable(R.string.save)
-                        },3000)
+                        }, 3000)
                         btn_save_edit_pend.hideDrawable(R.string.not_update)
 //                        view?.btn_save_edit_pend?.hideDrawable(R.string.not_update)
                     }
@@ -148,7 +179,7 @@ class EditPendFragment : Fragment() {
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_edit_pend.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_edit_pend.hideDrawable(R.string.not_update)
 //                    view?.btn_save_edit_pend?.hideDrawable(R.string.not_update)
                 }

@@ -2,14 +2,14 @@ package id.calocallo.sicape.ui.main.personel
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
+import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.editpersonel.pendidikan.EditPendidikanActivity
 import id.calocallo.sicape.ui.main.editpersonel.EditPersonelActivity
 import id.calocallo.sicape.ui.main.editpersonel.alamat.PickAlamatActivity
@@ -17,6 +17,8 @@ import id.calocallo.sicape.ui.main.editpersonel.anak.PickAnakActivity
 import id.calocallo.sicape.ui.main.editpersonel.foto.EditFotoActivity
 import id.calocallo.sicape.ui.main.editpersonel.keluarga.EditKeluargaActivity
 import id.calocallo.sicape.ui.main.editpersonel.keluarga.EditPasanganActivity
+import id.calocallo.sicape.ui.main.editpersonel.keluarga.PickKeluargaActivity
+import id.calocallo.sicape.ui.main.editpersonel.keluarga.PickPasanganActivity
 import id.calocallo.sicape.ui.main.editpersonel.med_sos.PickMedSosActivity
 import id.calocallo.sicape.ui.main.editpersonel.media_info.PickMedInfoActivity
 import id.calocallo.sicape.ui.main.editpersonel.orangs.PickOrangsActivity
@@ -28,19 +30,20 @@ import id.calocallo.sicape.ui.main.editpersonel.sahabat.PickSahabatActivity
 import id.calocallo.sicape.ui.main.editpersonel.saudara.PickSaudaraActivity
 import id.calocallo.sicape.ui.main.editpersonel.signalement.EditSignalementActivity
 import id.calocallo.sicape.ui.main.editpersonel.tokoh.PickTokohActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
+import id.calocallo.sicape.utils.ext.formatterTanggal
+import id.calocallo.sicape.utils.ext.setFromUrl
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_personel.*
-import kotlinx.android.synthetic.main.item_personel.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DetailPersonelActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var idPersonel = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,78 +51,29 @@ class DetailPersonelActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Personel"
 
-        sessionManager = SessionManager(this)
-        val hakAkses = sessionManager.fetchHakAkses()
+        sessionManager1 = SessionManager1(this)
+        val hakAkses = sessionManager1.fetchHakAkses()
         if (hakAkses == "operator") {
             btn_edit_personel.toggleVisibility()
         }
         val bundle = intent.extras
-        val detail = bundle?.getParcelable<PersonelModel>("PERSONEL")
+        val detail = bundle?.getParcelable<PersonelMinResp>("PERSONEL")
         idPersonel = detail?.id.toString()
-        detail?.id?.let { sessionManager.saveID(it) }
-        if (bundle != null) {
-            when (detail?.id_satuan_kerja) {
-                1 -> txt_kesatuan_personel.text = "POLRESTA BANJARMASIN"
-                2 -> txt_kesatuan_personel.text = "POLRES BANJARBARU"
-                3 -> txt_kesatuan_personel.text = "POLRES BANJAR"
-                4 -> txt_kesatuan_personel.text = "POLRES TAPIN"
-                5 -> txt_kesatuan_personel.text = "POLRES HULU SUNGAI SELATAN"
-                6 -> txt_kesatuan_personel.text = "POLRES HULU SUNGAI TENGAH"
-                7 -> txt_kesatuan_personel.text = "POLRES HULU SUNGAI UTARA"
-                8 -> txt_kesatuan_personel.text = "POLRES BALANGAN"
-                9 -> txt_kesatuan_personel.text = "POLRES TABALONG"
-                10 -> txt_kesatuan_personel.text = "POLRES TANAH LAUT"
-                11 -> txt_kesatuan_personel.text = "POLRES TANAH BUMBU"
-                12 -> txt_kesatuan_personel.text = "POLRES KOTABARU"
-                13 -> txt_kesatuan_personel.text = "POLRES BATOLA"
-                14 -> txt_kesatuan_personel.text = "SAT BRIMOB"
-                15 -> txt_kesatuan_personel.text = "SAT POLAIR"
-                16 -> txt_kesatuan_personel.text = "SPN BANJARBARU"
-                17 -> txt_kesatuan_personel.text = "POLDA KALSEL"
-                18 -> txt_kesatuan_personel.text = "SARPRAS"
-            }
-            val nama = detail?.nama
-            val alias = detail?.nama_alias
-            val jabatan = detail?.jabatan
-            val pangkat = detail?.pangkat.toString().toUpperCase()
-            val nrp = detail?.nrp
-            val tgl_lhr = detail?.tanggal_lahir
-            val tmpt_lhr = detail?.tempat_lahir
-            var jk = detail?.jenis_kelamin
-            var agama = detail?.agama_sekarang
-//            val almt_kntr = detail?.alamat_kantor
+        detail?.id?.let { sessionManager1.saveID(it) }
+        apiDetailPersonel(detail)
 
+//        buttonDetailPersonel(detail)
 
-            if (jk == "laki_laki") {
-                jk = "Laki-laki"
-            } else {
-                jk = "Perempuan"
-            }
+    }
 
-            agama = when (agama) {
-                "islam" -> "Islam"
-                "katolik" -> "Katolik"
-                "protestas" -> "Protestan"
-                "budha" -> "Budha"
-                "hindu" -> "Hindu"
-                else -> "Khonghucu"
-            }
-
-            txt_nama_personel.text = nama
-            txt_ttl_personel.text = "$tmpt_lhr, $tgl_lhr"
-            txt_jk.text = jk
-            txt_agama.text = agama
-            txt_pangkat_nrp.text = "$pangkat / $nrp"
-            txt_jabatan_personel.text = jabatan
-            txt_alamat_kantor_personel.text = detail?.satuan_kerja?.alamat_kantor
-
-        } else {
-            Log.e("tidak masuk", "tidak masuk")
-        }
-
+    private fun buttonDetailPersonel(detail: AllPersonelModel1?) {
+        //        btn_edit_catpers.setOnClickListener {
+//            Toast.makeText(this, "Catatarn Personel Personel", Toast.LENGTH_SHORT).show()
+//        }
         btn_edit_personel.setOnClickListener {
-            val intent = Intent(this, EditPersonelActivity::class.java)
-            intent.putExtra("PERSONEL_DETAIL", detail)
+            val intent = Intent(this, EditPersonelActivity::class.java).apply {
+                this.putExtra("PERSONEL_DETAIL", detail)
+            }
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -153,13 +107,19 @@ class DetailPersonelActivity : BaseActivity() {
 //        btn_edit_penghargaan.setOnClickListener {
 //            Toast.makeText(this, "Penghargaan", Toast.LENGTH_SHORT).show()
 //        }
-        btn_edit_pasangan.setOnClickListener {
-            val intent = Intent(this, EditPasanganActivity::class.java)
+        btn_edit_keluarga.setOnClickListener {
+            val intent = Intent(this, PickKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        btn_edit_ayah_kandung.setOnClickListener {
+        btn_edit_pasangan.setOnClickListener {
+            val intent = Intent(this, PickPasanganActivity::class.java)
+            intent.putExtra("PERSONEL_DETAIL", detail)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+        /*btn_edit_ayah_kandung.setOnClickListener {
             val intent = Intent(this, EditKeluargaActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
             intent.putExtra("KELUARGA", "ayah_kandung")
@@ -200,7 +160,7 @@ class DetailPersonelActivity : BaseActivity() {
             intent.putExtra("KELUARGA", "mertua_perempuan")
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        }*/
         btn_edit_anak.setOnClickListener {
             val intent = Intent(this, PickAnakActivity::class.java)
             intent.putExtra("PERSONEL_DETAIL", detail)
@@ -281,10 +241,63 @@ class DetailPersonelActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 //            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
         }
-//        btn_edit_catpers.setOnClickListener {
-//            Toast.makeText(this, "Catatarn Personel Personel", Toast.LENGTH_SHORT).show()
-//        }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        val bundle = intent.extras
+        val detail = bundle?.getParcelable<PersonelMinResp>("PERSONEL")
+        apiDetailPersonel(detail)
+    }
+
+    private fun apiDetailPersonel(detail: PersonelMinResp?) {
+        NetworkConfig().getService().showPersonelById(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            detail?.id.toString()
+        ).enqueue(object : Callback<AllPersonelModel1> {
+            override fun onFailure(call: Call<AllPersonelModel1>, t: Throwable) {
+                Toast.makeText(this@DetailPersonelActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun onResponse(
+                call: Call<AllPersonelModel1>,
+                response: Response<AllPersonelModel1>
+            ) {
+                if (response.isSuccessful) {
+                    getViewDetailPersonel(response.body())
+                    buttonDetailPersonel(response.body())
+                } else {
+                    Toast.makeText(this@DetailPersonelActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        })
+    }
+
+    private fun getViewDetailPersonel(data: AllPersonelModel1?) {
+        img_personel.setFromUrl(data?.foto?.foto_muka?.url.toString())
+        txt_kesatuan_personel.text = data?.satuan_kerja?.kesatuan
+        txt_nama_personel.text = data?.nama
+        txt_ttl_personel.text =
+            "${data?.tempat_lahir}, ${formatterTanggal(data?.tanggal_lahir)}"
+        if (data?.jenis_kelamin == "laki_laki") {
+            txt_jk.text = "Laki-Laki"
+        } else {
+            txt_jk.text = "Perempuan"
+        }
+        when (data?.agama_sekarang) {
+            "islam" -> txt_agama.text = "Islam"
+            "katolik" -> txt_agama.text = "Katolik"
+            "protestas" -> txt_agama.text = "Protestan"
+            "budha" -> txt_agama.text = "Budha"
+            "hindu" -> txt_agama.text = "Hindu"
+            else -> "Khonghucu"
+        }
+
+        txt_pangkat_nrp.text =" ${data?.pangkat.toString().toUpperCase()} / ${data?.nrp}"
+        txt_jabatan_personel.text = data?.jabatan
+        txt_alamat_kantor_personel.text = data?.satuan_kerja?.alamat_kantor
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -315,7 +328,7 @@ class DetailPersonelActivity : BaseActivity() {
 
     private fun ApiDelete() {
         NetworkConfig().getService()
-            .deletePersonel("Bearer ${sessionManager.fetchAuthToken()}", idPersonel)
+            .deletePersonel("Bearer ${sessionManager1.fetchAuthToken()}", idPersonel)
             .enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     Toast.makeText(this@DetailPersonelActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)

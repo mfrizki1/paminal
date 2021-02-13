@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.rehab.sktt
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -9,7 +8,7 @@ import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.SkttResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -25,7 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ListSkttActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var adapterSktt = ReusableAdapter<SkttResp>(this)
     private lateinit var callbackSktt: AdapterCallback<SkttResp>
     override fun onCreate(savedInstanceState: Bundle?) {

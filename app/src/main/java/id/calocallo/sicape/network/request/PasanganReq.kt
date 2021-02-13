@@ -35,15 +35,14 @@ data class PasanganReq(
 
 ) {
     constructor() : this(
-        "", "", "", "", "",
-        "", "", "", "",
-        "", "", "",
-        "", "", "",
-        "", "", "", "",
-        "", "", "",
-        "", "",
-        "", "",
-        "", "",
-        ""
+        null,null,null,null,null,
+        null,null,null,null,
+        null,null,null,
+        null,null,null,
+        null,null,null,
+        null,null,null,null,
+        null,null,null,
+        null,null,null,
+        null
     )
 }

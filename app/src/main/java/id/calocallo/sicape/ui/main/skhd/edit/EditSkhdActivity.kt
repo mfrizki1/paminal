@@ -19,13 +19,13 @@ import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
 import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
 import id.calocallo.sicape.ui.main.skhd.DetailSkhdActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditSkhdActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var skhdReq = SkhdReq()
     private var idLhp: Int? = null
     private var idLp: Int? = null

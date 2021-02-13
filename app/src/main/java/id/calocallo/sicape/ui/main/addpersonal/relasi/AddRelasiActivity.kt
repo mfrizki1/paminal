@@ -2,44 +2,54 @@ package id.calocallo.sicape.ui.main.addpersonal.relasi
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AddAllPersonelModel
+import id.calocallo.sicape.model.AddPendidikanModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.HukumanReq
+import id.calocallo.sicape.network.request.KeluargaReq
 import id.calocallo.sicape.network.request.RelasiReq
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.ui.main.personel.PersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.network.response.AddPersonelResp
+import id.calocallo.sicape.network.response.Base1Resp
+import id.calocallo.sicape.ui.main.MainActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
+import id.calocallo.sicape.utils.hideKeyboard
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_cat_pers.*
 import kotlinx.android.synthetic.main.activity_add_relasi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class AddRelasiActivity : BaseActivity() {
     private lateinit var listRelasi: ArrayList<RelasiReq>
     private lateinit var listHukum: ArrayList<HukumanReq>
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterRelasi: RelasiAdapter
     private lateinit var adapterHukum: PernahHukumAdapter
-    private var allPersonelModel = AllPersonelModel()
+    private var allPersonelModel = AddAllPersonelModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_relasi)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Relasi"
+        Logger.addLogAdapter(AndroidLogAdapter())
         listRelasi = ArrayList()
         listHukum = ArrayList()
 
+        hideKeyboard()
         initRV(rv_relasi, rv_pernah_dihukum)
 
         btn_next_relasi.setOnClickListener {
@@ -51,67 +61,141 @@ class AddRelasiActivity : BaseActivity() {
                 listHukum.clear()
             }
 
-            sessionManager.setRelasi(listRelasi)
-            sessionManager.setHukuman(listHukum)
+            sessionManager1.setRelasi(listRelasi)
+            sessionManager1.setHukuman(listHukum)
 //            Log.e("size Relasi", sessionManager.getRelasi().size.toString())
 //            Log.e("size Relasi", sessionManager.getRelasi()[0].lokasi.toString())
 //            Log.e("size Relasi", sessionManager.getRelasi()[1].lokasi.toString())
 //            Log.e("size Hukum", sessionManager.getHukuman().size.toString())
 //            Log.e("size Relasi", sessionManager.getHukuman()[0].perkara.toString())
 //            startActivity(Intent(this, AddCatPersActivity::class.java))
-            doSavePersonel()
+            doSavePersonel(listRelasi, listHukum)
         }
     }
 
-    private fun doSavePersonel() {
-        allPersonelModel.personel = sessionManager.getPersonel()
-        allPersonelModel.signalement = sessionManager.getSignalement()
-        allPersonelModel.foto = sessionManager.getFoto()
-        allPersonelModel.relasi = sessionManager.getRelasi()
-        allPersonelModel.pernah_dihukum = sessionManager.getHukuman()
-        allPersonelModel.catatan_personel = sessionManager.getCatpers()
-        allPersonelModel.riwayat_pendidikan_umum = sessionManager.getPendUmum()
-        allPersonelModel.riwayat_pendidikan_kedinasan = sessionManager.getPendDinas()
-        allPersonelModel.riwayat_pendidikan_lain_lain = sessionManager.getPendOther()
-        allPersonelModel.riwayat_pekerjaan = sessionManager.getPekerjaan()
-        allPersonelModel.pekerjaan_diluar_dinas = sessionManager.getPekerjaanDiluar()
-        allPersonelModel.riwayat_alamat = sessionManager.getAlamat()
-        allPersonelModel.riwayat_organisasi = sessionManager.getOrganisasi()
-        allPersonelModel.riwayat_penghargaan = sessionManager.getPenghargaan()
-        allPersonelModel.riwayat_perjuangan = sessionManager.getPerjuanganCita()
-        allPersonelModel.pasangan = sessionManager.getPasangan()
-        allPersonelModel.ayah_kandung = sessionManager.getAyahKandung()
-        allPersonelModel.ayah_tiri = sessionManager.getAyahTiri()
-        allPersonelModel.ibu_kandung = sessionManager.getIbu()
-        allPersonelModel.ibu_tiri = sessionManager.getIbuTiri()
-        allPersonelModel.mertua_laki = sessionManager.getMertuaLaki()
-        allPersonelModel.mertua_perempuan = sessionManager.getMertuaPerempuan()
-        allPersonelModel.anak = sessionManager.getAnak()
-        allPersonelModel.saudara = sessionManager.getSaudara()
-        allPersonelModel.orang_berjasa = sessionManager.getOrangBerjasa()
-        allPersonelModel.orang_disegani = sessionManager.getOrangDisegani()
-        allPersonelModel.tokoh_dikagumi = sessionManager.getTokoh()
-        allPersonelModel.sahabat = sessionManager.getSahabat()
-        allPersonelModel.media_disenangi = sessionManager.getMediaInfo()
-        allPersonelModel.media_sosial = sessionManager.getMedsos()
+    private fun doSavePersonel(
+        listRelasi: ArrayList<RelasiReq>,
+        listHukum: ArrayList<HukumanReq>
+    ) {
+        Log.e("relasi", "$listRelasi")
+        val personel = sessionManager1.getPersonel()
+
+        allPersonelModel.nama = personel.nama
+        allPersonelModel.nama_alias = personel.nama_alias
+        allPersonelModel.jenis_kelamin = personel.jenis_kelamin
+        allPersonelModel.tempat_lahir = personel.tempat_lahir
+        allPersonelModel.tanggal_lahir = personel.tanggal_lahir
+        allPersonelModel.ras = personel.ras
+        allPersonelModel.jabatan = personel.jabatan
+        allPersonelModel.pangkat = personel.pangkat.toString().toUpperCase()
+        allPersonelModel.nrp = personel.nrp
+        allPersonelModel.id_satuan_kerja = personel.id_satuan_kerja
+        allPersonelModel.alamat_rumah = personel.alamat_rumah
+        allPersonelModel.no_telp_rumah = personel.no_telp_rumah
+        allPersonelModel.kewarganegaraan = personel.kewarganegaraan
+        allPersonelModel.cara_peroleh_kewarganegaraan = personel.cara_peroleh_kewarganegaraan
+        allPersonelModel.agama_sekarang = personel.agama_sekarang
+        allPersonelModel.agama_sebelumnya = personel.agama_sebelumnya.toString()
+        allPersonelModel.aliran_kepercayaan = ""
+        allPersonelModel.status_perkawinan = personel.status_perkawinan
+        allPersonelModel.tempat_perkawinan = personel.tempat_perkawinan
+        allPersonelModel.tanggal_perkawinan = personel.tanggal_perkawinan
+        allPersonelModel.perkawinan_keberapa = personel.perkawinan_keberapa
+        allPersonelModel.jumlah_anak = personel.jumlah_anak
+        allPersonelModel.alamat_sesuai_ktp = personel.alamat_sesuai_ktp
+        allPersonelModel.no_telp = personel.no_telp
+        allPersonelModel.no_ktp = personel.no_ktp
+        allPersonelModel.hobi = personel.hobi
+        allPersonelModel.kebiasaan = personel.kebiasaan
+        allPersonelModel.bahasa = personel.bahasa
+        allPersonelModel.bahasa = personel.bahasa
+//        = sessionManager1.getPersonel()
+        allPersonelModel.signalement = sessionManager1.getSignalement()
+        allPersonelModel.foto = sessionManager1.getIdFoto()
+        allPersonelModel.relasi = listRelasi
+        allPersonelModel.pernah_dihukum = listHukum
+//        allPersonelModel.catatan_personel = sessionManager1.getCatpers()
+        val listPend = arrayListOf<AddPendidikanModel>()
+        listPend.addAll(sessionManager1.getPendUmum())
+        listPend.addAll(sessionManager1.getPendDinas())
+        listPend.addAll(sessionManager1.getPendOther())
+        allPersonelModel.riwayat_pendidikan = listPend
+//        allPersonelModel.riwayat_pendidikan_kedinasan = sessionManager1.getPendDinas()
+//        allPersonelModel.riwayat_pendidikan_lain_lain = sessionManager1.getPendOther()
+        allPersonelModel.riwayat_pekerjaan = sessionManager1.getPekerjaan()
+        val pekerjaanLuar = sessionManager1.getPekerjaanDiluar()
+        if (pekerjaanLuar[0].pekerjaan != "") {
+            allPersonelModel.pekerjaan_diluar_dinas = pekerjaanLuar
+        }
+        allPersonelModel.riwayat_alamat = sessionManager1.getAlamat()
+        allPersonelModel.riwayat_organisasi = sessionManager1.getOrganisasi()
+        allPersonelModel.riwayat_penghargaan = sessionManager1.getPenghargaan()
+        allPersonelModel.riwayat_perjuangan = sessionManager1.getPerjuanganCita()
+
+//        allPersonelModel.ayah_tiri = sessionManager1.getAyahTiri()
+//        allPersonelModel.ibu_kandung = sessionManager1.getIbu()
+//        allPersonelModel.ibu_tiri = sessionManager1.getIbuTiri()
+//        allPersonelModel.mertua_laki = sessionManager1.getMertuaLaki()
+//        allPersonelModel.mertua_perempuan = sessionManager1.getMertuaPerempuan()
+        allPersonelModel.anak = sessionManager1.getAnak()
+        allPersonelModel.saudara = sessionManager1.getSaudara()
+        allPersonelModel.orang_berjasa = sessionManager1.getOrangBerjasa()
+        allPersonelModel.orang_disegani = sessionManager1.getOrangDisegani()
+        allPersonelModel.tokoh_dikagumi = sessionManager1.getTokoh()
+        allPersonelModel.sahabat = sessionManager1.getSahabat()
+        allPersonelModel.media_disenangi = sessionManager1.getMediaInfo()
+        allPersonelModel.media_sosial = sessionManager1.getMedsos()
+
+        val pasangan = sessionManager1.getPasangan()
+        if (pasangan[0].nama != "") {
+            allPersonelModel.pasangan = sessionManager1.getPasangan()
+        }
+        val ayah = sessionManager1.getAyahKandung()
+        val listKeluarga = ArrayList<KeluargaReq>()
+        if (ayah.nama != null) {
+            listKeluarga.add(ayah)
+        }
+        val ayahTiri = sessionManager1.getAyahTiri()
+        if (ayahTiri.nama != "")
+            listKeluarga.add(ayahTiri)
+        val ibu = sessionManager1.getIbu()
+        if (ibu.nama != "")
+            listKeluarga.add(ibu)
+        val ibuTiri = sessionManager1.getIbuTiri()
+        if (ibuTiri.nama != "")
+            listKeluarga.add(ibuTiri)
+        val mertuaLaki = sessionManager1.getMertuaLaki()
+        if (mertuaLaki.nama != "")
+            listKeluarga.add(mertuaLaki)
+        val mertuaPerempuan = sessionManager1.getMertuaPerempuan()
+        if (mertuaPerempuan.nama != "")
+            listKeluarga.add(mertuaPerempuan)
+        allPersonelModel.keluarga = listKeluarga
+
+        Logger.e("$allPersonelModel")
 
         NetworkConfig().getService().addAllPersonel(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             allPersonelModel
-        ).enqueue(object : Callback<BaseResp> {
-            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+        ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {
+            override fun onFailure(call: Call<Base1Resp<AddPersonelResp>>, t: Throwable) {
+                Log.e("error", "$t")
                 Toast.makeText(this@AddRelasiActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+            override fun onResponse(
+                call: Call<Base1Resp<AddPersonelResp>>,
+                response: Response<Base1Resp<AddPersonelResp>>
+            ) {
                 if (response.isSuccessful) {
-                    sessionManager.clearAllPers()
-                    btn_next_cat_pers.showSnackbar(R.string.data_saved) {
+                    hideKeyboard()
+                    sessionManager1.clearAllPers()
+                    btn_next_relasi.showSnackbar(R.string.data_saved) {
                         action(R.string.next) {
                             startActivity(
                                 Intent(
                                     this@AddRelasiActivity,
-                                    PersonelActivity::class.java
+                                    MainActivity::class.java
                                 )
                             )
                         }
@@ -125,12 +209,13 @@ class AddRelasiActivity : BaseActivity() {
     }
 
     private fun initRV(rvRelasi: RecyclerView, rvHukum: RecyclerView) {
-        val getRelasi = sessionManager.getRelasi()
+        val getRelasi = sessionManager1.getRelasi()
         if (getRelasi.size == 1) {
             for (i in 0 until getRelasi.size) {
                 listRelasi.add(
                     i, RelasiReq(
-                        getRelasi[i].nama
+                        getRelasi[i].nama,
+                        getRelasi[i].lokasi
                     )
                 )
             }
@@ -162,7 +247,7 @@ class AddRelasiActivity : BaseActivity() {
 
 
         //Hukum
-        val getHukum = sessionManager.getHukuman()
+        val getHukum = sessionManager1.getHukuman()
         if (getHukum.size == 1) {
             for (i in 0 until getHukum.size) {
                 listHukum.add(

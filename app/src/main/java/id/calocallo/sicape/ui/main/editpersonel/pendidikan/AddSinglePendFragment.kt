@@ -13,21 +13,21 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
+import id.calocallo.sicape.model.AddSinglePendResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SinglePendReq
+import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
-import kotlinx.android.synthetic.main.activity_edit_personel.*
+import id.calocallo.sicape.utils.SessionManager1
 import kotlinx.android.synthetic.main.fragment_add_single_pend.*
 import kotlinx.android.synthetic.main.fragment_add_single_pend.view.*
-import kotlinx.android.synthetic.main.fragment_edit_pend.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AddSinglePendFragment : Fragment() {
     var jenis_pendidikan = ""
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private val singlePendReq = SinglePendReq()
 
     override fun onCreateView(
@@ -40,7 +40,7 @@ class AddSinglePendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
         val item = listOf("Umum", "Kedinasan", "Lain-Lain")
         val adapter = activity?.let { ArrayAdapter(it, R.layout.item_spinner, item) }
         view.sp_jenis_pendidikan_single.setAdapter(adapter)
@@ -65,7 +65,8 @@ class AddSinglePendFragment : Fragment() {
     }
 
     private fun doAdd(jenis: String) {
-        val animatedDrawable = activity?.let { ContextCompat.getDrawable(it, R.drawable.animated_check) }!!
+        val animatedDrawable =
+            activity?.let { ContextCompat.getDrawable(it, R.drawable.animated_check) }!!
         //Defined bounds are required for your drawable
         val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
@@ -77,43 +78,47 @@ class AddSinglePendFragment : Fragment() {
         singlePendReq.tahun_akhir = edt_thn_akhir_add_pend_single.text.toString()
         singlePendReq.keterangan = edt_ket_add_pend_single.text.toString()
         singlePendReq.pendidikan = edt_nama_add_pend_single.text.toString()
+        singlePendReq.jenis = jenis
 
         view?.btn_save_add_pend_single?.showProgress {
-                progressColor = Color.WHITE
-            }
+            progressColor = Color.WHITE
+        }
         NetworkConfig().getService().addSinglePend(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
-            sessionManager.fetchID().toString(),
-            jenis,
+            sessionManager1.fetchID().toString(),
+//            jenis,
             singlePendReq
-        ).enqueue(object : Callback<BaseResp>{
-            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+        ).enqueue(object : Callback<Base1Resp<AddSinglePendResp>> {
+            override fun onFailure(call: Call<Base1Resp<AddSinglePendResp>>, t: Throwable) {
                 Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
                 btn_save_add_pend_single.hideDrawable(R.string.save)
             }
 
-            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
-                    if(response.body()?.message =="Data riwayat pendidikan saved succesfully"){
+            override fun onResponse(
+                call: Call<Base1Resp<AddSinglePendResp>>,
+                response: Response<Base1Resp<AddSinglePendResp>>
+            ) {
+                if (response.isSuccessful) {
+                    if (response.body()?.message == "Data riwayat pendidikan personel saved succesfully") {
                         view?.btn_save_add_pend_single?.showDrawable(animatedDrawable) {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
                         }
                         Handler(Looper.getMainLooper()).postDelayed({
-                        fragmentManager?.popBackStack()
-                        },500)
+                            fragmentManager?.popBackStack()
+                        }, 500)
 //                        activity?.finish()
-                    }else{
+                    } else {
                         Handler(Looper.getMainLooper()).postDelayed({
                             btn_save_add_pend_single.hideDrawable(R.string.save)
-                        },3000)
+                        }, 3000)
                         btn_save_add_pend_single.hideDrawable(R.string.not_save)
                     }
-                }else{
+                } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_add_pend_single.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_add_pend_single.hideDrawable(R.string.not_save)
                 }
             }

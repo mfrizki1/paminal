@@ -2,30 +2,28 @@ package id.calocallo.sicape.ui.main.skhd.tinddisiplin
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.TindDisiplinReq
 import id.calocallo.sicape.network.response.TindDisiplinResp
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_tind_disiplin_skhd.*
 import kotlinx.android.synthetic.main.activity_edit_tind_disiplin_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditTindDisiplinSkhdActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var tindakan: String? = null
     private var tindDisiplinReq = TindDisiplinReq()
     private var idPersonel: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_tind_disiplin_skhd)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Tindakan Disiplin"
 
@@ -51,7 +49,8 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
         }
 
         btn_choose_personel_tind_disiplin_edit.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PERSONEL_TIND_DISP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -66,10 +65,10 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_PERSONEL_TIND_DISP) {
             if (resultCode == Activity.RESULT_OK) {
-                val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+                val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
                 idPersonel = personel?.id
                 txt_nama_personel_tind_disiplin_edit.text = "Nama : ${personel?.nama}"
-                txt_pangkat_personel_tind_disiplin_edit.text = "Pangkat ${personel?.pangkat}: "
+                txt_pangkat_personel_tind_disiplin_edit.text = "Pangkat ${personel?.pangkat.toString().toUpperCase()}: "
                 txt_nrp_personel_tind_disiplin_edit.text = "NRP : ${personel?.nrp}"
                 txt_jabatan_personel_tind_disiplin_edit.text = "Jabatan : ${personel?.jabatan}"
                 txt_kesatuan_personel_tind_disiplin_edit.text =

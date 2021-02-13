@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.manajemen.DetailOperatorActivity">
+
+    <include layout="@layout/layout_toolbar_white" />
+
+    <include layout="@layout/view_separator" />
+
+    <LinearLayout
+        android:id="@+id/ll_operator_polisi_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_judul_nama_operator_detail"
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama" />
+
+        <TextView
+            android:id="@+id/txt_nama_operator_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pangkat" />
+
+        <TextView
+            android:id="@+id/txt_pangkat_operator_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pangkat" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nrp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_12dp">
+
+            <TextView
+                android:id="@+id/txt_nrp_operator_detail"
+                style="@style/JustText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/nrp" />
+
+            <ImageView
+                android:id="@+id/btn_copy_nrp_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/space_12dp"
+                android:src="@drawable/ic_copy" />
+        </RelativeLayout>
+
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jabatan" />
+
+        <TextView
+            android:id="@+id/txt_jabatan_operator_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jabatan" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kesatuan" />
+
+        <TextView
+            android:id="@+id/txt_kesatuan_operator_detail"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kesatuan" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status" />
+
+    <TextView
+        android:id="@+id/txt_status_aktif_operator_detail"
+        style="@style/JustText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aktif / TIdak Aktif" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_personel_operator"
+        style="@style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="@string/edit_data" />
+
+</LinearLayout>

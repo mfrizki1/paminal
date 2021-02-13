@@ -5,7 +5,8 @@ import android.transition.Slide
 import android.view.Gravity
 import androidx.fragment.app.FragmentTransaction
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -16,7 +17,7 @@ class EditPendidikanActivity : BaseActivity() {
         setContentView(R.layout.activity_edit_pendidikan)
 
         val bundel = intent.extras
-        val personel = bundel?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val personel = bundel?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
 
 
         setupActionBarWithBackButton(toolbar)

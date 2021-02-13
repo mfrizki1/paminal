@@ -15,11 +15,11 @@ import com.github.razir.progressbutton.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.SaksiLhpReq
 import id.calocallo.sicape.network.response.SaksiLhpResp
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -38,7 +38,7 @@ import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_tempat_lahir_s
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditSaksiLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var mAlerDBuilder: MaterialAlertDialogBuilder
     private lateinit var sipilAlertD: View
     private var saksiLhpReq = SaksiLhpReq()
@@ -52,11 +52,11 @@ class EditSaksiLhpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_saksi_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Saksi LHP"
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_saksi_lhp_edit.gone()
             btn_delete_saksi_lhp_edit.gone()
@@ -82,9 +82,10 @@ class EditSaksiLhpActivity : BaseActivity() {
         }
 
         btn_choose_personel_saksi_edit.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_SAKSI_LHP)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         mAlerDBuilder = MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
         btn_sipil_saksi_edit.setOnClickListener {
@@ -133,11 +134,11 @@ class EditSaksiLhpActivity : BaseActivity() {
             rb_polisi_saksi_edit.isChecked = true
             ll_sipil_saksi_edit.gone()
             ll_personel_saksi_edit.visible()
-            txt_nama_saksi_edit.text = saksi.nama
-            txt_pangkat_saksi_edit.text = saksi.pangkat.toString().toUpperCase()
-            txt_nrp_saksi_edit.text = saksi.nrp
-            txt_jabatan_saksi_edit.text = saksi.jabatan
-            txt_kesatuan_saksi_edit.text = saksi.kesatuan.toString().toUpperCase()
+            txt_nama_saksi_edit.text ="Nama : ${saksi.nama}"
+            txt_pangkat_saksi_edit.text ="Pangkat : ${saksi.pangkat.toString().toUpperCase()}"
+            txt_nrp_saksi_edit.text ="NRP : ${saksi.nrp}"
+            txt_jabatan_saksi_edit.text ="Jabatan : ${saksi.jabatan}"
+            txt_kesatuan_saksi_edit.text ="Kesatuan : ${saksi.kesatuan.toString().toUpperCase()}"
             tempStatusSaksi = "polisi"
 //            idPersonelSaksi = saksi.id_personel
 
@@ -216,14 +217,14 @@ class EditSaksiLhpActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personelSaksi = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personelSaksi = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_SAKSI_LHP) {
             idPersonelSaksi = personelSaksi?.id
-            txt_nama_saksi_edit.text = personelSaksi?.nama
-            txt_pangkat_saksi_edit.text = personelSaksi?.pangkat.toString().toUpperCase()
-            txt_nrp_saksi_edit.text = personelSaksi?.nrp
-            txt_jabatan_saksi_edit.text = personelSaksi?.jabatan
-            txt_kesatuan_saksi_edit.text = personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()
+            txt_nama_saksi_edit.text ="Nama : ${personelSaksi?.nama}"
+            txt_pangkat_saksi_edit.text ="Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
+            txt_nrp_saksi_edit.text ="NRP : ${personelSaksi?.nrp}"
+            txt_jabatan_saksi_edit.text ="Jabatan : ${personelSaksi?.jabatan}"
+            txt_kesatuan_saksi_edit.text ="Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
         }
     }
 

@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.response.SaudaraResp
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,21 +24,21 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickSaudaraActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var saudaraAdapter: ReusableAdapter<SaudaraResp>
     private lateinit var saudaraCallback: AdapterCallback<SaudaraResp>
 
-    private var namaPersonel= ""
+    private var namaPersonel = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_saudara)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         saudaraAdapter = ReusableAdapter(this)
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama
-        namaPersonel =detailPersonel?.nama.toString()
+        namaPersonel = detailPersonel?.nama.toString()
 
         btn_add_pick_single_saudara.setOnClickListener {
             val intent = Intent(this, AddSingleSaudaraActivity::class.java)
@@ -55,8 +55,8 @@ class PickSaudaraActivity : BaseActivity() {
     private fun getSaudara() {
         rl_pb.visible()
         NetworkConfig().getService().showSaudara(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString()
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<SaudaraResp>> {
             override fun onFailure(call: Call<ArrayList<SaudaraResp>>, t: Throwable) {
                 rl_pb.gone()
@@ -71,10 +71,10 @@ class PickSaudaraActivity : BaseActivity() {
                 if (response.isSuccessful) {
                     rl_pb.gone()
                     rv_status_saudara.gone()
-                    if(response.body()!!.isEmpty()){
+                    if (response.body()!!.isEmpty()) {
                         rl_no_data.visible()
                         rv_status_saudara.gone()
-                    }else {
+                    } else {
                         rl_no_data.gone()
                         rv_status_saudara.visible()
                         saudaraCallback = object : AdapterCallback<SaudaraResp> {
@@ -111,12 +111,13 @@ class PickSaudaraActivity : BaseActivity() {
                                 overridePendingTransition(
                                     R.anim.slide_in_right,
                                     R.anim.slide_out_left
-                                )}
+                                )
+                            }
 
                         }
                         saudaraAdapter.adapterCallback(saudaraCallback)
                             .isVerticalView()
-                            .addData(response.body()!!)
+                            .addData(sortSaudara(response.body()!!))
                             .setLayout(R.layout.item_2_text)
                             .build(rv_status_saudara)
                     }
@@ -126,6 +127,21 @@ class PickSaudaraActivity : BaseActivity() {
                 }
             }
         })
+    }
+
+    private val roles: HashMap<String, Int> = hashMapOf(
+        "kandung" to 0,
+        "tiri" to 1,
+        "angkat" to 2
+    )
+
+    fun sortSaudara(keluarga: ArrayList<SaudaraResp>): ArrayList<SaudaraResp> {
+        val comparator = Comparator { o1: SaudaraResp, o2: SaudaraResp ->
+            return@Comparator roles[o1.status_ikatan]!! - roles[o2.status_ikatan]!!
+        }
+        val copy = arrayListOf<SaudaraResp>().apply { addAll(keluarga) }
+        copy.sortWith(comparator)
+        return copy
     }
 
     override fun onResume() {

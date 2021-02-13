@@ -16,13 +16,13 @@ import id.calocallo.sicape.network.response.LpCustomResp
 import id.calocallo.sicape.network.response.SkttResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_sktt.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditSkttActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var idLhp: Int? = null
     private var idLp: Int? = null
     private var skttReq = SkttReq()

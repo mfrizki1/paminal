@@ -18,7 +18,7 @@ import id.calocallo.sicape.network.response.LpPidanaResp
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpEditActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpEditActivity.Companion.EDIT_PASAL_PIDANA
 import id.calocallo.sicape.ui.main.lp.pidana.EditLpPidanaActivity.Companion.EDIT_PIDANA
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
@@ -35,13 +35,13 @@ class DetailLpPidanaActivity : BaseActivity() {
         const val DETAIL_PIDANA = "DETAIL_PIDANA"
     }
 
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterDetailPasal: ReusableAdapter<LpPasalResp>
     private lateinit var callbackDetailPasal: AdapterCallback<LpPasalResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lp_pidana)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterDetailPasal = ReusableAdapter(this)
 
         setupActionBarWithBackButton(toolbar)
@@ -49,7 +49,7 @@ class DetailLpPidanaActivity : BaseActivity() {
         val pidana = intent.extras?.getParcelable<LpPidanaResp>(DETAIL_PIDANA)
         getDetailPidana(pidana)
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_pidana.gone()
             btn_edit_pasal_pidana.gone()

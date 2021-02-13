@@ -8,20 +8,20 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.MedSosReq
 import id.calocallo.sicape.model.ParentListMedsos
 import id.calocallo.sicape.ui.main.addpersonal.AddFotoActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_medsos.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddMedsosActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<MedSosReq>
     private lateinit var parentList: ParentListMedsos
     lateinit var adapter: MedSosAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_medsos)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         list = ArrayList()
         parentList = ParentListMedsos(list)
 
@@ -34,15 +34,15 @@ class AddMedsosActivity : BaseActivity() {
                 list.clear()
             }
 
-            sessionManager.setMedsos(list)
-            Log.e("size Medsos", sessionManager.getMedsos().size.toString())
+            sessionManager1.setMedsos(list)
+            Log.e("size Medsos", "${sessionManager1.getMedsos()}")
             startActivity(Intent(this, AddFotoActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
     private fun intiRV() {
-        val medsos = sessionManager.getMedsos()
+        val medsos = sessionManager1.getMedsos()
         if (medsos.size == 1) {
             for (i in 0 until medsos.size) {
                 list.add(

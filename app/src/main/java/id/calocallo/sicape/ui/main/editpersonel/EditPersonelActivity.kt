@@ -1,6 +1,7 @@
 package id.calocallo.sicape.ui.main.editpersonel
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -8,17 +9,23 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
-import id.calocallo.sicape.network.response.SatKerResp
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AddPersonelReq
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.network.response.*
+import id.calocallo.sicape.ui.kesatuan.polda.PoldaActivity
+import id.calocallo.sicape.ui.kesatuan.polres.PolresActivity
+import id.calocallo.sicape.ui.kesatuan.polres.SatPolresActivity
+import id.calocallo.sicape.ui.kesatuan.polsek.PolsekActivity
+import id.calocallo.sicape.ui.kesatuan.polsek.SatPolsekActivity
+import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_personel.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -32,37 +39,135 @@ class EditPersonelActivity : BaseActivity() {
     private var agmBefore = ""
     private var sttsKawin: Int? = null
     private val addPersonelReq = AddPersonelReq()
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var idPersonel = ""
+    private var idSatker: Int? = null
+    private var jenisKesatuan: String? = null
+
+    companion object {
+        const val RES_POLRES_EDIT = 121
+        const val RES_POLSEK_EDIT = 122
+        const val RES_POLDA_EDIT = 123
+
+        const val REQ_POLDA_EDIT = 111
+        const val REQ_POLRES_EDIT = 112
+        const val REQ_POLSEK_EDIT = 113
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_personel)
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         val bundle = intent.extras
-        val detail = bundle?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val detail = bundle?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         idPersonel = detail?.id.toString()
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detail?.nama.toString()
         getPersonel(detail)
 
-        initSpinner(spinner_jk_edit, spinner_stts_kwn_edit, sp_agm_now_edit, sp_agm_before_edit)
+        initSpinner()
 
         bindProgressButton(btn_save_personel_edit)
         btn_save_personel_edit.attachTextChangeAnimator()
         btn_save_personel_edit.setOnClickListener {
-            doUpdate(sessionManager.fetchHakAkses())
+            doUpdate(sessionManager1.fetchHakAkses())
 
         }
-        getSatker()
+//        getSatker()
+
+        btn_personel_edit_polda.setOnClickListener {
+
+            btn_personel_edit_polda.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polda.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_edit_polres.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_edit_polres.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polsek.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_edit_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+            startActivityForResult(
+                Intent(this, PoldaActivity::class.java),
+                AddPersonelActivity.REQ_POLDA
+            )
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+            Log.e("polda text", "${txt_satker_polda_edit.text}")
+            Log.e("polres text", "${txt_satker_polda_edit.text}")
+            Log.e("polsek text", "${txt_satker_polda_edit.text}")
+            txt_polres_edit.gone()
+            txt_polres_edit.text = ""
+
+            txt_sat_polres_edit.gone()
+            txt_sat_polres_edit.text = ""
+
+            txt_polsek_edit.gone()
+            txt_polsek_edit.text = ""
+
+            txt_sat_polsek_edit.gone()
+            txt_sat_polsek_edit.text = ""
+
+        }
+        btn_personel_edit_polres.setOnClickListener {
+//            spinner_satker_edit.hint = "Satker Polres"
+//            txt_layout_satker_personel_edit.visible()
+
+            btn_personel_edit_polres.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polres.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_edit_polda.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_edit_polda.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polsek.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_edit_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+//            satker("polres")
+            startActivityForResult(
+                Intent(this, PolresActivity::class.java),
+                AddPersonelActivity.REQ_POLRES
+            )
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+            txt_satker_polda_edit.gone()
+            txt_satker_polda_edit.text = ""
+
+            txt_polsek_edit.gone()
+            txt_polsek_edit.text = ""
+
+            txt_sat_polsek_edit.gone()
+            txt_sat_polsek_edit.text = ""
+        }
+        btn_personel_edit_polsek.setOnClickListener {
+//            spinner_satker_edit.hint = "Satker Polsek"
+//            txt_layout_satker_personel_edit.visible()
+
+            btn_personel_edit_polsek.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polsek.setTextColor(resources.getColor(R.color.white))
+
+            btn_personel_edit_polda.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_edit_polda.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polres.setBackgroundColor(resources.getColor(R.color.white))
+            btn_personel_edit_polres.setTextColor(resources.getColor(R.color.colorPrimary))
+//            satker("polsek")
+            val intent = Intent(this, PolsekActivity::class.java)
+//            intent.putExtra(PolresActivity.IS_POLSEK, PolresActivity.IS_POLSEK)
+            startActivityForResult(intent, AddPersonelActivity.REQ_POLSEK)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+
+            txt_satker_polda_edit.gone()
+            txt_satker_polda_edit.text = ""
+
+            txt_polres_edit.gone()
+            txt_polres_edit.text = ""
+
+            txt_sat_polres_edit.gone()
+            txt_sat_polres_edit.text = ""
+        }
 
     }
 
-    private fun getPersonel(detail: PersonelModel?) {
+    private fun getPersonel(detail: AllPersonelModel1?) {
         when (detail?.agama_sekarang) {
             "islam" -> {
                 agmNow = "islam"
@@ -137,6 +242,7 @@ class EditPersonelActivity : BaseActivity() {
             }
         }
 
+        /*
         when (detail?.id_satuan_kerja) {
             1 -> spinner_kesatuan_edit.setText("POLRESTA BANJARMASIN")
             2 -> spinner_kesatuan_edit.setText("POLRES BANJARBARU")
@@ -157,26 +263,29 @@ class EditPersonelActivity : BaseActivity() {
             17 -> spinner_kesatuan_edit.setText("POLDA KALSEL")
             18 -> spinner_kesatuan_edit.setText("SARPRAS")
         }
+
+         */
         when (detail?.status_perkawinan) {
-            "0" -> {
+            0 -> {
                 spinner_stts_kwn_edit.setText("Tidak")
                 sttsKawin = 0
                 txt_layout_kawin_berapa_edit.visibility = View.GONE
                 cl_ttl_kawin_edit.visibility = View.GONE
             }
-            "1" -> {
+            1 -> {
                 spinner_stts_kwn_edit.setText("Ya")
                 sttsKawin = 1
                 txt_layout_kawin_berapa_edit.visibility = View.VISIBLE
                 cl_ttl_kawin_edit.visibility = View.VISIBLE
             }
         }
-        addPersonelReq.id_satuan_kerja = detail?.id_satuan_kerja
+        addPersonelReq.id_satuan_kerja = detail?.satuan_kerja?.id
         addPersonelReq.jenis_kelamin = jk
         addPersonelReq.agama_sekarang = agmNow
         addPersonelReq.agama_sebelumnya = agmBefore
         addPersonelReq.status_perkawinan = sttsKawin
 
+        edt_aliran_kepercayaan_personel_edit.setText(detail?.aliran_kepercayaan)
         edt_bahasa_edit.setText(detail?.bahasa)
         edt_almt_ktp_edit.setText(detail?.alamat_sesuai_ktp)
         edt_almt_rmh_edit.setText(detail?.alamat_rumah)
@@ -187,8 +296,8 @@ class EditPersonelActivity : BaseActivity() {
         edt_pangkat_edit.setText(detail?.pangkat.toString().toUpperCase())
         edt_pekerjaan_edit.setText(detail?.jabatan)
         edt_suku_edit.setText(detail?.ras)
-        edt_jmlh_anak_edit.setText(detail?.jumlah_anak)
-        edt_kwin_berapa_edit.setText(detail?.perkawinan_keberapa)
+        edt_jmlh_anak_edit.setText(detail?.jumlah_anak.toString())
+        edt_kwin_berapa_edit.setText(detail?.perkawinan_keberapa.toString())
         edt_nama_alias_edit.setText(detail?.nama_alias)
         edt_nama_lengkap_edit.setText(detail?.nama)
         edt_no_ktp_edit.setText(detail?.no_ktp)
@@ -199,11 +308,84 @@ class EditPersonelActivity : BaseActivity() {
         edt_tgl_ttl_edit.setText(detail?.tanggal_lahir)
         edt_tmpt_ttl_edit.setText(detail?.tempat_lahir)
         edt_how_to_kwg_edit.setText(detail?.cara_peroleh_kewarganegaraan)
+
+        txt_satker_polda_edit.visible()
+        txt_satker_polda_edit.text = "${detail?.satuan_kerja?.kesatuan}"
+        idSatker = detail?.satuan_kerja?.id
+        /*when(detail?.id_satuan_kerja){
+            "polda"->{
+                txt_satker_polda_edit.visible()
+                btn_personel_edit_polda.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+                btn_personel_edit_polda.setTextColor(resources.getColor(R.color.white))
+            }
+            "polres"->{
+                txt_polres_edit.visible()
+                txt_sat_polres_edit.visible()
+                btn_personel_edit_polres.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+                btn_personel_edit_polres.setTextColor(resources.getColor(R.color.white))
+            }
+            "polsek"->{
+                txt_polsek_edit.visible()
+                txt_sat_polsek_edit.visible()
+                btn_personel_edit_polsek.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+                btn_personel_edit_polsek.setTextColor(resources.getColor(R.color.white))
+            }
+            else->{
+                txt_satker_polda_edit.visible()
+                txt_satker_polda_edit.text = "Masih Kosong"
+            }
+        }*/
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            AddPersonelActivity.REQ_POLDA -> {
+                if (resultCode == AddPersonelActivity.RES_POLDA) {
+                    val polda = data?.getParcelableExtra<SatKerResp>(PoldaActivity.DATA_POLDA)
+                    txt_satker_polda_edit.visible()
+                    txt_satker_polda_edit.text = "Satuan Kerja : ${polda?.kesatuan}"
+                    jenisKesatuan = "polda"
+                    idSatker = polda?.id
+                } else {
+                    txt_satker_polda_edit.gone()
+                }
+            }
+            AddPersonelActivity.REQ_POLRES -> {
+                if (resultCode == AddPersonelActivity.RES_POLRES) {
+                    val polres = data?.extras
+                    val dataPolres =
+                        polres?.getParcelable<SatKerResp>(SatPolresActivity.DATA_POLRES_SAT)
+                    txt_sat_polres_edit.visible()
+                    txt_sat_polres_edit.text = "Satuan Kerja  : ${dataPolres?.kesatuan}"
+                    jenisKesatuan = "polres"
+                    idSatker = dataPolres?.id
+                } else {
+                    txt_sat_polres_edit.gone()
+                    txt_polres_edit.gone()
+                }
+            }
+            AddPersonelActivity.REQ_POLSEK -> {
+                if (resultCode == AddPersonelActivity.RES_POLSEK) {
+                    val polsek = data?.extras
+                    val dataPolsek = polsek?.getParcelable<SatKerResp>(SatPolsekActivity.UNIT_POLSEK)
+                    txt_sat_polsek_edit.visible()
+                    txt_sat_polsek_edit.text = "Satuan Kerja : ${dataPolsek?.kesatuan}"
+                    jenisKesatuan = "polsek"
+                    idSatker = dataPolsek?.id
+                } else {
+                    txt_sat_polsek_edit.gone()
+                    txt_polsek_edit.gone()
+                }
+            }
+        }
     }
 
     private fun getSatker() {
         NetworkConfig().getService().showSatker(
-            "Bearer ${sessionManager.fetchAuthToken()}"
+            "Bearer ${sessionManager1.fetchAuthToken()}"
         ).enqueue(object : Callback<ArrayList<SatKerResp>> {
             override fun onFailure(call: Call<ArrayList<SatKerResp>>, t: Throwable) {
                 Toast.makeText(this@EditPersonelActivity, "Error Koneksi", Toast.LENGTH_SHORT)
@@ -258,6 +440,7 @@ class EditPersonelActivity : BaseActivity() {
     }
 
     private fun doUpdate(hakAkses: String?) {
+        addPersonelReq.aliran_kepercayaan = edt_aliran_kepercayaan_personel_edit.text.toString()
         addPersonelReq.tempat_perkawinan = edt_tmpt_kwn_edit.text.toString()
         addPersonelReq.tanggal_perkawinan = edt_tgl_kwn_edit.text.toString()
         addPersonelReq.tempat_lahir = edt_tmpt_ttl_edit.text.toString()
@@ -274,13 +457,16 @@ class EditPersonelActivity : BaseActivity() {
         addPersonelReq.kewarganegaraan = edt_kwg_edit.text.toString()
         addPersonelReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_edit.text.toString()
         addPersonelReq.status_perkawinan = sttsKawin
-        addPersonelReq.perkawinan_keberapa = edt_kwin_berapa_edit.text.toString()
+        addPersonelReq.perkawinan_keberapa = edt_kwin_berapa_edit.text.toString().toInt()
         addPersonelReq.jumlah_anak = Integer.parseInt(edt_jmlh_anak_edit.text.toString())
         addPersonelReq.alamat_sesuai_ktp = edt_almt_ktp_edit.text.toString()
         addPersonelReq.no_ktp = edt_no_ktp_edit.text.toString()
         addPersonelReq.hobi = edt_hobi_edit.text.toString()
         addPersonelReq.kebiasaan = edt_kebiasaan_edit.text.toString()
         addPersonelReq.bahasa = edt_bahasa_edit.text.toString()
+        addPersonelReq.jenis_kesatuan = jenisKesatuan
+        addPersonelReq.id_satuan_kerja = idSatker
+        Log.e("editPesonel", "$addPersonelReq")
 
         btn_save_personel_edit.showProgress {
             progressColor = Color.WHITE
@@ -294,20 +480,23 @@ class EditPersonelActivity : BaseActivity() {
         //validasi Hak Akses & API
         if (hakAkses != "operator") {
             NetworkConfig().getService().updatePersonel(
-                "Bearer ${sessionManager.fetchAuthToken()}",
+                "Bearer ${sessionManager1.fetchAuthToken()}",
                 idPersonel,
                 addPersonelReq
-            ).enqueue(object : Callback<BaseResp> {
-                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+            ).enqueue(object : Callback<Base1Resp<PersonelModelMax1>> {
+                override fun onFailure(call: Call<Base1Resp<PersonelModelMax1>>, t: Throwable) {
                     Toast.makeText(this@EditPersonelActivity, "Gagal Update", Toast.LENGTH_SHORT)
                         .show()
                     btn_save_personel_edit.hideDrawable(R.string.save)
 
                 }
 
-                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                override fun onResponse(
+                    call: Call<Base1Resp<PersonelModelMax1>>,
+                    response: Response<Base1Resp<PersonelModelMax1>>
+                ) {
                     if (response.isSuccessful) {
-                        if (response.body()?.message == "Data identitas updated succesfully") {
+                        if (response.body()?.message == "Data identitas personel updated succesfully") {
 //                        Toast.makeText(this@EditPersonelActivity, R.string.data_saved, Toast.LENGTH_SHORT).show()
                             btn_save_personel_edit.showDrawable(animatedDrawable) {
                                 buttonTextRes = R.string.data_updated
@@ -336,16 +525,11 @@ class EditPersonelActivity : BaseActivity() {
     }
 
     //Data Spinner JK, STTS_KAWIN, AGAMA_SKRG, AGAMA_SBLM
-    private fun initSpinner(
-        sp_jk: AutoCompleteTextView,
-        sp_stts_kawin: AutoCompleteTextView,
-        sp_agama_skrg: AutoCompleteTextView,
-        sp_agama_sblm: AutoCompleteTextView
-    ) {
+    private fun initSpinner() {
         val jkItems = listOf("Laki-Laki", "Perempuan")
         val adapterJk = ArrayAdapter(this, R.layout.item_spinner, jkItems)
-        sp_jk.setAdapter(adapterJk)
-        sp_jk.setOnItemClickListener { parent, view, position, id ->
+        spinner_jk_edit.setAdapter(adapterJk)
+        spinner_jk_edit.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 addPersonelReq.jenis_kelamin = "laki_laki"
                 jk = "laki_laki"
@@ -359,8 +543,8 @@ class EditPersonelActivity : BaseActivity() {
 
         val sttsKawinItem = listOf("Ya", "Tidak")
         val adapterSttusKawin = ArrayAdapter(this, R.layout.item_spinner, sttsKawinItem)
-        sp_stts_kawin.setAdapter(adapterSttusKawin)
-        sp_stts_kawin.setOnItemClickListener { parent, view, position, id ->
+        spinner_stts_kwn_edit.setAdapter(adapterSttusKawin)
+        spinner_stts_kwn_edit.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {  // YA
                 sttsKawin = 1
                 txt_layout_kawin_berapa_edit.visibility = View.VISIBLE
@@ -377,8 +561,8 @@ class EditPersonelActivity : BaseActivity() {
         val agamaItem =
             listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu", "Tidak Ada")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
-        sp_agama_skrg.setAdapter(adapterAgama)
-        sp_agama_skrg.setOnItemClickListener { parent, view, position, id ->
+        sp_agm_now_edit.setAdapter(adapterAgama)
+        sp_agm_now_edit.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 agmNow = "islam"
                 addPersonelReq.agama_sekarang = "islam"
@@ -402,8 +586,8 @@ class EditPersonelActivity : BaseActivity() {
                 addPersonelReq.agama_sekarang = ""
             }
         }
-        sp_agama_sblm.setAdapter(adapterAgama)
-        sp_agama_sblm.setOnItemClickListener { parent, view, position, id ->
+        sp_agm_before_edit.setAdapter(adapterAgama)
+        sp_agm_before_edit.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 agmBefore = "islam"
                 addPersonelReq.agama_sebelumnya = "islam"

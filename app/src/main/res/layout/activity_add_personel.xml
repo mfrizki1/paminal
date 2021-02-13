@@ -211,9 +211,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="@string/kesatuan">
+                android:hint="@string/kesatuan"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_kesatuan"
@@ -223,23 +223,112 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="@string/kesatuan">
+                android:orientation="horizontal">
 
-                <AutoCompleteTextView
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_personel_add_polda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/polda"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_personel_add_polres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/polres"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_personel_add_polsek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/polsek"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleText"
+                android:visibility="gone"
+                android:id="@+id/txt_satker_polda"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleText"
+                android:visibility="gone"
+                android:id="@+id/txt_polres_add"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleText"
+                android:visibility="gone"
+                android:id="@+id/txt_sat_polres_add"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleText"
+                android:visibility="gone"
+                android:id="@+id/txt_polsek_add"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleText"
+                android:visibility="gone"
+                android:id="@+id/txt_sat_polsek_add"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_satker_personel_add"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/spinner_satker_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textCapCharacters" />
+                    android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_unit_sat_personel_add"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Satuan Kerja"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/spinner_unit_sat_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -248,7 +337,8 @@
                 android:layout_height="100dp"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Alamat Kantor">
+                android:hint="Alamat Kantor"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_almt_kntr"
@@ -265,7 +355,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="No Telepon Kantor">
+                android:hint="No Telepon Kantor"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_no_telp_kntr"
@@ -281,7 +372,8 @@
                 android:layout_height="100dp"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Alamat Rumah">
+                android:hint="Alamat Rumah"
+                android:visibility="visible">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_almt_rmh"
@@ -447,6 +539,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_kwin_berapa"
                     android:layout_width="match_parent"
+                    android:text="0"
                     android:layout_height="match_parent"
                     android:inputType="number" />
 
@@ -465,6 +558,7 @@
                     android:id="@+id/edt_jmlh_anak"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:text="0"
                     android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -558,10 +652,10 @@
                 android:id="@+id/btn_next_personel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:text="@string/next" />
+                android:text="@string/next"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

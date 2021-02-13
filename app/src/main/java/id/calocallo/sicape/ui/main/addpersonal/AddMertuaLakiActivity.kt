@@ -7,16 +7,15 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.request.MertuaLakiReq
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.network.request.KeluargaReq
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_mertua_laki.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddMertuaLakiActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
-    private var mertuaLakiReq =
-        MertuaLakiReq()
+    private lateinit var sessionManager1: SessionManager1
+    private var keluargaReq = KeluargaReq()
     var stts_hidup = 0
     var stts_kerja = 0
     var agama_skrg = ""
@@ -24,15 +23,11 @@ class AddMertuaLakiActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_mertua_laki)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Mertua Laki"
-        initSpinner(
-            spinner_pekerjaan_mertua_laki,
-            spinner_stts_hidup_mertua_laki,
-            sp_agama_mertua_laki
-        )
+        initSpinner()
 
 
         val nama_lengkap = edt_nama_lngkp_mertua_laki.text.toString()
@@ -71,51 +66,71 @@ class AddMertuaLakiActivity : BaseActivity() {
         val penyebab_hidup = edt_penyebab_mertua_laki.text.toString()
 
         btn_next_mertua_laki.setOnClickListener {
-            mertuaLakiReq.nama = edt_nama_lngkp_mertua_laki.text.toString()
-            mertuaLakiReq.nama_alias = edt_alias_mertua_laki.text.toString()
-            mertuaLakiReq.tempat_lahir = edt_tmpt_ttl_mertua_laki.text.toString()
-            mertuaLakiReq.tanggal_lahir = edt_tgl_ttl_mertua_laki.text.toString()
-            mertuaLakiReq.agama = agama_skrg
-            mertuaLakiReq.aliran_kepercayaan_dianut = edt_aliran_dianut_mertua_laki.text.toString()
-            mertuaLakiReq.ras = edt_suku_mertua_laki.text.toString()
-            mertuaLakiReq.kewarganegaran = edt_kwg_mertua_laki.text.toString()
-            mertuaLakiReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_mertua_laki.text.toString()
-            mertuaLakiReq.alamat_rumah = edt_almt_skrg_mertua_laki.text.toString()
-            mertuaLakiReq.no_telp_rumah = edt_no_telp_mertua_laki.text.toString()
-            mertuaLakiReq.alamat_rumah_sebelumnya = edt_almt_rmh_sblm_mertua_laki.text.toString()
+            keluargaReq.nama = edt_nama_lngkp_mertua_laki.text.toString()
+            if (edt_nama_lngkp_mertua_laki.text?.length!! > 1) {
+                keluargaReq.status_hubungan = "mertua_laki_laki"
+            }
+            keluargaReq.nama_alias = edt_alias_mertua_laki.text.toString()
+            keluargaReq.tempat_lahir = edt_tmpt_ttl_mertua_laki.text.toString()
+            keluargaReq.tanggal_lahir = edt_tgl_ttl_mertua_laki.text.toString()
+            keluargaReq.agama = agama_skrg
+            keluargaReq.aliran_kepercayaan_dianut = edt_aliran_dianut_mertua_laki.text.toString()
+            keluargaReq.ras = edt_suku_mertua_laki.text.toString()
+            keluargaReq.kewarganegaraan = edt_kwg_mertua_laki.text.toString()
+            keluargaReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg_mertua_laki.text.toString()
+            keluargaReq.alamat_rumah = edt_almt_skrg_mertua_laki.text.toString()
+            keluargaReq.no_telp_rumah = edt_no_telp_mertua_laki.text.toString()
+            keluargaReq.alamat_rumah_sebelumnya = edt_almt_rmh_sblm_mertua_laki.text.toString()
 
-            mertuaLakiReq.status_kerja = stts_kerja
-            mertuaLakiReq.pekerjaan_terakhir = edt_pekerjaan_mertua_laki.text.toString()
-            mertuaLakiReq.alasan_pensiun = edt_alsn_berhenti_mertua_laki.text.toString()
-            mertuaLakiReq.tahun_pensiun = edt_thn_berhenti_mertua_laki.text.toString()
+            keluargaReq.status_kerja = stts_kerja
+            keluargaReq.pekerjaan_terakhir = edt_pekerjaan_mertua_laki.text.toString()
+            keluargaReq.alasan_pensiun = edt_alsn_berhenti_mertua_laki.text.toString()
+            keluargaReq.tahun_pensiun = edt_thn_berhenti_mertua_laki.text.toString()
 
-            mertuaLakiReq.nama_kantor = edt_nama_almt_kntr_mertua_laki.text.toString()
-            mertuaLakiReq.alamat_kantor = edt_almt_kntr_mertua_laki.text.toString()
-            mertuaLakiReq.no_telp_kantor = edt_no_telp_kntr_mertua_laki.text.toString()
-            mertuaLakiReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_mertua_laki.text.toString()
-            mertuaLakiReq.pendidikan_terakhir = edt_pend_trkhr_mertua_laki.text.toString()
+            keluargaReq.nama_kantor = edt_nama_almt_kntr_mertua_laki.text.toString()
+            keluargaReq.alamat_kantor = edt_almt_kntr_mertua_laki.text.toString()
+            keluargaReq.no_telp_kantor = edt_no_telp_kntr_mertua_laki.text.toString()
+            keluargaReq.pekerjaan_sebelumnya = edt_pekerjaan_sblm_mertua_laki.text.toString()
+            keluargaReq.pendidikan_terakhir = edt_pend_trkhr_mertua_laki.text.toString()
 
-            mertuaLakiReq.status_kehidupan = stts_hidup
-            mertuaLakiReq.tahun_kematian = edt_tahun_kematian_mertua_laki.text.toString()
-            mertuaLakiReq.lokasi_kematian = edt_dimana_mertua_laki.text.toString()
-            mertuaLakiReq.sebab_kematian = edt_penyebab_mertua_laki.text.toString()
+            keluargaReq.kedudukan_organisasi_saat_ini =
+                edt_kddkn_org_prnh_mertua_laki.text.toString()
+            keluargaReq.tahun_bergabung_organisasi_saat_ini =
+                edt_thn_org_diikuti_mertua_laki.text.toString()
+            keluargaReq.alasan_bergabung_organisasi_saat_ini =
+                edt_alasan_org_diikuti_mertua_laki.text.toString()
+            keluargaReq.alamat_organisasi_saat_ini =
+                edt_almt_org_diikuti_mertua_laki.text.toString()
+            keluargaReq.kedudukan_organisasi_sebelumnya =
+                edt_kddkn_org_prnh_mertua_laki.text.toString()
+            keluargaReq.tahun_bergabung_organisasi_sebelumnya =
+                edt_thn_org_prnh_mertua_laki.text.toString()
+            keluargaReq.alasan_bergabung_organisasi_sebelumnya =
+                edt_alasan_org_prnh_mertua_laki.text.toString()
+            keluargaReq.alamat_organisasi_sebelumnya = edt_almt_org_prnh_mertua_laki.text.toString()
 
-            sessionManager.setMertuaLaki(mertuaLakiReq)
-            Log.e("mertuaLaki", "${sessionManager.getMertuaLaki()}")
+
+            keluargaReq.status_kehidupan = stts_hidup
+            keluargaReq.tahun_kematian = edt_tahun_kematian_mertua_laki.text.toString()
+            keluargaReq.lokasi_kematian = edt_dimana_mertua_laki.text.toString()
+            keluargaReq.sebab_kematian = edt_penyebab_mertua_laki.text.toString()
+
+            if (keluargaReq.nama != null) {
+                sessionManager1.setMertuaLaki(keluargaReq)
+            }else{
+                sessionManager1.clearMertuaLaki()
+            }
+            Log.e("mertuaLaki", "${sessionManager1.getMertuaLaki()}")
             startActivity(Intent(this, AddMertuaPerempuanActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
-    private fun initSpinner(
-        spinnerPekerjaanMertuaLaki: AutoCompleteTextView,
-        spinnerSttsHidupMertuaLaki: AutoCompleteTextView,
-        spAgamaMertuaLaki: AutoCompleteTextView
-    ) {
+    private fun initSpinner() {
         val item = listOf("Masih", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
-        spinnerPekerjaanMertuaLaki.setAdapter(adapter)
-        spinnerPekerjaanMertuaLaki.setOnItemClickListener { parent, view, position, id ->
+        spinner_pekerjaan_mertua_laki.setAdapter(adapter)
+        spinner_pekerjaan_mertua_laki.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 txt_layout_nama_kantor_mertua_laki.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_mertua_laki.visibility = View.VISIBLE
@@ -123,7 +138,8 @@ class AddMertuaLakiActivity : BaseActivity() {
                 txt_layout_thn_berhenti_mertua_laki.visibility = View.GONE
                 txt_layout_alsn_berhenti_mertua_laki.visibility = View.GONE
                 stts_kerja = 1
-
+                edt_thn_berhenti_mertua_laki.text = null
+                edt_alsn_berhenti_mertua_laki.text = null
             } else {
                 txt_layout_nama_kantor_mertua_laki.visibility = View.GONE
                 txt_layout_alamat_kantor_mertua_laki.visibility = View.GONE
@@ -131,18 +147,23 @@ class AddMertuaLakiActivity : BaseActivity() {
                 txt_layout_thn_berhenti_mertua_laki.visibility = View.VISIBLE
                 txt_layout_alsn_berhenti_mertua_laki.visibility = View.VISIBLE
                 stts_kerja = 0
-
+                edt_nama_almt_kntr_mertua_laki.text = null
+                edt_almt_kntr_mertua_laki.text = null
+                edt_no_telp_kntr_mertua_laki.text = null
             }
         }
         val itemHidup = listOf("Masih", "Tidak")
         val adapterHidup = ArrayAdapter(this, R.layout.item_spinner, itemHidup)
-        spinnerSttsHidupMertuaLaki.setAdapter(adapterHidup)
-        spinnerSttsHidupMertuaLaki.setOnItemClickListener { parent, view, position, id ->
+        spinner_stts_hidup_mertua_laki.setAdapter(adapterHidup)
+        spinner_stts_hidup_mertua_laki.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 txt_layout_penyebab_mertua_laki.visibility = View.GONE
                 txt_layout_dimana_mertua_laki.visibility = View.GONE
                 txt_layout_bagaimana_stts_mertua_laki.visibility = View.GONE
                 stts_hidup = 1
+                edt_penyebab_mertua_laki.text = null
+                edt_tahun_kematian_mertua_laki.text = null
+                edt_dimana_mertua_laki.text = null
             } else {
                 txt_layout_penyebab_mertua_laki.visibility = View.VISIBLE
                 txt_layout_dimana_mertua_laki.visibility = View.VISIBLE
@@ -153,8 +174,8 @@ class AddMertuaLakiActivity : BaseActivity() {
 
         val agama = listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Konghuchu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agama)
-        spAgamaMertuaLaki.setAdapter(adapterAgama)
-        spAgamaMertuaLaki.setOnItemClickListener { parent, view, position, id ->
+        sp_agama_mertua_laki.setAdapter(adapterAgama)
+        sp_agama_mertua_laki.setOnItemClickListener { parent, view, position, id ->
             if (position == 0) {
                 agama_skrg = "islam"
             } else if (position == 1) {
@@ -169,5 +190,86 @@ class AddMertuaLakiActivity : BaseActivity() {
                 agama_skrg = "konghuchu"
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        test(sessionManager1.getMertuaLaki())
+        initSpinner()
+    }
+
+    private fun test(mertua1: KeluargaReq) {
+        edt_nama_lngkp_mertua_laki.setText(mertua1.nama)
+        edt_alias_mertua_laki.setText(mertua1.nama_alias)
+        edt_tmpt_ttl_mertua_laki.setText(mertua1.tempat_lahir)
+        edt_tgl_ttl_mertua_laki.setText(mertua1.tanggal_lahir)
+        sp_agama_mertua_laki.setText(mertua1.agama)
+        edt_aliran_dianut_mertua_laki.setText(mertua1.aliran_kepercayaan_dianut)
+        edt_suku_mertua_laki.setText(mertua1.ras)
+        edt_kwg_mertua_laki.setText(mertua1.kewarganegaraan)
+        edt_how_to_kwg_mertua_laki.setText(mertua1.cara_peroleh_kewarganegaraan)
+        edt_almt_skrg_mertua_laki.setText(mertua1.alamat_rumah)
+        edt_no_telp_mertua_laki.setText(mertua1.no_telp_rumah)
+        edt_almt_rmh_sblm_mertua_laki.setText(mertua1.alamat_rumah_sebelumnya)
+        edt_pekerjaan_mertua_laki.setText(mertua1.pekerjaan_terakhir)
+        edt_almt_kntr_mertua_laki.setText(mertua1.alamat_kantor)
+        edt_no_telp_kntr_mertua_laki.setText(mertua1.no_telp_kantor)
+        edt_pekerjaan_sblm_mertua_laki.setText(mertua1.pekerjaan_sebelumnya)
+        edt_pend_trkhr_mertua_laki.setText(mertua1.pendidikan_terakhir)
+        edt_kddkn_org_diikuti_mertua_laki.setText(mertua1.kedudukan_organisasi_saat_ini)
+        edt_thn_org_diikuti_mertua_laki.setText(mertua1.tahun_bergabung_organisasi_saat_ini)
+        edt_alasan_org_diikuti_mertua_laki.setText(mertua1.alasan_bergabung_organisasi_saat_ini)
+        edt_almt_org_diikuti_mertua_laki.setText(mertua1.alamat_organisasi_saat_ini)
+        edt_kddkn_org_prnh_mertua_laki.setText(mertua1.kedudukan_organisasi_sebelumnya)
+        edt_thn_org_prnh_mertua_laki.setText(mertua1.tahun_bergabung_organisasi_sebelumnya)
+        edt_alasan_org_prnh_mertua_laki.setText(mertua1.alasan_bergabung_organisasi_sebelumnya)
+        edt_almt_org_prnh_mertua_laki.setText(mertua1.alamat_organisasi_sebelumnya)
+        edt_tahun_kematian_mertua_laki.setText(mertua1.tahun_kematian)
+        edt_dimana_mertua_laki.setText(mertua1.lokasi_kematian)
+        edt_penyebab_mertua_laki.setText(mertua1.sebab_kematian)
+        edt_nama_almt_kntr_mertua_laki.setText(mertua1.nama_kantor)
+
+        edt_kddkn_org_prnh_mertua_laki.setText(mertua1.kedudukan_organisasi_saat_ini)
+        edt_thn_org_diikuti_mertua_laki.setText(mertua1.tahun_bergabung_organisasi_saat_ini)
+        edt_alasan_org_diikuti_mertua_laki.setText(mertua1.alasan_bergabung_organisasi_saat_ini)
+        edt_almt_org_diikuti_mertua_laki.setText(mertua1.alamat_organisasi_saat_ini)
+        edt_kddkn_org_prnh_mertua_laki.setText(mertua1.kedudukan_organisasi_sebelumnya)
+        edt_thn_org_prnh_mertua_laki.setText(mertua1.tahun_bergabung_organisasi_sebelumnya)
+        edt_alasan_org_prnh_mertua_laki.setText(mertua1.alasan_bergabung_organisasi_sebelumnya)
+        edt_almt_org_prnh_mertua_laki.setText(mertua1.alamat_rumah_sebelumnya)
+
+        agama_skrg = mertua1.agama.toString()
+        sp_agama_mertua_laki.setText(mertua1.agama) /**/
+
+        stts_kerja = mertua1.status_kerja!!
+        stts_hidup = mertua1.status_kehidupan!!
+        if (mertua1.status_kerja == 1) {
+            txt_layout_nama_kantor_mertua_laki.visibility = View.VISIBLE
+            txt_layout_alamat_kantor_mertua_laki.visibility = View.VISIBLE
+            txt_layout_no_telp_kantor_mertua_laki.visibility = View.VISIBLE
+            txt_layout_alsn_berhenti_mertua_laki.visibility = View.GONE
+            txt_layout_thn_berhenti_mertua_laki.visibility = View.GONE
+            spinner_pekerjaan_mertua_laki.setText("Masih")
+        } else {
+            txt_layout_nama_kantor_mertua_laki.visibility = View.GONE
+            txt_layout_alamat_kantor_mertua_laki.visibility = View.GONE
+            txt_layout_no_telp_kantor_mertua_laki.visibility = View.GONE
+            txt_layout_alsn_berhenti_mertua_laki.visibility = View.VISIBLE
+            txt_layout_thn_berhenti_mertua_laki.visibility = View.VISIBLE
+            spinner_pekerjaan_mertua_laki.setText("Tidak")
+        }
+        if (mertua1.status_kehidupan == 1) {
+            txt_layout_penyebab_mertua_laki.visibility = View.GONE
+            txt_layout_bagaimana_stts_mertua_laki.visibility = View.GONE
+            txt_layout_dimana_mertua_laki.visibility = View.GONE
+            spinner_stts_hidup_mertua_laki.setText("Masih")
+        } else {
+            txt_layout_penyebab_mertua_laki.visibility = View.VISIBLE
+            txt_layout_bagaimana_stts_mertua_laki.visibility = View.VISIBLE
+            txt_layout_dimana_mertua_laki.visibility = View.VISIBLE
+            spinner_stts_hidup_mertua_laki.setText("Tidak")
+        }
+        edt_thn_berhenti_mertua_laki.setText(mertua1.tahun_pensiun)
+        edt_alsn_berhenti_mertua_laki.setText(mertua1.alasan_pensiun)
     }
 }

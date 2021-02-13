@@ -15,14 +15,14 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.OrganisasiReq
 import id.calocallo.sicape.model.ParentListOrganisasi
 import id.calocallo.sicape.ui.main.addpersonal.misc.perjuangan.PerjuanganCitaFragment
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.fragment_organisasi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 
 class OrganisasiFragment : Fragment() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<OrganisasiReq>
     private lateinit var parentList: ParentListOrganisasi
     private lateinit var adapter: OrganisasiAdapter
@@ -37,7 +37,7 @@ class OrganisasiFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sessionManager = activity?.let { SessionManager(it) }!!
+        sessionManager1 = activity?.let { SessionManager1(it) }!!
         (activity as BaseActivity).setupActionBarWithBackButton(toolbar)
         (activity as BaseActivity).supportActionBar?.title = "Organisasi"
         list = ArrayList()
@@ -50,9 +50,9 @@ class OrganisasiFragment : Fragment() {
                 list.clear()
             }
 
-            sessionManager.setOrganisasi(list)
-            val org_temp = sessionManager.getOrganisasi()
-            Log.e("orgSize", "orgSize ${org_temp.size}")
+            sessionManager1.setOrganisasi(list)
+            val org_temp = sessionManager1.getOrganisasi()
+            Log.e("orgSize", "$org_temp")
             //initAPI(param: list)
             //berhasil -> GO
             //gagal -> toast
@@ -72,7 +72,7 @@ class OrganisasiFragment : Fragment() {
 
     private fun initRV(rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        if (sessionManager.getOrganisasi().size == 0) {
+        if (sessionManager1.getOrganisasi().size == 0) {
             list.add(
                 OrganisasiReq(
                     "",
@@ -85,7 +85,7 @@ class OrganisasiFragment : Fragment() {
                 )
             )
         }
-        Log.e("size Organisasi", sessionManager.getOrganisasi().size.toString())
+        Log.e("size Organisasi", sessionManager1.getOrganisasi().size.toString())
         adapter = activity?.let {
             OrganisasiAdapter(it, list, object : OrganisasiAdapter.OnCLickOrg {
                 override fun onDelete(position: Int) {
@@ -117,7 +117,7 @@ class OrganisasiFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val organisasi = sessionManager.getOrganisasi()
+        val organisasi = sessionManager1.getOrganisasi()
         for (i in 0 until organisasi.size) {
             list.add(
                 i, OrganisasiReq(

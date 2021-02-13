@@ -9,10 +9,11 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.MedSosReq
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_med_sos.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -21,13 +22,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddSingleMedSosActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var medSosReq = MedSosReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_med_sos)
-        sessionManager = SessionManager(this)
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        sessionManager1 = SessionManager1(this)
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
@@ -53,8 +54,8 @@ class AddSingleMedSosActivity : BaseActivity() {
         medSosReq.keterangan = edt_ket_single_medsos.text.toString()
 
         NetworkConfig().getService().addMedSosSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString(),
             medSosReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

@@ -9,11 +9,12 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.hideDrawable
 import com.github.razir.progressbutton.showDrawable
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.request.SahabatReq
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_sahabat.*
@@ -23,19 +24,19 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AddSingleSahabatActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var sahabatReq = SahabatReq()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_sahabat)
 
-        sessionManager = SessionManager(this)
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        sessionManager1 = SessionManager1(this)
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_single_sahabat.gone()
         }
@@ -61,8 +62,8 @@ class AddSingleSahabatActivity : BaseActivity() {
             sahabatReq.alasan = edt_alasan_single_sahabat.text.toString()
 
             NetworkConfig().getService().addSahabatSingle(
-                "Bearer ${sessionManager.fetchAuthToken()}",
-                sessionManager.fetchID().toString(),
+                "Bearer ${sessionManager1.fetchAuthToken()}",
+                sessionManager1.fetchID().toString(),
                 sahabatReq
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {

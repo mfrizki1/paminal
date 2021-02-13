@@ -9,11 +9,11 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.OrganisasiReq
-import id.calocallo.sicape.network.response.OrganisasiResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.network.response.*
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,9 +24,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditOrganisasiActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
-    private var organisasiReq =
-        OrganisasiReq()
+    private lateinit var sessionManager1: SessionManager1
+    private var organisasiReq = OrganisasiReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_organisasi)
@@ -34,24 +33,18 @@ class EditOrganisasiActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         val bundle = intent.extras
         val org = bundle?.getParcelable<OrganisasiResp>("ORGANISASI")
-        val detail = bundle?.getParcelable<PersonelModel>("PERSONEL")
+        val detail = bundle?.getParcelable<AllPersonelModel1>("PERSONEL")
         supportActionBar?.title = detail?.nama
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_organisasi_edit.gone()
             btn_delete_organisasi_edit.gone()
         }
 
+        getDetail(org)
 
-        edt_organisasi_edit.setText(org?.organisasi)
-        edt_thn_awal_organisasi_edit.setText(org?.tahun_awal)
-        edt_thn_akhir_organisasi_edit.setText(org?.tahun_akhir)
-        edt_kedudukan_organisasi_edit.setText(org?.jabatan)
-        edt_thn_ikut_organisasi_edit.setText(org?.tahun_bergabung)
-        edt_alamat_organisasi_edit.setText(org?.alamat)
-        edt_ket_organisasi_edit.setText(org?.keterangan)
 
         btn_save_organisasi_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_organisasi_edit)
@@ -75,6 +68,37 @@ class EditOrganisasiActivity : BaseActivity() {
 
     }
 
+    private fun getDetail(org: OrganisasiResp?) {
+        NetworkConfig().getService().getDetailOrga(
+            "Bearer ${sessionManager1.fetchAuthToken()}", org?.id.toString()
+        ).enqueue(object : Callback<DetailOrganisasiResp> {
+            override fun onFailure(call: Call<DetailOrganisasiResp>, t: Throwable) {
+                Toast.makeText(this@EditOrganisasiActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun onResponse(
+                call: Call<DetailOrganisasiResp>,
+                response: Response<DetailOrganisasiResp>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    edt_organisasi_edit.setText(data?.organisasi)
+                    edt_thn_awal_organisasi_edit.setText(data?.tahun_awal)
+                    edt_thn_akhir_organisasi_edit.setText(data?.tahun_akhir)
+                    edt_kedudukan_organisasi_edit.setText(data?.jabatan)
+                    edt_thn_ikut_organisasi_edit.setText(data?.tahun_bergabung)
+                    edt_alamat_organisasi_edit.setText(data?.alamat)
+                    edt_ket_organisasi_edit.setText(data?.keterangan)
+                } else {
+                    Toast.makeText(this@EditOrganisasiActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        })
+
+    }
+
     private fun doUpdateOrg(org: OrganisasiResp) {
         val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
         //Defined bounds are required for your drawable
@@ -90,21 +114,24 @@ class EditOrganisasiActivity : BaseActivity() {
         organisasiReq.keterangan = edt_ket_organisasi_edit.text.toString()
 
         btn_save_organisasi_edit.showProgress {
-                progressColor = Color.WHITE
-            }
+            progressColor = Color.WHITE
+        }
 
         NetworkConfig().getService().updateOrganisasiSingle(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             org.id.toString(),
             organisasiReq
-        ).enqueue(object : Callback<BaseResp> {
-            override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+        ).enqueue(object : Callback<Base1Resp<AddOrganisasiResp>> {
+            override fun onFailure(call: Call<Base1Resp<AddOrganisasiResp>>, t: Throwable) {
                 btn_save_organisasi_edit.hideDrawable(R.string.save)
                 Toast.makeText(this@EditOrganisasiActivity, "Error Koneksi", Toast.LENGTH_SHORT)
                     .show()
             }
 
-            override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+            override fun onResponse(
+                call: Call<Base1Resp<AddOrganisasiResp>>,
+                response: Response<Base1Resp<AddOrganisasiResp>>
+            ) {
                 if (response.isSuccessful) {
                     btn_save_organisasi_edit.showDrawable(animatedDrawable) {
                         buttonTextRes = R.string.data_updated
@@ -117,7 +144,7 @@ class EditOrganisasiActivity : BaseActivity() {
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_organisasi_edit.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_organisasi_edit.hideDrawable(R.string.not_update)
 
                 }
@@ -127,7 +154,7 @@ class EditOrganisasiActivity : BaseActivity() {
 
     private fun doDeleteOrg(org: OrganisasiResp) {
         NetworkConfig().getService().deleteOrganisasi(
-            "Bearer ${sessionManager.fetchAuthToken()}",
+            "Bearer ${sessionManager1.fetchAuthToken()}",
             org.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

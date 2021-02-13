@@ -1,16 +1,14 @@
 package id.calocallo.sicape.ui.main.skhd.tinddisiplin
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.Adapter
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.response.TindDisiplinResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_skhd_tind_disiplin.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
@@ -19,7 +17,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class SkhdTindDisiplinActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var listTindDisiplin = arrayListOf<TindDisiplinResp>()
     private var personelTerlapor = PersonelLapor()
     private var adapterTindDisiplin = ReusableAdapter<TindDisiplinResp>(this)
@@ -29,7 +27,7 @@ class SkhdTindDisiplinActivity : BaseActivity() {
         setContentView(R.layout.activity_skhd_tind_disiplin)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data Tindakan Disiplin"
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 
         getListTindDisiplin()
         btn_add_single_tind_disiplin.setOnClickListener {

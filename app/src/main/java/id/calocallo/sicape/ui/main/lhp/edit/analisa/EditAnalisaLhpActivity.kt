@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.lhp.edit.analisa
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,24 +8,23 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ListAnalisa
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_analisa_lhp.*
-import kotlinx.android.synthetic.main.activity_edit_bar_bukti_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditAnalisaLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var analisaReq = ListAnalisa()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_analisa_lhp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Analisa"
-        sessionManager = SessionManager(this)
-        val hak = sessionManager.fetchHakAkses()
+        sessionManager1 = SessionManager1(this)
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_add_analisa_edit.gone()
             btn_delete_analisa_edit.gone()

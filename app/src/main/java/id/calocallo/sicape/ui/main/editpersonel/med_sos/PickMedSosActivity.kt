@@ -6,9 +6,10 @@ import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.MedSosResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,17 +25,17 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PickMedSosActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterMedsos: ReusableAdapter<MedSosResp>
     private lateinit var callbackMedsos: AdapterCallback<MedSosResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_med_sos)
-        val detailPersonel = intent.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = detailPersonel?.nama
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterMedsos = ReusableAdapter(this)
 
         callbackMedsos = object : AdapterCallback<MedSosResp> {
@@ -65,8 +66,8 @@ class PickMedSosActivity : BaseActivity() {
     private fun ApiMedsos() {
         rl_pb.visible()
         NetworkConfig().getService().showMedSos(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString()
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<MedSosResp>> {
             override fun onFailure(call: Call<ArrayList<MedSosResp>>, t: Throwable) {
                 Toast.makeText(this@PickMedSosActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()

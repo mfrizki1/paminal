@@ -2,8 +2,10 @@ package id.calocallo.sicape.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import id.calocallo.sicape.network.response.PersonelMinResp
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class PendidikanModel(
     val id: Int,
     val id_personel: Int,
@@ -17,49 +19,22 @@ data class PendidikanModel(
     val created_at: String?,
     val updated_at: String?,
     val deleted_at: String?
-) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
-    }
+) : Parcelable
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
-        parcel.writeInt(id_personel)
-        parcel.writeString(pendidikan)
-        parcel.writeString(jenis)
-        parcel.writeString(tahun_awal)
-        parcel.writeString(tahun_akhir)
-        parcel.writeString(kota)
-        parcel.writeString(yang_membiayai)
-        parcel.writeString(keterangan)
-        parcel.writeString(created_at)
-        parcel.writeString(updated_at)
-        parcel.writeString(deleted_at)
-    }
+@Parcelize
+data class DetailPendModel(
+    val id: Int,
+    val personel: PersonelMinResp?,
+    val pendidikan: String?,
+    val jenis: String?,
+    val tahun_awal: String?,
+    val tahun_akhir: String?,
+    val kota: String?,
+    val yang_membiayai: String?,
+    val keterangan: String?
+) : Parcelable
 
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<PendidikanModel> {
-        override fun createFromParcel(parcel: Parcel): PendidikanModel {
-            return PendidikanModel(parcel)
-        }
-
-        override fun newArray(size: Int): Array<PendidikanModel?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+@Parcelize
+data class AddSinglePendResp(
+    var riwayat_pendidikan: DetailPendModel?
+) : Parcelable

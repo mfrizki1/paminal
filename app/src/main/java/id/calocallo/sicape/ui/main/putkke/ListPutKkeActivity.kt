@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.putkke
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -10,7 +9,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpOnSkhd
 import id.calocallo.sicape.model.LpOnSkhd
 import id.calocallo.sicape.network.response.PutKkeResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_put_kke.*
 import kotlinx.android.synthetic.main.item_skhd.view.*
@@ -19,7 +18,7 @@ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class ListPutKkeActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var listPutKke = arrayListOf<PutKkeResp>()
     private var adapterPutKke = ReusableAdapter<PutKkeResp>(this)
     private lateinit var callbackPutKke: AdapterCallback<PutKkeResp>

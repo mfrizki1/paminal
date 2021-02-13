@@ -142,8 +142,12 @@ class OrangsAdapter(
                 val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
                 spJK.setAdapter(adapter)
                 spJK.setOnItemClickListener { parent, view, position, id ->
-                    orangsReq.jenis_kelamin =
-                        parent.getItemAtPosition(position).toString()
+                    when (position) {
+                        0 -> orangsReq.jenis_kelamin = "laki_laki"
+                        1 -> orangsReq.jenis_kelamin = "perempuan"
+                    }
+//                    orangsReq.jenis_kelamin =
+//                        parent.getItemAtPosition(position).toString()
                 }
                 btnDelete.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
                 btnDelete.setOnClickListener {
@@ -170,6 +174,23 @@ class OrangsAdapter(
 
     override fun onBindViewHolder(holder: OrangHolder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+
+        holder.etNama.setText(data.nama)
+        holder.spJK.setText(data.jenis_kelamin)
+        holder.etUmur.setText(data.umur)
+        holder.etPekerjaan.setText(data.pekerjaan)
+        holder.etKet.setText(data.keterangan)
+        holder.etAlamat.setText(data.alamat)
+        val item = listOf("Laki-Laki", "Perempuan")
+        val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
+        holder.spJK.setAdapter(adapter)
+        holder.spJK.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> data.jenis_kelamin = "laki_laki"
+                1 -> data.jenis_kelamin = "perempuan"
+            }
+        }
 
     }
 }

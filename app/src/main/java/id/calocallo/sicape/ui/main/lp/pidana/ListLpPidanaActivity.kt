@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
@@ -13,20 +12,18 @@ import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.network.response.LpPidanaResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.ui.main.lp.AddLpActivity
-import id.calocallo.sicape.ui.main.lp.LpPidanaPasalAdapter
 import id.calocallo.sicape.ui.main.lp.pidana.DetailLpPidanaActivity.Companion.DETAIL_PIDANA
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_lp_pidana.*
-import kotlinx.android.synthetic.main.item_lp_pidana.view.*
+import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class ListLpPidanaActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var personelTerLapor = PersonelLapor()
     private var personelPeLapor = PersonelLapor()
     private var satKerResp = SatKerResp()
@@ -40,12 +37,12 @@ class ListLpPidanaActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_lp_pidana)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data Laporan Polisi Pidana"
-        sessionManager.setJenisLP("pidana")
+        sessionManager1.setJenisLP("pidana")
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_add_lp_pidana.gone()
         }
@@ -61,7 +58,7 @@ class ListLpPidanaActivity : BaseActivity() {
     }
 
     private fun getList() {
-        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "", "", "", "")
+        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "")
         personelTerLapor = PersonelLapor(
             1, "faisal", "bripda", "jabatan", "1234", 1, "polda kalsel", "Jl Banjarmasin",
             "islam",
@@ -134,12 +131,14 @@ class ListLpPidanaActivity : BaseActivity() {
 
         callbackListPidana = object : AdapterCallback<LpPidanaResp> {
             override fun initComponent(itemView: View, data: LpPidanaResp, itemIndex: Int) {
+                itemView.txt_edit_pendidikan.text = data.no_lp
+                /*
                 if (data.status_pelapor == "sipil") {
-                    itemView.ll_sipil_pidana.visible()
-                    itemView.ll_personel_pelapor.gone()
+//                    itemView.ll_sipil_pidana.visible()
+//                    itemView.ll_personel_pelapor.gone()
                 } else if (data.status_pelapor == "polisi") {
-                    itemView.ll_sipil_pidana.gone()
-                    itemView.ll_personel_pelapor.visible()
+//                    itemView.ll_sipil_pidana.gone()
+//                    itemView.ll_personel_pelapor.visible()
                 }
                 itemView.txt_no_lp_pidana.text = data.no_lp
 
@@ -181,6 +180,8 @@ class ListLpPidanaActivity : BaseActivity() {
                     setRecycledViewPool(viewPool)
 
                 }
+
+                 */
             }
 
             override fun onItemClicked(itemView: View, data: LpPidanaResp, itemIndex: Int) {
@@ -193,7 +194,7 @@ class ListLpPidanaActivity : BaseActivity() {
         adapterListPidana.adapterCallback(callbackListPidana)
             .isVerticalView()
             .addData(listPidana)
-            .setLayout(R.layout.item_lp_pidana)
+            .setLayout(R.layout.layout_edit_1_text)
             .build(rv_list_pidana)
             .filterable()
     }

@@ -1,115 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.editpersonel.med_sos.EditMedSosActivity">
 
-    <include layout="@layout/layout_toolbar_white"/>
-    <include layout="@layout/view_separator"/>
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Data Media Sosial"
-        android:textSize="@dimen/text_18"
-        android:textStyle="bold"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="@dimen/space_8dp"/>
+        android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Nama Media Sosial">
+        <include layout="@layout/layout_toolbar_white" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_nama_medsos_edit"
+        <include layout="@layout/view_separator" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text|textCapSentences" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="Edit Data Media Sosial"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Nama Account">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_acc_medsos_edit"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Nama Media Sosial">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_nama_medsos_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text|textCapSentences" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Alasan">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_alasan_medsos_edit"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top|start"
-            android:inputType="textMultiLine|textCapSentences"
-            />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Nama Account">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_acc_medsos_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="@string/keterangan_optional">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_ket_medsos_edit"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top|start"
-            android:inputType="textMultiLine|textCapSentences"
-            />
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Alasan">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_alasan_medsos_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:background="@color/grey" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        style="@style/Widget.Button"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:id="@+id/btn_save_medsos_edit"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="@string/keterangan_optional">
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/delete"
-        style="@style/UnselectedButton"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:id="@+id/btn_delete_medsos_edit"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_ket_medsos_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
 
-</LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:background="@color/grey" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_medsos_edit"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="@string/save" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete_medsos_edit"
+            style="@style/UnselectedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="@string/delete" />
+    </LinearLayout>
+
+</ScrollView>

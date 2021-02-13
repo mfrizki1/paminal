@@ -226,13 +226,14 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-        <include layout="@layout/layout_separator" />
+<!--        <include layout="@layout/layout_separator" />-->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
             android:text="Pasal"
+            android:visibility="gone"
             android:textSize="@dimen/text_14"
             android:textStyle="bold" />
 
@@ -240,9 +241,10 @@
             android:id="@+id/rv_pasal_lp_pidana"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             tools:listitem="@layout/item_pasal_lp" />
 
-        <include layout="@layout/layout_separator" />
+<!--        <include layout="@layout/layout_separator" />-->
 
 
     </LinearLayout>

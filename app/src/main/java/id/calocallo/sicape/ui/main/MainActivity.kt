@@ -1,16 +1,21 @@
 package id.calocallo.sicape.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.FiturModel
-import id.calocallo.sicape.model.PersonelModel
 import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.HakAksesPersonel1
+import id.calocallo.sicape.network.response.HakAksesSipil
+import id.calocallo.sicape.network.response.SipilProfilResp
 import id.calocallo.sicape.ui.main.profil.ProfilFragment
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar_logo.*
@@ -20,14 +25,16 @@ import retrofit2.Response
 
 class MainActivity : BaseActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
-    private lateinit var sessionmanager: SessionManager
+    private lateinit var sessionmanager: SessionManager1
     lateinit var list: ArrayList<FiturModel>
+    private var isSipilLogin: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Logger.addLogAdapter(AndroidLogAdapter())
 
-        sessionmanager = SessionManager(this)
+        sessionmanager = SessionManager1(this)
 
         /*
         list = ArrayList<FiturModel>()
@@ -44,8 +51,14 @@ class MainActivity : BaseActivity(),
 
         setSupportActionBar(toolbar_logo)
         supportActionBar?.title = "Dashboard"
-
-        getPersonel()
+        isSipilLogin = intent.extras?.getBoolean("IS_SIPIL")
+        if (isSipilLogin == true) {
+            getSipil()
+        } else if(isSipilLogin == false) {
+            getPersonel()
+        }else{
+            getSuperAdmin()
+        }
         initBottom()
         if (savedInstanceState == null) {
             bottom_navigation.selectedItemId = R.id.nav_home
@@ -53,28 +66,27 @@ class MainActivity : BaseActivity(),
 
     }
 
-    private fun initBottom() {
-        bottom_navigation.setOnNavigationItemSelectedListener(this)
-    }
-
-    private fun getPersonel() {
+    private fun getSuperAdmin() {
         NetworkConfig().getService()
-            .getUser(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
-            .enqueue(object : Callback<PersonelModel> {
-                override fun onFailure(call: Call<PersonelModel>, t: Throwable) {
+            .getUserSuper(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
+            .enqueue(object : Callback<HakAksesPersonel1> {
+                override fun onFailure(call: Call<HakAksesPersonel1>, t: Throwable) {
                     Toast.makeText(this@MainActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)
                         .show()
                 }
 
                 override fun onResponse(
-                    call: Call<PersonelModel>,
-                    response: Response<PersonelModel>
+                    call: Call<HakAksesPersonel1>,
+                    response: Response<HakAksesPersonel1>
                 ) {
                     if (response.isSuccessful) {
                         val user = response.body()
+                        Logger.d("$user")
 //                        saveUser(user)
-                        sessionmanager.saveUser(user)
-
+                        sessionmanager.saveUserPersonel(user)
+                        sessionmanager.clearUserSipil()
+                        Log.e("personel", "${sessionmanager.fetchUserPersonel()}")
+                        Log.e("sipil", "${sessionmanager.fetchUserSipil()}")
                     } else {
                         Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT)
                             .show()
@@ -83,7 +95,65 @@ class MainActivity : BaseActivity(),
             })
     }
 
+    private fun getSipil() {
+        NetworkConfig().getService()
+            .getUserSipil(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
+            .enqueue(object : Callback<HakAksesSipil> {
+                override fun onFailure(call: Call<HakAksesSipil>, t: Throwable) {
+                    Toast.makeText(this@MainActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
 
+                override fun onResponse(
+                    call: Call<HakAksesSipil>,
+                    response: Response<HakAksesSipil>
+                ) {
+                    if (response.isSuccessful) {
+                        val user = response.body()
+//                        saveUser(user)
+                        sessionmanager.saveUserSipil(user)
+                        sessionmanager.clearUserPersonel()
+                        Log.e("sipil", "${sessionmanager.fetchUserSipil()}")
+                        Log.e("personel", "${sessionmanager.fetchUserPersonel()}")
+                    } else {
+                        Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
+    }
+
+    private fun initBottom() {
+        bottom_navigation.setOnNavigationItemSelectedListener(this)
+    }
+
+    private fun getPersonel() {
+        NetworkConfig().getService()
+            .getUserPersonel(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
+            .enqueue(object : Callback<HakAksesPersonel1> {
+                override fun onFailure(call: Call<HakAksesPersonel1>, t: Throwable) {
+                    Toast.makeText(this@MainActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(
+                    call: Call<HakAksesPersonel1>,
+                    response: Response<HakAksesPersonel1>
+                ) {
+                    if (response.isSuccessful) {
+                        val user = response.body()
+//                        saveUser(user)
+                        sessionmanager.saveUserPersonel(user)
+                        sessionmanager.clearUserSipil()
+                        Log.e("personel", "${sessionmanager.fetchUserPersonel()}")
+                        Log.e("sipil", "${sessionmanager.fetchUserSipil()}")
+                    } else {
+                        Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
+    }
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

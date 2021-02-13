@@ -7,16 +7,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.ListLidik
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.PersonelPenyelidikReq
 import id.calocallo.sicape.network.response.PersonelPenyelidikResp
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_edit_lidik_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditLidikLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var lidikReq = PersonelPenyelidikReq()
     private var statusLidik: String? = null
     private var idPersonelLidik: Int? = null
@@ -32,12 +30,12 @@ class EditLidikLhpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_lidik_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Personel Penyelidik"
         val lhp = intent.extras?.getParcelable<PersonelPenyelidikResp>(EDIT_LIDIK)
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_delete_lidik_edit.gone()
             btn_save_lidik_edit.gone()
@@ -57,9 +55,10 @@ class EditLidikLhpActivity : BaseActivity() {
         }
         getViewLidik(lhp)
         btn_choose_personel_lidik_edit.setOnClickListener {
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PERSONEL_LIDIK)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
@@ -83,11 +82,11 @@ class EditLidikLhpActivity : BaseActivity() {
 //            spinner_status_lidik_edit.setText("Anggota")
         }
 
-        txt_nama_lidik_edit.text = lhp?.nama
-        txt_pangkat_lidik_edit.text = lhp?.pangkat.toString().toUpperCase()
-        txt_nrp_lidik_edit.text = lhp?.nrp
-        txt_jabatan_lidik_edit.text = lhp?.jabatan
-        txt_kesatuan_lidik_edit.text = lhp?.kesatuan.toString().toUpperCase()
+        txt_nama_lidik_edit.text ="Nama : ${lhp?.nama}"
+        txt_pangkat_lidik_edit.text ="Pangkat : ${lhp?.pangkat.toString().toUpperCase()}"
+        txt_nrp_lidik_edit.text ="NRP : ${lhp?.nrp}"
+        txt_jabatan_lidik_edit.text ="Jabatan : ${lhp?.jabatan}"
+        txt_kesatuan_lidik_edit.text ="Kesatuan : ${lhp?.kesatuan.toString().toUpperCase()}"
 
 //        edt_nama_lidik_edit.setText(lhp?.nama)
 //        edt_pangkat_lidik_edit.setText(lhp?.pangkat)
@@ -133,7 +132,7 @@ class EditLidikLhpActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_PERSONEL_LIDIK) {
             idPersonelLidik = personel?.id
             txt_nama_lidik_edit.text = personel?.nama

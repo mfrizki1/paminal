@@ -18,7 +18,7 @@
         <include layout="@layout/view_separator" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/btn_rps"
+            android:id="@+id/btn_personel_polres"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
@@ -130,6 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
+            android:visibility="gone"
             android:layout_marginVertical="@dimen/space_8dp"
             app:cardBackgroundColor="#4CAF50"
             app:cardCornerRadius="@dimen/space_8dp">

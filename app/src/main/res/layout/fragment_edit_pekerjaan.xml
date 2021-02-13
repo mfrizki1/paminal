@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.editpersonel.pekerjaan.EditPekerjaanFragment">
 
     <LinearLayout
@@ -72,12 +72,12 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:suffixText="Tahun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="@string/tahun_lamanya">
+            android:hint="@string/tahun_lamanya"
+            app:suffixText="Tahun">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_lama_thn_pekerjaan_edit"
@@ -100,8 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"
-                android:inputType="textMultiLine|textCapSentences"
-                />
+                android:inputType="textMultiLine|textCapSentences" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,20 +109,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:textStyle="bold"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="@string/save" />
+            android:text="@string/save"
+            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_delete_edit_pekerjaan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            app:backgroundTint="@color/white"
-            android:textColor="@color/colorPrimary"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="@string/delete" />
+            android:text="@string/delete"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            app:backgroundTint="@color/white" />
 
         <View
             android:layout_width="match_parent"
@@ -134,4 +133,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

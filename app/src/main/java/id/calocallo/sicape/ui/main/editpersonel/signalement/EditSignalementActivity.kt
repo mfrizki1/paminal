@@ -8,11 +8,12 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.model.SignalementModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_signalement.*
@@ -22,21 +23,22 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditSignalementActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var signalementModel = SignalementModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_signalement)
-        sessionManager = SessionManager(this)
-        val personel = intent?.extras?.getParcelable<PersonelModel>("PERSONEL_DETAIL")
+        sessionManager1 = SessionManager1(this)
+        val personel = intent?.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
 
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_signalement_edit.gone()
         }
-        getSignalement()
+//        getSignalement()
+        personel?.signalement?.let { viewSignalement(it) }
         btn_save_signalement_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_signalement_edit)
         btn_save_signalement_edit.setOnClickListener {
@@ -53,7 +55,7 @@ class EditSignalementActivity : BaseActivity() {
         btn_save_signalement_edit.showProgress {
             progressColor = Color.WHITE
         }
-        signalementModel.tinggi = edt_tinggi_edit.text.toString()
+        signalementModel.tinggi = edt_tinggi_edit.text.toString().toInt()
         signalementModel.rambut = edt_rambut_edit.text.toString()
         signalementModel.muka = edt_muka_edit.text.toString()
         signalementModel.mata = edt_mata_edit.text.toString()
@@ -63,11 +65,11 @@ class EditSignalementActivity : BaseActivity() {
         signalementModel.kelemahan = edt_kelemahan_edit.text.toString()
         signalementModel.yang_mempengaruhi = edt_dapat_dipengaruhi_edit.text.toString()
         signalementModel.keluarga_dekat = edt_keluarga_dekat_edit.text.toString()
-        signalementModel.lain_lainnya = edt_lainnya_edit.text.toString()
+        signalementModel.lain_lain = edt_lainnya_edit.text.toString()
 
         NetworkConfig().getService().updateSignalement(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString(),
             signalementModel
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
@@ -98,8 +100,8 @@ class EditSignalementActivity : BaseActivity() {
 
     private fun getSignalement() {
         NetworkConfig().getService().getSignalement(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString()
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<SignalementModel> {
             override fun onFailure(call: Call<SignalementModel>, t: Throwable) {
                 Toast.makeText(
@@ -114,7 +116,7 @@ class EditSignalementActivity : BaseActivity() {
                 response: Response<SignalementModel>
             ) {
                 if (response.isSuccessful) {
-                    if (!response.body()!!.tinggi.isNullOrEmpty()) {
+                    if (!response.body()!!.tinggi.toString().isNullOrEmpty()) {
                         viewSignalement(response.body()!!)
                     }
                 } else {
@@ -126,7 +128,7 @@ class EditSignalementActivity : BaseActivity() {
     }
 
     private fun viewSignalement(body: SignalementModel) {
-        edt_tinggi_edit.setText(body.tinggi)
+        edt_tinggi_edit.setText(body.tinggi.toString())
         edt_rambut_edit.setText(body.rambut)
         edt_muka_edit.setText(body.muka)
         edt_mata_edit.setText(body.mata)
@@ -136,6 +138,6 @@ class EditSignalementActivity : BaseActivity() {
         edt_kelemahan_edit.setText(body.kelemahan)
         edt_dapat_dipengaruhi_edit.setText(body.yang_mempengaruhi)
         edt_keluarga_dekat_edit.setText(body.keluarga_dekat)
-        edt_lainnya_edit.setText(body.lain_lainnya)
+        edt_lainnya_edit.setText(body.lain_lain)
     }
 }

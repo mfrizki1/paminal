@@ -10,10 +10,7 @@ data class SatKerResp(
     var kesatuan: String?,
     var alamat_kantor: String?,
     var no_telp_kantor: String?,
-    var tingkat: String?,
-    var created_at: String?,
-    var updated_at: String?,
-    var deleted_at: String?
+    var jenis: String?
 ) : Parcelable {
-    constructor() : this(0, "", "", "", "", "", "", "")
+    constructor() : this(null, null,null,null,null)
 }

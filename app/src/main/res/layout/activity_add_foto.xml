@@ -44,8 +44,8 @@
                     layout="@layout/layout_progress_dialog"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:layout_below="@+id/txt_foto_depan" />
+                    android:layout_below="@+id/txt_foto_depan"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/img_foto_depan"
@@ -58,63 +58,6 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btn_add_foto_depan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="@dimen/space_12dp"
-                    android:layout_marginBottom="@dimen/space_12dp"
-                    android:src="@drawable/ic_add"
-                    android:tint="@color/white"
-                    app:backgroundTint="@color/colorPrimary" />
-            </RelativeLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_add_foto_kanan"
-            android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_8dp"
-            app:cardCornerRadius="12dp"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="2dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/txt_foto_kanan"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center|start"
-                    android:paddingHorizontal="@dimen/space_12dp"
-                    android:text="Foto Samping Kanan"
-                    android:textSize="@dimen/text_18"
-                    android:textStyle="bold" />
-
-                <include
-                    android:id="@+id/pb_foto_kanan"
-                    layout="@layout/layout_progress_dialog"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:layout_below="@+id/txt_foto_kanan" />
-
-                <ImageView
-                    android:id="@+id/img_foto_kanan"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/txt_foto_kanan"
-                    android:layout_gravity="center"
-                    android:background="@color/grey_50"
-                    android:onClick="showImage"
-                    android:scaleType="centerCrop" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_add_foto_kanan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -157,8 +100,8 @@
                     layout="@layout/layout_progress_dialog"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:layout_below="@+id/txt_foto_kiri" />
+                    android:layout_below="@+id/txt_foto_kiri"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/img_foto_kiri"
@@ -183,6 +126,63 @@
                     app:backgroundTint="@color/colorPrimary" />
             </RelativeLayout>
 
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_add_foto_kanan"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            app:cardCornerRadius="12dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_foto_kanan"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center|start"
+                    android:paddingHorizontal="@dimen/space_12dp"
+                    android:text="Foto Samping Kanan"
+                    android:textSize="@dimen/text_18"
+                    android:textStyle="bold" />
+
+                <include
+                    android:id="@+id/pb_foto_kanan"
+                    layout="@layout/layout_progress_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_foto_kanan"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/img_foto_kanan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/txt_foto_kanan"
+                    android:layout_gravity="center"
+                    android:background="@color/grey_50"
+                    android:onClick="showImage"
+                    android:scaleType="centerCrop" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_add_foto_kanan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/space_12dp"
+                    android:layout_marginBottom="@dimen/space_12dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/white"
+                    app:backgroundTint="@color/colorPrimary" />
+            </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>
 

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LpDisiplinModel
 import id.calocallo.sicape.network.response.LpResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lp.*
@@ -30,7 +30,7 @@ class LpActivity : BaseActivity() {
 
     //    private lateinit var adapterLp: ReusableAdapter<LpResp>
     private lateinit var callbackLp: AdapterCallback<LpResp>
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
 
     companion object {
         const val JENIS = "JENIS"
@@ -43,9 +43,9 @@ class LpActivity : BaseActivity() {
          setupActionBarWithBackButton(toolbar)
         val jenis = intent.extras?.getString(JENIS)
         supportActionBar?.title = "Laporan Polisi $jenis"
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
 //        adapterLp = ReusableAdapter(this)
-        val hak = sessionManager.fetchHakAkses()
+        val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_add_lp.gone()
         }
@@ -97,23 +97,23 @@ class LpActivity : BaseActivity() {
         listLp.add(
             LpResp(
                 1, "pidana", "LP/PIDANA/2020/BIDPROPAM", 4,
-                4, 1, sessionManager.getAlatBukiLP(), sessionManager.getListPasalLP(),
-                sessionManager.getListSaksi(), "KET", "", "", ""
+                4, 1, sessionManager1.getAlatBukiLP(), sessionManager1.getListPasalLP(),
+                sessionManager1.getListSaksi(), "KET", "", "", ""
             )
         )
         listLp.add(
             LpResp(
                 2, "pidana", "LP/PIDANA2/2020/BIDPROPAM", 4,
-                5, 2, sessionManager.getAlatBukiLP(), sessionManager.getListPasalLP(),
-                sessionManager.getListSaksi(), "KET", "", "", ""
+                5, 2, sessionManager1.getAlatBukiLP(), sessionManager1.getListPasalLP(),
+                sessionManager1.getListSaksi(), "KET", "", "", ""
 
             )
         )
         listLp.add(
             LpResp(
                 3, "kode_etik", "LP/KODE_ETIK/2020/BIDPROPAM", 4,
-                5, 2, sessionManager.getAlatBukiLP(), sessionManager.getListPasalLP(),
-                sessionManager.getListSaksi(), "KET", "", "", ""
+                5, 2, sessionManager1.getAlatBukiLP(), sessionManager1.getListPasalLP(),
+                sessionManager1.getListSaksi(), "KET", "", "", ""
 
             )
         )

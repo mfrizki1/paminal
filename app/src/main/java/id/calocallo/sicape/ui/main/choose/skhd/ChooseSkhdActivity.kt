@@ -1,27 +1,23 @@
 package id.calocallo.sicape.ui.main.choose.skhd
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.Adapter
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PutKkeOnRpphModel
 import id.calocallo.sicape.model.SkhdOnRpsModel
-import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.ui.main.rehab.rpph.AddRpphActivity
 import id.calocallo.sicape.ui.main.rehab.rps.AddRpsActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_choose_skhd.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
-import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import kotlinx.android.synthetic.main.view_no_data.*
@@ -32,7 +28,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ChooseSkhdActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var skhdOnRpsModel = ArrayList<SkhdOnRpsModel>()
     private var adapterSkhdOnRps = ReusableAdapter<SkhdOnRpsModel>(this)
     private lateinit var callbackSkhdOnRps: AdapterCallback<SkhdOnRpsModel>
@@ -48,7 +44,7 @@ class ChooseSkhdActivity : BaseActivity() {
         setContentView(R.layout.activity_choose_skhd)
         setupActionBarWithBackButton(toolbar)
 
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         /*set for put kke*/
         putkke = intent.extras?.getString(PUT_KKE)
         if (putkke == null) {

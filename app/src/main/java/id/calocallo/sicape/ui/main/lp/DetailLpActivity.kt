@@ -12,7 +12,7 @@ import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.network.response.LpSaksiResp
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpEditActivity
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpEditActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -24,7 +24,7 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import java.util.ArrayList
 
 class DetailLpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterDetailPasal: ReusableAdapter<LpPasalResp>
     private lateinit var callbackDetailPasal: AdapterCallback<LpPasalResp>
     private lateinit var adapterDetailSaksi: ReusableAdapter<LpSaksiResp>
@@ -37,7 +37,7 @@ class DetailLpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterDetailPasal = ReusableAdapter(this)
         adapterDetailSaksi = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
@@ -68,7 +68,7 @@ class DetailLpActivity : BaseActivity() {
         getPasalDetail(detailLP?.listPasal)
         getSaksiDetail(detailLP?.listSaksi)
         //edit
-        val hakAkses = sessionManager.fetchHakAkses()
+        val hakAkses = sessionManager1.fetchHakAkses()
         if (hakAkses == "operator") {
             btn_edit_lp.toggleVisibility()
 //            btn_edit_personel.toggleVisibility()

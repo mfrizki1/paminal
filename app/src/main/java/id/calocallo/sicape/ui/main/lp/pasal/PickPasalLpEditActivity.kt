@@ -6,7 +6,7 @@ import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.EditLpActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal_lp_edit.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -20,7 +20,7 @@ class PickPasalLpEditActivity : BaseActivity() {
         LpPasalResp(2, "Pasal 2", "", "", "", ""),
         LpPasalResp(3, "Pasal 3", "", "", "", "")
     )
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterPasalEdit: ReusableAdapter<LpPasalResp>
     private lateinit var callbackPasalEdit: AdapterCallback<LpPasalResp>
     private var jenisPelanggaran: String? = null
@@ -35,14 +35,14 @@ class PickPasalLpEditActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_pasal_lp_edit)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         adapterPasalEdit = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
         val pidana = intent.extras?.getParcelable<LpPidanaResp>(EDIT_PASAL_PIDANA)
         val kodeEtik = intent.extras?.getParcelable<LpKkeResp>(EDIT_PASAL_KKE)
         val disiplin = intent.extras?.getParcelable<LpDisiplinResp>(EDIT_PASAL_DISIPLIN)
         val detailLp = intent.extras?.getParcelable<LpResp>(EditLpActivity.EDIT_LP)
-        jenisPelanggaran = sessionManager.getJenisLP()
+        jenisPelanggaran = sessionManager1.getJenisLP()
         if(pidana != null){
             supportActionBar?.title = "Edit Data Laporan Polisi Pidana"
         }else if(kodeEtik != null){

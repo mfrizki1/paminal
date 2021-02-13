@@ -121,7 +121,7 @@
             android:layout_height="100dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Kesengan">
+            android:hint="Kesenangan">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_kesenangan"

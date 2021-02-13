@@ -8,20 +8,20 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.ParentListSaudara
 import id.calocallo.sicape.network.request.SaudaraReq
 import id.calocallo.sicape.ui.main.addpersonal.orangs.AddOrgSelainOrtuActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_saudara.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddSaudaraActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<SaudaraReq>
     private lateinit var parentList: ParentListSaudara
     lateinit var adapter: SaudaraAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_saudara)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         list = ArrayList()
 
         setupActionBarWithBackButton(toolbar)
@@ -34,10 +34,10 @@ class AddSaudaraActivity : BaseActivity() {
                 list.clear()
             }
 
-            sessionManager.setSaudara(list)
+            sessionManager1.setSaudara(list)
 
 
-            Log.e("saudara", sessionManager.getSaudara().size.toString())
+            Log.e("saudara", "${sessionManager1.getSaudara()}")
 //            Log.e("dasasf", parentList.parentList[0].nama.toString()))
 //            Log.e("data 1 saudara", parentList.parentList[0].nama.toString())
 //            Log.e("data 1 jk saudara", parentList.parentList[0].jenis_kelamin.toString())
@@ -48,7 +48,7 @@ class AddSaudaraActivity : BaseActivity() {
     }
 
     private fun initRecycler() {
-        val getSaudara = sessionManager.getSaudara()
+        val getSaudara = sessionManager1.getSaudara()
         if (getSaudara.size == 1) {
             for (i in 0 until getSaudara.size) {
                 list.add(

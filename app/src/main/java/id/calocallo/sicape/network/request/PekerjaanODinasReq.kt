@@ -2,7 +2,9 @@ package id.calocallo.sicape.network.request
 
 import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class PekerjaanODinasReq(
     var pekerjaan: String?,
     var instansi: String?,
@@ -12,36 +14,5 @@ data class PekerjaanODinasReq(
     var dalam_rangka: String?,
     var keterangan: String?
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(pekerjaan)
-        parcel.writeString(instansi)
-        parcel.writeString(tahun_awal)
-        parcel.writeString(tahun_akhir)
-        parcel.writeString(dalam_rangka)
-        parcel.writeString(keterangan)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<PekerjaanODinasReq> {
-        override fun createFromParcel(parcel: Parcel): PekerjaanODinasReq {
-            return PekerjaanODinasReq(parcel)
-        }
-
-        override fun newArray(size: Int): Array<PekerjaanODinasReq?> {
-            return arrayOfNulls(size)
-        }
-    }
+    constructor() : this(null, null, null, null, null, null)
 }

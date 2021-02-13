@@ -9,7 +9,7 @@ import id.calocallo.sicape.network.request.RefPenyelidikanReq
 import id.calocallo.sicape.network.response.RefPenyelidikanResp
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_detail_ref_penyelidikan.*
@@ -17,11 +17,11 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditDetailRefPenyelidikanActivity : BaseActivity() {
     private var refLpReq = RefPenyelidikanReq()
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var detailRef = RefPenyelidikanResp()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setContentView(R.layout.activity_edit_detail_ref_penyelidikan)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Referensi Penyelidikan"

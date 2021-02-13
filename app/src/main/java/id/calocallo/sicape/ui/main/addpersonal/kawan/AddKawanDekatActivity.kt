@@ -8,13 +8,13 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.SahabatReq
 import id.calocallo.sicape.model.ParentListKawanDekat
 import id.calocallo.sicape.ui.main.addpersonal.mediainfo.AddMedianfoActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_kawan_dekat.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddKawanDekatActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<SahabatReq>
     private lateinit var parentList: ParentListKawanDekat
     private lateinit var adapter: KawanAdapter
@@ -22,7 +22,7 @@ class AddKawanDekatActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_kawan_dekat)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Kawan Dekat"
 
@@ -34,15 +34,15 @@ class AddKawanDekatActivity : BaseActivity() {
             if (list.size == 1 && list[0].nama == "") {
                 list.clear()
             }
-            sessionManager.setSahabat(list)
-            Log.e("size Sahabat", sessionManager.getSahabat().size.toString())
+            sessionManager1.setSahabat(list)
+            Log.e("size Sahabat", "${sessionManager1.getSahabat()}")
             startActivity(Intent(this, AddMedianfoActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
     private fun initRV() {
-        val sahabat = sessionManager.getSahabat()
+        val sahabat = sessionManager1.getSahabat()
         if(sahabat.size == 1){
             for(i in 0 until sahabat.size){
                 list.add(i, SahabatReq(

@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.editpersonel.relasi
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,29 +9,28 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.RelasiReq
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_single_alamat.*
 import kotlinx.android.synthetic.main.activity_add_single_relasi.*
-import kotlinx.android.synthetic.main.activity_pick_relasi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AddSingleRelasiActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var jenisRelasi: String? = null
     private var relasiReq = RelasiReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_single_relasi)
-        sessionManager = SessionManager(this)
-        val personel = intent.extras?.getParcelable<PersonelModel>("PERSONEL")
+        sessionManager1 = SessionManager1(this)
+        val personel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = personel?.nama
 
@@ -69,10 +67,10 @@ class AddSingleRelasiActivity : BaseActivity() {
             progressColor = Color.WHITE
         }
         relasiReq.nama = edt_nama_relasi_single.text.toString()
+        relasiReq.lokasi = jenisRelasi
         NetworkConfig().getService().addSingleRelasi(
-            "Bearer ${sessionManager.fetchAuthToken()}",
-            sessionManager.fetchID().toString(),
-            jenisRelasi.toString(),
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.fetchID().toString(),
             relasiReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

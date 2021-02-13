@@ -2,9 +2,6 @@ package id.calocallo.sicape.network.request
 
 import android.os.Parcel
 import android.os.Parcelable
-import id.calocallo.sicape.model.PersonelModel
-import kotlinx.android.parcel.Parceler
-import kotlinx.android.parcel.Parcelize
 
 data class RefPenyelidikanReq (
     var id_lp: Int?,

@@ -9,14 +9,14 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.AnakReq
 import id.calocallo.sicape.model.ParentListAnak
 import id.calocallo.sicape.ui.main.addpersonal.saudara.AddSaudaraActivity
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_anak.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddAnakActivity : BaseActivity() {
     private var anakReq = AnakReq()
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<AnakReq>
     private lateinit var parentList: ParentListAnak
     lateinit var adapter: AnakAdapter
@@ -24,7 +24,7 @@ class AddAnakActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_anak)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Anak"
         list = ArrayList()
@@ -37,8 +37,8 @@ class AddAnakActivity : BaseActivity() {
                 list.clear()
             }
 
-            sessionManager.setAnak(list)
-            Log.e("anak", sessionManager.getAnak().size.toString())
+            sessionManager1.setAnak(list)
+            Log.e("anak", "${sessionManager1.getAnak()}")
 //            Log.e("data 1 anak", list[0].nama.toString())
 //            Log.e("data 1 jk anak", list[0].jenis_kelamin.toString())
 //            Log.e("data 1 jk anak", list[0].status_ikatan.toString())
@@ -50,7 +50,7 @@ class AddAnakActivity : BaseActivity() {
     }
 
     private fun initRecycler(rvAnak: RecyclerView) {
-        val getAnak = sessionManager.getAnak()
+        val getAnak = sessionManager1.getAnak()
         if (getAnak.size == 1) {
             for (i in 0 until getAnak.size) {
                 list.add(

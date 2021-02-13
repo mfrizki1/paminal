@@ -11,26 +11,26 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
-import id.calocallo.sicape.model.PersonelModel
+import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.KetTerlaporReq
-import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity
 import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity.Companion.GET_TERLAPOR
-import id.calocallo.sicape.utils.SessionManager
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_terlapor_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddTerlaporLhpActivity : BaseActivity() {
-    private lateinit var sessionManager: SessionManager
+    private lateinit var sessionManager1: SessionManager1
     private var ketTerlaporReq = KetTerlaporReq()
     private var idTerlapor: Int? = null
     private var namaTerlapor: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_terlapor_lhp)
-        sessionManager = SessionManager(this)
+        sessionManager1 = SessionManager1(this)
         val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Terlapor"
@@ -46,9 +46,10 @@ class AddTerlaporLhpActivity : BaseActivity() {
         /*set button for get personel*/
         bt_choose_personel_terlapor.setOnClickListener {
             //TODO CHANGE FILTERING PERSONEL(BERDASARKAN LP YG ADA DI LHP TRS PILIH PERSONELNYA)
-            val intent = Intent(this, ChoosePersonelActivity::class.java)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, ADD_TERLAPOR_PERSONEL)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
@@ -90,7 +91,7 @@ class AddTerlaporLhpActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<PersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         if (resultCode == Activity.RESULT_OK && requestCode == ADD_TERLAPOR_PERSONEL) {
             idTerlapor = personel?.id
             namaTerlapor = personel?.nama
