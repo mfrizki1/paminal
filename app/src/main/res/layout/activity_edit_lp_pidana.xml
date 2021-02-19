@@ -62,7 +62,7 @@
 
         <!--button for choose personel terlapor-->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_choose_personel_terlapor_pidana_edit"
+            android:id="@+id/btn_choose_personel_menerima_pidana_edit"
             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,51 +87,51 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Personel Terlapor"
+                    android:text="Personel Yang Menerima Laporan"
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
 
                 <include layout="@layout/layout_separator" />
 
                 <TextView
-                    android:id="@+id/txt_nama_terlapor_lp_edit"
+                    android:id="@+id/txt_nama_menerima_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_8dp"
-                    android:text="Nama Personel Terlapor"
+                    android:text="Nama Personel Menerima Laporan"
                     android:textSize="@dimen/text_14"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txt_pangkat_terlapor_lp_edit"
+                    android:id="@+id/txt_pangkat_menerima_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Pangkat Personel Terlapor"
+                    android:text="Pangkat Personel Menerima Laporan"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
-                    android:id="@+id/txt_nrp_terlapor_lp_edit"
+                    android:id="@+id/txt_nrp_menerima_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="NRP Personel Terlapor"
+                    android:text="NRP Personel Menerima Laporan"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
-                    android:id="@+id/txt_jabatan_terlapor_lp_edit"
+                    android:id="@+id/txt_jabatan_menerima_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Jabatan Personel Terlapor"
+                    android:text="Jabatan Personel Menerima Laporan"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
-                    android:id="@+id/txt_kesatuan_terlapor_lp_edit"
+                    android:id="@+id/txt_kesatuan_menerima_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Kesatuan Personel Terlapor"
+                    android:text="Kesatuan Personel Menerima Laporan"
                     android:textSize="@dimen/text_14" />
             </LinearLayout>
 

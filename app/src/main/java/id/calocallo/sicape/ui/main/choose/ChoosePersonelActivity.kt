@@ -7,11 +7,19 @@ import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
+import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.SatKerResp
+import id.calocallo.sicape.ui.gelar.AddGelarActivity
+import id.calocallo.sicape.ui.main.choose.multiple.PersonelDetailsLookup
+import id.calocallo.sicape.ui.main.choose.multiple.PersonelItemKeyProvider
+import id.calocallo.sicape.ui.main.choose.multiple.PersonelMultipleAdapter
 import id.calocallo.sicape.ui.main.personel.PersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
@@ -29,9 +37,20 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ChoosePersonelActivity : BaseActivity() {
+    companion object {
+        const val MULTIPLE = "MULTIPLE"
+        const val DATA_MULTIPLE = "DATA_MULTIPLE"
+        const val REQ_MULTIPLE = "MULTIPLE"
+    }
+
     private lateinit var sessionManager1: SessionManager1
     private lateinit var personelChooseAdapter: ReusableAdapter<PersonelMinResp>
     private lateinit var personelChooseCallback: AdapterCallback<PersonelMinResp>
+    private lateinit var selevted : ArrayList<PersonelMinResp>
+
+    private var selectedPersonel : MutableList<PersonelMinResp> = mutableListOf<PersonelMinResp>()
+    private lateinit var adapterPersonelMultiple: PersonelMultipleAdapter
+    private var tracker: SelectionTracker<PersonelMinResp>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_personel)
@@ -40,27 +59,34 @@ class ChoosePersonelActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Personel"
         Log.e("iniChoose", "iniChoosePersonel")
+        personelChooseAdapter = ReusableAdapter(this)
+        selevted = arrayListOf()
 
         val isPolda = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLDA)
         val isPolres = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLRES)
         val isPolsek = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLSEK)
-        when {
-            isPolda != null -> {
-                Log.e("isPolda", "$isPolda")
-                apiChoosePersonelBySatker(isPolda)
-            }
-            isPolres != null -> {
-                Log.e("isPOlres", "$isPolres")
-                apiChoosePersonelBySatker(isPolres)
-            }
-            isPolsek != null -> {
-                Log.e("isPolsek", "$isPolsek")
-                apiChoosePersonelBySatker(isPolsek)
-            }
+        val isMultipleSelect = intent.getBooleanExtra(MULTIPLE, false)
+        if (isMultipleSelect) {
+            getPersonel()
+            ll_button_choose.visible()
+        } else {
+            when {
+                isPolda != null -> {
+                    Log.e("isPolda", "$isPolda")
+                    apiChoosePersonelBySatker(isPolda)
+                }
+                isPolres != null -> {
+                    Log.e("isPOlres", "$isPolres")
+                    apiChoosePersonelBySatker(isPolres)
+                }
+                isPolsek != null -> {
+                    Log.e("isPolsek", "$isPolsek")
+                    apiChoosePersonelBySatker(isPolsek)
+                }
 //            else -> initAPI()
 
+            }
         }
-        personelChooseAdapter = ReusableAdapter(this)
 
 
         /*set ketTerlapor*/
@@ -146,8 +172,8 @@ class ChoosePersonelActivity : BaseActivity() {
         rv_list_choose_personel.gone()
         NetworkConfig().getService().showPersonel(
             "Bearer ${sessionManager1.fetchAuthToken()}"
-        ).enqueue(object : Callback<ArrayList<AllPersonelModel>> {
-            override fun onFailure(call: Call<ArrayList<AllPersonelModel>>, t: Throwable) {
+        ).enqueue(object : Callback<ArrayList<PersonelMinResp>> {
+            override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {
                 rl_pb.gone()
                 rl_no_data.visible()
                 Toast.makeText(this@ChoosePersonelActivity, R.string.error_conn, Toast.LENGTH_SHORT)
@@ -156,8 +182,8 @@ class ChoosePersonelActivity : BaseActivity() {
             }
 
             override fun onResponse(
-                call: Call<ArrayList<AllPersonelModel>>,
-                response: Response<ArrayList<AllPersonelModel>>
+                call: Call<ArrayList<PersonelMinResp>>,
+                response: Response<ArrayList<PersonelMinResp>>
 
             ) {
                 if (response.isSuccessful) {
@@ -167,12 +193,7 @@ class ChoosePersonelActivity : BaseActivity() {
                         rv_list_choose_personel.gone()
                     } else {
                         rv_list_choose_personel.visible()
-                        personelChooseAdapter.adapterCallback(personelChooseCallback)
-                            .isVerticalView()
-                            .filterable()
-//                            .addData(response.body()!!)
-                            .setLayout(R.layout.item_choose_personel)
-                            .build(rv_list_choose_personel)
+                        rvMultipleSelect(response.body())
                     }
                 } else {
                     Toast.makeText(this@ChoosePersonelActivity, R.string.error, Toast.LENGTH_SHORT)
@@ -183,6 +204,49 @@ class ChoosePersonelActivity : BaseActivity() {
                 }
             }
         })
+    }
+
+    private fun rvMultipleSelect(list: ArrayList<PersonelMinResp>?) {
+        var selection = mutableListOf<PersonelMinResp>()
+        rv_list_choose_personel.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapterPersonelMultiple = list?.let { PersonelMultipleAdapter(this, it) }!!
+        rv_list_choose_personel.adapter = adapterPersonelMultiple
+
+        tracker = SelectionTracker.Builder<PersonelMinResp>(
+            "personelSelection",
+            rv_list_choose_personel,
+            PersonelItemKeyProvider(adapterPersonelMultiple),
+            PersonelDetailsLookup(rv_list_choose_personel),
+            StorageStrategy.createParcelableStorage(PersonelMinResp::class.java)
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+        adapterPersonelMultiple.tracker = tracker
+        tracker?.addObserver(
+            object : SelectionTracker.SelectionObserver<Long>() {
+                override fun onSelectionChanged() {
+                    super.onSelectionChanged()
+                    tracker?.let {
+                        selectedPersonel = it.selection.toMutableList()
+//                        selection = it.selection.toMutableList()
+//                        selevted = it.selection.toMutableList()
+                        Log.e("personelMultiple", "$selectedPersonel")
+//                        Log.e("personelMultiple", "$selection")
+//                        Log.e("selevted", "$selevted")
+                    }
+                }
+            }
+        )
+
+        btn_chose_personel.setOnClickListener {
+            val intent = Intent().apply {
+                this.putExtra(DATA_MULTIPLE, selectedPersonel as ArrayList<AllPersonelModel>)
+//                this.putExtra(DATA_MULTIPLE, ArrayList(selection))
+            }
+            setResult(AddGelarActivity.RES_PESERTA, intent)
+            finish()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -198,6 +262,7 @@ class ChoosePersonelActivity : BaseActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 personelChooseAdapter.filter.filter(newText)
+                adapterPersonelMultiple.filter.filter(newText)
                 return true
             }
 

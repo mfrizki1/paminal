@@ -11,6 +11,18 @@
 
     <include layout="@layout/view_separator" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/personel_search"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_8dp"
+        android:background="@drawable/bg_button_oval_primary"
+        android:backgroundTint="@color/timber_wolf"
+        android:textCursorDrawable="@null"
+        app:iconifiedByDefault="false"
+        app:queryBackground="@null" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -35,22 +47,24 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:background="@color/white"-->
-<!--            android:elevation="45dp"-->
-<!--            android:orientation="vertical"-->
-<!--            android:layout_height="wrap_content">-->
+        <LinearLayout
+            android:id="@+id/ll_button_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:elevation="45dp"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-<!--            <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/btn_choose_personel"-->
-<!--                style="@style/Widget.Button"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_marginVertical="@dimen/space_12dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Pilih" />-->
-<!--        </LinearLayout>-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_chose_personel"
+                style="@style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_12dp"
+                android:text="Pilih" />
+        </LinearLayout>
     </RelativeLayout>
 
 

@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.editpersonel.keluarga.PickPasanganActivity"></activity>
+        <activity android:name=".ui.gelar.AddGelar4Activity"></activity>
+        <activity android:name=".ui.gelar.AddGelar3Activity" />
+        <activity android:name=".ui.gelar.AddGelar2Activity" />
+        <activity android:name=".ui.main.editpersonel.keluarga.PickPasanganActivity" />
         <activity android:name=".ui.main.editpersonel.keluarga.PickKeluargaActivity" />
         <activity android:name=".ui.manajemen.sipil.EditSipilOperatorActivity" />
         <activity android:name=".ui.manajemen.admin.AddAdminPersonelActivity" />
@@ -220,6 +223,7 @@
         <activity android:name=".ui.main.addpersonal.pasangan.AddPasanganActivity" />
         <activity android:name=".ui.main.anev.AnevActivity" />
         <activity android:name=".ui.main.addpersonal.AddPersonelActivity" />
+        <activity android:name=".ui.gelar.AddGelarActivity" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

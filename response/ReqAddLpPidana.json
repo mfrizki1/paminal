@@ -1,0 +1,27 @@
+{
+    "id_satuan_kerja": 121,
+    "id_personel_terlapor": 9,
+    "uraian_pelanggaran": "Pokok pokok",
+    "kota_buat_laporan": "Banjarmasin",
+    "tanggal_buat_laporan": "02-11-2020",
+    "nama_pelapor": "Johan Carl",
+    "tempat_lahir_pelapor": "Banjarbaru",
+    "tanggal_lahir_pelapor": "14-02-2019",
+    "agama_pelapor": "islam",
+    "pekerjaan_pelapor": "Wiraswasta",
+    "kewarganegaraan_pelapor": "Indonesia",
+    "alamat_pelapor": "Jl. ABC",
+    "no_telp_pelapor": "082233",
+    "nik_ktp_pelapor": "98839138129038",
+    "jenis_kelamin_pelapor": "laki_laki",
+    "isi_laporan": "Telah melaporkan tentang adanya dugaan peristiwa tindak pidana Penipuan dan Penggelapan, and then you know lah",
+    "waktu_buat_laporan": "20:18",
+    "pasal_dilanggar": [
+        {
+            "id_pasal": 1
+        },
+        {
+            "id_pasal": 3
+        }
+    ]
+}

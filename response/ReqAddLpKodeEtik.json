@@ -1,0 +1,36 @@
+{
+    "id_satuan_kerja": 142,
+    "id_personel_terlapor": 9,
+    "uraian_pelanggaran": "Pokok pokok",
+    "kota_buat_laporan": "Banjarmasin",
+    "tanggal_buat_laporan": "02-11-2020",
+    "id_personel_pelapor": 8,
+    "isi_laporan": "Absasasasla",
+    "alat_bukti": "fofjsadifjdsiflk",
+    "jabatan_yang_mengetahui": "Abc",
+    "nama_yang_mengetahui": "Cde",
+    "pangkat_yang_mengetahui": "Oke",
+    "nrp_yang_mengetahui": "09123904",
+    "pasal_dilanggar": [
+        { "id_pasal": "1" },
+        { "id_pasal": "3" }
+    ],
+    "saksi_kode_etik": [
+        {
+            "nama": "Jackson",
+            "tempat_lahir": "Alabama",
+            "tanggal_lahir": "25-03-2001",
+            "pekerjaan": "Tukang",
+            "alamat": "Jl. Abc",
+            "is_korban": 0
+        },
+        {
+            "nama": "Gabriel",
+            "tempat_lahir": "Alabama",
+            "tanggal_lahir": "25-03-2001",
+            "pekerjaan": "Tukang",
+            "alamat": "Jl. Abc",
+            "is_korban": 1
+        }
+    ]
+}

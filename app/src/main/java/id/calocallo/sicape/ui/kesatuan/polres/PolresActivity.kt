@@ -8,8 +8,10 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity
+import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity.Companion.RES_POLRES
 import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.ui.main.personel.PersonelActivity
@@ -36,10 +38,10 @@ class PolresActivity : BaseActivity() {
         const val IS_POLSEK = "IS_POLSEK"
         const val REQ_POLRES_SAT = 198
         const val RES_POLRES_SAT = 189
+        const val RES_POLRES = 214
         const val DATA_POLRES = "DATA_POLRES"
         const val REQ_TO_ADD = 213
         const val REQ_PICK_POLRES = 1234
-        const val REQ_PICK_POLSEK = 241
     }
     private var bundle = Bundle()
     private var namaPolres = "t"
@@ -126,7 +128,7 @@ class PolresActivity : BaseActivity() {
                                 isPickPersonel == true->{
                                     val intent = Intent(this@PolresActivity, ChoosePersonelActivity::class.java)
                                     intent.putExtra(PersonelActivity.IS_POLRES, data)
-                                    startActivityForResult(intent, 453)
+                                    startActivityForResult(intent, REQ_PICK_POLRES)
                                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                                 }
                                 isListPolres != null ->{
@@ -170,6 +172,23 @@ class PolresActivity : BaseActivity() {
             }
         })
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            REQ_PICK_POLRES->{
+                if(resultCode == 123){
+                    val data = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
+                    val intent = Intent().apply {
+                        this.putExtra("ID_PERSONEL", data)
+                    }
+                    setResult(123, intent)
+                    finish()
+                }
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_bar, menu)
         val item = menu?.findItem(R.id.action_search)

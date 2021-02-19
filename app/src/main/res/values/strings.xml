@@ -3,6 +3,7 @@
     <string name="DATA">PERSONEL</string>
     <string name="LP">LP</string>
     <string name="LHP">LHP</string>
+    <string name="GELAR">GELAR</string>
     <string name="login">Login</string>
     <string name="save">Simpan</string>
     <string name="error">Error</string>

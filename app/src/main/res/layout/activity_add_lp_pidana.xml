@@ -56,11 +56,13 @@
 
             <TextView
                 style="@style/TitleText"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pilih Salah Satu Pelapor" />
 
             <RadioGroup
+                android:visibility="gone"
                 android:id="@+id/rg_pidana"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,8 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_sipil_add"

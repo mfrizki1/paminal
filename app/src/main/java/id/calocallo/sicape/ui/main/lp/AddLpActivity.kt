@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.response.PelanggaranResp
+import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.lp.disiplin.AddLpDisiplinActivity.Companion.JENIS_DISIPLIN
 import id.calocallo.sicape.ui.main.lp.kke.AddLpKodeEtikActivity.Companion.JENIS_KKE
 import id.calocallo.sicape.ui.main.lp.pidana.AddLpPidanaActivity.Companion.JENIS_PIDANA
@@ -45,7 +45,7 @@ class AddLpActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
 
 
-        btn_choose_personel_terlapor_lp_add.setOnClickListener {
+        btn_choose_personel_menerima_lp_add.setOnClickListener {
             val intent = Intent(this, KatPersonelActivity::class.java)
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_TERLAPOR)
@@ -120,7 +120,7 @@ class AddLpActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
         val pelanggaran = data?.getParcelableExtra<PelanggaranResp>("PELANGGARAN")
         when (resultCode) {
             Activity.RESULT_OK -> {
@@ -136,11 +136,11 @@ class AddLpActivity : BaseActivity() {
 
                     REQ_TERLAPOR -> {
                         idPersonelTerlapor = personel?.id
-                        txt_jabatan_terlapor_lp_add.text ="Jabatan : ${personel?.jabatan}"
-                        txt_kesatuan_terlapor_lp_add.text = "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
-                        txt_nama_terlapor_lp_add.text ="Nama : ${personel?.nama}"
-                        txt_nrp_terlapor_lp_add.text = "NRP : ${personel?.nrp}"
-                        txt_pangkat_terlapor_lp_add.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
+                        txt_jabatan_menerima_lp_add.text ="Jabatan : ${personel?.jabatan}"
+                        txt_kesatuan_menerima_lp_add.text = "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+                        txt_nama_menerima_lp_add.text ="Nama : ${personel?.nama}"
+                        txt_nrp_menerima_lp_add.text = "NRP : ${personel?.nrp}"
+                        txt_pangkat_menerima_lp_add.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
                     }
                     REQ_PELANGGARAN -> {
                         idPelanggaran = pelanggaran?.id

@@ -36,9 +36,9 @@ class PersonelActivity : BaseActivity() {
     }
 
     private lateinit var sessionManager1: SessionManager1
-    private lateinit var adapter: ReusableAdapter<AllPersonelModel>
+    private lateinit var adapter: ReusableAdapter<PersonelMinResp>
     private var adapterMin = ReusableAdapter<PersonelMinResp>(this)
-    private lateinit var adapterCallback: AdapterCallback<AllPersonelModel>
+    private lateinit var adapterCallback: AdapterCallback<PersonelMinResp>
     private lateinit var adapterMinCallback: AdapterCallback<PersonelMinResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -189,8 +189,8 @@ class PersonelActivity : BaseActivity() {
         rv_personel.gone()
         NetworkConfig().getService()
             .showPersonel(tokenBearer = "Bearer ${sessionManager1.fetchAuthToken()}")
-            .enqueue(object : Callback<ArrayList<AllPersonelModel>> {
-                override fun onFailure(call: Call<ArrayList<AllPersonelModel>>, t: Throwable) {
+            .enqueue(object : Callback<ArrayList<PersonelMinResp>> {
+                override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {
                     rl_no_data.visible()
                     rl_pb.gone()
                     Toast.makeText(this@PersonelActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)
@@ -199,8 +199,8 @@ class PersonelActivity : BaseActivity() {
                 }
 
                 override fun onResponse(
-                    call: Call<ArrayList<AllPersonelModel>>,
-                    response: Response<ArrayList<AllPersonelModel>>
+                    call: Call<ArrayList<PersonelMinResp>>,
+                    response: Response<ArrayList<PersonelMinResp>>
                 ) {
                     if (response.isSuccessful) {
                         rl_pb.gone()

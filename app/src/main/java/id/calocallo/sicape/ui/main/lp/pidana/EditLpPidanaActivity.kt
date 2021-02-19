@@ -58,7 +58,7 @@ class EditLpPidanaActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        btn_choose_personel_terlapor_pidana_edit.setOnClickListener {
+        btn_choose_personel_menerima_pidana_edit.setOnClickListener {
             val intent = Intent(this, KatPersonelActivity::class.java)
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_TERLAPOR)
@@ -213,13 +213,13 @@ class EditLpPidanaActivity : BaseActivity() {
 
         //personel terlapor
 //        lpPidanaReq.id_personel_terlapor = pidana?.personel_terlapor
-        txt_nama_terlapor_lp_edit.text = "Nama : ${pidana?.personel_terlapor?.nama}"
-        txt_pangkat_terlapor_lp_edit.text =
+        txt_nama_menerima_lp_edit.text = "Nama : ${pidana?.personel_terlapor?.nama}"
+        txt_pangkat_menerima_lp_edit.text =
             "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}"
-        txt_nrp_terlapor_lp_edit.text = "NRP : ${pidana?.personel_terlapor?.nrp}"
-        txt_jabatan_terlapor_lp_edit.text =
+        txt_nrp_menerima_lp_edit.text = "NRP : ${pidana?.personel_terlapor?.nrp}"
+        txt_jabatan_menerima_lp_edit.text =
             "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
-        txt_kesatuan_terlapor_lp_edit.text =
+        txt_kesatuan_menerima_lp_edit.text =
             "Kesatuan : ${pidana?.personel_terlapor?.kesatuan.toString().toUpperCase()}"
 
         //uraiain
@@ -324,12 +324,12 @@ class EditLpPidanaActivity : BaseActivity() {
                     REQ_TERLAPOR -> {
 //                            personel?.id?.let { sessionManager.setIDPersonelTerlapor(it) }
                         changedIdTerlapor = personel?.id
-                        txt_nama_terlapor_lp_edit.text = "Nama : ${personel?.nama}"
-                        txt_pangkat_terlapor_lp_edit.text =
+                        txt_nama_menerima_lp_edit.text = "Nama : ${personel?.nama}"
+                        txt_pangkat_menerima_lp_edit.text =
                             "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
-                        txt_nrp_terlapor_lp_edit.text = "NRP : ${personel?.nrp}"
-                        txt_jabatan_terlapor_lp_edit.text = "Jabatan : ${personel?.jabatan}"
-                        txt_kesatuan_terlapor_lp_edit.text =
+                        txt_nrp_menerima_lp_edit.text = "NRP : ${personel?.nrp}"
+                        txt_jabatan_menerima_lp_edit.text = "Jabatan : ${personel?.jabatan}"
+                        txt_kesatuan_menerima_lp_edit.text =
                             "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString()
                                 .toUpperCase()}"
                     }

@@ -1,0 +1,26 @@
+{
+    "no_lp": "LP/HUK/000x0x",
+    "id_satuan_kerja": 142,
+    "id_personel_terlapor": 9,
+    "uraian_pelanggaran": "Pokok pokok",
+    "kota_buat_laporan": "Banjarmasin",
+    "tanggal_buat_laporan": "02-11-2020",
+    "id_personel_pelapor": 8,
+    "macam_pelanggaran": "Lorem Ipsum",
+    "keterangan_pelapor": "Lorem Ipsum 1",
+    "kronologis_dari_pelapor": "Lorem Ipsum 2",
+    "rincian_pelanggaran_disiplin": "Lorem Ipsum 3",
+    "waktu_buat_laporan": "17:45",
+    "jabatan_yang_mengetahui": "Abc",
+    "nama_yang_mengetahui": "Cde",
+    "pangkat_yang_mengetahui": "Oke",
+    "nrp_yang_mengetahui": "09123904",
+    "pasal_dilanggar": [
+        {
+            "id_pasal": "1"
+        },
+        {
+            "id_pasal": "3"
+        }
+    ]
+}

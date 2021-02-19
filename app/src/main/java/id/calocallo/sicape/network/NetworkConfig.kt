@@ -24,4 +24,6 @@ class NetworkConfig {
             .build()
     }
     fun getService() = getRetrofit().create(Api::class.java)
+    fun getServLp() = getRetrofit().create(ApiLp::class.java)
+    fun getServLhp() = getRetrofit().create(ApiLhp::class.java)
 }

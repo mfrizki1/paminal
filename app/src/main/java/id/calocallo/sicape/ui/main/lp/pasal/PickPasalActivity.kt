@@ -11,7 +11,7 @@ import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.network.response.PasalResp
-import com.zanyastudios.test.PasalTesDetailsLookup
+import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesDetailsLookup
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.LpDisiplinReq
 import id.calocallo.sicape.network.request.LpKkeReq

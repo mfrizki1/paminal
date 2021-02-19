@@ -56,7 +56,7 @@ class EditLpActivity : BaseActivity() {
 //
 //        }
 
-        btn_choose_personel_terlapor_lp_add.setOnClickListener {
+        btn_choose_personel_menerima_lp_add.setOnClickListener {
             val intent = Intent(this, KatPersonelActivity::class.java)
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, AddLpActivity.REQ_DILAPOR)
@@ -134,11 +134,11 @@ class EditLpActivity : BaseActivity() {
 //        txt_jabatan_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
 //        txt_kesatuan_dilapor_lp_add.text = editLp?.id_personel_dilapor.toString()
 
-        txt_nama_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
-        txt_pangkat_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
-        txt_nrp_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
-        txt_jabatan_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
-        txt_kesatuan_terlapor_lp_add.text = editLp?.id_personel_terlapor.toString()
+        txt_nama_menerima_lp_add.text = editLp?.id_personel_terlapor.toString()
+        txt_pangkat_menerima_lp_add.text = editLp?.id_personel_terlapor.toString()
+        txt_nrp_menerima_lp_add.text = editLp?.id_personel_terlapor.toString()
+        txt_jabatan_menerima_lp_add.text = editLp?.id_personel_terlapor.toString()
+        txt_kesatuan_menerima_lp_add.text = editLp?.id_personel_terlapor.toString()
 
 //        txt_pelanggaran_lp_add.text = editLp?.id_pelanggaran.toString()
     }
@@ -161,11 +161,11 @@ class EditLpActivity : BaseActivity() {
 
                     AddLpActivity.REQ_TERLAPOR -> {
                         idPersonelTerlapor = personel?.id
-                        txt_jabatan_terlapor_lp_add.text = personel?.jabatan
-                        txt_kesatuan_terlapor_lp_add.text = personel?.satuan_kerja?.kesatuan
-                        txt_nama_terlapor_lp_add.text = personel?.nama
-                        txt_nrp_terlapor_lp_add.text = "NRP : ${personel?.nrp}"
-                        txt_pangkat_terlapor_lp_add.text = "Pangkat ${personel?.pangkat}"
+                        txt_jabatan_menerima_lp_add.text = personel?.jabatan
+                        txt_kesatuan_menerima_lp_add.text = personel?.satuan_kerja?.kesatuan
+                        txt_nama_menerima_lp_add.text = personel?.nama
+                        txt_nrp_menerima_lp_add.text = "NRP : ${personel?.nrp}"
+                        txt_pangkat_menerima_lp_add.text = "Pangkat ${personel?.pangkat}"
                     }
                     AddLpActivity.REQ_PELANGGARAN -> {
                         idPelanggaran = pelanggaran?.id

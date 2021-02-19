@@ -3,6 +3,7 @@ package id.calocallo.sicape.ui.main.personel
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.kesatuan.polda.PoldaActivity
@@ -79,6 +80,7 @@ class KatPersonelActivity : BaseActivity() {
                 val intent = Intent()
                 val dataPersonel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
                 intent.putExtra("ID_PERSONEL", dataPersonel)
+                Log.e("katPersonelOnResult", "$dataPersonel")
                 setResult(Activity.RESULT_OK, intent)
 //                startActivity(intent)
                 finish()

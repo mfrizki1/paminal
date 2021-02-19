@@ -126,7 +126,7 @@ interface Api {
 
     @Headers(ACCEPT)
     @GET(PERSONEL)
-    fun showPersonel(@Header("Authorization") tokenBearer: String): Call<ArrayList<AllPersonelModel>>
+    fun showPersonel(@Header("Authorization") tokenBearer: String): Call<ArrayList<PersonelMinResp>>
 
     //Satker
     @Headers(ACCEPT)

@@ -234,6 +234,7 @@
             style="@style/Widget.Button"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/space_8dp"
             android:text="@string/save" />
 

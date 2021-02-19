@@ -8,7 +8,7 @@ import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.zanyastudios.test.PasalTesDetailsLookup
+import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesDetailsLookup
 import id.calocallo.sicape.network.response.PasalResp
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter

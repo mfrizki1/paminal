@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.network.response.UnitPolsekResp
 import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity
@@ -37,6 +38,8 @@ class PolsekActivity : BaseActivity() {
         const val REQ_UNIT_POLSEK = 12
         const val RES_UNIT_POLSEK = 11
         const val DATA_POLSEK = "DATA_POLSEK"
+        const val REQ_PICK_POLSEK = 241
+
     }
 
     private var adapterPolsek = ReusableAdapter<SatKerResp>(this)
@@ -96,8 +99,8 @@ class PolsekActivity : BaseActivity() {
                 finish()
             }
         }
-        if (requestCode == 342 && resultCode == 123) {
-            val dataPers = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
+        if (requestCode == REQ_PICK_POLSEK && resultCode == 123) {
+            val dataPers = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
             val intent = Intent()
             intent.putExtra("ID_PERSONEL", dataPers)
             setResult(123, intent)
@@ -119,7 +122,7 @@ class PolsekActivity : BaseActivity() {
                     isPickPolsek == true -> {
                         val intent = Intent(this@PolsekActivity, ChoosePersonelActivity::class.java)
                         intent.putExtra(PersonelActivity.IS_POLSEK, data)
-                        startActivityForResult(intent, 453)
+                        startActivityForResult(intent, REQ_PICK_POLSEK)
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     }
                     isListPolsek != null -> {

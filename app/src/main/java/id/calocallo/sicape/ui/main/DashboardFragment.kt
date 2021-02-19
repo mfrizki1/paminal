@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.FiturModel
+import id.calocallo.sicape.ui.gelar.AddGelarActivity
 import id.calocallo.sicape.ui.main.anev.AnevActivity
 import id.calocallo.sicape.ui.main.catpers.CatpersActivity
 import id.calocallo.sicape.ui.main.lapbul.ListLapbulActivity
@@ -35,7 +36,7 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
         FiturModel("CATPERS", R.drawable.ic_catpers),
         FiturModel("SKHP", R.drawable.ic_skhp),
         FiturModel("REHAB", R.drawable.ic_rehab),
-//        FiturModel("WANJAK", R.drawable.ic_wanjak),
+        FiturModel("GELAR PERKARA", R.drawable.ic_gelar),
         FiturModel("Laporan Bulanan", R.drawable.ic_laporan),
         FiturModel("Analisa", R.drawable.ic_analisa)
     )
@@ -94,8 +95,8 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
                 startActivity(Intent(activity, PickRehabActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
-            "WANJAK" -> {
-                startActivity(Intent(activity, ListWanjakActivity::class.java))
+            "GELAR PERKARA" -> {
+                startActivity(Intent(activity, AddGelarActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "Laporan Bulanan" -> {

@@ -1,4 +1,4 @@
-package com.zanyastudios.test
+package id.calocallo.sicape.ui.main.lp.pasal.tes
 
 import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
