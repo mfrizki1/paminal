@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
@@ -36,7 +39,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ChoosePersonelActivity : BaseActivity() {
+class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
     companion object {
         const val MULTIPLE = "MULTIPLE"
         const val DATA_MULTIPLE = "DATA_MULTIPLE"
@@ -51,6 +54,10 @@ class ChoosePersonelActivity : BaseActivity() {
     private var selectedPersonel : MutableList<PersonelMinResp> = mutableListOf<PersonelMinResp>()
     private lateinit var adapterPersonelMultiple: PersonelMultipleAdapter
     private var tracker: SelectionTracker<PersonelMinResp>? = null
+
+    /*action mode*/
+    private var actionMode: ActionMode? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_personel)
@@ -207,7 +214,6 @@ class ChoosePersonelActivity : BaseActivity() {
     }
 
     private fun rvMultipleSelect(list: ArrayList<PersonelMinResp>?) {
-        var selection = mutableListOf<PersonelMinResp>()
         rv_list_choose_personel.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterPersonelMultiple = list?.let { PersonelMultipleAdapter(this, it) }!!
@@ -234,6 +240,12 @@ class ChoosePersonelActivity : BaseActivity() {
                         Log.e("personelMultiple", "$selectedPersonel")
 //                        Log.e("personelMultiple", "$selection")
 //                        Log.e("selevted", "$selevted")
+                        if(selectedPersonel.isEmpty()){
+                            actionMode?.finish()
+                        }else{
+                            if(actionMode == null)actionMode=startSupportActionMode(this@ChoosePersonelActivity)
+                            actionMode?.title = "${selectedPersonel.size}"
+                        }
                     }
                 }
             }
@@ -268,5 +280,37 @@ class ChoosePersonelActivity : BaseActivity() {
 
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_view_list ->{
+                val listNamaPers = ArrayList<String>()
+                for(i in 0 until selectedPersonel.size){
+                    selectedPersonel[i].nama?.let { listNamaPers.add(it) }
+                }
+                Toast.makeText(this, "$listNamaPers", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return true
+    }
+
+    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        mode?.let {
+            val inflater: MenuInflater = it.menuInflater
+            inflater.inflate(R.menu.action_mode_menu, menu)
+            return true
+        }
+        return false
+    }
+
+    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        return true
+    }
+
+    override fun onDestroyActionMode(mode: ActionMode?) {
+        adapterPersonelMultiple.tracker?.clearSelection()
+        adapterPersonelMultiple.notifyDataSetChanged()
+        actionMode = null
     }
 }

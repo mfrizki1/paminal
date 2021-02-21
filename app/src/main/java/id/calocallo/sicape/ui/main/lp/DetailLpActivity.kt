@@ -7,10 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.response.LpPasalResp
+import id.calocallo.sicape.network.response.PasalDilanggarResp
 import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.network.response.LpSaksiResp
-import id.calocallo.sicape.ui.main.lp.pasal.PickPasalLpEditActivity
+import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpEditActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
@@ -25,8 +25,8 @@ import java.util.ArrayList
 
 class DetailLpActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private lateinit var adapterDetailPasal: ReusableAdapter<LpPasalResp>
-    private lateinit var callbackDetailPasal: AdapterCallback<LpPasalResp>
+    private lateinit var adapterDetailPasalDilanggar: ReusableAdapter<PasalDilanggarResp>
+    private lateinit var callbackDetailPasalDilanggar: AdapterCallback<PasalDilanggarResp>
     private lateinit var adapterDetailSaksi: ReusableAdapter<LpSaksiResp>
     private lateinit var callbackDetailSaksi: AdapterCallback<LpSaksiResp>
 
@@ -38,7 +38,7 @@ class DetailLpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lp)
         sessionManager1 = SessionManager1(this)
-        adapterDetailPasal = ReusableAdapter(this)
+        adapterDetailPasalDilanggar = ReusableAdapter(this)
         adapterDetailSaksi = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
 //        val detailLP = intent.extras?.getParcelable<LpResp>(DETAIL_LP)
@@ -65,7 +65,7 @@ class DetailLpActivity : BaseActivity() {
         txt_alat_bukti_lp_detail.text = detailLP?.alatBukti
 
         txt_ket_lp_detail.text = detailLP?.keterangan
-        getPasalDetail(detailLP?.listPasal)
+        getPasalDetail(detailLP?.listPasalDilanggar)
         getSaksiDetail(detailLP?.listSaksi)
         //edit
         val hakAkses = sessionManager1.fetchHakAkses()
@@ -80,7 +80,7 @@ class DetailLpActivity : BaseActivity() {
         }
 
         btn_edit_pasal_lp.setOnClickListener {
-            val intent = Intent(this, PickPasalLpEditActivity::class.java)
+            val intent = Intent(this, ListPasalDilanggarActivity::class.java)
             intent.putExtra(EditLpActivity.EDIT_LP, detailLP)
             startActivity(intent)
         }
@@ -112,17 +112,17 @@ class DetailLpActivity : BaseActivity() {
         }
     }
 
-    private fun getPasalDetail(listPasal: ArrayList<LpPasalResp>?) {
-        callbackDetailPasal = object : AdapterCallback<LpPasalResp> {
-            override fun initComponent(itemView: View, data: LpPasalResp, itemIndex: Int) {
-                itemView.txt_item_1.text = data.nama_pasal
+    private fun getPasalDetail(listPasalDilanggar: ArrayList<PasalDilanggarResp>?) {
+        callbackDetailPasalDilanggar = object : AdapterCallback<PasalDilanggarResp> {
+            override fun initComponent(itemView: View, data: PasalDilanggarResp, itemIndex: Int) {
+                itemView.txt_item_1.text = data.pasal?.nama_pasal
             }
 
-            override fun onItemClicked(itemView: View, data: LpPasalResp, itemIndex: Int) {
+            override fun onItemClicked(itemView: View, data: PasalDilanggarResp, itemIndex: Int) {
             }
         }
-        listPasal?.let {
-            adapterDetailPasal.adapterCallback(callbackDetailPasal)
+        listPasalDilanggar?.let {
+            adapterDetailPasalDilanggar.adapterCallback(callbackDetailPasalDilanggar)
                 .isVerticalView().addData(it).setLayout(R.layout.item_pasal_lp)
                 .build(rv_pasal_detail_lp)
         }

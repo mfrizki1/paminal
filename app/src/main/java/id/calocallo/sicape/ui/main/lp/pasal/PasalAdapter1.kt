@@ -9,35 +9,34 @@ import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.response.LpPasalResp
-import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
+import id.calocallo.sicape.network.response.PasalDilanggarResp
 
 class PasalAdapter1 internal constructor(
     private val context: Context,
-    private val pasalItems: List<LpPasalResp>
+    private val pasalDilanggarItems: List<PasalDilanggarResp>
 ) :
     RecyclerView.Adapter<PasalAdapter1.ListViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    var tracker: SelectionTracker<LpPasalResp>? = null
+    var tracker: SelectionTracker<PasalDilanggarResp>? = null
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtPasal: TextView = itemView.findViewById(R.id.txt_1_clickable)
 //        private val container: LinearLayout = itemView.findViewById(R.id.linear_layout_container)
 
-        fun setPasalItems(pasal: LpPasalResp, isActivated: Boolean = false) {
+        fun setPasalItems(pasalDilanggar: PasalDilanggarResp, isActivated: Boolean = false) {
 //            with(itemView){
-            txtPasal.text = pasal.nama_pasal
+            txtPasal.text = pasalDilanggar.pasal?.nama_pasal
             itemView.isActivated = isActivated
 
 //            }
 //            postImageView.setImageResource(postItem.image)
         }
 
-        fun getItemDetails(): ItemDetailsLookup.ItemDetails<LpPasalResp> =
-            object : ItemDetailsLookup.ItemDetails<LpPasalResp>() {
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<PasalDilanggarResp> =
+            object : ItemDetailsLookup.ItemDetails<PasalDilanggarResp>() {
                 override fun getPosition(): Int = adapterPosition
-                override fun getSelectionKey(): LpPasalResp? = pasalItems[position]
+                override fun getSelectionKey(): PasalDilanggarResp? = pasalDilanggarItems[position]
             }
     }
 
@@ -48,16 +47,16 @@ class PasalAdapter1 internal constructor(
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         tracker?.let {
-            holder.setPasalItems(pasalItems[position], it.isSelected(pasalItems[position]))
+            holder.setPasalItems(pasalDilanggarItems[position], it.isSelected(pasalDilanggarItems[position]))
         }
 
     }
 
     override fun getItemCount(): Int {
-        return pasalItems.size
+        return pasalDilanggarItems.size
     }
 
-    fun getItem(position: Int) = pasalItems[position]
-    fun getPosition(name: String) = pasalItems.indexOfFirst { it.nama_pasal == name }
+    fun getItem(position: Int) = pasalDilanggarItems[position]
+    fun getPosition(name: String) = pasalDilanggarItems.indexOfFirst { it.pasal?.nama_pasal == name }
 }
 

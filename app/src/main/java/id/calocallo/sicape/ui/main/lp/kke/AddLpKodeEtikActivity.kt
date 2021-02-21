@@ -1,10 +1,12 @@
 package id.calocallo.sicape.ui.main.lp.kke
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -49,9 +51,10 @@ class AddLpKodeEtikActivity : BaseActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val pelapor = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
+        val pelapor = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
         if(resultCode == Activity.RESULT_OK && requestCode == REQ_PELAPOR){
             idPelapor = pelapor?.id
             txt_nama_pelapor_kke_lp_add.text ="Nama : ${pelapor?.nama}"

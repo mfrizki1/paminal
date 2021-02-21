@@ -33,6 +33,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
+                android:id="@+id/txt_layout_no_lp_add"
                 android:layout_height="75dp"
                 android:hint="NO LP">
 
@@ -40,15 +41,15 @@
                     android:id="@+id/edt_no_lp_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text|textCapSentences" />
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_choose_personel_menerima_lp_add"
+                android:id="@+id/btn_choose_personel_terlapor_lp_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:text="Pilih Personel Yang Menerima Laporan"
+                android:text="Pilih Personel Terlapor"
                 android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
@@ -75,44 +76,45 @@
                     <include layout="@layout/layout_separator" />
 
                     <TextView
-                        android:id="@+id/txt_nama_menerima_lp_add"
+                        android:id="@+id/txt_nama_terlapor_lp_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_8dp"
-                        android:text="Nama Personel Menerima Laporan"
+                        android:text="Nama Personel Terlapor"
                         android:textSize="@dimen/text_14"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txt_pangkat_menerima_lp_add"
+                        android:id="@+id/txt_pangkat_terlapor_lp_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_half"
-                        android:text="Pangkat Personel Menerima Laporan"
+                        android:text="Pangkat Personel Terlapor"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
-                        android:id="@+id/txt_nrp_menerima_lp_add"
+                        android:id="@+id/txt_nrp_terlapor_lp_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_half"
-                        android:text="NRP Personel Menerima Laporan"
+                        android:text="NRP Personel Terlapor"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
-                        android:id="@+id/txt_jabatan_menerima_lp_add"
+                        android:id="@+id/txt_jabatan_terlapor_lp_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_half"
-                        android:text="Jabatan Personel Menerima Laporan"
+                        android:text="Jabatan Personel Terlapor"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
-                        android:id="@+id/txt_kesatuan_menerima_lp_add"
+                        android:id="@+id/txt_kesatuan_terlapor_lp_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
                         android:layout_marginTop="@dimen/space_half"
-                        android:text="Kesatuan Personel Menerima Laporan"
+                        android:text="Kesatuan Personel Terlapor"
                         android:textSize="@dimen/text_14" />
                 </LinearLayout>
 
@@ -184,7 +186,22 @@
 
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Pukul Dibuat Laporan(XX:XX)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_pukul_laporan_lp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="datetime" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
+                android:id="@+id/txt_title_pimpinan_bidang_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
@@ -193,6 +210,7 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_nama_pimpinan_bidang_add"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -214,6 +232,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_pangkat_pimpinan_bidang_add"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -229,6 +248,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txt_layout_nrp_pimpinan_bidang_add"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -245,6 +265,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_jabatan_pimpinan_bidang_add"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -260,9 +281,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_spinner_kesatuan_lp_add"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:hint="Kesatuan Pimpinan Bidang">
 

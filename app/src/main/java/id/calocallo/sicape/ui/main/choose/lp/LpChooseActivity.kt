@@ -41,7 +41,7 @@ class LpChooseActivity : BaseActivity() {
     private var personelTerLapor = PersonelLapor()
     private var personelPeLapor = PersonelLapor()
     private var satKerResp = SatKerResp()
-    private var listPasal = arrayListOf<LpPasalResp>()
+    private var listPasal = arrayListOf<PasalDilanggarResp>()
     private var listSaksi = arrayListOf<LpSaksiResp>()
 
     private lateinit var sessionManager1: SessionManager1

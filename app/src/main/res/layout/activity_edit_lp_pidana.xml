@@ -25,6 +25,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="75dp"
+            android:enabled="false"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="No LP">
@@ -41,7 +42,8 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pembukaan Laporan" />
+            android:text="Pembukaan Laporan"
+            android:visibility="gone" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -49,7 +51,8 @@
             android:layout_height="150dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Pembukaan Laporan">
+            android:hint="Pembukaan Laporan"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_pembukaan_laporan_pidana_edit"
@@ -62,7 +65,7 @@
 
         <!--button for choose personel terlapor-->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_choose_personel_menerima_pidana_edit"
+            android:id="@+id/btn_choose_personel_terlapor_pidana_edit"
             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,51 +90,51 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Personel Yang Menerima Laporan"
+                    android:text="Personel Yang Terlapor"
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
 
                 <include layout="@layout/layout_separator" />
 
                 <TextView
-                    android:id="@+id/txt_nama_menerima_lp_edit"
+                    android:id="@+id/txt_nama_terlapor_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_8dp"
-                    android:text="Nama Personel Menerima Laporan"
+                    android:text="Nama Personel Terlapor"
                     android:textSize="@dimen/text_14"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txt_pangkat_menerima_lp_edit"
+                    android:id="@+id/txt_pangkat_terlapor_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Pangkat Personel Menerima Laporan"
+                    android:text="Pangkat Personel Terlapor"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
-                    android:id="@+id/txt_nrp_menerima_lp_edit"
+                    android:id="@+id/txt_nrp_terlapor_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="NRP Personel Menerima Laporan"
+                    android:text="NRP Personel Terlapor"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
-                    android:id="@+id/txt_jabatan_menerima_lp_edit"
+                    android:id="@+id/txt_jabatan_terlapor_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Jabatan Personel Menerima Laporan"
+                    android:text="Jabatan Personel Terlapor"
                     android:textSize="@dimen/text_14" />
 
                 <TextView
-                    android:id="@+id/txt_kesatuan_menerima_lp_edit"
+                    android:id="@+id/txt_kesatuan_terlapor_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_half"
-                    android:text="Kesatuan Personel Menerima Laporan"
+                    android:text="Kesatuan Personel Terlapor"
                     android:textSize="@dimen/text_14" />
             </LinearLayout>
 
@@ -188,14 +191,16 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Status Pelapor" />
+            android:text="Status Pelapor"
+            android:visibility="gone" />
 
         <RadioGroup
             android:id="@+id/rg_pelapor_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
-            android:paddingHorizontal="@dimen/space_12dp">
+            android:paddingHorizontal="@dimen/space_12dp"
+            android:visibility="gone">
 
             <RadioButton
                 android:id="@+id/rb_sipil_pidana_edit"
@@ -303,8 +308,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_sipil_edit"
@@ -344,13 +348,27 @@
                         android:text="Nama Sipil Pelapor"
                         android:textSize="@dimen/text_14"
                         android:textStyle="bold" />
-
+                    <TextView
+                        android:id="@+id/txt_ttl_sipil_pidana_lp_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="TTL Sipil Pelapor"
+                        android:textSize="@dimen/text_14" />
                     <TextView
                         android:id="@+id/txt_agama_sipil_pidana_lp_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_half"
                         android:text="Agama Sipil Pelapor"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_jk_sipil_pidana_lp_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Jenis Kelamin Sipil Pelapor"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
@@ -444,12 +462,27 @@
 
         </LinearLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Pukul Dibuat Laporan(XX:XX)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_pukul_buat_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="datetime" />
+        </com.google.android.material.textfield.TextInputLayout>
         <!--pimpinan-->
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pimpinan Bidang" />
+            android:text="Pimpinan Bidang"
+            android:visibility="gone" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -457,7 +490,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Nama Pimpinan Bidang">
+            android:hint="Nama Pimpinan Bidang"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_nama_pimpinan_bidang_edit"
@@ -471,7 +505,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -510,7 +545,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Jabatan Pimpinan Bidang">
+            android:hint="Jabatan Pimpinan Bidang"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_jabatan_pimpinan_bidang_edit"
@@ -525,7 +561,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Kesatuan Pimpinan Bidang">
+            android:hint="Kesatuan Pimpinan Bidang"
+            android:visibility="gone">
 
             <AutoCompleteTextView
                 android:id="@+id/spinner_kesatuan_pimpinan_bidang_edit"

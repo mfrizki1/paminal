@@ -30,7 +30,7 @@
             android:text="LP/ LP / lp"
             android:textSize="@dimen/text_16" />
 
-        <include layout="@layout/layout_separator" />
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -74,7 +74,7 @@
             android:text="Kesatuan : "
             android:textSize="@dimen/text_16" />
 
-        <include layout="@layout/layout_separator" />
+        <include layout="@layout/line_separator" />
         <!--personel pelapor-->
         <LinearLayout
             android:id="@+id/ll_detail_personel_pidana"
@@ -125,7 +125,7 @@
                 android:text="Kesatuan : "
                 android:textSize="@dimen/text_16" />
 
-            <include layout="@layout/layout_separator" />
+            <include layout="@layout/line_separator" />
 
         </LinearLayout>
 
@@ -134,8 +134,7 @@
             android:id="@+id/ll_detail_sipil_pidana"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
             <TextView
                 style="@style/TitleText"
@@ -150,6 +149,23 @@
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_half"
                 android:text="Nama : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_ttl_sipil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="TTL : "
+                android:textSize="@dimen/text_16" />
+            <TextView
+                android:id="@+id/txt_detail_jk_sipil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Jenis Kelamin : "
                 android:textSize="@dimen/text_16" />
 
             <TextView
@@ -206,7 +222,7 @@
                 android:text="Nik Ktp : "
                 android:textSize="@dimen/text_16" />
 
-            <include layout="@layout/layout_separator" />
+            <include layout="@layout/line_separator" />
 
 
         </LinearLayout>
@@ -215,7 +231,8 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pembukaan Laporan " />
+            android:text="Pembukaan Laporan "
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_detail_pembukaan_laporan_pidana"
@@ -224,9 +241,9 @@
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_half"
             android:text="@string/paragraf"
-            android:textSize="@dimen/text_16" />
+            android:textSize="@dimen/text_16"
+            android:visibility="gone" />
 
-        <include layout="@layout/layout_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -243,6 +260,8 @@
             android:text="@string/paragraf"
             android:textSize="@dimen/text_16" />
 
+        <include layout="@layout/line_separator" />
+
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
@@ -257,7 +276,7 @@
             android:layout_marginTop="@dimen/space_half"
             tools:listitem="@layout/item_pasal_lp" />
 
-        <include layout="@layout/layout_separator" />
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -283,72 +302,85 @@
             android:text="Tanggal : "
             android:textSize="@dimen/text_16" />
 
-        <include layout="@layout/layout_separator" />
+        <include layout="@layout/line_separator" />
 
-        <TextView
-            style="@style/TitleText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pimpinan" />
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/txt_detail_nama_pimpinan_pidana"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_half"
-            android:text="Nama : "
-            android:textSize="@dimen/text_16" />
+            <TextView
+                style="@style/TitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pimpinan" />
 
-        <TextView
-            android:id="@+id/txt_detail_pangkat_nrp_pimpinan_pidana"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_half"
-            android:text="PAngkat: NRP : "
-            android:textSize="@dimen/text_16" />
+            <TextView
+                android:id="@+id/txt_detail_nama_pimpinan_pidana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Nama : "
+                android:textSize="@dimen/text_16" />
 
-        <TextView
-            android:id="@+id/txt_detail_jabatan_pimpinan_pidana"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_half"
-            android:text="Jabatan : "
-            android:textSize="@dimen/text_16" />
+            <TextView
+                android:id="@+id/txt_detail_pangkat_nrp_pimpinan_pidana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="PAngkat: NRP : "
+                android:textSize="@dimen/text_16" />
 
-        <TextView
-            android:id="@+id/txt_detail_kesatuan_pimpinan_pidana"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_half"
-            android:text="Kesatuan : "
-            android:textSize="@dimen/text_16" />
+            <TextView
+                android:id="@+id/txt_detail_jabatan_pimpinan_pidana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Jabatan : "
+                android:textSize="@dimen/text_16" />
 
-        <include layout="@layout/layout_separator" />
+            <TextView
+                android:id="@+id/txt_detail_kesatuan_pimpinan_pidana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Kesatuan : "
+                android:textSize="@dimen/text_16" />
+
+            <include layout="@layout/line_separator" />
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_pidana"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Button"
-            android:text="Edit Data Laporan"/>
+            android:text="Edit Data Laporan" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_pasal_pidana"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Button"
-            android:text="Edit Data Pasal"/>
+            android:text="Edit Data Pasal Yang Dilanggar" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_generate_pidana"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/generate_dokumen" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_lihat_dok_pidana"
             style="@style/Widget.Button"
-            android:text="@string/generate_dokumen"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lihat Dokumen" />
 
 
     </LinearLayout>

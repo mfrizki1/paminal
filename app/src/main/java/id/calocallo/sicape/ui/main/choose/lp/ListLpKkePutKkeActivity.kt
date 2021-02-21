@@ -6,7 +6,7 @@ import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.response.LpKkeResp
-import id.calocallo.sicape.network.response.LpPasalResp
+import id.calocallo.sicape.network.response.PasalDilanggarResp
 import id.calocallo.sicape.network.response.LpSaksiResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.utils.SessionManager1
@@ -31,7 +31,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
     private var personelTerLapor = PersonelLapor()
     private var personelPeLapor = PersonelLapor()
     private var satKerResp = SatKerResp()
-    private var listPasal = arrayListOf<LpPasalResp>()
+    private var listPasal = arrayListOf<PasalDilanggarResp>()
     private var listSaksi = arrayListOf<LpSaksiResp>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
     }
 
     private fun getListKke() {
-        satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "")
+       /* satKerResp = SatKerResp(1, "POLDA", "ALAMAT", "081210812", "")
         personelTerLapor =
             PersonelLapor(
                 1,
@@ -67,7 +67,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
                 "Jl Banjarmasin", "islam", "laki_laki", "Batola", "12-01-2000", "081212"
 
             )
-        listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
+//        listPasal.add(PasalDilanggarResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
         listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))
 
         listLpKke.add(
@@ -88,7 +88,7 @@ class ListLpKkePutKkeActivity : BaseActivity() {
                 sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
                 listPasal, listSaksi, "", "", ""
             )
-        )
+        )*/
         callbackKke = object : AdapterCallback<LpKkeResp> {
             override fun initComponent(itemView: View, data: LpKkeResp, itemIndex: Int) {
                 itemView.txt_1_clickable.text = data.no_lp

@@ -1,10 +1,12 @@
 package id.calocallo.sicape.ui.main.lp.disiplin
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -51,9 +53,10 @@ class AddLpDisiplinActivity : BaseActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
         when (resultCode) {
             Activity.RESULT_OK -> {
                 when (requestCode) {

@@ -17,6 +17,7 @@ import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP
 import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity.Companion.LIST_KET_TERLAPOR
 import id.calocallo.sicape.ui.main.lhp.add.ReferensiPenyelidikanLhpActivity
+import id.calocallo.sicape.ui.main.lp.pasal.ListPasalActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_choose_lp.*
@@ -62,12 +63,11 @@ class ChooseLpActivity : BaseActivity() {
 
         }
 
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val noLp: String
-        val intentLP = Intent()
         if (requestCode == REQ_LP) {
             if(sktt == null) {
                 when (resultCode) {

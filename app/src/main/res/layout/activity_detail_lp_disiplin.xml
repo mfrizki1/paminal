@@ -81,23 +81,6 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Keterangan Terlapor" />
-
-        <TextView
-            android:id="@+id/txt_detail_keterangan_pelapor_disiplin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_half"
-            android:text="@string/paragraf"
-            android:textSize="@dimen/text_16" />
-
-        <include layout="@layout/layout_separator" />
-
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="Macam Pelanggaran" />
 
         <TextView
@@ -181,7 +164,22 @@
             android:textSize="@dimen/text_16" />
 
         <include layout="@layout/layout_separator" />
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Keterangan Pelapor" />
 
+        <TextView
+            android:id="@+id/txt_detail_keterangan_pelapor_disiplin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:text="@string/paragraf"
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/layout_separator" />
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
@@ -278,6 +276,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/space_half"
             android:text="Kesatuan : "
             android:textSize="@dimen/text_16" />
@@ -296,7 +295,7 @@
             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Data Pasal" />
+            android:text="Edit Data Pasal Yang Dilanggar" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_generate_disiplin"
@@ -304,5 +303,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/generate_dokumen" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_lihat_dok_disiplin"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lihat Dokumen" />
     </LinearLayout>
 </ScrollView>

@@ -30,7 +30,7 @@ class LpDisiplinPasalAdapter(
     }
 
     override fun onBindViewHolder(holder: LpDisiplinHolder, position: Int) {
-        holder.txtItem1.text = pasalDisiplinItem.pasal_dilanggar!![position].nama_pasal
+        holder.txtItem1.text = pasalDisiplinItem.pasal_dilanggar!![position].pasal?.nama_pasal
 
     }
 }

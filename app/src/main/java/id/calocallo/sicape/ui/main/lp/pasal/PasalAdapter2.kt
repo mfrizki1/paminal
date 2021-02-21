@@ -56,7 +56,7 @@ class PasalAdapter2(
         private val checkedPasal: ImageView
         fun bind(lpPasalResp: LpPasalModel) {
             checkedPasal.visibility = if (lpPasalResp.isChecked) View.VISIBLE else View.GONE
-            txtPasal.text = lpPasalResp.pasalModel[adapterPosition].nama_pasal
+            txtPasal.text = lpPasalResp.pasalDilanggarModel[adapterPosition].pasal?.nama_pasal
             itemView.setOnClickListener {
                 lpPasalResp.isChecked = !lpPasalResp.isChecked
                 checkedPasal.visibility = if(lpPasalResp.isChecked) View.VISIBLE else View.GONE

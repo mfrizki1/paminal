@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
         sheenValidator.registerAsRequired(edt_username)
         sheenValidator.registerHasMinLength(edt_password, 6)
 
-        isSipilLogin = intent.extras?.getBoolean("IS_SIPIL")
+        isSipilLogin = intent?.getBooleanExtra("IS_SIPIL",false)
         if (isSipilLogin == true) {
             txt_layout_username.hint = "Masukkan Username"
         } else {

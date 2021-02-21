@@ -70,4 +70,5 @@ dependencies {
     implementation 'com.airbnb.android:paris:1.7.2'
     implementation 'com.github.ajithvgiri:search-dialog:v1.5'
     implementation 'com.orhanobut:logger:2.2.0'
+    implementation 'com.github.naumanmir:filedownloadservice:1.2'
 }

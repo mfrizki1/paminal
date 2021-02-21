@@ -3,6 +3,7 @@
     package="id.calocallo.sicape">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.gelar.AddGelar4Activity"></activity>
+        <activity android:name=".ui.main.lp.pasal.AddPasalDilanggarActivity"></activity>
+        <activity android:name=".ui.main.lp.pasal.DetailPasalActivity" />
+        <activity android:name=".ui.main.lp.pasal.EditPasalActivity" />
+        <activity android:name=".ui.main.lp.pasal.ListPasalActivity" />
+        <activity android:name=".ui.gelar.AddGelar4Activity" />
         <activity android:name=".ui.gelar.AddGelar3Activity" />
         <activity android:name=".ui.gelar.AddGelar2Activity" />
         <activity android:name=".ui.main.editpersonel.keluarga.PickPasanganActivity" />
@@ -127,13 +132,12 @@
         <activity android:name=".ui.main.choose.lp.LpChooseActivity" />
         <activity android:name=".ui.main.choose.lp.ChooseLpActivity" />
         <activity android:name=".ui.main.lp.saksi.PickSaksiLpEditActivity" />
-        <activity android:name=".ui.main.lp.pasal.PickPasalLpEditActivity" />
+        <activity android:name=".ui.main.lp.pasal.ListPasalDilanggarActivity" />
         <activity android:name=".ui.main.lp.saksi.AddSaksiLpActivity" />
         <activity android:name=".ui.main.lp.saksi.EditSaksiLpActivity" />
         <activity android:name=".ui.main.lp.saksi.PickSaksiLpActivity" />
-        <activity android:name=".ui.main.lp.pasal.EditPasalLpActivity" />
-        <activity android:name=".ui.main.lp.pasal.PickPasalLpActivity" />
-        <activity android:name=".ui.main.lp.pasal.AddPasalLpActivity" />
+        <activity android:name=".ui.main.lp.pasal.EditPasalDilanggarActivity" />
+        <activity android:name=".ui.main.lp.pasal.AddPasalActivity" />
         <activity android:name=".ui.main.pelanggaran.PickPelanggaranActivity" />
         <activity android:name=".ui.main.choose.ChoosePersonelActivity" />
         <activity android:name=".ui.main.editpersonel.relasi.AddSingleRelasiActivity" />
@@ -235,6 +239,8 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service android:name="com.downloadservice.filedownloadservice.service.DownloadService" />
     </application>
 
 </manifest>

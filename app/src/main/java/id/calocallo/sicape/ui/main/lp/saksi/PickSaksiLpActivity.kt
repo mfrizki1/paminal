@@ -34,11 +34,11 @@ class PickSaksiLpActivity : BaseActivity() {
     private var lpKKeReq = LpKkeReq()
     private var selectedSaksi: MutableList<LpSaksiResp> = mutableListOf()
     private var tracker: SelectionTracker<LpSaksiResp>? = null
-    private var listSaksi = arrayListOf(
+   /* private var listSaksi = arrayListOf(
         LpSaksiResp(1, "Utuh", "", "", "","",1,"","",""),
         LpSaksiResp(2, "Galuh", "", "", "","" ,0,"","",""),
         LpSaksiResp(3, "Dulak", "", "", "","",0,"","","")
-    )
+    )*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +88,7 @@ class PickSaksiLpActivity : BaseActivity() {
     private fun addAllLp(jenisLP: String?, idPelaporSaksi: Int?) {
         when (jenisLP) {
             "kode_etik" -> {
-                lpKKeReq.no_lp = sessionManager1.getNoLP()
+//                lpKKeReq.no_lp = sessionManager1.getNoLP()
 //                lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
                 lpKKeReq.uraian_pelanggaran = jenisLP
                 lpKKeReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
@@ -104,7 +104,7 @@ class PickSaksiLpActivity : BaseActivity() {
                 lpKKeReq.isi_laporan = sessionManager1.getIsiLapLP()
                 lpKKeReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
                 lpKKeReq.pasal_dilanggar = sessionManager1.getListPasalLP()
-                lpKKeReq.saksi_kode_etik = selectedSaksi as ArrayList<LpSaksiResp>
+//                lpKKeReq.saksi_kode_etik = selectedSaksi as ArrayList<LpSaksiResp>
 
                 Log.e("KKE", "${lpKKeReq}")
             }
@@ -114,7 +114,7 @@ class PickSaksiLpActivity : BaseActivity() {
     private fun getSaksiLp() {
 //        NetworkConfig().getService()
         rv_list_saksi.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapterSaksiLp = SelectedSaksiAdapter(this, listSaksi)
+//        adapterSaksiLp = SelectedSaksiAdapter(this, listSaksi)
         rv_list_saksi.adapter = adapterSaksiLp
 
         tracker = SelectionTracker.Builder<LpSaksiResp>(

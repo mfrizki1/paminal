@@ -8,7 +8,7 @@
         <item name="android:textColor">@color/onyx</item>
         <item name="fontFamily">sans-serif</item>
         <item name="buttonStyle">@style/Widget.Button</item>
-
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="SplashScreenStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge" />

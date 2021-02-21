@@ -722,6 +722,16 @@ class SessionManager1(context: Context) {
 
 //    <!-----------LP-----------/>
 
+    fun setWaktuBuatLaporan(waktu: String) {
+        val editor = prefsLP.edit()
+        editor.putString("WAKTU", waktu)
+        editor.apply()
+    }
+
+    fun getWaktuBuatLaporan(): String? {
+        return prefsLP.getString("WAKTU", null)
+    }
+
     fun setJenisLP(jenis: String) {
         val editor = prefsLP.edit()
         editor.putString("JENIS_LP", jenis)
@@ -944,18 +954,18 @@ class SessionManager1(context: Context) {
     }
 
 
-    fun setListPasalLP(listPasal: ArrayList<LpPasalResp>) {
+    fun setListPasalLP(listPasal: ArrayList<ListIdPasalReq>) {
         val editor = prefsLP.edit()
         val json = Gson().toJson(listPasal)
         editor.putString("LIST_PASAL", json)
         editor.commit()
     }
 
-    fun getListPasalLP(): ArrayList<LpPasalResp> {
-        val emptyJson = Gson().toJson(ArrayList<LpPasalResp>())
+    fun getListPasalLP(): ArrayList<ListIdPasalReq> {
+        val emptyJson = Gson().toJson(ArrayList<ListIdPasalReq>())
         return Gson().fromJson(
             prefsLP.getString("LIST_PASAL", emptyJson),
-            object : TypeToken<ArrayList<LpPasalResp>>() {}.type
+            object : TypeToken<ArrayList<ListIdPasalReq>>() {}.type
         )
     }
 

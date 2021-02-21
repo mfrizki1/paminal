@@ -1,6 +1,6 @@
 package id.calocallo.sicape.network.request
 
-import id.calocallo.sicape.network.response.LpPasalResp
+import id.calocallo.sicape.network.response.PasalDilanggarResp
 import id.calocallo.sicape.network.response.LpSaksiResp
 
 
@@ -10,7 +10,7 @@ data class LpReq(
     var no_lp: String?,
     var id_pelanggaran: Int?,
     var alat_bukti: String?,
-    var listPasal: ArrayList<LpPasalResp>?,
+    var listPasalDilanggar: ArrayList<PasalDilanggarResp>?,
     var listSaksi: MutableList<LpSaksiResp>?,
     var keterangan: String?
 

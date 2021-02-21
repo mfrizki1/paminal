@@ -24,6 +24,9 @@
         <include
             layout="@layout/view_no_data"
             android:visibility="gone" />
+        <include
+            layout="@layout/layout_progress_dialog"
+            android:visibility="gone" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_add_lp_pidana"
