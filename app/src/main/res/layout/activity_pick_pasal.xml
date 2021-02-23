@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.lp.pasal.PickPasalActivity">
 
     <include layout="@layout/layout_toolbar_white" />
@@ -16,36 +16,33 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/txt_pilih_pasal"
+            style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TitleText"
-            android:text="Pilih Data Pasal"
-            android:id="@+id/txt_pilih_pasal"/>
+            android:text="Pilih Data Pasal" />
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_pasal_pick"
+            android:id="@+id/pasal_searchview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textCursorDrawable="@null"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@null"
-            android:layout_below="@+id/txt_pilih_pasal"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_8dp"
             android:background="@drawable/bg_button_oval_primary"
-            android:backgroundTint="@color/timber_wolf" />
-
+            android:backgroundTint="@color/timber_wolf"
+            android:layout_below="@+id/txt_pilih_pasal"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_pasal_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/txt_pilih_pasal"
+            android:layout_below="@+id/pasal_searchview"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:id="@+id/rv_list_pasal_2"
-            tools:listitem="@layout/layout_1_text_clickable"/>
-        <include layout="@layout/view_no_data"
-            android:visibility="gone"/>
+            tools:listitem="@layout/layout_1_text_clickable" />
+
+        <include
+            layout="@layout/view_no_data"
+            android:visibility="gone" />
 
         <include
             layout="@layout/layout_progress_dialog"
@@ -57,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/ll_pick_pasal"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/space_12dp"
             android:layout_marginRight="@dimen/space_12dp"
+            android:layout_marginBottom="@dimen/space_12dp"
             android:backgroundTint="@color/colorPrimary"
             android:src="@drawable/ic_add"
             android:tint="@color/white" />
@@ -71,12 +68,13 @@
             android:background="@color/white"
             android:elevation="45dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
-                android:textColor="@color/davy_grey"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Tekan lama untuk memilih pasal"/>
+                android:text="Tekan lama untuk memilih pasal"
+                android:textColor="@color/davy_grey" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save_lp_all"

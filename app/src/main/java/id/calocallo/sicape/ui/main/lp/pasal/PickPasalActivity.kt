@@ -16,21 +16,19 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.razir.progressbutton.*
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
 import id.calocallo.sicape.network.response.PasalResp
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesDetailsLookup
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.request.*
-import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.DokLpResp
-import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
+import id.calocallo.sicape.network.request.LpDisiplinReq
+import id.calocallo.sicape.network.request.LpKkeReq
+import id.calocallo.sicape.network.request.LpPidanaReq
+import id.calocallo.sicape.network.request.SipilPelaporReq
+import id.calocallo.sicape.network.response.LpPasalResp
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
 import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity.Companion.ID_PELAPOR_SAKSI
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.hideKeyboard
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -44,7 +42,6 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
     private lateinit var adapterPasalTes: PasalTesAdapter
     private var selectedIdPasal: MutableList<PasalResp> = mutableListOf()
     private var tracker: SelectionTracker<PasalResp>? = null
-    private val listIdPasal = ArrayList<ListIdPasalReq>()
 
     //req
     private var lpPidanaReq = LpPidanaReq()
@@ -59,8 +56,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
         setContentView(R.layout.activity_pick_pasal)
         setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
-        Logger.addLogAdapter(AndroidLogAdapter())
-        hideKeyboard()
+
         when (sessionManager1.getJenisLP()) {
             "pidana" -> {
                 supportActionBar?.title = "Tambah Data Laporan Pidana"
@@ -70,9 +66,8 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
             }
             "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Kode Etik"
         }
-        apiPasalAll()
+        apiListPasal()
 //        getListPasal(listPasal)
-
 
         //getSipil if not empty
         val sipil = intent?.extras?.getParcelable<SipilPelaporReq>(SIPIL)
@@ -80,19 +75,11 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
         val idPelapor = intent.extras?.getInt(ID_PELAPOR)
         bindProgressButton(btn_save_lp_all)
         btn_save_lp_all.attachTextChangeAnimator()
-        if (sessionManager1.getJenisLP() == "kode_etik") {
-            btn_save_lp_all.text = getString(R.string.next)
-        }
         btn_save_lp_all.setOnClickListener {
-
-            for (i in 0 until selectedIdPasal.size) {
-                listIdPasal.add(ListIdPasalReq(selectedIdPasal[i].id))
-            }
-//            Log.e("idPasalOnButton", "$listIdPasal")
             if (sessionManager1.getJenisLP() != "kode_etik") {
                 addAllLp(sessionManager1.getJenisLP(), idPelapor, sipil)
             } else {
-                sessionManager1.setListPasalLP(listIdPasal)
+                sessionManager1.setListPasalLP(selectedIdPasal as ArrayList<LpPasalResp>)
                 val intent = Intent(this, PickSaksiActivity::class.java)
                 intent.putExtra(ID_PELAPOR_SAKSI, idPelapor)
                 startActivity(intent)
@@ -101,49 +88,34 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
         }
 
         btn_add_single_pasal.setOnClickListener {
-            val intent = Intent(this, AddPasalActivity::class.java)
+            val intent = Intent(this, AddPasalLpActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        /*searchView*/
-        searchView()
 
+        //apakah kke / tidak
+searchView()
 
     }
 
-    private fun searchView() {
-        search_pasal_pick.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+    private fun apiListPasal() {
+        NetworkConfig().getServLp().getAllPasal(
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk2OTkwMWIwMWFlMGFiN2IxMTg3YzYxYmFiMDhjYzU3NGE4MGFjZTZiN2RiMmE4MzdhYWE5NDhmM2QyY2Q3MmJiNTBlY2NlZWQ5YWJjZDYwIn0.eyJhdWQiOiIxIiwianRpIjoiOTY5OTAxYjAxYWUwYWI3YjExODdjNjFiYWIwOGNjNTc0YTgwYWNlNmI3ZGIyYTgzN2FhYTk0OGYzZDJjZDcyYmI1MGVjY2VlZDlhYmNkNjAiLCJpYXQiOjE2MTQwNDAyMjgsIm5iZiI6MTYxNDA0MDIyOCwiZXhwIjoxNjQ1NTc2MjI4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Kg9YmOAcUkT01oN_fxxwxUZMgiLb3Q77HsociadtlC1bj_e8zlQ9D71LJMMNuWbrJuwOSSxuHbjlrkjhCXkhdGun-5uqSzRPEaZue45cg5s2lSADnGTb-7jsedGEuz9OBURTYujdl9f1I37tWFWfiTFXUAmbLdReZspkaqEdBaeh-ogmnNfti2_Xg3id55M2A607gv2pn-Qfz46zyXk8B7arAjNb0VqbIKkJ3zygZ6rM7h7RHhU7xWkoO4dG_FcTPTK3wRlxrwIPkUnb5EbymZoK82kabqZ0Q6-WYpDRVHfaynhzCtHwQkHvwIx5WW15H6cAUg3FLTXQwIQ6rwmzMa3tN2PvGfo-9uMVxgj7T9UQfD7D3lBin17p7JFykWI4RlSW_OZt5oCPN4HK4Rffqmr2xjUeDNB6idnGvjP1Htpq-h_nKF0hWSKOi2Df_YnDhxQwP3iFSQAdtGKtWs-4a4Mxn4hS02wcdSrIGNSxAN2a8eeOFa7xXusbWCZOMnD1Vvpa0XwTdv7dY1P4rbYRgeD1b29GPja2RPnR3jNJ0Rll9CWjWefvKGdOI4YcKQorX_pJcW9LxN_NA8LHndd9r87hnFftcYLoRQLsIzCqFm2Zl8ogiPWaG0TTfEBSRtleVkmYWOJNdJwS8otwHGsvPCztRq3bBFiHFwQA2x8hA_k"
+        ).enqueue(object : Callback<ArrayList<PasalResp>> {
+            override fun onResponse(
+                call: Call<ArrayList<PasalResp>>,
+                response: Response<ArrayList<PasalResp>>
+            ) {
+                if(response.isSuccessful){
+                    response.body()?.let { getListPasal(it) }
+                }
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                adapterPasalTes.filter.filter(newText)
-                return true
+            override fun onFailure(call: Call<ArrayList<PasalResp>>, t: Throwable) {
+                Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+
             }
-        }
-
-    private fun apiPasalAll() {
-        NetworkConfig().getServLp().getAllPasal("Bearer ${sessionManager1.fetchAuthToken()}")
-            .enqueue(object :
-                Callback<ArrayList<PasalResp>> {
-                override fun onFailure(call: Call<ArrayList<PasalResp>>, t: Throwable) {
-                    Toast.makeText(this@PickPasalActivity, "Error Konekisi", Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                override fun onResponse(
-                    call: Call<ArrayList<PasalResp>>,
-                    response: Response<ArrayList<PasalResp>>
-                ) {
-                    if (response.isSuccessful) {
-                        getListPasal(response.body() as ArrayList<PasalResp>)
-                    } else {
-                        Toast.makeText(this@PickPasalActivity, "Error Konekisi", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-            })
+        })
     }
 
     private fun getListPasal(listPasal: MutableList<PasalResp>) {
@@ -192,24 +164,28 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
         btn_save_lp_all.showProgress {
             progressColor = Color.WHITE
         }
-//        btn_save_lp_all.hideDrawable(R.string.save)
+
+
+        btn_save_lp_all.showDrawable(animatedDrawable) {
+            buttonTextRes = R.string.data_saved
+            textMarginRes = R.dimen.space_10dp
+        }
+
+        btn_save_lp_all.hideDrawable(R.string.save)
 
         when (jenisLP) {
             "pidana" -> {
-//                lpPidanaReq.no_lp = sessionManager1.getNoLP()
-                lpPidanaReq.id_satuan_kerja = 123
+                lpPidanaReq.no_lp = sessionManager1.getNoLP()
                 lpPidanaReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
-//                lpPidanaReq.id_personel_pelapor = idPelapor
-//                lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
-//                lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
-//                lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
-//                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
-//                lpPidanaReq.status_pelapor = sessionManager1.getPelapor()
-//                lpPidanaReq.pembukaan_laporan = sessionManager1.getPembukaanLpLP()
+                lpPidanaReq.id_personel_pelapor = idPelapor
+                lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
+                lpPidanaReq.status_pelapor = sessionManager1.getPelapor()
+                lpPidanaReq.pembukaan_laporan = sessionManager1.getPembukaanLpLP()
                 lpPidanaReq.isi_laporan = sessionManager1.getIsiLapLP()
-                lpPidanaReq.pasal_dilanggar = listIdPasal
-                lpPidanaReq.waktu_buat_laporan = sessionManager1.getWaktuBuatLaporan()
-//                lpPidanaReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
+                lpPidanaReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
                 lpPidanaReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
                 lpPidanaReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
                 lpPidanaReq.nama_pelapor = sipil?.nama_sipil
@@ -219,20 +195,14 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpPidanaReq.alamat_pelapor = sipil?.alamat_sipil
                 lpPidanaReq.nik_ktp_pelapor = sipil?.nik_sipil
                 lpPidanaReq.no_telp_pelapor = sipil?.no_telp_sipil
-                lpPidanaReq.jenis_kelamin_pelapor = sipil?.jenis_kelamin
-                lpPidanaReq.tempat_lahir_pelapor = sipil?.tempat_lahir_pelapor
-                lpPidanaReq.tanggal_lahir_pelapor = sipil?.tanggal_lahir_pelapor
                 lpPidanaReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
-//                lpPidanaReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
-                Logger.e("$lpPidanaReq")
-                apiAddLpPidana()
+                lpPidanaReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
+                Log.e("pidanaAll", "$lpPidanaReq")
             }
             "disiplin" -> {
-                lpDisiplinReq.id_satuan_kerja = 123
-                lpDisiplinReq.waktu_buat_laporan = sessionManager1.getWaktuBuatLaporan()
                 lpDisiplinReq.no_lp = sessionManager1.getNoLP()
                 lpDisiplinReq.uraian_pelanggaran = jenisLP
-//                lpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id
+                lpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id
                 lpDisiplinReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
                 lpDisiplinReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
                 lpDisiplinReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
@@ -245,76 +215,13 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpDisiplinReq.keterangan_pelapor = sessionManager1.getKetPelaporLP()
                 lpDisiplinReq.kronologis_dari_pelapor = sessionManager1.getKronologisPelapor()
                 lpDisiplinReq.rincian_pelanggaran_disiplin = sessionManager1.getRincianDisiplin()
-                lpDisiplinReq.pasal_dilanggar = listIdPasal
+                lpDisiplinReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>
                 lpDisiplinReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
-                Logger.e("$lpDisiplinReq")
-                apiAddLpDisiplin()
+                Log.e("add_disiplin", "$lpDisiplinReq")
+
             }
         }
 
-    }
-
-    private fun apiAddLpDisiplin() {
-        NetworkConfig().getServLp().addLpDisiplin("Bearer ${sessionManager1.fetchAuthToken()}",lpDisiplinReq).enqueue(object :Callback<Base1Resp<DokLpResp>>{
-            override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
-                Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
-                btn_save_lp_all.hideDrawable(R.string.not_save)
-            }
-
-            override fun onResponse(
-                call: Call<Base1Resp<DokLpResp>>,
-                response: Response<Base1Resp<DokLpResp>>
-            ) {
-                if(response.body()?.message == "Data lp disiplin saved succesfully"){
-                    btn_save_lp_all.hideDrawable(R.string.data_saved)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                       startActivity(Intent(this@PickPasalActivity, ListLpDisiplinActivity::class.java))
-                       finish()
-                    },500)
-                }else{
-                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
-                    btn_save_lp_all.hideDrawable(R.string.not_save)
-                }
-            }
-        })
-    }
-
-    private fun apiAddLpPidana() {
-        NetworkConfig().getServLp()
-            .addLpPidana("Bearer ${sessionManager1.fetchAuthToken()}", lpPidanaReq)
-            .enqueue(object : Callback<Base1Resp<DokLpResp>> {
-                override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
-                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT)
-                        .show()
-                    btn_save_lp_all.hideDrawable(R.string.not_save)
-                    Log.e("t", "$t")
-                }
-
-                override fun onResponse(
-                    call: Call<Base1Resp<DokLpResp>>,
-                    response: Response<Base1Resp<DokLpResp>>
-                ) {
-                    if (response.body()?.message == "Data lp pidana saved succesfully") {
-                        val animatedDrawable =
-                            ContextCompat.getDrawable(
-                                this@PickPasalActivity,
-                                R.drawable.animated_check
-                            )!!
-                        //Defined bounds are required for your drawable
-                        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
-                        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
-                        btn_save_lp_all.showDrawable(animatedDrawable) {
-                            buttonTextRes = R.string.data_saved
-                            textMarginRes = R.dimen.space_10dp
-                        }
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            finish()
-                        },500)
-                    } else {
-                        btn_save_lp_all.hideDrawable(R.string.not_save)
-                    }
-                }
-            })
     }
 
     companion object {
@@ -322,17 +229,19 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
         const val SIPIL = "SIPIL"
     }
 
-    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.action_view_list -> {
-                val listNamePasal = ArrayList<String>()
-                for (i in 0 until selectedIdPasal.size) {
-                    selectedIdPasal[i].nama_pasal?.let { listNamePasal.add(it) }
-                }
-                Toast.makeText(this, "$listNamePasal", Toast.LENGTH_SHORT).show()
+
+    private fun searchView() {
+        pasal_searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
             }
-        }
-        return true
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterPasalTes.filter.filter(newText)
+                return true
+            }
+
+        })
     }
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
@@ -348,14 +257,22 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
         return true
     }
 
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_view_list -> {
+                val listNamePasal = ArrayList<String>()
+                for (i in 0 until selectedIdPasal.size) {
+                    selectedIdPasal[i].nama_pasal?.let { listNamePasal.add(it) }
+                }
+                Toast.makeText(this, "$listNamePasal", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return true
+    }
+
     override fun onDestroyActionMode(mode: ActionMode?) {
         adapterPasalTes.tracker?.clearSelection()
         adapterPasalTes.notifyDataSetChanged()
         actionMode = null
-    }
-
-    override fun onResume() {
-        super.onResume()
-        apiPasalAll()
     }
 }
