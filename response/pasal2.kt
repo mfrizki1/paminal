@@ -3,6 +3,8 @@ package id.calocallo.sicape.ui.main.lp.pasal
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -121,7 +123,9 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 adapterPasalTes.filter.filter(newText)
                 return true
             }
-        }
+
+        })
+    }
 
     private fun apiPasalAll() {
         NetworkConfig().getServLp().getAllPasal("Bearer ${sessionManager1.fetchAuthToken()}")
@@ -164,7 +168,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
         adapterPasalTes.tracker = tracker
 
         tracker?.addObserver(
-            object : SelectionTracker.SelectionObserver<PasalResp>() {
+            object : SelectionTracker.SelectionObserver<Long>() {
                 override fun onSelectionChanged() {
                     super.onSelectionChanged()
                     tracker?.let {
@@ -177,6 +181,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                                 startSupportActionMode(this@PickPasalActivity)
                             actionMode?.title = " ${selectedIdPasal.size}"
                         }
+
                     }
                 }
             }
@@ -184,11 +189,6 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
     }
 
     private fun addAllLp(jenisLP: String?, idPelapor: Int?, sipil: SipilPelaporReq?) {
-        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
-        //Defined bounds are required for your drawable
-        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
-        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
-
         btn_save_lp_all.showProgress {
             progressColor = Color.WHITE
         }
