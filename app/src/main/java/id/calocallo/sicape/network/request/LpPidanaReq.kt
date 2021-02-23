@@ -2,10 +2,10 @@ package id.calocallo.sicape.network.request
 
 data class LpPidanaReq(
 //    var no_lp: String?,
-//    var nama_yang_mengetahui: String?,
-//    var pangkat_yang_mengetahui: String?,
-//    var nrp_yang_mengetahui: String?,
-//    var jabatan_yang_mengetahui: String?,
+    var nama_yang_mengetahui: String?,
+    var pangkat_yang_mengetahui: String?,
+    var nrp_yang_mengetahui: String?,
+    var jabatan_yang_mengetahui: String?,
 //    var kesatuan_yang_mengetahui: String?,
 //    var status_pelapor: String?,
 //    var pembukaan_laporan: String?,
@@ -51,11 +51,11 @@ data class LpPidanaReq(
         null,
         null,
         null,
+        null,
+        null,
+        null,
+        null,
         null
-//        null,
-//        null,
-//        null,
-//        null,
 //        null,
 //        null,
 //        null

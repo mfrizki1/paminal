@@ -129,13 +129,8 @@ class AddLpActivity : BaseActivity() {
     }
 
     private fun viewPidana() {
-        txt_layout_nama_pimpinan_bidang_add.gone()
-        txt_layout_pangkat_pimpinan_bidang_add.gone()
-        txt_layout_nrp_pimpinan_bidang_add.gone()
-        txt_layout_jabatan_pimpinan_bidang_add.gone()
         txt_layout_spinner_kesatuan_lp_add.gone()
         txt_layout_no_lp_add.gone()
-        txt_title_pimpinan_bidang_add.gone()
     }
 
     @SuppressLint("SetTextI18n")

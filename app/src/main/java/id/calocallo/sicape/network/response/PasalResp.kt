@@ -16,3 +16,10 @@ data class PasalResp(
 ) : Parcelable {
     constructor() : this(null, null, null, null, null, null, null, null)
 }
+
+@Parcelize
+data class AddPasalResp(
+    var pasal: PasalResp?
+) : Parcelable{
+    constructor():this(null)
+}
