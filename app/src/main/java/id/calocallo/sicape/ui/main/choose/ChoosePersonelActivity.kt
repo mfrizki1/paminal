@@ -224,7 +224,7 @@ class ChoosePersonelActivity : BaseActivity() {
         ).build()
         adapterPersonelMultiple.tracker = tracker
         tracker?.addObserver(
-            object : SelectionTracker.SelectionObserver<Long>() {
+            object : SelectionTracker.SelectionObserver<PersonelMinResp>() {
                 override fun onSelectionChanged() {
                     super.onSelectionChanged()
                     tracker?.let {

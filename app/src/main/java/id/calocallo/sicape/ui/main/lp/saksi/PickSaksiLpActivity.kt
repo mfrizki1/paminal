@@ -128,7 +128,7 @@ class PickSaksiLpActivity : BaseActivity() {
         ).build()
         adapterSaksiLp.tracker = tracker
         tracker?.addObserver(
-            object : SelectionTracker.SelectionObserver<Long>() {
+            object : SelectionTracker.SelectionObserver<LpSaksiResp>() {
                 override fun onSelectionChanged() {
                     super.onSelectionChanged()
                     tracker?.let {

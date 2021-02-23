@@ -127,7 +127,7 @@ class PickPasalLpActivity : BaseActivity() {
 
     private fun getPasal() {
         //        NetworkConfig().getService()
-        listPasal.add(
+      /*  listPasal.add(
             PasalResp(1, 1, "Pasal 1", "")
         )
         listPasal.add(
@@ -135,7 +135,7 @@ class PickPasalLpActivity : BaseActivity() {
         )
         listPasal.add(
             PasalResp(3, 3, "Pasal 3", "")
-        )
+        )*/
         rv_list_pasal.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterPasalTes = PasalTesAdapter(this, listPasal)
@@ -153,7 +153,7 @@ class PickPasalLpActivity : BaseActivity() {
         adapterPasalTes.tracker = tracker
 
         tracker?.addObserver(
-            object : SelectionTracker.SelectionObserver<Long>() {
+            object : SelectionTracker.SelectionObserver<PasalResp>() {
                 override fun onSelectionChanged() {
                     super.onSelectionChanged()
                     tracker?.let {
