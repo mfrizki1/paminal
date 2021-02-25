@@ -68,7 +68,7 @@ class EditPendFragment : Fragment() {
     }
 
     private fun viewPendDetail(pendidikan: PendidikanModel?) {
-        NetworkConfig().getService().getDetailPend(
+        NetworkConfig().getServPers().getDetailPend(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pendidikan?.id.toString()
         ).enqueue(object : Callback<DetailPendModel> {
@@ -98,7 +98,7 @@ class EditPendFragment : Fragment() {
     }
 
     private fun doDelete(pendidikan: PendidikanModel?) {
-        NetworkConfig().getService().deletePend(
+        NetworkConfig().getServPers().deletePend(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pendidikan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
@@ -142,7 +142,7 @@ class EditPendFragment : Fragment() {
             progressColor = Color.WHITE
         }
 
-        NetworkConfig().getService().updatePend(
+        NetworkConfig().getServPers().updatePend(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pendidikan?.id.toString(), //id
             singlePendReq

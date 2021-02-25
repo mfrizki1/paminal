@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.model.SignalementModel
 import id.calocallo.sicape.network.NetworkConfig
@@ -67,7 +66,7 @@ class EditSignalementActivity : BaseActivity() {
         signalementModel.keluarga_dekat = edt_keluarga_dekat_edit.text.toString()
         signalementModel.lain_lain = edt_lainnya_edit.text.toString()
 
-        NetworkConfig().getService().updateSignalement(
+        NetworkConfig().getServPers().updateSignalement(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString(),
             signalementModel
@@ -99,7 +98,7 @@ class EditSignalementActivity : BaseActivity() {
     }
 
     private fun getSignalement() {
-        NetworkConfig().getService().getSignalement(
+        NetworkConfig().getServPers().getSignalement(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<SignalementModel> {

@@ -5,15 +5,11 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.EditLpDisiplinReq
 import id.calocallo.sicape.network.response.*
@@ -173,7 +169,7 @@ class EditLpDisiplinActivity : BaseActivity() {
         editLpDisiplinReq.jabatan_yang_mengetahui =
             edt_jabatan_pimpinan_bidang_edit_disiplin.text.toString()
         editLpDisiplinReq.uraian_pelanggaran = edt_uraian_pelanggaran_disiplin_edit.text.toString()
-        editLpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id
+        editLpDisiplinReq.id_personel_operator = sessionManager1.fetchUser()?.id
 //        editLpDisiplinReq.id_personel_pelapor = disiplin?.personel_pelapor?.id
         editLpDisiplinReq.id_personel_terlapor = disiplin?.personel_terlapor?.id
 //        editLpDisiplinReq.kesatuan_yang_mengetahui = namaSatker

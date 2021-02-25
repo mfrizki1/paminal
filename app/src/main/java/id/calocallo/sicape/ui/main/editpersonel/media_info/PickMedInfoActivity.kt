@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.MedInfoResp
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.utils.SessionManager1
@@ -72,7 +71,7 @@ class PickMedInfoActivity : BaseActivity() {
 
     private fun ApiMedInfo() {
         rl_pb.visible()
-        NetworkConfig().getService().showMedInfo(
+        NetworkConfig().getServPers().showMedInfo(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString()
             ).enqueue(object : Callback<ArrayList<MedInfoResp>> {

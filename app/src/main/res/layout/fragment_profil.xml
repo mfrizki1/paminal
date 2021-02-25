@@ -46,13 +46,27 @@
                 android:textSize="@dimen/text_18" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_logout"
+                android:id="@+id/btn_manajemen_admin"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:text="LOGOUT"
+                android:text="Manajemen Admin"
                 android:textColor="@color/colorPrimary"
+                android:visibility="gone"
+                app:backgroundTint="@color/white"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_manajemen_operator"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Manajemen Operator"
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone"
                 app:backgroundTint="@color/white"
                 app:strokeColor="@color/colorPrimary"
                 app:strokeWidth="2dp" />
@@ -69,26 +83,14 @@
                 app:strokeColor="@color/colorPrimary"
                 app:strokeWidth="2dp" />
 
+
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_manajemen_admin"
+                android:id="@+id/btn_logout"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:text="Manajemen Admin"
-                android:visibility="gone"
-                android:textColor="@color/colorPrimary"
-                app:backgroundTint="@color/white"
-                app:strokeColor="@color/colorPrimary"
-                app:strokeWidth="2dp" />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_manajemen_operator"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:text="Manajemen Operator"
+                android:text="LOGOUT"
                 android:textColor="@color/colorPrimary"
                 app:backgroundTint="@color/white"
                 app:strokeColor="@color/colorPrimary"

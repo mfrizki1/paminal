@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.response.TokohResp
 import id.calocallo.sicape.network.NetworkConfig
@@ -69,7 +68,7 @@ class PickTokohActivity : BaseActivity() {
     private fun ApiTokoh() {
         rl_pb.visible()
         rv_list_tokoh.gone()
-        NetworkConfig().getService().showTokoh(
+        NetworkConfig().getServPers().showTokoh(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<TokohResp>> {

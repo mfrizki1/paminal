@@ -48,7 +48,7 @@ class PickKeluargaActivity : BaseActivity() {
 
     private fun getListKeluarga(personel: AllPersonelModel1?) {
         rl_pb.visible()
-        NetworkConfig().getService().showKeluarga(
+        NetworkConfig().getServPers().showKeluarga(
             "Bearer ${sessionManager1.fetchAuthToken()}", personel?.id.toString()
         ).enqueue(object : Callback<ArrayList<KeluargaMinResp>> {
             override fun onFailure(call: Call<ArrayList<KeluargaMinResp>>, t: Throwable) {

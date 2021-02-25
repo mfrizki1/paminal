@@ -12,7 +12,6 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.OrganisasiReq
 import id.calocallo.sicape.network.request.PenghargaanReq
 import id.calocallo.sicape.network.request.PerjuanganCitaReq
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.AddOrganisasiResp
@@ -154,7 +153,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         perjuanganCitaReq.tahun_akhir = edt_single_thn_akhir_perjuangan.text.toString()
         perjuanganCitaReq.dalam_rangka = edt_single_rangka_perjuangan.text.toString()
         perjuanganCitaReq.keterangan = edt_ket_single_perjuangan.text.toString()
-        NetworkConfig().getService().addPerjuanganSingle(
+        NetworkConfig().getServPers().addPerjuanganSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
             sessionManager1.fetchID().toString(),
@@ -211,7 +210,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         penghargaanReq.dalam_rangka = edt_rangka_single_penghargaan.text.toString()
         penghargaanReq.tahun = edt_thn_single_penghargaan.text.toString()
         penghargaanReq.keterangan = edt_ket_single_penghargaan.text.toString()
-        NetworkConfig().getService().addPenghargaanSingle(
+        NetworkConfig().getServPers().addPenghargaanSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
             sessionManager1.fetchID().toString(),
@@ -274,7 +273,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
             progressColor = Color.WHITE
         }
 
-        NetworkConfig().getService().addOrganisasiSingle(
+        NetworkConfig().getServPers().addOrganisasiSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
             sessionManager1.fetchID().toString(),

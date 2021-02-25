@@ -17,7 +17,6 @@ import id.calocallo.sicape.model.AddSinglePendResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SinglePendReq
 import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager1
 import kotlinx.android.synthetic.main.fragment_add_single_pend.*
 import kotlinx.android.synthetic.main.fragment_add_single_pend.view.*
@@ -83,7 +82,7 @@ class AddSinglePendFragment : Fragment() {
         view?.btn_save_add_pend_single?.showProgress {
             progressColor = Color.WHITE
         }
-        NetworkConfig().getService().addSinglePend(
+        NetworkConfig().getServPers().addSinglePend(
             "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
             sessionManager1.fetchID().toString(),

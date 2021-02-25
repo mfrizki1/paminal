@@ -69,7 +69,7 @@ class PickPendFragment : Fragment() {
 
     private fun initAPI(nama_jenis: String) {
         rl_pb.visible()
-        NetworkConfig().getService().showPendByJenis(
+        NetworkConfig().getServPers().showPendByJenis(
             "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4",
             sessionManager1.fetchID().toString()//Constants.ID_PERSONEL

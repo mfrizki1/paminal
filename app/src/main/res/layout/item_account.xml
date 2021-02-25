@@ -20,7 +20,7 @@
             android:id="@+id/txt_judul_acc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Personel"
+            android:text="Akun"
             android:textSize="@dimen/text_18"
             android:textStyle="bold" />
 
@@ -31,24 +31,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="Nama Personel "
+            android:text="Nama Akun "
             android:textSize="@dimen/text_14"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txt_pangkat_acc_add"
+            android:id="@+id/txt_username_acc_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_half"
-            android:text="Pangkat Personel "
+            android:text="Username Akun"
             android:textSize="@dimen/text_14" />
 
         <TextView
             android:id="@+id/txt_nrp_acc_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/space_half"
-            android:text="NRP Personel "
+            android:text="NRP Akun "
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -56,15 +57,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_half"
-            android:text="Jabatan Personel "
+            android:visibility="gone"
+            android:text="Jabatan Akun "
             android:textSize="@dimen/text_14" />
 
         <TextView
             android:id="@+id/txt_kesatuan_acc_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/space_half"
-            android:text="Kesatuan Personel "
+            android:text="Kesatuan Akun "
             android:textSize="@dimen/text_14" />
         <TextView
             android:id="@+id/txt_aktif_acc_add"

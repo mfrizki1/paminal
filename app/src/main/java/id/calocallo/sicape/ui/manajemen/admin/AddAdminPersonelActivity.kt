@@ -3,17 +3,15 @@ package id.calocallo.sicape.ui.manajemen.admin
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AdminReq
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.PersonelMinResp
-import id.calocallo.sicape.network.response.PersonelModelMax2
+import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.ui.manajemen.AddOperatorActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -22,7 +20,6 @@ import id.calocallo.sicape.utils.ext.showSnackbar
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.activity_add_admin_personel.*
-import kotlinx.android.synthetic.main.activity_add_operator.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,6 +30,8 @@ class AddAdminPersonelActivity : BaseActivity() {
     private var adminReq = AdminReq()
     private var idPersonel: Int? = null
     private var isAktif: Int? = null
+    private var namaPersonel: String? = null
+    private var nrpPersonel: String? = null
     private lateinit var sheenValidator: SheenValidator
 
 
@@ -83,23 +82,25 @@ class AddAdminPersonelActivity : BaseActivity() {
 
     private fun addAdmin() {
 
+        adminReq.nama = namaPersonel
+        adminReq.username = nrpPersonel
         adminReq.password = edt_password_admin.text.toString()
         adminReq.password_confirmation = edt_repassword_admin.text.toString()
         adminReq.id_personel = idPersonel
         adminReq.is_aktif = isAktif
-        NetworkConfig().getService().addAdmin(
+       NetworkConfig().getServUser().addAdmin(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             adminReq
-        ).enqueue(object : Callback<Base1Resp<PersonelModelMax2>> {
-            override fun onFailure(call: Call<Base1Resp<PersonelModelMax2>>, t: Throwable) {
+        ).enqueue(object : Callback<Base1Resp<UserResp>> {
+            override fun onFailure(call: Call<Base1Resp<UserResp>>, t: Throwable) {
                 btn_save_admin.hideProgress("Error Koneksi")
             }
 
             override fun onResponse(
-                call: Call<Base1Resp<PersonelModelMax2>>,
-                response: Response<Base1Resp<PersonelModelMax2>>
+                call: Call<Base1Resp<UserResp>>,
+                response: Response<Base1Resp<UserResp>>
             ) {
-                if (response.isSuccessful) {
+                if (response.body()?.message == "Data personel admin saved succesfully") {
                     btn_save_admin.showSnackbar(R.string.data_saved) {
                         action(R.string.back) {
                             finish()
@@ -126,6 +127,8 @@ class AddAdminPersonelActivity : BaseActivity() {
                     txt_nrp_personel_admin_add.text = "NRP : ${personel?.nrp}"
                     txt_jabatan_personel_admin_add.text = "Jabatan : ${personel?.jabatan}"
                     idPersonel = personel?.id
+                    namaPersonel = personel?.nama
+                    nrpPersonel = personel?.nrp
                 }
             }
         }

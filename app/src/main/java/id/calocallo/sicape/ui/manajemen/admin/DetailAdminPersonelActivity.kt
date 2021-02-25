@@ -4,7 +4,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +13,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.network.response.UserCreatorResp
+import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -31,7 +31,7 @@ class DetailAdminPersonelActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
         supportActionBar?.title = "Detail Data Admin"
-        val detailAdmin = intent.getParcelableExtra<UserCreatorResp>("admin")
+        val detailAdmin = intent.getParcelableExtra<UserResp>("admin")
         apiDetailAdmin(detailAdmin)
 
 
@@ -45,11 +45,11 @@ class DetailAdminPersonelActivity : BaseActivity() {
 
     }
 
-    private fun apiDetailAdmin(detailAdmin: UserCreatorResp?) {
-        NetworkConfig().getService().getDetailAdmin("Bearer ${sessionManager1.fetchAuthToken()}",
+    private fun apiDetailAdmin(detailAdmin: UserResp?) {
+       NetworkConfig().getServUser().getDetailAdmin("Bearer ${sessionManager1.fetchAuthToken()}",
         detailAdmin?.id.toString())
-            .enqueue(object : Callback<UserCreatorResp> {
-                override fun onFailure(call: Call<UserCreatorResp>, t: Throwable) {
+            .enqueue(object : Callback<UserResp> {
+                override fun onFailure(call: Call<UserResp>, t: Throwable) {
                     Toast.makeText(
                         this@DetailAdminPersonelActivity,
                         "Error Koneksi",
@@ -58,8 +58,8 @@ class DetailAdminPersonelActivity : BaseActivity() {
                 }
 
                 override fun onResponse(
-                    call: Call<UserCreatorResp>,
-                    response: Response<UserCreatorResp>
+                    call: Call<UserResp>,
+                    response: Response<UserResp>
                 ) {
                     if(response.isSuccessful){
                         viewDetailAdmin(response.body())
@@ -74,15 +74,14 @@ class DetailAdminPersonelActivity : BaseActivity() {
             })
     }
 
-    private fun viewDetailAdmin(admin: UserCreatorResp?) {
-        txt_nama_admin_detail.text = admin?.personel?.nama
-        txt_pangkat_admin_detail.text = admin?.personel?.pangkat.toString().toUpperCase()
-        txt_nrp_admin_detail.text = admin?.personel?.nrp
+    private fun viewDetailAdmin(admin: UserResp?) {
+        txt_nama_admin_detail.text = admin?.nama
+//        txt_pangkat_admin_detail.text = admin?.pangkat.toString().toUpperCase()
+        txt_nrp_admin_detail.text = admin?.username
         btn_copy_nrp_detail.setOnClickListener {
             copyTextToClipboard(txt_nrp_admin_detail)
         }
-        txt_jabatan_admin_detail.text = admin?.personel?.jabatan
-        txt_kesatuan_admin_detail.text = admin?.personel?.satuan_kerja?.kesatuan
+        txt_kesatuan_admin_detail.text = admin?.satuan_kerja?.kesatuan
         if(admin?.is_aktif == 1){
             txt_status_aktif_admin_detail.text = "Aktif"
         }else{
@@ -100,7 +99,7 @@ class DetailAdminPersonelActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val detailAdmin = intent.getParcelableExtra<UserCreatorResp>("admin")
+        val detailAdmin = intent.getParcelableExtra<UserResp>("admin")
         apiDetailAdmin(detailAdmin)
     }
 
@@ -131,21 +130,21 @@ class DetailAdminPersonelActivity : BaseActivity() {
     }
 
     private fun ApiDelete() {
-        val detailAdmin = intent.getParcelableExtra<UserCreatorResp>("admin")
+        val detailAdmin = intent.getParcelableExtra<UserResp>("admin")
 
-        NetworkConfig().getService()
+       NetworkConfig().getServUser()
             .delAdmin("Bearer ${sessionManager1.fetchAuthToken()}", detailAdmin?.id.toString())
             .enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     Toast.makeText(
                         this@DetailAdminPersonelActivity,
-                        "Error Koneksi / Lakukan Beberapa Saat",
+                        R.string.failed_deleted,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                    if (response.isSuccessful) {
+                    if (response.body()?.message == "Data personel admin removed succesfully") {
                         Toast.makeText(
                             this@DetailAdminPersonelActivity,
                             R.string.data_deleted,
@@ -155,7 +154,7 @@ class DetailAdminPersonelActivity : BaseActivity() {
                     } else {
                         Toast.makeText(
                             this@DetailAdminPersonelActivity,
-                            "Error Koneksi / Lakukan Beberapa Saat",
+                            R.string.failed_deleted,
                             Toast.LENGTH_SHORT
                         ).show()
                     }

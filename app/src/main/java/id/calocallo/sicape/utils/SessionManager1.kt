@@ -97,7 +97,7 @@ class SessionManager1(context: Context) {
         return prefs.getString(HAK_AKSES, null)
     }
 
-    fun saveUserPersonel(obj: HakAksesPersonel1?) {
+    fun saveUser(obj: UserResp?) {
         val editor = prefs.edit()
         val gson = Gson()
         val json = gson.toJson(obj)
@@ -105,11 +105,11 @@ class SessionManager1(context: Context) {
         editor.commit()
     }
 
-    fun fetchUserPersonel(): HakAksesPersonel1? {
-        val emptyUser = Gson().toJson(HakAksesPersonel1)
+    fun fetchUser(): UserResp? {
+        val emptyUser = Gson().toJson(UserResp)
         return Gson().fromJson(
             prefs.getString(USER, emptyUser),
-            object : TypeToken<HakAksesPersonel1>() {}.type
+            object : TypeToken<UserResp>() {}.type
         )
     }
 

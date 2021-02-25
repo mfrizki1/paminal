@@ -107,7 +107,7 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
 
     private fun apiChoosePersonelBySatker(satker: SatKerResp) {
         rl_pb.visible()
-        NetworkConfig().getService().showPersonelBySatker(
+        NetworkConfig().getServPers().showPersonelBySatker(
             "Bearer ${sessionManager1.fetchAuthToken()}", satker.id.toString()
         ).enqueue(object : Callback<ArrayList<PersonelMinResp>> {
             override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {
@@ -177,7 +177,7 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
     private fun getPersonel() {
         rl_pb.visible()
         rv_list_choose_personel.gone()
-        NetworkConfig().getService().showPersonel(
+        NetworkConfig().getServPers().showPersonel(
             "Bearer ${sessionManager1.fetchAuthToken()}"
         ).enqueue(object : Callback<ArrayList<PersonelMinResp>> {
             override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {

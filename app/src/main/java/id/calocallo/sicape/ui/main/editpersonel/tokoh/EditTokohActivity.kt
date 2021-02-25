@@ -61,7 +61,7 @@ class EditTokohActivity : BaseActivity() {
     }
 
     private fun apiDetailTokoh(tokoh: TokohResp?) {
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .getDetailTokoh("Bearer ${sessionManager1.fetchAuthToken()}", tokoh?.id.toString())
             .enqueue(object : Callback<TokohResp> {
                 override fun onFailure(call: Call<TokohResp>, t: Throwable) {
@@ -102,7 +102,7 @@ class EditTokohActivity : BaseActivity() {
             progressColor = Color.WHITE
         }
 
-        NetworkConfig().getService().updateTokohSingle(
+        NetworkConfig().getServPers().updateTokohSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             tokoh?.id.toString(),
             tokohReq
@@ -134,7 +134,7 @@ class EditTokohActivity : BaseActivity() {
     }
 
     private fun doDeleteTokoh(tokoh: TokohResp?) {
-        NetworkConfig().getService().deleteTokoh(
+        NetworkConfig().getServPers().deleteTokoh(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             tokoh?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

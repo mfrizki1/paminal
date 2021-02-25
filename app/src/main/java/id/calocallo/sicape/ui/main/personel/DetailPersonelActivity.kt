@@ -15,8 +15,6 @@ import id.calocallo.sicape.ui.main.editpersonel.EditPersonelActivity
 import id.calocallo.sicape.ui.main.editpersonel.alamat.PickAlamatActivity
 import id.calocallo.sicape.ui.main.editpersonel.anak.PickAnakActivity
 import id.calocallo.sicape.ui.main.editpersonel.foto.EditFotoActivity
-import id.calocallo.sicape.ui.main.editpersonel.keluarga.EditKeluargaActivity
-import id.calocallo.sicape.ui.main.editpersonel.keluarga.EditPasanganActivity
 import id.calocallo.sicape.ui.main.editpersonel.keluarga.PickKeluargaActivity
 import id.calocallo.sicape.ui.main.editpersonel.keluarga.PickPasanganActivity
 import id.calocallo.sicape.ui.main.editpersonel.med_sos.PickMedSosActivity
@@ -251,7 +249,7 @@ class DetailPersonelActivity : BaseActivity() {
     }
 
     private fun apiDetailPersonel(detail: PersonelMinResp?) {
-        NetworkConfig().getService().showPersonelById(
+        NetworkConfig().getServPers().showPersonelById(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             detail?.id.toString()
         ).enqueue(object : Callback<AllPersonelModel1> {
@@ -327,7 +325,7 @@ class DetailPersonelActivity : BaseActivity() {
     }
 
     private fun ApiDelete() {
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .deletePersonel("Bearer ${sessionManager1.fetchAuthToken()}", idPersonel)
             .enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {

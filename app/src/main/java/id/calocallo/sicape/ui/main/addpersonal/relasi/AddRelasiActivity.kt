@@ -174,7 +174,7 @@ class AddRelasiActivity : BaseActivity() {
 
         Logger.e("$allPersonelModel")
 
-        NetworkConfig().getService().addAllPersonel(
+        NetworkConfig().getServPers().addAllPersonel(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             allPersonelModel
         ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {

@@ -10,7 +10,6 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.MedSosReq
 import id.calocallo.sicape.network.response.MedSosResp
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -63,7 +62,7 @@ class EditMedSosActivity : BaseActivity() {
     }
 
     private fun apiDetailSos(medsos: MedSosResp?) {
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .getDetailMedSos("Bearer ${sessionManager1.fetchAuthToken()}", medsos?.id.toString())
             .enqueue(object : Callback<MedSosResp> {
                 override fun onFailure(call: Call<MedSosResp>, t: Throwable) {
@@ -102,7 +101,7 @@ class EditMedSosActivity : BaseActivity() {
         medSosReq.nama_akun = edt_acc_medsos_edit.text.toString()
         medSosReq.alasan = edt_alasan_medsos_edit.text.toString()
         medSosReq.keterangan = edt_ket_medsos_edit.text.toString()
-        NetworkConfig().getService().updateMedSosSingle(
+        NetworkConfig().getServPers().updateMedSosSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             medsos?.id.toString(),
             medSosReq
@@ -136,7 +135,7 @@ class EditMedSosActivity : BaseActivity() {
     }
 
     private fun deleteMedsos(medsos: MedSosResp?) {
-        NetworkConfig().getService().deleteMedSos(
+        NetworkConfig().getServPers().deleteMedSos(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             medsos?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

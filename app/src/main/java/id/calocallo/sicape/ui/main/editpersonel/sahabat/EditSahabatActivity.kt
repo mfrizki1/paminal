@@ -76,7 +76,7 @@ class EditSahabatActivity : BaseActivity() {
     }
 
     private fun apiDetailSahabat(sahabat: SahabatResp?) {
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .getDetailSahabat("Bearer ${sessionManager1.fetchAuthToken()}", sahabat?.id.toString())
             .enqueue(object : Callback<SahabatResp> {
                 override fun onFailure(call: Call<SahabatResp>, t: Throwable) {
@@ -133,7 +133,7 @@ class EditSahabatActivity : BaseActivity() {
         sahabatReq.alamat = edt_alamat_sahabat_edit.text.toString()
         sahabatReq.pekerjaan = edt_pekerjaan_sahabat_edit.text.toString()
         sahabatReq.alasan = edt_alasan_sahabat_edit.text.toString()
-        NetworkConfig().getService().updateSahabatSingle(
+        NetworkConfig().getServPers().updateSahabatSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sahabat?.id.toString(),
             sahabatReq
@@ -164,7 +164,7 @@ class EditSahabatActivity : BaseActivity() {
     }
 
     private fun doDeleteSahabat(sahabat: SahabatResp?) {
-        NetworkConfig().getService().deleteSahabat(
+        NetworkConfig().getServPers().deleteSahabat(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sahabat?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

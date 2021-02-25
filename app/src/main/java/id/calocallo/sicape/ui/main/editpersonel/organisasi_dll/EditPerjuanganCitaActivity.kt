@@ -10,7 +10,6 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.PerjuanganCitaReq
 import id.calocallo.sicape.network.response.PerjuanganResp
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -67,7 +66,7 @@ class EditPerjuanganCitaActivity : BaseActivity() {
     }
 
     private fun getDetailPerjuangan(perjuangan: PerjuanganResp?) {
-        NetworkConfig().getService().getDetailPerjuangan(
+        NetworkConfig().getServPers().getDetailPerjuangan(
             "Bearer ${sessionManager1.fetchAuthToken()}", perjuangan?.id.toString()
         ).enqueue(object :Callback<DetailPerjuanganResp>{
             override fun onFailure(call: Call<DetailPerjuanganResp>, t: Throwable) {
@@ -112,7 +111,7 @@ class EditPerjuanganCitaActivity : BaseActivity() {
         perjuanganCitaReq.dalam_rangka = edt_rangka_perjuangan_edit.text.toString()
         perjuanganCitaReq.keterangan = edt_ket_perjuangan_edit.text.toString()
 
-        NetworkConfig().getService().updatePerjuanganSingle(
+        NetworkConfig().getServPers().updatePerjuanganSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             perjuangan?.id.toString(),
             perjuanganCitaReq
@@ -145,7 +144,7 @@ class EditPerjuanganCitaActivity : BaseActivity() {
     }
 
     private fun doDeletePerjuangan(perjuangan: PerjuanganResp?) {
-        NetworkConfig().getService().deletePerjuangan(
+        NetworkConfig().getServPers().deletePerjuangan(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             perjuangan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

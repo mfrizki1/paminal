@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.HukumanReq
@@ -49,7 +48,7 @@ class AddSinglePernahDihukumActivity : BaseActivity() {
             progressColor = Color.WHITE
         }
         hukumanReq.perkara = edt_perkara_hukum.text.toString()
-        NetworkConfig().getService().addSingleDihukum(
+        NetworkConfig().getServPers().addSingleDihukum(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString(),
             hukumanReq

@@ -13,7 +13,7 @@ import id.calocallo.sicape.model.FiturModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.HakAksesPersonel1
 import id.calocallo.sicape.network.response.HakAksesSipil
-import id.calocallo.sicape.network.response.SipilProfilResp
+import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.ui.main.profil.ProfilFragment
 import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -52,13 +52,15 @@ class MainActivity : BaseActivity(),
         setSupportActionBar(toolbar_logo)
         supportActionBar?.title = "Dashboard"
         isSipilLogin = intent.extras?.getBoolean("IS_SIPIL")
-        if (isSipilLogin == true) {
+       /* if (isSipilLogin == true) {
             getSipil()
         } else if(isSipilLogin == false) {
             getPersonel()
         }else{
             getSuperAdmin()
-        }
+        }*/
+
+        getUser()
         initBottom()
         if (savedInstanceState == null) {
             bottom_navigation.selectedItemId = R.id.nav_home
@@ -66,37 +68,30 @@ class MainActivity : BaseActivity(),
 
     }
 
-    private fun getSuperAdmin() {
-        NetworkConfig().getService()
-            .getUserSuper(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
-            .enqueue(object : Callback<HakAksesPersonel1> {
-                override fun onFailure(call: Call<HakAksesPersonel1>, t: Throwable) {
-                    Toast.makeText(this@MainActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)
-                        .show()
+    private fun initBottom() {
+        bottom_navigation.setOnNavigationItemSelectedListener(this)
+    }
+
+    private fun getUser(){
+        NetworkConfig().getServUser().getUser("Bearer ${sessionmanager.fetchAuthToken()}").enqueue(
+            object : Callback<UserResp> {
+                override fun onResponse(call: Call<UserResp>, response: Response<UserResp>) {
+                    if (response.isSuccessful) {
+                        sessionmanager.saveUser(response.body())
+                    } else {
+                        Toast.makeText(this@MainActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                    }
                 }
 
-                override fun onResponse(
-                    call: Call<HakAksesPersonel1>,
-                    response: Response<HakAksesPersonel1>
-                ) {
-                    if (response.isSuccessful) {
-                        val user = response.body()
-                        Logger.d("$user")
-//                        saveUser(user)
-                        sessionmanager.saveUserPersonel(user)
-                        sessionmanager.clearUserSipil()
-                        Log.e("personel", "${sessionmanager.fetchUserPersonel()}")
-                        Log.e("sipil", "${sessionmanager.fetchUserSipil()}")
-                    } else {
-                        Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                override fun onFailure(call: Call<UserResp>, t: Throwable) {
+                    Toast.makeText(this@MainActivity, t.toString(), Toast.LENGTH_SHORT).show()
+
                 }
             })
     }
 
-    private fun getSipil() {
-        NetworkConfig().getService()
+   /* private fun getSipil() {
+        NetworkConfig().getServPers()
             .getUserSipil(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
             .enqueue(object : Callback<HakAksesSipil> {
                 override fun onFailure(call: Call<HakAksesSipil>, t: Throwable) {
@@ -123,12 +118,8 @@ class MainActivity : BaseActivity(),
             })
     }
 
-    private fun initBottom() {
-        bottom_navigation.setOnNavigationItemSelectedListener(this)
-    }
-
     private fun getPersonel() {
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .getUserPersonel(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
             .enqueue(object : Callback<HakAksesPersonel1> {
                 override fun onFailure(call: Call<HakAksesPersonel1>, t: Throwable) {
@@ -154,6 +145,35 @@ class MainActivity : BaseActivity(),
                 }
             })
     }
+
+    private fun getSuperAdmin() {
+        NetworkConfig().getServPers()
+            .getUserSuper(tokenBearer = "Bearer ${sessionmanager.fetchAuthToken()}")
+            .enqueue(object : Callback<HakAksesPersonel1> {
+                override fun onFailure(call: Call<HakAksesPersonel1>, t: Throwable) {
+                    Toast.makeText(this@MainActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onResponse(
+                    call: Call<HakAksesPersonel1>,
+                    response: Response<HakAksesPersonel1>
+                ) {
+                    if (response.isSuccessful) {
+                        val user = response.body()
+                        Logger.d("$user")
+//                        saveUser(user)
+                        sessionmanager.saveUserPersonel(user)
+                        sessionmanager.clearUserSipil()
+                        Log.e("personel", "${sessionmanager.fetchUserPersonel()}")
+                        Log.e("sipil", "${sessionmanager.fetchUserSipil()}")
+                    } else {
+                        Toast.makeText(this@MainActivity, "Error", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
+    }*/
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

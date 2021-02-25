@@ -2,7 +2,6 @@ package id.calocallo.sicape.ui.manajemen.sipil
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -10,7 +9,7 @@ import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.HakAksesSipil
-import id.calocallo.sicape.ui.manajemen.EditOperatorActivity
+import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -27,10 +26,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ListSipilOperatorActivity : BaseActivity() {
+class
+ListSipilOperatorActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var adapterSipil = ReusableAdapter<HakAksesSipil>(this)
-    private lateinit var callbackSipil: AdapterCallback<HakAksesSipil>
+    private var adapterSipil = ReusableAdapter<UserResp>(this)
+    private lateinit var callbackSipil: AdapterCallback<UserResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_sipil_operator)
@@ -55,35 +55,36 @@ class ListSipilOperatorActivity : BaseActivity() {
 
     private fun listOperatorSipil() {
         rl_pb.visible()
-        NetworkConfig().getService()
+        NetworkConfig().getServUser()
             .getListSipilOperator("Bearer ${sessionManager1.fetchAuthToken()}")
-            .enqueue(object : Callback<ArrayList<HakAksesSipil>> {
-                override fun onFailure(call: Call<ArrayList<HakAksesSipil>>, t: Throwable) {
+            .enqueue(object : Callback<ArrayList<UserResp>> {
+                override fun onFailure(call: Call<ArrayList<UserResp>>, t: Throwable) {
                     rl_pb.gone()
                     rl_no_data.visible()
                     rv_list_sipil_operator.gone()
                 }
 
                 override fun onResponse(
-                    call: Call<ArrayList<HakAksesSipil>>,
-                    response: Response<ArrayList<HakAksesSipil>>
+                    call: Call<ArrayList<UserResp>>,
+                    response: Response<ArrayList<UserResp>>
                 ) {
                     if (response.isSuccessful) {
                         rl_pb.gone()
-                        callbackSipil = object : AdapterCallback<HakAksesSipil> {
+                        callbackSipil = object : AdapterCallback<UserResp> {
                             @SuppressLint("SetTextI18n")
                             override fun initComponent(
                                 itemView: View,
-                                data: HakAksesSipil,
+                                data: UserResp,
                                 itemIndex: Int
                             ) {
                                 itemView.txt_judul_acc.text = "Sipil"
                                 itemView.txt_nama_acc_add.text =
-                                    "Nama : ${data.operator_sipil?.nama}"
-                                itemView.txt_pangkat_acc_add.gone()
+                                    "Nama : ${data.nama}"
+//                                itemView.txt_pangkat_acc_add.gone()
                                 itemView.txt_nrp_acc_add.gone()
                                 itemView.txt_jabatan_acc_add.gone()
                                 itemView.txt_kesatuan_acc_add.gone()
+                                itemView.txt_username_acc_add.text = "Username : ${data.username}"
                                 if (data.is_aktif == 1) {
                                     itemView.txt_aktif_acc_add.text = "Aktif"
                                 } else {
@@ -92,16 +93,12 @@ class ListSipilOperatorActivity : BaseActivity() {
                             }
 
                             override fun onItemClicked(
-                                itemView: View,
-                                data: HakAksesSipil,
-                                itemIndex: Int
+                                itemView: View, data: UserResp, itemIndex: Int
                             ) {
-                                val status = intent.extras?.getString("manajemen")
                                 val intent = Intent(
                                     this@ListSipilOperatorActivity,
                                     DetailSipilOperatorActivity::class.java
                                 )
-                                intent.putExtra("manajemen", status)
                                 intent.putExtra("acc", data)
                                 startActivity(intent)
                                 overridePendingTransition(
@@ -126,6 +123,7 @@ class ListSipilOperatorActivity : BaseActivity() {
             })
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_bar, menu)
         val item = menu?.findItem(R.id.action_search)

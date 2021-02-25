@@ -384,7 +384,7 @@ class EditPersonelActivity : BaseActivity() {
     }
 
     private fun getSatker() {
-        NetworkConfig().getService().showSatker(
+        NetworkConfig().getServPers().showSatker(
             "Bearer ${sessionManager1.fetchAuthToken()}"
         ).enqueue(object : Callback<ArrayList<SatKerResp>> {
             override fun onFailure(call: Call<ArrayList<SatKerResp>>, t: Throwable) {
@@ -479,7 +479,7 @@ class EditPersonelActivity : BaseActivity() {
 
         //validasi Hak Akses & API
         if (hakAkses != "operator") {
-            NetworkConfig().getService().updatePersonel(
+            NetworkConfig().getServPers().updatePersonel(
                 "Bearer ${sessionManager1.fetchAuthToken()}",
                 idPersonel,
                 addPersonelReq

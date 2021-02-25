@@ -87,7 +87,7 @@ class PickPekerjaanFragment : Fragment() {
     private fun ApiPekerjaan(name: String) {
         rl_pb.visible()
         if (name == "pekerjaan") {
-            NetworkConfig().getService().showPekerjaan(
+            NetworkConfig().getServPers().showPekerjaan(
                 "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4"
                 sessionManager1.fetchID().toString()
@@ -121,7 +121,7 @@ class PickPekerjaanFragment : Fragment() {
                 }
             })
         } else if (name == "pekerjaan_luar_dinas") {
-            NetworkConfig().getService().showPekerjaanLuar(
+            NetworkConfig().getServPers().showPekerjaanLuar(
                 "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4"
                 sessionManager1.fetchID().toString()

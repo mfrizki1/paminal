@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.RelasiReq
@@ -68,7 +67,7 @@ class AddSingleRelasiActivity : BaseActivity() {
         }
         relasiReq.nama = edt_nama_relasi_single.text.toString()
         relasiReq.lokasi = jenisRelasi
-        NetworkConfig().getService().addSingleRelasi(
+        NetworkConfig().getServPers().addSingleRelasi(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString(),
             relasiReq

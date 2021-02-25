@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
@@ -18,7 +17,6 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.PasanganReq
 import id.calocallo.sicape.network.response.AddPersonelResp
 import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.ui.main.addpersonal.AddAyahKandungActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
@@ -161,7 +159,7 @@ class AddPasanganActivity : BaseActivity() {
             progressColor = Color.WHITE
         }
         val personel = intent.getParcelableExtra<AllPersonelModel1>("PERSONEL_DETAIL")
-        NetworkConfig().getService().addPasanganSingle(
+        NetworkConfig().getServPers().addPasanganSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}", personel?.id.toString(), pasanganReq[0]
         ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {
             override fun onFailure(call: Call<Base1Resp<AddPersonelResp>>, t: Throwable) {

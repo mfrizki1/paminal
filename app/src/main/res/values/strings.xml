@@ -71,6 +71,8 @@
     <string name="polda">Polda</string>
     <string name="success_change_pass">Berhasil Ubah Password</string>
     <string name="back">Kembali</string>
+    <string name="failed_login">Gagal Login</string>
+    <string name="failed_deleted">Error Koneksi / Lakukan Beberapa Saat</string>
 
 
     <string-array name="satker">

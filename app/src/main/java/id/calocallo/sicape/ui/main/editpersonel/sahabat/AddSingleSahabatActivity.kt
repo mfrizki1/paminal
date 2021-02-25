@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.hideDrawable
 import com.github.razir.progressbutton.showDrawable
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.request.SahabatReq
 import id.calocallo.sicape.network.NetworkConfig
@@ -61,7 +60,7 @@ class AddSingleSahabatActivity : BaseActivity() {
             sahabatReq.pekerjaan = edt_pekerjaan_single_sahabat.text.toString()
             sahabatReq.alasan = edt_alasan_single_sahabat.text.toString()
 
-            NetworkConfig().getService().addSahabatSingle(
+            NetworkConfig().getServPers().addSahabatSingle(
                 "Bearer ${sessionManager1.fetchAuthToken()}",
                 sessionManager1.fetchID().toString(),
                 sahabatReq

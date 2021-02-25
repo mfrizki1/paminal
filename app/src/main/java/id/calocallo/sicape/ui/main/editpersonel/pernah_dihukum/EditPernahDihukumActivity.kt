@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.PernahDihukumResp
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.HukumanReq
@@ -66,7 +65,7 @@ class EditPernahDihukumActivity : BaseActivity() {
             progressColor = Color.WHITE
         }
         hukumanReq.perkara = edt_perkara_hukum_edit.text.toString()
-        NetworkConfig().getService().updateSingleDihukum(
+        NetworkConfig().getServPers().updateSingleDihukum(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             dihukum?.id.toString(),
             hukumanReq
@@ -101,7 +100,7 @@ class EditPernahDihukumActivity : BaseActivity() {
     }
 
     private fun deleteDihukum(dihukum: PernahDihukumResp?) {
-        NetworkConfig().getService().deleteSingleDihukum(
+        NetworkConfig().getServPers().deleteSingleDihukum(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             dihukum?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

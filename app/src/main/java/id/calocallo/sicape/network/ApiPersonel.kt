@@ -7,10 +7,10 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
-interface Api {
+interface ApiPersonel {
     companion object {
         const val ACCEPT = "Accept: application/json"
-        const val LOGIN = "guest/login"
+
 
         const val SATUAN_KERJA = "satuan/kerja"
 
@@ -84,45 +84,10 @@ interface Api {
 
         const val FOTO_SINGLE = "personel/{id_personel}/foto"
 
-        const val AUTH = "auth"
-        const val GET_USER = "${AUTH}/profile"
-        const val LOGOUT = "${AUTH}/logout"
+
     }
 
-    @Headers(ACCEPT)
-    @POST(LOGIN)
-    fun loginSuper(@Body loginReq: LoginReq): Call<LoginSuperAdminResp>
 
-    @Headers(ACCEPT)
-    @POST(LOGIN)
-    fun loginSipil(@Body loginReq: LoginReq): Call<LoginSipilResp>
-
-    @Headers(ACCEPT)
-    @POST(LOGIN)
-    fun loginPersonel(@Body loginReq: LoginReq): Call<LoginPersonelResp>
-
-    @Headers(ACCEPT)
-    @GET(GET_USER)
-    fun getUserSipil(@Header("Authorization") tokenBearer: String): Call<HakAksesSipil>
-
-    @Headers(ACCEPT)
-    @GET(GET_USER)
-    fun getUserSuper(@Header("Authorization") tokenBearer: String): Call<HakAksesPersonel1>
-
-    @Headers(ACCEPT)
-    @GET(GET_USER)
-    fun getUserPersonel(@Header("Authorization") tokenBearer: String): Call<HakAksesPersonel1>
-
-    @Headers(ACCEPT)
-    @GET(LOGOUT)
-    fun logout(@Header("Authorization") token: String): Call<BaseResp>
-
-    @Headers(ACCEPT)
-    @PATCH("auth/password/update")
-    fun changePassword(
-        @Header("Authorization") token: String,
-        @Body changePassReq: ChangePassReq
-    ): Call<BaseResp>
 
     @Headers(ACCEPT)
     @GET(PERSONEL)
@@ -966,114 +931,7 @@ interface Api {
         @Body editFotoReq: EditFotoReq
     ): Call<BaseResp>
 
-    /*operator Personel*/
-    @Headers(ACCEPT)
-    @GET("user/personel/operator")
-    fun getListPersOperator(
-        @Header("Authorization") token: String
-    ): Call<ArrayList<UserCreatorResp>>
 
-
-    @Headers(ACCEPT)
-    @POST("user/personel/operator")
-    fun addPersOperator(
-        @Header("Authorization") token: String,
-        @Body personelOperatorReq: PersonelOperatorReq
-    ): Call<PersonelModelMax2>
-
-    @Headers(ACCEPT)
-    @GET("user/personel/operator/{id_operator}")
-    fun getDetailPersOperator(
-        @Header("Authorization") token: String,
-        @Path("id_operator") id_operator: String
-    ): Call<HakAksesPersonel1>
-
-    @Headers(ACCEPT)
-    @PATCH("user/personel/operator/{id_operator}")
-    fun updPersOperator(
-        @Header("Authorization") token: String,
-        @Path("id_operator") id_operator: String,
-        @Body personelOperatorReq: PersonelOperatorReq
-    ): Call<Base1Resp<PersonelModelMax2>>
-
-    @Headers(ACCEPT)
-    @DELETE("user/personel/operator/{id_operator}")
-    fun delPersOperator(
-        @Header("Authorization") token: String,
-        @Path("id_operator") id_operator: String
-    ): Call<BaseResp>
-
-    /*SIPIL OPERATOR*/
-    @Headers(ACCEPT)
-    @GET("user/sipil/operator")
-    fun getListSipilOperator(
-        @Header("Authorization") token: String
-    ): Call<ArrayList<HakAksesSipil>>
-
-    @Headers(ACCEPT)
-    @GET("user/sipil/operator/{id_sipil}")
-    fun getDetailSipilOperator(
-        @Header("Authorization") token: String,
-        @Path("id_sipil") id_sipil: String
-    ): Call<HakAksesSipil>
-
-    @Headers(ACCEPT)
-    @POST("user/sipil/operator")
-    fun addSipilOperator(
-        @Header("Authorization") token: String,
-        @Body sipilOperatorReq: SipilOperatorReq
-    ): Call<Base1Resp<HakAksesSipil>>
-
-    @Headers(ACCEPT)
-    @PATCH("user/sipil/operator/{id_operator}")
-    fun updSipilOperator(
-        @Header("Authorization") token: String,
-        @Path("id_operator") id_operator: String,
-        @Body sipilOperatorReq: SipilOperatorReq
-    ): Call<Base1Resp<HakAksesSipil>>
-
-    @Headers(ACCEPT)
-    @DELETE("user/sipil/operator/{id_operator}")
-    fun delSipilOperator(
-        @Header("Authorization") token: String,
-        @Path("id_operator") id_operator: String
-    ): Call<BaseResp>
-
-    /*admin*/
-    @Headers(ACCEPT)
-    @GET("user/personel/admin")
-    fun getListAdmin(
-        @Header("Authorization") token: String
-    ): Call<ArrayList<UserCreatorResp>>
-
-    @Headers(ACCEPT)
-    @GET("user/personel/admin/{id_admin}")
-    fun getDetailAdmin(
-        @Header("Authorization") token: String,
-        @Path("id_admin") id_admin: String
-    ): Call<UserCreatorResp>
-
-    @Headers(ACCEPT)
-    @POST("user/personel/admin")
-    fun addAdmin(
-        @Header("Authorization") token: String,
-        @Body adminReq: AdminReq
-    ): Call<Base1Resp<PersonelModelMax2>>
-
-    @Headers(ACCEPT)
-    @PATCH("user/personel/admin/{id_admin}")
-    fun updAdmin(
-        @Header("Authorization") token: String,
-        @Path("id_admin") id_admin: String,
-        @Body adminReq: AdminReq
-    ): Call<Base1Resp<PersonelModelMax2>>
-
-    @Headers(ACCEPT)
-    @DELETE("user/personel/admin/{id_admin}")
-    fun delAdmin(
-        @Header("Authorization") token: String,
-        @Path("id_admin") id_admin: String
-    ): Call<BaseResp>
 
 
 }

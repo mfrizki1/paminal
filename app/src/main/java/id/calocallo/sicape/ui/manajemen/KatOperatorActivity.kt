@@ -18,39 +18,23 @@ class KatOperatorActivity : BaseActivity() {
         supportActionBar?.title = "Kategori Operator"
         val stts = intent.extras?.getString("manajemen")
         Log.e("sttsKat", "$stts")
+        val addSingle = intent.getBooleanExtra("add_single", false)
 
         btn_personel_operator.setOnClickListener {
-            if (stts.isNullOrEmpty()) {
                 val intent = Intent(this, ManajemenOperatorActivity::class.java)
-                intent.putExtra("list", "polisi")
-                intent.putExtra("manajemen", "operator")
-
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            } else {
-                val intent = Intent(this, AddOperatorActivity::class.java)
-                intent.putExtra("manajemen", "polisi")
-                startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
 
         }
         btn_sipil_operator.setOnClickListener {
-            if (stts.isNullOrEmpty()) {
-                val intent = Intent(this, ListSipilOperatorActivity::class.java)
+            val intent = Intent(this, ListSipilOperatorActivity::class.java)
 //                intent.putExtra("list", "sipil")
 //                intent.putExtra("manajemen", "operator")
 
-                startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            } else {
-                val intent = Intent(this, AddOperatorActivity::class.java)
-                intent.putExtra("manajemen", "sipil")
-                startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }
+
 }

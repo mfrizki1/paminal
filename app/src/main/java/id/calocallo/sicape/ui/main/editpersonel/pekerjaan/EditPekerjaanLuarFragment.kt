@@ -72,7 +72,7 @@ class EditPekerjaanLuarFragment : Fragment() {
     }
 
     private fun apiDetail(pekerjaan: PekerjaanLuarResp?) {
-        NetworkConfig().getService().getDetailPekerjaanLuar("Bearer ${sessionManager1.fetchAuthToken()}",
+        NetworkConfig().getServPers().getDetailPekerjaanLuar("Bearer ${sessionManager1.fetchAuthToken()}",
         pekerjaan?.id.toString()).enqueue(object :Callback<DetailPekerjaanLuar>{
             override fun onFailure(call: Call<DetailPekerjaanLuar>, t: Throwable) {
                 Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
@@ -100,7 +100,7 @@ class EditPekerjaanLuarFragment : Fragment() {
     }
 
     private fun doDeletePekerjaan(pekerjaan: PekerjaanLuarResp?) {
-        NetworkConfig().getService().deletePekerjaanLuar(
+        NetworkConfig().getServPers().deletePekerjaanLuar(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
@@ -139,7 +139,7 @@ class EditPekerjaanLuarFragment : Fragment() {
             progressColor = Color.WHITE
         }
 
-        NetworkConfig().getService().updatePekerjaanLuar(
+        NetworkConfig().getServPers().updatePekerjaanLuar(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString(),
             pekerjaanLuarReq

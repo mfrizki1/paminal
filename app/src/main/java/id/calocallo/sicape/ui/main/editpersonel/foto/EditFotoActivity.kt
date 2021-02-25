@@ -105,7 +105,7 @@ class EditFotoActivity : BaseActivity() {
         editFotoReq.id_foto_kanan = idKanan
         editFotoReq.id_foto_kiri = idKiri
         editFotoReq.id_foto_muka = idDepan
-        NetworkConfig().getService().updateFoto(
+        NetworkConfig().getServPers().updateFoto(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString(),
             editFotoReq
@@ -353,7 +353,7 @@ class EditFotoActivity : BaseActivity() {
         detailPersonel: AllPersonelModel1?, jenis: String, filePart: MultipartBody.Part
     ) {
 
-        NetworkConfig().getService().uploadEditFoto(
+        NetworkConfig().getServPers().uploadEditFoto(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             detailPersonel?.id.toString(),
             jenis,

@@ -63,7 +63,7 @@ class PoldaActivity : BaseActivity() {
 
     private fun getListSatkerPolda() {
         rl_pb.visible()
-        NetworkConfig().getService().showSatkerPolda(
+        NetworkConfig().getServPers().showSatkerPolda(
             "Bearer ${sessionManager1.fetchAuthToken()}"
         ).enqueue(object : Callback<ArrayList<SatKerResp>> {
             override fun onFailure(call: Call<ArrayList<SatKerResp>>, t: Throwable) {

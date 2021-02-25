@@ -7,7 +7,6 @@ import android.os.Looper
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.PasanganReq
@@ -65,7 +64,7 @@ class EditPasanganActivity : BaseActivity() {
     }
 
     private fun getPasanganData(pasangan: PasanganMinResp?) {
-        NetworkConfig().getService().getDetailPasangan(
+        NetworkConfig().getServPers().getDetailPasangan(
             "Bearer ${sessionManager1.fetchAuthToken()}", pasangan?.id.toString()
         ).enqueue(object : Callback<PasanganResp> {
             override fun onFailure(call: Call<PasanganResp>, t: Throwable) {
@@ -184,7 +183,7 @@ class EditPasanganActivity : BaseActivity() {
         pasanganReq.agama_sebelumnya = agama_sblm
         pasanganReq.agama_sekarang = agama_skrg
 
-        NetworkConfig().getService().updatePasanganSingle(
+        NetworkConfig().getServPers().updatePasanganSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pasangan?.id.toString(), pasanganReq
         ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {
@@ -224,7 +223,7 @@ class EditPasanganActivity : BaseActivity() {
     }
 
     private fun doDeletePasangan(pasangan: PasanganMinResp?) {
-        NetworkConfig().getService().deletePasangan(
+        NetworkConfig().getServPers().deletePasangan(
             "Bearer ${sessionManager1.fetchAuthToken()}", pasangan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {

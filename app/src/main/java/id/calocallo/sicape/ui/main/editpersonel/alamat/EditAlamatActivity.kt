@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AlamatReq
@@ -67,7 +66,7 @@ class EditAlamatActivity : BaseActivity() {
     }
 
     private fun getDetail(alamat: AlamatResp?) {
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .getDetailAlamat("Bearer ${sessionManager1.fetchAuthToken()}", alamat?.id.toString())
             .enqueue(object : Callback<DetailAlamatResp> {
                 override fun onFailure(call: Call<DetailAlamatResp>, t: Throwable) {
@@ -96,7 +95,7 @@ class EditAlamatActivity : BaseActivity() {
     }
 
     private fun doDeletePekerjaan(alamat: AlamatResp) {
-        NetworkConfig().getService().deleteAlamat(
+        NetworkConfig().getServPers().deleteAlamat(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             alamat.id.toString()
         ).enqueue(object : Callback<BaseResp> {
@@ -131,7 +130,7 @@ class EditAlamatActivity : BaseActivity() {
             progressColor = Color.WHITE
         }
 
-        NetworkConfig().getService().updateAlamatSingle(
+        NetworkConfig().getServPers().updateAlamatSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             alamat?.id.toString(),
             alamatReq

@@ -38,18 +38,10 @@ class ProfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sessionManager = activity?.let { SessionManager1(it) }!!
-        val userSipil = sessionManager.fetchUserSipil()
-        val userPersonel = sessionManager.fetchUserPersonel()
-//        val user =
-        if (userSipil?.id == null || userSipil?.id == 0) {
-            txt_nama_profil.text = userPersonel?.personel?.nama
+        val user = sessionManager.fetchUser()
+        txt_nama_profil.text = user?.nama
 
-        } else {
-            txt_nama_profil.text = userSipil?.operator_sipil?.nama
-
-        }
-        var hakAkses = sessionManager.fetchHakAkses()
-
+        val hakAkses = sessionManager.fetchHakAkses()
         when (hakAkses) {
             "operator" -> txt_jenis_hak_akses.text = "Operator"
             "admin" -> {
@@ -62,8 +54,6 @@ class ProfilFragment : Fragment() {
                 btn_manajemen_operator.visible()
             }
         }
-//        Log.e("user", "$user")
-//        txt_nama_profil.text = user?.operator_sipil?.nama
 
         btn_logout.attachTextChangeAnimator()
         bindProgressButton(btn_logout)
@@ -97,7 +87,7 @@ class ProfilFragment : Fragment() {
         btn_logout.showProgress {
             progressColor = R.color.colorPrimary
         }
-        NetworkConfig().getService().logout("Bearer ${sessionManager.fetchAuthToken()}")
+      NetworkConfig().getServUser().logout("Bearer ${sessionManager.fetchAuthToken()}")
             .enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     Toast.makeText(activity, "Gagal Logout", Toast.LENGTH_SHORT).show()
@@ -108,7 +98,9 @@ class ProfilFragment : Fragment() {
 //                        deleteUser()
                         sessionManager.clearUser()
                         btn_logout.hideProgress("Logout")
-                        startActivity(Intent(activity, KatUserActivity::class.java))
+                        val intent = Intent(activity, KatUserActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
                         activity?.finish()
                     } else {
                         Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
@@ -117,11 +109,4 @@ class ProfilFragment : Fragment() {
 
             })
     }
-
-//    private fun deleteUser() {
-//        val realm = Realm.getDefaultInstance()
-//        realm.beginTransaction()
-//        realm.deleteAll()
-//        realm.commitTransaction()
-//    }
 }

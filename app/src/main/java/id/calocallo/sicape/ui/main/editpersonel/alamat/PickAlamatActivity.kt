@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.AlamatResp
@@ -68,7 +67,7 @@ class PickAlamatActivity : BaseActivity() {
 
     private fun ApiAlamat() {
         rl_pb.visible()
-        NetworkConfig().getService().showAlamat(
+        NetworkConfig().getServPers().showAlamat(
             "Bearer ${sessionManager1.fetchAuthToken()}",
 //            "4"
             sessionManager1.fetchID().toString()

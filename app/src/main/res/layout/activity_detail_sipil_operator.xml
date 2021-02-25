@@ -32,12 +32,14 @@
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="Alamat Sipil" />
 
         <TextView
             android:id="@+id/txt_alamat_sipil_operator_detail"
             style="@style/JustText"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Alamat Sipil" />
@@ -73,12 +75,14 @@
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="Bekerja Di" />
 
         <TextView
             android:id="@+id/txt_bekerja_sipil_operator_detail"
             style="@style/JustText"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Di XXX" />

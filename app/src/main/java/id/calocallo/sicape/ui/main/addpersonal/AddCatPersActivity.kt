@@ -83,7 +83,7 @@ class AddCatPersActivity : BaseActivity() {
         allPersonelModel.media_disenangi= sessionManager1.getMediaInfo()
         allPersonelModel.media_sosial= sessionManager1.getMedsos()
 
-        NetworkConfig().getService().addAllPersonel(
+        NetworkConfig().getServPers().addAllPersonel(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             allPersonelModel
         ).enqueue(object: Callback<Base1Resp<AddPersonelResp>> {

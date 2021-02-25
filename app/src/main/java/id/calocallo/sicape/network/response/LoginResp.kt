@@ -4,6 +4,15 @@ import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+
+@Parcelize
+data class LoginResp(
+    val status: Int?,
+    val token: String?,
+    val user: UserResp?
+) : Parcelable
+
+
 @Parcelize
 data class LoginSipilResp(
     val status: Int,

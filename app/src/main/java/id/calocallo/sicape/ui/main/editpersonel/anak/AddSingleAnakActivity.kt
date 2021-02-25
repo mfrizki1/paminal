@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.AnakReq
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -83,7 +82,7 @@ class AddSingleAnakActivity : BaseActivity() {
         btn_save_single_anak.showProgress {
             progressColor = Color.WHITE
         }
-        NetworkConfig().getService().addAnakSingle(
+        NetworkConfig().getServPers().addAnakSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString(),
             anakReq
