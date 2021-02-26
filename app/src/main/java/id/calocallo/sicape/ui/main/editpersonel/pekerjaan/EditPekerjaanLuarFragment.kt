@@ -86,7 +86,11 @@ class EditPekerjaanLuarFragment : Fragment() {
                     val data  =response.body()
                     edt_nama_pekerjaan_luar_edit.setText(data?.pekerjaan)
                     edt_thn_awal_pekerjaan_luar_edit.setText(data?.tahun_awal.toString())
-                    edt_thn_akhir_pekerjaan_luar_edit.setText(data?.tahun_akhir.toString())
+                    if(data?.tahun_akhir == null){
+                        edt_thn_akhir_pekerjaan_luar_edit.setText("")
+                    }else{
+                        edt_thn_akhir_pekerjaan_luar_edit.setText(data?.tahun_akhir.toString())
+                    }
                     edt_instansi_pekerjaan_luar_edit.setText(data?.instansi)
                     edt_rangka_pekerjaan_luar_edit.setText(data?.dalam_rangka)
                     edt_ket_pekerjaan_luar_edit.setText(data?.keterangan)

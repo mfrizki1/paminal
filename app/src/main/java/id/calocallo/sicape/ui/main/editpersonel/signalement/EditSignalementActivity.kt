@@ -37,7 +37,7 @@ class EditSignalementActivity : BaseActivity() {
             btn_save_signalement_edit.gone()
         }
 //        getSignalement()
-        personel?.signalement?.let { viewSignalement(it) }
+        personel?.let { viewSignalement(it) }
         btn_save_signalement_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_signalement_edit)
         btn_save_signalement_edit.setOnClickListener {
@@ -116,7 +116,7 @@ class EditSignalementActivity : BaseActivity() {
             ) {
                 if (response.isSuccessful) {
                     if (!response.body()!!.tinggi.toString().isNullOrEmpty()) {
-                        viewSignalement(response.body()!!)
+//                        viewSignalement(response.body()!!)
                     }
                 } else {
                     Toast.makeText(this@EditSignalementActivity, R.string.error, Toast.LENGTH_SHORT)
@@ -126,7 +126,7 @@ class EditSignalementActivity : BaseActivity() {
         })
     }
 
-    private fun viewSignalement(body: SignalementModel) {
+    private fun viewSignalement(body: AllPersonelModel1) {
         edt_tinggi_edit.setText(body.tinggi.toString())
         edt_rambut_edit.setText(body.rambut)
         edt_muka_edit.setText(body.muka)

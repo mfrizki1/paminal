@@ -274,7 +274,7 @@ class DetailPersonelActivity : BaseActivity() {
     }
 
     private fun getViewDetailPersonel(data: AllPersonelModel1?) {
-        img_personel.setFromUrl(data?.foto?.foto_muka?.url.toString())
+        img_personel.setFromUrl(data?.foto_muka?.url.toString())
         txt_kesatuan_personel.text = data?.satuan_kerja?.kesatuan
         txt_nama_personel.text = data?.nama
         txt_ttl_personel.text =

@@ -24,7 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EditPasanganActivity : BaseActivity() {
-    private var agama_skrg = ""
+    private var agama_skrg: String? = null
     private var agama_sblm = ""
     private var stts_pasangan = ""
     private lateinit var sessionManager1: SessionManager1
@@ -111,16 +111,30 @@ class EditPasanganActivity : BaseActivity() {
         edt_no_telp_pekerjaan_pasangan_edit.setText(body?.no_telp_kantor)
         edt_pekerjaan_sblm_pasangan_edit.setText(body?.pekerjaan_sebelumnya)
         edt_kddkn_org_diikuti_pasangan_edit.setText(body?.kedudukan_organisasi_saat_ini)
-        edt_thn_org_diikuti_pasangan_edit.setText(body?.tahun_bergabung_organisasi_saat_ini.toString())
         edt_alasan_org_diikuti_pasangan_edit.setText(body?.alasan_bergabung_organisasi_saat_ini)
         edt_almt_org_diikuti_pasangan_edit.setText(body?.alamat_organisasi_saat_ini)
+
         edt_kddkn_org_prnh_pasangan_edit.setText(body?.kedudukan_organisasi_sebelumnya)
-        edt_thn_org_prnh_pasangan_edit.setText(body?.tahun_bergabung_organisasi_sebelumnya.toString())
         edt_alasan_org_prnh_pasangan_edit.setText(body?.alasan_bergabung_organisasi_sebelumnya)
         edt_almt_org_prnh_pasangan_edit.setText(body?.alamat_organisasi_sebelumnya)
+        edt_thn_org_diikuti_pasangan_edit.setText(body?.tahun_bergabung_organisasi_saat_ini.toString())
+        edt_thn_org_prnh_pasangan_edit.setText(body?.tahun_bergabung_organisasi_sebelumnya.toString())
         agama_skrg = body?.agama_sekarang.toString()
         agama_sblm = body?.agama_sebelumnya.toString()
+        when {
+            body?.tahun_bergabung_organisasi_saat_ini == null -> {
+                edt_thn_org_diikuti_pasangan_edit.setText("")
+            }
+            body.tahun_bergabung_organisasi_sebelumnya == null -> {
+                edt_thn_org_prnh_pasangan_edit.setText("")
+            }
+            body.agama_sebelumnya == null -> {
+                agama_sblm = ""
+            }
+        }
+
         when (body?.agama_sebelumnya) {
+            "" -> sp_agama_sblm_pasangan_edit_edit.setText("Tidak Ada")
             "islam" -> sp_agama_sblm_pasangan_edit_edit.setText("Islam")
             "katolik" -> sp_agama_sblm_pasangan_edit_edit.setText("Katolik")
             "protestan" -> sp_agama_sblm_pasangan_edit_edit.setText("Protestan")
@@ -137,6 +151,8 @@ class EditPasanganActivity : BaseActivity() {
             "hindu" -> sp_agama_skrg_pasangan_edit_edit.setText("Hindu")
             "konghuchu" -> sp_agama_skrg_pasangan_edit_edit.setText("Konghuchu")
         }
+
+
         initSP()
 
     }
@@ -251,7 +267,8 @@ class EditPasanganActivity : BaseActivity() {
 
     private fun initSP() {
         //spinner
-        val agama = listOf("Islam", "Kristen", "Protestan", "Buddha", "Hindu", "Khonghucu")
+        val agama =
+            listOf("Tidak ada", "Islam", "Kristen", "Protestan", "Buddha", "Hindu", "Khonghucu")
         val agamaNowAdapter = ArrayAdapter(this, R.layout.item_spinner, agama)
         val agamaSblmAdapter = ArrayAdapter(this, R.layout.item_spinner, agama)
         sp_agama_skrg_pasangan_edit_edit.setAdapter(agamaNowAdapter)
@@ -259,7 +276,7 @@ class EditPasanganActivity : BaseActivity() {
             val tes = parent.getItemAtPosition(position).toString().toLowerCase()
             Log.e("3", tes)
             agama_skrg = tes
-            Log.e("4", agama_skrg)
+            Log.e("4", agama_skrg!!)
 
         }
         val itemPasangan = listOf("Suami", "Istri")
@@ -275,11 +292,12 @@ class EditPasanganActivity : BaseActivity() {
         sp_agama_sblm_pasangan_edit_edit.setAdapter(agamaSblmAdapter)
         sp_agama_sblm_pasangan_edit_edit.setOnItemClickListener { parent, view, position, id ->
             agama_sblm = when (position) {
-                0 -> "islam"
-                1 -> "katolik"
-                2 -> "protestan"
-                3 -> "buddha"
-                4 -> "hindu"
+                0 -> ""
+                1 -> "islam"
+                2 -> "katolik"
+                3 -> "protestan"
+                4 -> "buddha"
+                5 -> "hindu"
                 else -> "konghuchu"
             }
         }

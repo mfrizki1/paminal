@@ -57,7 +57,7 @@ class EditFotoActivity : BaseActivity() {
 
         val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title = detailPersonel?.nama.toString()
+        supportActionBar?.title ="Edit Foto ${detailPersonel?.nama.toString()}"
 
         btn_edit_foto_depan_edit.setOnClickListener {
             picker(DEPAN)
@@ -194,24 +194,24 @@ class EditFotoActivity : BaseActivity() {
              }
          })*/
 
-        if (personel?.foto?.foto_kanan == null) {
+        if (personel?.foto_kanan == null) {
             img_foto_kanan_edit.gone()
             img_foto_kanan_null.visible()
         } else {
-            personel?.foto?.foto_kanan?.url?.let { img_foto_kanan_edit.setFromUrl(it) }
+            personel.foto_kanan?.url?.let { img_foto_kanan_edit.setFromUrl(it) }
         }
 
-        if (personel?.foto?.foto_kiri == null) {
+        if (personel?.foto_kiri == null) {
             img_foto_kiri_edit.gone()
             img_foto_kiri_null.visible()
         } else {
-            personel?.foto?.foto_kiri?.url?.let { img_foto_kiri_edit.setFromUrl(it) }
+            personel?.foto_kiri?.url?.let { img_foto_kiri_edit.setFromUrl(it) }
         }
-        if (personel?.foto?.foto_muka == null) {
+        if (personel?.foto_muka == null) {
             img_foto_depan_null.visible()
             img_foto_depan_edit.gone()
         } else {
-            personel?.foto?.foto_muka?.url?.let { img_foto_depan_edit.setFromUrl(it) }
+            personel?.foto_muka?.url?.let { img_foto_depan_edit.setFromUrl(it) }
         }
 
     }
@@ -408,27 +408,27 @@ class EditFotoActivity : BaseActivity() {
                 pb_foto_depan_edit.gone()
                 img_foto_depan_null.gone()
                 img_foto_depan_edit.visible()
-                Log.e("depan", "${body?.data?.get(0)?.foto}")
+                Log.e("depan", "${body?.data?.get(0)?.foto_muka}")
 //                                img_foto_depan_edit.setLocalImage(file, false)
-                mDepanUrl = body?.data?.get(0)?.foto?.foto_muka?.url
+                mDepanUrl = body?.data?.get(0)?.foto_muka?.url
                 mDepanUrl?.let { img_foto_depan_edit.setFromUrl(it, false) }
             }
             "foto_kanan"->{
                 pb_foto_kanan_edit.gone()
                 img_foto_kanan_null.gone()
                 img_foto_kanan_edit.visible()
-                Log.e("kanan", "${body?.data?.get(0)?.foto}")
+                Log.e("kanan", "${body?.data?.get(0)?.foto_kanan}")
 //                                img_foto_depan_edit.setLocalImage(file, false)
-                mKananUrl = body?.data?.get(0)?.foto?.foto_kanan?.url
+                mKananUrl = body?.data?.get(0)?.foto_kanan?.url
                 mKananUrl?.let { img_foto_kanan_edit.setFromUrl(it, false) }
             }
             "foto_kiri"->{
                 pb_foto_kiri_edit.gone()
                 img_foto_kiri_null.gone()
                 img_foto_kiri_edit.visible()
-                Log.e("kiri", "${body?.data?.get(0)?.foto}")
+                Log.e("kiri", "${body?.data?.get(0)?.foto_kiri}")
 //                                img_foto_depan_edit.setLocalImage(file, false)
-                mKiriUrl = body?.data?.get(0)?.foto?.foto_kiri?.url
+                mKiriUrl = body?.data?.get(0)?.foto_kiri?.url
                 mKiriUrl?.let { img_foto_kiri_edit.setFromUrl(it, false) }
             }
         }

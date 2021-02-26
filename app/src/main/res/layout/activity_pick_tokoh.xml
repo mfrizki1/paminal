@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.editpersonel.tokoh.PickTokohActivity">
 
     <include layout="@layout/layout_toolbar_white" />
 
     <include layout="@layout/view_separator" />
+
+    <TextView
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Data Tokoh Dikagumi" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,6 +39,7 @@
             android:id="@+id/rv_list_tokoh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="@dimen/space_8dp"
             tools:listitem="@layout/layout_edit_1_text" />
@@ -41,8 +48,8 @@
             android:id="@+id/btn_add_single_tokoh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/space_12dp"
             android:layout_marginBottom="@dimen/space_12dp"
             android:backgroundTint="@color/colorPrimary"

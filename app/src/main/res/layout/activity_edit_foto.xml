@@ -15,6 +15,12 @@
 
         <include layout="@layout/view_separator" />
 
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Foto" />
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_edit_foto_depan"
             android:layout_width="match_parent"
@@ -39,10 +45,11 @@
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
 
-                <include layout="@layout/view_separator"
-                    android:layout_below="@+id/txt_foto_depan_edit"
+                <include
+                    layout="@layout/view_separator"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_width="match_parent" />
+                    android:layout_below="@+id/txt_foto_depan_edit" />
 
                 <include
                     android:id="@+id/pb_foto_depan_edit"
@@ -66,9 +73,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:visibility="gone"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_placeholder" />
+                    android:src="@drawable/ic_placeholder"
+                    android:visibility="gone" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btn_edit_foto_depan_edit"
@@ -109,10 +116,11 @@
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
 
-                <include layout="@layout/view_separator"
-                    android:layout_below="@+id/txt_foto_kanan_edit"
+                <include
+                    layout="@layout/view_separator"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_width="match_parent" />
+                    android:layout_below="@+id/txt_foto_kanan_edit" />
 
                 <include
                     android:id="@+id/pb_foto_kanan_edit"
@@ -137,9 +145,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:visibility="gone"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_placeholder" />
+                    android:src="@drawable/ic_placeholder"
+                    android:visibility="gone" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btn_edit_foto_kanan_edit"
@@ -180,10 +188,11 @@
                     android:textSize="@dimen/text_18"
                     android:textStyle="bold" />
 
-                <include layout="@layout/view_separator"
-                    android:layout_below="@+id/txt_foto_kiri_edit"
+                <include
+                    layout="@layout/view_separator"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_width="match_parent" />
+                    android:layout_below="@+id/txt_foto_kiri_edit" />
 
                 <include
                     android:id="@+id/pb_foto_kiri_edit"
@@ -208,9 +217,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:visibility="gone"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_placeholder" />
+                    android:src="@drawable/ic_placeholder"
+                    android:visibility="gone" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btn_edit_foto_kiri_edit"
@@ -230,13 +239,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_foto_edit"
-            android:layout_width="match_parent"
             style="@style/Widget.Button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="@string/save" />
+            android:text="@string/save"
+            android:visibility="gone" />
 
     </LinearLayout>
 

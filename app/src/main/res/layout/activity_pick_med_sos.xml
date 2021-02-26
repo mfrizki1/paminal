@@ -9,6 +9,11 @@
 
     <include layout="@layout/layout_toolbar_white"/>
     <include layout="@layout/view_separator"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Data Media Sosial"
+        style="@style/TitleText"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,6 +37,7 @@
             android:id="@+id/rv_list_med_sos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="@dimen/space_8dp"
             tools:listitem="@layout/layout_edit_1_text" />

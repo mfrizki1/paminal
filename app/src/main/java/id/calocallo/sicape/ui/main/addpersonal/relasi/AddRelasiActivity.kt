@@ -108,10 +108,26 @@ class AddRelasiActivity : BaseActivity() {
         allPersonelModel.hobi = personel.hobi
         allPersonelModel.kebiasaan = personel.kebiasaan
         allPersonelModel.bahasa = personel.bahasa
-        allPersonelModel.bahasa = personel.bahasa
 //        = sessionManager1.getPersonel()
-        allPersonelModel.signalement = sessionManager1.getSignalement()
-        allPersonelModel.foto = sessionManager1.getIdFoto()
+
+        val signalement = sessionManager1.getSignalement()
+        allPersonelModel.tinggi = signalement.tinggi
+        allPersonelModel.rambut = signalement.rambut
+        allPersonelModel.muka = signalement.muka
+        allPersonelModel.mata = signalement.mata
+        allPersonelModel.sidik_jari = signalement.sidik_jari
+        allPersonelModel.cacat = signalement.cacat
+        allPersonelModel.kesenangan = signalement.kesenangan
+        allPersonelModel.kelemahan = signalement.kelemahan
+        allPersonelModel.yang_mempengaruhi = signalement.yang_mempengaruhi
+        allPersonelModel.keluarga_dekat = signalement.keluarga_dekat
+        allPersonelModel.lain_lain = signalement.lain_lain
+
+        val foto = sessionManager1.getIdFoto()
+        allPersonelModel.id_foto_kanan = foto.id_foto_kanan
+        allPersonelModel.id_foto_muka = foto.id_foto_muka
+        allPersonelModel.id_foto_kiri = foto.id_foto_kiri
+
         allPersonelModel.relasi = listRelasi
         allPersonelModel.pernah_dihukum = listHukum
 //        allPersonelModel.catatan_personel = sessionManager1.getCatpers()
@@ -192,12 +208,9 @@ class AddRelasiActivity : BaseActivity() {
                     sessionManager1.clearAllPers()
                     btn_next_relasi.showSnackbar(R.string.data_saved) {
                         action(R.string.next) {
-                            startActivity(
-                                Intent(
-                                    this@AddRelasiActivity,
-                                    MainActivity::class.java
-                                )
-                            )
+                            val intent = Intent(this@AddRelasiActivity, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME)
+                            startActivity(intent)
                         }
                     }
                 } else {

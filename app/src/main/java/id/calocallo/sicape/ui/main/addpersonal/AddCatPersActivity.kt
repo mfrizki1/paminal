@@ -53,8 +53,8 @@ class AddCatPersActivity : BaseActivity() {
 
     private fun doSavePersonel() {
 //        allPersonelModel.personel = sessionManager1.getPersonel()
-        allPersonelModel.signalement = sessionManager1.getSignalement()
-        allPersonelModel.foto = sessionManager1.getIdFoto()
+//        allPersonelModel.signalement = sessionManager1.getSignalement()
+//        allPersonelModel.foto = sessionManager1.getIdFoto()
         allPersonelModel.relasi = sessionManager1.getRelasi()
         allPersonelModel.pernah_dihukum = sessionManager1.getHukuman()
 //        allPersonelModel.catatan_personel= sessionManager1.getCatpers()

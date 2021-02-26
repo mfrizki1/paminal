@@ -130,7 +130,7 @@ class EditKeluargaActivity : BaseActivity() {
             }.show()
         }
 
-        initSP()
+//        initSP()
     }
 
 
@@ -250,6 +250,7 @@ class EditKeluargaActivity : BaseActivity() {
         }
         sp_agama_keluarga_edit.setText(status_agama)
 
+        initSP()
 
     }
 

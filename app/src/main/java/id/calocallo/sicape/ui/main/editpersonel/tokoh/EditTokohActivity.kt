@@ -32,7 +32,7 @@ class EditTokohActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         val namaPersonel = intent.extras?.getString("NAMA_PERSONEL")
         setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title = namaPersonel
+        supportActionBar?.title =namaPersonel
 
 
         val hak = sessionManager1.fetchHakAkses()
@@ -84,7 +84,7 @@ class EditTokohActivity : BaseActivity() {
         edt_nama_tokoh_edit.setText(tokoh?.nama)
         edt_asal_negara_tokoh_edit.setText(tokoh?.asal_negara)
         edt_alasan_tokoh_edit.setText(tokoh?.alasan)
-        edt_alasan_tokoh_edit.setText(tokoh?.keterangan)
+        edt_ket_tokoh_edit.setText(tokoh?.keterangan)
     }
 
     private fun doUpdateTokoh(tokoh: TokohResp?) {
