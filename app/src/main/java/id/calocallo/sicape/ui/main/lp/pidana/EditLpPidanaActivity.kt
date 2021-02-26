@@ -55,6 +55,12 @@ class EditLpPidanaActivity : BaseActivity() {
     private var pekerjaanSipil: String? = null
     private var tmptSipil: String? = null
     private var tglSipil: String? = null
+
+    private var namaPimpinan: String? = null
+    private var pangkatPimpinan: String? = null
+    private var nrpPimpinan: String? = null
+    private var jabatanPimpinan: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_lp_pidana)
@@ -114,6 +120,11 @@ class EditLpPidanaActivity : BaseActivity() {
         changedIdTerlapor: Int?,
         changedIdPelapor: Int?
     ) {
+
+        editLpPidana.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit.text.toString()
+        editLpPidana.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
+        editLpPidana.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
+        editLpPidana.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
         editLpPidana.no_lp = edt_no_lp_pidana_edit.text.toString()
         editLpPidana.pembukaan_laporan = edt_pembukaan_laporan_pidana_edit.text.toString()
         editLpPidana.isi_laporan = edt_isi_laporan_pidana_edit.text.toString()
@@ -158,7 +169,8 @@ class EditLpPidanaActivity : BaseActivity() {
     }
 
     private fun apiUpdPidana(pidana: LpPidanaResp?) {
-        NetworkConfig().getServLp().updLpPidana("Bearer ${sessionManager1.fetchAuthToken()}", pidana?.id, editLpPidana)
+        NetworkConfig().getServLp()
+            .updLpPidana("Bearer ${sessionManager1.fetchAuthToken()}", pidana?.id, editLpPidana)
             .enqueue(object :
                 Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
@@ -236,13 +248,14 @@ class EditLpPidanaActivity : BaseActivity() {
             "Jenis Kelamin : ${pidana?.detail_laporan?.jenis_kelamin_pelapor}"
 
         //pimpinan
-        /* edt_nama_pimpinan_bidang_edit.setText(pidana?.nama_yang_mengetahui)
-         edt_pangkat_pimpinan_bidang_edit.setText(pidana?.pangkat_yang_mengetahui)
-         edt_nrp_pimpinan_bidang_edit.setText(pidana?.nrp_yang_mengetahui)
-         edt_jabatan_pimpinan_bidang_edit.setText(
-             pidana?.jabatan_yang_mengetahui.toString().toUpperCase()
-         )
-         spinner_kesatuan_pimpinan_bidang_edit.setText(
+        edt_nama_pimpinan_bidang_edit.setText(pidana?.nama_yang_mengetahui)
+        edt_pangkat_pimpinan_bidang_edit.setText(pidana?.pangkat_yang_mengetahui)
+        edt_nrp_pimpinan_bidang_edit.setText(pidana?.nrp_yang_mengetahui)
+        edt_jabatan_pimpinan_bidang_edit.setText(
+            pidana?.jabatan_yang_mengetahui.toString().toUpperCase()
+        )
+
+        /*  spinner_kesatuan_pimpinan_bidang_edit.setText(
              pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()
          )
          namaSatker = pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()*/
@@ -302,8 +315,10 @@ class EditLpPidanaActivity : BaseActivity() {
         txt_jabatan_terlapor_lp_edit.text =
             "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
         txt_kesatuan_terlapor_lp_edit.text =
-            "Kesatuan : ${pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase()
+            }"
         //uraiain
         edt_uraian_pelanggaran_pidana_edit.setText(pidana?.uraian_pelanggaran)
     }
@@ -436,8 +451,10 @@ class EditLpPidanaActivity : BaseActivity() {
                         txt_nrp_terlapor_lp_edit.text = "NRP : ${personel?.nrp}"
                         txt_jabatan_terlapor_lp_edit.text = "Jabatan : ${personel?.jabatan}"
                         txt_kesatuan_terlapor_lp_edit.text =
-                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString()
-                                .toUpperCase()}"
+                            "Kesatuan : ${
+                                personel?.satuan_kerja?.kesatuan.toString()
+                                    .toUpperCase()
+                            }"
                     }
                     REQ_PELAPOR -> {
 //                            personel?.id?.let { sessionManager.setIDPersonelPelapor(it) }
@@ -448,8 +465,10 @@ class EditLpPidanaActivity : BaseActivity() {
                         txt_nrp_pelapor_pidana_lp_edit.text = "NRP : ${personel?.nrp}"
                         txt_jabatan_pelapor_pidana_lp_edit.text = "Jabatan : ${personel?.jabatan}"
                         txt_kesatuan_pelapor_pidana_lp_edit.text =
-                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString()
-                                .toUpperCase()}"
+                            "Kesatuan : ${
+                                personel?.satuan_kerja?.kesatuan.toString()
+                                    .toUpperCase()
+                            }"
                     }
                 }
             }

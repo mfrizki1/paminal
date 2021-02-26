@@ -217,12 +217,10 @@ class PickSaksiActivity : BaseActivity() {
                             textMarginRes = R.dimen.space_10dp
                         }
                         Handler(Looper.getMainLooper()).postDelayed({
-                            startActivity(
-                                Intent(
-                                    this@PickSaksiActivity,
-                                    ListLpKodeEtikActivity::class.java
-                                )
-                            )
+                            val intent =
+                                Intent(this@PickSaksiActivity, ListLpKodeEtikActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
                             finish()
                         }, 500)
                     } else {

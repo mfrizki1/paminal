@@ -183,7 +183,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
                 lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
                 lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
-//                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
+                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
 //                lpPidanaReq.status_pelapor = sessionManager1.getPelapor()
 //                lpPidanaReq.pembukaan_laporan = sessionManager1.getPembukaanLpLP()
                 lpPidanaReq.isi_laporan = sessionManager1.getIsiLapLP()
@@ -252,12 +252,10 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                     if (response.body()?.message == "Data lp disiplin saved succesfully") {
                         btn_save_lp_all.hideDrawable(R.string.data_saved)
                         Handler(Looper.getMainLooper()).postDelayed({
-                            startActivity(
-                                Intent(
-                                    this@PickPasalActivity,
-                                    ListLpDisiplinActivity::class.java
-                                )
-                            )
+                            val intent =
+                                Intent(this@PickPasalActivity, ListLpDisiplinActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
                             finish()
                         }, 500)
                     } else {
@@ -301,11 +299,10 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             textMarginRes = R.dimen.space_10dp
                         }
                         Handler(Looper.getMainLooper()).postDelayed({
-                            startActivity(
-                                Intent(
-                                    this@PickPasalActivity, ListLpPidanaActivity::class.java
-                                )
-                            )
+                            val intent =
+                                Intent(this@PickPasalActivity, ListLpPidanaActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
                             finish()
                         }, 500)
                     } else {

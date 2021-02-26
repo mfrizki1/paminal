@@ -213,14 +213,14 @@ class DetailLpPidanaActivity : BaseActivity() {
         txt_detail_tgl_buat_pidana.text =
             "Tanggal : ${formatterTanggal(pidana?.tanggal_buat_laporan)}"
 
-        /*  //pimpinan
+        //pimpinan
           txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.nama_yang_mengetahui}"
           txt_detail_pangkat_nrp_pimpinan_pidana.text =
               "Pangkat : ${pidana?.pangkat_yang_mengetahui.toString()
                   .toUpperCase()}, NRP : ${pidana?.nrp_yang_mengetahui}"
           txt_detail_jabatan_pimpinan_pidana.text = "Jabatan : ${pidana?.jabatan_yang_mengetahui}"
-          txt_detail_kesatuan_pimpinan_pidana.text =
-              "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"*/
+//          txt_detail_kesatuan_pimpinan_pidana.text =
+//              "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
         //terlapor
         txt_detail_nama_terlapor.text = "Nama : ${pidana?.personel_terlapor?.nama}"

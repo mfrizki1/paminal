@@ -40,6 +40,7 @@ class AddLpDisiplinActivity : BaseActivity() {
 
         //next to Pasal
         btn_next_lp_displin.setOnClickListener {
+            sessionManager1.setUraianPelanggaranLP(edt_uraian_pelanggaran_disiplin_add.text.toString())
             sessionManager1.setMacamPelanggaranLP(edt_macam_pelanggaran_disiplin.text.toString())
             sessionManager1.setKetPelaporLP(edt_ket_pelapor_disiplin.text.toString())
             sessionManager1.setKronologisPelapor(edt_kronologis_pelapor_disiplin.text.toString())

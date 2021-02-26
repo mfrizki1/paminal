@@ -481,8 +481,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pimpinan Bidang"
-            android:visibility="gone" />
+            android:text="Pimpinan Bidang" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -490,8 +489,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Nama Pimpinan Bidang"
-            android:visibility="gone">
+            android:hint="Nama Pimpinan Bidang">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_nama_pimpinan_bidang_edit"
@@ -505,8 +503,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -534,7 +531,7 @@
                     android:id="@+id/edt_nrp_pimpinan_bidang_edit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text|textCapSentences" />
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -545,8 +542,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Jabatan Pimpinan Bidang"
-            android:visibility="gone">
+            android:hint="Jabatan Pimpinan Bidang">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_jabatan_pimpinan_bidang_edit"
