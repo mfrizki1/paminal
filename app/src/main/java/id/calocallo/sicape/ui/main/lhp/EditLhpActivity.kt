@@ -2,18 +2,27 @@ package id.calocallo.sicape.ui.main.lhp
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
+import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.EditLhpReq
+import id.calocallo.sicape.network.response.Base1Resp
+import id.calocallo.sicape.network.response.LhpMinResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class EditLhpActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
@@ -38,9 +47,10 @@ class EditLhpActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
 
         val bundle = intent.extras
-        val editLHP = bundle?.getParcelable<LhpResp>(EDIT_LHP)
+        val editLHP = bundle?.getParcelable<LhpMinResp>(EDIT_LHP)
 
-        getViewLhpEdit(editLHP)
+        apiDetailLhp(editLHP)
+//        getViewLhpEdit(editLHP)
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_save_lhp_edit.gone()
@@ -54,19 +64,30 @@ class EditLhpActivity : BaseActivity() {
 
     }
 
-    private fun updateLhp(editLHP: LhpResp?) {
-        val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
-        val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
-        animated.setBounds(0, 0, size, size)
+    private fun apiDetailLhp(editLHP: LhpMinResp?) {
+        NetworkConfig().getServLhp()
+            .getLhpById("Bearer ${sessionManager1.fetchAuthToken()}", editLHP?.id).enqueue(
+                object :
+                    Callback<LhpResp> {
+                    override fun onResponse(call: Call<LhpResp>, response: Response<LhpResp>) {
+                        if (response.isSuccessful) {
+                            getViewLhpEdit(response.body())
+                        } else {
+                            Toast.makeText(this@EditLhpActivity, R.string.error, Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
 
+                    override fun onFailure(call: Call<LhpResp>, t: Throwable) {
+                        Toast.makeText(this@EditLhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                    }
+                })
+    }
+
+    private fun updateLhp(editLHP: LhpMinResp?) {
         btn_save_lhp_edit.showProgress {
             progressColor = Color.WHITE
         }
-        btn_save_lhp_edit.showDrawable(animated) {
-            textMarginRes = R.dimen.space_10dp
-            buttonTextRes = R.string.data_updated
-        }
-        btn_save_lhp_edit.hideDrawable(R.string.save)
         editLhpReq.no_lhp = edt_no_lhp_edit.text.toString()
         editLhpReq.tentang = edt_isi_pengaduan_lhp_edit.text.toString()
         editLhpReq.no_surat_perintah_penyelidikan = edt_no_sp_lhp_edit.text.toString()
@@ -92,6 +113,32 @@ class EditLhpActivity : BaseActivity() {
             }
         }
         Log.e("updateLHP", "$editLhpReq")
+        apiUpdLhp(editLHP)
+    }
+
+    private fun apiUpdLhp(editLHP: LhpMinResp?) {
+        NetworkConfig().getServLhp().updLhp("Bearer ${sessionManager1.fetchAuthToken()}", editLHP?.id, editLhpReq).enqueue(
+            object : Callback<Base1Resp<AddLhpResp>> {
+                override fun onResponse(
+                    call: Call<Base1Resp<AddLhpResp>>,
+                    response: Response<Base1Resp<AddLhpResp>>
+                ) {
+                    if (response.body()?.message == "Data lhp updated succesfully") {
+                        btn_save_lhp_edit.hideProgress(R.string.data_saved)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            finish()
+                        },750)
+
+                    } else {
+                        btn_save_lhp_edit.hideProgress(R.string.not_update)
+                    }
+                }
+
+                override fun onFailure(call: Call<Base1Resp<AddLhpResp>>, t: Throwable) {
+                    Toast.makeText(this@EditLhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                    btn_save_lhp_edit.hideProgress(R.string.not_update)
+                }
+            })
     }
 
     private fun getViewLhpEdit(editLHP: LhpResp?) {
@@ -118,137 +165,6 @@ class EditLhpActivity : BaseActivity() {
             rb_terbukti_edit.isChecked = true
             editLhpReq.isTerbukti = 1
         }
-        /*
-        val listLidik = editLHP?.listLidik
-        adapterLidik = LidikAdapter(this, listLidik!!, object : LidikAdapter.OnClickLidik {
-            override fun onAdd() {
-                listLidik.add(ListLidik())
-                val position = if (listLidik.isEmpty()) 0 else listLidik.size - 1
-                adapterLidik.notifyItemInserted(position)
-                adapterLidik.notifyDataSetChanged()
-            }
-
-            override fun onDelete(position: Int) {
-                listLidik.removeAt(position)
-                adapterLidik.notifyDataSetChanged()
-            }
-        })
-        rv_lidik.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_lidik.adapter = adapterLidik
-
-        val listSaksi = editLHP.listSaksi
-        adapterSaksi = listSaksi?.let {
-            SaksiAdapter(this, it, object : SaksiAdapter.OnClickSaksi {
-                override fun onAdd() {
-                    listSaksi.add(ListSaksi())
-                    val position = if (listSaksi.isEmpty()) 0 else listSaksi.size - 1
-                    adapterSaksi.notifyItemInserted(position)
-                    adapterSaksi.notifyDataSetChanged()
-                }
-
-                override fun onDelete(position: Int) {
-                    listSaksi.removeAt(position)
-                    adapterSaksi.notifyDataSetChanged()
-                }
-            })
-        }!!
-        rv_saksi.adapter = adapterSaksi
-
-        val listSurat = editLHP.listSurat
-        adapterSurat = listSurat?.let {
-            SuratAdapter(this, it, object : SuratAdapter.OnClickSurat {
-                override fun onAdd() {
-                    listSurat.add(ListSurat())
-                    val position = if (listSurat.isEmpty()) 0 else listSurat.size - 1
-                    adapterSurat.notifyItemInserted(position)
-                    adapterSurat.notifyDataSetChanged()
-                }
-
-                override fun onDelete(position: Int) {
-                    listSurat.removeAt(position)
-                    adapterSurat.notifyDataSetChanged()
-                }
-            })
-        }!!
-        rv_surat.adapter = adapterSurat
-
-        val listPetunjuk = editLHP.listPetunjuk
-        adapterPetunjuk = listPetunjuk?.let {
-            PetunjukAdapter(this, it, object : PetunjukAdapter.OnClickPetunjuk {
-                override fun onAdd() {
-                    listPetunjuk.add(ListPetunjuk())
-                    val position = if (listPetunjuk.isEmpty()) 0 else listPetunjuk.size - 1
-                    adapterPetunjuk.notifyItemInserted(position)
-                    adapterPetunjuk.notifyDataSetChanged()
-                }
-
-                override fun onDelete(position: Int) {
-                    listPetunjuk.removeAt(position)
-                    adapterPetunjuk.notifyDataSetChanged()
-                }
-            })
-        }!!
-        rv_petunjuk.adapter = adapterPetunjuk
-
-        val listBukti = editLHP.listBukti
-        adapterBukti = listBukti?.let {
-            BuktiAdapter(this, it, object : BuktiAdapter.OnClickBukti {
-                override fun onAdd() {
-                    listBukti.add(ListBukti())
-                    val position = if (listBukti.isEmpty()) 0 else listBukti.size - 1
-                    adapterBukti.notifyItemInserted(position)
-                    adapterBukti.notifyDataSetChanged()
-                }
-
-                override fun onDelete(position: Int) {
-                    listBukti.removeAt(position)
-                    adapterBukti.notifyDataSetChanged()
-                }
-
-            })
-        }!!
-        rv_bukti.adapter = adapterBukti
-
-        val listTerlapor = editLHP.listTerlapor
-        adapterTerlapor = listTerlapor?.let {
-            TerlaporAdapter(this, it, object : TerlaporAdapter.OnClickTerlapor {
-                override fun onAdd() {
-                    listTerlapor.add(ListTerlapor())
-                    val position = if (listTerlapor.isEmpty()) 0 else listTerlapor.size - 1
-                    adapterTerlapor.notifyItemInserted(position)
-                    adapterTerlapor.notifyDataSetChanged()
-                }
-
-                override fun onDelete(position: Int) {
-                    listTerlapor.removeAt(position)
-                    adapterTerlapor.notifyDataSetChanged()
-                }
-            })
-        }!!
-        rv_terlapor.adapter = adapterTerlapor
-
-        val listAnalisa = editLHP.listAnalisa
-        adapterAnalisa = listAnalisa?.let {
-            AnalisaAdapter(this, it, object : AnalisaAdapter.OnClickAnalisa {
-                override fun onAdd() {
-                    listAnalisa.add(ListAnalisa())
-                    val position = if (listAnalisa.isEmpty()) 0 else listAnalisa.size - 1
-                    adapterAnalisa.notifyItemInserted(position)
-                    adapterAnalisa.notifyDataSetChanged()
-                }
-
-                override fun onDelete(position: Int) {
-                    listAnalisa.removeAt(position)
-                    adapterAnalisa.notifyDataSetChanged()
-                }
-            })
-        }!!
-        rv_analisa.adapter = adapterAnalisa
-
-
-        Log.e("size", "${}")
-
-         */
     }
 
 }

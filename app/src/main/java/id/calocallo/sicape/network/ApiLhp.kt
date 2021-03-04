@@ -37,8 +37,8 @@ interface ApiLhp {
     @PATCH(LHP_ID)
     fun updLhp(
         @Header("Authorization") token: String,
-        @Body editLhpReq: EditLhpReq,
-        @Path("id_lhp") id_lhp: Int?
+        @Path("id_lhp") id_lhp: Int?,
+        @Body editLhpReq: EditLhpReq
     ): Call<Base1Resp<AddLhpResp>>
 
     @Headers(ApiLp.ACCEPT)
