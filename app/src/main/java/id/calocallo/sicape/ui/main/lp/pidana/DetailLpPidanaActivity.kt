@@ -13,7 +13,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.downloadservice.filedownloadservice.manager.FileDownloadManager
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
@@ -146,25 +145,6 @@ class DetailLpPidanaActivity : BaseActivity() {
         val uri = Uri.parse(dok?.dokumen?.url)
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
 
-    }
-
-    private fun downloadDok(lp: LpPidanaResp?) {
-        val folder = File(Environment.DIRECTORY_DOWNLOADS + "/" + "LP")
-        if (!folder.exists()) {
-            folder.mkdirs()
-        }
-
-        val fileName = "PIDANA_${lp?.no_lp}.${lp?.dokumen?.jenis}"
-        val urlOfTheFile = lp?.dokumen?.url
-        urlOfTheFile?.let {
-            FileDownloadManager.initDownload(
-                this,
-                it,
-                folder.absolutePath,
-                fileName
-            )
-        }
-//        val fileName = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date()) + ".mp3"
     }
 
     private fun apiDetailPidana(pidana: LpMinResp?) {

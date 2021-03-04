@@ -43,7 +43,7 @@
                     android:id="@+id/edt_no_lhp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textMultiLine|textCapSentences" />
+                    android:inputType="textMultiLine|textCapCharacters" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +81,7 @@
                     android:id="@+id/edt_no_sp_lhp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text|textCapSentences" />
+                    android:inputType="text|textCapCharacters" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,7 +98,7 @@
                     android:id="@+id/edt_waktu_penugasan_lhp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textMultiLine|textCapSentences" />
+                    android:inputType="date" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="@dimen/space_8dp"
+                android:visibility="gone"
                 android:hint="Tempat Penyelidikan">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -120,7 +121,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:hint="Tugas Pokok">
 
@@ -128,7 +129,7 @@
                     android:id="@+id/edt_tugas_pokok_lhp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text|textCapSentences" />
+                    android:inputType="textMultiLine|textCapSentences" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -170,7 +171,7 @@
                     android:id="@+id/edt_keterangan_ahli_lhp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text|textCapSentences" />
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

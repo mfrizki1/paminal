@@ -5,17 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.main.choose.lp.ChooseLpActivity">
-
-    <include layout="@layout/layout_toolbar_white" />
-
-    <include layout="@layout/view_separator" />
+    tools:context=".ui.main.choose.lp.PickJenisLpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <include layout="@layout/layout_toolbar_white" />
 
+        <include layout="@layout/view_separator" />
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_lp_pidana_choose"
             android:layout_width="match_parent"

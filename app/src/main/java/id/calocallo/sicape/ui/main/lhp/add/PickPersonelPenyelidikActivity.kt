@@ -20,8 +20,8 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 class PickPersonelPenyelidikActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private lateinit var lhpDataManager: LhpDataManager
-    private var adapterLidik = ReusableAdapter<PersonelPenyelidikResp>(this)
-    private lateinit var callbackLidik: AdapterCallback<PersonelPenyelidikResp>
+    private var adapterLidik = ReusableAdapter<PersonelPenyelidikReq>(this)
+    private lateinit var callbackLidik: AdapterCallback<PersonelPenyelidikReq>
     private var currPersonelLidik = ArrayList<PersonelPenyelidikResp>()
 //    private var templidikReq= PersonelPenyelidikReq()
     private var templidikReq= ArrayList<PersonelPenyelidikReq>()
@@ -52,14 +52,14 @@ class PickPersonelPenyelidikActivity : BaseActivity() {
 //        getListDataLidik(currPersonelLidik)
     }
 
-    private fun getListDataLidik(currPersonelLidik: ArrayList<PersonelPenyelidikResp>) {
-        callbackLidik = object : AdapterCallback<PersonelPenyelidikResp> {
+    private fun getListDataLidik(currPersonelLidik: ArrayList<PersonelPenyelidikReq>) {
+        callbackLidik = object : AdapterCallback<PersonelPenyelidikReq> {
             override fun initComponent(
                 itemView: View,
-                data: PersonelPenyelidikResp,
+                data: PersonelPenyelidikReq,
                 itemIndex: Int
             ) {
-                itemView.txt_detail_1.text = data.nama
+                itemView.txt_detail_1.text = data.nama_personel
                 when (data.is_ketua) {
                     1 -> itemView.txt_detail_2.text = "Ketua Tim"
                     0 -> itemView.txt_detail_2.text = "Anggota"
@@ -68,10 +68,9 @@ class PickPersonelPenyelidikActivity : BaseActivity() {
 
             override fun onItemClicked(
                 itemView: View,
-                data: PersonelPenyelidikResp,
+                data: PersonelPenyelidikReq,
                 itemIndex: Int
-            ) {
-            }
+            ) {}
 
         }
         adapterLidik.adapterCallback(callbackLidik)
@@ -89,10 +88,12 @@ class PickPersonelPenyelidikActivity : BaseActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_LIDIK_PICK) {
             Log.e("req", "$personelLidikReq")
             personelLidik?.let { currPersonelLidik.add(it) }
-            getListDataLidik(currPersonelLidik)
             personelLidikReq?.let { templidikReq.add(it) }
+            getListDataLidik(templidikReq)
 //            templidikReq.id_personel = personelLidikReq?.id_personel
 //            templidikReq.is_ketua = personelLidikReq?.is_ketua
+
+            Log.e("personel", "$personelLidik")
         }
     }
 

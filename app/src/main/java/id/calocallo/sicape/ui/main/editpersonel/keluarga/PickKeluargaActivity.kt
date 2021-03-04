@@ -100,7 +100,7 @@ class PickKeluargaActivity : BaseActivity() {
             }
 
         }
-        list?.let {
+        list?.let { it ->
             sortKeluarga(it).let {
                 adapterKeluarga.adapterCallback(callbackKeluarga)
                     .addData(it).setLayout(R.layout.item_2_text)

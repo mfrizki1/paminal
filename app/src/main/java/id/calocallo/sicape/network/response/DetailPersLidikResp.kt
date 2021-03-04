@@ -4,11 +4,14 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class PersonelPenyelidikResp(
+data class DetailPersLidikResp(
     var id: Int?,
-    var id_lhp: Int?,
+    var id_lhp: LhpMinResp?,
     var personel: PersonelMinResp?,
     var is_ketua: Int?
-) : Parcelable {
-    constructor() : this(null,null,null,null)
-}
+):Parcelable
+
+@Parcelize
+data class AddPersLidikResp(
+    var personel_penyelidik: DetailPersLidikResp?
+):Parcelable

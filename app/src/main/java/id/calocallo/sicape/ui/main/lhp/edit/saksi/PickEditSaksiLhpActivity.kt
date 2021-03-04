@@ -2,9 +2,14 @@ package id.calocallo.sicape.ui.main.lhp.edit.saksi
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
+import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.LhpMinResp
 import id.calocallo.sicape.network.response.SaksiLhpResp
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity.Companion.EDIT_LHP
@@ -17,6 +22,9 @@ import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class PickEditSaksiLhpActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
@@ -28,9 +36,9 @@ class PickEditSaksiLhpActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         adapterSaksiLhp = ReusableAdapter(this)
 
-        val detailLhp = intent.extras?.getParcelable<LhpResp>(EditLhpActivity.EDIT_LHP)
+        val detailLhp = intent.extras?.getParcelable<LhpMinResp>(EDIT_LHP)
         setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title = "Pilih Data Saksi"
+        supportActionBar?.title = "Data Saksi LHP"
 
         btn_add_single_saksi_lhp.setOnClickListener {
             val intent = Intent(this, AddSingleSaksiLhpActivity::class.java)
@@ -38,17 +46,47 @@ class PickEditSaksiLhpActivity : BaseActivity() {
             startActivity(intent)
 
         }
-        val dataLHP = intent.extras?.getParcelable<LhpResp>(EDIT_LHP)
-        getListSaksiLhp(dataLHP)
+        apiListSaksiLhp(detailLhp)
+//        getListSaksiLhp(detailLhp)
     }
 
-    private fun getListSaksiLhp(dataLHP: LhpResp?) {
+    private fun apiListSaksiLhp(detailLhp: LhpMinResp?) {
+        NetworkConfig().getServLhp()
+            .getAllSaksiLhp("Bearer ${sessionManager1.fetchAuthToken()}", detailLhp?.id)
+            .enqueue(object : Callback<ArrayList<SaksiLhpResp>> {
+                override fun onResponse(
+                    call: Call<ArrayList<SaksiLhpResp>>,
+                    response: Response<ArrayList<SaksiLhpResp>>
+                ) {
+                    if (response.isSuccessful) {
+                        getListSaksiLhp(response.body())
+                    } else {
+                        Toast.makeText(
+                            this@PickEditSaksiLhpActivity,
+                            R.string.error,
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<SaksiLhpResp>>, t: Throwable) {
+                    Toast.makeText(this@PickEditSaksiLhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    private fun getListSaksiLhp(dataSaksi: ArrayList<SaksiLhpResp>?) {
 
         callbackSaksiLhp = object : AdapterCallback<SaksiLhpResp> {
             override fun initComponent(itemView: View, data: SaksiLhpResp, itemIndex: Int) {
-                itemView.txt_detail_1.text = data.nama
+                if(data.personel == null) {
+                    itemView.txt_detail_1.text = data.nama
+                }else{
+                    itemView.txt_detail_1.text = data.personel?.nama
+                }
                 when (data.status_saksi) {
-                    "polisi" -> itemView.txt_detail_2.text = "Polisi"
+                    "personel" -> itemView.txt_detail_2.text = "Personel"
                     "sipil" -> itemView.txt_detail_2.text = "Sipil"
 
                 }
@@ -60,7 +98,7 @@ class PickEditSaksiLhpActivity : BaseActivity() {
                 startActivity(intent)
             }
         }
-        dataLHP?.saksi?.let {
+        dataSaksi?.let {
             adapterSaksiLhp.adapterCallback(callbackSaksiLhp)
                 .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
                 .build(rv_list_saksi_lhp)
@@ -69,6 +107,28 @@ class PickEditSaksiLhpActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-//        getListSaksiLhp()
+        val detailLhp = intent.extras?.getParcelable<LhpMinResp>(EDIT_LHP)
+        apiListSaksiLhp(detailLhp)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_bar, menu)
+        val item = menu?.findItem(R.id.action_search)
+        val searchView = item?.actionView as SearchView
+        searchView.queryHint = "Cari Nama Saksi"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterSaksiLhp.filter.filter(newText)
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
 }

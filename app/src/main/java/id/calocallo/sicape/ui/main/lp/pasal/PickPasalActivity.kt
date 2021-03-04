@@ -67,7 +67,10 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
             "disiplin" -> {
                 supportActionBar?.title = "Tambah Data Laporan Disiplin"
             }
-            "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Kode Etik"
+            "kode_etik" -> {
+                btn_save_lp_all.text = getString(R.string.next)
+                supportActionBar?.title = "Tambah Data Laporan Kode Etik"
+            }
         }
         apiListPasal()
 //        getListPasal(listPasal)

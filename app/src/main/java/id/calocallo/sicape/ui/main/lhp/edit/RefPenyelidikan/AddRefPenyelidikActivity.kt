@@ -28,12 +28,13 @@ class AddRefPenyelidikActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var idLp: Int? = null
     private var refPenyelidikanReq = RefPenyelidikanReq()
+    private var isSingleAdd:Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_ref_penyelidik)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Referensi Penyelidikan"
-        val isSingleAdd = intent.getBooleanExtra(SINGLE_ADD, false)
+        isSingleAdd = intent.getBooleanExtra(SINGLE_ADD, false)
         val dataLhp = intent.getParcelableExtra<LhpMinResp>(DATA_LHP)
 
         sessionManager1 = SessionManager1(this)
@@ -48,9 +49,20 @@ class AddRefPenyelidikActivity : BaseActivity() {
         btn_save_ref_penyelidik_add.setOnClickListener {
             refPenyelidikanReq.id_lp = idLp
             refPenyelidikanReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
-            Log.e("refPenyelidikanReq", "$refPenyelidikanReq")
-            btn_save_ref_penyelidik_add.showProgress { progressColor = Color.WHITE }
-            addRefPenyelidikSingle(dataLhp)
+            if(isSingleAdd == true){
+                btn_save_ref_penyelidik_add.showProgress { progressColor = Color.WHITE }
+                addRefPenyelidikSingle(dataLhp)
+            }else{
+
+                val intent = Intent().apply{
+                    this.putExtra(DATA_REF_PENYELIDIK, refPenyelidikanReq)
+                    this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                setResult(RES_LP_ON_REF, intent)
+                finish()
+            }
+
+
         }
     }
 
@@ -86,9 +98,9 @@ class AddRefPenyelidikActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_LP && resultCode == RES_LP_ON_REF) {
             val dataLp = data?.getParcelableExtra<LpMinResp>(GET_LP_FROM_CHOOSE_LP)
-            Log.e("dataLp", "$dataLp")
             idLp = dataLp?.id
             txt_no_lp_ref_add.text = dataLp?.no_lp
+            refPenyelidikanReq.no_lp = txt_no_lp_ref_add.text.toString()
         }
     }
 
@@ -98,6 +110,7 @@ class AddRefPenyelidikActivity : BaseActivity() {
         const val REQ_LP = 234
         const val RES_LP_ON_REF = 124
         const val GET_LP_FROM_CHOOSE_LP = "GET_LP_FROM_CHOOSE_LP"
+        const val DATA_REF_PENYELIDIK = "DATA_REF_PENYELIDIK"
 
     }
 }

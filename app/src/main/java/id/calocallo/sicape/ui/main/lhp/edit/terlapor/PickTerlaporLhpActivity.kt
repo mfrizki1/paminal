@@ -52,10 +52,10 @@ class PickTerlaporLhpActivity : BaseActivity() {
                 startActivity(intent)
             }
         }
-        detailLhp?.keterangan_terlapor?.let {
-            adapterTerlapor.adapterCallback(callbackTerlapor)
-                .isVerticalView().addData(it).setLayout(R.layout.layout_edit_1_text)
-                .build(rv_list_terlapor)
-        }
+//        detailLhp?.keterangan_terlapor?.let {
+//            adapterTerlapor.adapterCallback(callbackTerlapor)
+//                .isVerticalView().addData(it).setLayout(R.layout.layout_edit_1_text)
+//                .build(rv_list_terlapor)
+//        }
     }
 }

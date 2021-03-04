@@ -7,7 +7,14 @@ import kotlinx.android.parcel.Parcelize
 data class RefPenyelidikanResp(
     var id: Int?,
     var id_lp: Int?,
-    var no_lp: String?
+    var lhp: LhpMinResp?,
+    var lp: LpPidanaResp?,
+    var isi_keterangan_terlapor: String?
 ):Parcelable {
-    constructor() : this(0, 0, "")
+    constructor() : this(null,null,null,null,null)
 }
+
+@Parcelize
+data class AddRefPenyelidikanResp(
+    var referensi_penyelidikan: RefPenyelidikanResp?
+):Parcelable

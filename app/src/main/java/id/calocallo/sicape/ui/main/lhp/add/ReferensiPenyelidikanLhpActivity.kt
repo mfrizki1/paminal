@@ -1,13 +1,12 @@
 package id.calocallo.sicape.ui.main.lhp.add
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
-import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
+import id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.utils.LhpDataManager
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
@@ -25,7 +24,7 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
     private var adapteRefLpReq = ReusableAdapter<RefPenyelidikanReq>(this)
     private lateinit var callbackRefLpReq: AdapterCallback<RefPenyelidikanReq>
     private var currRefLp = ArrayList<RefPenyelidikanReq>()
-    private var refLp = ArrayList<RefPenyelidikanReq>()
+    private var refLp = mutableListOf<RefPenyelidikanReq>()
     private lateinit var lhpDataManager: LhpDataManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,55 +36,46 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
 
         //set button for pick and add lp on lhp
         btn_add_lp_lhp.setOnClickListener {
-            val intent = Intent(this, ChooseLpActivity::class.java)
-            startActivityForResult(intent, REQ_LP)
+            val intent = Intent(this, AddRefPenyelidikActivity::class.java)
+            startActivityForResult(intent, ADD_REF)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 //        Log.e("listbfr", "$currRefLp")
         //set button for next
         btn_next_lp_lhp.setOnClickListener {
-            lhpDataManager.setListRefLp(currRefLp)
+            lhpDataManager.setListRefLp(refLp as ArrayList<RefPenyelidikanReq>)
             val intent = Intent(this, PickPersonelPenyelidikActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         }
+
+        getListRefLp(refLp)
     }
 
-    /*
-    private fun getListRefLp() {
-        if (refLp.isNullOrEmpty()) {
-            rl_no_data.visible()
-            rv_list_add_lp.gone()
-        } else {
-            rv_list_add_lp.visible()
-            callbackRefLpResp = object : AdapterCallback<RefPenyelidikanResp> {
-                override fun initComponent(
-                    itemView: View,
-                    data: RefPenyelidikanResp,
-                    itemIndex: Int
-                ) {
-                    itemView.txt_edit_pendidikan.text = data.no_lp
-                }
 
-                override fun onItemClicked(
-                    itemView: View,
-                    data: RefPenyelidikanResp,
-                    itemIndex: Int
-                ) {
-                }
+    private fun getListRefLp(listRef: MutableList<RefPenyelidikanReq>) {
+        Log.e("listRef", "$listRef")
+        callbackRefLpReq = object : AdapterCallback<RefPenyelidikanReq> {
+            override fun initComponent(
+                itemView: View, data: RefPenyelidikanReq, itemIndex: Int
+            ) {
+                itemView.txt_edit_pendidikan.text = data.no_lp
             }
-            adapteRefLpResp.adapterCallback(callbackRefLpResp)
-                .isVerticalView()
-                .addData(refResp)
-                .setLayout(R.layout.layout_edit_1_text)
-                .build(rv_list_add_lp)
 
+            override fun onItemClicked(
+                itemView: View, data: RefPenyelidikanReq, itemIndex: Int
+            ) {
+            }
         }
+        adapteRefLpReq.adapterCallback(callbackRefLpReq)
+            .isVerticalView()
+            .addData(refLp)
+            .setLayout(R.layout.layout_edit_1_text)
+            .build(rv_list_add_lp)
+
     }
 
-
-     */
     private fun addLpOnLhp(currRefLp: ArrayList<RefPenyelidikanReq>) {
         if (currRefLp.isNullOrEmpty()) {
             rl_no_data.visible()
@@ -97,7 +87,7 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
                     data: RefPenyelidikanReq,
                     itemIndex: Int
                 ) {
-                    itemView.txt_edit_pendidikan.text = data.no_lp
+                    itemView.txt_edit_pendidikan.text = data.isi_keterangan_terlapor
                 }
 
                 override fun onItemClicked(
@@ -116,8 +106,19 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
         }
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ADD_REF && resultCode == AddRefPenyelidikActivity.RES_LP_ON_REF) {
+            val dataRef =
+                data?.getParcelableExtra<RefPenyelidikanReq>(AddRefPenyelidikActivity.DATA_REF_PENYELIDIK)
+            Log.e("dataRef", "$dataRef")
+            if (dataRef != null) {
+                refLp.add(dataRef)
+            }
+        }
+    }
+
+/* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val idLP = data?.getParcelableExtra<RefPenyelidikanReq>(DATA_LP)
         when (resultCode) {
@@ -138,11 +139,10 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
             }
         }
     }
-
+*/
 
     companion object {
         const val LHP_ADD = "LHP_ADD"
-        const val REQ_LP = 200
-        const val GET_LP_FROM_CHOOSE_LP = "GET_LP_FROM_CHOOSE_LP"
+        const val ADD_REF = 1
     }
 }

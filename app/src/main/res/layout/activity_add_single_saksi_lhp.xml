@@ -79,7 +79,7 @@
                     <include layout="@layout/layout_separator" />
 
                     <TextView
-                        android:id="@+id/txt_nama_saksi_edit"
+                        android:id="@+id/txt_nama_saksi_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_8dp"
@@ -88,7 +88,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/txt_pangkat_saksi_edit"
+                        android:id="@+id/txt_pangkat_saksi_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_half"
@@ -96,7 +96,7 @@
                         android:textSize="@dimen/text_14" />
 
                     <TextView
-                        android:id="@+id/txt_nrp_saksi_edit"
+                        android:id="@+id/txt_nrp_saksi_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_half"
@@ -104,7 +104,7 @@
                         android:textSize="@dimen/text_14" />
 
                     <TextView
-                        android:id="@+id/txt_jabatan_saksi_edit"
+                        android:id="@+id/txt_jabatan_saksi_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_half"
@@ -112,7 +112,7 @@
                         android:textSize="@dimen/text_14" />
 
                     <TextView
-                        android:id="@+id/txt_kesatuan_saksi_edit"
+                        android:id="@+id/txt_kesatuan_saksi_add"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_half"
@@ -234,6 +234,31 @@
                 android:gravity="top|start"
                 android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apakah Korban?" />
+
+        <RadioGroup
+            android:id="@+id/rg_is_korban_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/space_12dp">
+
+            <RadioButton
+                android:id="@+id/rb_korban_saksi_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Korban" />
+
+            <RadioButton
+                android:id="@+id/rb_not_korban_saksi_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bukan Korban" />
+        </RadioGroup>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add_saksi_lhp_single"

@@ -71,7 +71,7 @@ class EditLhpActivity : BaseActivity() {
         editLhpReq.tentang = edt_isi_pengaduan_lhp_edit.text.toString()
         editLhpReq.no_surat_perintah_penyelidikan = edt_no_sp_lhp_edit.text.toString()
         editLhpReq.tanggal_mulai_penyelidikan = edt_waktu_penugasan_lhp_edit.text.toString()
-        editLhpReq.daerah_penyelidikan = edt_tempat_penyelidikan_lhp_edit.text.toString()
+//        editLhpReq.daerah_penyelidikan = edt_tempat_penyelidikan_lhp_edit.text.toString()
         editLhpReq.tugas_pokok = edt_tugas_pokok_lhp_edit.text.toString()
         editLhpReq.pokok_permasalahan = edt_pokok_permasalahan_lhp_edit.text.toString()
         editLhpReq.keterangan_ahli = edt_keterangan_ahli_lhp_edit.text.toString()
