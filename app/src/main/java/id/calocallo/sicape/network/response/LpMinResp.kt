@@ -9,6 +9,7 @@ data class LpMinResp(
     var no_lp: String?,
     var satuan_kerja: SatKerResp?,
     var jenis_pelanggaran: String?,
+    var personel_terlapor: PersonelMinResp?,
     var created_at: String?,
     var updated_at: String?
 ) : Parcelable
