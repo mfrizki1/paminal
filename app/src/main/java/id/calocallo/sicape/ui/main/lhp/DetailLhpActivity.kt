@@ -3,6 +3,7 @@ package id.calocallo.sicape.ui.main.lhp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -23,11 +24,10 @@ import id.calocallo.sicape.ui.main.lhp.edit.lidik.PickLidikLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
-import id.calocallo.sicape.utils.ext.toggleVisibility
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lhp.*
+import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -110,21 +110,51 @@ class DetailLhpActivity : BaseActivity() {
             btn_generate_lhp.showProgress {
                 progressColor = Color.WHITE
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                btn_generate_lhp.hideProgress(R.string.success_generate_doc)
-                alert(R.string.download) {
-                    positiveButton(R.string.iya) {
-                        btn_generate_lhp.hideProgress(R.string.generate_dokumen)
-
-                    }
-                    negativeButton(R.string.tidak) {
-                        btn_generate_lhp.hideProgress(R.string.generate_dokumen)
-
-                    }
-                }.show()
-            }, 2000)
+            apiGenerateDoc(dataLhp)
         }
 
+    }
+
+    private fun apiGenerateDoc(dataLhp: LhpMinResp?) {
+        NetworkConfig().getServLhp()
+            .generateDokLhp("Bearer ${sessionManager1.fetchAuthToken()}", dataLhp?.id).enqueue(
+                object : Callback<Base1Resp<AddLhpResp>> {
+                    override fun onResponse(
+                        call: Call<Base1Resp<AddLhpResp>>,
+                        response: Response<Base1Resp<AddLhpResp>>
+                    ) {
+                        if (response.body()?.message == "Document lhp generated successfully") {
+                            saveDocLhp(response.body()?.data?.lhp)
+                        } else {
+                            btn_generate_lhp.hideProgress(R.string.failed_generate_doc)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Base1Resp<AddLhpResp>>, t: Throwable) {
+                        btn_generate_lhp.hideProgress(R.string.failed_generate_doc)
+                        Toast.makeText(this@DetailLhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                    }
+                })
+    }
+
+    private fun saveDocLhp(dataDoc: LhpResp?) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            btn_generate_lhp.hideProgress(R.string.success_generate_doc)
+            alert("Lihat Dokumen") {
+                positiveButton(R.string.iya) {
+                    viewDocLhp(dataDoc)
+                    btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+
+                }
+                negativeButton(R.string.tidak) {
+                    btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+                }
+            }.show()
+        }, 1000)
+    }
+
+    private fun viewDocLhp(dataDoc: LhpResp?) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(dataDoc?.dokumen?.url)))
     }
 
     private fun apiDetailLhp(dataLhp: LhpMinResp?) {
@@ -185,6 +215,15 @@ class DetailLhpActivity : BaseActivity() {
         listOfSaksi(dataLhp?.saksi)
 //        listOfKetTerlapor(dataLhp?.keterangan_terlapor)
 
+        if (dataLhp?.is_ada_dokumen == 1) {
+            btn_lihat_doc_lhp.visible()
+            btn_lihat_doc_lhp.setOnClickListener {
+                viewDocLhp(dataLhp)
+            }
+        } else {
+            btn_lihat_doc_lhp.gone()
+        }
+
     }
 
     private fun listOfKetTerlapor(listTerlapor: ArrayList<KetTerlaporLhpResp>?) {
@@ -210,9 +249,9 @@ class DetailLhpActivity : BaseActivity() {
             override fun initComponent(itemView: View, data: SaksiLhpResp, itemIndex: Int) {
                 itemView.txt_detail_1.textSize = 14F
                 itemView.txt_detail_2.textSize = 12F
-                if(data.personel == null){
+                if (data.personel == null) {
                     itemView.txt_detail_1.text = data.nama
-                }else{
+                } else {
                     itemView.txt_detail_1.text = data.personel?.nama
                 }
                 if (data.is_korban == 1) {

@@ -27,6 +27,13 @@ interface ApiLhp {
     ): Call<LhpResp>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("lhp/{id_lhp}/generate/document")
+    fun generateDokLhp(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lhp") id_lhp: Int?
+    ): Call<Base1Resp<AddLhpResp>>
+
+    @Headers(ApiLp.ACCEPT)
     @POST(LHP)
     fun addLhp(
         @Header("Authorization") tokenBearer: String,

@@ -29,6 +29,7 @@ data class LhpResp(
     var saksi: ArrayList<SaksiLhpResp>?,/**/
 //    var keterangan_terlapor: ArrayList<KetTerlaporLhpResp>?,
     var is_ada_dokumen: Int?,/**/
+    var dokumen: DokResp?,
     var user_creator: UserCreatorResp?,/**/
     var user_updater: UserCreatorResp?,/**/
     var user_deleter: UserCreatorResp?,/**/
@@ -71,6 +72,7 @@ data class LhpResp(
 //    var nrp_ketua_tim: String?,*/
 ) : Parcelable {
     constructor() : this(
+        null,
         null,
         null,
         null,
