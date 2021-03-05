@@ -63,7 +63,7 @@ class LpChooseActivity : BaseActivity() {
             }
             "Kode Etik" -> {
                 supportActionBar?.title = "Pilih Data Laporan Kode Etik"
-                tempJenis = "kode_etik"
+                tempJenis = "kode/etik"
             }
             "Disiplin" -> {
                 tempJenis = "disiplin"
