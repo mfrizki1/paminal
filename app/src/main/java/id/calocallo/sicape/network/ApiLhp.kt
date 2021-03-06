@@ -6,7 +6,7 @@ import id.calocallo.sicape.network.request.*
 import id.calocallo.sicape.network.response.*
 import retrofit2.Call
 import retrofit2.http.*
-
+/*ENDPOINT LHP*/
 interface ApiLhp {
     companion object {
         const val LHP = "lhp"
