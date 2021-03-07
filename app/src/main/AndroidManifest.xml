@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.gelar.DetailGelarActivity"></activity>
+        <activity android:name=".ui.gelar.EditGelarActivity" />
+        <activity android:name=".ui.gelar.ListGelarActivity" />
         <activity android:name=".ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity"></activity>
         <activity android:name=".ui.main.lp.pasal.AddPasalDilanggarActivity" />
         <activity android:name=".ui.main.lp.pasal.DetailPasalActivity" />
