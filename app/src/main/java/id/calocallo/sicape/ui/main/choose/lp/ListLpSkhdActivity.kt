@@ -1,20 +1,35 @@
 package id.calocallo.sicape.ui.main.choose.lp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
+import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_list_lp_skhd.*
+import kotlinx.android.synthetic.main.activity_lp_choose.*
+import kotlinx.android.synthetic.main.activity_lp_choose.rv_list_lp_choose
+import kotlinx.android.synthetic.main.item_2_text.view.*
+import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
+import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ListLpSkhdActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
@@ -27,8 +42,8 @@ class ListLpSkhdActivity : BaseActivity() {
     private var listPasal = arrayListOf<PasalDilanggarResp>()
     private var listSaksi = arrayListOf<LpSaksiResp>()
 
-    private var adapterLpChoose = ReusableAdapter<LpPidanaResp>(this)
-    private lateinit var callbackLpChoose: AdapterCallback<LpPidanaResp>
+    private var adapterLpChoose = ReusableAdapter<LpMinResp>(this)
+    private lateinit var callbackLpChoose: AdapterCallback<LpMinResp>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +58,7 @@ class ListLpSkhdActivity : BaseActivity() {
 //        Log.e("ListLpSkhd", "$idLhp")
 
         val dataLhp = intent.getParcelableExtra<LhpMinResp>(ChooseLhpActivity.DATA_LHP)
-        Log.e(TAG, "$dataLhp" )
+        Log.e(TAG, "$dataLhp")
 
         apiListLpByLhp(dataLhp)
 
@@ -199,13 +214,66 @@ class ListLpSkhdActivity : BaseActivity() {
 
     private fun apiListLpByLhp(dataLhp: LhpMinResp?) {
         rl_pb.visible()
-//        NetworkConfig().getServSkhd()
+        NetworkConfig().getServLp()
+            .getLpByJenis("Bearer ${sessionManager1.fetchAuthToken()}", "pidana").enqueue(
+                object : Callback<ArrayList<LpMinResp>> {
+                    override fun onResponse(
+                        call: Call<ArrayList<LpMinResp>>,
+                        response: Response<ArrayList<LpMinResp>>
+                    ) {
+                        if (response.isSuccessful) {
+                            rl_pb.gone()
+                            getListLpByLhp(response.body())
+                        } else {
+                            rl_pb.gone()
+                            rl_no_data.visible()
+                            rv_choose_lp_skhd.gone()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ArrayList<LpMinResp>>, t: Throwable) {
+                        Toast.makeText(this@ListLpSkhdActivity, "$t", Toast.LENGTH_SHORT).show()
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                        rv_choose_lp_skhd.gone()
+                    }
+                })
+
+//        getListLpByLhp(response.body())
     }
+
+    private fun getListLpByLhp(list: ArrayList<LpMinResp>?) {
+        callbackLpChoose = object : AdapterCallback<LpMinResp> {
+            override fun initComponent(itemView: View, data: LpMinResp, itemIndex: Int) {
+                itemView.txt_1_clickable.text = data.no_lp
+            }
+
+            override fun onItemClicked(itemView: View, data: LpMinResp, itemIndex: Int) {
+                /**
+                 * get ID And go to previous activity
+                 */
+                itemView.img_clickable.visible()
+                val intent = Intent().apply {
+                    this.putExtra(DATA_LP, data)
+                }
+                setResult(RESULT_LP, intent)
+                finish()
+            }
+
+        }
+        list?.let {
+            adapterLpChoose.adapterCallback(callbackLpChoose)
+                .isVerticalView()
+                .filterable().addData(it).setLayout(R.layout.layout_1_text_clickable)
+                .build(rv_choose_lp_skhd)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_bar, menu)
         val item = menu?.findItem(R.id.action_search)
         val searchView = item?.actionView as SearchView
-        searchView.queryHint = "Cari LHP"
+        searchView.queryHint = "Cari Lp"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -225,6 +293,8 @@ class ListLpSkhdActivity : BaseActivity() {
         const val PIDANA = "PIDANA"
         const val DISIPLIN = "DISIPLIN"
         const val TAG = "--ListLpSkhdActivity"
+        const val RESULT_LP = 23
+        const val DATA_LP = "DATA_LP"
 
     }
 

@@ -4,12 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.network.request.SkhdReq
 import id.calocallo.sicape.network.response.LpDisiplinResp
+import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.network.response.LpPidanaResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
@@ -95,6 +97,16 @@ class AddSkhdActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_CHOOSE_LHP) {
             when (resultCode) {
+                ChooseLhpActivity.RES_LP_CHOSE_LHP -> {
+                    val dataLp = data?.getParcelableExtra<LpMinResp>(ChooseLhpActivity.DATA_LP)
+                    Log.e(TAG, "LpAdd: $dataLp")
+//                    val lhpResp = data?.getParcelableExtra<LhpResp>(ChooseLhpActivity.DATA_LP)
+//                    idLhp = lhpResp?.id
+                    txt_lp_skhd_add.text = dataLp?.no_lp
+                }
+            }
+            /* if (requestCode == REQ_CHOOSE_LHP) {
+            when (resultCode) {
                 Activity.RESULT_OK -> {
                     val lhpResp = data?.getParcelableExtra<LhpResp>("CHOOSE_LHP")
                     idLhp = lhpResp?.id
@@ -114,6 +126,7 @@ class AddSkhdActivity : BaseActivity() {
                     txt_lp_skhd_add.text = disiplin?.no_lp
                 }
             }
+        }*/
         }
     }
 
@@ -122,5 +135,6 @@ class AddSkhdActivity : BaseActivity() {
         const val REQ_CHOOSE_LP = 1
         const val IDLHP_FOR_LP = "LP_SKHD"
         const val ID_LP = "ID_LP"
+        const val TAG = "--AddSkhd"
     }
 }

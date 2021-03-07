@@ -2,6 +2,7 @@ package id.calocallo.sicape.ui.main.choose.lhp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -100,7 +101,7 @@ class ChooseLhpActivity : BaseActivity() {
 //                        this.putExtra(PICK_SKHD_ADD, true)
                         this.putExtra(DATA_LHP, data)
                     }
-                startActivity(intent)
+                startActivityForResult(intent,REQ_LHP)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
@@ -111,6 +112,19 @@ class ChooseLhpActivity : BaseActivity() {
                 .addData(it)
                 .setLayout(R.layout.layout_1_text_clickable)
                 .build(rv_choose_lhp)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQ_LHP && resultCode == ListLpSkhdActivity.RESULT_LP){
+            val dataLp = data?.getParcelableExtra<LpMinResp>(ListLpSkhdActivity.DATA_LP)
+            Log.e(TAG, "onActivityResult: $dataLp")
+            val intent = Intent().apply {
+                this.putExtra(DATA_LP,dataLp)
+            }
+            setResult(RES_LP_CHOSE_LHP, intent)
+            finish()
         }
     }
 
@@ -136,6 +150,10 @@ class ChooseLhpActivity : BaseActivity() {
 
     companion object {
         const val DATA_LHP = "DATA_LHP"
+        const val DATA_LP = "DATA_LP"
         const val PICK_SKHD_ADD = "PICK_SKHD_ADD"
+        const val REQ_LHP = 234
+        const val TAG = "--ChooseLhpActivity"
+        const val RES_LP_CHOSE_LHP = 23
     }
 }
