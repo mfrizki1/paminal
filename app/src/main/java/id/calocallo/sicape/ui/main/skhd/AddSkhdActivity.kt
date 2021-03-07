@@ -13,6 +13,7 @@ import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpPidanaResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
+import id.calocallo.sicape.ui.main.choose.lp.ListLpSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_skhd.*
@@ -31,17 +32,21 @@ class AddSkhdActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data SKHD"
 
-        /*set button for add id_lhp*/
-        bnt_pick_lhp_skhd_add.setOnClickListener {
+        /*set button for add id_lhp*/ /*GONE*/
+       /* bnt_pick_lhp_skhd_add.setOnClickListener {
             val intent = Intent(this, ChooseLhpActivity::class.java)
             startActivityForResult(intent, REQ_CHOOSE_LHP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        }*/
 
         /*set button for add id_lp*/
         bnt_pick_lp_skhd_add.setOnClickListener {
-            val intent = Intent(this, ChooseLpSkhdActivity::class.java)
-            intent.putExtra(IDLHP_FOR_LP, idLhp)
+//            val intent = Intent(this, ListLpSkhdActivity::class.java)
+//            val intent = Intent(this, ChooseLpSkhdActivity::class.java)
+//            intent.putExtra(IDLHP_FOR_LP, idLhp)
+
+//            /*Goto List Lp By Id LHP*/
+            val intent = Intent(this, ChooseLhpActivity::class.java)
             startActivityForResult(intent, REQ_CHOOSE_LP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 

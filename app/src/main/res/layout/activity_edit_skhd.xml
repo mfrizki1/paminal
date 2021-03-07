@@ -35,6 +35,13 @@
                     android:inputType="text|textCapSentences" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bnt_pick_lhp_skhd_edit"
                 android:layout_width="match_parent"
@@ -78,10 +85,12 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/bnt_pick_lp_skhd_edit"
+                android:id="@+id/btn_pick_lp_skhd_edit"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:text="Pilih Data Laporan Polisi"

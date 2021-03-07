@@ -37,49 +37,57 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/bnt_pick_lhp_skhd_add"
+            <LinearLayout
+                android:id="@+id/ll_pick_lhp_skhd_add"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:text="Pilih Data Laporan Hasil Penyelidikan"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cv_lhp_skhd_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:strokeColor="@color/colorPrimary"
-                app:strokeWidth="2dp">
-
-                <LinearLayout
+                android:orientation="vertical">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bnt_pick_lhp_skhd_add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="@dimen/space_8dp"
+                    android:text="Pilih Data Laporan Hasil Penyelidikan"
+                    android:textStyle="bold" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_lhp_skhd_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="2dp">
 
-                    <TextView
-                        style="@style/TitleText"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Laporan Hasil Penyelidikan" />
+                        android:orientation="vertical">
 
-                    <include
-                        layout="@layout/layout_separator"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginHorizontal="@dimen/space_12dp"
-                        android:layout_marginVertical="@dimen/space_half" />
+                        <TextView
+                            style="@style/TitleText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Laporan Hasil Penyelidikan" />
 
-                    <TextView
-                        android:id="@+id/txt_lhp_skhd_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/space_12dp"
-                        android:layout_marginBottom="@dimen/space_8dp"
-                        android:text="No LHP"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <include
+                            layout="@layout/layout_separator"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="@dimen/space_12dp"
+                            android:layout_marginVertical="@dimen/space_half" />
+
+                        <TextView
+                            android:id="@+id/txt_lhp_skhd_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/space_12dp"
+                            android:layout_marginBottom="@dimen/space_8dp"
+                            android:text="No LHP"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bnt_pick_lp_skhd_add"
