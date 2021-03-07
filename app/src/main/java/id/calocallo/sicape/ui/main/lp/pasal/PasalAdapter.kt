@@ -6,33 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.response.LpPasalResp
+import id.calocallo.sicape.network.response.PasalDilanggarResp
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
 
 class PasalAdapter(
     val context: Context,
-    val list: ArrayList<LpPasalResp>,
+    val list: ArrayList<PasalDilanggarResp>,
     val pasalClick: PasalClick
 ) : RecyclerView.Adapter<PasalAdapter.PasalHolder>() {
     private var multiSelect = false
-    private val selectedIdPasal = arrayListOf<LpPasalResp>()
+    private val selectedIdPasal = arrayListOf<PasalDilanggarResp>()
     interface PasalClick {
-        fun onClick(position: Int, list: LpPasalResp)
+        fun onClick(position: Int, list: PasalDilanggarResp)
         fun onLongClick(position: Int)
     }
 
     inner class PasalHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(lpPasalResp: LpPasalResp) {
-            val currentItem = lpPasalResp.id
+        fun bind(pasalDilanggarResp: PasalDilanggarResp) {
+            val currentItem = pasalDilanggarResp.id
             with(itemView) {
-                txt_1_clickable.text = lpPasalResp.nama_pasal
+                txt_1_clickable.text = pasalDilanggarResp.pasal?.nama_pasal
                 itemView.setOnClickListener {
                     if(!multiSelect){
                         multiSelect = true
                         itemView.img_clickable.toggleVisibility()
                         if(itemView.img_clickable.visibility == View.VISIBLE) {
-                            pasalClick.onClick(adapterPosition, lpPasalResp)
+                            pasalClick.onClick(adapterPosition, pasalDilanggarResp)
 //                            selectItem(holder, currentItem)
                         }
                     }

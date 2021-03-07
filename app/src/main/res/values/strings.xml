@@ -62,6 +62,7 @@
     <string name="generate_dokumen">Generate Dokumen</string>
     <string name="download">Download</string>
     <string name="success_generate_doc">Berhasil Generate Dokumen</string>
+    <string name="failed_generate_doc">Gagal Generate Dokumen</string>
     <string name="iya">Iya</string>
     <string name="tidak">Tidak</string>
     <string name="memiliki">Memiliki</string>
@@ -70,6 +71,8 @@
     <string name="polda">Polda</string>
     <string name="success_change_pass">Berhasil Ubah Password</string>
     <string name="back">Kembali</string>
+    <string name="failed_login">Gagal Login</string>
+    <string name="failed_deleted">Error Koneksi / Lakukan Beberapa Saat</string>
 
 
     <string-array name="satker">

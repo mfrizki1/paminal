@@ -93,7 +93,7 @@ class AddSinglePekerjaanFragment : Fragment() {
                 progressColor = Color.WHITE
             }
 
-            NetworkConfig().getService().addPekerjaanSingle(
+            NetworkConfig().getServPers().addPekerjaanSingle(
                 "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4",
                 sessionManager1.fetchID().toString(),
@@ -144,7 +144,7 @@ class AddSinglePekerjaanFragment : Fragment() {
                 progressColor = Color.WHITE
             }
 
-            NetworkConfig().getService().addPekerjaanLuar(
+            NetworkConfig().getServPers().addPekerjaanLuar(
                 "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4",
                 sessionManager1.fetchID().toString(),

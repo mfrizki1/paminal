@@ -237,6 +237,33 @@
                 android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TitleText"
+            android:text="Apakah Korban?"/>
+
+        <RadioGroup
+            android:id="@+id/rg_is_korban_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/space_12dp">
+
+            <RadioButton
+                android:id="@+id/rb_korban_saksi_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Korban" />
+
+            <RadioButton
+                android:id="@+id/rb_not_korban_saksi_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bukan Korban" />
+        </RadioGroup>
+
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_saksi_lhp_edit"
             android:layout_width="match_parent"

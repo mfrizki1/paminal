@@ -501,6 +501,7 @@
             android:id="@+id/btn_edit_pernah_dihukum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:text="Edit Data Pernah Dihukum"
             android:textColor="@color/colorPrimary"

@@ -1,0 +1,515 @@
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'kotlin-android'\r\napply plugin: 'kotlin-android-extensions'\r\napply plugin: 'kotlin-kapt'\r\n\r\nandroid {\r\n    compileSdkVersion 30\r\n    buildToolsVersion \"30.0.3\"\r\n\r\n    defaultConfig {\r\n        applicationId \"id.calocallo.sicape\"\r\n        minSdkVersion 26\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n\r\n    kotlinOptions { jvmTarget = \"1.8\" }\r\n}\r\n\r\ndependencies {\r\n\r\n\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version\"\r\n    implementation 'androidx.core:core-ktx:1.3.2'\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    implementation 'androidx.browser:browser:1.2.0'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n    implementation 'androidx.multidex:multidex:2.0.1'\r\n\r\n\r\n    implementation 'androidx.recyclerview:recyclerview:1.1.0'\r\n    implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'\r\n    implementation 'com.squareup.okhttp3:okhttp:3.12.1'\r\n    implementation 'com.squareup.retrofit2:retrofit:2.4.0'\r\n    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'\r\n    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'\r\n    implementation 'com.github.rizmaulana:SheenValidator:0.2.3'\r\n    implementation 'com.github.bumptech.glide:glide:4.11.0'\r\n    implementation 'com.google.android.material:material:1.2.1'\r\n    implementation 'de.hdodenhof:circleimageview:3.1.0'\r\n    implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'\r\n    implementation 'com.github.azmirizkifar20:reusable-recyclerview-adapter:1.0.3'\r\n    implementation 'com.google.code.gson:gson:2.8.5'\r\n\r\n    implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'\r\n\r\n    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'\r\n\r\n    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'\r\n\r\n    implementation 'com.airbnb.android:paris:1.7.2'\r\n    implementation 'com.github.ajithvgiri:search-dialog:v1.5'\r\n    implementation 'com.orhanobut:logger:2.2.0'\r\n    implementation 'com.github.naumanmir:filedownloadservice:1.2'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision a7fcd6281606177d1251518751e403a5535497eb)
++++ app/build.gradle	(date 1614051792986)
+@@ -48,7 +48,7 @@
+ 
+ 
+     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+-    implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
++    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
+     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+@@ -71,4 +71,9 @@
+     implementation 'com.github.ajithvgiri:search-dialog:v1.5'
+     implementation 'com.orhanobut:logger:2.2.0'
+     implementation 'com.github.naumanmir:filedownloadservice:1.2'
++
++    implementation "com.mikepenz:fastadapter:5.3.4"
++    implementation "com.mikepenz:fastadapter-extensions-expandable:5.3.4"
++    implementation "com.mikepenz:fastadapter-extensions-ui:5.3.4"
++    implementation "com.mikepenz:fastadapter-extensions-utils:5.3.4"
+ }
+\ No newline at end of file
+Index: app/src/main/java/id/calocallo/sicape/ui/main/lp/pasal/PickPasalActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.lp.pasal\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport android.view.Menu\r\nimport android.view.MenuInflater\r\nimport android.view.MenuItem\r\nimport android.widget.Toast\r\nimport androidx.appcompat.view.ActionMode\r\nimport androidx.appcompat.widget.SearchView\r\nimport androidx.core.content.ContextCompat\r\nimport androidx.recyclerview.selection.SelectionPredicates\r\nimport androidx.recyclerview.selection.SelectionTracker\r\nimport androidx.recyclerview.selection.StorageStrategy\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport com.github.razir.progressbutton.*\r\nimport com.orhanobut.logger.AndroidLogAdapter\r\nimport com.orhanobut.logger.Logger\r\nimport id.calocallo.sicape.network.response.PasalResp\r\nimport id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesDetailsLookup\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.NetworkConfig\r\nimport id.calocallo.sicape.network.request.*\r\nimport id.calocallo.sicape.network.response.Base1Resp\r\nimport id.calocallo.sicape.network.response.DokLpResp\r\nimport id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity\r\nimport id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter\r\nimport id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider\r\nimport id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity.Companion.ID_PELAPOR_SAKSI\r\nimport id.calocallo.sicape.utils.SessionManager1\r\nimport id.calocallo.sicape.utils.hideKeyboard\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_pick_pasal.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Response\r\n\r\nclass PickPasalActivity : BaseActivity(), ActionMode.Callback {\r\n    private lateinit var sessionManager1: SessionManager1\r\n    private val listPasal = mutableListOf<PasalResp>()\r\n    private lateinit var adapterPasalTes: PasalTesAdapter\r\n    private var selectedIdPasal: MutableList<PasalResp> = mutableListOf()\r\n    private var tracker: SelectionTracker<PasalResp>? = null\r\n    private val listIdPasal = ArrayList<ListIdPasalReq>()\r\n\r\n    //req\r\n    private var lpPidanaReq = LpPidanaReq()\r\n    private var lpKKeReq = LpKkeReq()\r\n    private var lpDisiplinReq = LpDisiplinReq()\r\n\r\n    /*action mode*/\r\n    private var actionMode: ActionMode? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_pick_pasal)\r\n        setupActionBarWithBackButton(toolbar)\r\n        sessionManager1 = SessionManager1(this)\r\n        Logger.addLogAdapter(AndroidLogAdapter())\r\n        hideKeyboard()\r\n        when (sessionManager1.getJenisLP()) {\r\n            \"pidana\" -> {\r\n                supportActionBar?.title = \"Tambah Data Laporan Pidana\"\r\n            }\r\n            \"disiplin\" -> {\r\n                supportActionBar?.title = \"Tambah Data Laporan Disiplin\"\r\n            }\r\n            \"kode_etik\" -> supportActionBar?.title = \"Tambah Data Laporan Kode Etik\"\r\n        }\r\n        apiPasalAll()\r\n//        getListPasal(listPasal)\r\n\r\n\r\n        //getSipil if not empty\r\n        val sipil = intent?.extras?.getParcelable<SipilPelaporReq>(SIPIL)\r\n\r\n        val idPelapor = intent.extras?.getInt(ID_PELAPOR)\r\n        bindProgressButton(btn_save_lp_all)\r\n        btn_save_lp_all.attachTextChangeAnimator()\r\n        if (sessionManager1.getJenisLP() == \"kode_etik\") {\r\n            btn_save_lp_all.text = getString(R.string.next)\r\n        }\r\n        btn_save_lp_all.setOnClickListener {\r\n\r\n            for (i in 0 until selectedIdPasal.size) {\r\n                listIdPasal.add(ListIdPasalReq(selectedIdPasal[i].id))\r\n            }\r\n//            Log.e(\"idPasalOnButton\", \"$listIdPasal\")\r\n            if (sessionManager1.getJenisLP() != \"kode_etik\") {\r\n                addAllLp(sessionManager1.getJenisLP(), idPelapor, sipil)\r\n            } else {\r\n                sessionManager1.setListPasalLP(listIdPasal)\r\n                val intent = Intent(this, PickSaksiActivity::class.java)\r\n                intent.putExtra(ID_PELAPOR_SAKSI, idPelapor)\r\n                startActivity(intent)\r\n                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n            }\r\n        }\r\n\r\n        btn_add_single_pasal.setOnClickListener {\r\n            val intent = Intent(this, AddPasalActivity::class.java)\r\n            startActivity(intent)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n        /*searchView*/\r\n        searchView()\r\n\r\n\r\n    }\r\n\r\n    private fun searchView() {\r\n        search_pasal_pick.setOnQueryTextListener(object : SearchView.OnQueryTextListener {\r\n            override fun onQueryTextSubmit(query: String?): Boolean {\r\n                return false\r\n            }\r\n\r\n            override fun onQueryTextChange(newText: String?): Boolean {\r\n                adapterPasalTes.filter.filter(newText)\r\n                return true\r\n            }\r\n\r\n        })\r\n    }\r\n\r\n    private fun apiPasalAll() {\r\n        NetworkConfig().getServLp().getAllPasal(\"Bearer ${sessionManager1.fetchAuthToken()}\")\r\n            .enqueue(object :\r\n                Callback<ArrayList<PasalResp>> {\r\n                override fun onFailure(call: Call<ArrayList<PasalResp>>, t: Throwable) {\r\n                    Toast.makeText(this@PickPasalActivity, \"Error Konekisi\", Toast.LENGTH_SHORT)\r\n                        .show()\r\n                }\r\n\r\n                override fun onResponse(\r\n                    call: Call<ArrayList<PasalResp>>,\r\n                    response: Response<ArrayList<PasalResp>>\r\n                ) {\r\n                    if (response.isSuccessful) {\r\n                        getListPasal(response.body() as ArrayList<PasalResp>)\r\n                    } else {\r\n                        Toast.makeText(this@PickPasalActivity, \"Error Konekisi\", Toast.LENGTH_SHORT)\r\n                            .show()\r\n                    }\r\n                }\r\n            })\r\n    }\r\n\r\n    private fun getListPasal(listPasal: MutableList<PasalResp>) {\r\n        rv_list_pasal_2.layoutManager =\r\n            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)\r\n        adapterPasalTes = PasalTesAdapter(this, listPasal as ArrayList<PasalResp>)\r\n        rv_list_pasal_2.adapter = adapterPasalTes\r\n\r\n        tracker = SelectionTracker.Builder<PasalResp>(\r\n            \"pasalSelection\",\r\n            rv_list_pasal_2,\r\n            PasalTesItemKeyProvider(adapterPasalTes),\r\n            PasalTesDetailsLookup(rv_list_pasal_2),\r\n            StorageStrategy.createParcelableStorage(PasalResp::class.java)\r\n        ).withSelectionPredicate(\r\n            SelectionPredicates.createSelectAnything()\r\n        ).build()\r\n        adapterPasalTes.tracker = tracker\r\n\r\n        tracker?.addObserver(\r\n            object : SelectionTracker.SelectionObserver<Long>() {\r\n                override fun onSelectionChanged() {\r\n                    super.onSelectionChanged()\r\n                    tracker?.let {\r\n                        selectedIdPasal = it.selection.toMutableList()\r\n                        Log.e(\"idPasal\", \"$selectedIdPasal\")\r\n                        if (selectedIdPasal.isEmpty()) {\r\n                            actionMode?.finish()\r\n                        } else {\r\n                            if (actionMode == null) actionMode =\r\n                                startSupportActionMode(this@PickPasalActivity)\r\n                            actionMode?.title = \" ${selectedIdPasal.size}\"\r\n                        }\r\n\r\n                    }\r\n                }\r\n            }\r\n        )\r\n    }\r\n\r\n    private fun addAllLp(jenisLP: String?, idPelapor: Int?, sipil: SipilPelaporReq?) {\r\n        btn_save_lp_all.showProgress {\r\n            progressColor = Color.WHITE\r\n        }\r\n//        btn_save_lp_all.hideDrawable(R.string.save)\r\n\r\n        when (jenisLP) {\r\n            \"pidana\" -> {\r\n//                lpPidanaReq.no_lp = sessionManager1.getNoLP()\r\n                lpPidanaReq.id_satuan_kerja = 123\r\n                lpPidanaReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()\r\n//                lpPidanaReq.id_personel_pelapor = idPelapor\r\n//                lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()\r\n//                lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()\r\n//                lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()\r\n//                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()\r\n//                lpPidanaReq.status_pelapor = sessionManager1.getPelapor()\r\n//                lpPidanaReq.pembukaan_laporan = sessionManager1.getPembukaanLpLP()\r\n                lpPidanaReq.isi_laporan = sessionManager1.getIsiLapLP()\r\n                lpPidanaReq.pasal_dilanggar = listIdPasal\r\n                lpPidanaReq.waktu_buat_laporan = sessionManager1.getWaktuBuatLaporan()\r\n//                lpPidanaReq.pasal_dilanggar = selectedIdPasal as ArrayList<LpPasalResp>\r\n                lpPidanaReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()\r\n                lpPidanaReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()\r\n                lpPidanaReq.nama_pelapor = sipil?.nama_sipil\r\n                lpPidanaReq.agama_pelapor = sipil?.agama_sipil\r\n                lpPidanaReq.pekerjaan_pelapor = sipil?.pekerjaan_sipil\r\n                lpPidanaReq.kewarganegaraan_pelapor = sipil?.kewarganegaraan_sipil\r\n                lpPidanaReq.alamat_pelapor = sipil?.alamat_sipil\r\n                lpPidanaReq.nik_ktp_pelapor = sipil?.nik_sipil\r\n                lpPidanaReq.no_telp_pelapor = sipil?.no_telp_sipil\r\n                lpPidanaReq.jenis_kelamin_pelapor = sipil?.jenis_kelamin\r\n                lpPidanaReq.tempat_lahir_pelapor = sipil?.tempat_lahir_pelapor\r\n                lpPidanaReq.tanggal_lahir_pelapor = sipil?.tanggal_lahir_pelapor\r\n                lpPidanaReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()\r\n//                lpPidanaReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()\r\n                Logger.e(\"$lpPidanaReq\")\r\n                apiAddLpPidana()\r\n            }\r\n            \"disiplin\" -> {\r\n                lpDisiplinReq.id_satuan_kerja = 123\r\n                lpDisiplinReq.waktu_buat_laporan = sessionManager1.getWaktuBuatLaporan()\r\n                lpDisiplinReq.no_lp = sessionManager1.getNoLP()\r\n                lpDisiplinReq.uraian_pelanggaran = jenisLP\r\n//                lpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id\r\n                lpDisiplinReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()\r\n                lpDisiplinReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()\r\n                lpDisiplinReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()\r\n                lpDisiplinReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()\r\n                lpDisiplinReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()\r\n                lpDisiplinReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()\r\n                lpDisiplinReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()\r\n                lpDisiplinReq.id_personel_pelapor = idPelapor\r\n                lpDisiplinReq.macam_pelanggaran = sessionManager1.getMacamPelanggaranLP()\r\n                lpDisiplinReq.keterangan_pelapor = sessionManager1.getKetPelaporLP()\r\n                lpDisiplinReq.kronologis_dari_pelapor = sessionManager1.getKronologisPelapor()\r\n                lpDisiplinReq.rincian_pelanggaran_disiplin = sessionManager1.getRincianDisiplin()\r\n                lpDisiplinReq.pasal_dilanggar = listIdPasal\r\n                lpDisiplinReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()\r\n                Logger.e(\"$lpDisiplinReq\")\r\n                apiAddLpDisiplin()\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n    private fun apiAddLpDisiplin() {\r\n        NetworkConfig().getServLp().addLpDisiplin(\"Bearer ${sessionManager1.fetchAuthToken()}\",lpDisiplinReq).enqueue(object :Callback<Base1Resp<DokLpResp>>{\r\n            override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {\r\n                Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()\r\n                btn_save_lp_all.hideDrawable(R.string.not_save)\r\n            }\r\n\r\n            override fun onResponse(\r\n                call: Call<Base1Resp<DokLpResp>>,\r\n                response: Response<Base1Resp<DokLpResp>>\r\n            ) {\r\n                if(response.body()?.message == \"Data lp disiplin saved succesfully\"){\r\n                    btn_save_lp_all.hideDrawable(R.string.data_saved)\r\n                    Handler(Looper.getMainLooper()).postDelayed({\r\n                       startActivity(Intent(this@PickPasalActivity, ListLpDisiplinActivity::class.java))\r\n                       finish()\r\n                    },500)\r\n                }else{\r\n                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()\r\n                    btn_save_lp_all.hideDrawable(R.string.not_save)\r\n                }\r\n            }\r\n        })\r\n    }\r\n\r\n    private fun apiAddLpPidana() {\r\n        NetworkConfig().getServLp()\r\n            .addLpPidana(\"Bearer ${sessionManager1.fetchAuthToken()}\", lpPidanaReq)\r\n            .enqueue(object : Callback<Base1Resp<DokLpResp>> {\r\n                override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {\r\n                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT)\r\n                        .show()\r\n                    btn_save_lp_all.hideDrawable(R.string.not_save)\r\n                    Log.e(\"t\", \"$t\")\r\n                }\r\n\r\n                override fun onResponse(\r\n                    call: Call<Base1Resp<DokLpResp>>,\r\n                    response: Response<Base1Resp<DokLpResp>>\r\n                ) {\r\n                    if (response.body()?.message == \"Data lp pidana saved succesfully\") {\r\n                        val animatedDrawable =\r\n                            ContextCompat.getDrawable(\r\n                                this@PickPasalActivity,\r\n                                R.drawable.animated_check\r\n                            )!!\r\n                        //Defined bounds are required for your drawable\r\n                        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)\r\n                        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)\r\n                        btn_save_lp_all.showDrawable(animatedDrawable) {\r\n                            buttonTextRes = R.string.data_saved\r\n                            textMarginRes = R.dimen.space_10dp\r\n                        }\r\n                        Handler(Looper.getMainLooper()).postDelayed({\r\n                            finish()\r\n                        },500)\r\n                    } else {\r\n                        btn_save_lp_all.hideDrawable(R.string.not_save)\r\n                    }\r\n                }\r\n            })\r\n    }\r\n\r\n    companion object {\r\n        const val ID_PELAPOR = \"ID_PELAPOR\"\r\n        const val SIPIL = \"SIPIL\"\r\n    }\r\n\r\n    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {\r\n        when (item?.itemId) {\r\n            R.id.action_view_list -> {\r\n                val listNamePasal = ArrayList<String>()\r\n                for (i in 0 until selectedIdPasal.size) {\r\n                    selectedIdPasal[i].nama_pasal?.let { listNamePasal.add(it) }\r\n                }\r\n                Toast.makeText(this, \"$listNamePasal\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n        return true\r\n    }\r\n\r\n    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {\r\n        mode?.let {\r\n            val inflater: MenuInflater = it.menuInflater\r\n            inflater.inflate(R.menu.action_mode_menu, menu)\r\n            return true\r\n        }\r\n        return false\r\n    }\r\n\r\n    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {\r\n        return true\r\n    }\r\n\r\n    override fun onDestroyActionMode(mode: ActionMode?) {\r\n        adapterPasalTes.tracker?.clearSelection()\r\n        adapterPasalTes.notifyDataSetChanged()\r\n        actionMode = null\r\n    }\r\n\r\n    override fun onResume() {\r\n        super.onResume()\r\n        apiPasalAll()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/lp/pasal/PickPasalActivity.kt	(revision a7fcd6281606177d1251518751e403a5535497eb)
++++ app/src/main/java/id/calocallo/sicape/ui/main/lp/pasal/PickPasalActivity.kt	(date 1614054499737)
+@@ -9,33 +9,41 @@
+ import android.view.Menu
+ import android.view.MenuInflater
+ import android.view.MenuItem
++import android.view.View
+ import android.widget.Toast
+ import androidx.appcompat.view.ActionMode
+ import androidx.appcompat.widget.SearchView
+ import androidx.core.content.ContextCompat
+-import androidx.recyclerview.selection.SelectionPredicates
+ import androidx.recyclerview.selection.SelectionTracker
+-import androidx.recyclerview.selection.StorageStrategy
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import com.github.razir.progressbutton.*
++import com.mikepenz.fastadapter.FastAdapter
++import com.mikepenz.fastadapter.IAdapter
++import com.mikepenz.fastadapter.ISelectionListener
++import com.mikepenz.fastadapter.adapters.ItemAdapter
++import com.mikepenz.fastadapter.helpers.ActionModeHelper
++import com.mikepenz.fastadapter.select.SelectExtension
++import com.mikepenz.fastadapter.select.getSelectExtension
+ import com.orhanobut.logger.AndroidLogAdapter
+ import com.orhanobut.logger.Logger
+-import id.calocallo.sicape.network.response.PasalResp
+-import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesDetailsLookup
+ import id.calocallo.sicape.R
+ import id.calocallo.sicape.network.NetworkConfig
+ import id.calocallo.sicape.network.request.*
+ import id.calocallo.sicape.network.response.Base1Resp
+ import id.calocallo.sicape.network.response.DokLpResp
++import id.calocallo.sicape.network.response.PasalResp
+ import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
+-import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
+-import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
+ import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity.Companion.ID_PELAPOR_SAKSI
++import id.calocallo.sicape.utils.ActionBarCallback
+ import id.calocallo.sicape.utils.SessionManager1
++import id.calocallo.sicape.utils.ext.gone
++import id.calocallo.sicape.utils.ext.visible
+ import id.calocallo.sicape.utils.hideKeyboard
+ import id.co.iconpln.smartcity.ui.base.BaseActivity
+ import kotlinx.android.synthetic.main.activity_pick_pasal.*
++import kotlinx.android.synthetic.main.layout_progress_dialog.*
+ import kotlinx.android.synthetic.main.layout_toolbar_white.*
++import kotlinx.android.synthetic.main.view_no_data.*
+ import retrofit2.Call
+ import retrofit2.Callback
+ import retrofit2.Response
+@@ -43,7 +51,7 @@
+ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
+     private lateinit var sessionManager1: SessionManager1
+     private val listPasal = mutableListOf<PasalResp>()
+-    private lateinit var adapterPasalTes: PasalTesAdapter
++    private lateinit var adapterPasalTes: PasalMultipleAdapter
+     private var selectedIdPasal: MutableList<PasalResp> = mutableListOf()
+     private var tracker: SelectionTracker<PasalResp>? = null
+     private val listIdPasal = ArrayList<ListIdPasalReq>()
+@@ -56,6 +64,12 @@
+     /*action mode*/
+     private var actionMode: ActionMode? = null
+ 
++    /*FAST ADAPTER*/
++    private lateinit var mFastAdapter: FastAdapter<PasalResp>
++    private lateinit var mActionModeHelper: ActionModeHelper<PasalResp>
++    private lateinit var selectExtension: SelectExtension<PasalResp>
++    private lateinit var pasalAdapter: ItemAdapter<PasalResp>
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_pick_pasal)
+@@ -110,7 +124,59 @@
+         /*searchView*/
+         searchView()
+ 
++        /*adapter fast*/
++        fastAdapterPasal()
++        mActionModeHelper =
++            ActionModeHelper(mFastAdapter, R.menu.action_mode_menu, ActionBarCallback(this))
++
+ 
++    }
++
++    private fun fastAdapterPasal() {
++        pasalAdapter = ItemAdapter()
++        mFastAdapter = FastAdapter.with(arrayListOf(pasalAdapter))
++        mFastAdapter.setHasStableIds(true)
++        selectExtension = mFastAdapter.getSelectExtension()
++        selectExtension.apply {
++            isSelectable = true
++            multiSelect = true
++            selectOnLongClick = true
++            selectionListener = object : ISelectionListener<PasalResp> {
++                override fun onSelectionChanged(item: PasalResp, selected: Boolean) {
++                    Log.i(
++                        "FastAdapter",
++                        "SelectedCount: " + selectExtension.selections.size + " ItemsCount: " + selectExtension.selectedItems.size
++                    )
++                    selectedIdPasal.add(item)
++                    Log.e("pasal", "$selectedIdPasal")
++                }
++            }
++        }
++
++        mFastAdapter.onPreClickListener =
++            { _: View?, _: IAdapter<PasalResp>, item: PasalResp, _: Int ->
++                //we handle the default onClick behavior for the actionMode. This will return null if it didn't do anything and you can handle a normal onClick
++                val res = mActionModeHelper.onClick(item)
++                res ?: false
++            }
++
++        mFastAdapter.onClickListener = { v: View?, _: IAdapter<PasalResp>, _: PasalResp, _: Int ->
++            if (v != null) {
++                Toast.makeText(
++                    v.context,
++                    "SelectedCount: " + selectExtension.selections.size + " ItemsCount: " + selectExtension.selectedItems.size,
++                    Toast.LENGTH_SHORT
++                ).show()
++            }
++            false
++        }
++
++        mFastAdapter.onPreLongClickListener =
++            { _: View, _: IAdapter<PasalResp>, _: PasalResp, position: Int ->
++                val actionMode = mActionModeHelper.onLongClick(this, position)
++//                //we want color our CAB
++                actionMode != null
++            }
+     }
+ 
+     private fun searchView() {
+@@ -128,11 +194,15 @@
+     }
+ 
+     private fun apiPasalAll() {
++        rl_pb.visible()
+         NetworkConfig().getServLp().getAllPasal("Bearer ${sessionManager1.fetchAuthToken()}")
+             .enqueue(object :
+                 Callback<ArrayList<PasalResp>> {
+                 override fun onFailure(call: Call<ArrayList<PasalResp>>, t: Throwable) {
+-                    Toast.makeText(this@PickPasalActivity, "Error Konekisi", Toast.LENGTH_SHORT)
++                    rl_pb.gone()
++                    rl_no_data.visible()
++                    rv_list_pasal_2.gone()
++                    Toast.makeText(this@PickPasalActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                         .show()
+                 }
+ 
+@@ -141,51 +211,61 @@
+                     response: Response<ArrayList<PasalResp>>
+                 ) {
+                     if (response.isSuccessful) {
+-                        getListPasal(response.body() as ArrayList<PasalResp>)
++                        rl_pb.gone()
++                        response.body()?.let { getListPasal(it) }
+                     } else {
+-                        Toast.makeText(this@PickPasalActivity, "Error Konekisi", Toast.LENGTH_SHORT)
++                        rl_pb.gone()
++                        rl_no_data.visible()
++                        rv_list_pasal_2.gone()
++                        Toast.makeText(this@PickPasalActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                             .show()
+                     }
+                 }
+             })
+     }
+ 
+-    private fun getListPasal(listPasal: MutableList<PasalResp>) {
+-        rv_list_pasal_2.layoutManager =
+-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+-        adapterPasalTes = PasalTesAdapter(this, listPasal as ArrayList<PasalResp>)
+-        rv_list_pasal_2.adapter = adapterPasalTes
++    private fun getListPasal(listPasal: ArrayList<PasalResp>) {
++        /*   rv_list_pasal_2.layoutManager =
++               LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
++   //        adapterPasalTes = PasalTesAdapter(this, listPasal as ArrayList<PasalResp>)
++           adapterPasalTes = PasalMultipleAdapter(this, listPasal)
++   //        adapterPasalTes.setHasStableIds(true)
++           rv_list_pasal_2.adapter = adapterPasalTes
+ 
+-        tracker = SelectionTracker.Builder<PasalResp>(
+-            "pasalSelection",
+-            rv_list_pasal_2,
+-            PasalTesItemKeyProvider(adapterPasalTes),
+-            PasalTesDetailsLookup(rv_list_pasal_2),
+-            StorageStrategy.createParcelableStorage(PasalResp::class.java)
+-        ).withSelectionPredicate(
+-            SelectionPredicates.createSelectAnything()
+-        ).build()
+-        adapterPasalTes.tracker = tracker
++           tracker = SelectionTracker.Builder<PasalResp>(
++               "pasalSelection1",
++               rv_list_pasal_2,
++               PasalTesItemKeyProvider(adapterPasalTes),
++               PasalTesDetailsLookup(rv_list_pasal_2),
++               StorageStrategy.createParcelableStorage(PasalResp::class.java)
++           ).withSelectionPredicate(
++               SelectionPredicates.createSelectAnything()
++           ).build()
++           adapterPasalTes.tracker = tracker
+ 
+-        tracker?.addObserver(
+-            object : SelectionTracker.SelectionObserver<Long>() {
+-                override fun onSelectionChanged() {
+-                    super.onSelectionChanged()
+-                    tracker?.let {
+-                        selectedIdPasal = it.selection.toMutableList()
+-                        Log.e("idPasal", "$selectedIdPasal")
+-                        if (selectedIdPasal.isEmpty()) {
+-                            actionMode?.finish()
+-                        } else {
+-                            if (actionMode == null) actionMode =
+-                                startSupportActionMode(this@PickPasalActivity)
+-                            actionMode?.title = " ${selectedIdPasal.size}"
+-                        }
++           tracker?.addObserver(
++               object : SelectionTracker.SelectionObserver<PasalResp>() {
++                   override fun onSelectionChanged() {
++                       super.onSelectionChanged()
++                       tracker?.let {
++                           selectedIdPasal = it.selection.toMutableList()
++                           Log.e("idPasal", "$selectedIdPasal")
++                           if (selectedIdPasal.isEmpty()) {
++                               actionMode?.finish()
++                           } else {
++                               if (actionMode == null) actionMode =
++                                   startSupportActionMode(this@PickPasalActivity)
++                               actionMode?.title = " ${selectedIdPasal.size}"
++                           }
+ 
+-                    }
+-                }
+-            }
+-        )
++                       }
++                   }
++               }
++           )*/
++        pasalAdapter.add(listPasal as List<PasalResp>)
++        rv_list_pasal_2.layoutManager =
++            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
++        rv_list_pasal_2.adapter = mFastAdapter
+     }
+ 
+     private fun addAllLp(jenisLP: String?, idPelapor: Int?, sipil: SipilPelaporReq?) {
+@@ -255,28 +335,40 @@
+     }
+ 
+     private fun apiAddLpDisiplin() {
+-        NetworkConfig().getServLp().addLpDisiplin("Bearer ${sessionManager1.fetchAuthToken()}",lpDisiplinReq).enqueue(object :Callback<Base1Resp<DokLpResp>>{
+-            override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
+-                Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+-                btn_save_lp_all.hideDrawable(R.string.not_save)
+-            }
++        NetworkConfig().getServLp()
++            .addLpDisiplin("Bearer ${sessionManager1.fetchAuthToken()}", lpDisiplinReq)
++            .enqueue(object : Callback<Base1Resp<DokLpResp>> {
++                override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
++                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT)
++                        .show()
++                    btn_save_lp_all.hideDrawable(R.string.not_save)
++                }
+ 
+-            override fun onResponse(
+-                call: Call<Base1Resp<DokLpResp>>,
+-                response: Response<Base1Resp<DokLpResp>>
+-            ) {
+-                if(response.body()?.message == "Data lp disiplin saved succesfully"){
+-                    btn_save_lp_all.hideDrawable(R.string.data_saved)
+-                    Handler(Looper.getMainLooper()).postDelayed({
+-                       startActivity(Intent(this@PickPasalActivity, ListLpDisiplinActivity::class.java))
+-                       finish()
+-                    },500)
+-                }else{
+-                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+-                    btn_save_lp_all.hideDrawable(R.string.not_save)
+-                }
+-            }
+-        })
++                override fun onResponse(
++                    call: Call<Base1Resp<DokLpResp>>,
++                    response: Response<Base1Resp<DokLpResp>>
++                ) {
++                    if (response.body()?.message == "Data lp disiplin saved succesfully") {
++                        btn_save_lp_all.hideDrawable(R.string.data_saved)
++                        Handler(Looper.getMainLooper()).postDelayed({
++                            startActivity(
++                                Intent(
++                                    this@PickPasalActivity,
++                                    ListLpDisiplinActivity::class.java
++                                )
++                            )
++                            finish()
++                        }, 500)
++                    } else {
++                        Toast.makeText(
++                            this@PickPasalActivity,
++                            R.string.error_conn,
++                            Toast.LENGTH_SHORT
++                        ).show()
++                        btn_save_lp_all.hideDrawable(R.string.not_save)
++                    }
++                }
++            })
+     }
+ 
+     private fun apiAddLpPidana() {
+@@ -309,7 +401,7 @@
+                         }
+                         Handler(Looper.getMainLooper()).postDelayed({
+                             finish()
+-                        },500)
++                        }, 500)
+                     } else {
+                         btn_save_lp_all.hideDrawable(R.string.not_save)
+                     }
+Index: app/src/main/java/id/calocallo/sicape/ui/main/lp/pasal/tes/PasalTesAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.lp.pasal.tes\r\n\r\nimport android.content.Context\r\nimport android.graphics.Color\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.Filter\r\nimport android.widget.Filterable\r\nimport android.widget.TextView\r\nimport androidx.recyclerview.selection.ItemDetailsLookup\r\nimport androidx.recyclerview.selection.SelectionTracker\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport id.calocallo.sicape.network.response.PasalResp\r\nimport id.calocallo.sicape.R\r\nimport kotlinx.android.synthetic.main.layout_1_text_clickable.view.*\r\nimport java.util.*\r\nimport kotlin.collections.ArrayList\r\n\r\nclass PasalTesAdapter internal constructor(\r\n    private val context: Context,\r\n    private val pasalResp: ArrayList<PasalResp>\r\n) : RecyclerView.Adapter<PasalTesAdapter.PasalHolder>(), Filterable {\r\n\r\n    private val inflater: LayoutInflater = LayoutInflater.from(context)\r\n    var tracker: SelectionTracker<PasalResp>? = null\r\n    var filterPasalLisit = ArrayList<PasalResp>()\r\n\r\n    init {\r\n        filterPasalLisit = pasalResp\r\n    }\r\n\r\n    inner class PasalHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\r\n        private val txtPasal = itemView.findViewById<TextView>(R.id.txt_1_clickable)\r\n        fun getItemDetails(): ItemDetailsLookup.ItemDetails<PasalResp> =\r\n            object : ItemDetailsLookup.ItemDetails<PasalResp>() {\r\n                override fun getPosition(): Int = adapterPosition\r\n                override fun getSelectionKey(): PasalResp? = filterPasalLisit[position]\r\n            }\r\n\r\n        fun setPasal(pasalResp: PasalResp, selected: Boolean) {\r\n            with(itemView){\r\n//                txtPasal.text = pasalResp.nama_pasal\r\n                txt_1_clickable.text = pasalResp.nama_pasal\r\n//                itemView.isActivated = selected\r\n                this.isActivated = selected\r\n                if(selected){\r\n                    txt_1_clickable.setTextColor(Color.WHITE)\r\n                }else{\r\n                    txt_1_clickable.setTextColor(Color.BLACK)\r\n                }\r\n            }\r\n\r\n\r\n        }\r\n\r\n    }\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasalHolder {\r\n        val itemView = inflater.inflate(R.layout.layout_1_text_clickable, parent, false)\r\n        return PasalHolder(itemView)\r\n    }\r\n\r\n    override fun getItemCount(): Int {\r\n        return filterPasalLisit.size\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: PasalHolder, position: Int) {\r\n        tracker?.let {\r\n            holder.setPasal(filterPasalLisit[position], it.isSelected(filterPasalLisit[position]))\r\n        }\r\n    }\r\n\r\n    fun getItem(position: Int): PasalResp = filterPasalLisit[position]\r\n\r\n    fun getPosition(name: String) = filterPasalLisit.indexOfFirst { it.nama_pasal == name }\r\n\r\n    override fun getFilter(): Filter {\r\n        return object : Filter() {\r\n            override fun performFiltering(constraint: CharSequence?): FilterResults {\r\n                val pasalSearch = constraint.toString()\r\n                if (pasalSearch.isEmpty()) {\r\n                    filterPasalLisit = pasalResp\r\n                } else {\r\n                    val resultList = ArrayList<PasalResp>()\r\n                    for (row in pasalResp) {\r\n                        if (row.toString().toLowerCase(Locale.ROOT)\r\n                                .contains(pasalSearch.toLowerCase(Locale.ROOT))\r\n                        ) {\r\n                            resultList.add(row)\r\n                        }\r\n                    }\r\n                    filterPasalLisit = resultList\r\n                }\r\n                val filterResult = FilterResults()\r\n                filterResult.values = filterPasalLisit\r\n                return filterResult\r\n            }\r\n\r\n            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {\r\n                filterPasalLisit = results?.values as ArrayList<PasalResp>\r\n                notifyDataSetChanged()\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/lp/pasal/tes/PasalTesAdapter.kt	(revision a7fcd6281606177d1251518751e403a5535497eb)
++++ app/src/main/java/id/calocallo/sicape/ui/main/lp/pasal/tes/PasalTesAdapter.kt	(date 1613973503760)
+@@ -13,6 +13,8 @@
+ import androidx.recyclerview.widget.RecyclerView
+ import id.calocallo.sicape.network.response.PasalResp
+ import id.calocallo.sicape.R
++import id.calocallo.sicape.utils.ext.gone
++import id.calocallo.sicape.utils.ext.visible
+ import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
+ import java.util.*
+ import kotlin.collections.ArrayList
+@@ -35,19 +37,19 @@
+         fun getItemDetails(): ItemDetailsLookup.ItemDetails<PasalResp> =
+             object : ItemDetailsLookup.ItemDetails<PasalResp>() {
+                 override fun getPosition(): Int = adapterPosition
+-                override fun getSelectionKey(): PasalResp? = filterPasalLisit[position]
++                override fun getSelectionKey(): PasalResp = filterPasalLisit[position]
+             }
+ 
+         fun setPasal(pasalResp: PasalResp, selected: Boolean) {
+-            with(itemView){
++            with(itemView) {
+ //                txtPasal.text = pasalResp.nama_pasal
+                 txt_1_clickable.text = pasalResp.nama_pasal
+ //                itemView.isActivated = selected
+                 this.isActivated = selected
+-                if(selected){
+-                    txt_1_clickable.setTextColor(Color.WHITE)
+-                }else{
+-                    txt_1_clickable.setTextColor(Color.BLACK)
++                if (selected) {
++                    this.img_clickable.visible()
++                } else {
++                    this.img_clickable.gone()
+                 }
+             }
+ 
+@@ -66,9 +68,12 @@
+     }
+ 
+     override fun onBindViewHolder(holder: PasalHolder, position: Int) {
+-        tracker?.let {
++        tracker?.isSelected(filterPasalLisit[position])?.let {
++            holder.setPasal(filterPasalLisit[position], it)
++        }
++     /*   tracker?.let {
+             holder.setPasal(filterPasalLisit[position], it.isSelected(filterPasalLisit[position]))
+-        }
++        }*/
+     }
+ 
+     fun getItem(position: Int): PasalResp = filterPasalLisit[position]
+Index: app/src/main/java/id/calocallo/sicape/ui/main/lp/AddLpActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.lp\r\n\r\nimport android.annotation.SuppressLint\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.widget.ArrayAdapter\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.response.PelanggaranResp\r\nimport id.calocallo.sicape.network.response.PersonelMinResp\r\nimport id.calocallo.sicape.ui.main.lp.disiplin.AddLpDisiplinActivity.Companion.JENIS_DISIPLIN\r\nimport id.calocallo.sicape.ui.main.lp.kke.AddLpKodeEtikActivity.Companion.JENIS_KKE\r\nimport id.calocallo.sicape.ui.main.lp.pidana.AddLpPidanaActivity.Companion.JENIS_PIDANA\r\nimport id.calocallo.sicape.ui.main.lp.disiplin.AddLpDisiplinActivity\r\nimport id.calocallo.sicape.ui.main.lp.kke.AddLpKodeEtikActivity\r\nimport id.calocallo.sicape.ui.main.lp.pidana.AddLpPidanaActivity\r\nimport id.calocallo.sicape.ui.main.personel.KatPersonelActivity\r\nimport id.calocallo.sicape.utils.SessionManager1\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_add_lp.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass AddLpActivity : BaseActivity() {\r\n    companion object {\r\n        const val REQ_DILAPOR = 111\r\n        const val REQ_TERLAPOR = 222\r\n        const val REQ_PELANGGARAN = 333\r\n        const val LP = \"LP\"\r\n    }\r\n\r\n    private lateinit var sessionManager1: SessionManager1\r\n    private var idPersonelTerlapor: Int? = null\r\n    private var idPersonelDilapor: Int? = null\r\n    private var idPelanggaran: Int? = null\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_add_lp)\r\n        val jenis = intent.extras?.getString(\"JENIS_LP\")\r\n        setupActionBarWithBackButton(toolbar)\r\n//        supportActionBar?.title = \"Tambah Data Laporan Polisi\"\r\n        when (jenis) {\r\n            \"pidana\" -> {\r\n                viewPidana()\r\n                supportActionBar?.title = \"Tambah Data Laporan Polisi Pidana\"\r\n            }\r\n            \"kode_etik\" -> {\r\n                txt_layout_no_lp_add.gone()\r\n                supportActionBar?.title = \"Tambah Data Laporan Polisi Kode Etik\"\r\n            }\r\n            \"disiplin\" -> supportActionBar?.title = \"Tambah Data Laporan Polisi Disiplin\"\r\n        }\r\n        sessionManager1 = SessionManager1(this)\r\n\r\n\r\n        btn_choose_personel_terlapor_lp_add.setOnClickListener {\r\n            val intent = Intent(this, KatPersonelActivity::class.java)\r\n            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)\r\n            startActivityForResult(intent, REQ_TERLAPOR)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        /*\r\n        btn_choose_personel_terlapor_lp_add.setOnClickListener {\r\n            val intent = Intent(this, ChoosePersonelActivity::class.java)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n            startActivityForResult(intent, REQ_TERLAPOR)\r\n        }\r\n                 */\r\n\r\n        btn_next_lp_add.setOnClickListener {\r\n            if (idPersonelDilapor == 0) {\r\n                btn_next_lp_add.isClickable = false\r\n            } else if (idPersonelTerlapor == 0) {\r\n                btn_next_lp_add.isClickable = false\r\n\r\n            } else {\r\n                /*\r\n//            bundle.putString(NO_LP, edt_no_lp_add.text.toString())\r\n//            bundle.putString(KET_LP, edt_ket_lp_add.text.toString())\r\n//            idPersonelDilapor?.let { it1 -> bundle.putInt(ID_DILAPOR, it1) }\r\n//            idPersonelTerlapor?.let { it1 -> bundle.putInt(ID_TERLAPOR, it1) }\r\n//            idPelanggaran?.let { it1 -> bundle.putInt(ID_PELANGGARAN, it1) }\r\n//            intent.putExtras(bundle)\r\n                 */\r\n                sessionManager1.setJenisLP(jenis.toString())\r\n                sessionManager1.setNoLP(edt_no_lp_add.text.toString())\r\n                idPersonelTerlapor?.let { it1 -> sessionManager1.setIDPersonelTerlapor(it1) }\r\n                idPelanggaran?.let { it1 -> sessionManager1.setIdPelanggaran(it1) }\r\n                sessionManager1.setKotaBuatLp(edt_kota_buat_add_lp.text.toString())\r\n                sessionManager1.setTglBuatLp(edt_tgl_buat_add.text.toString())\r\n                sessionManager1.setWaktuBuatLaporan(edt_pukul_laporan_lp.text.toString())\r\n                sessionManager1.setNamaPimpBidLp(edt_nama_pimpinan_bidang_add.text.toString())\r\n                sessionManager1.setPangkatPimpBidLp(edt_pangkat_pimpinan_bidang_add.text.toString())\r\n                sessionManager1.setNrpPimpBidLp(edt_nrp_pimpinan_bidang_add.text.toString())\r\n                sessionManager1.setJabatanPimpBidLp(edt_jabatan_pimpinan_bidang_add.text.toString())\r\n//                txt_pelanggaran_lp_add.text.toString()\r\n\r\n                when (jenis) {\r\n                    \"pidana\" -> {\r\n                        val intent = Intent(this, AddLpPidanaActivity::class.java)\r\n                        intent.putExtra(JENIS_PIDANA, jenis)\r\n                        startActivity(intent)\r\n                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n                    }\r\n                    \"kode_etik\" -> {\r\n                        val intent = Intent(this, AddLpKodeEtikActivity::class.java)\r\n                        intent.putExtra(JENIS_KKE, jenis)\r\n                        startActivity(intent)\r\n                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n                    }\r\n                    \"disiplin\" -> {\r\n                        val intent = Intent(this, AddLpDisiplinActivity::class.java)\r\n                        intent.putExtra(JENIS_DISIPLIN, jenis)\r\n                        startActivity(intent)\r\n                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n                    }\r\n                }\r\n            }\r\n\r\n        }\r\n\r\n        val adapterSatker =\r\n            ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))\r\n        spinner_kesatuan_lp_add.setAdapter(adapterSatker)\r\n        spinner_kesatuan_lp_add.setOnItemClickListener { parent, view, position, id ->\r\n            sessionManager1.setKesatuanPimpBidLp(parent.getItemAtPosition(position) as String)\r\n        }\r\n    }\r\n\r\n    private fun viewPidana() {\r\n        txt_layout_nama_pimpinan_bidang_add.gone()\r\n        txt_layout_pangkat_pimpinan_bidang_add.gone()\r\n        txt_layout_nrp_pimpinan_bidang_add.gone()\r\n        txt_layout_jabatan_pimpinan_bidang_add.gone()\r\n        txt_layout_spinner_kesatuan_lp_add.gone()\r\n        txt_layout_no_lp_add.gone()\r\n        txt_title_pimpinan_bidang_add.gone()\r\n    }\r\n\r\n    @SuppressLint(\"SetTextI18n\")\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        val personel = data?.getParcelableExtra<PersonelMinResp>(\"ID_PERSONEL\")\r\n        val pelanggaran = data?.getParcelableExtra<PelanggaranResp>(\"PELANGGARAN\")\r\n        when (resultCode) {\r\n            Activity.RESULT_OK -> {\r\n                when (requestCode) {\r\n                    REQ_DILAPOR -> {\r\n//                        idPersonelDilapor = personel?.id\r\n//                        txt_jabatan_dilapor_lp_add.text = personel?.jabatan\r\n//                        txt_kesatuan_dilapor_lp_add.text = personel?.satuan_kerja?.kesatuan\r\n//                        txt_nama_dilapor_lp_add.text = personel?.nama\r\n//                        txt_nrp_dilapor_lp_add.text = \"NRP : ${personel?.nrp}\"\r\n//                        txt_pangkat_dilapor_lp_add.text = \"Pangkat ${personel?.pangkat}\"\r\n                    }\r\n\r\n                    REQ_TERLAPOR -> {\r\n                        idPersonelTerlapor = personel?.id\r\n                        txt_jabatan_terlapor_lp_add.text = \"Jabatan : ${personel?.jabatan}\"\r\n                        txt_kesatuan_terlapor_lp_add.text =\r\n                            \"Kesatuan : ${personel?.satuan_kerja?.kesatuan}\"\r\n                        txt_nama_terlapor_lp_add.text = \"Nama : ${personel?.nama}\"\r\n                        txt_nrp_terlapor_lp_add.text = \"NRP : ${personel?.nrp}\"\r\n                        txt_pangkat_terlapor_lp_add.text =\r\n                            \"Pangkat : ${personel?.pangkat.toString().toUpperCase()}\"\r\n                    }\r\n                    REQ_PELANGGARAN -> {\r\n                        idPelanggaran = pelanggaran?.id\r\n//                        txt_pelanggaran_lp_add.text =\r\n//                            \"Pelanggaran : ${pelanggaran?.nama_pelanggaran}\"\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/lp/AddLpActivity.kt	(revision a7fcd6281606177d1251518751e403a5535497eb)
++++ app/src/main/java/id/calocallo/sicape/ui/main/lp/AddLpActivity.kt	(date 1613979594379)
+@@ -41,7 +41,7 @@
+ //        supportActionBar?.title = "Tambah Data Laporan Polisi"
+         when (jenis) {
+             "pidana" -> {
+-                viewPidana()
++//                viewPidana()
+                 supportActionBar?.title = "Tambah Data Laporan Polisi Pidana"
+             }
+             "kode_etik" -> {
+Index: app/src/main/java/id/calocallo/sicape/ui/main/choose/multiple/PersonelMultipleAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.choose.multiple\r\n\r\nimport android.content.Context\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.Filter\r\nimport android.widget.Filterable\r\nimport androidx.recyclerview.selection.ItemDetailsLookup\r\nimport androidx.recyclerview.selection.SelectionTracker\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.AllPersonelModel\r\nimport id.calocallo.sicape.network.response.PasalResp\r\nimport id.calocallo.sicape.network.response.PersonelMinResp\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.calocallo.sicape.utils.ext.visible\r\nimport kotlinx.android.synthetic.main.item_choose_personel.view.*\r\nimport java.util.*\r\nimport kotlin.collections.ArrayList\r\n\r\nclass PersonelMultipleAdapter internal constructor(\r\n    private val context: Context,\r\n    private val personel: ArrayList<PersonelMinResp>\r\n) : RecyclerView.Adapter<PersonelMultipleAdapter.PersMultipHolder>(), Filterable {\r\n    private val inflater: LayoutInflater = LayoutInflater.from(context)\r\n    private var filterable: Boolean = false\r\n    var tracker: SelectionTracker<PersonelMinResp>? = null\r\n    var filterList = ArrayList<PersonelMinResp>()\r\n    init {\r\n        filterList = personel\r\n    }\r\n\r\n    inner class PersMultipHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\r\n        fun getItemDetails(): ItemDetailsLookup.ItemDetails<PersonelMinResp> =\r\n            object : ItemDetailsLookup.ItemDetails<PersonelMinResp>() {\r\n                override fun getPosition(): Int = adapterPosition\r\n                override fun getSelectionKey(): PersonelMinResp? = filterList[position]\r\n            }\r\n\r\n        fun setPersonel(allPersonelModel: PersonelMinResp, selected: Boolean) {\r\n            with(itemView) {\r\n\r\n                txt_personel_nama_choose.text = allPersonelModel.nama\r\n                txt_personel_pangkat_choose.text = allPersonelModel.pangkat.toString().toUpperCase()\r\n                txt_personel_nrp_choose.text = allPersonelModel.nrp\r\n                txt_personel_jabatan_choose.text = allPersonelModel.jabatan\r\n                txt_personel_kesatuan_choose.text = allPersonelModel.satuan_kerja?.kesatuan\r\n                Log.e(\"selected\", \"$selected\")\r\n                this.isActivated = selected\r\n                if(selected){\r\n                    img_choose_personel.visible()\r\n                }else{\r\n                    img_choose_personel.gone()\r\n                }\r\n                Log.e(\"selected2\", \"$selected\")\r\n            }\r\n\r\n        }\r\n\r\n    }\r\n\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersMultipHolder {\r\n        val view = inflater.inflate(R.layout.item_choose_personel, parent, false)\r\n        return PersMultipHolder(view)\r\n    }\r\n\r\n    override fun getItemCount(): Int {\r\n        return filterList.size\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: PersMultipHolder, position: Int) {\r\n        tracker?.isSelected(filterList[position])?.let { holder.setPersonel(filterList[position], it) }\r\n    }\r\n\r\n    fun getItem(position: Int): PersonelMinResp? = filterList[position]\r\n\r\n    fun getPosition(nama: String) = filterList.indexOfFirst { it.nama == nama }\r\n    override fun getFilter(): Filter {\r\n        return object :Filter(){\r\n            override fun performFiltering(constraint: CharSequence?): FilterResults {\r\n                val charSearch = constraint.toString()\r\n                if (charSearch.isEmpty()) {\r\n                    filterList = personel\r\n                } else {\r\n                    val resultList = ArrayList<PersonelMinResp>()\r\n                    for (row in personel) {\r\n                        if (row.toString().toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {\r\n                            resultList.add(row)\r\n                        }\r\n                    }\r\n                    filterList = resultList\r\n                }\r\n                val filterResults = FilterResults()\r\n                filterResults.values = filterList\r\n                return filterResults\r\n            }\r\n            /*override fun performFiltering(constraint: CharSequence?): FilterResults {\r\n                val search = constraint?.toString()\r\n                if(search?.isEmpty()!!){\r\n                    filterList = personel\r\n                }else{\r\n                    val resultList = ArrayList<AllPersonelModel>()\r\n                    for(row in personel){\r\n                        if(row.toString().toLowerCase(Locale.ROOT)\r\n                                .contains(search.toLowerCase(Locale.ROOT))){\r\n                            resultList.add(row)\r\n                        }\r\n                        filterList = resultList\r\n                    }\r\n                    val filterResult = FilterResults()\r\n                    filterResult.values = filterList\r\n                    return filterResult\r\n                }\r\n            }*/\r\n\r\n            @Suppress(\"UNCHECKED_CAST\")\r\n            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {\r\n                filterList = results?.values as ArrayList<PersonelMinResp>\r\n                notifyDataSetChanged()\r\n            }\r\n\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/choose/multiple/PersonelMultipleAdapter.kt	(revision a7fcd6281606177d1251518751e403a5535497eb)
++++ app/src/main/java/id/calocallo/sicape/ui/main/choose/multiple/PersonelMultipleAdapter.kt	(date 1613972462722)
+@@ -36,7 +36,7 @@
+         fun getItemDetails(): ItemDetailsLookup.ItemDetails<PersonelMinResp> =
+             object : ItemDetailsLookup.ItemDetails<PersonelMinResp>() {
+                 override fun getPosition(): Int = adapterPosition
+-                override fun getSelectionKey(): PersonelMinResp? = filterList[position]
++                override fun getSelectionKey(): PersonelMinResp = filterList[position]
+             }
+ 
+         fun setPersonel(allPersonelModel: PersonelMinResp, selected: Boolean) {
+@@ -75,7 +75,7 @@
+         tracker?.isSelected(filterList[position])?.let { holder.setPersonel(filterList[position], it) }
+     }
+ 
+-    fun getItem(position: Int): PersonelMinResp? = filterList[position]
++    fun getItem(position: Int): PersonelMinResp = filterList[position]
+ 
+     fun getPosition(nama: String) = filterList.indexOfFirst { it.nama == nama }
+     override fun getFilter(): Filter {
+Index: app/src/main/java/id/calocallo/sicape/network/response/PasalResp.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.network.response\r\n\r\nimport android.os.Parcelable\r\nimport kotlinx.android.parcel.Parcelize\r\n\r\n@Parcelize\r\ndata class PasalResp(\r\n    var id: Int?,\r\n    var nama_pasal: String?,\r\n    var tentang_pasal: String?,\r\n    var isi_pasal: String?,\r\n    var user_creator: UserCreatorResp?,\r\n    var user_updater: UserCreatorResp?,\r\n    var created_at: String?,\r\n    var updated_at: String?\r\n) : Parcelable {\r\n    constructor() : this(null, null, null, null, null, null, null, null)\r\n}\r\n\r\n@Parcelize\r\ndata class AddPasalResp(\r\n    var pasal: PasalResp?\r\n) : Parcelable{\r\n    constructor():this(null)\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/network/response/PasalResp.kt	(revision a7fcd6281606177d1251518751e403a5535497eb)
++++ app/src/main/java/id/calocallo/sicape/network/response/PasalResp.kt	(date 1614053329889)
+@@ -1,6 +1,14 @@
+ package id.calocallo.sicape.network.response
+ 
++import android.graphics.Color
+ import android.os.Parcelable
++import android.view.View
++import android.widget.ImageView
++import android.widget.TextView
++import com.mikepenz.fastadapter.FastAdapter
++import com.mikepenz.fastadapter.items.AbstractItem
++import com.mikepenz.fastadapter.ui.utils.FastAdapterUIUtils
++import id.calocallo.sicape.R
+ import kotlinx.android.parcel.Parcelize
+ 
+ @Parcelize
+@@ -13,8 +21,32 @@
+     var user_updater: UserCreatorResp?,
+     var created_at: String?,
+     var updated_at: String?
+-) : Parcelable {
++) : Parcelable, AbstractItem<PasalResp.PasalHolder>() {
+     constructor() : this(null, null, null, null, null, null, null, null)
++
++    override val layoutRes: Int
++        get() = R.layout.layout_1_text_clickable
++    override val type: Int
++        get() = R.id.fastadapter_item
++
++    override fun getViewHolder(v: View): PasalResp.PasalHolder {
++        return PasalHolder(v)
++    }
++
++    class PasalHolder(private var view: View) : FastAdapter.ViewHolder<PasalResp>(view) {
++        var txt_item: TextView = view.findViewById(R.id.txt_1_clickable)
++        var img_item: ImageView = view.findViewById(R.id.img_clickable)
++
++        override fun bindView(item: PasalResp, payloads: List<Any>) {
++            txt_item.text = item.nama_pasal
++            view.background = FastAdapterUIUtils.getSelectableBackground(itemView.context, Color.RED, true)
++        }
++
++        override fun unbindView(item: PasalResp) {
++            txt_item.text = null
++        }
++
++    }
+ }
+ 
+ @Parcelize

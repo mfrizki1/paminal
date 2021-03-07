@@ -101,7 +101,7 @@ class EditOrangsActivity : BaseActivity() {
     }
 
     private fun apiDetailOrangs(orangs: OrangsResp?, menu: String?) {
-        NetworkConfig().getService().getDetailOrang(
+        NetworkConfig().getServPers().getDetailOrang(
             "Bearer ${sessionManager1.fetchAuthToken()}", menu.toString(), orangs?.id.toString()
         ).enqueue(object : Callback<OrangsResp> {
             override fun onFailure(call: Call<OrangsResp>, t: Throwable) {
@@ -155,7 +155,7 @@ class EditOrangsActivity : BaseActivity() {
         orangsReq.alamat = edt_alamat_orangs_edit.text.toString()
         orangsReq.pekerjaan = edt_pekerjaan_orangs_edit.text.toString()
         orangsReq.keterangan = edt_ket_orangs_edit.text.toString()
-        NetworkConfig().getService().updateOrangsSingle(
+        NetworkConfig().getServPers().updateOrangsSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             menu.toString(),
             data?.id.toString(),
@@ -187,7 +187,7 @@ class EditOrangsActivity : BaseActivity() {
     }
 
     private fun doDeleteOrangs(data: OrangsResp?, menu: String?) {
-        NetworkConfig().getService().deleteOrangs(
+        NetworkConfig().getServPers().deleteOrangs(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             menu.toString(),
             data?.id.toString()

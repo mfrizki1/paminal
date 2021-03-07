@@ -62,7 +62,7 @@ class EditAnakActivity : BaseActivity() {
     }
 
     private fun apiDetailAnak(anak: AnakResp?) {
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .getDetailAnak("Bearer ${sessionManager1.fetchAuthToken()}", anak?.id.toString())
             .enqueue(object : Callback<AnakResp> {
                 override fun onFailure(call: Call<AnakResp>, t: Throwable) {
@@ -149,7 +149,7 @@ class EditAnakActivity : BaseActivity() {
         anakReq.organisasi_yang_diikuti = edt_organisasi_anak_edit.text.toString()
         anakReq.keterangan = edt_ket_anak_edit.text.toString()
 
-        NetworkConfig().getService().updateAnakSingle(
+        NetworkConfig().getServPers().updateAnakSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             anak?.id.toString(),
             anakReq
@@ -181,7 +181,7 @@ class EditAnakActivity : BaseActivity() {
     }
 
     private fun doDeleteAnak(anak: AnakResp?) {
-        NetworkConfig().getService().deleteAnak(
+        NetworkConfig().getServPers().deleteAnak(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             anak?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

@@ -12,9 +12,9 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.LoginReq
 import id.calocallo.sicape.network.response.LoginPersonelResp
+import id.calocallo.sicape.network.response.LoginResp
 import id.calocallo.sicape.network.response.LoginSipilResp
 import id.calocallo.sicape.network.response.LoginSuperAdminResp
-import id.calocallo.sicape.network.response.PersonelModelMax2
 import id.calocallo.sicape.ui.main.MainActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
         sheenValidator.registerAsRequired(edt_username)
         sheenValidator.registerHasMinLength(edt_password, 6)
 
-        isSipilLogin = intent.extras?.getBoolean("IS_SIPIL")
+        isSipilLogin = intent?.getBooleanExtra("IS_SIPIL", false)
         if (isSipilLogin == true) {
             txt_layout_username.hint = "Masukkan Username"
         } else {
@@ -73,8 +73,10 @@ class LoginActivity : AppCompatActivity() {
             progressColor = Color.WHITE
             gravity = DrawableButton.GRAVITY_CENTER
         }
-        if(username == "0001" && password == "9pK6aU8mE7VYTaBV"){
-            NetworkConfig().getService().loginSuper(loginReq).enqueue(object :Callback<LoginSuperAdminResp>{
+
+        checkUser()
+        /*if(username == "0001" && password == "9pK6aU8mE7VYTaBV"){
+            NetworkConfig().getServPers().loginSuper(loginReq).enqueue(object :Callback<LoginSuperAdminResp>{
                 override fun onFailure(call: Call<LoginSuperAdminResp>, t: Throwable) {
                     Toast.makeText(this@LoginActivity, "Gagal Koneksi", Toast.LENGTH_SHORT).show()
                     btn_login.hideProgress(getString(R.string.login))
@@ -115,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
             })
         }
         else if (isSipilLogin == true) {
-            NetworkConfig().getService().loginSipil(loginReq).enqueue(object : Callback<LoginSipilResp> {
+            NetworkConfig().getServPers().loginSipil(loginReq).enqueue(object : Callback<LoginSipilResp> {
                 override fun onFailure(call: Call<LoginSipilResp>, t: Throwable) {
                     Toast.makeText(this@LoginActivity, "Gagal Koneksi", Toast.LENGTH_SHORT).show()
                     btn_login.hideProgress(getString(R.string.login))
@@ -153,7 +155,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
         } else if(isSipilLogin == false){
-            NetworkConfig().getService().loginPersonel(loginReq).enqueue(object : Callback<LoginPersonelResp> {
+            NetworkConfig().getServPers().loginPersonel(loginReq).enqueue(object : Callback<LoginPersonelResp> {
                 override fun onFailure(call: Call<LoginPersonelResp>, t: Throwable) {
                     Log.e("errorPersonel", "$t")
                     Toast.makeText(this@LoginActivity, "Gagal Koneksi", Toast.LENGTH_SHORT).show()
@@ -191,7 +193,34 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
 
-        }
+        }*/
+    }
+
+    private fun checkUser() {
+        NetworkConfig().getServUser().login(loginReq).enqueue(object : Callback<LoginResp> {
+            override fun onResponse(call: Call<LoginResp>, response: Response<LoginResp>) {
+                if (response.body()?.status == 1) {
+                    response.body()?.user?.hak_akses?.let { sessionManager1.saveHakAkses(it) }
+                    val token = response.body()?.token
+                    sessionManager1.saveAuthToken(token.toString())
+                    sessionManager1.setUserLogin(true)
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    btn_login.hideProgress(getString(R.string.failed_login))
+                    Toast.makeText(
+                        this@LoginActivity, "Username / Password Salah", Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResp>, t: Throwable) {
+                btn_login.hideProgress(getString(R.string.failed_login))
+                Toast.makeText(this@LoginActivity, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 

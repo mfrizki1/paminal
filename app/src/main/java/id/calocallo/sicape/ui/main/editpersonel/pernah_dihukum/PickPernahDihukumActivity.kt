@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.PernahDihukumResp
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.utils.SessionManager1
@@ -70,7 +69,7 @@ class PickPernahDihukumActivity : BaseActivity() {
         rl_pb.visible()
         rv_list_pernah_dihukum.gone()
 
-        NetworkConfig().getService().showDihukum(
+        NetworkConfig().getServPers().showDihukum(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<PernahDihukumResp>> {

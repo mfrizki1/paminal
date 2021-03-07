@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <include layout="@layout/layout_toolbar_white" />
@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
+            android:enabled="false"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="No LP">
 
@@ -65,7 +66,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Isi Laporan" />
+            android:text="Alat Bukti" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -77,6 +78,29 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_alat_bukti_kke_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        URAIAN-->
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uraian Pelanggaran" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Uraian Pelanggaran">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_uraian_kke_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"
@@ -153,6 +177,7 @@
                     android:id="@+id/txt_kesatuan_menerima_lp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/space_half"
                     android:text="Kesatuan Personel Terlapor"
                     android:textSize="@dimen/text_14" />
@@ -371,6 +396,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
+            android:visibility="gone"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:hint="Kesatuan Pimpinan Bidang">
 

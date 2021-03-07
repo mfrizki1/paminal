@@ -33,12 +33,14 @@
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="@string/pangkat" />
 
         <TextView
             android:id="@+id/txt_pangkat_admin_detail"
             style="@style/JustText"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pangkat" />
@@ -76,6 +78,7 @@
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="Jabatan" />
 
@@ -83,6 +86,7 @@
             android:id="@+id/txt_jabatan_admin_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="Jabatan" />
 

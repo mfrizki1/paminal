@@ -1,10 +1,8 @@
 package id.calocallo.sicape.network.request
 
-import id.calocallo.sicape.network.response.LpPasalResp
-
-data class EditLpPidanaReq (
+data class EditLpPidanaReq(
     var no_lp: String?,
-//    var id_satuan_kerja: String?,
+    var id_satuan_kerja: Int?,
     var id_personel_terlapor: Int?,
 //    var id_pelanggaran: Int?,
     var kota_buat_laporan: String?,
@@ -23,18 +21,41 @@ data class EditLpPidanaReq (
     var agama_pelapor: String?,
     var pekerjaan_pelapor: String?,
     var kewarganegaraan_pelapor: String?,
+    var jenis_kelamin_pelapor: String?,
     var alamat_pelapor: String?,
     var no_telp_pelapor: String?,
     var nik_ktp_pelapor: String?,
-
-    var uraian_pelanggaran: String?
-){
+    var tempat_lahir_pelapor: String?,/*1*/
+    var tanggal_lahir_pelapor: String?,/*1*/
+    var uraian_pelanggaran: String?,
+    var waktu_buat_laporan: String?
+) {
     constructor() : this(
-        "",  0,
-        "", "", "", "",
-        "", "", "", "", "",
-        "", 0, "",
-        "","","","",
-        "","",""
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
     )
 }

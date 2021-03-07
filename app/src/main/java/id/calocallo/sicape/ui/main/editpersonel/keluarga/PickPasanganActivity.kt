@@ -49,7 +49,7 @@ class PickPasanganActivity : BaseActivity() {
 
     private fun getPasangan(personel: AllPersonelModel1?) {
         rl_pb.visible()
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .showPasangan("Bearer ${sessionManager1.fetchAuthToken()}", personel?.id.toString())
             .enqueue(object : Callback<ArrayList<PasanganMinResp>> {
                 override fun onFailure(call: Call<ArrayList<PasanganMinResp>>, t: Throwable) {

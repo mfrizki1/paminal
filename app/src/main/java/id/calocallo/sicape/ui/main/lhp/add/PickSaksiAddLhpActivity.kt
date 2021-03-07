@@ -31,7 +31,7 @@ class PickSaksiAddLhpActivity : BaseActivity() {
         //set button next
         btn_next_saksi_lhp.setOnClickListener {
             lhpDataManager.setListSaksiLHP(saksiLhpReq)
-            val intent = Intent(this, ListKetTerlaporLhpActivity::class.java)
+            val intent = Intent(this, OtherAddLhpActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -63,10 +63,10 @@ class PickSaksiAddLhpActivity : BaseActivity() {
         callbackSaksiResp = object : AdapterCallback<SaksiLhpReq> {
             override fun initComponent(itemView: View, data: SaksiLhpReq, itemIndex: Int) {
                 itemView.txt_detail_1.text = data.nama
-                if (data.status_saksi == "polisi") {
-                    itemView.txt_detail_2.text = "Polisi"
+                if (data.status_saksi == "personel" && data.is_korban == 1) {
+                    itemView.txt_detail_2.text = "Polisi \nKorban"
                 } else {
-                    itemView.txt_detail_2.text = "Sipil"
+                    itemView.txt_detail_2.text = "Sipil \nBukan Korban"
                 }
             }
 

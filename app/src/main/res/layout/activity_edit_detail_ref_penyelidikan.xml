@@ -5,11 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.main.lhp.edit.EditDetailRefPenyelidikanActivity">
+    tools:context=".ui.main.lhp.edit.RefPenyelidikan.EditDetailRefPenyelidikanActivity">
 
     <include layout="@layout/layout_toolbar_white" />
 
     <include layout="@layout/view_separator" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_change_lp_ref_penyelidikan"
+        style="@style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:text="Pilih Laporan Polisi" />
 
     <TextView
         style="@style/TitleText"
@@ -26,19 +34,35 @@
         android:text="LP /12/12/12"
         android:textSize="@dimen/text_16" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_change_lp_ref_penyelidikan"
-        style="@style/Widget.Button"
+
+    <include
+        layout="@layout/layout_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/space_12dp"
+        android:layout_marginTop="@dimen/space_8dp" />
+
+    <TextView
+        style="@style/TitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:text="Pilih Laporan Polisi" />
+        android:text="Keterangan Terlapor" />
 
-    <include layout="@layout/layout_separator"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_height="1dp"
         android:layout_marginTop="@dimen/space_8dp"
-        android:layout_width="match_parent" />
+        android:hint="Keterangan Terlapor">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_ket_terlapor_ref_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:inputType="textCapSentences|textMultiLine"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_update_ref_penyelidikan"

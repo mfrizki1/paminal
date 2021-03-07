@@ -6,9 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import com.ajithvgiri.searchdialog.OnSearchItemSelected
-import com.ajithvgiri.searchdialog.SearchListItem
-import com.ajithvgiri.searchdialog.SearchableDialog
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import id.calocallo.sicape.R
@@ -30,7 +27,7 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import java.util.*
 
 
-class AddPersonelActivity : BaseActivity(), OnSearchItemSelected {
+class AddPersonelActivity : BaseActivity(){
     companion object {
         const val RES_POLRES = 121
         const val RES_POLSEK = 122
@@ -43,7 +40,7 @@ class AddPersonelActivity : BaseActivity(), OnSearchItemSelected {
 
     private lateinit var sheenValidator: SheenValidator
     private lateinit var sessionManager1: SessionManager1
-    private lateinit var searchableDialog: SearchableDialog
+//    private lateinit var searchableDialog: SearchableDialog
     private var jk: String? = null
     private var agmNow: String? = null
     private var agmBefore = ""
@@ -336,7 +333,7 @@ class AddPersonelActivity : BaseActivity(), OnSearchItemSelected {
         }
     }
 
-    private fun satker(jenis: String) {
+    /*private fun satker(jenis: String) {
         val list = arrayListOf<SearchListItem>()
         when (jenis) {
             "polda" -> {
@@ -392,7 +389,7 @@ class AddPersonelActivity : BaseActivity(), OnSearchItemSelected {
 
 
         }
-    }
+    }*/
 
     private fun initSpinner() {
         val jkItems = listOf("Laki-Laki", "Perempuan")
@@ -575,10 +572,10 @@ class AddPersonelActivity : BaseActivity(), OnSearchItemSelected {
         }
     }
 
-    override fun onClick(position: Int, searchListItem: SearchListItem) {
+  /*  override fun onClick(position: Int, searchListItem: SearchListItem) {
         searchableDialog.dismiss()
         spinner_satker_add.setText(searchListItem.title)
         addPersonelReq.id_satuan_kerja = searchListItem.id
-    }
+    }*/
 
 }

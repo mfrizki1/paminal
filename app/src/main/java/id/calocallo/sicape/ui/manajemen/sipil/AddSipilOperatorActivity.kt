@@ -3,18 +3,15 @@ package id.calocallo.sicape.ui.manajemen.sipil
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SipilOperatorReq
 import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.HakAksesSipil
+import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.ui.kesatuan.polda.PoldaActivity
@@ -53,8 +50,41 @@ class AddSipilOperatorActivity : BaseActivity() {
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Operator Sipil"
+    changeButton()
 
 
+
+
+        val item = listOf("Masih", "Tidak")
+        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
+        spinner_status_operator_sipil.setAdapter(adapter)
+        spinner_status_operator_sipil.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> isAktif = 1
+                1 -> isAktif = 0
+            }
+        }
+        sheenValidator.registerHasMinLength(edt_password_operator_sipil, 6)
+        sheenValidator.registerHasMinLength(edt_repassword_operator_sipil, 6)
+
+        bindProgressButton(btn_save_operator_sipil)
+        btn_save_operator_sipil.attachTextChangeAnimator()
+        btn_save_operator_sipil.setOnClickListener {
+            sheenValidator.validate()
+            btn_save_operator_sipil.showProgress {
+                progressColor = Color.WHITE
+            }
+            if (edt_password_operator_sipil.text.toString() != edt_repassword_operator_sipil.text.toString()) {
+                btn_save_operator_sipil.hideProgress("Password Harus Sama")
+            } else {
+                addSipil()
+            }
+
+        }
+
+    }
+
+    private fun changeButton() {
         btn_personel_add_polda_sipil_oper.setOnClickListener {
             btn_personel_add_polda_sipil_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
             btn_personel_add_polda_sipil_oper.setTextColor(resources.getColor(R.color.white))
@@ -103,60 +133,29 @@ class AddSipilOperatorActivity : BaseActivity() {
             txt_satker_sipil_oper_add.gone()
             txt_satker_sipil_oper_add.text = ""
         }
-
-
-        val item = listOf("Masih", "Tidak")
-        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
-        spinner_status_operator_sipil.setAdapter(adapter)
-        spinner_status_operator_sipil.setOnItemClickListener { parent, view, position, id ->
-            when (position) {
-                0 -> isAktif = 1
-                1 -> isAktif = 0
-            }
-        }
-        sheenValidator.registerHasMinLength(edt_password_operator_sipil, 6)
-        sheenValidator.registerHasMinLength(edt_repassword_operator_sipil, 6)
-
-        bindProgressButton(btn_save_operator_sipil)
-        btn_save_operator_sipil.attachTextChangeAnimator()
-        btn_save_operator_sipil.setOnClickListener {
-            sheenValidator.validate()
-            btn_save_operator_sipil.showProgress {
-                progressColor = Color.WHITE
-            }
-            if (edt_password_operator_sipil.text.toString() != edt_repassword_operator_sipil.text.toString()) {
-                btn_save_operator_sipil.hideProgress("Password Harus Sama")
-            } else {
-                addSipil()
-            }
-
-        }
-
     }
 
     private fun addSipil() {
-
-
         sipilOperatorReq.nama = edt_nama_operator_sipil.text.toString()
         sipilOperatorReq.alamat = edt_alamat_operator_sipil.text.toString()
         sipilOperatorReq.password = edt_password_operator_sipil.text.toString()
         sipilOperatorReq.password_confirmation = edt_repassword_operator_sipil.text.toString()
-        sipilOperatorReq.id_satuan_kerja = idSatker
         sipilOperatorReq.is_aktif = isAktif
         Log.e("sipil add", "$sipilOperatorReq")
-        NetworkConfig().getService().addSipilOperator(
+
+        NetworkConfig().getServUser().addSipilOperator(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sipilOperatorReq
-        ).enqueue(object : Callback<Base1Resp<HakAksesSipil>> {
-            override fun onFailure(call: Call<Base1Resp<HakAksesSipil>>, t: Throwable) {
-                btn_save_operator_sipil.hideDrawable("Gagal Simpan")
+        ).enqueue(object : Callback<Base1Resp<UserResp>> {
+            override fun onFailure(call: Call<Base1Resp<UserResp>>, t: Throwable) {
+                btn_save_operator_sipil.hideDrawable(R.string.not_save)
             }
 
             override fun onResponse(
-                call: Call<Base1Resp<HakAksesSipil>>,
-                response: Response<Base1Resp<HakAksesSipil>>
+                call: Call<Base1Resp<UserResp>>,
+                response: Response<Base1Resp<UserResp>>
             ) {
-                if (response.isSuccessful) {
+                if (response.body()?.message == "Data sipil operator saved succesfully") {
                     btn_save_operator_sipil.hideDrawable(R.string.data_saved)
                     btn_save_operator_sipil.showSnackbar(R.string.data_saved) {
                         action(R.string.back) {

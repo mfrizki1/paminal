@@ -3,6 +3,7 @@
     package="id.calocallo.sicape">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +16,11 @@
         <activity android:name=".ui.gelar.DetailGelarActivity"></activity>
         <activity android:name=".ui.gelar.EditGelarActivity" />
         <activity android:name=".ui.gelar.ListGelarActivity" />
+        <activity android:name=".ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity"></activity>
+        <activity android:name=".ui.main.lp.pasal.AddPasalDilanggarActivity" />
+        <activity android:name=".ui.main.lp.pasal.DetailPasalActivity" />
+        <activity android:name=".ui.main.lp.pasal.EditPasalActivity" />
+        <activity android:name=".ui.main.lp.pasal.ListPasalActivity" />
         <activity android:name=".ui.gelar.AddGelar4Activity" />
         <activity android:name=".ui.gelar.AddGelar3Activity" />
         <activity android:name=".ui.gelar.AddGelar2Activity" />
@@ -84,8 +90,8 @@
         <activity android:name=".ui.main.choose.lp.ChooseLpSkhdActivity" />
         <activity android:name=".ui.main.choose.lhp.ChooseLhpActivity" />
         <activity android:name=".ui.main.putkke.ListPutKkeActivity" />
-        <activity android:name=".ui.main.lhp.edit.EditDetailRefPenyelidikanActivity" />
-        <activity android:name=".ui.main.lhp.edit.ListDetailRefPenyelidikanActivity" />
+        <activity android:name=".ui.main.lhp.edit.RefPenyelidikan.EditDetailRefPenyelidikanActivity" />
+        <activity android:name=".ui.main.lhp.edit.RefPenyelidikan.ListDetailRefPenyelidikanActivity" />
         <activity android:name=".ui.main.lhp.add.OtherAddLhpActivity" />
         <activity android:name=".ui.main.lhp.add.ListKetTerlaporLhpActivity" />
         <activity android:name=".ui.main.lhp.add.PickSaksiAddLhpActivity" />
@@ -128,15 +134,14 @@
         <activity android:name=".ui.main.lhp.edit.lidik.PickLidikLhpActivity" />
         <activity android:name=".ui.main.lhp.edit.lidik.EditLidikLhpActivity" />
         <activity android:name=".ui.main.choose.lp.LpChooseActivity" />
-        <activity android:name=".ui.main.choose.lp.ChooseLpActivity" />
+        <activity android:name=".ui.main.choose.lp.PickJenisLpActivity" />
         <activity android:name=".ui.main.lp.saksi.PickSaksiLpEditActivity" />
-        <activity android:name=".ui.main.lp.pasal.PickPasalLpEditActivity" />
+        <activity android:name=".ui.main.lp.pasal.ListPasalDilanggarActivity" />
         <activity android:name=".ui.main.lp.saksi.AddSaksiLpActivity" />
         <activity android:name=".ui.main.lp.saksi.EditSaksiLpActivity" />
         <activity android:name=".ui.main.lp.saksi.PickSaksiLpActivity" />
-        <activity android:name=".ui.main.lp.pasal.EditPasalLpActivity" />
-        <activity android:name=".ui.main.lp.pasal.PickPasalLpActivity" />
-        <activity android:name=".ui.main.lp.pasal.AddPasalLpActivity" />
+        <activity android:name=".ui.main.lp.pasal.EditPasalDilanggarActivity" />
+        <activity android:name=".ui.main.lp.pasal.AddPasalActivity" />
         <activity android:name=".ui.main.pelanggaran.PickPelanggaranActivity" />
         <activity android:name=".ui.main.choose.ChoosePersonelActivity" />
         <activity android:name=".ui.main.editpersonel.relasi.AddSingleRelasiActivity" />
@@ -238,6 +243,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

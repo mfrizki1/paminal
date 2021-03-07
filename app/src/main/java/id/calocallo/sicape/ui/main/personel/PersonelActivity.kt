@@ -8,7 +8,6 @@ import androidx.appcompat.widget.SearchView
 import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.SatKerResp
@@ -125,7 +124,7 @@ class PersonelActivity : BaseActivity() {
 
     private fun apiPersonelBySatker(satker: SatKerResp) {
         rl_pb.visible()
-        NetworkConfig().getService().showPersonelBySatker(
+        NetworkConfig().getServPers().showPersonelBySatker(
             "Bearer ${sessionManager1.fetchAuthToken()}", satker.id.toString()
         ).enqueue(object : Callback<ArrayList<PersonelMinResp>> {
             override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {
@@ -187,7 +186,7 @@ class PersonelActivity : BaseActivity() {
     private fun initAPI() {
         rl_pb.visible()
         rv_personel.gone()
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .showPersonel(tokenBearer = "Bearer ${sessionManager1.fetchAuthToken()}")
             .enqueue(object : Callback<ArrayList<PersonelMinResp>> {
                 override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {

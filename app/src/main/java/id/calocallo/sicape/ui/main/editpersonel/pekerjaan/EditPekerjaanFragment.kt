@@ -70,7 +70,7 @@ class EditPekerjaanFragment : Fragment() {
     }
 
     private fun viewDetailPekerjaan(pekerjaan: PekerjaanModel?) {
-        NetworkConfig().getService().getDetailPekerjaan(
+        NetworkConfig().getServPers().getDetailPekerjaan(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString()
         ).enqueue(object :Callback<PekerjaanModel>{
@@ -114,7 +114,7 @@ class EditPekerjaanFragment : Fragment() {
             progressColor = Color.WHITE
         }
 
-        NetworkConfig().getService().updatePekerjaan(
+        NetworkConfig().getServPers().updatePekerjaan(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString(),
             singlePekerjaanReq
@@ -145,7 +145,7 @@ class EditPekerjaanFragment : Fragment() {
     }
 
     private fun doDeletePekerjaan(pekerjaan: PekerjaanModel?) {
-        NetworkConfig().getService().deletePekerjaan(
+        NetworkConfig().getServPers().deletePekerjaan(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

@@ -9,7 +9,6 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.OrganisasiResp
 import id.calocallo.sicape.network.response.PenghargaanResp
 import id.calocallo.sicape.network.response.PerjuanganResp
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.utils.SessionManager1
@@ -100,7 +99,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
         rl_no_data.gone()
         when (name) {
             ORGANISASI -> {
-                NetworkConfig().getService().showOrganisasi(
+                NetworkConfig().getServPers().showOrganisasi(
                     "Bearer ${sessionManager1.fetchAuthToken()}",
 //                    "4"
                     sessionManager1.fetchID().toString()
@@ -141,7 +140,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                 })
             }
             PERJUANGAN -> {
-                NetworkConfig().getService().showPerjuangan(
+                NetworkConfig().getServPers().showPerjuangan(
                     "Bearer ${sessionManager1.fetchAuthToken()}",
 //                    "4"
                     sessionManager1.fetchID().toString()
@@ -182,7 +181,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                 })
             }
             PENGHARGAAN -> {
-                NetworkConfig().getService().showPenghargaan(
+                NetworkConfig().getServPers().showPenghargaan(
                     "Bearer ${sessionManager1.fetchAuthToken()}",
 //                    "4"
                     sessionManager1.fetchID().toString()

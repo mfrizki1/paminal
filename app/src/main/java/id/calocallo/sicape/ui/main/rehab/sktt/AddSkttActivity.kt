@@ -14,7 +14,7 @@ import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.network.request.SkttReq
 import id.calocallo.sicape.network.response.LpCustomResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
-import id.calocallo.sicape.ui.main.choose.lp.ChooseLpActivity
+import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_sktt.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -41,7 +41,7 @@ class AddSkttActivity : BaseActivity() {
 
 
         btn_pick_lp_sktt_add.setOnClickListener {
-            val intent = Intent(this, ChooseLpActivity::class.java)
+            val intent = Intent(this, PickJenisLpActivity::class.java)
             intent.putExtra(LP_SKTT, LP_SKTT)
             startActivityForResult(intent, REQ_LP_ON_SKTT)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

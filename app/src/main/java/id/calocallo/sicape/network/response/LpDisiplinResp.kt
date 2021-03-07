@@ -1,7 +1,7 @@
 package id.calocallo.sicape.network.response
 
 import android.os.Parcelable
-import id.calocallo.sicape.model.PersonelLapor
+import id.calocallo.sicape.model.DetLapDisiplinModel
 import kotlinx.android.parcel.Parcelize
 
 
@@ -9,24 +9,19 @@ import kotlinx.android.parcel.Parcelize
 data class LpDisiplinResp(
     var id: Int?,
     var no_lp: String?,
+    var satuan_kerja: SatKerResp?,
+    var jenis_pelanggaran: SatKerResp?,
+    var detail_laporan: DetLapDisiplinModel?,
+    var personel_terlapor: PersonelMinResp?,
     var uraian_pelanggaran: String?,
-    var personel_terlapor: PersonelLapor?,
-    var personel_pelapor: PersonelLapor?,
+    var pasal_dilanggar: ArrayList<PasalDilanggarResp>?,
     var kota_buat_laporan: String?,
     var tanggal_buat_laporan: String?,
-    var nama_yang_mengetahui: String?,
-    var pangkat_yang_mengetahui: String?,
-    var nrp_yang_mengetahui: String?,
-    var jabatan_yang_mengetahui: String?,
-    var kesatuan_yang_mengetahui: String?,
-//    var id_personel_operator: Int?,
-
-    var macam_pelanggaran: String?,
-    var keterangan_terlapor: String?,
-    var kronologis_dari_pelapor: String?,
-    var rincian_pelanggaran_disiplin: String?,
-    var pasal_dilanggar: ArrayList<LpPasalResp>?,
-    var satuan_kerja: SatKerResp?,
+    var status_terlapor: String?,
+    var is_ada_dokumen: Int?,
+    var dokumen: DokResp?,
+    var user_creator: UserCreatorResp?,
+    var user_updater: UserCreatorResp?,
     var created_at: String?,
     var updated_at: String?
 ) : Parcelable

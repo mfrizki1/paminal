@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.lp
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +16,7 @@ import id.calocallo.sicape.ui.main.lp.kke.AddLpKodeEtikActivity
 import id.calocallo.sicape.ui.main.lp.pidana.AddLpPidanaActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -38,14 +40,20 @@ class AddLpActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
 //        supportActionBar?.title = "Tambah Data Laporan Polisi"
         when (jenis) {
-            "pidana" -> supportActionBar?.title = "Tambah Data Laporan Polisi Pidana"
-            "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Polisi Kode Etik"
+            "pidana" -> {
+                viewPidana()
+                supportActionBar?.title = "Tambah Data Laporan Polisi Pidana"
+            }
+            "kode_etik" -> {
+                txt_layout_no_lp_add.gone()
+                supportActionBar?.title = "Tambah Data Laporan Polisi Kode Etik"
+            }
             "disiplin" -> supportActionBar?.title = "Tambah Data Laporan Polisi Disiplin"
         }
         sessionManager1 = SessionManager1(this)
 
 
-        btn_choose_personel_menerima_lp_add.setOnClickListener {
+        btn_choose_personel_terlapor_lp_add.setOnClickListener {
             val intent = Intent(this, KatPersonelActivity::class.java)
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_TERLAPOR)
@@ -81,6 +89,7 @@ class AddLpActivity : BaseActivity() {
                 idPelanggaran?.let { it1 -> sessionManager1.setIdPelanggaran(it1) }
                 sessionManager1.setKotaBuatLp(edt_kota_buat_add_lp.text.toString())
                 sessionManager1.setTglBuatLp(edt_tgl_buat_add.text.toString())
+                sessionManager1.setWaktuBuatLaporan(edt_pukul_laporan_lp.text.toString())
                 sessionManager1.setNamaPimpBidLp(edt_nama_pimpinan_bidang_add.text.toString())
                 sessionManager1.setPangkatPimpBidLp(edt_pangkat_pimpinan_bidang_add.text.toString())
                 sessionManager1.setNrpPimpBidLp(edt_nrp_pimpinan_bidang_add.text.toString())
@@ -111,13 +120,20 @@ class AddLpActivity : BaseActivity() {
 
         }
 
-        val adapterSatker = ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))
+        val adapterSatker =
+            ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))
         spinner_kesatuan_lp_add.setAdapter(adapterSatker)
         spinner_kesatuan_lp_add.setOnItemClickListener { parent, view, position, id ->
             sessionManager1.setKesatuanPimpBidLp(parent.getItemAtPosition(position) as String)
         }
     }
 
+    private fun viewPidana() {
+        txt_layout_spinner_kesatuan_lp_add.gone()
+        txt_layout_no_lp_add.gone()
+    }
+
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
@@ -136,11 +152,13 @@ class AddLpActivity : BaseActivity() {
 
                     REQ_TERLAPOR -> {
                         idPersonelTerlapor = personel?.id
-                        txt_jabatan_menerima_lp_add.text ="Jabatan : ${personel?.jabatan}"
-                        txt_kesatuan_menerima_lp_add.text = "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
-                        txt_nama_menerima_lp_add.text ="Nama : ${personel?.nama}"
-                        txt_nrp_menerima_lp_add.text = "NRP : ${personel?.nrp}"
-                        txt_pangkat_menerima_lp_add.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
+                        txt_jabatan_terlapor_lp_add.text = "Jabatan : ${personel?.jabatan}"
+                        txt_kesatuan_terlapor_lp_add.text =
+                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+                        txt_nama_terlapor_lp_add.text = "Nama : ${personel?.nama}"
+                        txt_nrp_terlapor_lp_add.text = "NRP : ${personel?.nrp}"
+                        txt_pangkat_terlapor_lp_add.text =
+                            "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
                     }
                     REQ_PELANGGARAN -> {
                         idPelanggaran = pelanggaran?.id

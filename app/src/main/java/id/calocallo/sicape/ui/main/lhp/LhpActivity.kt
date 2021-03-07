@@ -4,23 +4,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
-import id.calocallo.sicape.network.response.KetTerlaporLhpResp
-import id.calocallo.sicape.network.response.PersonelPenyelidikResp
-import id.calocallo.sicape.network.response.RefPenyelidikanResp
-import id.calocallo.sicape.network.response.SaksiLhpResp
+import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lhp.DetailLhpActivity.Companion.DETAIL_LHP
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
+import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lhp.*
 import kotlinx.android.synthetic.main.item_lhp.view.*
+import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LhpActivity : BaseActivity() {
+    private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<LhpResp>
     private var refPenyelidikan = ArrayList<RefPenyelidikanResp>()
     private var personelPenyelidikan = ArrayList<PersonelPenyelidikResp>()
@@ -28,17 +36,17 @@ class LhpActivity : BaseActivity() {
     private var ketTerlaporLhpResp = ArrayList<KetTerlaporLhpResp>()
 
     //    private lateinit var adapterLhp: LhpAdapter
-    private lateinit var adapterLhp: ReusableAdapter<LhpResp>
-    private lateinit var adapterCallbackLhp: AdapterCallback<LhpResp>
+    private lateinit var adapterLhp: ReusableAdapter<LhpMinResp>
+    private lateinit var adapterCallbackLhp: AdapterCallback<LhpMinResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lhp)
-
+        sessionManager1 = SessionManager1(this)
         list = ArrayList()
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Laporan Hasil Penyelidikan"
-
-        getListLHP()
+        apiListLhp()
+//        getListLHP(response.body())
 
         btn_lhp_add.setOnClickListener {
             startActivity(Intent(this, AddLhpActivity::class.java))
@@ -47,139 +55,67 @@ class LhpActivity : BaseActivity() {
 
     }
 
-    private fun getListLHP() {
-        //list ref penyelidikan
-        refPenyelidikan.add(RefPenyelidikanResp(1, 1, "LP/KODEETIK1/2020/BIDPROPAM"))
-        refPenyelidikan.add(RefPenyelidikanResp(2, 4, "LP/KODEETIK4/2019/BIDPROPAM"))
-        refPenyelidikan.add(RefPenyelidikanResp(3, 2, "LP/KODEETIK2/2019/BIDPROPAM"))
+    private fun apiListLhp() {
+        rl_pb.visible()
+        NetworkConfig().getServLhp().getLhpAll("Bearer ${sessionManager1.fetchAuthToken()}")
+            .enqueue(
+                object :
+                    Callback<ArrayList<LhpMinResp>> {
+                    override fun onResponse(
+                        call: Call<ArrayList<LhpMinResp>>,
+                        response: Response<ArrayList<LhpMinResp>>
+                    ) {
+                        if (response.isSuccessful) {
+                            rl_pb.gone()
+                            getListLHP(response.body())
+                        } else {
+                            rl_no_data.visible()
+                            rl_pb.gone()
+                            rv_lhp.gone()
+                        }
+                    }
 
-        //listpenyelidik
-        personelPenyelidikan.add(
-            PersonelPenyelidikResp(
-                1, 4, "Faisal", "BRIPDA", "POLAIR",
-                "1234567", 2, "Polresta Banjarmasin", 1
-            )
-        )
-        personelPenyelidikan.add(
-            PersonelPenyelidikResp(
-                1, 5, "Rizki", "KOMBES", "POLAIR",
-                "1234567", 2, "Polresta Banjarmasin", 0
-            )
-        )
-        personelPenyelidikan.add(
-            PersonelPenyelidikResp(
-                1, 12, "Ahmad", "IPDA", "POLAIR",
-                "1234567", 2, "Polresta Banjarmasin", 0
-            )
-        )
+                    override fun onFailure(call: Call<ArrayList<LhpMinResp>>, t: Throwable) {
+                        Toast.makeText(this@LhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                        rl_no_data.visible()
+                        rl_pb.gone()
+                        rv_lhp.gone()
+                    }
+                })
+    }
 
-        //saksi LHP
-        saksiLhp.add(
-            SaksiLhpResp(
-                1, "KETERANGAN INI\nadalah", "polisi",
-                "Utuh", 10, "BRIPDA", "POLAIR",
-                "123456", 2, "Polresta Banjarmasin",
-                "", "", "", "", "", ""
-            )
-        )
-
-        saksiLhp.add(
-            SaksiLhpResp(
-                1, "KETERANGAN INI\nadalah", "sipil", "Ghoni",
-                null, "", "", "123456", null, "",
-                "Banjarmasin", "12-12-2008", "Buruh", "Jl xxx",
-                "", ""
-            )
-        )
-
-        //keterangan terlapor
-        ketTerlaporLhpResp.add(
-            KetTerlaporLhpResp(
-                1,
-                20,
-                "Faisal Rizki",
-                "IPDA",
-                "POLAIR",
-                "09876",
-                2,
-                "Polresta Banjarmasin",
-                "isi\nterlapor"
-            )
-        )
-
-        //list lhp
-        list.add(
-            LhpResp(
-                1, "LHP 1/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
-                ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
-                "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
-                "Banjarbaru", "12-08-1999", "", "",
-                "surat\nsurat1\nsurat2",
-                "ptunjuk1\npetunjuk2\n3",
-                "bukti1\nbukti2\n3",
-                "analisa\nini adalah analisa", 1,
-                "dari tanggal 12 agustus 2020 sampai 18 agustus 2020", "Banjarmasin"
-
-            )
-        )
-        list.add(
-            LhpResp(
-                2, "LHP 2/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
-                ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
-                "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
-                "Banjarbaru", "12-08-1999", "", "",
-                "surat\nsurat1\nsurat2",
-                "ptunjuk1\npetunjuk2\n3",
-                "bukti1\nbukti2\n3",
-                "analisa\nini adalah analisa", 0,
-                "dari tanggal 12 agustus 2020 sampai 18 agustus 2020", "Banjarmasin"
-
-            )
-        )
-
-        list.add(
-            LhpResp(
-                2, "LHP 3/xx/2020/BIDPROPAM", refPenyelidikan, personelPenyelidikan, saksiLhp,
-                ketTerlaporLhpResp, "pengaduan\nisi", "SP/123", "pokok\ntugas",
-                "permasalahan\npokok", "ahli", "kesimpulan", "rekomendasi",
-                "Banjarbaru", "12-08-1999", "", "",
-                "surat\nsurat1\nsurat2",
-                "ptunjuk1\npetunjuk2\n3",
-                "bukti1\nbukti2\n3",
-                "analisa\nini adalah analisa", 1,
-                "dari tanggal 12 agustus 2020 sampai 18 agustus 2020", "Banjarmasin"
-            )
-        )
-
+    private fun getListLHP(list: ArrayList<LhpMinResp>?) {
 
         //adapterLibrary
         adapterLhp = ReusableAdapter(this)
-        adapterCallbackLhp = object : AdapterCallback<LhpResp> {
-            override fun initComponent(itemView: View, data: LhpResp, itemIndex: Int) {
-                val lidik = data.personel_penyelidik?.find { it.is_ketua == 1 }
-                if (lidik?.is_ketua == 1) itemView.txt_ketua_tim.text =
-                    "Ketua Tim : ${lidik.nama}"
+        adapterCallbackLhp = object : AdapterCallback<LhpMinResp> {
+            override fun initComponent(itemView: View, data: LhpMinResp, itemIndex: Int) {
                 itemView.txt_no_lhp.text = data.no_lhp
-                var terbukti: String = if (data.isTerbukti == 0) {
-                    "TIdak Terbukti"
-                } else {
-                    "Terbukti"
-                }
-                itemView.txt_isTerbukti.text = terbukti
+                /*                val lidik = data.personel_penyelidik?.find { it.is_ketua == 1 }
+                if (lidik?.is_ketua == 1) itemView.txt_ketua_tim.text =
+                                 "Ketua Tim : ${lidik.nama}"
+                             var terbukti: String = if (data.isTerbukti == 0) {
+                                 "TIdak Terbukti"
+                             } else {
+                                 "Terbukti"
+                             }
+                             itemView.txt_isTerbukti.text = terbukti*/
             }
 
-            override fun onItemClicked(itemView: View, data: LhpResp, itemIndex: Int) {
+            override fun onItemClicked(itemView: View, data: LhpMinResp, itemIndex: Int) {
                 val intent = Intent(this@LhpActivity, DetailLhpActivity::class.java)
                 intent.putExtra(DETAIL_LHP, data)
                 startActivity(intent)
             }
         }
-        adapterLhp.filterable()
-            .adapterCallback(adapterCallbackLhp)
-            .setLayout(R.layout.item_lhp)
-            .isVerticalView()
-            .addData(list)
-            .build(rv_lhp)
+        list?.let {
+            adapterLhp.filterable()
+                .adapterCallback(adapterCallbackLhp)
+                .setLayout(R.layout.item_lhp)
+                .isVerticalView()
+                .addData(it)
+                .build(rv_lhp)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -200,5 +136,10 @@ class LhpActivity : BaseActivity() {
 
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        apiListLhp()
     }
 }

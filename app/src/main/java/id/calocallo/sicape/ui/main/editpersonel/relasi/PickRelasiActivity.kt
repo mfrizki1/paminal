@@ -3,10 +3,8 @@ package id.calocallo.sicape.ui.main.editpersonel.relasi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.response.RelasiResp
 import id.calocallo.sicape.network.NetworkConfig
@@ -81,7 +79,7 @@ class PickRelasiActivity : BaseActivity() {
     private fun getListRelasi(jenis: String?) {
         rl_pb.visible()
         rv_list_relasi.gone()
-        NetworkConfig().getService().showRelasi(
+        NetworkConfig().getServPers().showRelasi(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<RelasiResp>> {

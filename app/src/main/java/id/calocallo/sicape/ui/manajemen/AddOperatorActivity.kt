@@ -1,12 +1,12 @@
 package id.calocallo.sicape.ui.manajemen
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
@@ -15,19 +15,15 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.PersonelOperatorReq
 import id.calocallo.sicape.network.request.SipilOperatorReq
-import id.calocallo.sicape.network.response.PersonelMinResp
-import id.calocallo.sicape.network.response.PersonelModelMax2
-import id.calocallo.sicape.network.response.SatKerResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.kesatuan.polda.PoldaActivity
 import id.calocallo.sicape.ui.kesatuan.polres.PolresActivity
 import id.calocallo.sicape.ui.kesatuan.polres.SatPolresActivity
 import id.calocallo.sicape.ui.kesatuan.polsek.PolsekActivity
 import id.calocallo.sicape.ui.kesatuan.polsek.SatPolsekActivity
-import id.calocallo.sicape.ui.login.KatUserActivity
 import id.calocallo.sicape.ui.main.MainActivity
 import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
-import id.calocallo.sicape.ui.main.profil.ProfilFragment
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.gone
@@ -54,6 +50,8 @@ class AddOperatorActivity : BaseActivity() {
     private var idPersonel: Int? = null
     private var idKesatuan: Int? = null
     private var idStatus: Int? = null
+    private var namaPersonel: String? = null
+    private var nrpPersonel: String? = null
     private var personelOperatorReq = PersonelOperatorReq()
     private var sipilOperatorReq = SipilOperatorReq()
     private lateinit var sheenValidator: SheenValidator
@@ -61,96 +59,47 @@ class AddOperatorActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_operator)
         sessionManager1 = SessionManager1(this)
-        sheenValidator = SheenValidator(this)
-
         setupActionBarWithBackButton(toolbar)
-        val status = intent.extras?.getString("manajemen")
-        sheenValidator.registerHasMinLength(edt_password_operator, 6)
+        supportActionBar?.title = "Tambah Operator Polisi"
 
+        sheenValidator = SheenValidator(this)
+        sheenValidator.registerHasMinLength(edt_password_operator, 6)
         sheenValidator.registerHasMinLength(edt_repassword_operator, 6)
 
-        when (status) {
-            "polisi" -> {
-                supportActionBar?.title = "Tambah Operator Polisi"
-                btn_save_operator.attachTextChangeAnimator()
-                bindProgressButton(btn_save_operator)
-                btn_save_operator.setOnClickListener {
-                    sheenValidator.validate()
-                    btn_save_operator.showProgress {
-                        progressColor = Color.WHITE
-                    }
-                    if (edt_password_operator.text.toString() != edt_repassword_operator.text.toString()) {
-                        btn_save_operator.hideProgress("Password Harus Sama")
-                    } else if (edt_password_operator.text.toString() == edt_repassword_operator.text.toString()) {
-                        personelOperatorReq.password = edt_password_operator.text.toString()
-                        personelOperatorReq.password_confirmation =
-                            edt_repassword_operator.text.toString()
-                        personelOperatorReq.is_aktif = idStatus
-                        personelOperatorReq.id_satuan_kerja = idKesatuan
-                        personelOperatorReq.id_personel = idPersonel
-                        personelOperatorReq.id_satuan_kerja = idSatker
+        changeButton()
 
-                        Log.e("add_operator", "$personelOperatorReq")
-                        addPolisiOperator(personelOperatorReq)
-
-
-                    }
-                }
+        btn_save_operator.attachTextChangeAnimator()
+        bindProgressButton(btn_save_operator)
+        btn_save_operator.setOnClickListener {
+            sheenValidator.validate()
+            btn_save_operator.showProgress {
+                progressColor = Color.WHITE
             }
-            /*    "sipil" -> {
-                    supportActionBar?.title = "Tambah Operator Sipil"
-                    btn_save_operator.attachTextChangeAnimator()
-                    bindProgressButton(btn_save_operator)
-                    btn_save_operator.setOnClickListener {
-                        sheenValidator.validate()
+            if (edt_password_operator.text.toString() != edt_repassword_operator.text.toString()) {
+                btn_save_operator.hideProgress("Password Harus Sama")
+            } else if (edt_password_operator.text.toString() == edt_repassword_operator.text.toString()) {
+                personelOperatorReq.nama = namaPersonel
+                personelOperatorReq.username = nrpPersonel
+                personelOperatorReq.password = edt_password_operator.text.toString()
+                personelOperatorReq.password_confirmation =
+                    edt_repassword_operator.text.toString()
+                personelOperatorReq.is_aktif = idStatus
+                personelOperatorReq.id_personel = idPersonel
+                personelOperatorReq.id_satuan_kerja = idSatker
 
-                        if (edt_password_operator.text.toString() != edt_repassword_operator.text.toString()) {
-                            Log.e("notSame", "notSame")
-                            Toast.makeText(this, "Password Harus Sama", Toast.LENGTH_LONG).show()
-                        } else if (edt_password_operator.text.toString() == edt_repassword_operator.text.toString()) {
-                            personelOperatorReq.password = edt_password_operator.text.toString()
-                            personelOperatorReq.password_confirmation =
-                                edt_repassword_operator.text.toString()
-                            personelOperatorReq.is_aktif = idStatus
-                            personelOperatorReq.id_satuan_kerja = idKesatuan
-                            personelOperatorReq.id_personel = idPersonel
+                Log.e("add_operator", "$personelOperatorReq")
+                addPolisiOperator(personelOperatorReq)
 
-                            Log.e("add_operator", "$personelOperatorReq")
-                            addSipilOperator()
-                        }
-                    }
-                }*/
-           /* "admin" -> {
-                supportActionBar?.title = "Tambah Admin"
-                ll_kesatuan_operator.gone()
-                btn_save_operator.attachTextChangeAnimator()
-                bindProgressButton(btn_save_operator)
-                btn_save_operator.setOnClickListener {
-                    if (edt_password_operator.text.toString() != edt_repassword_operator.text.toString()) {
-                        Log.e("notSame", "notSame")
-                        Toast.makeText(this, "Password Harus Sama", Toast.LENGTH_SHORT).show()
-                    } else if (edt_password_operator.text.toString() == edt_repassword_operator.text.toString()) {
-                        personelOperatorReq.password = edt_password_operator.text.toString()
-                        personelOperatorReq.password_confirmation =
-                            edt_repassword_operator.text.toString()
-                        personelOperatorReq.is_aktif = idStatus
-                        personelOperatorReq.id_satuan_kerja = idKesatuan
-                        personelOperatorReq.id_personel = idPersonel
 
-                        Log.e("add_operator", "$personelOperatorReq")
-                        addAdmin()
-                    }
-                }
-            }*/
+            }
         }
+
         btn_choose_personel_operator.setOnClickListener {
             val intent = Intent(this, KatPersonelActivity::class.java)
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PERSONEL_OPERATOR)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
         }
-
 
         val item = listOf("Aktif", "Tidak")
         val adapterStatus = ArrayAdapter(this, R.layout.item_spinner, item)
@@ -163,7 +112,9 @@ class AddOperatorActivity : BaseActivity() {
         }
 
 
+    }
 
+    private fun changeButton() {
         btn_personel_add_polda_polisi_oper.setOnClickListener {
             btn_personel_add_polda_polisi_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
             btn_personel_add_polda_polisi_oper.setTextColor(resources.getColor(R.color.white))
@@ -221,26 +172,26 @@ class AddOperatorActivity : BaseActivity() {
     }
 
     private fun addPolisiOperator(personelOperatorReq: PersonelOperatorReq) {
-        NetworkConfig().getService().addPersOperator(
+        NetworkConfig().getServUser().addPersOperator(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             personelOperatorReq
-        ).enqueue(object : Callback<PersonelModelMax2> {
-            override fun onFailure(call: Call<PersonelModelMax2>, t: Throwable) {
-                btn_save_operator.hideProgress("Error Koneksi")
+        ).enqueue(object : Callback<Base1Resp<UserResp>> {
+            override fun onFailure(call: Call<Base1Resp<UserResp>>, t: Throwable) {
+                btn_save_operator.hideProgress(R.string.error_conn)
             }
 
             override fun onResponse(
-                call: Call<PersonelModelMax2>,
-                response: Response<PersonelModelMax2>
+                call: Call<Base1Resp<UserResp>>,
+                response: Response<Base1Resp<UserResp>>
             ) {
-                if (response.isSuccessful) {
+                if (response.body()?.message == "Data personel operator saved succesfully") {
                     hideKeyboard()
                     btn_save_operator.hideProgress(R.string.data_saved)
                     btn_save_operator.showSnackbar(R.string.data_saved) {
                         action(R.string.back) {
-                            startActivity(
-                                Intent(this@AddOperatorActivity, MainActivity::class.java)
-                            )
+                            val intent = Intent(this@AddOperatorActivity, ManajemenOperatorActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
                         }
                     }
                 } else {
@@ -250,6 +201,7 @@ class AddOperatorActivity : BaseActivity() {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -317,6 +269,8 @@ class AddOperatorActivity : BaseActivity() {
                     txt_nrp_personel_operator_add.text = "NRP : ${personel?.nrp}"
                     txt_jabatan_personel_operator_add.text = "Jabatan : ${personel?.jabatan}"
                     idPersonel = personel?.id
+                    namaPersonel = personel?.nama
+                    nrpPersonel = personel?.nrp
                 }
             }
         }

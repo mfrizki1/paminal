@@ -5,16 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.main.lp.pasal.PickPasalLpActivity">
+    tools:context=".ui.main.lp.pasal.ListPasalDilanggarActivity">
 
-    <include layout="@layout/layout_toolbar_white" />
-
-    <include layout="@layout/view_separator" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TitleText"
-        android:text="Pilih Data Pasal"/>
+    <include layout="@layout/layout_toolbar_white"/>
+    <include layout="@layout/view_separator"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,7 +28,7 @@
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_list_pasal"
+            android:id="@+id/rv_list_pasal_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -42,10 +36,11 @@
             tools:listitem="@layout/layout_1_text_clickable" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_add_single_pasal"
+            android:id="@+id/btn_add_single_pasal_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_above="@id/ll_pick_pasal"
             android:layout_marginRight="@dimen/space_12dp"
             android:layout_marginBottom="@dimen/space_12dp"
@@ -53,23 +48,6 @@
             android:src="@drawable/ic_add"
             android:tint="@color/white" />
 
-        <LinearLayout
-            android:id="@+id/ll_pick_pasal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            android:elevation="45dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_save_lp_all_pidana"
-                style="@style/Widget.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/space_12dp"
-                android:text="@string/save" />
-        </LinearLayout>
 
     </RelativeLayout>
 

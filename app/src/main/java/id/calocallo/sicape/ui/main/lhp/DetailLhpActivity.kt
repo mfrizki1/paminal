@@ -1,38 +1,41 @@
 package id.calocallo.sicape.ui.main.lhp
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
-import id.calocallo.sicape.network.response.KetTerlaporLhpResp
-import id.calocallo.sicape.network.response.PersonelPenyelidikResp
-import id.calocallo.sicape.network.response.RefPenyelidikanResp
-import id.calocallo.sicape.network.response.SaksiLhpResp
-import id.calocallo.sicape.ui.main.lhp.edit.ListDetailRefPenyelidikanActivity
+import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.*
+import id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.ListDetailRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.PickLidikLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
-import id.calocallo.sicape.utils.ext.toggleVisibility
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lhp.*
+import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.ArrayList
 
 class DetailLhpActivity : BaseActivity() {
@@ -56,8 +59,9 @@ class DetailLhpActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Laporan Hasil Penyelidikan"
 
-        val dataLhp = intent.extras?.getParcelable<LhpResp>(DETAIL_LHP)
-        getDetailLHP(dataLhp)
+        val dataLhp = intent.extras?.getParcelable<LhpMinResp>(DETAIL_LHP)
+        apiDetailLhp(dataLhp)
+//        getDetailLHP(dataLhp)
 
 
         val hakAkses = sessionManager1.fetchHakAkses()
@@ -106,23 +110,76 @@ class DetailLhpActivity : BaseActivity() {
             btn_generate_lhp.showProgress {
                 progressColor = Color.WHITE
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                btn_generate_lhp.hideProgress(R.string.success_generate_doc)
-                alert(R.string.download) {
-                    positiveButton(R.string.iya) {
-                        btn_generate_lhp.hideProgress(R.string.generate_dokumen)
-
-                    }
-                    negativeButton(R.string.tidak) {
-                        btn_generate_lhp.hideProgress(R.string.generate_dokumen)
-
-                    }
-                }.show()
-            }, 2000)
+            apiGenerateDoc(dataLhp)
         }
 
     }
 
+    private fun apiGenerateDoc(dataLhp: LhpMinResp?) {
+        NetworkConfig().getServLhp()
+            .generateDokLhp("Bearer ${sessionManager1.fetchAuthToken()}", dataLhp?.id).enqueue(
+                object : Callback<Base1Resp<AddLhpResp>> {
+                    override fun onResponse(
+                        call: Call<Base1Resp<AddLhpResp>>,
+                        response: Response<Base1Resp<AddLhpResp>>
+                    ) {
+                        if (response.body()?.message == "Document lhp generated successfully") {
+                            saveDocLhp(response.body()?.data?.lhp)
+                        } else {
+                            btn_generate_lhp.hideProgress(R.string.failed_generate_doc)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Base1Resp<AddLhpResp>>, t: Throwable) {
+                        btn_generate_lhp.hideProgress(R.string.failed_generate_doc)
+                        Toast.makeText(this@DetailLhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                    }
+                })
+    }
+
+    private fun saveDocLhp(dataDoc: LhpResp?) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            btn_generate_lhp.hideProgress(R.string.success_generate_doc)
+            alert("Lihat Dokumen") {
+                positiveButton(R.string.iya) {
+                    viewDocLhp(dataDoc)
+                    btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+
+                }
+                negativeButton(R.string.tidak) {
+                    btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+                }
+            }.show()
+        }, 1000)
+    }
+
+    private fun viewDocLhp(dataDoc: LhpResp?) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(dataDoc?.dokumen?.url)))
+    }
+
+    private fun apiDetailLhp(dataLhp: LhpMinResp?) {
+        dataLhp?.id?.let {
+            NetworkConfig().getServLhp().getLhpById(
+                "Bearer ${sessionManager1.fetchAuthToken()}", it
+            ).enqueue(object : Callback<LhpResp> {
+                override fun onResponse(call: Call<LhpResp>, response: Response<LhpResp>) {
+                    if (response.isSuccessful) {
+                        getDetailLHP(response.body())
+                    } else {
+                        Toast.makeText(this@DetailLhpActivity, R.string.error, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
+                override fun onFailure(call: Call<LhpResp>, t: Throwable) {
+                    Toast.makeText(this@DetailLhpActivity, "$t", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun getDetailLHP(dataLhp: LhpResp?) {
         txt_no_lhp_detail.text = dataLhp?.no_lhp
         txt_kesimpulan_detail.text = dataLhp?.kesimpulan
@@ -131,7 +188,7 @@ class DetailLhpActivity : BaseActivity() {
 //        txt_rencana_penyelidikan_detail.text = dataLhp?.rencana_pelaksanaan_penyelidikan
         txt_pengaduan_detail.text = dataLhp?.tentang
         txt_no_sp_detail.text = dataLhp?.no_surat_perintah_penyelidikan
-        txt_waktu_penugasan_detail.text = dataLhp?.tanggal_mulai_penyelidikan
+        txt_waktu_penugasan_detail.text = formatterTanggal(dataLhp?.tanggal_mulai_penyelidikan)
         txt_tempat_penyelidikan_detail.text = dataLhp?.wilayah_hukum_penyelidikan
         txt_tugas_pokok_detail.text = dataLhp?.tugas_pokok
         txt_pokok_permasalahan_detail.text = dataLhp?.pokok_permasalahan
@@ -142,9 +199,11 @@ class DetailLhpActivity : BaseActivity() {
         }
         val lidik = dataLhp?.personel_penyelidik?.find { it.is_ketua == 1 }
         txt_ketua_tim_detail.text =
-            "Nama : ${lidik?.nama}\nPangkat : ${lidik?.pangkat.toString()
-                .toUpperCase()}\nNRP : ${lidik?.nrp}\nKesatuan : ${lidik?.kesatuan.toString()
-                .toUpperCase()}"
+            "Nama : ${lidik?.personel?.nama}\nPangkat : ${
+                lidik?.personel?.pangkat.toString().toUpperCase()
+            }\nNRP : ${lidik?.personel?.nrp}\nKesatuan : ${
+                lidik?.personel?.satuan_kerja?.kesatuan.toString().toUpperCase()
+            }"
         txt_surat_detail_lhp.text = dataLhp?.surat
         txt_petunjuk_detail_lhp.text = dataLhp?.petunjuk
         txt_analisa_detail_lhp.text = dataLhp?.analisa
@@ -154,7 +213,16 @@ class DetailLhpActivity : BaseActivity() {
         listOfRefLP(dataLhp?.referensi_penyelidikan)
         listOfLidik(dataLhp?.personel_penyelidik)
         listOfSaksi(dataLhp?.saksi)
-        listOfKetTerlapor(dataLhp?.keterangan_terlapor)
+//        listOfKetTerlapor(dataLhp?.keterangan_terlapor)
+
+        if (dataLhp?.is_ada_dokumen == 1) {
+            btn_lihat_doc_lhp.visible()
+            btn_lihat_doc_lhp.setOnClickListener {
+                viewDocLhp(dataLhp)
+            }
+        } else {
+            btn_lihat_doc_lhp.gone()
+        }
 
     }
 
@@ -181,8 +249,12 @@ class DetailLhpActivity : BaseActivity() {
             override fun initComponent(itemView: View, data: SaksiLhpResp, itemIndex: Int) {
                 itemView.txt_detail_1.textSize = 14F
                 itemView.txt_detail_2.textSize = 12F
-                itemView.txt_detail_1.text = data.nama
-                if (data.status_saksi == "sipil") {
+                if (data.personel == null) {
+                    itemView.txt_detail_1.text = data.nama
+                } else {
+                    itemView.txt_detail_1.text = data.personel?.nama
+                }
+                if (data.is_korban == 1) {
                     itemView.txt_detail_2.text = "Sipil"
                 } else {
                     itemView.txt_detail_2.text = "Polisi"
@@ -210,7 +282,7 @@ class DetailLhpActivity : BaseActivity() {
             ) {
                 itemView.txt_detail_1.textSize = 14F
                 itemView.txt_detail_2.textSize = 12F
-                itemView.txt_detail_1.text = data.nama
+                itemView.txt_detail_1.text = data.personel?.nama
                 if (data.is_ketua == 1) {
                     itemView.txt_detail_2.text = "Ketua Tim"
                 } else {
@@ -237,7 +309,7 @@ class DetailLhpActivity : BaseActivity() {
     private fun listOfRefLP(referensiPenyelidikan: ArrayList<RefPenyelidikanResp>?) {
         callbackRefLP = object : AdapterCallback<RefPenyelidikanResp> {
             override fun initComponent(itemView: View, data: RefPenyelidikanResp, itemIndex: Int) {
-                itemView.txt_item_1.text = data.no_lp
+                itemView.txt_item_1.text = data.lp?.no_lp
             }
 
             override fun onItemClicked(itemView: View, data: RefPenyelidikanResp, itemIndex: Int) {
@@ -269,9 +341,10 @@ class DetailLhpActivity : BaseActivity() {
     }
 
     private fun alertDialogDelete() {
+        val dataLhp = intent.extras?.getParcelable<LhpMinResp>(DETAIL_LHP)
         this.alert("Hapus Data", "Yakin Hapus?") {
             positiveButton("Iya") {
-//                ApiDelete()
+                ApiDelete(dataLhp)
                 finish()
             }
             negativeButton("Tidak") {
@@ -279,8 +352,39 @@ class DetailLhpActivity : BaseActivity() {
         }.show()
     }
 
+    private fun ApiDelete(dataLhp: LhpMinResp?) {
+        dataLhp?.id?.let {
+            NetworkConfig().getServLhp().delLhp(
+                "Bearer ${sessionManager1.fetchAuthToken()}", it
+            ).enqueue(object : Callback<BaseResp> {
+                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                    if (response.body()?.message == "Data lhp removed succesfully") {
+                        Toast.makeText(
+                            this@DetailLhpActivity,
+                            R.string.data_deleted,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            finish()
+                        }, 1000)
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                    Toast.makeText(this@DetailLhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    }
+
     companion object {
         const val DETAIL_LHP = "DETAIL_LHP"
         const val DETAIL_REF = "DETAIL_REF"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val dataLhp = intent.extras?.getParcelable<LhpMinResp>(DETAIL_LHP)
+        apiDetailLhp(dataLhp)
     }
 }

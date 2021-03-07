@@ -13,7 +13,6 @@ import com.github.razir.progressbutton.showDrawable
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.OrangsReq
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -84,7 +83,7 @@ class AddSingleOrangsActivity : BaseActivity() {
             orangsReq.alamat = edt_alamat_single_orangs.text.toString()
             orangsReq.pekerjaan = edt_pekerjaan_single_orangs.text.toString()
             orangsReq.keterangan = edt_ket_single_orangs.text.toString()
-            NetworkConfig().getService().addOrangsSingle(
+            NetworkConfig().getServPers().addOrangsSingle(
                 "Bearer ${sessionManager1.fetchAuthToken()}",
                 sessionManager1.fetchID().toString(),
                 menu.toString(),

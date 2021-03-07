@@ -36,7 +36,7 @@ class PersonelMultipleAdapter internal constructor(
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<PersonelMinResp> =
             object : ItemDetailsLookup.ItemDetails<PersonelMinResp>() {
                 override fun getPosition(): Int = adapterPosition
-                override fun getSelectionKey(): PersonelMinResp? = personel[position]
+                override fun getSelectionKey(): PersonelMinResp? = filterList[position]
             }
 
         fun setPersonel(allPersonelModel: PersonelMinResp, selected: Boolean) {
@@ -72,12 +72,12 @@ class PersonelMultipleAdapter internal constructor(
     }
 
     override fun onBindViewHolder(holder: PersMultipHolder, position: Int) {
-        tracker?.isSelected(personel[position])?.let { holder.setPersonel(filterList[position], it) }
+        tracker?.isSelected(filterList[position])?.let { holder.setPersonel(filterList[position], it) }
     }
 
-    fun getItem(position: Int): PersonelMinResp? = personel[position]
+    fun getItem(position: Int): PersonelMinResp? = filterList[position]
 
-    fun getPosition(nama: String) = personel.indexOfFirst { it.nama == nama }
+    fun getPosition(nama: String) = filterList.indexOfFirst { it.nama == nama }
     override fun getFilter(): Filter {
         return object :Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {

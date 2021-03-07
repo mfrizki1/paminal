@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.MedInfoReq
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -56,7 +55,7 @@ class AddSingleMedInfoActivity : BaseActivity() {
         medInfoReq.keterangan = edt_ket_single_med_info.text.toString()
 
 
-        NetworkConfig().getService().addMedInfoSingle(
+        NetworkConfig().getServPers().addMedInfoSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString(),
             medInfoReq

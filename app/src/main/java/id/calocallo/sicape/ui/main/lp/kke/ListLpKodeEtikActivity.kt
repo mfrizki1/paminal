@@ -8,29 +8,37 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
+import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.LpKkeResp
-import id.calocallo.sicape.network.response.LpPasalResp
+import id.calocallo.sicape.network.response.LpMinResp
+import id.calocallo.sicape.network.response.PasalDilanggarResp
 import id.calocallo.sicape.network.response.LpSaksiResp
 import id.calocallo.sicape.ui.main.lp.AddLpActivity
 import id.calocallo.sicape.ui.main.lp.kke.DetailLpKkeActivity.Companion.DETAIL_KKE
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_lp_kode_etik.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
+import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ListLpKodeEtikActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var listKke = arrayListOf<LpKkeResp>()
-    private var listPasal = arrayListOf<LpPasalResp>()
+    private var listPasal = arrayListOf<PasalDilanggarResp>()
     private var listSaksi = arrayListOf<LpSaksiResp>()
     private var personelTerLapor = PersonelLapor()
     private var personelPeLapor = PersonelLapor()
-    private var adapterLpKke = ReusableAdapter<LpKkeResp>(this)
-    private lateinit var callbackLpKke: AdapterCallback<LpKkeResp>
+    private var adapterLpKke = ReusableAdapter<LpMinResp>(this)
+    private lateinit var callbackLpKke: AdapterCallback<LpMinResp>
     private val viewPool = RecyclerView.RecycledViewPool()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,64 +60,93 @@ class ListLpKodeEtikActivity : BaseActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        getListKke()
+//        getListKke(response.body())
+        apiListKke()
 
     }
 
-    private fun getListKke() {
-        personelTerLapor = PersonelLapor(
-            1, "faisal", "bripda", "jabatan", "1234", 1, "polda kalsel", "Jl Banjarmasin",
-            "islam",
-            "laki_laki",
-            "Batola", "12-01-2000", "081212"
-        )
-        personelPeLapor =
-            PersonelLapor(
-                2, "utuh", "ipda", "jabatan", "0987", 1, "polresta banjarmasin", "Jl Banjarmasin",
-                "islam",
-                "laki_laki",
-                "Batola", "12-01-2000", "081212"
-            )
+    private fun apiListKke() {
+        rl_pb.visible()
+        NetworkConfig().getServLp()
+            .getLpByJenis("Bearer ${sessionManager1.fetchAuthToken()}", "kode/etik")
+            .enqueue(object :
+                Callback<ArrayList<LpMinResp>> {
+                override fun onFailure(call: Call<ArrayList<LpMinResp>>, t: Throwable) {
+                    rl_pb.gone()
+                    rl_no_data.visible()
+                    rv_lp_kke.gone()
+                }
 
-        listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
-        listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
-        listPasal.add(LpPasalResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
+                override fun onResponse(
+                    call: Call<ArrayList<LpMinResp>>,
+                    response: Response<ArrayList<LpMinResp>>
+                ) {
+                    if (response.isSuccessful) {
+                        rl_pb.gone()
+                        getListKke(response.body())
+                    } else {
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                        rv_lp_kke.gone()
+                    }
+                }
+            })
+    }
 
-        listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))
-        listSaksi.add(LpSaksiResp(2, "Akbar", "saksi", "", "", "", 0, "", "", ""))
-        listSaksi.add(LpSaksiResp(3, "Wahyu", "saksi", "", "", "", 0, "", "", ""))
-        listKke.add(
-            LpKkeResp(
-                1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
-                personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES", "POLRES BANJAR",
-                sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
-                listPasal, listSaksi, "", "", ""
-            )
-        )
+    private fun getListKke(body: ArrayList<LpMinResp>?) {
+        /*     personelTerLapor = PersonelLapor(
+                 1, "faisal", "bripda", "jabatan", "1234", 1, "polda kalsel", "Jl Banjarmasin",
+                 "islam",
+                 "laki_laki",
+                 "Batola", "12-01-2000", "081212"
+             )
+             personelPeLapor =
+                 PersonelLapor(
+                     2, "utuh", "ipda", "jabatan", "0987", 1, "polresta banjarmasin", "Jl Banjarmasin",
+                     "islam",
+                     "laki_laki",
+                     "Batola", "12-01-2000", "081212"
+                 )
 
-        listKke.add(
-            LpKkeResp(
-                2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
-                personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES", "POLRES BANJAR",
-                sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
-                listPasal, listSaksi, "", "", ""
-            )
-        )
-        listKke.add(
-            LpKkeResp(
-                3, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
-                personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
-                "IPDA", "9090", "KOMBES", "POLRES BANJAR",
-                sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
-                listPasal, listSaksi, "", "", ""
-            )
-        )
+             listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
+             listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
+             listPasal.add(LpPasalResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
+
+             listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))
+             listSaksi.add(LpSaksiResp(2, "Akbar", "saksi", "", "", "", 0, "", "", ""))
+             listSaksi.add(LpSaksiResp(3, "Wahyu", "saksi", "", "", "", 0, "", "", ""))
+             listKke.add(
+                 LpKkeResp(
+                     1, "LP/KKE1/2019/BIDPROPAM", "kode_etik", personelTerLapor,
+                     personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
+                     "IPDA", "9090", "KOMBES", "POLRES BANJAR",
+                     sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
+                     listPasal, listSaksi, "", "", ""
+                 )
+             )
+
+             listKke.add(
+                 LpKkeResp(
+                     2, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
+                     personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
+                     "IPDA", "9090", "KOMBES", "POLRES BANJAR",
+                     sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
+                     listPasal, listSaksi, "", "", ""
+                 )
+             )
+             listKke.add(
+                 LpKkeResp(
+                     3, "LP/KKE2/2019/BIDPROPAM", "kode_etik", personelTerLapor,
+                     personelPeLapor, "Banjarbaru", "12-12-2000", "Budi",
+                     "IPDA", "9090", "KOMBES", "POLRES BANJAR",
+                     sessionManager1.fetchUserPersonel()?.id, "Alat Bukti\nbaju\nsenjata", "isi Laporan",
+                     listPasal, listSaksi, "", "", ""
+                 )
+             )*/
 
 
-        callbackLpKke = object : AdapterCallback<LpKkeResp> {
-            override fun initComponent(itemView: View, data: LpKkeResp, itemIndex: Int) {
+        callbackLpKke = object : AdapterCallback<LpMinResp> {
+            override fun initComponent(itemView: View, data: LpMinResp, itemIndex: Int) {
                 /*
                 itemView.txt_no_lp_kke.text = data.no_lp
                 itemView.txt_nama_lp_kke_pelapor.text =
@@ -148,17 +185,19 @@ class ListLpKodeEtikActivity : BaseActivity() {
                 itemView.txt_edit_pendidikan.text = data.no_lp
             }
 
-            override fun onItemClicked(itemView: View, data: LpKkeResp, itemIndex: Int) {
+            override fun onItemClicked(itemView: View, data: LpMinResp, itemIndex: Int) {
                 val intent = Intent(this@ListLpKodeEtikActivity, DetailLpKkeActivity::class.java)
                 intent.putExtra(DETAIL_KKE, data)
                 startActivity(intent)
             }
         }
-        adapterLpKke.adapterCallback(callbackLpKke)
-            .isVerticalView().addData(listKke)
-            .setLayout(R.layout.layout_edit_1_text)
-            .build(rv_lp_kke)
-            .filterable()
+        body?.let {
+            adapterLpKke.adapterCallback(callbackLpKke)
+                .isVerticalView().addData(it)
+                .setLayout(R.layout.layout_edit_1_text)
+                .build(rv_lp_kke)
+                .filterable()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -181,4 +220,8 @@ class ListLpKodeEtikActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onResume() {
+        super.onResume()
+        apiListKke()
+    }
 }

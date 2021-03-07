@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/space_8dp"
+            android:visibility="gone"
             tools:listitem="@layout/layout_hukuman" />
 
         <com.google.android.material.button.MaterialButton

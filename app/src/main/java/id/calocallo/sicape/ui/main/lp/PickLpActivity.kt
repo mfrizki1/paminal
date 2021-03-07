@@ -5,6 +5,7 @@ import android.os.Bundle
 import id.calocallo.sicape.R
 import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
 import id.calocallo.sicape.ui.main.lp.kke.ListLpKodeEtikActivity
+import id.calocallo.sicape.ui.main.lp.pasal.ListPasalActivity
 import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_lp.*
@@ -39,6 +40,9 @@ class PickLpActivity : BaseActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-
+        btn_list_pasal.setOnClickListener {
+            startActivity(Intent(this, ListPasalActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
     }
 }

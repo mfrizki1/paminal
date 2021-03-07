@@ -12,10 +12,7 @@ import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SipilOperatorReq
-import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.HakAksesSipil
-import id.calocallo.sicape.network.response.PersonelMinResp
-import id.calocallo.sicape.network.response.SatKerResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.kesatuan.polda.PoldaActivity
 import id.calocallo.sicape.ui.kesatuan.polres.PolresActivity
 import id.calocallo.sicape.ui.kesatuan.polres.SatPolresActivity
@@ -48,9 +45,41 @@ class EditSipilOperatorActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Operator Sipil"
         sessionManager1 = SessionManager1(this)
-        val dataDetail = intent.extras?.getParcelable<HakAksesSipil>("acc")
+        val dataDetail = intent.extras?.getParcelable<UserResp>("acc")
         viewEditSipil(dataDetail)
+        changeButton()
 
+
+
+        btn_save_operator_sipil_edit.attachTextChangeAnimator()
+        bindProgressButton(btn_save_operator_sipil_edit)
+        btn_save_operator_sipil_edit.setOnClickListener {
+            btn_save_operator_sipil_edit.showProgress {
+                progressColor = Color.WHITE
+            }
+            sipilOperatorReq.nama = edt_nama_operator_sipil_edit.text.toString()
+            sipilOperatorReq.alamat = edt_alamat_operator_sipil_edit.text.toString()
+            sipilOperatorReq.password = edt_password_operator_sipil_edit.text.toString()
+            sipilOperatorReq.password_confirmation =
+                edt_repassword_operator_sipil_edit.text.toString()
+            sipilOperatorReq.id_satuan_kerja = idSatker
+            sipilOperatorReq.is_aktif = isAktif
+
+            apiUpdateSipil(dataDetail)
+        }
+        val item = listOf("Masih", "Tidak")
+        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
+        spinner_status_operator_sipil_edit.setAdapter(adapter)
+        spinner_status_operator_sipil_edit.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> isAktif = 1
+                1 -> isAktif = 0
+            }
+        }
+
+    }
+
+    private fun changeButton() {
         btn_personel_edit_polda_sipil_oper.setOnClickListener {
             btn_personel_edit_polda_sipil_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
             btn_personel_edit_polda_sipil_oper.setTextColor(resources.getColor(R.color.white))
@@ -100,50 +129,23 @@ class EditSipilOperatorActivity : BaseActivity() {
             txt_satker_sipil_oper_edit.text = ""
 
         }
-
-        btn_save_operator_sipil_edit.attachTextChangeAnimator()
-        bindProgressButton(btn_save_operator_sipil_edit)
-        btn_save_operator_sipil_edit.setOnClickListener {
-            btn_save_operator_sipil_edit.showProgress {
-                progressColor = Color.WHITE
-            }
-            sipilOperatorReq.nama = edt_nama_operator_sipil_edit.text.toString()
-            sipilOperatorReq.alamat = edt_alamat_operator_sipil_edit.text.toString()
-            sipilOperatorReq.password = edt_password_operator_sipil_edit.text.toString()
-            sipilOperatorReq.password_confirmation =
-                edt_repassword_operator_sipil_edit.text.toString()
-            sipilOperatorReq.id_satuan_kerja = idSatker
-            sipilOperatorReq.is_aktif = isAktif
-
-            apiUpdateSipil(dataDetail)
-        }
-        val item = listOf("Masih", "Tidak")
-        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
-        spinner_status_operator_sipil_edit.setAdapter(adapter)
-        spinner_status_operator_sipil_edit.setOnItemClickListener { parent, view, position, id ->
-            when (position) {
-                0 -> isAktif = 1
-                1 -> isAktif = 0
-            }
-        }
-
     }
 
-    private fun apiUpdateSipil(sipil: HakAksesSipil?) {
-        NetworkConfig().getService().updSipilOperator(
+    private fun apiUpdateSipil(sipil: UserResp?) {
+       NetworkConfig().getServUser().updSipilOperator(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sipil?.id.toString(),
             sipilOperatorReq
-        ).enqueue(object : Callback<Base1Resp<HakAksesSipil>> {
-            override fun onFailure(call: Call<Base1Resp<HakAksesSipil>>, t: Throwable) {
+        ).enqueue(object : Callback<Base1Resp<UserResp>> {
+            override fun onFailure(call: Call<Base1Resp<UserResp>>, t: Throwable) {
                 btn_save_operator_sipil_edit.hideProgress("Gagal Simpan")
             }
 
             override fun onResponse(
-                call: Call<Base1Resp<HakAksesSipil>>,
-                response: Response<Base1Resp<HakAksesSipil>>
+                call: Call<Base1Resp<UserResp>>,
+                response: Response<Base1Resp<UserResp>>
             ) {
-                if (response.isSuccessful) {
+                if (response.body()?.message == "Data sipil operator updated succesfully") {
                     btn_save_operator_sipil_edit.hideProgress(R.string.data_updated)
                     btn_save_operator_sipil_edit.showSnackbar(R.string.data_updated) {
                         action(R.string.back) {
@@ -157,16 +159,16 @@ class EditSipilOperatorActivity : BaseActivity() {
         })
     }
 
-    private fun viewEditSipil(dataDetail: HakAksesSipil?) {
+    private fun viewEditSipil(dataDetail: UserResp?) {
 
-        edt_nama_operator_sipil_edit.setText(dataDetail?.operator_sipil?.nama)
-        edt_alamat_operator_sipil_edit.setText(dataDetail?.operator_sipil?.alamat)
-        txt_satker_sipil_oper_edit.visible()
-        txt_satker_sipil_oper_edit.text = dataDetail?.satuan_kerja?.kesatuan
-        idSatker = dataDetail?.satuan_kerja?.id
+        edt_nama_operator_sipil_edit.setText(dataDetail?.nama)
+//        edt_alamat_operator_sipil_edit.setText(dataDetail?.operator_sipil?.alamat)
+//        txt_satker_sipil_oper_edit.visible()
+//        txt_satker_sipil_oper_edit.text = dataDetail?.satuan_kerja?.kesatuan
+//        idSatker = dataDetail?.satuan_kerja?.id
 
-        edt_password_operator_sipil_edit
-        edt_repassword_operator_sipil_edit
+//        edt_password_operator_sipil_edit
+//        edt_repassword_operator_sipil_edit
         if (dataDetail?.is_aktif == 1) {
             spinner_status_operator_sipil_edit.setText("Masih")
             isAktif = 1

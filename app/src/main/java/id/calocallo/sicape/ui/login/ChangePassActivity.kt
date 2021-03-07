@@ -35,14 +35,9 @@ class ChangePassActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         supportActionBar?.title = "Ubah Password"
         val userSipil = sessionManager1.fetchUserSipil()
-        val userPersonel = sessionManager1.fetchUserPersonel()
-        if (userSipil?.id == null || userSipil.id == 0) {
-            txt_nama_change_pass.text = "Nama : ${userPersonel?.personel?.nama}"
-            txt_user_nrp_change_pass.text = "NRP : ${userPersonel?.personel?.nrp}"
-        } else {
-            txt_nama_change_pass.text = "Nama : ${userSipil.operator_sipil?.nama}"
-            txt_user_nrp_change_pass.text = "Username : ${userSipil.operator_sipil?.username}"
-        }
+        val userPersonel = sessionManager1.fetchUser()
+        txt_nama_change_pass.text = "Nama : ${userPersonel?.nama}"
+        txt_user_nrp_change_pass.text = "NRP : ${userPersonel?.username}"
         sheenValidator = SheenValidator(this)
         sheenValidator.registerHasMinLength(edt_password_change_pass, 6)
         sheenValidator.registerHasMinLength(edt_repassword_change_pass, 6)
@@ -61,9 +56,8 @@ class ChangePassActivity : BaseActivity() {
                 changePassReq.password_confirmation = edt_repassword_change_pass.text.toString()
 
 
-                NetworkConfig().getService().changePassword(
-                    "Bearer ${sessionManager1.fetchAuthToken()}",
-                    changePassReq
+                NetworkConfig().getServUser().changePassword(
+                    "Bearer ${sessionManager1.fetchAuthToken()}", changePassReq
                 ).enqueue(object : Callback<BaseResp> {
                     override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                         btn_save_change_pass.hideProgress("Gagal Ubah Password")
@@ -76,9 +70,12 @@ class ChangePassActivity : BaseActivity() {
                             sessionManager1.clearUser()
                             btn_save_change_pass.showSnackbar(R.string.success_change_pass) {
                                 action(R.string.back) {
-                                    startActivity(
-                                        Intent(this@ChangePassActivity, KatUserActivity::class.java)
+                                    val intent = Intent(
+                                        this@ChangePassActivity, KatUserActivity::class.java
                                     )
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    startActivity(intent)
+                                    finish()
                                 }
                             }
                         } else {

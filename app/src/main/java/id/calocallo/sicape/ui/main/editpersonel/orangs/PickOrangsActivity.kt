@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.OrangsResp
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.utils.SessionManager1
@@ -78,7 +77,7 @@ class PickOrangsActivity : BaseActivity() {
     private fun getOrangs(menu: String?) {
         rl_pb.visible()
         rv_orangs.gone()
-        NetworkConfig().getService().showOrangs(
+        NetworkConfig().getServPers().showOrangs(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString(),
             menu.toString()

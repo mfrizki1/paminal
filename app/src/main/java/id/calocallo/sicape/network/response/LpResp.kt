@@ -12,7 +12,7 @@ data class LpResp(
     var id_personel_terlapor: Int?,
     var id_pelanggaran: Int?,
     var alatBukti : String?,
-    var listPasal: ArrayList<LpPasalResp>?,
+    var listPasalDilanggar: ArrayList<PasalDilanggarResp>?,
     var listSaksi: ArrayList<LpSaksiResp>?,
     var keterangan: String?,
     var created_at:String?,

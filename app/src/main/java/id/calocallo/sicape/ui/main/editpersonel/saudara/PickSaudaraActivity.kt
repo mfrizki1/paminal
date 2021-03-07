@@ -54,7 +54,7 @@ class PickSaudaraActivity : BaseActivity() {
 
     private fun getSaudara() {
         rl_pb.visible()
-        NetworkConfig().getService().showSaudara(
+        NetworkConfig().getServPers().showSaudara(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<SaudaraResp>> {

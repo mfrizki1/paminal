@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.AlamatReq
@@ -57,7 +56,7 @@ class AddSingleAlamatActivity : BaseActivity() {
                 progressColor = Color.WHITE
             }
 
-            NetworkConfig().getService().addAlamatSingle(
+            NetworkConfig().getServPers().addAlamatSingle(
                 "Bearer ${sessionManager1.fetchAuthToken()}",
 //                "4",
                 sessionManager1.fetchID().toString(),

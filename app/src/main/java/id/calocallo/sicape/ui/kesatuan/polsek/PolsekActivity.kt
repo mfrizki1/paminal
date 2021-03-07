@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.SatKerResp
@@ -60,7 +59,7 @@ class PolsekActivity : BaseActivity() {
 
     private fun getListPolsek() {
         rl_pb.visible()
-        NetworkConfig().getService().showPolsek("Bearer ${sessionManager1.fetchAuthToken()}")
+        NetworkConfig().getServPers().showPolsek("Bearer ${sessionManager1.fetchAuthToken()}")
             .enqueue(object : Callback<ArrayList<SatKerResp>> {
                 override fun onFailure(call: Call<ArrayList<SatKerResp>>, t: Throwable) {
                     rl_no_data.visible()

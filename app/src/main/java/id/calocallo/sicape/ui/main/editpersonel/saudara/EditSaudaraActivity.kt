@@ -62,7 +62,7 @@ class EditSaudaraActivity : BaseActivity() {
     }
 
     private fun apiDetailSaudara(saudara: SaudaraResp?) {
-        NetworkConfig().getService()
+        NetworkConfig().getServPers()
             .getDetailSaudara("Bearer ${sessionManager1.fetchAuthToken()}", saudara?.id.toString()).enqueue(object :Callback<SaudaraResp>{
                 override fun onFailure(call: Call<SaudaraResp>, t: Throwable) {
                     Toast.makeText(this@EditSaudaraActivity, "Error Koneksi", Toast.LENGTH_SHORT)
@@ -144,7 +144,7 @@ class EditSaudaraActivity : BaseActivity() {
             progressColor = Color.WHITE
         }
 
-        NetworkConfig().getService().updateSaudaraSingle(
+        NetworkConfig().getServPers().updateSaudaraSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             saudara?.id.toString(),
             saudaraReq
@@ -175,7 +175,7 @@ class EditSaudaraActivity : BaseActivity() {
     }
 
     private fun doDeleteSaudara(saudara: SaudaraResp?) {
-        NetworkConfig().getService().deleteSaudara(
+        NetworkConfig().getServPers().deleteSaudara(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             saudara?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

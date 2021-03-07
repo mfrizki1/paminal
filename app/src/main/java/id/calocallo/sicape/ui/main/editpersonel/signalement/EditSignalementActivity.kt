@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.model.SignalementModel
 import id.calocallo.sicape.network.NetworkConfig
@@ -38,7 +37,7 @@ class EditSignalementActivity : BaseActivity() {
             btn_save_signalement_edit.gone()
         }
 //        getSignalement()
-        personel?.signalement?.let { viewSignalement(it) }
+        personel?.let { viewSignalement(it) }
         btn_save_signalement_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_signalement_edit)
         btn_save_signalement_edit.setOnClickListener {
@@ -67,7 +66,7 @@ class EditSignalementActivity : BaseActivity() {
         signalementModel.keluarga_dekat = edt_keluarga_dekat_edit.text.toString()
         signalementModel.lain_lain = edt_lainnya_edit.text.toString()
 
-        NetworkConfig().getService().updateSignalement(
+        NetworkConfig().getServPers().updateSignalement(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString(),
             signalementModel
@@ -99,7 +98,7 @@ class EditSignalementActivity : BaseActivity() {
     }
 
     private fun getSignalement() {
-        NetworkConfig().getService().getSignalement(
+        NetworkConfig().getServPers().getSignalement(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<SignalementModel> {
@@ -117,7 +116,7 @@ class EditSignalementActivity : BaseActivity() {
             ) {
                 if (response.isSuccessful) {
                     if (!response.body()!!.tinggi.toString().isNullOrEmpty()) {
-                        viewSignalement(response.body()!!)
+//                        viewSignalement(response.body()!!)
                     }
                 } else {
                     Toast.makeText(this@EditSignalementActivity, R.string.error, Toast.LENGTH_SHORT)
@@ -127,7 +126,7 @@ class EditSignalementActivity : BaseActivity() {
         })
     }
 
-    private fun viewSignalement(body: SignalementModel) {
+    private fun viewSignalement(body: AllPersonelModel1) {
         edt_tinggi_edit.setText(body.tinggi.toString())
         edt_rambut_edit.setText(body.rambut)
         edt_muka_edit.setText(body.muka)

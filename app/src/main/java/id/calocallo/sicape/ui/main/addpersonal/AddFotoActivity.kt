@@ -15,7 +15,6 @@ import id.calocallo.sicape.network.response.FotoResp
 import id.calocallo.sicape.utils.IntentUtil
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.setFromUrl
 import id.calocallo.sicape.utils.ext.setLocalImage
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -131,7 +130,7 @@ class AddFotoActivity : BaseActivity() {
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mDepanFile!!.name, requestBody)
 //                    img_foto_depan.setLocalImage(file, false)
-                    NetworkConfig().getService().uploadMuka(
+                    NetworkConfig().getServPers().uploadMuka(
                         "Bearer ${sessionManager1.fetchAuthToken()}",
                         filePart
                     ).enqueue(object : Callback<Base1Resp<ArrayList<FotoResp>>> {
@@ -183,7 +182,7 @@ class AddFotoActivity : BaseActivity() {
                     val requestBody = RequestBody.create(MediaType.parse("*/*"), mKananFile)
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mKananFile!!.name, requestBody)
-                    NetworkConfig().getService().uploadKanan(
+                    NetworkConfig().getServPers().uploadKanan(
                         "Bearer ${sessionManager1.fetchAuthToken()}",
                         filePart
                     ).enqueue(object : Callback<Base1Resp<ArrayList<FotoResp>>> {
@@ -234,7 +233,7 @@ class AddFotoActivity : BaseActivity() {
                     val requestBody = RequestBody.create(MediaType.parse("*/*"), mKiriFile)
                     val filePart =
                         MultipartBody.Part.createFormData("foto", mKiriFile!!.name, requestBody)
-                    NetworkConfig().getService().uploadKiri(
+                    NetworkConfig().getServPers().uploadKiri(
                         "Bearer ${sessionManager1.fetchAuthToken()}",
                         filePart
                     ).enqueue(object : Callback<Base1Resp<ArrayList<FotoResp>>> {

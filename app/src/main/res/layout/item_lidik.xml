@@ -23,7 +23,7 @@
         android:id="@+id/txt_pangkat_nrp_lidik"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_half"
+        android:layout_marginTop="8dp"
         android:text="PANGKAT: BRIPTU NRP: "
         android:textSize="@dimen/text_14"
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
@@ -31,15 +31,37 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_nama_lidik" />
 
     <TextView
+        android:id="@+id/txt_jabatan_lidik"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="JABATAN"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/txt_nama_lidik"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pangkat_nrp_lidik" />
+
+    <TextView
+        android:id="@+id/txt_kesatuan_lidik"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/kesatuan"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/txt_nama_lidik"
+        app:layout_constraintTop_toBottomOf="@+id/txt_jabatan_lidik" />
+
+    <TextView
         android:id="@+id/ttx_status_lidik"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_half"
+        android:layout_marginTop="8dp"
         android:text="Status : Ketua Tim"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="@+id/txt_pangkat_nrp_lidik"
-        app:layout_constraintTop_toBottomOf="@+id/txt_pangkat_nrp_lidik" />
+        app:layout_constraintStart_toStartOf="@+id/txt_kesatuan_lidik"
+        app:layout_constraintTop_toBottomOf="@+id/txt_kesatuan_lidik" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -50,17 +72,16 @@
         android:layout_marginVertical="@dimen/space_8dp"
         android:layout_marginEnd="4dp"
         android:src="@drawable/ic_go"
-        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="@color/gainsboro"
-        app:layout_constraintTop_toBottomOf="@+id/ttx_status_lidik">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ttx_status_lidik" />
 
-    </View>
 </androidx.constraintlayout.widget.ConstraintLayout>

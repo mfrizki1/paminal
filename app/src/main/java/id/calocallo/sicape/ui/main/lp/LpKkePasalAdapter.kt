@@ -28,7 +28,7 @@ class LpKkePasalAdapter(
     }
 
     override fun onBindViewHolder(holder: LpKkePasalHolder, position: Int) {
-        holder.txtItem1.text = pasalKkeItem.pasal_dilanggar!![position].nama_pasal
+        holder.txtItem1.text = pasalKkeItem.pasal_dilanggar!![position].pasal?.nama_pasal
 
     }
 }

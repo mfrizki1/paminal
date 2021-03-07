@@ -92,6 +92,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="80dp"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:hint="Tempat Penyelidikan">
@@ -155,7 +156,7 @@
                     android:id="@+id/edt_keterangan_ahli_lhp_edit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text|textCapSentences" />
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -327,7 +328,7 @@
                         android:id="@+id/edt_kota_buat_edit_lhp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text" />
+                        android:inputType="textCapCharacters" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

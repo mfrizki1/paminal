@@ -53,8 +53,8 @@ class AddCatPersActivity : BaseActivity() {
 
     private fun doSavePersonel() {
 //        allPersonelModel.personel = sessionManager1.getPersonel()
-        allPersonelModel.signalement = sessionManager1.getSignalement()
-        allPersonelModel.foto = sessionManager1.getIdFoto()
+//        allPersonelModel.signalement = sessionManager1.getSignalement()
+//        allPersonelModel.foto = sessionManager1.getIdFoto()
         allPersonelModel.relasi = sessionManager1.getRelasi()
         allPersonelModel.pernah_dihukum = sessionManager1.getHukuman()
 //        allPersonelModel.catatan_personel= sessionManager1.getCatpers()
@@ -83,7 +83,7 @@ class AddCatPersActivity : BaseActivity() {
         allPersonelModel.media_disenangi= sessionManager1.getMediaInfo()
         allPersonelModel.media_sosial= sessionManager1.getMedsos()
 
-        NetworkConfig().getService().addAllPersonel(
+        NetworkConfig().getServPers().addAllPersonel(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             allPersonelModel
         ).enqueue(object: Callback<Base1Resp<AddPersonelResp>> {

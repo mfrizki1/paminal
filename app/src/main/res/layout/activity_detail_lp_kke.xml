@@ -259,6 +259,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_half"
+            android:visibility="gone"
             android:text="Kesatuan : "
             android:textSize="@dimen/text_16" />
 
@@ -276,7 +277,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.Button"
-            android:text="Edit Data Pasal"/>
+            android:text="Edit Data Pasal Yang Dilanggar"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_saksi_kke"
             android:layout_width="match_parent"
@@ -289,6 +290,12 @@
             android:layout_height="wrap_content"
             style="@style/Widget.Button"
             android:text="@string/generate_dokumen"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_lihat_dok_kke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Button"
+            android:text="Lihat Dokumen"/>
     </LinearLayout>
 
 

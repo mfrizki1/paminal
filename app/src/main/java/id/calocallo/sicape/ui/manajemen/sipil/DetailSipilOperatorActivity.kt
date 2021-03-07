@@ -12,8 +12,7 @@ import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.network.response.HakAksesSipil
-import id.calocallo.sicape.network.response.UserCreatorResp
+import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -31,45 +30,45 @@ class DetailSipilOperatorActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
         supportActionBar?.title = "Detail Data Operator Sipil"
-        val dataSipil = intent.extras?.getParcelable<HakAksesSipil>("acc")
+        val dataSipil = intent.extras?.getParcelable<UserResp>("acc")
         getDetailSipil(dataSipil)
     }
 
-    private fun getDetailSipil(dataSipil: HakAksesSipil?) {
-        NetworkConfig().getService().getDetailSipilOperator(
-            "Bearer ${sessionManager1.fetchAuthToken()}",
-            dataSipil?.id.toString()
-        ).enqueue(object : Callback<HakAksesSipil> {
-            override fun onFailure(call: Call<HakAksesSipil>, t: Throwable) {
-                Toast.makeText(
-                    this@DetailSipilOperatorActivity,
-                    "Error Koneksi",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+    private fun getDetailSipil(dataSipil: UserResp?) {
+        NetworkConfig().getServUser().getDetailSipilOperator(
+               "Bearer ${sessionManager1.fetchAuthToken()}",
+               dataSipil?.id.toString()
+           ).enqueue(object : Callback<UserResp> {
+               override fun onFailure(call: Call<UserResp>, t: Throwable) {
+                   Toast.makeText(
+                       this@DetailSipilOperatorActivity,
+                       "Error Koneksi",
+                       Toast.LENGTH_SHORT
+                   ).show()
+               }
 
-            override fun onResponse(call: Call<HakAksesSipil>, response: Response<HakAksesSipil>) {
-                if (response.isSuccessful) {
-                    viewDetailSipil(response.body())
-                } else {
-                    Toast.makeText(
-                        this@DetailSipilOperatorActivity,
-                        "Error Koneksi",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        })
+               override fun onResponse(call: Call<UserResp>, response: Response<UserResp>) {
+                   if (response.isSuccessful) {
+                       viewDetailSipil(response.body())
+                   } else {
+                       Toast.makeText(
+                           this@DetailSipilOperatorActivity,
+                           "Error Koneksi",
+                           Toast.LENGTH_SHORT
+                       ).show()
+                   }
+               }
+           })
     }
 
-    private fun viewDetailSipil(data: HakAksesSipil?) {
-        txt_nama_sipil_operator_detail.text = data?.operator_sipil?.nama
-        txt_alamat_sipil_operator_detail.text = data?.operator_sipil?.alamat
-        txt_username_sipil_operator_detail.text = data?.operator_sipil?.username
+    private fun viewDetailSipil(data: UserResp?) {
+        txt_nama_sipil_operator_detail.text = data?.nama
+//        txt_alamat_sipil_operator_detail.text = data??.alamat
+        txt_username_sipil_operator_detail.text = data?.username
         btn_copy_username_detail.setOnClickListener {
             copyTextToClipboard(txt_username_sipil_operator_detail)
         }
-        txt_bekerja_sipil_operator_detail.text = data?.satuan_kerja?.kesatuan
+//        txt_bekerja_sipil_operator_detail.text = data?.satuan_kerja?.kesatuan
         if (data?.is_aktif == 1) {
             txt_status_aktif_operator_detail.text = "Aktif"
         } else {
@@ -119,10 +118,13 @@ class DetailSipilOperatorActivity : BaseActivity() {
     }
 
     private fun ApiDelete() {
-        val sipilOper = intent.extras?.getParcelable<HakAksesSipil>("acc")
+        val sipilOper = intent.extras?.getParcelable<UserResp>("acc")
 
-        NetworkConfig().getService()
-            .delSipilOperator("Bearer ${sessionManager1.fetchAuthToken()}", sipilOper?.id.toString())
+        NetworkConfig().getServUser()
+            .delSipilOperator(
+                "Bearer ${sessionManager1.fetchAuthToken()}",
+                sipilOper?.id.toString()
+            )
             .enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     Toast.makeText(
@@ -133,7 +135,7 @@ class DetailSipilOperatorActivity : BaseActivity() {
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                    if (response.isSuccessful) {
+                    if (response.body()?.message == "Data sipil operator removed succesfully") {
                         Toast.makeText(
                             this@DetailSipilOperatorActivity,
                             R.string.data_deleted,
@@ -153,7 +155,7 @@ class DetailSipilOperatorActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val dataSipil = intent.extras?.getParcelable<HakAksesSipil>("acc")
+        val dataSipil = intent.extras?.getParcelable<UserResp>("acc")
         getDetailSipil(dataSipil)
     }
 }

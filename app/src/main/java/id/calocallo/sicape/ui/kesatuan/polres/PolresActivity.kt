@@ -11,7 +11,6 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity
-import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity.Companion.RES_POLRES
 import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.ui.main.personel.PersonelActivity
@@ -102,7 +101,7 @@ class PolresActivity : BaseActivity() {
 
     private fun getListPolres() {
         rl_pb.visible()
-        NetworkConfig().getService().showPolres("Bearer ${sessionManager1.fetchAuthToken()}").
+        NetworkConfig().getServPers().showPolres("Bearer ${sessionManager1.fetchAuthToken()}").
         enqueue(object : Callback<ArrayList<SatKerResp>> {
             override fun onFailure(call: Call<ArrayList<SatKerResp>>, t: Throwable) {
                 rl_pb.gone()

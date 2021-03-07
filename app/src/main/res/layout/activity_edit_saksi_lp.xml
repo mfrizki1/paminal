@@ -71,7 +71,7 @@
                     android:id="@+id/edt_tanggal_lahir_saksi_edit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="number"
+                    android:inputType="date"
                     android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -72,7 +72,7 @@ class EditPekerjaanLuarFragment : Fragment() {
     }
 
     private fun apiDetail(pekerjaan: PekerjaanLuarResp?) {
-        NetworkConfig().getService().getDetailPekerjaanLuar("Bearer ${sessionManager1.fetchAuthToken()}",
+        NetworkConfig().getServPers().getDetailPekerjaanLuar("Bearer ${sessionManager1.fetchAuthToken()}",
         pekerjaan?.id.toString()).enqueue(object :Callback<DetailPekerjaanLuar>{
             override fun onFailure(call: Call<DetailPekerjaanLuar>, t: Throwable) {
                 Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
@@ -86,7 +86,11 @@ class EditPekerjaanLuarFragment : Fragment() {
                     val data  =response.body()
                     edt_nama_pekerjaan_luar_edit.setText(data?.pekerjaan)
                     edt_thn_awal_pekerjaan_luar_edit.setText(data?.tahun_awal.toString())
-                    edt_thn_akhir_pekerjaan_luar_edit.setText(data?.tahun_akhir.toString())
+                    if(data?.tahun_akhir == null){
+                        edt_thn_akhir_pekerjaan_luar_edit.setText("")
+                    }else{
+                        edt_thn_akhir_pekerjaan_luar_edit.setText(data?.tahun_akhir.toString())
+                    }
                     edt_instansi_pekerjaan_luar_edit.setText(data?.instansi)
                     edt_rangka_pekerjaan_luar_edit.setText(data?.dalam_rangka)
                     edt_ket_pekerjaan_luar_edit.setText(data?.keterangan)
@@ -100,7 +104,7 @@ class EditPekerjaanLuarFragment : Fragment() {
     }
 
     private fun doDeletePekerjaan(pekerjaan: PekerjaanLuarResp?) {
-        NetworkConfig().getService().deletePekerjaanLuar(
+        NetworkConfig().getServPers().deletePekerjaanLuar(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
@@ -139,7 +143,7 @@ class EditPekerjaanLuarFragment : Fragment() {
             progressColor = Color.WHITE
         }
 
-        NetworkConfig().getService().updatePekerjaanLuar(
+        NetworkConfig().getServPers().updatePekerjaanLuar(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             pekerjaan?.id.toString(),
             pekerjaanLuarReq

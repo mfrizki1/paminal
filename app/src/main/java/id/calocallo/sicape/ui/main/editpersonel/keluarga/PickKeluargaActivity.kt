@@ -48,7 +48,7 @@ class PickKeluargaActivity : BaseActivity() {
 
     private fun getListKeluarga(personel: AllPersonelModel1?) {
         rl_pb.visible()
-        NetworkConfig().getService().showKeluarga(
+        NetworkConfig().getServPers().showKeluarga(
             "Bearer ${sessionManager1.fetchAuthToken()}", personel?.id.toString()
         ).enqueue(object : Callback<ArrayList<KeluargaMinResp>> {
             override fun onFailure(call: Call<ArrayList<KeluargaMinResp>>, t: Throwable) {
@@ -100,7 +100,7 @@ class PickKeluargaActivity : BaseActivity() {
             }
 
         }
-        list?.let {
+        list?.let { it ->
             sortKeluarga(it).let {
                 adapterKeluarga.adapterCallback(callbackKeluarga)
                     .addData(it).setLayout(R.layout.item_2_text)

@@ -4,43 +4,38 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
 import id.calocallo.sicape.network.response.LpCustomResp
-import id.calocallo.sicape.network.response.LpDisiplinResp
-import id.calocallo.sicape.network.response.LpKkeResp
-import id.calocallo.sicape.network.response.LpPidanaResp
-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP
-import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity.Companion.LIST_KET_TERLAPOR
+import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.ui.main.lhp.add.ReferensiPenyelidikanLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity
+import id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.ListDetailRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_choose_lp.*
+import kotlinx.android.synthetic.main.activity_pick_jenis_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
-class ChooseLpActivity : BaseActivity() {
-    private var sktt :String? = null
-    private var refLp = RefPenyelidikanReq()
+class PickJenisLpActivity : BaseActivity() {
+    private var sktt: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_choose_lp)
+        setContentView(R.layout.activity_pick_jenis_lp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Jenis Laporan Polisi"
 
         /*get value from sktt*/
-        sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)
+//        sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)/**/
         /*set jika ad ket terlapor dari activity ListKetTerlaporLhpActivity*/
         btn_lp_pidana_choose.setOnClickListener {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Pidana")
-            if (sktt != null) {
+
+            /*if (sktt != null) {
                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
-            }
-            startActivityForResult(intent, REQ_LP)
+            }*//**/
+
+            startActivityForResult(intent, REQ_LP_CHOOSE)
         }
 
         btn_lp_kkep_choose.setOnClickListener {
@@ -49,7 +44,7 @@ class ChooseLpActivity : BaseActivity() {
             if (sktt != null) {
                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
             }
-            startActivityForResult(intent, REQ_LP)
+            startActivityForResult(intent, REQ_LP_CHOOSE)
 
         }
         btn_lp_disiplin_choose.setOnClickListener {
@@ -58,18 +53,17 @@ class ChooseLpActivity : BaseActivity() {
             if (sktt != null) {
                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
             }
-            startActivityForResult(intent, REQ_LP)
+            startActivityForResult(intent, REQ_LP_CHOOSE)
 
         }
+
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val noLp: String
-        val intentLP = Intent()
-        if (requestCode == REQ_LP) {
-            if(sktt == null) {
+        if (requestCode == REQ_LP_CHOOSE) {
+            if (sktt == null) {
                 when (resultCode) {
                     /*
                 999 -> {
@@ -110,26 +104,25 @@ class ChooseLpActivity : BaseActivity() {
                 }
                  */
                     RES_LP_CHOOSE -> {
-                        val lpAll = data?.getParcelableExtra<LpCustomResp>(DATA_LP)
+                        val lpAll = data?.getParcelableExtra<LpMinResp>(GET_LP_CHOOSE)
+                        Log.e("lpAll", "$lpAll")
                         val intent = Intent()
 
-                        refLp.id_lp = lpAll?.id
-                        refLp.no_lp = lpAll?.no_lp
                         intent.putExtra(
-                            ReferensiPenyelidikanLhpActivity.GET_LP_FROM_CHOOSE_LP,
-                            refLp
+                            AddRefPenyelidikActivity.GET_LP_FROM_CHOOSE_LP,
+                            lpAll
                         )
-                        setResult(Activity.RESULT_OK, intent)
+                        setResult(AddRefPenyelidikActivity.RES_LP_ON_REF, intent)
                         finish()
                     }
                 }
-            }else{
-                when(resultCode){
-                    RES_LP_CHOOSE->{
+            } else {
+                when (resultCode) {
+                    RES_LP_CHOOSE -> {
                         val lpAll = data?.getParcelableExtra<LpCustomResp>(GET_LP_WITHOUT_SKTBB_DLL)
 //                        Log.e("lpall","$lpAll")
                         val intent = Intent()
-                        intent.putExtra(AddSkttActivity.GET_LP_ON_SKTT,lpAll)
+                        intent.putExtra(AddSkttActivity.GET_LP_ON_SKTT, lpAll)
                         setResult(Activity.RESULT_OK, intent)
                         finish()
                     }
@@ -142,7 +135,9 @@ class ChooseLpActivity : BaseActivity() {
 
     companion object {
         const val NO_LP = "NO_LP"
+        const val REQ_LP_CHOOSE = 123
         const val RES_LP_CHOOSE = 1
+        const val GET_LP_CHOOSE = "GET_LP_CHOOS"
         const val GET_LP_WITHOUT_SKTBB_DLL = "GET_LP_WITHOUT_SKTBB_DLL"
     }
 }

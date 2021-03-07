@@ -24,7 +24,7 @@ class ListLpSkhdActivity : BaseActivity() {
     private var personelTerLapor = PersonelLapor()
     private var personelPeLapor = PersonelLapor()
     private var satKerResp = SatKerResp()
-    private var listPasal = arrayListOf<LpPasalResp>()
+    private var listPasal = arrayListOf<PasalDilanggarResp>()
     private var listSaksi = arrayListOf<LpSaksiResp>()
 
     private var adapterLpPidanaChoose = ReusableAdapter<LpPidanaResp>(this)
@@ -45,11 +45,11 @@ class ListLpSkhdActivity : BaseActivity() {
         when (jenisLPFromSkhd) {
             "pidana" -> {
                 supportActionBar?.title = "Data Laporan Polisi Pidana"
-                getPidana(idLhp)
+//                getPidana(idLhp)
             }
             "disiplin" -> {
                 supportActionBar?.title = "Data Laporan Polisi Disiplin"
-                getDisiplin(idLhp)
+//                getDisiplin(idLhp)
             }
         }
 
@@ -68,17 +68,17 @@ class ListLpSkhdActivity : BaseActivity() {
                 "laki_laki",
                 "Batola", "12-01-2000", "081212"
             )
-        listPasal.add(LpPasalResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
-        listPasal.add(LpPasalResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
-        listPasal.add(LpPasalResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
+ /*       listPasal.add(PasalDilanggarResp(1, "Pasal 1", "LOREM IPSUM DOLOR", "", "", ""))
+        listPasal.add(PasalDilanggarResp(2, "Pasal 2", "LOREM IPSUM DOLOR", "", "", ""))
+        listPasal.add(PasalDilanggarResp(3, "Pasal 3", "LOREM IPSUM DOLOR", "", "", ""))
         listSaksi.add(LpSaksiResp(1, "Galuh", "korban", "", "", "", 1, "", "", ""))
         listSaksi.add(LpSaksiResp(2, "Akbar", "saksi", "", "", "", 0, "", "", ""))
         listSaksi.add(LpSaksiResp(3, "Wahyu", "saksi", "", "", "", 0, "", "", ""))
-
+*/
 
     }
 
-    private fun getPidana(idLhp: Int?) {
+    /*private fun getPidana(idLhp: Int?) {
         listPidanaLP.add(
             LpPidanaResp(
                 1,
@@ -158,9 +158,9 @@ class ListLpSkhdActivity : BaseActivity() {
         adapterLpPidanaChoose.adapterCallback(callbackLpPidanaChoose)
             .isVerticalView().addData(listPidanaLP)
             .setLayout(R.layout.layout_1_text_clickable).build(rv_choose_lp_skhd)
-    }
+    }*/
 
-    private fun getDisiplin(idLhp: Int?) {
+   /* private fun getDisiplin(idLhp: Int?) {
         listDisiplinLP.add(
             LpDisiplinResp(
                 1, "LP/DISIPLIN1",
@@ -188,7 +188,7 @@ class ListLpSkhdActivity : BaseActivity() {
         adapterLpDisiplinChoose.adapterCallback(callbackLpDisiplinChoose)
             .isVerticalView().addData(listDisiplinLP)
             .setLayout(R.layout.layout_1_text_clickable).build(rv_choose_lp_skhd)
-    }
+    }*/
 
     companion object {
         const val PIDANA = "PIDANA"

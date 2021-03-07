@@ -18,6 +18,7 @@ import id.calocallo.sicape.ui.kesatuan.polres.SatPolresActivity
 import id.calocallo.sicape.ui.kesatuan.polsek.PolsekActivity
 import id.calocallo.sicape.ui.kesatuan.polsek.SatPolsekActivity
 import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity
+import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.gone
@@ -37,6 +38,9 @@ class EditOperatorActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var idSatker: Int? = null
     private var isAktif: Int? = null
+    private var idPersonel: Int? = null
+    private var namaPersonel: String? = null
+    private var nrpPersonel: String? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,19 +48,15 @@ class EditOperatorActivity : BaseActivity() {
         setContentView(R.layout.activity_edit_operator)
         sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
-//        val status = intent.extras?.getString("manajemen")
-//        when (status) {
-//            "operator" -> {
         supportActionBar?.title = "Edit Operator"
-        val operator = intent.extras?.getParcelable<HakAksesPersonel1>("operator")
-        Log.e("operator", "$operator")
+
+        val operator = intent.extras?.getParcelable<UserResp>("operator")
         with(operator) {
-            txt_nama_personel_operator_edit.text = "Nama : ${this?.personel?.nama}"
-            txt_pangkat_personel_operator_edit.text =
-                "Pangkat : ${this?.personel?.pangkat.toString().toUpperCase()}"
-            txt_nrp_personel_operator_edit.text = "NRP : ${this?.personel?.nrp}"
-            txt_jabatan_personel_operator_edit.text = "Jabatan : ${this?.personel?.jabatan}"
-//            spinner_kesatuan_operator_edit.setText(this?.satuan_kerja?.kesatuan)
+            namaPersonel = this?.nama
+            nrpPersonel = this?.username
+            idSatker = this?.satuan_kerja?.id
+            txt_nama_personel_operator_edit.text = "Nama : ${this?.nama}"
+            txt_nrp_personel_operator_edit.text = "NRP : ${this?.username}"
             if (this?.is_aktif == 1) {
                 spinner_status_operator_edit.setText("Aktif")
                 isAktif = this?.is_aktif
@@ -66,28 +66,44 @@ class EditOperatorActivity : BaseActivity() {
             }
             txt_satker_polisi_oper_edit.visible()
             txt_satker_polisi_oper_edit.text = this?.satuan_kerja?.kesatuan
-            idSatker = this?.satuan_kerja?.id
+//            idSatker = this?.satuan_kerja?.id
         }
-        /*}
-        "admin" -> {
-            supportActionBar?.title = "Edit Admin"
-            ll_kesatuan_operator_edit.gone()
-            admin = intent.extras?.getParcelable("acc")!!
-            with(admin){
-                txt_nama_personel_operator_edit.text = "Nama : ${personel?.nama}"
-                txt_pangkat_personel_operator_edit.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
-                txt_nrp_personel_operator_edit.text ="NRP : ${personel?.nrp}"
-                txt_jabatan_personel_operator_edit.text = "Jabatan : ${personel?.jabatan}"
-                spinner_kesatuan_operator_edit.setText(personel?.kesatuan)
-                if(is_aktif == 1){
-                    spinner_status_operator_edit.setText("Aktif")
-                }else{
-                    spinner_status_operator_edit.setText("Tidak")
-                }
+
+        changeButton()
+
+        val item = listOf("Aktif", "Tidak")
+        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
+        spinner_status_operator_edit.setAdapter(adapter)
+        spinner_status_operator_edit.setOnItemClickListener { parent, view, position, id ->
+            when (position) {
+                0 -> isAktif = 1
+                1 -> isAktif = 0
             }
-        }*/
+        }
+
+        btn_choose_personel_operator_edit.setOnClickListener {
+            val intent = Intent(this, KatPersonelActivity::class.java)
+            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
+            startActivityForResult(intent, AddOperatorActivity.REQ_PERSONEL_OPERATOR)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
 
 
+        btn_save_operator_edit.setOnClickListener {
+            personelOperatorReq.nama = namaPersonel
+            personelOperatorReq.username = nrpPersonel
+            personelOperatorReq.id_satuan_kerja = idSatker
+            personelOperatorReq.is_aktif = isAktif
+            personelOperatorReq.password = edt_password_new_operator_edit.text.toString()
+            personelOperatorReq.password_confirmation =
+                edt_password_renew_operator_edit.text.toString()
+            Log.e("personelReq", "$personelOperatorReq")
+
+            apiUpdateOperator(operator)
+        }
+    }
+
+    private fun changeButton() {
         btn_personel_edit_polda_polisi_oper.setOnClickListener {
             btn_personel_edit_polda_polisi_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
             btn_personel_edit_polda_polisi_oper.setTextColor(resources.getColor(R.color.white))
@@ -137,65 +153,43 @@ class EditOperatorActivity : BaseActivity() {
             txt_satker_polisi_oper_edit.gone()
             txt_satker_polisi_oper_edit.text = ""
         }
+    }
 
-        btn_choose_personel_operator_edit
-        txt_nama_personel_operator_edit
-        txt_pangkat_personel_operator_edit
-        txt_nrp_personel_operator_edit
-        txt_jabatan_personel_operator_edit
-        ll_kesatuan_operator_edit
+    private fun apiUpdateOperator(operator: UserResp?) {
+        operator?.id?.let {
+            NetworkConfig().getServUser().updPersOperator(
+                "Bearer ${sessionManager1.fetchAuthToken()}", it, personelOperatorReq
+            ).enqueue(object : Callback<Base1Resp<PersonelModelMax2>> {
+                override fun onFailure(call: Call<Base1Resp<PersonelModelMax2>>, t: Throwable) {
+                    Toast.makeText(this@EditOperatorActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                        .show()
+                }
 
-        edt_password_new_operator_edit
-
-        edt_password_renew_operator_edit
-        val item = listOf("Aktif", "Tidak")
-        val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
-        spinner_status_operator_edit.setAdapter(adapter)
-        spinner_status_operator_edit.setOnItemClickListener { parent, view, position, id ->
-            when (position) {
-                0 -> isAktif = 1
-                1 -> isAktif = 0
-            }
-        }
-        btn_save_operator_edit.setOnClickListener {
-            personelOperatorReq.id_satuan_kerja = idSatker
-            personelOperatorReq.is_aktif = isAktif
-            personelOperatorReq.password = edt_password_new_operator_edit.text.toString()
-            personelOperatorReq.password_confirmation =
-                edt_password_renew_operator_edit.text.toString()
-            Log.e("personelReq", "$personelOperatorReq")
-
-            apiUpdateOperator(operator)
+                override fun onResponse(
+                    call: Call<Base1Resp<PersonelModelMax2>>,
+                    response: Response<Base1Resp<PersonelModelMax2>>
+                ) {
+                    if (response.body()?.message == "Data personel operator updated succesfully") {
+                        btn_save_operator_edit.hideProgress(R.string.data_updated)
+                        btn_save_operator_edit.showSnackbar(R.string.data_updated) {
+                            action(R.string.back) {
+                                finish()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@EditOperatorActivity,
+                            "Error Koneksi",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+            })
         }
     }
 
-    private fun apiUpdateOperator(operator: HakAksesPersonel1?) {
-        NetworkConfig().getService().updPersOperator(
-            "Bearer ${sessionManager1.fetchAuthToken()}",
-            operator?.id.toString(), personelOperatorReq
-        ).enqueue(object : Callback<Base1Resp<PersonelModelMax2>> {
-            override fun onFailure(call: Call<Base1Resp<PersonelModelMax2>>, t: Throwable) {
-                Toast.makeText(this@EditOperatorActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(
-                call: Call<Base1Resp<PersonelModelMax2>>,
-                response: Response<Base1Resp<PersonelModelMax2>>
-            ) {
-               if(response.isSuccessful){
-                   btn_save_operator_edit.hideProgress(R.string.data_updated)
-                   btn_save_operator_edit.showSnackbar(R.string.data_updated){
-                       action(R.string.back){
-                           finish()
-                       }
-                   }
-               }else{
-                   Toast.makeText(this@EditOperatorActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
-               }
-            }
-        })
-    }
-
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -257,11 +251,14 @@ class EditOperatorActivity : BaseActivity() {
             AddOperatorActivity.REQ_PERSONEL_OPERATOR -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
-                    txt_nama_personel_operator_add.text = "Nama ${personel?.nama}"
-                    txt_pangkat_personel_operator_add.text =
-                        "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
-                    txt_nrp_personel_operator_add.text = "NRP : ${personel?.nrp}"
-                    txt_jabatan_personel_operator_add.text = "Jabatan : ${personel?.jabatan}"
+                    txt_nama_personel_operator_edit.text = "Nama ${personel?.nama}"
+                    txt_nrp_personel_operator_edit.text = "NRP : ${personel?.nrp}"
+                    idPersonel = personel?.id
+                    namaPersonel = personel?.nama
+                    nrpPersonel = personel?.nrp
+//                    txt_pangkat_personel_operator_add.text =
+//                        "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
+//                    txt_jabatan_personel_operator_add.text = "Jabatan : ${personel?.jabatan}"
 //                    idPersonel = personel?.id
                 }
             }

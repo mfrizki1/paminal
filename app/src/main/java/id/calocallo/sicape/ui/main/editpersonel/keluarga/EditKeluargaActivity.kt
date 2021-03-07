@@ -92,7 +92,7 @@ class EditKeluargaActivity : BaseActivity() {
         btn_delete_keluarga_edit.setOnClickListener {
             alert("Yakin Hapus Data ?") {
                 positiveButton("Iya") {
-                    NetworkConfig().getService().deleteKeluarga(
+                    NetworkConfig().getServPers().deleteKeluarga(
                         "Bearer ${sessionManager1.fetchAuthToken()}",
 //                        sessionManager1.fetchID().toString()
                         keluarga?.id.toString()
@@ -130,12 +130,12 @@ class EditKeluargaActivity : BaseActivity() {
             }.show()
         }
 
-        initSP()
+//        initSP()
     }
 
 
     private fun getKeluarga(keluarga: KeluargaMinResp?) {
-        NetworkConfig().getService().getDetailKeluarga(
+        NetworkConfig().getServPers().getDetailKeluarga(
             "Bearer ${sessionManager1.fetchAuthToken()}",
 //            sessionManager1.fetchID().toString(),
             keluarga?.id.toString()
@@ -250,6 +250,7 @@ class EditKeluargaActivity : BaseActivity() {
         }
         sp_agama_keluarga_edit.setText(status_agama)
 
+        initSP()
 
     }
 
@@ -300,7 +301,7 @@ class EditKeluargaActivity : BaseActivity() {
         keluargaReq.lokasi_kematian = edt_dimana_keluarga_edit.text.toString()
         keluargaReq.sebab_kematian = edt_penyebab_keluarga_edit.text.toString()
 
-        NetworkConfig().getService().addKeluargaSingle(
+        NetworkConfig().getServPers().addKeluargaSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             keluarga?.id.toString(),
             keluargaReq
@@ -378,7 +379,7 @@ class EditKeluargaActivity : BaseActivity() {
         keluargaReq.sebab_kematian = edt_penyebab_keluarga_edit.text.toString()
         Log.e("keluarga", "$keluargaReq")
 
-        NetworkConfig().getService().updateKeluargaSingle(
+        NetworkConfig().getServPers().updateKeluargaSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
 //            sessionManager1.fetchID().toString(),
             keluarga?.id.toString(),

@@ -15,6 +15,7 @@ import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.ID_PELAP
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.SIPIL
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -29,6 +30,9 @@ class AddLpPidanaActivity : BaseActivity() {
     private var idPelapor: Int? = null
     private var agamaSipil: String? = null
     private var namaSipil: String? = null
+    private var tmptSipil: String? = null
+    private var tglSipil: String? = null
+    private var jkSipil: String? = null
     private var pekerjaanSipil: String? = null
     private var alamatSipil: String? = null
     private var notelpSipil: String? = null
@@ -47,6 +51,10 @@ class AddLpPidanaActivity : BaseActivity() {
             "kode_etik" -> supportActionBar?.title = "Tambah Data Laporan Polisi Kode Etik"
             "disiplin" -> supportActionBar?.title = "Tambah Data Laporan Polisi Disiplin"
         }
+
+        txt_title_pembukaan_laporan_pidana_add.gone()
+        txt_layout_pembukaan_laporan_pidana_add.gone()
+
         btn_choose_personel_pelapor_lp_add_pidana.setOnClickListener {
             val intent = Intent(this, KatPersonelActivity::class.java)
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
@@ -60,11 +68,14 @@ class AddLpPidanaActivity : BaseActivity() {
             sessionManager1.setUraianPelanggaranLP(edt_uraian_pelanggaran_pidana.text.toString())
             sipilPelaporReq.nama_sipil = namaSipil
             sipilPelaporReq.agama_sipil = agamaSipil
+            sipilPelaporReq.jenis_kelamin = jkSipil
             sipilPelaporReq.alamat_sipil = alamatSipil
             sipilPelaporReq.kewarganegaraan_sipil = kwgSipil
             sipilPelaporReq.nik_sipil = nikSipil
             sipilPelaporReq.no_telp_sipil = notelpSipil
             sipilPelaporReq.pekerjaan_sipil = pekerjaanSipil
+            sipilPelaporReq.tempat_lahir_pelapor = tmptSipil
+            sipilPelaporReq.tanggal_lahir_pelapor = tglSipil
             val intent = Intent(this, PickPasalActivity::class.java)
             if(idPelapor == null || idPelapor == 0){
                 intent.putExtra(SIPIL, sipilPelaporReq)
@@ -105,75 +116,92 @@ class AddLpPidanaActivity : BaseActivity() {
         val pekerjaanSipilView =
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_pekerjaan_sipil)
         val kwgSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_kwg_sipil)
+        val jkSipilView = sipilAlertDialog.findViewById<AutoCompleteTextView>(R.id.spinner_jk_sipil)
         val alamatSipilView =
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_alamat_sipil)
         val noTelpSipilView =
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_no_telp_sipil)
         val nikSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nik_sipil)
 
+        val tempatLahirSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tempat_lahir_sipil)
+        val tglLahirSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tanggal_lahir_sipil)
+
+
+
+
         val ll = sipilAlertDialog.findViewById<LinearLayout>(R.id.ll_add_sipil)
         val pb = sipilAlertDialog.findViewById<RelativeLayout>(R.id.rl_pb)
 
-        //NetworkConfig().getService().
-        //add Sipil
-        //muncul pb
-        //jika sudah berhasil menambahkan maka muncul id sipil_terlapor dan pb hilang
-        //jika gagal maka logcat error ada error
-
         val agamaItem =
-            listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu")
+            listOf("Islam", "Katolik", "Protestan", "Buddha", "Hindu", "Khonghucu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
         spAgama.setAdapter(adapterAgama)
         spAgama.setOnItemClickListener { parent, view, position, id ->
             when (position) {
                 0 -> {
                     agamaSipil = "islam"
-                    txt_agama_sipil_pidana_lp_add.text = "Islam"
+                    txt_agama_sipil_pidana_lp_add.text = "Agama : Islam"
                 }
                 1 -> {
                     agamaSipil = "katolik"
-                    txt_agama_sipil_pidana_lp_add.text = "Katolik"
+                    txt_agama_sipil_pidana_lp_add.text = "Agama : Katolik"
                 }
                 2 -> {
                     agamaSipil="protestan"
                     sipilPelaporReq.agama_sipil = "protestan"
-                    txt_agama_sipil_pidana_lp_add.text = "Protestan"
+                    txt_agama_sipil_pidana_lp_add.text = "Agama : Protestan"
                 }
                 3 -> {
                     agamaSipil="buddha"
-                    txt_agama_sipil_pidana_lp_add.text = "Buddha"
+                    txt_agama_sipil_pidana_lp_add.text = "Agama : Buddha"
                 }
                 4 -> {
                     agamaSipil="hindu"
-                    txt_agama_sipil_pidana_lp_add.text = "Hindu"
+                    txt_agama_sipil_pidana_lp_add.text = "Agama : Hindu"
                 }
                 5 -> {
                     agamaSipil="konghuchu"
-                    txt_agama_sipil_pidana_lp_add.text = "Konghuchu"
+                    txt_agama_sipil_pidana_lp_add.text = "Agama : Konghuchu"
                 }
             }
         }
+
+        val jkItem = listOf("Laki-Laki", "Perempuan")
+        val adapterJk = ArrayAdapter(this, R.layout.item_spinner, jkItem)
+        jkSipilView.setAdapter(adapterJk)
+        jkSipilView.setOnItemClickListener { parent, view, position, id ->
+            txt_jk_sipil_pidana_lp_add.text ="Jenis Kelamin : ${parent.getItemAtPosition(position).toString()}"
+            when(position){
+                0->jkSipil = "laki_laki"
+                1->jkSipil = "perempuan"
+            }
+        }
+
         materialAlertDialogBuilder.setView(sipilAlertDialog)
             .setTitle("Tambah Data Sipil")
 //            .setMessage("Masukkan Data Sipil")
             .setPositiveButton("Tambah") { dialog, _ ->
                 namaSipil = namaSipilView.text.toString()
-                txt_nama_sipil_pidana_lp_add.text = namaSipilView.text.toString()
+                txt_nama_sipil_pidana_lp_add.text ="Nama : ${namaSipilView.text.toString()}"
+
+                tmptSipil = tempatLahirSipilView.text.toString()
+                tglSipil = tglLahirSipilView.text.toString()
+                txt_ttl_sipil_pidana_lp_add.text = "TTL : ${tmptSipil}, ${formatterTanggal(tglSipil)}"
 
                 pekerjaanSipil = pekerjaanSipilView.text.toString()
-                txt_pekerjaan_sipil_pidana_lp_add.text = pekerjaanSipilView.text.toString()
+                txt_pekerjaan_sipil_pidana_lp_add.text ="Pekerjaan : ${pekerjaanSipilView.text.toString()}"
 
                 kwgSipil = kwgSipilView.text.toString()
-                txt_kwg_sipil_pidana_lp_add.text = kwgSipilView.text.toString()
+                txt_kwg_sipil_pidana_lp_add.text ="Kewarganegaraan : ${kwgSipilView.text.toString()}"
 
                 alamatSipil = alamatSipilView.text.toString()
-                txt_alamat_sipil_pidana_lp_add.text = alamatSipilView.text.toString()
+                txt_alamat_sipil_pidana_lp_add.text ="Alamat : ${alamatSipilView.text.toString()}"
 
                 notelpSipil = noTelpSipilView.text.toString()
-                txt_no_telp_sipil_pidana_lp_add.text = noTelpSipilView.text.toString()
+                txt_no_telp_sipil_pidana_lp_add.text ="No Telp : ${noTelpSipilView.text.toString()}"
 
                 nikSipil = nikSipilView.text.toString()
-                txt_nik_ktp_sipil_pidana_lp_add.text = nikSipilView.text.toString()
+                txt_nik_ktp_sipil_pidana_lp_add.text ="NIK KTP : ${nikSipilView.text.toString()}"
 
 //                dialog.dismiss()
 

@@ -68,7 +68,7 @@ class PekerjaanOutDinasFragment : Fragment() {
     private fun doPekerjaan() {
         addPekerjaanReq.riwayat_pekerjaan = sessionManager1.getPekerjaan()
         addPekerjaanReq.riwayat_pekerjaan_luar_dinas = list
-        NetworkConfig().getService().addPekerjaanMany(
+        NetworkConfig().getServPers().addPekerjaanMany(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             Constants.ID_PERSONEL,
             addPekerjaanReq

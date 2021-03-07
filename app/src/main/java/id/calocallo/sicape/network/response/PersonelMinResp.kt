@@ -12,5 +12,6 @@ data class PersonelMinResp(
     var nrp: String?,
     var satuan_kerja: SatKerResp?,
     var created_at: String?,
-    var updated_at: String?
+    var updated_at: String?,
+    var deleted_at: String?
 ) : Parcelable

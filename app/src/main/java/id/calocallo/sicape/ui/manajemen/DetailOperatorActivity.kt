@@ -12,8 +12,7 @@ import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.network.response.HakAksesPersonel1
-import id.calocallo.sicape.network.response.UserCreatorResp
+import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -31,23 +30,24 @@ class DetailOperatorActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
         supportActionBar?.title = "Detail Operator"
-        val dataOper = intent.extras?.getParcelable<UserCreatorResp>("acc")
+        val dataOper = intent.extras?.getParcelable<UserResp>("acc")
         getDetailOperator(dataOper)
+//        viewDetailOperator(dataOper)
     }
 
-    private fun getDetailOperator(dataOper: UserCreatorResp?) {
-        NetworkConfig().getService().getDetailPersOperator(
+    private fun getDetailOperator(dataOper: UserResp?) {
+        NetworkConfig().getServUser().getDetailPersOperator(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             dataOper?.id.toString()
-        ).enqueue(object : Callback<HakAksesPersonel1> {
-            override fun onFailure(call: Call<HakAksesPersonel1>, t: Throwable) {
-                Toast.makeText(this@DetailOperatorActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+        ).enqueue(object : Callback<UserResp> {
+            override fun onFailure(call: Call<UserResp>, t: Throwable) {
+                Toast.makeText(this@DetailOperatorActivity, R.string.error_conn, Toast.LENGTH_SHORT)
                     .show()
             }
 
             override fun onResponse(
-                call: Call<HakAksesPersonel1>,
-                response: Response<HakAksesPersonel1>
+                call: Call<UserResp>,
+                response: Response<UserResp>
             ) {
                 if (response.isSuccessful) {
                     viewDetailOperator(response.body())
@@ -59,16 +59,18 @@ class DetailOperatorActivity : BaseActivity() {
         })
     }
 
-    private fun viewDetailOperator(data: HakAksesPersonel1?) {
-        txt_nama_operator_detail.text = data?.personel?.nama
-        txt_pangkat_operator_detail.text = data?.personel?.pangkat.toString().toUpperCase()
-
-        txt_nrp_operator_detail.text = data?.personel?.nrp
+    private fun viewDetailOperator(data: UserResp?) {
+        if (data?.is_aktif == 0) {
+            txt_status_aktif_operator_detail.text = "Tidak Aktif"
+        } else {
+            txt_status_aktif_operator_detail.text = "Aktif"
+        }
+        txt_nama_operator_detail.text = data?.nama
+        txt_nrp_operator_detail.text = data?.username
         btn_copy_nrp_detail.setOnClickListener {
             //COPY
             copyTextToClipboard(txt_nrp_operator_detail)
         }
-        txt_jabatan_operator_detail.text = data?.personel?.jabatan
         txt_kesatuan_operator_detail.text = data?.satuan_kerja?.kesatuan
         btn_edit_personel_operator.setOnClickListener {
             val intent = Intent(this, EditOperatorActivity::class.java)
@@ -113,41 +115,41 @@ class DetailOperatorActivity : BaseActivity() {
     }
 
     private fun ApiDelete() {
-        val dataOper = intent.extras?.getParcelable<UserCreatorResp>("acc")
+        val dataOper = intent.extras?.getParcelable<UserResp>("acc")
 
-        NetworkConfig().getService()
-            .delPersOperator("Bearer ${sessionManager1.fetchAuthToken()}", dataOper?.id.toString())
-            .enqueue(object : Callback<BaseResp> {
-                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(
-                        this@DetailOperatorActivity,
-                        "Error Koneksi / Lakukan Beberapa Saat",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+          NetworkConfig().getServUser()
+              .delPersOperator("Bearer ${sessionManager1.fetchAuthToken()}", dataOper?.id.toString())
+              .enqueue(object : Callback<BaseResp> {
+                  override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                      Toast.makeText(
+                          this@DetailOperatorActivity,
+                          getString(R.string.failed_deleted),
+                          Toast.LENGTH_SHORT
+                      ).show()
+                  }
 
-                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(
-                            this@DetailOperatorActivity,
-                            R.string.data_deleted,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        finish()
-                    } else {
-                        Toast.makeText(
-                            this@DetailOperatorActivity,
-                            "Error Koneksi / Lakukan Beberapa Saat",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            })
+                  override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                      if (response.isSuccessful) {
+                          Toast.makeText(
+                              this@DetailOperatorActivity,
+                              R.string.data_deleted,
+                              Toast.LENGTH_SHORT
+                          ).show()
+                          finish()
+                      } else {
+                          Toast.makeText(
+                              this@DetailOperatorActivity,
+                              getString(R.string.failed_deleted),
+                              Toast.LENGTH_SHORT
+                          ).show()
+                      }
+                  }
+              })
     }
 
     override fun onResume() {
         super.onResume()
-        val dataOper = intent.extras?.getParcelable<UserCreatorResp>("acc")
+        val dataOper = intent.extras?.getParcelable<UserResp>("acc")
         getDetailOperator(dataOper)
     }
 }

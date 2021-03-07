@@ -128,7 +128,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Keterangan Terlapor" />
+            android:text="Keterangan Pelapor" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -136,7 +136,7 @@
             android:layout_height="150dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_half"
-            android:hint="Keterangan Terlapor">
+            android:hint="Keterangan Pelapor">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_ket_pelapor_disiplin"
@@ -184,6 +184,28 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_rincian_pelanggaran_disiplin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uraiain Pelanggaran" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:hint="Uraiain Pelanggaran">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_uraian_pelanggaran_disiplin_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"

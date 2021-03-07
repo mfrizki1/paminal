@@ -10,7 +10,6 @@ import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.PenghargaanReq
 import id.calocallo.sicape.network.response.PenghargaanResp
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
@@ -66,7 +65,7 @@ class EditPenghargaanActivity : BaseActivity() {
     }
 
     private fun getDetailPenghargaan(penghargaan: PenghargaanResp?) {
-        NetworkConfig().getService().getDetailPenghargaan(
+        NetworkConfig().getServPers().getDetailPenghargaan(
             "Bearer ${sessionManager1.fetchAuthToken()}", penghargaan?.id.toString()
         ).enqueue(object :Callback<DetailPenghargaanResp>{
             override fun onFailure(call: Call<DetailPenghargaanResp>, t: Throwable) {
@@ -110,7 +109,7 @@ class EditPenghargaanActivity : BaseActivity() {
         penghargaanReq.tahun = edt_tgl_penghargaan_edit.text.toString()
         penghargaanReq.keterangan = edt_ket_penghargaan_edit.text.toString()
 
-        NetworkConfig().getService().updatePenghargaanSingle(
+        NetworkConfig().getServPers().updatePenghargaanSingle(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             penghargaan?.id.toString(),
             penghargaanReq
@@ -142,7 +141,7 @@ class EditPenghargaanActivity : BaseActivity() {
     }
 
     private fun doDeletePenghargaan(penghargaan: PenghargaanResp?) {
-        NetworkConfig().getService().deletePenghargaan(
+        NetworkConfig().getServPers().deletePenghargaan(
             "Bearer ${sessionManager1.fetchAuthToken()}",
             penghargaan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {

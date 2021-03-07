@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.lp.pidana
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -25,36 +26,37 @@ class LpPidanaAdapter(
     }
 
     inner class LpPidanaHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bind(lpPidanaResp: LpPidanaResp) {
             with(itemView) {
-                if (lpPidanaResp.status_pelapor == "sipil") {
+              /*  if (lpPidanaResp.status_pelapor == "sipil") {
                     itemView.ll_sipil_pidana.visible()
                     itemView.ll_personel_pelapor.gone()
                 } else if(lpPidanaResp.status_pelapor == "polisi") {
                     itemView.ll_sipil_pidana.gone()
                     itemView.ll_personel_pelapor.visible()
-                }
+                }*/
                 //general
                 txt_no_lp_pidana.text = lpPidanaResp.no_lp
 
                 //sipil
-                txt_agama_lp_sipil_pidana.text = lpPidanaResp.agama_pelapor
-                txt_alamat_lp_sipil_pidana.text = lpPidanaResp.alamat_pelapor
-                txt_kwg_lp_sipil_pidana.text = lpPidanaResp.kewarganegaraan_pelapor
-                txt_nama_lp_sipil_pidana.text = lpPidanaResp.nama_pelapor
-                txt_nik_lp_sipil_pidana.text = lpPidanaResp.nik_ktp_pelapor
-                txt_no_telp_lp_sipil_pidana.text = lpPidanaResp.no_telp_pelapor
-                txt_pekerjaan_lp_sipil_pidana.text = lpPidanaResp.pekerjaan_pelapor
+                txt_agama_lp_sipil_pidana.text = lpPidanaResp.detail_laporan?.agama_pelapor
+                txt_alamat_lp_sipil_pidana.text = lpPidanaResp.detail_laporan?.alamat_pelapor
+                txt_kwg_lp_sipil_pidana.text = lpPidanaResp.detail_laporan?.kewarganegaraan_pelapor
+                txt_nama_lp_sipil_pidana.text = lpPidanaResp.detail_laporan?.nama_pelapor
+                txt_nik_lp_sipil_pidana.text = lpPidanaResp.detail_laporan?.nik_ktp_pelapor
+                txt_no_telp_lp_sipil_pidana.text = lpPidanaResp.detail_laporan?.no_telp_pelapor
+                txt_pekerjaan_lp_sipil_pidana.text = lpPidanaResp.detail_laporan?.pekerjaan_pelapor
 
                 //personel pelapor
-                txt_nama_lp_pidana_pelapor.text =
+               /* txt_nama_lp_pidana_pelapor.text =
                     "Nama : ${lpPidanaResp.personel_pelapor?.nama}"
                 txt_nrp_pangkat_lp_pidana_pelapor.text =
                     "Pangkat : ${lpPidanaResp.personel_pelapor?.pangkat}, NRP : ${lpPidanaResp.personel_pelapor?.nrp}"
                 txt_jabatan_lp_pidana_terlapor.text =
                     "Jabatan : ${lpPidanaResp.personel_pelapor?.jabatan}"
                 txt_kesatuan_lp_pidana_terlapor.text =
-                    "Kesatuan : ${lpPidanaResp.personel_pelapor?.kesatuan}"
+                    "Kesatuan : ${lpPidanaResp.personel_pelapor?.kesatuan}"*/
 
                 //personel terlapor
                 txt_nama_lp_pidana_terlapor.text =
@@ -64,7 +66,7 @@ class LpPidanaAdapter(
                 txt_jabatan_lp_pidana_terlapor.text =
                     "Jabatan : ${lpPidanaResp.personel_terlapor?.jabatan}"
                 txt_kesatuan_lp_pidana_terlapor.text =
-                    "Kesatuan : ${lpPidanaResp.personel_terlapor?.kesatuan}"
+                    "Kesatuan : ${lpPidanaResp.personel_terlapor?.satuan_kerja?.kesatuan}"
 
                 //set pasal Layout and adapter
                 itemView.rv_pasal_lp_pidana.apply {

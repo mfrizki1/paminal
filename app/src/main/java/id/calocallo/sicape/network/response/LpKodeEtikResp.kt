@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class LpKodeEtikResp(
     var id: Int?,
     var no_lp: String?,
-    var listPasal: ArrayList<LpPasalResp>?
+    var listPasalDilanggar: ArrayList<PasalDilanggarResp>?
 ):Parcelable{
     constructor():this(0,"",ArrayList())
 }

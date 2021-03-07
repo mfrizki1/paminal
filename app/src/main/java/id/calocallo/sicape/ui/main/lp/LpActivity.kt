@@ -63,6 +63,7 @@ class LpActivity : BaseActivity() {
             doAPI(tempJenis)
         }
 
+/*
         //TODO STATIC LIST
         list = ArrayList()
         list.add(
@@ -156,6 +157,7 @@ class LpActivity : BaseActivity() {
             }
         })
         rv_lp.adapter = adapterLp
+*/
 
 
         btn_add_lp.setOnClickListener {
