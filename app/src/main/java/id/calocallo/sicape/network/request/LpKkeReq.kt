@@ -10,10 +10,10 @@ data class LpKkeReq(
     var id_personel_terlapor: Int?,/**/
     var kota_buat_laporan: String?,/**/
     var tanggal_buat_laporan: String?,/**/
-    var nama_yang_mengetahui: String?,/**/
-    var pangkat_yang_mengetahui: String?,/**/
-    var nrp_yang_mengetahui: String?,/**/
-    var jabatan_yang_mengetahui: String?,/**/
+    var nama_kep_spkt: String?,/**/
+    var pangkat_kep_spkt: String?,/**/
+    var nrp_kep_spkt: String?,/**/
+    var jabatan_kep_spkt: String?,/**/
 //    var kesatuan_yang_mengetahui: String?,
 //    var id_personel_operator: Int?,
 
