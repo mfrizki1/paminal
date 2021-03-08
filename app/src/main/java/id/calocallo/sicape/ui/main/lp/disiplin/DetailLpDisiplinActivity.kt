@@ -33,6 +33,7 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class DetailLpDisiplinActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
@@ -101,7 +102,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
             })
     }
 
-    private fun saveDocLpDisiplin(lp: LpPidanaResp?) {
+    private fun saveDocLpDisiplin(lp: LpResp?) {
         Handler(Looper.getMainLooper()).postDelayed({
             btn_generate_disiplin.hideProgress(R.string.success_generate_doc)
             alert("Lihat Dokumen") {
@@ -117,7 +118,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
         }, 2000)
     }
 
-    private fun viewDocDispl(lp: LpPidanaResp?) {
+    private fun viewDocDispl(lp: LpResp?) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(lp?.dokumen?.url)))
 //        finish()
     }
@@ -125,8 +126,8 @@ class DetailLpDisiplinActivity : BaseActivity() {
     private fun apiDetailDisiplin(disiplin: LpMinResp?) {
         NetworkConfig().getServLp()
             .getLpById("Bearer ${sessionManager1.fetchAuthToken()}", disiplin?.id).enqueue(object :
-                Callback<LpPidanaResp> {
-                override fun onFailure(call: Call<LpPidanaResp>, t: Throwable) {
+                Callback<LpResp> {
+                override fun onFailure(call: Call<LpResp>, t: Throwable) {
                     Toast.makeText(
                         this@DetailLpDisiplinActivity,
                         "Error Koneksi",
@@ -136,8 +137,8 @@ class DetailLpDisiplinActivity : BaseActivity() {
                 }
 
                 override fun onResponse(
-                    call: Call<LpPidanaResp>,
-                    response: Response<LpPidanaResp>
+                    call: Call<LpResp>,
+                    response: Response<LpResp>
                 ) {
                     if (response.isSuccessful) {
                         getViewDisiplin(response.body())
@@ -155,7 +156,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
 
 
     @SuppressLint("SetTextI18n")
-    private fun getViewDisiplin(disiplin: LpPidanaResp?) {
+    private fun getViewDisiplin(disiplin: LpResp?) {
         //general
         txt_detail_no_lp_disiplin.text = disiplin?.no_lp
         txt_detail_macam_pelanggaran_disiplin.text = disiplin?.detail_laporan?.macam_pelanggaran
@@ -166,38 +167,48 @@ class DetailLpDisiplinActivity : BaseActivity() {
             disiplin?.detail_laporan?.rincian_pelanggaran_disiplin
         //pimpinan
         txt_detail_nama_pimpinan_disiplin.text =
-            "Nama : ${disiplin?.detail_laporan?.nama_yang_mengetahui}"
+            "Nama : ${disiplin?.detail_laporan?.nama_kabid_propam}"
         txt_detail_pangkat_nrp_pimpinan_disiplin.text =
-            "Pangkat : ${disiplin?.detail_laporan?.pangkat_yang_mengetahui.toString()
-                .toUpperCase()}, NRP : ${disiplin?.detail_laporan?.nrp_yang_mengetahui}"
+            "Pangkat : ${
+                disiplin?.detail_laporan?.pangkat_kabid_propam.toString()
+                    .toUpperCase(Locale.ROOT)
+            }, NRP : ${disiplin?.detail_laporan?.nrp_kabid_propam}"
         txt_detail_jabatan_pimpinan_disiplin.text =
-            "Jabatan : ${disiplin?.detail_laporan?.jabatan_yang_mengetahui}"
+            "Jabatan : ${disiplin?.detail_laporan?.jabatan_kabid_propam}"
 //         txt_detail_kesatuan_pimpinan_disiplin.text =
 //             "Kesatuan : ${disiplin?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
         //terlapor
         txt_detail_nama_terlapor_disiplin.text = "Nama : ${disiplin?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_disiplin.text =
-            "Pangkat : ${disiplin?.personel_terlapor?.pangkat.toString()
-                .toUpperCase()}, NRP : ${disiplin?.personel_terlapor?.nrp}"
+            "Pangkat : ${
+                disiplin?.personel_terlapor?.pangkat.toString()
+                    .toUpperCase(Locale.ROOT)
+            }, NRP : ${disiplin?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor_disiplin.text =
             "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
         txt_detail_kesatuan_terlapor_disiplin.text =
-            "Kesatuan : ${disiplin?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                disiplin?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase(Locale.ROOT)
+            }"
 
         //pelapor
         txt_detail_nama_pelapor_disiplin.text =
             "Nama : ${disiplin?.detail_laporan?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_disiplin.text =
-            "Pangkat : ${disiplin?.detail_laporan?.personel_pelapor?.pangkat.toString()
-                .toUpperCase()}, NRP : ${disiplin?.detail_laporan?.personel_pelapor?.nrp}"
+            "Pangkat : ${
+                disiplin?.detail_laporan?.personel_pelapor?.pangkat.toString()
+                    .toUpperCase(Locale.ROOT)
+            }, NRP : ${disiplin?.detail_laporan?.personel_pelapor?.nrp}"
 
         txt_detail_jabatan_pelapor_disiplin.text =
             "Jabatan : ${disiplin?.detail_laporan?.personel_pelapor?.jabatan}"
         txt_detail_kesatuan_pelapor_disiplin.text =
-            "Kesatuan : ${disiplin?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                disiplin?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase(Locale.ROOT)
+            }"
         txt_detail_keterangan_pelapor_disiplin.text = disiplin?.detail_laporan?.keterangan_pelapor
         txt_detail_kronologis_pelapor_disiplin.text =
             disiplin?.detail_laporan?.kronologis_dari_pelapor
@@ -276,12 +287,20 @@ class DetailLpDisiplinActivity : BaseActivity() {
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                     if (response.isSuccessful) {
-                        if(response.body()?.message == "Data lp removed succesfully"){
-                            Toast.makeText(this@DetailLpDisiplinActivity, R.string.data_deleted, Toast.LENGTH_SHORT).show()
+                        if (response.body()?.message == "Data lp removed succesfully") {
+                            Toast.makeText(
+                                this@DetailLpDisiplinActivity,
+                                R.string.data_deleted,
+                                Toast.LENGTH_SHORT
+                            ).show()
                             finish()
                         }
-                    }else{
-                        Toast.makeText(this@DetailLpDisiplinActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            this@DetailLpDisiplinActivity,
+                            R.string.error_conn,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             })

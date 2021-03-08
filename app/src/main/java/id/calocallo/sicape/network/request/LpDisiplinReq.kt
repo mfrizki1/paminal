@@ -8,10 +8,10 @@ data class LpDisiplinReq(
     var id_personel_pelapor: Int?,/**/
     var kota_buat_laporan: String?,/**/
     var tanggal_buat_laporan: String?,/**/
-    var nama_kep_spkt: String?,/**/
-    var pangkat_kep_spkt: String?,/**/
-    var nrp_kep_spkt: String?,/**/
-    var jabatan_kep_spkt: String?,/**/
+    var nama_kabid_propam: String?,/**/
+    var pangkat_kabid_propam: String?,/**/
+    var nrp_kabid_propam: String?,/**/
+    var jabatan_kabid_propam: String?,/**/
     var kesatuan_yang_mengetahui: String?,
 //    var id_personel_operator: Int?,
 

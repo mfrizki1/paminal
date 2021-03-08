@@ -91,7 +91,7 @@ interface ApiLp {
     fun updLpDisiplin(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,
-        @Body editLpDisiplinReq: EditLpDisiplinReq
+        @Body editLpDisiplinReq: LpDisiplinReq
     ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)

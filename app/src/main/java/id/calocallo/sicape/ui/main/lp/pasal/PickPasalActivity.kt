@@ -214,7 +214,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpDisiplinReq.id_satuan_kerja = sessionManager1.getIDPersonelTerlapor()
                 lpDisiplinReq.waktu_buat_laporan = sessionManager1.getWaktuBuatLaporan()
                 lpDisiplinReq.no_lp = sessionManager1.getNoLP()
-                lpDisiplinReq.uraian_pelanggaran = jenisLP
+                lpDisiplinReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
 //                lpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id
                 lpDisiplinReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
                 lpDisiplinReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
