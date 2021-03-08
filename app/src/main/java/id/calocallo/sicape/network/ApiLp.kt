@@ -40,7 +40,7 @@ interface ApiLp {
     fun getLpById(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?
-    ): Call<LpPidanaResp>
+    ): Call<LpResp>
 
 
     @Headers(ACCEPT)
@@ -79,15 +79,15 @@ interface ApiLp {
     ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)
-    @PATCH(LP_WITH_ID)
+    @PATCH("$LP_PIDANA/{id_lp}")
     fun updLpPidana(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,
-        @Body lpPidanaReq: EditLpPidanaReq
+        @Body lpPidanaReq: LpPidanaReq
     ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)
-    @PATCH(LP_WITH_ID)
+    @PATCH("$LP_DISIPLIN/{id_lp}")
     fun updLpDisiplin(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,
@@ -95,7 +95,7 @@ interface ApiLp {
     ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)
-    @PATCH(LP_WITH_ID)
+    @PATCH("$LP_KKE/{id_lp}")
     fun updLpKke(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,

@@ -1,24 +1,36 @@
 package id.calocallo.sicape.network.response
 
 import android.os.Parcelable
+import id.calocallo.sicape.model.DetLapPidanaModel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LpResp(
     var id: Int?,
-    var jenis: String?,
     var no_lp: String?,
-    var id_personel_dilapor: Int?,
-    var id_personel_terlapor: Int?,
-    var id_pelanggaran: Int?,
-    var alatBukti : String?,
-    var listPasalDilanggar: ArrayList<PasalDilanggarResp>?,
-    var listSaksi: ArrayList<LpSaksiResp>?,
-    var keterangan: String?,
-    var created_at:String?,
-    var updated_at:String?,
-    var deleted_at: String?
-):Parcelable{
-    constructor():this(0,"","",0,0,0,"",
-    ArrayList(),ArrayList(), "","","","")
-}
+    var satuan_kerja: SatKerResp?,
+    var jenis_pelanggaran: String?,
+    var personel_terlapor: PersonelMinResp?,
+    var uraian_pelanggaran: String?,
+    var kota_buat_laporan: String?,
+    var tanggal_buat_laporan: String?,
+    var is_melewati_proses_gelar: Int?,
+    var status_kasus: String?,
+    var status_terlapor: String?,
+    var detail_keterangan_terlapor: String?,
+    var is_ada_dokumen: Int?,
+    var dokumen: DokResp?,
+    var user_creator: UserCreatorResp?,
+    var user_updater: UserCreatorResp?,
+    var user_deleter: UserCreatorResp?,
+    var created_at: String?,
+    var updated_at: String?,
+    var deleted_at: String?,
+    var pasal_dilanggar: ArrayList<PasalDilanggarResp>?,
+    var saksi: ArrayList<LpSaksiResp>?,
+    var detail_laporan: DetLapPidanaModel?
+    ) : Parcelable
+@Parcelize
+data class DokLpResp(
+    var lp: LpResp?
+) : Parcelable

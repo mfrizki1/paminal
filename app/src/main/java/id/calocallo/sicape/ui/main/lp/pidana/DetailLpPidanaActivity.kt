@@ -13,7 +13,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.downloadservice.filedownloadservice.manager.FileDownloadManager
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
@@ -23,7 +22,6 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity.Companion.EDIT_PASAL_DILANGGAR
-import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity.Companion.EDIT_PASAL_PIDANA
 import id.calocallo.sicape.ui.main.lp.pidana.EditLpPidanaActivity.Companion.EDIT_PIDANA
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
@@ -124,7 +122,7 @@ class DetailLpPidanaActivity : BaseActivity() {
             })
     }
 
-    private fun saveDocLpPidana(dok: LpPidanaResp?) {
+    private fun saveDocLpPidana(dok: LpResp?) {
         Log.e("urlDok", "${dok?.dokumen?.url}")
         Handler(Looper.getMainLooper()).postDelayed({
             btn_generate_pidana.hideProgress(R.string.success_generate_doc)
@@ -142,13 +140,13 @@ class DetailLpPidanaActivity : BaseActivity() {
         }, 2000)
     }
 
-    private fun gotoBrowser(dok: LpPidanaResp?) {
+    private fun gotoBrowser(dok: LpResp?) {
         val uri = Uri.parse(dok?.dokumen?.url)
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
 
     }
 
-    private fun downloadDok(lp: LpPidanaResp?) {
+ /*   private fun downloadDok(lp: LpResp?) {
         val folder = File(Environment.DIRECTORY_DOWNLOADS + "/" + "LP")
         if (!folder.exists()) {
             folder.mkdirs()
@@ -165,21 +163,21 @@ class DetailLpPidanaActivity : BaseActivity() {
             )
         }
 //        val fileName = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date()) + ".mp3"
-    }
+    }*/
 
     private fun apiDetailPidana(pidana: LpMinResp?) {
         NetworkConfig().getServLp()
             .getLpById("Bearer ${sessionManager1.fetchAuthToken()}", pidana?.id).enqueue(object :
-                Callback<LpPidanaResp> {
-                override fun onFailure(call: Call<LpPidanaResp>, t: Throwable) {
+                Callback<LpResp> {
+                override fun onFailure(call: Call<LpResp>, t: Throwable) {
                     Log.e("t", "$t")
                     Toast.makeText(this@DetailLpPidanaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
                         .show()
                 }
 
                 override fun onResponse(
-                    call: Call<LpPidanaResp>,
-                    response: Response<LpPidanaResp>
+                    call: Call<LpResp>,
+                    response: Response<LpResp>
                 ) {
                     if (response.isSuccessful) {
                         getDetailPidana(response.body())
@@ -197,7 +195,7 @@ class DetailLpPidanaActivity : BaseActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getDetailPidana(pidana: LpPidanaResp?) {
+    private fun getDetailPidana(pidana: LpResp?) {
         /*if (pidana?.status_pelapor == "polisi") {
             ll_detail_personel_pidana.visible()
             ll_detail_sipil_pidana.gone()
@@ -214,11 +212,11 @@ class DetailLpPidanaActivity : BaseActivity() {
             "Tanggal : ${formatterTanggal(pidana?.tanggal_buat_laporan)}"
 
         //pimpinan
-          txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.nama_yang_mengetahui}"
+          txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.detail_laporan?.nama_kep_spkt}"
           txt_detail_pangkat_nrp_pimpinan_pidana.text =
-              "Pangkat : ${pidana?.pangkat_yang_mengetahui.toString()
-                  .toUpperCase()}, NRP : ${pidana?.nrp_yang_mengetahui}"
-          txt_detail_jabatan_pimpinan_pidana.text = "Jabatan : ${pidana?.jabatan_yang_mengetahui}"
+              "Pangkat : ${pidana?.detail_laporan?.pangkat_kep_spkt.toString()
+                  .toUpperCase()}, NRP : ${pidana?.detail_laporan?.nrp_kep_spkt}"
+          txt_detail_jabatan_pimpinan_pidana.text = "Jabatan : ${pidana?.detail_laporan?.jabatan_kep_spkt}"
 //          txt_detail_kesatuan_pimpinan_pidana.text =
 //              "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
