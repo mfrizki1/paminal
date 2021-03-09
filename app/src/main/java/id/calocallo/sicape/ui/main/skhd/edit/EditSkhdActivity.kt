@@ -15,7 +15,6 @@ import id.calocallo.sicape.network.request.SkhdReq
 import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.network.response.SkhdResp
-import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
 import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
 import id.calocallo.sicape.ui.main.skhd.DetailSkhdActivity
@@ -54,15 +53,17 @@ class EditSkhdActivity : BaseActivity() {
             edt_jabatan_kepala_bidang_skhd_edit.text.toString()
             edt_tembusan_skhd_edit.text.toString()
         }
+/*
 
         bnt_pick_lhp_skhd_edit.setOnClickListener {
             val intent = Intent(this, ChooseLhpActivity::class.java)
             startActivityForResult(intent, AddSkhdActivity.REQ_CHOOSE_LHP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
+*/
 
         /*set button for edit id_lp*/
-        bnt_pick_lp_skhd_edit.setOnClickListener {
+        btn_pick_lp_skhd_edit.setOnClickListener {
             val intent = Intent(this, ChooseLpSkhdActivity::class.java)
             intent.putExtra(AddSkhdActivity.IDLHP_FOR_LP, idLhp)
             startActivityForResult(intent, AddSkhdActivity.REQ_CHOOSE_LP)

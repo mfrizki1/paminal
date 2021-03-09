@@ -4,15 +4,19 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.network.request.SkhdReq
 import id.calocallo.sicape.network.response.LpDisiplinResp
+import id.calocallo.sicape.network.response.LpMinResp
+import id.calocallo.sicape.network.response.LpPidanaResp
 import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
+import id.calocallo.sicape.ui.main.choose.lp.ListLpSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_skhd.*
@@ -31,17 +35,21 @@ class AddSkhdActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data SKHD"
 
-        /*set button for add id_lhp*/
-        bnt_pick_lhp_skhd_add.setOnClickListener {
+        /*set button for add id_lhp*/ /*GONE*/
+       /* bnt_pick_lhp_skhd_add.setOnClickListener {
             val intent = Intent(this, ChooseLhpActivity::class.java)
             startActivityForResult(intent, REQ_CHOOSE_LHP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        }*/
 
         /*set button for add id_lp*/
         bnt_pick_lp_skhd_add.setOnClickListener {
-            val intent = Intent(this, ChooseLpSkhdActivity::class.java)
-            intent.putExtra(IDLHP_FOR_LP, idLhp)
+//            val intent = Intent(this, ListLpSkhdActivity::class.java)
+//            val intent = Intent(this, ChooseLpSkhdActivity::class.java)
+//            intent.putExtra(IDLHP_FOR_LP, idLhp)
+
+//            /*Goto List Lp By Id LHP*/
+            val intent = Intent(this, ChooseLhpActivity::class.java)
             startActivityForResult(intent, REQ_CHOOSE_LP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
@@ -90,6 +98,16 @@ class AddSkhdActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_CHOOSE_LHP) {
             when (resultCode) {
+                ChooseLhpActivity.RES_LP_CHOSE_LHP -> {
+                    val dataLp = data?.getParcelableExtra<LpMinResp>(ChooseLhpActivity.DATA_LP)
+                    Log.e(TAG, "LpAdd: $dataLp")
+//                    val lhpResp = data?.getParcelableExtra<LhpResp>(ChooseLhpActivity.DATA_LP)
+//                    idLhp = lhpResp?.id
+                    txt_lp_skhd_add.text = dataLp?.no_lp
+                }
+            }
+            /* if (requestCode == REQ_CHOOSE_LHP) {
+            when (resultCode) {
                 Activity.RESULT_OK -> {
                     val lhpResp = data?.getParcelableExtra<LhpResp>("CHOOSE_LHP")
                     idLhp = lhpResp?.id
@@ -109,6 +127,7 @@ class AddSkhdActivity : BaseActivity() {
                     txt_lp_skhd_add.text = disiplin?.no_lp
                 }
             }
+        }*/
         }
     }
 
@@ -117,5 +136,6 @@ class AddSkhdActivity : BaseActivity() {
         const val REQ_CHOOSE_LP = 1
         const val IDLHP_FOR_LP = "LP_SKHD"
         const val ID_LP = "ID_LP"
+        const val TAG = "--AddSkhd"
     }
 }

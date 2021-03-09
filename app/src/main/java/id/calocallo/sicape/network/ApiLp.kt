@@ -21,8 +21,7 @@ interface ApiLp {
 
         const val PASAL_DILANGGAR = "lp/{id_pasal}/pasal/dilanggar"
         const val UPD_PASAL_DILANGGAR = "lp/pasal/dilanggar/{id_pasal_dilanggar}"
-
-
+      
         const val SAKSI_LP = "lp/{id_lp}/saksi/kode/etik"
         const val UPD_SAKSI_LP = "lp/saksi/kode/etik/{id_saksi}"
 

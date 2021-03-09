@@ -37,14 +37,15 @@ class AddPutKkeActivity : BaseActivity() {
             addPutKke()
         }
 
-        btn_pick_lhp_put_kke_add.setOnClickListener {
+  /*      btn_pick_lhp_put_kke_add.setOnClickListener {
             val intent = Intent(this, ChooseLhpActivity::class.java)
             startActivityForResult(intent, REQ_CHOOSE_LHP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        }*/
         btn_pick_lp_put_kke_add.setOnClickListener {
-            val intent = Intent(this, ChooseLpSkhdActivity::class.java)
-            intent.putExtra(IDLHP_PUTKKE, idLhp)
+//            val intent = Intent(this, ChooseLpSkhdActivity::class.java)
+            val intent = Intent(this, ChooseLhpActivity::class.java)
+//            intent.putExtra(IDLHP_PUTKKE, idLhp)
             startActivityForResult(intent, REQ_CHOOSE_LP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
