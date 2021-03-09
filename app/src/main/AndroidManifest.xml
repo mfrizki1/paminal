@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.lp.pasal.AddPasalDilanggarActivity"></activity>
+        <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity" />
+        <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.EditDetailRefPenyelidikanActivity" />
+        <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.ListDetailRefPenyelidikanActivity" />
+        <activity android:name=".ui.main.lp.pasal.AddPasalDilanggarActivity" />
         <activity android:name=".ui.main.lp.pasal.DetailPasalActivity" />
         <activity android:name=".ui.main.lp.pasal.EditPasalActivity" />
         <activity android:name=".ui.main.lp.pasal.ListPasalActivity" />
@@ -86,14 +89,12 @@
         <activity android:name=".ui.main.choose.lp.ChooseLpSkhdActivity" />
         <activity android:name=".ui.main.choose.lhp.ChooseLhpActivity" />
         <activity android:name=".ui.main.putkke.ListPutKkeActivity" />
-        <activity android:name=".ui.main.lhp.edit.EditDetailRefPenyelidikanActivity" />
-        <activity android:name=".ui.main.lhp.edit.ListDetailRefPenyelidikanActivity" />
         <activity android:name=".ui.main.lhp.add.OtherAddLhpActivity" />
         <activity android:name=".ui.main.lhp.add.ListKetTerlaporLhpActivity" />
         <activity android:name=".ui.main.lhp.add.PickSaksiAddLhpActivity" />
         <activity android:name=".ui.main.lhp.add.AddPersonelLidikActivity" />
         <activity android:name=".ui.main.lhp.add.PickPersonelPenyelidikActivity" />
-        <activity android:name=".ui.main.lhp.add.ReferensiPenyelidikanLhpActivity" />
+        <activity android:name=".ui.main.lhp.add.ListRefPenyelidikanActivity" />
         <activity android:name=".ui.main.lp.pasal.PickPasalActivity" />
         <activity android:name=".ui.main.lp.pasal.PickSaksiActivity" />
         <activity android:name=".ui.main.lp.pidana.EditLpPidanaActivity" />
@@ -130,7 +131,7 @@
         <activity android:name=".ui.main.lhp.edit.lidik.PickLidikLhpActivity" />
         <activity android:name=".ui.main.lhp.edit.lidik.EditLidikLhpActivity" />
         <activity android:name=".ui.main.choose.lp.LpChooseActivity" />
-        <activity android:name=".ui.main.choose.lp.ChooseLpActivity" />
+        <activity android:name=".ui.main.choose.lp.PickJenisLpActivity" />
         <activity android:name=".ui.main.lp.saksi.ListSaksiLpActivity" />
         <activity android:name=".ui.main.lp.pasal.ListPasalDilanggarActivity" />
         <activity android:name=".ui.main.lp.saksi.AddSaksiLpActivity" />

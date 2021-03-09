@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
@@ -114,8 +113,8 @@ class LpChooseActivity : BaseActivity() {
                             ) {
                                 itemView.img_clickable.toggleVisibility()
                                 val intent = Intent()
-                                intent.putExtra(ChooseLpActivity.GET_LP_WITHOUT_SKTBB_DLL, data)
-                                setResult(ChooseLpActivity.RES_LP_CHOOSE, intent)
+                                intent.putExtra(PickJenisLpActivity.GET_LP_WITHOUT_SKTBB_DLL, data)
+                                setResult(PickJenisLpActivity.RES_LP_CHOOSE, intent)
                                 finish()
                             }
                         }
@@ -169,7 +168,7 @@ class LpChooseActivity : BaseActivity() {
                             itemView.img_clickable.toggleVisibility()
                             val intent = Intent()
                             intent.putExtra(DATA_LP, data)
-                            setResult(ChooseLpActivity.RES_LP_CHOOSE, intent)
+                            setResult(PickJenisLpActivity.RES_LP_CHOOSE, intent)
                             finish()
                         }
                     }

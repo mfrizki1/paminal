@@ -63,8 +63,7 @@ class EditSaksiLhpActivity : BaseActivity() {
         }
 
         val saksi = intent.extras?.getParcelable<SaksiLhpResp>(EDIT_SAKSI_LHP)
-        Log.e("model", "$saksi")
-        getViewSaksiLhp(saksi)
+//        getViewSaksiLhp(saksi)
 
         btn_save_saksi_lhp_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_saksi_lhp_edit)
@@ -128,8 +127,8 @@ class EditSaksiLhpActivity : BaseActivity() {
             .show()
     }
 
-    private fun getViewSaksiLhp(saksi: SaksiLhpResp?) {
-        idPersonelSaksi = saksi?.id_personel
+   /* private fun getViewSaksiLhp(saksi: SaksiLhpResp?) {
+//        idPersonelSaksi = saksi?.id_personel
         if (saksi?.status_saksi == "polisi") {
             rb_polisi_saksi_edit.isChecked = true
             ll_sipil_saksi_edit.gone()
@@ -161,7 +160,7 @@ class EditSaksiLhpActivity : BaseActivity() {
 
         edt_ket_saksi_edit.setText(saksi?.isi_keterangan_saksi)
 
-        /*set for radio group and other stuff*/
+//        set for radio group and other stuff
         rg_saksi_edit.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             if (radio.isChecked && radio.text == "Sipil") {
@@ -182,7 +181,7 @@ class EditSaksiLhpActivity : BaseActivity() {
             }
         }
 
-    }
+    }*/
 
     private fun updateSaksiLhp(saksi: SaksiLhpResp?) {
         val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!

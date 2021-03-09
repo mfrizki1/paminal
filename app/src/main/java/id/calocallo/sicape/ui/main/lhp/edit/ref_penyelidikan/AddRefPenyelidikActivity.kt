@@ -1,11 +1,10 @@
-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
+package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton

@@ -8,18 +8,18 @@ import id.calocallo.sicape.network.request.RefPenyelidikanReq
 import id.calocallo.sicape.network.response.LpCustomResp
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP
-import id.calocallo.sicape.ui.main.lhp.add.ReferensiPenyelidikanLhpActivity
+import id.calocallo.sicape.ui.main.lhp.add.ListRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_choose_lp.*
+import kotlinx.android.synthetic.main.activity_pick_jenis_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
-class ChooseLpActivity : BaseActivity() {
+class PickJenisLpActivity : BaseActivity() {
     private var sktt :String? = null
     private var refLp = RefPenyelidikanReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_choose_lp)
+        setContentView(R.layout.activity_pick_jenis_lp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Jenis Laporan Polisi"
 
@@ -107,7 +107,7 @@ class ChooseLpActivity : BaseActivity() {
                         refLp.id_lp = lpAll?.id
                         refLp.no_lp = lpAll?.no_lp
                         intent.putExtra(
-                            ReferensiPenyelidikanLhpActivity.GET_LP_FROM_CHOOSE_LP,
+                            ListRefPenyelidikanActivity.GET_LP_FROM_CHOOSE_LP,
                             refLp
                         )
                         setResult(Activity.RESULT_OK, intent)

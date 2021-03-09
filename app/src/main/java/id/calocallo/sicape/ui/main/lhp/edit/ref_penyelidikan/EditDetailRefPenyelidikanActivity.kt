@@ -1,4 +1,4 @@
-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
+package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,7 +16,6 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity

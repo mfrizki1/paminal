@@ -8,7 +8,7 @@ data class RefPenyelidikanResp(
     var id: Int?,
     var id_lp: Int?,
     var lhp: LhpMinResp?,
-    var lp: LpPidanaResp?,
+    var lp: LpResp?,
     var isi_keterangan_terlapor: String?
 ):Parcelable {
     constructor() : this(null,null,null,null,null)

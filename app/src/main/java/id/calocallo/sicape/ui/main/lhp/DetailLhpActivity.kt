@@ -19,7 +19,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
-import id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.ListDetailRefPenyelidikanActivity
+import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.ListDetailRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.PickLidikLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity
@@ -212,7 +212,7 @@ class DetailLhpActivity : BaseActivity() {
         txt_tanggal_buat_lhp.text = "Tanggal : ${formatterTanggal(dataLhp?.tanggal_buat_laporan)}"
         listOfRefLP(dataLhp?.referensi_penyelidikan)
         listOfLidik(dataLhp?.personel_penyelidik)
-        listOfSaksi(dataLhp?.saksi)
+//        listOfSaksi(dataLhp?.saksi)
 //        listOfKetTerlapor(dataLhp?.keterangan_terlapor)
 
         if (dataLhp?.is_ada_dokumen == 1) {
