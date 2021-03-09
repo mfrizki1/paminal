@@ -1,6 +1,5 @@
 package id.calocallo.sicape.ui.main.choose.lp
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -23,6 +22,7 @@ import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
+import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
@@ -34,7 +34,7 @@ import retrofit2.Response
 class ListLpSkhdActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
 
-    private var listPidanaLP = ArrayList<LpPidanaResp>()
+    private var listPidanaLP = ArrayList<LpResp>()
     private var listDisiplinLP = ArrayList<LpDisiplinResp>()
     private var personelTerLapor = PersonelLapor()
     private var personelPeLapor = PersonelLapor()
@@ -46,6 +46,10 @@ class ListLpSkhdActivity : BaseActivity() {
     private lateinit var callbackLpChoose: AdapterCallback<LpMinResp>
 
 
+    private var adapterLpPidanaChoose = ReusableAdapter<LpResp>(this)
+    private lateinit var callbackLpChoose: AdapterCallback<LpResp>
+    private var adapterLpDisiplinChoose = ReusableAdapter<LpDisiplinResp>(this)
+    private lateinit var callbackLpDisiplinChoose: AdapterCallback<LpDisiplinResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_lp_skhd)

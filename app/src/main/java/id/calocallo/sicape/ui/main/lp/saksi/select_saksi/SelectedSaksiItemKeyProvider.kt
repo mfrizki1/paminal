@@ -1,4 +1,4 @@
-package id.calocallo.sicape.ui.main.lp.pidana.tes
+package id.calocallo.sicape.ui.main.lp.saksi.select_saksi
 
 import androidx.recyclerview.selection.ItemKeyProvider
 import id.calocallo.sicape.network.response.LpSaksiResp

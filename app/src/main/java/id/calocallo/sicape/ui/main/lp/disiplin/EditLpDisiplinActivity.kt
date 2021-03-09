@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.request.EditLpDisiplinReq
+import id.calocallo.sicape.network.request.LpDisiplinReq
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -24,7 +24,7 @@ import retrofit2.Response
 
 class EditLpDisiplinActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var editLpDisiplinReq = EditLpDisiplinReq()
+    private var editLpDisiplinReq = LpDisiplinReq()
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
     private var namaSatker: String? = null
@@ -34,7 +34,7 @@ class EditLpDisiplinActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
         supportActionBar?.title = "Edit Data Laporan Polisi Disiplin"
-        val disiplin = intent.extras?.getParcelable<LpPidanaResp>(EDIT_DISIPLIN)
+        val disiplin = intent.extras?.getParcelable<LpResp>(EDIT_DISIPLIN)
         apiEditDisiplinView(disiplin)
 
         //set terlapor
@@ -57,7 +57,7 @@ class EditLpDisiplinActivity : BaseActivity() {
         btn_save_edit_lp_disiplin.attachTextChangeAnimator()
         bindProgressButton(btn_save_edit_lp_disiplin)
         btn_save_edit_lp_disiplin.setOnClickListener {
-            updateLpDisiplin(disiplin, changedIdTerlapor, changedIdPelapor)
+            updateLpDisiplin(disiplin)
         }
 
         /* spinner_kesatuan_pimpinan_bidang_edit_disiplin.setAdapter(
@@ -72,19 +72,19 @@ class EditLpDisiplinActivity : BaseActivity() {
          }*/
     }
 
-    private fun apiEditDisiplinView(disiplin: LpPidanaResp?) {
+    private fun apiEditDisiplinView(disiplin: LpResp?) {
         NetworkConfig().getServLp()
             .getLpById("Bearer ${sessionManager1.fetchAuthToken()}", disiplin?.id).enqueue(object :
-                Callback<LpPidanaResp> {
-                override fun onFailure(call: Call<LpPidanaResp>, t: Throwable) {
+                Callback<LpResp> {
+                override fun onFailure(call: Call<LpResp>, t: Throwable) {
                     Toast.makeText(
                         this@EditLpDisiplinActivity, R.string.error_conn, Toast.LENGTH_SHORT
                     ).show()
                 }
 
                 override fun onResponse(
-                    call: Call<LpPidanaResp>,
-                    response: Response<LpPidanaResp>
+                    call: Call<LpResp>,
+                    response: Response<LpResp>
                 ) {
                     if (response.isSuccessful) {
                         getViewEditDisipilin(response.body())
@@ -98,7 +98,7 @@ class EditLpDisiplinActivity : BaseActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getViewEditDisipilin(disiplin: LpPidanaResp?) {
+    private fun getViewEditDisipilin(disiplin: LpResp?) {
         edt_pukul_buat_edit_lp_disiplin.setText(disiplin?.detail_laporan?.waktu_buat_laporan)
         edt_no_lp_disiplin_edit.setText(disiplin?.no_lp)
         edt_macam_pelanggaran_disiplin_edit.setText(disiplin?.detail_laporan?.macam_pelanggaran)
@@ -110,34 +110,40 @@ class EditLpDisiplinActivity : BaseActivity() {
         txt_jabatan_terlapor_lp_disiplin_edit.text =
             "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
         txt_kesatuan_terlapor_lp_disiplin_edit.text =
-            "Kesatuan : ${disiplin?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                disiplin?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase()
+            }"
         edt_ket_pelapor_disiplin_edit.setText(disiplin?.detail_laporan?.keterangan_pelapor)
 
         txt_nama_pelapor_disiplin_lp_add.text =
             "Nama : ${disiplin?.detail_laporan?.personel_pelapor?.nama}"
         txt_pangkat_pelapor_disiplin_lp_add.text =
-            "Pangkat : ${disiplin?.detail_laporan?.personel_pelapor?.pangkat.toString()
-                .toUpperCase()}"
+            "Pangkat : ${
+                disiplin?.detail_laporan?.personel_pelapor?.pangkat.toString()
+                    .toUpperCase()
+            }"
         txt_nrp_pelapor_disiplin_lp_add.text =
             "NRP : ${disiplin?.detail_laporan?.personel_pelapor?.nrp}"
         txt_jabatan_pelapor_disiplin_lp_add.text =
             "Jabatan : ${disiplin?.detail_laporan?.personel_pelapor?.jabatan}"
         txt_kesatuan_pelapor_disiplin_lp_add.text =
-            "Kesatuan : ${disiplin?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                disiplin?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase()
+            }"
 
         edt_kronologis_pelapor_disiplin_edit.setText(disiplin?.detail_laporan?.kronologis_dari_pelapor)
         edt_rincian_pelanggaran_disiplin.setText(disiplin?.detail_laporan?.rincian_pelanggaran_disiplin)
 
         edt_kota_buat_edit_lp_disiplin.setText(disiplin?.kota_buat_laporan)
         edt_tgl_buat_edit_lp_disiplin.setText(disiplin?.tanggal_buat_laporan)
-        edt_nama_pimpinan_bidang_edit_disiplin.setText(disiplin?.detail_laporan?.nama_yang_mengetahui)
+        edt_nama_pimpinan_bidang_edit_disiplin.setText(disiplin?.detail_laporan?.nama_kabid_propam)
         edt_pangkat_pimpinan_bidang_edit_disiplin.setText(
-            disiplin?.detail_laporan?.pangkat_yang_mengetahui.toString().toUpperCase()
+            disiplin?.detail_laporan?.pangkat_kabid_propam.toString().toUpperCase()
         )
-        edt_nrp_pimpinan_bidang_edit_disiplin.setText(disiplin?.detail_laporan?.nrp_yang_mengetahui)
-        edt_jabatan_pimpinan_bidang_edit_disiplin.setText(disiplin?.detail_laporan?.jabatan_yang_mengetahui)
+        edt_nrp_pimpinan_bidang_edit_disiplin.setText(disiplin?.detail_laporan?.nrp_kabid_propam)
+        edt_jabatan_pimpinan_bidang_edit_disiplin.setText(disiplin?.detail_laporan?.jabatan_kabid_propam)
         edt_uraian_pelanggaran_disiplin_edit.setText(disiplin?.uraian_pelanggaran)
 
 //        spinner_kesatuan_pimpinan_bidang_edit_disiplin.setText(disiplin?.kesatuan_yang_mengetahui.toString().toUpperCase())
@@ -145,9 +151,10 @@ class EditLpDisiplinActivity : BaseActivity() {
 
     }
 
-    private fun updateLpDisiplin(
-        disiplin: LpPidanaResp?, changedIdTerlapor: Int?, changedIdPelapor: Int?
-    ) {
+    private fun updateLpDisiplin(disiplin: LpResp?) {
+//        changedIdPelapor = disiplin?.detail_laporan?.personel_pelapor?.id
+//        changedIdTerlapor = disiplin?.personel_terlapor?.id
+
         editLpDisiplinReq.id_satuan_kerja = 123
         editLpDisiplinReq.waktu_buat_laporan = edt_pukul_buat_edit_lp_disiplin.text.toString()
         editLpDisiplinReq.no_lp = edt_no_lp_disiplin_edit.text.toString()
@@ -160,31 +167,31 @@ class EditLpDisiplinActivity : BaseActivity() {
 
         editLpDisiplinReq.kota_buat_laporan = edt_kota_buat_edit_lp_disiplin.text.toString()
         editLpDisiplinReq.tanggal_buat_laporan = edt_tgl_buat_edit_lp_disiplin.text.toString()
-        editLpDisiplinReq.nama_yang_mengetahui =
+        editLpDisiplinReq.nama_kabid_propam =
             edt_nama_pimpinan_bidang_edit_disiplin.text.toString()
-        editLpDisiplinReq.pangkat_yang_mengetahui =
+        editLpDisiplinReq.pangkat_kabid_propam =
             edt_pangkat_pimpinan_bidang_edit_disiplin.text.toString()
-        editLpDisiplinReq.nrp_yang_mengetahui =
+        editLpDisiplinReq.nrp_kabid_propam =
             edt_nrp_pimpinan_bidang_edit_disiplin.text.toString()
-        editLpDisiplinReq.jabatan_yang_mengetahui =
+        editLpDisiplinReq.jabatan_kabid_propam =
             edt_jabatan_pimpinan_bidang_edit_disiplin.text.toString()
         editLpDisiplinReq.uraian_pelanggaran = edt_uraian_pelanggaran_disiplin_edit.text.toString()
-        editLpDisiplinReq.id_personel_operator = sessionManager1.fetchUser()?.id
-//        editLpDisiplinReq.id_personel_pelapor = disiplin?.personel_pelapor?.id
-        editLpDisiplinReq.id_personel_terlapor = disiplin?.personel_terlapor?.id
+//        editLpDisiplinReq.id_personel_operator = sessionManager1.fetchUser()?.id
+        editLpDisiplinReq.id_personel_pelapor = changedIdPelapor
+        editLpDisiplinReq.id_personel_terlapor = changedIdTerlapor
 //        editLpDisiplinReq.kesatuan_yang_mengetahui = namaSatker
 //        lpDisiplinReq.id_personel_pelapor = this.changedIdPelapor
 
-        if (changedIdPelapor == null) {
-            editLpDisiplinReq.id_personel_pelapor = disiplin?.detail_laporan?.personel_pelapor?.id
-        } else {
-            editLpDisiplinReq.id_personel_pelapor = changedIdPelapor
-        }
-        if (changedIdTerlapor == null) {
-            editLpDisiplinReq.id_personel_terlapor = disiplin?.personel_terlapor?.id
-        } else {
-            editLpDisiplinReq.id_personel_terlapor = changedIdTerlapor
-        }
+           if (changedIdPelapor == null) {
+               editLpDisiplinReq.id_personel_pelapor = disiplin?.detail_laporan?.personel_pelapor?.id
+           } else {
+               editLpDisiplinReq.id_personel_pelapor = changedIdPelapor
+           }
+           if (changedIdTerlapor == null) {
+               editLpDisiplinReq.id_personel_terlapor = disiplin?.personel_terlapor?.id
+           } else {
+               editLpDisiplinReq.id_personel_terlapor = changedIdTerlapor
+           }
 
 //        Log.e("is same", "${lpDisiplinReq.id_personel_pelapor == disiplin?.personel_pelapor}")
 //        if(lpDisiplinReq.id_personel_pelapor != disiplin?.id_personel_pelapor) {
@@ -194,11 +201,9 @@ class EditLpDisiplinActivity : BaseActivity() {
         apiUpdDisiplin(disiplin)
     }
 
-    private fun apiUpdDisiplin(disiplin: LpPidanaResp?) {
+    private fun apiUpdDisiplin(disiplin: LpResp?) {
         NetworkConfig().getServLp().updLpDisiplin(
-            "Bearer ${sessionManager1.fetchAuthToken()}",
-            disiplin?.id,
-            editLpDisiplinReq
+            "Bearer ${sessionManager1.fetchAuthToken()}", disiplin?.id, editLpDisiplinReq
         ).enqueue(object : Callback<Base1Resp<DokLpResp>> {
             override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
                 Toast.makeText(this@EditLpDisiplinActivity, R.string.error_conn, Toast.LENGTH_SHORT)
@@ -210,7 +215,7 @@ class EditLpDisiplinActivity : BaseActivity() {
                 call: Call<Base1Resp<DokLpResp>>,
                 response: Response<Base1Resp<DokLpResp>>
             ) {
-                if (response.body()?.message == "Data lp updated succesfully") {
+                if (response.body()?.message == "Data lp disiplin updated succesfully") {
                     val animated = ContextCompat.getDrawable(
                         this@EditLpDisiplinActivity,
                         R.drawable.animated_check
@@ -253,8 +258,10 @@ class EditLpDisiplinActivity : BaseActivity() {
                         txt_nrp_pelapor_disiplin_lp_add.text = " NRP : ${personel?.nrp}"
                         txt_jabatan_pelapor_disiplin_lp_add.text = " Jabatan : ${personel?.jabatan}"
                         txt_kesatuan_pelapor_disiplin_lp_add.text =
-                            " Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString()
-                                .toUpperCase()}"
+                            " Kesatuan : ${
+                                personel?.satuan_kerja?.kesatuan.toString()
+                                    .toUpperCase()
+                            }"
                         Log.e("id pelapor", "$changedIdPelapor")
 
                     }
@@ -267,8 +274,10 @@ class EditLpDisiplinActivity : BaseActivity() {
                         txt_jabatan_terlapor_lp_disiplin_edit.text =
                             "Jabatan : ${personel?.jabatan}"
                         txt_kesatuan_terlapor_lp_disiplin_edit.text =
-                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString()
-                                .toUpperCase()}"
+                            "Kesatuan : ${
+                                personel?.satuan_kerja?.kesatuan.toString()
+                                    .toUpperCase()
+                            }"
                         Log.e("id terlapor", "$changedIdTerlapor")
 
                     }

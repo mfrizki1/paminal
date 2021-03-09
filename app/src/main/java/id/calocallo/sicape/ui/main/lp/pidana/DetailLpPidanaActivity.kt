@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -22,8 +21,8 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity.Companion.EDIT_PASAL_DILANGGAR
-import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity.Companion.EDIT_PASAL_PIDANA
 import id.calocallo.sicape.ui.main.lp.pidana.EditLpPidanaActivity.Companion.EDIT_PIDANA
+import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
@@ -31,6 +30,7 @@ import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
+import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
@@ -38,7 +38,6 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class DetailLpPidanaActivity : BaseActivity() {
     companion object {
@@ -48,6 +47,9 @@ class DetailLpPidanaActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterDetailPasalDilanggar: ReusableAdapter<PasalDilanggarResp>
     private lateinit var callbackDetailPasalDilanggar: AdapterCallback<PasalDilanggarResp>
+
+    private var adapterDetailSaksiPidana = ReusableAdapter<LpSaksiResp>(this)
+    private lateinit var callbackDetailSaksiPidana: AdapterCallback<LpSaksiResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lp_pidana)
@@ -83,7 +85,14 @@ class DetailLpPidanaActivity : BaseActivity() {
             intent.putExtra(EDIT_PASAL_DILANGGAR, pidana)
             startActivity(intent)
         }
+        btn_edit_saksi_pidana.setOnClickListener {
+            val intent = Intent(this, ListSaksiLpActivity::class.java)
+            intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, pidana)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
     }
+
 
     private fun generateDoc(pidana: LpMinResp?) {
         NetworkConfig().getServLp()
@@ -123,7 +132,7 @@ class DetailLpPidanaActivity : BaseActivity() {
             })
     }
 
-    private fun saveDocLpPidana(dok: LpPidanaResp?) {
+    private fun saveDocLpPidana(dok: LpResp?) {
         Log.e("urlDok", "${dok?.dokumen?.url}")
         Handler(Looper.getMainLooper()).postDelayed({
             btn_generate_pidana.hideProgress(R.string.success_generate_doc)
@@ -141,43 +150,59 @@ class DetailLpPidanaActivity : BaseActivity() {
         }, 2000)
     }
 
-    private fun gotoBrowser(dok: LpPidanaResp?) {
+    private fun gotoBrowser(dok: LpResp?) {
         val uri = Uri.parse(dok?.dokumen?.url)
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
 
     }
 
+/*   private fun downloadDok(lp: LpResp?) {
+       val folder = File(Environment.DIRECTORY_DOWNLOADS + "/" + "LP")
+       if (!folder.exists()) {
+           folder.mkdirs()
+       }
+
+       val fileName = "PIDANA_${lp?.no_lp}.${lp?.dokumen?.jenis}"
+       val urlOfTheFile = lp?.dokumen?.url
+       urlOfTheFile?.let {
+           FileDownloadManager.initDownload(
+               this,
+               it,
+               folder.absolutePath,
+               fileName
+           )
+       }
+//        val fileName = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date()) + ".mp3"
+   }*/
+
     private fun apiDetailPidana(pidana: LpMinResp?) {
         NetworkConfig().getServLp()
             .getLpById("Bearer ${sessionManager1.fetchAuthToken()}", pidana?.id).enqueue(object :
-                Callback<LpPidanaResp> {
-                override fun onFailure(call: Call<LpPidanaResp>, t: Throwable) {
+                Callback<LpResp> {
+                override fun onFailure(call: Call<LpResp>, t: Throwable) {
                     Log.e("t", "$t")
                     Toast.makeText(this@DetailLpPidanaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
                         .show()
                 }
 
                 override fun onResponse(
-                    call: Call<LpPidanaResp>,
-                    response: Response<LpPidanaResp>
+                    call: Call<LpResp>,
+                    response: Response<LpResp>
                 ) {
                     if (response.isSuccessful) {
                         getDetailPidana(response.body())
                         Log.e("response", "${response.body()}")
                     } else {
                         Toast.makeText(
-                            this@DetailLpPidanaActivity,
-                            "Error Koneksi",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                            this@DetailLpPidanaActivity, "Error Koneksi", Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             })
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getDetailPidana(pidana: LpPidanaResp?) {
+    private fun getDetailPidana(pidana: LpResp?) {
         /*if (pidana?.status_pelapor == "polisi") {
             ll_detail_personel_pidana.visible()
             ll_detail_sipil_pidana.gone()
@@ -194,23 +219,24 @@ class DetailLpPidanaActivity : BaseActivity() {
             "Tanggal : ${formatterTanggal(pidana?.tanggal_buat_laporan)}"
 
         //pimpinan
-          txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.nama_yang_mengetahui}"
-          txt_detail_pangkat_nrp_pimpinan_pidana.text =
-              "Pangkat : ${pidana?.pangkat_yang_mengetahui.toString()
-                  .toUpperCase()}, NRP : ${pidana?.nrp_yang_mengetahui}"
-          txt_detail_jabatan_pimpinan_pidana.text = "Jabatan : ${pidana?.jabatan_yang_mengetahui}"
-//          txt_detail_kesatuan_pimpinan_pidana.text =
-//              "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
+        txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.detail_laporan?.nama_kep_spkt}"
+        txt_detail_pangkat_nrp_pimpinan_pidana.text =
+            "Pangkat : ${pidana?.detail_laporan?.pangkat_kep_spkt.toString().toUpperCase()}," +
+                    " NRP : ${pidana?.detail_laporan?.nrp_kep_spkt}"
+        txt_detail_jabatan_pimpinan_pidana.text =
+            "Jabatan : ${pidana?.detail_laporan?.jabatan_kep_spkt}"
+
 
         //terlapor
         txt_detail_nama_terlapor.text = "Nama : ${pidana?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor.text =
-            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString()
-                .toUpperCase()}, NRP : ${pidana?.personel_terlapor?.nrp}"
+            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}," +
+                    " NRP : ${pidana?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
         txt_detail_kesatuan_terlapor.text =
-            "Kesatuan : ${pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString().toUpperCase()
+            }"
 
         /*  //pelapor
           txt_detail_nama_pelapor.text = "Nama : ${pidana?.detail_laporan?.nama_pelapor}"
@@ -230,7 +256,8 @@ class DetailLpPidanaActivity : BaseActivity() {
         txt_detail_alamat_sipil.text = "Alamat : ${pidana?.detail_laporan?.alamat_pelapor}"
         txt_detail_no_telp_sipil.text = "No Telepon : ${pidana?.detail_laporan?.no_telp_pelapor}"
         txt_detail_nik_sipil.text = "NIK KTP : ${pidana?.detail_laporan?.nik_ktp_pelapor}"
-        txt_detail_jk_sipil.text = "Jenis Kelamin : ${pidana?.detail_laporan?.jenis_kelamin_pelapor}"
+        txt_detail_jk_sipil.text =
+            "Jenis Kelamin : ${pidana?.detail_laporan?.jenis_kelamin_pelapor}"
         txt_detail_ttl_sipil.text =
             "TTL : ${pidana?.detail_laporan?.tempat_lahir_pelapor}, ${formatterTanggal(pidana?.detail_laporan?.tanggal_lahir_pelapor)}"
 
@@ -249,6 +276,30 @@ class DetailLpPidanaActivity : BaseActivity() {
                 .isVerticalView().addData(it)
                 .setLayout(R.layout.item_pasal_lp).build(rv_detail_lp_pidana_pasal)
 
+        }
+        //saksi
+        callbackDetailSaksiPidana = object : AdapterCallback<LpSaksiResp> {
+            override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
+                if (data.status_saksi == "personel") {
+                    itemView.txt_detail_1.text = data.personel?.nama
+                    itemView.txt_detail_2.text = "Personel"
+                } else {
+                    itemView.txt_detail_1.text = data.nama
+                    if (data.is_korban == 0) {
+                        itemView.txt_detail_2.text = "Saksi"
+                    } else {
+                        itemView.txt_detail_2.text = "Korban"
+                    }
+                }
+
+            }
+
+            override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {}
+        }
+        pidana?.saksi?.let {
+            adapterDetailSaksiPidana.adapterCallback(callbackDetailSaksiPidana)
+                .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
+                .build(rv_detail_saksi_pidana)
         }
 
         /*button DOK*/

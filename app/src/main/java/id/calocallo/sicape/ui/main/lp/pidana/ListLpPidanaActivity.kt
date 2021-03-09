@@ -6,14 +6,9 @@ import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.LpMinResp
-import id.calocallo.sicape.network.response.PasalDilanggarResp
-import id.calocallo.sicape.network.response.LpPidanaResp
-import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.ui.main.lp.AddLpActivity
 import id.calocallo.sicape.ui.main.lp.pidana.DetailLpPidanaActivity.Companion.DETAIL_PIDANA
 import id.calocallo.sicape.utils.SessionManager1
@@ -33,15 +28,8 @@ import retrofit2.Response
 
 class ListLpPidanaActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var personelTerLapor = PersonelLapor()
-    private var personelPeLapor = PersonelLapor()
-    private var satKerResp = SatKerResp()
-
     private var adapterListPidana = ReusableAdapter<LpMinResp>(this)
     private lateinit var callbackListPidana: AdapterCallback<LpMinResp>
-    private var listPidana = arrayListOf<LpPidanaResp>()
-    private var listPasal = arrayListOf<PasalDilanggarResp>()
-    private val viewPool = RecyclerView.RecycledViewPool()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

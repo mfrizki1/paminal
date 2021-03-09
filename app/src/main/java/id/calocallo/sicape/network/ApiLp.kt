@@ -21,7 +21,7 @@ interface ApiLp {
 
         const val PASAL_DILANGGAR = "lp/{id_pasal}/pasal/dilanggar"
         const val UPD_PASAL_DILANGGAR = "lp/pasal/dilanggar/{id_pasal_dilanggar}"
-
+      
         const val SAKSI_LP = "lp/{id_lp}/saksi/kode/etik"
         const val UPD_SAKSI_LP = "lp/saksi/kode/etik/{id_saksi}"
 
@@ -40,7 +40,7 @@ interface ApiLp {
     fun getLpById(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?
-    ): Call<LpPidanaResp>
+    ): Call<LpResp>
 
 
     @Headers(ACCEPT)
@@ -79,27 +79,27 @@ interface ApiLp {
     ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)
-    @PATCH(LP_WITH_ID)
+    @PATCH("$LP_PIDANA/{id_lp}")
     fun updLpPidana(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,
-        @Body lpPidanaReq: EditLpPidanaReq
+        @Body lpPidanaReq: LpPidanaReq
     ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)
-    @PATCH(LP_WITH_ID)
+    @PATCH("$LP_DISIPLIN/{id_lp}")
     fun updLpDisiplin(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,
-        @Body editLpDisiplinReq: EditLpDisiplinReq
+        @Body editLpDisiplinReq: LpDisiplinReq
     ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)
-    @PATCH(LP_WITH_ID)
+    @PATCH("$LP_KKE/{id_lp}")
     fun updLpKke(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,
-        @Body editLpKkeReq: EditLpKkeReq
+        @Body editLpKkeReq: LpKkeReq
     ): Call<Base1Resp<DokLpResp>>
 
 
@@ -171,30 +171,53 @@ interface ApiLp {
     /*SAKSI*/
 
     @Headers(ACCEPT)
-    @GET(SAKSI_LP)
-    fun getSaksiByIdLp(
+    @GET("lp/{id_lp}/saksi")
+    fun getSaksiAllByLp(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int
     ): Call<ArrayList<LpSaksiResp>>
 
     @Headers(ACCEPT)
-    @POST(SAKSI_LP)
-    fun addSaksiByIdLp(
+    @GET("lp/saksi/{id_saksi}")
+    fun getSaksiById(
         @Header("Authorization") tokenBearer: String,
-        @Path("id_lp") id_lp: Int,
-        @Body saksiReq: SaksiReq
-    ): Call<Base1Resp<AddSaksiResp>>
+        @Path("id_saksi") id_saksi: Int?
+    ): Call<LpSaksiResp>
 
     @Headers(ACCEPT)
-    @PATCH(UPD_SAKSI_LP)
-    fun updSaksiSingle(
+    @POST("lp/{id_lp}/saksi/personel")
+    fun addSaksiPersonel(
         @Header("Authorization") tokenBearer: String,
-        @Path("id_saksi") id_saksi: Int,
-        @Body saksiReq: SaksiReq
-    ): Call<Base1Resp<AddSaksiResp>>
+        @Path("id_lp") id_lp: Int?,
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiPersonelResp>>
 
     @Headers(ACCEPT)
-    @DELETE(UPD_SAKSI_LP)
+    @POST("lp/{id_lp}/saksi/sipil")
+    fun addSaksiSipil(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiSipilResp>>
+    @Headers(ACCEPT)
+    @PATCH("lp/saksi/{id_lp}/personel")
+    fun updSaksiPersonel(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiPersonelResp>>
+
+    @Headers(ACCEPT)
+    @PATCH("lp/saksi/{id_lp}/sipil")
+    fun updSaksiSipil(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiSipilResp>>
+
+
+    @Headers(ACCEPT)
+    @DELETE("lp/saksi/{id_saksi}")
     fun delSaksiSingle(
         @Header("Authorization") tokenBearer: String,
         @Path("id_saksi") id_saksi: Int

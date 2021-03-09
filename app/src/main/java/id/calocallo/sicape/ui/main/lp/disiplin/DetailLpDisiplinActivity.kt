@@ -19,6 +19,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
+import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
@@ -26,6 +27,8 @@ import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
+import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
+import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
@@ -33,11 +36,15 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class DetailLpDisiplinActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var adapterDetailPasalDisiplin = ReusableAdapter<PasalDilanggarResp>(this)
     private lateinit var callbackDetailPasalDilanggarDisiplin: AdapterCallback<PasalDilanggarResp>
+
+    private var adapterDetailSaksiDisp = ReusableAdapter<LpSaksiResp>(this)
+    private lateinit var callbackDetailSaksiDisp: AdapterCallback<LpSaksiResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lp_disiplin)
@@ -59,6 +66,13 @@ class DetailLpDisiplinActivity : BaseActivity() {
             intent.putExtra(ListPasalDilanggarActivity.EDIT_PASAL_DILANGGAR, disiplin)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+        }
+
+        btn_edit_saksi_disiplin.setOnClickListener {
+            val intent = Intent(this, ListSaksiLpActivity::class.java)
+            intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, disiplin)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
 
@@ -101,7 +115,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
             })
     }
 
-    private fun saveDocLpDisiplin(lp: LpPidanaResp?) {
+    private fun saveDocLpDisiplin(lp: LpResp?) {
         Handler(Looper.getMainLooper()).postDelayed({
             btn_generate_disiplin.hideProgress(R.string.success_generate_doc)
             alert("Lihat Dokumen") {
@@ -117,7 +131,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
         }, 2000)
     }
 
-    private fun viewDocDispl(lp: LpPidanaResp?) {
+    private fun viewDocDispl(lp: LpResp?) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(lp?.dokumen?.url)))
 //        finish()
     }
@@ -125,19 +139,16 @@ class DetailLpDisiplinActivity : BaseActivity() {
     private fun apiDetailDisiplin(disiplin: LpMinResp?) {
         NetworkConfig().getServLp()
             .getLpById("Bearer ${sessionManager1.fetchAuthToken()}", disiplin?.id).enqueue(object :
-                Callback<LpPidanaResp> {
-                override fun onFailure(call: Call<LpPidanaResp>, t: Throwable) {
+                Callback<LpResp> {
+                override fun onFailure(call: Call<LpResp>, t: Throwable) {
                     Toast.makeText(
-                        this@DetailLpDisiplinActivity,
-                        "Error Koneksi",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                        this@DetailLpDisiplinActivity, "Error Koneksi", Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onResponse(
-                    call: Call<LpPidanaResp>,
-                    response: Response<LpPidanaResp>
+                    call: Call<LpResp>,
+                    response: Response<LpResp>
                 ) {
                     if (response.isSuccessful) {
                         getViewDisiplin(response.body())
@@ -155,7 +166,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
 
 
     @SuppressLint("SetTextI18n")
-    private fun getViewDisiplin(disiplin: LpPidanaResp?) {
+    private fun getViewDisiplin(disiplin: LpResp?) {
         //general
         txt_detail_no_lp_disiplin.text = disiplin?.no_lp
         txt_detail_macam_pelanggaran_disiplin.text = disiplin?.detail_laporan?.macam_pelanggaran
@@ -166,38 +177,46 @@ class DetailLpDisiplinActivity : BaseActivity() {
             disiplin?.detail_laporan?.rincian_pelanggaran_disiplin
         //pimpinan
         txt_detail_nama_pimpinan_disiplin.text =
-            "Nama : ${disiplin?.detail_laporan?.nama_yang_mengetahui}"
+            "Nama : ${disiplin?.detail_laporan?.nama_kabid_propam}"
         txt_detail_pangkat_nrp_pimpinan_disiplin.text =
-            "Pangkat : ${disiplin?.detail_laporan?.pangkat_yang_mengetahui.toString()
-                .toUpperCase()}, NRP : ${disiplin?.detail_laporan?.nrp_yang_mengetahui}"
+            "Pangkat : ${
+                disiplin?.detail_laporan?.pangkat_kabid_propam.toString()
+                    .toUpperCase(Locale.ROOT)
+            }, NRP : ${disiplin?.detail_laporan?.nrp_kabid_propam}"
         txt_detail_jabatan_pimpinan_disiplin.text =
-            "Jabatan : ${disiplin?.detail_laporan?.jabatan_yang_mengetahui}"
-//         txt_detail_kesatuan_pimpinan_disiplin.text =
-//             "Kesatuan : ${disiplin?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
+            "Jabatan : ${disiplin?.detail_laporan?.jabatan_kabid_propam}"
 
         //terlapor
         txt_detail_nama_terlapor_disiplin.text = "Nama : ${disiplin?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_disiplin.text =
-            "Pangkat : ${disiplin?.personel_terlapor?.pangkat.toString()
-                .toUpperCase()}, NRP : ${disiplin?.personel_terlapor?.nrp}"
+            "Pangkat : ${
+                disiplin?.personel_terlapor?.pangkat.toString()
+                    .toUpperCase(Locale.ROOT)
+            }, NRP : ${disiplin?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor_disiplin.text =
             "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
         txt_detail_kesatuan_terlapor_disiplin.text =
-            "Kesatuan : ${disiplin?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                disiplin?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase(Locale.ROOT)
+            }"
 
         //pelapor
         txt_detail_nama_pelapor_disiplin.text =
             "Nama : ${disiplin?.detail_laporan?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_disiplin.text =
-            "Pangkat : ${disiplin?.detail_laporan?.personel_pelapor?.pangkat.toString()
-                .toUpperCase()}, NRP : ${disiplin?.detail_laporan?.personel_pelapor?.nrp}"
+            "Pangkat : ${
+                disiplin?.detail_laporan?.personel_pelapor?.pangkat.toString()
+                    .toUpperCase(Locale.ROOT)
+            }, NRP : ${disiplin?.detail_laporan?.personel_pelapor?.nrp}"
 
         txt_detail_jabatan_pelapor_disiplin.text =
             "Jabatan : ${disiplin?.detail_laporan?.personel_pelapor?.jabatan}"
         txt_detail_kesatuan_pelapor_disiplin.text =
-            "Kesatuan : ${disiplin?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                disiplin?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase(Locale.ROOT)
+            }"
         txt_detail_keterangan_pelapor_disiplin.text = disiplin?.detail_laporan?.keterangan_pelapor
         txt_detail_kronologis_pelapor_disiplin.text =
             disiplin?.detail_laporan?.kronologis_dari_pelapor
@@ -217,6 +236,33 @@ class DetailLpDisiplinActivity : BaseActivity() {
                 .isVerticalView().addData(it).setLayout(R.layout.item_pasal_lp)
                 .build(rv_detail_pasal_disiplin)
         }
+
+        //saksi
+        callbackDetailSaksiDisp = object : AdapterCallback<LpSaksiResp> {
+            override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
+                if (data.status_saksi == "personel") {
+                    itemView.txt_detail_1.text = data.personel?.nama
+                    itemView.txt_detail_2.text = "Personel"
+                } else {
+                    itemView.txt_detail_1.text = data.nama
+                    if (data.is_korban == 0) {
+                        itemView.txt_detail_2.text = "Saksi"
+                    } else {
+                        itemView.txt_detail_2.text = "Korban"
+                    }
+                }
+
+            }
+
+            override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {
+            }
+        }
+        disiplin?.saksi?.let {
+            adapterDetailSaksiDisp.adapterCallback(callbackDetailSaksiDisp)
+                .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
+                .build(rv_detail_saksi_disiplin)
+        }
+
         /*buton lihat dok*/
         if (disiplin?.is_ada_dokumen == 0) {
             btn_lihat_dok_disiplin.gone()
@@ -276,12 +322,20 @@ class DetailLpDisiplinActivity : BaseActivity() {
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                     if (response.isSuccessful) {
-                        if(response.body()?.message == "Data lp removed succesfully"){
-                            Toast.makeText(this@DetailLpDisiplinActivity, R.string.data_deleted, Toast.LENGTH_SHORT).show()
+                        if (response.body()?.message == "Data lp removed succesfully") {
+                            Toast.makeText(
+                                this@DetailLpDisiplinActivity,
+                                R.string.data_deleted,
+                                Toast.LENGTH_SHORT
+                            ).show()
                             finish()
                         }
-                    }else{
-                        Toast.makeText(this@DetailLpDisiplinActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            this@DetailLpDisiplinActivity,
+                            R.string.error_conn,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             })

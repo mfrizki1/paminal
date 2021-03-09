@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SaksiReq (
+data class SaksiLpReq (
+    var id_personel: Int?,
     var nama: String?,
     var tempat_lahir: String?,
     var tanggal_lahir: String?,
@@ -12,5 +13,5 @@ data class SaksiReq (
     var alamat: String?,
     var is_korban: Int?
 ) : Parcelable {
-    constructor():this(null,null,null,null,null,null)
+    constructor():this(null,null,null,null,null,null,null)
 }

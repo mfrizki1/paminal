@@ -13,6 +13,7 @@ import id.calocallo.sicape.network.request.SkhdReq
 import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.network.response.LpPidanaResp
+import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
 import id.calocallo.sicape.ui.main.choose.lp.ListLpSkhdActivity
@@ -116,7 +117,7 @@ class AddSkhdActivity : BaseActivity() {
         } else if (requestCode == REQ_CHOOSE_LP) {
             when (resultCode) {
                 ChooseLpSkhdActivity.RES_LP_PIDANA_SKHD -> {
-                    val pidana = data?.getParcelableExtra<LpPidanaResp>(ID_LP)
+                    val pidana = data?.getParcelableExtra<LpResp>(ID_LP)
                     idLp = pidana?.id
                     txt_lp_skhd_add.text = pidana?.no_lp
                 }

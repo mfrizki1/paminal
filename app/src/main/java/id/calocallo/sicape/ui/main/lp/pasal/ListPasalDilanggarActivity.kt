@@ -49,9 +49,9 @@ class ListPasalDilanggarActivity : BaseActivity() {
         adapterPasalDilanggarEdit = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data Pasal Dilanggar"
-        val pidana = intent.extras?.getParcelable<LpPidanaResp>(EDIT_PASAL_PIDANA)
-        val kodeEtik = intent.extras?.getParcelable<LpPidanaResp>(EDIT_PASAL_KKE)
-        val disiplin = intent.extras?.getParcelable<LpPidanaResp>(EDIT_PASAL_DISIPLIN)
+        val pidana = intent.extras?.getParcelable<LpResp>(EDIT_PASAL_PIDANA)
+        val kodeEtik = intent.extras?.getParcelable<LpResp>(EDIT_PASAL_KKE)
+        val disiplin = intent.extras?.getParcelable<LpResp>(EDIT_PASAL_DISIPLIN)
         val detailLp = intent.extras?.getParcelable<LpMinResp>(EDIT_PASAL_DILANGGAR)
         jenisPelanggaran = sessionManager1.getJenisLP()
      /*   if (pidana != null) {
