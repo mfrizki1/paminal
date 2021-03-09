@@ -30,6 +30,7 @@ import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
+import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
@@ -46,6 +47,9 @@ class DetailLpPidanaActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterDetailPasalDilanggar: ReusableAdapter<PasalDilanggarResp>
     private lateinit var callbackDetailPasalDilanggar: AdapterCallback<PasalDilanggarResp>
+
+    private var adapterDetailSaksiPidana = ReusableAdapter<LpSaksiResp>(this)
+    private lateinit var callbackDetailSaksiPidana: AdapterCallback<LpSaksiResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lp_pidana)
@@ -190,11 +194,8 @@ class DetailLpPidanaActivity : BaseActivity() {
                         Log.e("response", "${response.body()}")
                     } else {
                         Toast.makeText(
-                            this@DetailLpPidanaActivity,
-                            "Error Koneksi",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                            this@DetailLpPidanaActivity, "Error Koneksi", Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             })
@@ -220,27 +221,21 @@ class DetailLpPidanaActivity : BaseActivity() {
         //pimpinan
         txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.detail_laporan?.nama_kep_spkt}"
         txt_detail_pangkat_nrp_pimpinan_pidana.text =
-            "Pangkat : ${
-                pidana?.detail_laporan?.pangkat_kep_spkt.toString()
-                    .toUpperCase()
-            }, NRP : ${pidana?.detail_laporan?.nrp_kep_spkt}"
+            "Pangkat : ${pidana?.detail_laporan?.pangkat_kep_spkt.toString().toUpperCase()}," +
+                    " NRP : ${pidana?.detail_laporan?.nrp_kep_spkt}"
         txt_detail_jabatan_pimpinan_pidana.text =
             "Jabatan : ${pidana?.detail_laporan?.jabatan_kep_spkt}"
-//          txt_detail_kesatuan_pimpinan_pidana.text =
-//              "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
+
 
         //terlapor
         txt_detail_nama_terlapor.text = "Nama : ${pidana?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor.text =
-            "Pangkat : ${
-                pidana?.personel_terlapor?.pangkat.toString()
-                    .toUpperCase()
-            }, NRP : ${pidana?.personel_terlapor?.nrp}"
+            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}," +
+                    " NRP : ${pidana?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
         txt_detail_kesatuan_terlapor.text =
             "Kesatuan : ${
-                pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                    .toUpperCase()
+                pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString().toUpperCase()
             }"
 
         /*  //pelapor
@@ -281,6 +276,30 @@ class DetailLpPidanaActivity : BaseActivity() {
                 .isVerticalView().addData(it)
                 .setLayout(R.layout.item_pasal_lp).build(rv_detail_lp_pidana_pasal)
 
+        }
+        //saksi
+        callbackDetailSaksiPidana = object : AdapterCallback<LpSaksiResp> {
+            override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
+                if (data.status_saksi == "personel") {
+                    itemView.txt_detail_1.text = data.personel?.nama
+                    itemView.txt_detail_2.text = "Personel"
+                } else {
+                    itemView.txt_detail_1.text = data.nama
+                    if (data.is_korban == 0) {
+                        itemView.txt_detail_2.text = "Saksi"
+                    } else {
+                        itemView.txt_detail_2.text = "Korban"
+                    }
+                }
+
+            }
+
+            override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {}
+        }
+        pidana?.saksi?.let {
+            adapterDetailSaksiPidana.adapterCallback(callbackDetailSaksiPidana)
+                .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
+                .build(rv_detail_saksi_pidana)
         }
 
         /*button DOK*/

@@ -27,6 +27,8 @@ import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
+import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
+import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
@@ -40,6 +42,9 @@ class DetailLpDisiplinActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var adapterDetailPasalDisiplin = ReusableAdapter<PasalDilanggarResp>(this)
     private lateinit var callbackDetailPasalDilanggarDisiplin: AdapterCallback<PasalDilanggarResp>
+
+    private var adapterDetailSaksiDisp = ReusableAdapter<LpSaksiResp>(this)
+    private lateinit var callbackDetailSaksiDisp: AdapterCallback<LpSaksiResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lp_disiplin)
@@ -137,11 +142,8 @@ class DetailLpDisiplinActivity : BaseActivity() {
                 Callback<LpResp> {
                 override fun onFailure(call: Call<LpResp>, t: Throwable) {
                     Toast.makeText(
-                        this@DetailLpDisiplinActivity,
-                        "Error Koneksi",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                        this@DetailLpDisiplinActivity, "Error Koneksi", Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onResponse(
@@ -183,8 +185,6 @@ class DetailLpDisiplinActivity : BaseActivity() {
             }, NRP : ${disiplin?.detail_laporan?.nrp_kabid_propam}"
         txt_detail_jabatan_pimpinan_disiplin.text =
             "Jabatan : ${disiplin?.detail_laporan?.jabatan_kabid_propam}"
-//         txt_detail_kesatuan_pimpinan_disiplin.text =
-//             "Kesatuan : ${disiplin?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
         //terlapor
         txt_detail_nama_terlapor_disiplin.text = "Nama : ${disiplin?.personel_terlapor?.nama}"
@@ -236,6 +236,33 @@ class DetailLpDisiplinActivity : BaseActivity() {
                 .isVerticalView().addData(it).setLayout(R.layout.item_pasal_lp)
                 .build(rv_detail_pasal_disiplin)
         }
+
+        //saksi
+        callbackDetailSaksiDisp = object : AdapterCallback<LpSaksiResp> {
+            override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
+                if (data.status_saksi == "personel") {
+                    itemView.txt_detail_1.text = data.personel?.nama
+                    itemView.txt_detail_2.text = "Personel"
+                } else {
+                    itemView.txt_detail_1.text = data.nama
+                    if (data.is_korban == 0) {
+                        itemView.txt_detail_2.text = "Saksi"
+                    } else {
+                        itemView.txt_detail_2.text = "Korban"
+                    }
+                }
+
+            }
+
+            override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {
+            }
+        }
+        disiplin?.saksi?.let {
+            adapterDetailSaksiDisp.adapterCallback(callbackDetailSaksiDisp)
+                .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
+                .build(rv_detail_saksi_disiplin)
+        }
+
         /*buton lihat dok*/
         if (disiplin?.is_ada_dokumen == 0) {
             btn_lihat_dok_disiplin.gone()

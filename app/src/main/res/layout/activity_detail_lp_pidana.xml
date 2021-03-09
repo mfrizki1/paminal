@@ -277,7 +277,21 @@
             tools:listitem="@layout/item_pasal_lp" />
 
         <include layout="@layout/line_separator" />
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Saksi" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_detail_saksi_pidana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_16dp"
+            android:layout_marginTop="@dimen/space_half"
+            tools:listitem="@layout/item_pasal_lp" />
+
+        <include layout="@layout/layout_separator" />
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
