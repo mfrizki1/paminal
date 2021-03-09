@@ -13,11 +13,15 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.PutKkeMinResp
 import id.calocallo.sicape.network.response.PutKkeResp
 import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_put_kke.*
 import kotlinx.android.synthetic.main.item_skhd.view.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
+import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import retrofit2.Call
@@ -45,6 +49,7 @@ class ListPutKkeActivity : BaseActivity() {
     }
 
     private fun apiListPutKke() {
+        rl_pb.visible()
         NetworkConfig().getServSkhd().getPutKke("Bearer ${sessionManager1.fetchAuthToken()}")
             .enqueue(
                 object :
@@ -54,8 +59,12 @@ class ListPutKkeActivity : BaseActivity() {
                         response: Response<ArrayList<PutKkeMinResp>>
                     ) {
                         if (response.isSuccessful) {
+                            rl_pb.gone()
                             getListPutKke(response.body())
                         } else {
+                            rl_pb.gone()
+                            rl_no_data.visible()
+                            rv_put_kke.gone()
                             Toast.makeText(
                                 this@ListPutKkeActivity, R.string.error, Toast.LENGTH_SHORT
                             ).show()
@@ -64,6 +73,9 @@ class ListPutKkeActivity : BaseActivity() {
 
                     override fun onFailure(call: Call<ArrayList<PutKkeMinResp>>, t: Throwable) {
                         Toast.makeText(this@ListPutKkeActivity, "$t", Toast.LENGTH_SHORT).show()
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                        rv_put_kke.gone()
                     }
                 })
     }
