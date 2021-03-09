@@ -24,6 +24,7 @@ import id.calocallo.sicape.ui.main.skhd.edit.EditSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
+import id.calocallo.sicape.utils.ext.gone
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -50,6 +51,11 @@ class DetailSkhdActivity : BaseActivity() {
         detailSKHD = intent.extras?.getParcelable<SkhdMinResp>(DETAIL_SKHD)
 //        Log.e("detailSKHD", "$detailSKHD")
         apiDetailSkhd(detailSKHD)
+        val hakAkses = sessionManager1.fetchHakAkses()
+        if(hakAkses == "operator"){
+            btn_edit_skhd.gone()
+            btn_generate_skhd.gone()
+        }
 
         btn_edit_skhd.setOnClickListener {
             val intent = Intent(this, EditSkhdActivity::class.java)
