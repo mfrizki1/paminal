@@ -109,6 +109,11 @@ class ListPutKkeActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onResume() {
+        super.onResume()
+        apiListPutKke()
+    }
+
     companion object {
         const val DETAIL_PUTKKE = "DETAIL_PUTKKE"
     }
