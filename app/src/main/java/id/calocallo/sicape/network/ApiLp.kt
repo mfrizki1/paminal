@@ -216,13 +216,6 @@ interface ApiLp {
         @Body saksiReq: SaksiLpReq
     ): Call<Base1Resp<AddSaksiSipilResp>>
 
-    @Headers(ACCEPT)
-    @PATCH(UPD_SAKSI_LP)
-    fun updSaksiSingle(
-        @Header("Authorization") tokenBearer: String,
-        @Path("id_saksi") id_saksi: Int,
-        @Body saksiReq: SaksiLpReq
-    ): Call<Base1Resp<AddSaksiPersonelResp>>
 
     @Headers(ACCEPT)
     @DELETE("lp/saksi/{id_saksi}")
