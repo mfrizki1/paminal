@@ -33,20 +33,9 @@ class LpChooseActivity : BaseActivity() {
         const val JENIS_LP_CHOOSE = "JENIS_LP_CHOOSE"
     }
 
-    private var listLp: MutableList<LpResp> = mutableListOf()
-    private var listPidanaLP = ArrayList<LpPidanaResp>()
-    private var listkkeLP = ArrayList<LpKkeResp>()
-    private var listDisiplinLP = ArrayList<LpDisiplinResp>()
-
-    private var personelTerLapor = PersonelLapor()
-    private var personelPeLapor = PersonelLapor()
-    private var satKerResp = SatKerResp()
-    private var listPasal = arrayListOf<PasalDilanggarResp>()
-    private var listSaksi = arrayListOf<LpSaksiResp>()
-
     private lateinit var sessionManager1: SessionManager1
-    private lateinit var adapterLpPidanaChoose: ReusableAdapter<LpPidanaResp>
-    private lateinit var callbackLpPidanaChoose: AdapterCallback<LpPidanaResp>
+    private lateinit var adapterLpChoose: ReusableAdapter<LpResp>
+    private lateinit var callbackLpChoose: AdapterCallback<LpResp>
 
     private var adapterLpKkeChoose = ReusableAdapter<LpKkeResp>(this)
     private lateinit var callbackLpKkeChoose: AdapterCallback<LpKkeResp>
@@ -61,7 +50,7 @@ class LpChooseActivity : BaseActivity() {
         setContentView(R.layout.activity_lp_choose)
 
         sessionManager1 = SessionManager1(this)
-        adapterLpPidanaChoose = ReusableAdapter(this)
+        adapterLpChoose = ReusableAdapter(this)
         adapterLpDisiplinChoose = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
         when (intent.extras?.getString(JENIS_LP_CHOOSE)) {

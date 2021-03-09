@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -23,6 +22,7 @@ import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity.Companion.EDIT_PASAL_DILANGGAR
 import id.calocallo.sicape.ui.main.lp.pidana.EditLpPidanaActivity.Companion.EDIT_PIDANA
+import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
@@ -37,7 +37,6 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class DetailLpPidanaActivity : BaseActivity() {
     companion object {
@@ -82,7 +81,14 @@ class DetailLpPidanaActivity : BaseActivity() {
             intent.putExtra(EDIT_PASAL_DILANGGAR, pidana)
             startActivity(intent)
         }
+        btn_edit_saksi_pidana.setOnClickListener {
+            val intent = Intent(this, ListSaksiLpActivity::class.java)
+            intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, pidana)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
     }
+
 
     private fun generateDoc(pidana: LpMinResp?) {
         NetworkConfig().getServLp()
@@ -146,24 +152,24 @@ class DetailLpPidanaActivity : BaseActivity() {
 
     }
 
- /*   private fun downloadDok(lp: LpResp?) {
-        val folder = File(Environment.DIRECTORY_DOWNLOADS + "/" + "LP")
-        if (!folder.exists()) {
-            folder.mkdirs()
-        }
+/*   private fun downloadDok(lp: LpResp?) {
+       val folder = File(Environment.DIRECTORY_DOWNLOADS + "/" + "LP")
+       if (!folder.exists()) {
+           folder.mkdirs()
+       }
 
-        val fileName = "PIDANA_${lp?.no_lp}.${lp?.dokumen?.jenis}"
-        val urlOfTheFile = lp?.dokumen?.url
-        urlOfTheFile?.let {
-            FileDownloadManager.initDownload(
-                this,
-                it,
-                folder.absolutePath,
-                fileName
-            )
-        }
+       val fileName = "PIDANA_${lp?.no_lp}.${lp?.dokumen?.jenis}"
+       val urlOfTheFile = lp?.dokumen?.url
+       urlOfTheFile?.let {
+           FileDownloadManager.initDownload(
+               this,
+               it,
+               folder.absolutePath,
+               fileName
+           )
+       }
 //        val fileName = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date()) + ".mp3"
-    }*/
+   }*/
 
     private fun apiDetailPidana(pidana: LpMinResp?) {
         NetworkConfig().getServLp()
@@ -212,23 +218,30 @@ class DetailLpPidanaActivity : BaseActivity() {
             "Tanggal : ${formatterTanggal(pidana?.tanggal_buat_laporan)}"
 
         //pimpinan
-          txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.detail_laporan?.nama_kep_spkt}"
-          txt_detail_pangkat_nrp_pimpinan_pidana.text =
-              "Pangkat : ${pidana?.detail_laporan?.pangkat_kep_spkt.toString()
-                  .toUpperCase()}, NRP : ${pidana?.detail_laporan?.nrp_kep_spkt}"
-          txt_detail_jabatan_pimpinan_pidana.text = "Jabatan : ${pidana?.detail_laporan?.jabatan_kep_spkt}"
+        txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.detail_laporan?.nama_kep_spkt}"
+        txt_detail_pangkat_nrp_pimpinan_pidana.text =
+            "Pangkat : ${
+                pidana?.detail_laporan?.pangkat_kep_spkt.toString()
+                    .toUpperCase()
+            }, NRP : ${pidana?.detail_laporan?.nrp_kep_spkt}"
+        txt_detail_jabatan_pimpinan_pidana.text =
+            "Jabatan : ${pidana?.detail_laporan?.jabatan_kep_spkt}"
 //          txt_detail_kesatuan_pimpinan_pidana.text =
 //              "Kesatuan : ${pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
 
         //terlapor
         txt_detail_nama_terlapor.text = "Nama : ${pidana?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor.text =
-            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString()
-                .toUpperCase()}, NRP : ${pidana?.personel_terlapor?.nrp}"
+            "Pangkat : ${
+                pidana?.personel_terlapor?.pangkat.toString()
+                    .toUpperCase()
+            }, NRP : ${pidana?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
         txt_detail_kesatuan_terlapor.text =
-            "Kesatuan : ${pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase()
+            }"
 
         /*  //pelapor
           txt_detail_nama_pelapor.text = "Nama : ${pidana?.detail_laporan?.nama_pelapor}"
@@ -248,7 +261,8 @@ class DetailLpPidanaActivity : BaseActivity() {
         txt_detail_alamat_sipil.text = "Alamat : ${pidana?.detail_laporan?.alamat_pelapor}"
         txt_detail_no_telp_sipil.text = "No Telepon : ${pidana?.detail_laporan?.no_telp_pelapor}"
         txt_detail_nik_sipil.text = "NIK KTP : ${pidana?.detail_laporan?.nik_ktp_pelapor}"
-        txt_detail_jk_sipil.text = "Jenis Kelamin : ${pidana?.detail_laporan?.jenis_kelamin_pelapor}"
+        txt_detail_jk_sipil.text =
+            "Jenis Kelamin : ${pidana?.detail_laporan?.jenis_kelamin_pelapor}"
         txt_detail_ttl_sipil.text =
             "TTL : ${pidana?.detail_laporan?.tempat_lahir_pelapor}, ${formatterTanggal(pidana?.detail_laporan?.tanggal_lahir_pelapor)}"
 

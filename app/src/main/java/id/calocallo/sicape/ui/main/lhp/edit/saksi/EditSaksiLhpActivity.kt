@@ -26,12 +26,12 @@ import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.*
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_alamat_sipil_saksi
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_jabatan_saksi_edit
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_kesatuan_saksi_edit
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nama_saksi_edit
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_jabatan_saksi_lp_add
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_kesatuan_saksi_lp_add
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nama_saksi_lp_add
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nama_sipil_saksi
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nrp_saksi_edit
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_pangkat_saksi_edit
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nrp_saksi_lp_add
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_pangkat_saksi_lp_add
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_pekerjaan_sipil_saksi
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_tanggal_lahir_sipil_saksi
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_tempat_lahir_sipil_saksi
@@ -134,11 +134,11 @@ class EditSaksiLhpActivity : BaseActivity() {
             rb_polisi_saksi_edit.isChecked = true
             ll_sipil_saksi_edit.gone()
             ll_personel_saksi_edit.visible()
-            txt_nama_saksi_edit.text ="Nama : ${saksi.nama}"
-            txt_pangkat_saksi_edit.text ="Pangkat : ${saksi.pangkat.toString().toUpperCase()}"
-            txt_nrp_saksi_edit.text ="NRP : ${saksi.nrp}"
-            txt_jabatan_saksi_edit.text ="Jabatan : ${saksi.jabatan}"
-            txt_kesatuan_saksi_edit.text ="Kesatuan : ${saksi.kesatuan.toString().toUpperCase()}"
+            txt_nama_saksi_lp_add.text ="Nama : ${saksi.nama}"
+            txt_pangkat_saksi_lp_add.text ="Pangkat : ${saksi.pangkat.toString().toUpperCase()}"
+            txt_nrp_saksi_lp_add.text ="NRP : ${saksi.nrp}"
+            txt_jabatan_saksi_lp_add.text ="Jabatan : ${saksi.jabatan}"
+            txt_kesatuan_saksi_lp_add.text ="Kesatuan : ${saksi.kesatuan.toString().toUpperCase()}"
             tempStatusSaksi = "polisi"
 //            idPersonelSaksi = saksi.id_personel
 
@@ -220,11 +220,11 @@ class EditSaksiLhpActivity : BaseActivity() {
         val personelSaksi = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_SAKSI_LHP) {
             idPersonelSaksi = personelSaksi?.id
-            txt_nama_saksi_edit.text ="Nama : ${personelSaksi?.nama}"
-            txt_pangkat_saksi_edit.text ="Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
-            txt_nrp_saksi_edit.text ="NRP : ${personelSaksi?.nrp}"
-            txt_jabatan_saksi_edit.text ="Jabatan : ${personelSaksi?.jabatan}"
-            txt_kesatuan_saksi_edit.text ="Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+            txt_nama_saksi_lp_add.text ="Nama : ${personelSaksi?.nama}"
+            txt_pangkat_saksi_lp_add.text ="Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
+            txt_nrp_saksi_lp_add.text ="NRP : ${personelSaksi?.nrp}"
+            txt_jabatan_saksi_lp_add.text ="Jabatan : ${personelSaksi?.jabatan}"
+            txt_kesatuan_saksi_lp_add.text ="Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
         }
     }
 

@@ -1,7 +1,6 @@
 package id.calocallo.sicape.model
 
 import android.os.Parcelable
-import id.calocallo.sicape.network.request.SaksiReq
 import id.calocallo.sicape.network.response.KetTerlaporLhpResp
 import id.calocallo.sicape.network.response.PersonelPenyelidikResp
 import id.calocallo.sicape.network.response.RefPenyelidikanResp

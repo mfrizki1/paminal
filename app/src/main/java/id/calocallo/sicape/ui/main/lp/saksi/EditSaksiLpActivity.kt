@@ -9,8 +9,8 @@ import android.widget.Toast
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.request.SaksiReq
-import id.calocallo.sicape.network.response.AddSaksiResp
+import id.calocallo.sicape.network.request.SaksiLpReq
+import id.calocallo.sicape.network.response.AddSaksiPersonelResp
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.network.response.LpSaksiResp
@@ -25,7 +25,7 @@ import retrofit2.Response
 
 class EditSaksiLpActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var saksiReq = SaksiReq()
+    private var saksiReq = SaksiLpReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_saksi_lp)
@@ -82,8 +82,8 @@ class EditSaksiLpActivity : BaseActivity() {
         saksi?.id?.let {
             NetworkConfig().getServLp().updSaksiSingle(
                 "Bearer ${sessionManager1.fetchAuthToken()}", it, saksiReq
-            ).enqueue(object : Callback<Base1Resp<AddSaksiResp>> {
-                override fun onFailure(call: Call<Base1Resp<AddSaksiResp>>, t: Throwable) {
+            ).enqueue(object : Callback<Base1Resp<AddSaksiPersonelResp>> {
+                override fun onFailure(call: Call<Base1Resp<AddSaksiPersonelResp>>, t: Throwable) {
                     btn_save_edit_saksi_lp.hideProgress(R.string.not_update)
                     Toast.makeText(
                         this@EditSaksiLpActivity, R.string.error_conn, Toast.LENGTH_SHORT
@@ -91,8 +91,8 @@ class EditSaksiLpActivity : BaseActivity() {
                 }
 
                 override fun onResponse(
-                    call: Call<Base1Resp<AddSaksiResp>>,
-                    response: Response<Base1Resp<AddSaksiResp>>
+                    call: Call<Base1Resp<AddSaksiPersonelResp>>,
+                    response: Response<Base1Resp<AddSaksiPersonelResp>>
                 ) {
                     if (response.body()?.message == "Data saksi kode etik updated succesfully") {
                         btn_save_edit_saksi_lp.hideProgress(R.string.data_updated)

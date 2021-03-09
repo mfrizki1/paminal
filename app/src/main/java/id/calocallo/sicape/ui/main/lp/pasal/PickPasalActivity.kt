@@ -25,12 +25,17 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.*
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.DokLpResp
+import id.calocallo.sicape.ui.main.MainActivity
 import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
 import id.calocallo.sicape.ui.main.lp.kke.ListLpKodeEtikActivity
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
 import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
+import id.calocallo.sicape.ui.main.lp.saksi.AddSaksiLpActivity
+import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.action
+import id.calocallo.sicape.utils.ext.showSnackbar
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal.*
 import kotlinx.android.synthetic.main.activity_pick_saksi.*
@@ -250,7 +255,8 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpKKeReq.alat_bukti = sessionManager1.getAlatBukiLP()
                 lpKKeReq.isi_laporan = sessionManager1.getIsiLapLP()
                 lpKKeReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
-                lpKKeReq.pasal_dilanggar = sessionManager1.getListPasalLP()
+                lpKKeReq.pasal_dilanggar = listIdPasal
+
 //                lpKKeReq.saksi_kode_etik = listSaksi as ArrayList<SaksiReq>
 //                lpKKeReq.saksi_kode_etik = selectedSaksi as ArrayList<LpSaksiResp>
 //                lpKKeReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
@@ -287,13 +293,14 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
                         }
-                        Handler(Looper.getMainLooper()).postDelayed({
+                        gotoAddSaksiLp(response.body()?.data)
+                       /* Handler(Looper.getMainLooper()).postDelayed({
                             val intent =
                                 Intent(this@PickPasalActivity, ListLpKodeEtikActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
                             finish()
-                        }, 500)
+                        }, 500)*/
                     } else {
                         Toast.makeText(
                             this@PickPasalActivity,
@@ -323,13 +330,14 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 ) {
                     if (response.body()?.message == "Data lp disiplin saved succesfully") {
                         btn_save_lp_all.hideDrawable(R.string.data_saved)
-                        Handler(Looper.getMainLooper()).postDelayed({
+                      /*  Handler(Looper.getMainLooper()).postDelayed({
                             val intent =
                                 Intent(this@PickPasalActivity, ListLpDisiplinActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
                             finish()
-                        }, 500)
+                        }, 500)*/
+                        gotoAddSaksiLp(response.body()?.data)
                     } else {
                         Toast.makeText(
                             this@PickPasalActivity,
@@ -370,13 +378,15 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
                         }
-                        Handler(Looper.getMainLooper()).postDelayed({
+                        gotoAddSaksiLp(response.body()?.data)
+
+                     /*   Handler(Looper.getMainLooper()).postDelayed({
                             val intent =
                                 Intent(this@PickPasalActivity, ListLpPidanaActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
                             finish()
-                        }, 500)
+                        }, 500)*/
                     } else {
                         btn_save_lp_all.hideDrawable(R.string.not_save)
                     }
@@ -384,9 +394,22 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
             })
     }
 
+    private fun gotoAddSaksiLp(data: DokLpResp?) {
+        btn_save_lp_all.showSnackbar(R.string.data_saved){
+            action(R.string.add_data_saksi) {
+                val intent = Intent(this@PickPasalActivity, AddSaksiLpActivity::class.java).apply {
+                    this.putExtra(DATA_LP, data?.lp)
+//                    this.putExtra("ADD_SINGLE_SAKSI", true)
+                }
+                startActivity(intent)
+            }
+        }
+    }
+
 
     companion object {
         const val ID_PELAPOR = "ID_PELAPOR"
+        const val DATA_LP = "DATA_LP"
         const val SIPIL = "SIPIL"
     }
 

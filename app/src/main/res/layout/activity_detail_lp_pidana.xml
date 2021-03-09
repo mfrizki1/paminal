@@ -370,6 +370,13 @@
             android:text="Edit Data Pasal Yang Dilanggar" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_saksi_pidana"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Data Saksi" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_generate_pidana"
             style="@style/Widget.Button"
             android:layout_width="match_parent"

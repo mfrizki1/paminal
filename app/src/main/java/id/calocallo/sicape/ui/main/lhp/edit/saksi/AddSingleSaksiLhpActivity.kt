@@ -153,11 +153,11 @@ class AddSingleSaksiLhpActivity : BaseActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_POLISI) {
             saksiReqLhp.nama = personelSaksi?.nama
             saksiReqLhp.id_personel = personelSaksi?.id
-            txt_nama_saksi_edit.text = "Nama : ${personelSaksi?.nama}"
-            txt_pangkat_saksi_edit.text = "Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
-            txt_nrp_saksi_edit.text = "NRP : ${personelSaksi?.nrp}"
-            txt_jabatan_saksi_edit.text = "Jabatan : ${personelSaksi?.jabatan}"
-            txt_kesatuan_saksi_edit.text = "Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+            txt_nama_saksi_lp_add.text = "Nama : ${personelSaksi?.nama}"
+            txt_pangkat_saksi_lp_add.text = "Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
+            txt_nrp_saksi_lp_add.text = "NRP : ${personelSaksi?.nrp}"
+            txt_jabatan_saksi_lp_add.text = "Jabatan : ${personelSaksi?.jabatan}"
+            txt_kesatuan_saksi_lp_add.text = "Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
         }
     }
 

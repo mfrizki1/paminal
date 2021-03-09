@@ -22,6 +22,7 @@ interface ApiLp {
         const val PASAL_DILANGGAR = "lp/{id_pasal}/pasal/dilanggar"
         const val UPD_PASAL_DILANGGAR = "lp/pasal/dilanggar/{id_pasal_dilanggar}"
 
+
         const val SAKSI_LP = "lp/{id_lp}/saksi/kode/etik"
         const val UPD_SAKSI_LP = "lp/saksi/kode/etik/{id_saksi}"
 
@@ -99,7 +100,7 @@ interface ApiLp {
     fun updLpKke(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,
-        @Body editLpKkeReq: EditLpKkeReq
+        @Body editLpKkeReq: LpKkeReq
     ): Call<Base1Resp<DokLpResp>>
 
 
@@ -171,27 +172,35 @@ interface ApiLp {
     /*SAKSI*/
 
     @Headers(ACCEPT)
-    @GET(SAKSI_LP)
+    @GET("lp/{id_lp}/saksi")
     fun getSaksiByIdLp(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int
     ): Call<ArrayList<LpSaksiResp>>
 
     @Headers(ACCEPT)
-    @POST(SAKSI_LP)
-    fun addSaksiByIdLp(
+    @POST("lp/{id_lp}/saksi/personel")
+    fun addSaksiPersonel(
         @Header("Authorization") tokenBearer: String,
-        @Path("id_lp") id_lp: Int,
-        @Body saksiReq: SaksiReq
-    ): Call<Base1Resp<AddSaksiResp>>
+        @Path("id_lp") id_lp: Int?,
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiPersonelResp>>
+
+    @Headers(ACCEPT)
+    @POST("lp/{id_lp}/saksi/sipil")
+    fun addSaksiSipil(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiSipilResp>>
 
     @Headers(ACCEPT)
     @PATCH(UPD_SAKSI_LP)
     fun updSaksiSingle(
         @Header("Authorization") tokenBearer: String,
         @Path("id_saksi") id_saksi: Int,
-        @Body saksiReq: SaksiReq
-    ): Call<Base1Resp<AddSaksiResp>>
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiPersonelResp>>
 
     @Headers(ACCEPT)
     @DELETE(UPD_SAKSI_LP)

@@ -19,6 +19,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
+import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
@@ -60,6 +61,13 @@ class DetailLpDisiplinActivity : BaseActivity() {
             intent.putExtra(ListPasalDilanggarActivity.EDIT_PASAL_DILANGGAR, disiplin)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
+        }
+
+        btn_edit_saksi_disiplin.setOnClickListener {
+            val intent = Intent(this, ListSaksiLpActivity::class.java)
+            intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, disiplin)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
 
