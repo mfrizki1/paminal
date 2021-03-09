@@ -12,12 +12,12 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.EditLpKkeReq
+import id.calocallo.sicape.network.request.LpKkeReq
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.DokLpResp
-import id.calocallo.sicape.network.response.LpPidanaResp
+import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -30,7 +30,7 @@ import retrofit2.Response
 
 class EditLpKkeActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var editLpKkeReq = EditLpKkeReq()
+    private var editLpKkeReq = LpKkeReq()
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
     private var namaSatker: String? = null
@@ -39,7 +39,7 @@ class EditLpKkeActivity : BaseActivity() {
         setContentView(R.layout.activity_edit_lp_kke)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Laporan Polisi Kode Etik"
-        val kke = intent.extras?.getParcelable<LpPidanaResp>(EDIT_KKE)
+        val kke = intent.extras?.getParcelable<LpResp>(EDIT_KKE)
 
         getViewKKeEdit(kke)
         sessionManager1 = SessionManager1(this)
@@ -70,22 +70,23 @@ class EditLpKkeActivity : BaseActivity() {
 
     }
 
-    private fun updateKke(kke: LpPidanaResp?, changedIdTerlapor: Int?, changedIdPelapor: Int?) {
+    private fun updateKke(kke: LpResp?, changedIdTerlapor: Int?, changedIdPelapor: Int?) {
         editLpKkeReq.id_satuan_kerja = 123
-        editLpKkeReq.no_lp = edt_no_lp_kke_edit.text.toString()
+//        editLpKkeReq.no_lp = edt_no_lp_kke_edit.text.toString()
         editLpKkeReq.isi_laporan = edt_isi_laporan_kke_edit.text.toString()
         editLpKkeReq.alat_bukti = edt_alat_bukti_kke_edit.text.toString()
         editLpKkeReq.kota_buat_laporan = edt_kota_buat_edit_lp.text.toString()
         editLpKkeReq.tanggal_buat_laporan = edt_tgl_buat_edit.text.toString()
-        editLpKkeReq.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit.text.toString()
-        editLpKkeReq.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
-        editLpKkeReq.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
-        editLpKkeReq.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
-        editLpKkeReq.kesatuan_yang_mengetahui = namaSatker
+        editLpKkeReq.nama_kabid_propam = edt_nama_pimpinan_bidang_edit.text.toString()
+        editLpKkeReq.pangkat_kabid_propam = edt_pangkat_pimpinan_bidang_edit.text.toString()
+        editLpKkeReq.nrp_kabid_propam = edt_nrp_pimpinan_bidang_edit.text.toString()
+        editLpKkeReq.jabatan_kabid_propam = edt_jabatan_pimpinan_bidang_edit.text.toString()
+//        editLpKkeReq.kesatuan_yang_mengetahui = namaSatker
 //        lpKodeEtikReq.id_personel_operator = sessionManager.fetchUser()?.id
         editLpKkeReq.id_personel_terlapor = changedIdTerlapor
         editLpKkeReq.id_personel_pelapor = changedIdPelapor
         editLpKkeReq.uraian_pelanggaran = edt_uraian_kke_edit.text.toString()
+
 
         /*  if (changedIdTerlapor == null) {
               editLpKkeReq.id_personel_terlapor = kke?.personel_terlapor?.id
@@ -101,7 +102,7 @@ class EditLpKkeActivity : BaseActivity() {
         apiUpdKke(kke)
     }
 
-    private fun apiUpdKke(kke: LpPidanaResp?) {
+    private fun apiUpdKke(kke: LpResp?) {
         NetworkConfig().getServLp()
             .updLpKke("Bearer ${sessionManager1.fetchAuthToken()}", kke?.id, editLpKkeReq)
             .enqueue(object :
@@ -116,7 +117,7 @@ class EditLpKkeActivity : BaseActivity() {
                     call: Call<Base1Resp<DokLpResp>>,
                     response: Response<Base1Resp<DokLpResp>>
                 ) {
-                    if (response.body()?.message == "Data lp updated succesfully") {
+                    if (response.body()?.message == "Data lp kode etik updated succesfully") {
                         val animatedDrawable =
                             ContextCompat.getDrawable(
                                 this@EditLpKkeActivity, R.drawable.animated_check
@@ -141,7 +142,7 @@ class EditLpKkeActivity : BaseActivity() {
             })
     }
 
-    private fun getViewKKeEdit(kke: LpPidanaResp?) {
+    private fun getViewKKeEdit(kke: LpResp?) {
         changedIdPelapor = kke?.detail_laporan?.personel_pelapor?.id
         changedIdTerlapor = kke?.personel_terlapor?.id
 
@@ -152,12 +153,12 @@ class EditLpKkeActivity : BaseActivity() {
         edt_kota_buat_edit_lp.setText(kke?.kota_buat_laporan)
         edt_uraian_kke_edit.setText(kke?.uraian_pelanggaran)
         edt_tgl_buat_edit.setText(kke?.tanggal_buat_laporan)
-        edt_nama_pimpinan_bidang_edit.setText(kke?.detail_laporan?.nama_yang_mengetahui)
+        edt_nama_pimpinan_bidang_edit.setText(kke?.detail_laporan?.nama_kabid_propam)
         edt_pangkat_pimpinan_bidang_edit.setText(
-            kke?.detail_laporan?.pangkat_yang_mengetahui.toString().toUpperCase()
+            kke?.detail_laporan?.pangkat_kabid_propam.toString().toUpperCase()
         )
-        edt_nrp_pimpinan_bidang_edit.setText(kke?.detail_laporan?.nrp_yang_mengetahui)
-        edt_jabatan_pimpinan_bidang_edit.setText(kke?.detail_laporan?.jabatan_yang_mengetahui)
+        edt_nrp_pimpinan_bidang_edit.setText(kke?.detail_laporan?.nrp_kabid_propam)
+        edt_jabatan_pimpinan_bidang_edit.setText(kke?.detail_laporan?.jabatan_kabid_propam)
 //        spinner_kesatuan_lp_kke_edit.setText(kke?.kesatuan_yang_mengetahui.toString().toUpperCase())
 //        namaSatker = kke?.kesatuan_yang_mengetahui
         //terlapor

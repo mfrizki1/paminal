@@ -17,7 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.request.EditLpPidanaReq
+import id.calocallo.sicape.network.request.LpPidanaReq
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -33,7 +33,7 @@ class EditLpPidanaActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
     private lateinit var sipilAlertDialog: View
-    private var editLpPidana = EditLpPidanaReq()
+    private var editLpPidana = LpPidanaReq()
 
     companion object {
         const val EDIT_PIDANA = "EDIT_PIDANA"
@@ -67,7 +67,7 @@ class EditLpPidanaActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Laporan Polisi Pidana"
-        val pidana = intent.extras?.getParcelable<LpPidanaResp>(EDIT_PIDANA)
+        val pidana = intent.extras?.getParcelable<LpResp>(EDIT_PIDANA)
         getViewEditPidana(pidana)
 
         btn_choose_personel_pelapor_pidana_edit.setOnClickListener {
@@ -92,7 +92,7 @@ class EditLpPidanaActivity : BaseActivity() {
             Handler(Looper.getMainLooper()).postDelayed({
                 btn_save_edit_lp_pidana.hideDrawable(R.string.save)
             }, 3000)
-            updateLpPidana(pidana, changedIdTerlapor, changedIdPelapor)
+            updateLpPidana(pidana)
         }
 
 //        btn_sipil_edit.setOnClickListener {
@@ -115,42 +115,33 @@ class EditLpPidanaActivity : BaseActivity() {
 
     }
 
-    private fun updateLpPidana(
-        pidana: LpPidanaResp?,
-        changedIdTerlapor: Int?,
-        changedIdPelapor: Int?
-    ) {
-
-        editLpPidana.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit.text.toString()
-        editLpPidana.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
-        editLpPidana.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
-        editLpPidana.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
-        editLpPidana.no_lp = edt_no_lp_pidana_edit.text.toString()
-        editLpPidana.pembukaan_laporan = edt_pembukaan_laporan_pidana_edit.text.toString()
+    private fun updateLpPidana(pidana: LpResp?) {
+        changedIdTerlapor = pidana?.personel_terlapor?.id
+        editLpPidana.nama_kep_spkt = edt_nama_pimpinan_bidang_edit.text.toString()
+        editLpPidana.pangkat_kep_spkt = edt_pangkat_pimpinan_bidang_edit.text.toString()
+        editLpPidana.nrp_kep_spkt = edt_nrp_pimpinan_bidang_edit.text.toString()
+        editLpPidana.jabatan_kep_spkt = edt_jabatan_pimpinan_bidang_edit.text.toString()
+//        editLpPidana.no_lp = edt_no_lp_pidana_edit.text.toString()
+//        editLpPidana.pembukaan_laporan = edt_pembukaan_laporan_pidana_edit.text.toString()
         editLpPidana.isi_laporan = edt_isi_laporan_pidana_edit.text.toString()
         editLpPidana.kota_buat_laporan = edt_kota_buat_edit_lp.text.toString()
         editLpPidana.tanggal_buat_laporan = edt_tgl_buat_edit.text.toString()
-        editLpPidana.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit.text.toString()
-        editLpPidana.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
-        editLpPidana.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
-        editLpPidana.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
-        editLpPidana.kesatuan_yang_mengetahui = namaSatker
         editLpPidana.id_satuan_kerja = 123
         editLpPidana.uraian_pelanggaran = edt_uraian_pelanggaran_pidana_edit.text.toString()
 //        lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
 //        lpPidanaReq.id_satuan_kerja = sessionManager.getJenisLP().toString().toLowerCase()
 
-        if (changedIdPelapor == null) {
-//            editLpPidana.id_personel_pelapor = pidana?.personel_pelapor?.id
-        } else {
-            editLpPidana.id_personel_pelapor = changedIdPelapor
-        }
+        /* if (changedIdPelapor == null) {
+ //            editLpPidana.id_personel_pelapor = pidana?.personel_pelapor?.id
+         } else {
+             editLpPidana.id_personel_pelapor = changedIdPelapor
+         }*/
 
-        if (changedIdTerlapor == null) {
+        /*if (changedIdTerlapor == null) {
 //            editLpPidana.id_personel_terlapor = pidana?.personel_pelapor?.id
         } else {
-            editLpPidana.id_personel_terlapor = changedIdTerlapor
-        }
+        }*/
+        editLpPidana.id_personel_terlapor = changedIdTerlapor
 
         editLpPidana.nama_pelapor = namaSipil
         editLpPidana.agama_pelapor = agamaSipil
@@ -168,7 +159,7 @@ class EditLpPidanaActivity : BaseActivity() {
         Log.e("update", "$editLpPidana")
     }
 
-    private fun apiUpdPidana(pidana: LpPidanaResp?) {
+    private fun apiUpdPidana(pidana: LpResp?) {
         NetworkConfig().getServLp()
             .updLpPidana("Bearer ${sessionManager1.fetchAuthToken()}", pidana?.id, editLpPidana)
             .enqueue(object :
@@ -187,7 +178,7 @@ class EditLpPidanaActivity : BaseActivity() {
                     call: Call<Base1Resp<DokLpResp>>,
                     response: Response<Base1Resp<DokLpResp>>
                 ) {
-                    if (response.body()?.message == "Data lp updated succesfully") {
+                    if (response.body()?.message == "Data lp pidana updated succesfully") {
                         val animatedDrawable = ContextCompat.getDrawable(
                             this@EditLpPidanaActivity,
                             R.drawable.animated_check
@@ -208,7 +199,7 @@ class EditLpPidanaActivity : BaseActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getViewEditPidana(pidana: LpPidanaResp?) {
+    private fun getViewEditPidana(pidana: LpResp?) {
         //general
         edt_no_lp_pidana_edit.setText(pidana?.no_lp)
 //        edt_pembukaan_laporan_pidana_edit.setText(pidana?.pembukaan_laporan)
@@ -248,11 +239,11 @@ class EditLpPidanaActivity : BaseActivity() {
             "Jenis Kelamin : ${pidana?.detail_laporan?.jenis_kelamin_pelapor}"
 
         //pimpinan
-        edt_nama_pimpinan_bidang_edit.setText(pidana?.nama_yang_mengetahui)
-        edt_pangkat_pimpinan_bidang_edit.setText(pidana?.pangkat_yang_mengetahui)
-        edt_nrp_pimpinan_bidang_edit.setText(pidana?.nrp_yang_mengetahui)
+        edt_nama_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.nama_kep_spkt)
+        edt_pangkat_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.pangkat_kep_spkt)
+        edt_nrp_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.nrp_kep_spkt)
         edt_jabatan_pimpinan_bidang_edit.setText(
-            pidana?.jabatan_yang_mengetahui.toString().toUpperCase()
+            pidana?.detail_laporan?.jabatan_kep_spkt.toString().toUpperCase()
         )
 
         /*  spinner_kesatuan_pimpinan_bidang_edit.setText(

@@ -7,6 +7,8 @@ import kotlinx.android.parcel.Parcelize
 data class LpSaksiResp(
     var id: Int?,
     var id_lp: Int?,
+    var status_saksi:String?,
+    var personel: PersonelMinResp?,
     var nama:String?,
     var tempat_lahir: String?,
     var tanggal_lahir: String?,
@@ -19,9 +21,20 @@ data class LpSaksiResp(
 
 ):Parcelable
 
-data class AddSaksiResp(
+data class SaksiPersonelResp(
     var id: Int?,
-    var lp: LpMinResp?,
+    var id_lp: Int?,
+    var status_saksi:String?,
+    var detail_keterangan: String?,
+    var kesimpulan_keterangan: String?,
+    var personel: PersonelMinResp?
+)
+data class SaksiSipilResp(
+    var id: Int?,
+    var id_lp: Int?,
+    var status_saksi:String?,
+    var detail_keterangan: String?,
+    var kesimpulan_keterangan: String?,
     var nama:String?,
     var tempat_lahir: String?,
     var tanggal_lahir: String?,
@@ -29,3 +42,5 @@ data class AddSaksiResp(
     var alamat: String?,
     var is_korban: Int?
 )
+data class AddSaksiPersonelResp(var saksi: SaksiPersonelResp?)
+data class AddSaksiSipilResp(var saksi: SaksiSipilResp?)

@@ -1,14 +1,12 @@
 package id.calocallo.sicape.ui.main.choose.lp
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.LpDisiplinResp
 import id.calocallo.sicape.network.response.LpKkeResp
-import id.calocallo.sicape.network.response.LpPidanaResp
-import id.calocallo.sicape.ui.main.choose.lp.ListLpSkhdActivity.Companion.DISIPLIN
+import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.ui.main.putkke.AddPutKkeActivity
 import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
 import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity.Companion.IDLHP_FOR_LP
@@ -62,7 +60,7 @@ class ChooseLpSkhdActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_LP_PIDANA_SKHD) {
             if (resultCode == 999) {
-                val pidanaResp = data?.getParcelableExtra<LpPidanaResp>(ListLpSkhdActivity.PIDANA)
+                val pidanaResp = data?.getParcelableExtra<LpResp>(ListLpSkhdActivity.PIDANA)
                 val intent = Intent()
                 intent.putExtra(AddSkhdActivity.ID_LP, pidanaResp)
                 setResult(RES_LP_PIDANA_SKHD, intent)

@@ -1,17 +1,12 @@
 package id.calocallo.sicape.ui.main.choose.lp
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_list_lp_skhd.*
-import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
@@ -19,7 +14,7 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 class ListLpSkhdActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
 
-    private var listPidanaLP = ArrayList<LpPidanaResp>()
+    private var listPidanaLP = ArrayList<LpResp>()
     private var listDisiplinLP = ArrayList<LpDisiplinResp>()
     private var personelTerLapor = PersonelLapor()
     private var personelPeLapor = PersonelLapor()
@@ -27,8 +22,8 @@ class ListLpSkhdActivity : BaseActivity() {
     private var listPasal = arrayListOf<PasalDilanggarResp>()
     private var listSaksi = arrayListOf<LpSaksiResp>()
 
-    private var adapterLpPidanaChoose = ReusableAdapter<LpPidanaResp>(this)
-    private lateinit var callbackLpPidanaChoose: AdapterCallback<LpPidanaResp>
+    private var adapterLpPidanaChoose = ReusableAdapter<LpResp>(this)
+    private lateinit var callbackLpChoose: AdapterCallback<LpResp>
     private var adapterLpDisiplinChoose = ReusableAdapter<LpDisiplinResp>(this)
     private lateinit var callbackLpDisiplinChoose: AdapterCallback<LpDisiplinResp>
     override fun onCreate(savedInstanceState: Bundle?) {
