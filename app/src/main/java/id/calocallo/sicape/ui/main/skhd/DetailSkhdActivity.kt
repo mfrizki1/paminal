@@ -52,7 +52,7 @@ class DetailSkhdActivity : BaseActivity() {
 //        Log.e("detailSKHD", "$detailSKHD")
         apiDetailSkhd(detailSKHD)
         val hakAkses = sessionManager1.fetchHakAkses()
-        if(hakAkses == "operator"){
+        if (hakAkses == "operator") {
             btn_edit_skhd.gone()
             btn_generate_skhd.gone()
         }
@@ -197,7 +197,7 @@ class DetailSkhdActivity : BaseActivity() {
                             ).show()
                             Handler(Looper.getMainLooper()).postDelayed({
                                 finish()
-                            },750)
+                            }, 750)
                         } else {
                             Toast.makeText(
                                 this@DetailSkhdActivity, R.string.failed_deleted, Toast.LENGTH_SHORT
