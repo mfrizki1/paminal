@@ -49,8 +49,6 @@ class ListRefPenyelidikanActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         }
-
-        getListRefLp(refLp)
     }
 
 
@@ -65,8 +63,7 @@ class ListRefPenyelidikanActivity : BaseActivity() {
 
             override fun onItemClicked(
                 itemView: View, data: RefPenyelidikanReq, itemIndex: Int
-            ) {
-            }
+            ) {}
         }
         adapteRefLpReq.adapterCallback(callbackRefLpReq)
             .isVerticalView()
@@ -112,6 +109,7 @@ class ListRefPenyelidikanActivity : BaseActivity() {
             val dataRef =
                 data?.getParcelableExtra<RefPenyelidikanReq>(AddRefPenyelidikActivity.DATA_REF_PENYELIDIK)
             Log.e("dataRef", "$dataRef")
+            getListRefLp(refLp)
             if (dataRef != null) {
                 refLp.add(dataRef)
             }

@@ -3,12 +3,15 @@ package id.calocallo.sicape.ui.main.choose.lp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
 import id.calocallo.sicape.network.response.LpCustomResp
+import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP
 import id.calocallo.sicape.ui.main.lhp.add.ListRefPenyelidikanActivity
+import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_jenis_lp.*
@@ -29,27 +32,27 @@ class PickJenisLpActivity : BaseActivity() {
         btn_lp_pidana_choose.setOnClickListener {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Pidana")
-            if (sktt != null) {
+          /*  if (sktt != null) {
                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
-            }
+            }*/
             startActivityForResult(intent, REQ_LP)
         }
 
         btn_lp_kkep_choose.setOnClickListener {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Kode Etik")
-            if (sktt != null) {
+           /* if (sktt != null) {
                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
-            }
+            }*/
             startActivityForResult(intent, REQ_LP)
 
         }
         btn_lp_disiplin_choose.setOnClickListener {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Disiplin")
-            if (sktt != null) {
+           /* if (sktt != null) {
                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
-            }
+            }*/
             startActivityForResult(intent, REQ_LP)
 
         }
@@ -101,23 +104,22 @@ class PickJenisLpActivity : BaseActivity() {
                 }
                  */
                     RES_LP_CHOOSE -> {
-                        val lpAll = data?.getParcelableExtra<LpCustomResp>(DATA_LP)
+                        val lpAll = data?.getParcelableExtra<LpMinResp>(DATA_LP)
                         val intent = Intent()
 
-                        refLp.id_lp = lpAll?.id
-                        refLp.no_lp = lpAll?.no_lp
+                       /* refLp.id_lp = lpAll?.id
+                        refLp.no_lp = lpAll?.no_lp*/
                         intent.putExtra(
-                            ListRefPenyelidikanActivity.GET_LP_FROM_CHOOSE_LP,
-                            refLp
+                            ListRefPenyelidikanActivity.GET_LP_FROM_CHOOSE_LP, lpAll
                         )
-                        setResult(Activity.RESULT_OK, intent)
+                        setResult(AddRefPenyelidikActivity.RES_LP_ON_REF, intent)
                         finish()
                     }
                 }
             }else{
                 when(resultCode){
                     RES_LP_CHOOSE->{
-                        val lpAll = data?.getParcelableExtra<LpCustomResp>(GET_LP_WITHOUT_SKTBB_DLL)
+                        val lpAll = data?.getParcelableExtra<LpMinResp>(GET_LP_WITHOUT_SKTBB_DLL)
 //                        Log.e("lpall","$lpAll")
                         val intent = Intent()
                         intent.putExtra(AddSkttActivity.GET_LP_ON_SKTT,lpAll)

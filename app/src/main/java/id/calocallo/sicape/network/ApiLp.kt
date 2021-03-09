@@ -33,7 +33,7 @@ interface ApiLp {
     @GET(JENIS_LP)
     fun getLpByJenis(
         @Header("Authorization") tokenBearer: String,
-        @Path("jenis_lp") jenis_lp: String
+        @Path("jenis_lp") jenis_lp: String?
     ): Call<ArrayList<LpMinResp>>
 
     @Headers(ACCEPT)

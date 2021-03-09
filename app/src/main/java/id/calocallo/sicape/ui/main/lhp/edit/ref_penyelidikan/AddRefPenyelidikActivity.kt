@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
@@ -52,7 +53,6 @@ class AddRefPenyelidikActivity : BaseActivity() {
                 btn_save_ref_penyelidik_add.showProgress { progressColor = Color.WHITE }
                 addRefPenyelidikSingle(dataLhp)
             }else{
-
                 val intent = Intent().apply{
                     this.putExtra(DATA_REF_PENYELIDIK, refPenyelidikanReq)
                     this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -97,6 +97,7 @@ class AddRefPenyelidikActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_LP && resultCode == RES_LP_ON_REF) {
             val dataLp = data?.getParcelableExtra<LpMinResp>(GET_LP_FROM_CHOOSE_LP)
+            Log.e("AddRefPenyelidikan", "${dataLp?.id}")
             idLp = dataLp?.id
             txt_no_lp_ref_add.text = dataLp?.no_lp
             refPenyelidikanReq.no_lp = txt_no_lp_ref_add.text.toString()
