@@ -193,10 +193,6 @@ class DetailLhpActivity : BaseActivity() {
         txt_tugas_pokok_detail.text = dataLhp?.tugas_pokok
         txt_pokok_permasalahan_detail.text = dataLhp?.pokok_permasalahan
         txt_ket_ahli_detail.text = dataLhp?.keterangan_ahli
-        when (dataLhp?.isTerbukti) {
-            0 -> txt_isTerbukti_detail.text = "Tidak Terbukti"
-            1 -> txt_isTerbukti_detail.text = "Terbukti"
-        }
         val lidik = dataLhp?.personel_penyelidik?.find { it.is_ketua == 1 }
         txt_ketua_tim_detail.text =
             "Nama : ${lidik?.personel?.nama}\nPangkat : ${

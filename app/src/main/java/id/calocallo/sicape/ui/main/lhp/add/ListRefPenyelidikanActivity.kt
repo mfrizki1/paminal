@@ -84,7 +84,7 @@ class ListRefPenyelidikanActivity : BaseActivity() {
                     data: RefPenyelidikanReq,
                     itemIndex: Int
                 ) {
-                    itemView.txt_edit_pendidikan.text = data.isi_keterangan_terlapor
+                    itemView.txt_edit_pendidikan.text = data.detail_keterangan_terlapor
                 }
 
                 override fun onItemClicked(

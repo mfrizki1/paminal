@@ -48,7 +48,7 @@ class AddRefPenyelidikActivity : BaseActivity() {
         bindProgressButton(btn_save_ref_penyelidik_add)
         btn_save_ref_penyelidik_add.setOnClickListener {
             refPenyelidikanReq.id_lp = idLp
-            refPenyelidikanReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
+            refPenyelidikanReq.detail_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
             if(isSingleAdd == true){
                 btn_save_ref_penyelidik_add.showProgress { progressColor = Color.WHITE }
                 addRefPenyelidikSingle(dataLhp)
