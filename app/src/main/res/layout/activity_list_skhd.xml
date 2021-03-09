@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.main.skhd.SkhdActivity">
+    tools:context=".ui.main.skhd.ListSkhdActivity">
 
     <include layout="@layout/layout_toolbar_white" />
 
@@ -15,11 +15,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_skhd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_skhd" />
+
+        <include
+            layout="@layout/view_no_data"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/layout_progress_dialog"
+            android:visibility="gone" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_add_skhd"

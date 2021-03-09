@@ -1,5 +1,6 @@
 package id.calocallo.sicape.network
 
+import id.calocallo.sicape.model.LpOnSkhd
 import id.calocallo.sicape.network.request.*
 import id.calocallo.sicape.network.response.*
 import retrofit2.Call
@@ -33,6 +34,13 @@ interface ApiLp {
     fun getLpForRefPenyelidikan(
         @Header("Authorization") tokenBearer: String
     ): Call<ArrayList<LpMinResp>>
+
+    @Headers(ACCEPT)
+    @GET("lhp/{id_lp}/referensi/penyelidikan/kasus/pidana/disiplin")
+    fun getLpByIdLhp(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?
+    ): Call<ArrayList<LpOnSkhd>>
 
     @Headers(ACCEPT)
     @GET(JENIS_LP)

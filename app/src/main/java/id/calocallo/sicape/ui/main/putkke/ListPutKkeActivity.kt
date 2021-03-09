@@ -39,7 +39,7 @@ class ListPutKkeActivity : BaseActivity() {
     }
 
     private fun getListPutKke() {
-        listLhpOnSkhd = LhpOnSkhd(1, "LHP/1/2020/BIDPROPAM")
+    /*    listLhpOnSkhd = LhpOnSkhd(1, "LHP/1/2020/BIDPROPAM")
         listLpOnSkhd = LpOnSkhd(1, "LP/1/2020/BIDPROPAM", "kode_etik")
         listPutKke.add(
             PutKkeResp(
@@ -75,11 +75,11 @@ class ListPutKkeActivity : BaseActivity() {
                 "Galuh","BRIPDA","0987","Wakil Utuh","KOMBES","9876",
                 "Anggota Dulak","ipda","8765","Banjarmasin","12-12-2000",null,null
             )
-        )
+        )*/
         callbackPutKke = object :AdapterCallback<PutKkeResp>{
             override fun initComponent(itemView: View, data: PutKkeResp, itemIndex: Int) {
                 itemView.txt_no_skhd.text = data.no_putkke
-                itemView.txt_no_lhp_skhd.text = data.lhp?.no_lhp
+//                itemView.txt_no_lhp_skhd.text = data.lhp?.no_lhp
                 itemView.txt_no_lp_skhd.text = data.lp?.no_lp
             }
 

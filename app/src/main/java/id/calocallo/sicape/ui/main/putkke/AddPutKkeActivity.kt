@@ -52,7 +52,7 @@ class AddPutKkeActivity : BaseActivity() {
     }
 
     private fun addPutKke() {
-        putKkeReq.no_putkke = edt_no_put_kke_add.text.toString()
+      /*  putKkeReq.no_putkke = edt_no_put_kke_add.text.toString()
         putKkeReq.pembukaan_putusan = edt_pembukan_putusan_add.text.toString()
         putKkeReq.menimbang_p2 = edt_berkas_pemeriksaan_put_kke_add.text.toString()
         putKkeReq.mengingat_p4 = edt_keputusan_kapolda_put_kke_add.text.toString()
@@ -60,7 +60,7 @@ class AddPutKkeActivity : BaseActivity() {
         putKkeReq.memperhatikan_p3 = edt_memperhatikan_p3_put_kke_add.text.toString()
         putKkeReq.memperhatikan_p5 = edt_memperhatikan_p5_put_kke_add.text.toString()
         putKkeReq.memutuskan_p1 = edt_memutuskan_p1_put_kke_add.text.toString()
-        putKkeReq.sanksi_rekomendasi = edt_sanksi_rekomendasi_put_kke_add.text.toString()
+        putKkeReq.sanksi_rekomendasi = edt_sanksi_rekomendasi_put_kke_add.text.toString()*/
         putKkeReq.sanksi_hasil_keputusan = edt_sanksi_hasil_putusan_put_kke_add.text.toString()
         putKkeReq.nama_ketua_komisi = edt_nama_ketua_komisi_put_kke_add.text.toString()
         putKkeReq.pangkat_ketua_komisi = edt_pangkat_ketua_komisi_put_kke_add.text.toString().toUpperCase()
@@ -72,9 +72,9 @@ class AddPutKkeActivity : BaseActivity() {
         putKkeReq.nama_anggota_komisi = edt_nama_anggota_komisi_put_kke_add.text.toString()
         putKkeReq.pangkat_anggota_komisi = edt_pangkat_anggota_komisi_put_kke_add.text.toString().toUpperCase()
         putKkeReq.nrp_anggota_komisi = edt_nrp_anggota_komisi_put_kke_add.text.toString()
-        putKkeReq.id_lhp = idLhp
+        /*putKkeReq.id_lhp = idLhp*/
         putKkeReq.id_lp = idLp
-        putKkeReq.kota_putusan = edt_kota_penetapan_put_kke_add.text.toString()
+     /*   putKkeReq.kota_putusan = edt_kota_penetapan_put_kke_add.text.toString()*/
         putKkeReq.tanggal_putusan = edt_tanggal_penetapan_put_kke_add.text.toString()
         Log.e("add PUTKKE", "$putKkeReq")
 

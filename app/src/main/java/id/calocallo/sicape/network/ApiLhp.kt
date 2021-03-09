@@ -14,6 +14,13 @@ interface ApiLhp {
     }
 
     @Headers(ApiLp.ACCEPT)
+    @GET("lhp/proses")
+    fun getLhpOnSkhd(
+        @Header("Authorization") tokenBearer: String
+    ): Call<ArrayList<LhpMinResp>>
+
+
+    @Headers(ApiLp.ACCEPT)
     @GET(LHP)
     fun getLhpAll(
         @Header("Authorization") tokenBearer: String

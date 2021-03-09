@@ -7,7 +7,7 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PersonelLapor
-import id.calocallo.sicape.network.response.TindDisiplinResp
+import id.calocallo.sicape.network.response.TindDisplMinResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_skhd_tind_disiplin.*
@@ -18,10 +18,10 @@ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
 class SkhdTindDisiplinActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var listTindDisiplin = arrayListOf<TindDisiplinResp>()
+    private var listTindDisiplin = arrayListOf<TindDisplMinResp>()
     private var personelTerlapor = PersonelLapor()
-    private var adapterTindDisiplin = ReusableAdapter<TindDisiplinResp>(this)
-    private lateinit var callbackTindDisiplin: AdapterCallback<TindDisiplinResp>
+    private var adapterTindDisiplin = ReusableAdapter<TindDisplMinResp>(this)
+    private lateinit var callbackTindDisplMin: AdapterCallback<TindDisplMinResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_skhd_tind_disiplin)
@@ -37,7 +37,7 @@ class SkhdTindDisiplinActivity : BaseActivity() {
     }
 
     private fun getListTindDisiplin() {
-        personelTerlapor =
+        /*personelTerlapor =
             PersonelLapor(
                 1,
                 "Gusti",
@@ -54,10 +54,10 @@ class SkhdTindDisiplinActivity : BaseActivity() {
             )
 
         listTindDisiplin.add(
-            TindDisiplinResp(1, personelTerlapor, "Lari", null, null)
+            TindDisplMinResp(1, personelTerlapor, "Lari", null, null)
         )
         listTindDisiplin.add(
-            TindDisiplinResp(
+            TindDisplMinResp(
                 2,
                 PersonelLapor(
                     2,
@@ -75,14 +75,14 @@ class SkhdTindDisiplinActivity : BaseActivity() {
                 null,
                 null
             )
-        )
-        callbackTindDisiplin = object : AdapterCallback<TindDisiplinResp> {
-            override fun initComponent(itemView: View, data: TindDisiplinResp, itemIndex: Int) {
-                itemView.txt_detail_1.text = data.personel?.nama
-                itemView.txt_detail_2.text = data.isi_tindakan_disiplin
+        )*/
+        callbackTindDisplMin = object : AdapterCallback<TindDisplMinResp> {
+            override fun initComponent(itemView: View, data: TindDisplMinResp, itemIndex: Int) {
+                itemView.txt_detail_1.text = data.id_personel
+//                itemView.txt_detail_2.text = data.isi_tindakan_disiplin
             }
 
-            override fun onItemClicked(itemView: View, data: TindDisiplinResp, itemIndex: Int) {
+            override fun onItemClicked(itemView: View, data: TindDisplMinResp, itemIndex: Int) {
                 val intent =
                     Intent(this@SkhdTindDisiplinActivity, DetailTindDisiplinActivity::class.java)
                 intent.putExtra(EDIT_TIND_DISIPLIN, data)
@@ -90,7 +90,7 @@ class SkhdTindDisiplinActivity : BaseActivity() {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
-        adapterTindDisiplin.adapterCallback(callbackTindDisiplin)
+        adapterTindDisiplin.adapterCallback(callbackTindDisplMin)
             .isVerticalView()
             .addData(listTindDisiplin)
             .setLayout(R.layout.item_2_text)

@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.putkke
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -63,18 +64,19 @@ class DetailPutKkeActivity : BaseActivity() {
         const val EDIT_PUT_KKE = "EDIT_PUT_KKE"
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getDetailPutKKe(detailPutKke: PutKkeResp?) {
         txt_no_put_kke_detail.text = detailPutKke?.no_putkke
-        txt_no_lhp_put_kke_detail.text = detailPutKke?.lhp?.no_lhp
+       /* txt_no_lhp_put_kke_detail.text = detailPutKke?.lhp?.no_lhp*/
         txt_no_lp_put_kke_detail.text = detailPutKke?.lp?.no_lp
-        txt_pembukaan_putusan_put_kke_detail.text = detailPutKke?.pembukaan_putusan
+     /*   txt_pembukaan_putusan_put_kke_detail.text = detailPutKke?.pembukaan_putusan
         txt_berkas_pemeriksaan_put_kke_detail.text = detailPutKke?.menimbang_p2
         txt_keputusan_kapolda_put_kke_detail.text = detailPutKke?.mengingat_p4
         txt_memperhatikan_p1_put_kke_detail.text = detailPutKke?.memperhatikan_p1
         txt_memperhatikan_p3_put_kke_detail.text = detailPutKke?.memperhatikan_p3
         txt_memperhatikan_p5_put_kke_detail.text = detailPutKke?.memperhatikan_p5
         txt_sanksi_rekomendasi_put_kke_detail.text = detailPutKke?.sanksi_rekomendasi
-        txt_memutuskan_p1_put_kke_detail.text = detailPutKke?.memutuskan_p1
+        txt_memutuskan_p1_put_kke_detail.text = detailPutKke?.memutuskan_p1*/
         txt_sanksi_hasil_putusan_put_kke_detail.text = detailPutKke?.sanksi_hasil_keputusan
 
         txt_nama_ketua_komisi_put_kke_detail.text = "Nama : ${detailPutKke?.nama_ketua_komisi}"
@@ -95,7 +97,7 @@ class DetailPutKkeActivity : BaseActivity() {
                 .toUpperCase()}, NRP : ${detailPutKke?.nrp_anggota_komisi}"
 
 
-        txt_kota_putusan_put_kke_detail.text = "Kota : ${detailPutKke?.kota_putusan}"
+     /*   txt_kota_putusan_put_kke_detail.text = "Kota : ${detailPutKke?.kota_putusan}"*/
         txt_tanggal_putusan_put_kke_detail.text =
             "Tanggal : ${formatterTanggal(detailPutKke?.tanggal_putusan)}"
     }

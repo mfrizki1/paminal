@@ -17,15 +17,15 @@ class PickSkhdActivity : BaseActivity() {
         supportActionBar?.title = "Surat Keterangan Hasil Disiplin"
 
         btn_skhd_pidana.setOnClickListener {
-            val intent = Intent(this, SkhdActivity::class.java)
-            intent.putExtra(SkhdActivity.SKHD, "Pidana")
+            val intent = Intent(this, ListSkhdActivity::class.java)
+            intent.putExtra(ListSkhdActivity.SKHD, "Pidana")
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         btn_skhd_disiplin.setOnClickListener {
-            val intent = Intent(this, SkhdActivity::class.java)
-            intent.putExtra(SkhdActivity.SKHD, "Disiplin")
+            val intent = Intent(this, ListSkhdActivity::class.java)
+            intent.putExtra(ListSkhdActivity.SKHD, "Disiplin")
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }

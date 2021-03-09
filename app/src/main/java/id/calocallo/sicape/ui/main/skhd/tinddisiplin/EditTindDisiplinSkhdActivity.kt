@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.TindDisiplinReq
-import id.calocallo.sicape.network.response.TindDisiplinResp
+import id.calocallo.sicape.network.response.TindDisplMinResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -28,7 +28,7 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
         supportActionBar?.title = "Edit Data Tindakan Disiplin"
 
         val dataTindDisp =
-            intent.extras?.getParcelable<TindDisiplinResp>(SkhdTindDisiplinActivity.EDIT_TIND_DISIPLIN)
+            intent.extras?.getParcelable<TindDisplMinResp>(SkhdTindDisiplinActivity.EDIT_TIND_DISIPLIN)
         getDataTindDisiplin(dataTindDisp)
 
 
@@ -77,14 +77,14 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
         }
     }
 
-    private fun getDataTindDisiplin(dataTindDisp: TindDisiplinResp?) {
-        spinner_tind_disiplin_edit.setText(dataTindDisp?.isi_tindakan_disiplin)
+    private fun getDataTindDisiplin(dataTindDisp: TindDisplMinResp?) {
+       /* spinner_tind_disiplin_edit.setText(dataTindDisp?.isi_tindakan_disiplin)
         tindakan = dataTindDisp?.isi_tindakan_disiplin
         txt_nama_personel_tind_disiplin_edit.text = dataTindDisp?.personel?.nama
         txt_pangkat_personel_tind_disiplin_edit.text = dataTindDisp?.personel?.pangkat
         txt_nrp_personel_tind_disiplin_edit.text = dataTindDisp?.personel?.nrp
         txt_jabatan_personel_tind_disiplin_edit.text = dataTindDisp?.personel?.jabatan
-        txt_kesatuan_personel_tind_disiplin_edit.text = dataTindDisp?.personel?.kesatuan
+        txt_kesatuan_personel_tind_disiplin_edit.text = dataTindDisp?.personel?.kesatuan*/
     }
 
     companion object {

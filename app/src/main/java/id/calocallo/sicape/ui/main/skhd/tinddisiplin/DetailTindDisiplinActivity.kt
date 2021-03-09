@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.response.TindDisiplinResp
+import id.calocallo.sicape.network.response.TindDisplMinResp
 import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_tind_disiplin.*
@@ -19,7 +19,7 @@ class DetailTindDisiplinActivity : BaseActivity() {
         supportActionBar?.title = "Detail Data Tindakan Disiplin"
 
         val detailTindDisiplin =
-            intent.extras?.getParcelable<TindDisiplinResp>(SkhdTindDisiplinActivity.EDIT_TIND_DISIPLIN)
+            intent.extras?.getParcelable<TindDisplMinResp>(SkhdTindDisiplinActivity.EDIT_TIND_DISIPLIN)
         btn_edit_tind_disiplin.setOnClickListener {
             val intent = Intent(this, EditTindDisiplinSkhdActivity::class.java)
             intent.putExtra(SkhdTindDisiplinActivity.EDIT_TIND_DISIPLIN, detailTindDisiplin)
@@ -29,13 +29,13 @@ class DetailTindDisiplinActivity : BaseActivity() {
         getDetailTindDisiplin(detailTindDisiplin)
     }
 
-    private fun getDetailTindDisiplin(detailTindDisiplin: TindDisiplinResp?) {
-        txt_tindakan_detail.text = detailTindDisiplin?.isi_tindakan_disiplin
-        txt_nama_personel_tind_disiplin_detail.text ="Nama : ${detailTindDisiplin?.personel?.nama}"
-        txt_pangkat_personel_tind_disiplin_detail.text ="Pangkat : ${detailTindDisiplin?.personel?.pangkat.toString().toUpperCase()}"
-        txt_nrp_personel_tind_disiplin_detail.text ="NRP : ${detailTindDisiplin?.personel?.nrp}"
-        txt_jabatan_personel_tind_disiplin_detail.text ="Jabatan : ${detailTindDisiplin?.personel?.jabatan}"
-        txt_kesatuan_personel_tind_disiplin_detail.text ="Kesatuan : ${detailTindDisiplin?.personel?.kesatuan}"
+    private fun getDetailTindDisiplin(detailTindDisplMin: TindDisplMinResp?) {
+      /*  txt_tindakan_detail.text = detailTindDisplMin?.isi_tindakan_disiplin
+        txt_nama_personel_tind_disiplin_detail.text ="Nama : ${detailTindDisplMin?.personel?.nama}"
+        txt_pangkat_personel_tind_disiplin_detail.text ="Pangkat : ${detailTindDisplMin?.personel?.pangkat.toString().toUpperCase()}"
+        txt_nrp_personel_tind_disiplin_detail.text ="NRP : ${detailTindDisplMin?.personel?.nrp}"
+        txt_jabatan_personel_tind_disiplin_detail.text ="Jabatan : ${detailTindDisplMin?.personel?.jabatan}"
+        txt_kesatuan_personel_tind_disiplin_detail.text ="Kesatuan : ${detailTindDisplMin?.personel?.kesatuan}"*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

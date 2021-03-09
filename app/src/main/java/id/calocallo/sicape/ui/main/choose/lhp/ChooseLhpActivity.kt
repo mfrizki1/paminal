@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
+import id.calocallo.sicape.model.LpOnSkhd
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
@@ -50,7 +51,7 @@ class ChooseLhpActivity : BaseActivity() {
 
     private fun apiListLhp() {
       rl_pb.visible()
-        NetworkConfig().getServLhp().getLhpAll("Bearer ${sessionManager1.fetchAuthToken()}")
+        NetworkConfig().getServLhp().getLhpOnSkhd("Bearer ${sessionManager1.fetchAuthToken()}")
             .enqueue(
                 object :
                     Callback<ArrayList<LhpMinResp>> {
@@ -118,7 +119,7 @@ class ChooseLhpActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == REQ_LHP && resultCode == ListLpSkhdActivity.RESULT_LP){
-            val dataLp = data?.getParcelableExtra<LpMinResp>(ListLpSkhdActivity.DATA_LP)
+            val dataLp = data?.getParcelableExtra<LpOnSkhd>(ListLpSkhdActivity.DATA_LP)
             Log.e(TAG, "onActivityResult: $dataLp")
             val intent = Intent().apply {
                 this.putExtra(DATA_LP,dataLp)
