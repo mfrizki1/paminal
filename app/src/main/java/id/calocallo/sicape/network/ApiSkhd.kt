@@ -101,12 +101,11 @@ interface ApiSkhd {
     @POST("tindakan/disiplin")
     fun addPersonelTindDispl(
         @Header("Authorization") tokenBearer: String,
-        @Path("id_tind_displ") id_tind_displ: Int?,
         @Body tindDisiplinReq: TindDisiplinReq?
     ): Call<Base1Resp<AddTindDisplResp>> /*Data tindakan disiplin saved succesfully*/
 
     @Headers(ApiLp.ACCEPT)
-    @PATCH("tindakan/disiplin")
+    @PATCH("tindakan/disiplin/{id_tind_displ}")
     fun updPersonelTindDispl(
         @Header("Authorization") tokenBearer: String,
         @Path("id_tind_displ") id_tind_displ: Int?,
