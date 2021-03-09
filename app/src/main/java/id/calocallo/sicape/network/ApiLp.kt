@@ -173,10 +173,17 @@ interface ApiLp {
 
     @Headers(ACCEPT)
     @GET("lp/{id_lp}/saksi")
-    fun getSaksiByIdLp(
+    fun getSaksiAllByLp(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int
     ): Call<ArrayList<LpSaksiResp>>
+
+    @Headers(ACCEPT)
+    @GET("lp/saksi/{id_saksi}")
+    fun getSaksiById(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_saksi") id_saksi: Int?
+    ): Call<LpSaksiResp>
 
     @Headers(ACCEPT)
     @POST("lp/{id_lp}/saksi/personel")
@@ -193,6 +200,21 @@ interface ApiLp {
         @Path("id_lp") id_lp: Int?,
         @Body saksiReq: SaksiLpReq
     ): Call<Base1Resp<AddSaksiSipilResp>>
+    @Headers(ACCEPT)
+    @PATCH("lp/saksi/{id_lp}/personel")
+    fun updSaksiPersonel(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiPersonelResp>>
+
+    @Headers(ACCEPT)
+    @PATCH("lp/saksi/{id_lp}/sipil")
+    fun updSaksiSipil(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Body saksiReq: SaksiLpReq
+    ): Call<Base1Resp<AddSaksiSipilResp>>
 
     @Headers(ACCEPT)
     @PATCH(UPD_SAKSI_LP)
@@ -203,7 +225,7 @@ interface ApiLp {
     ): Call<Base1Resp<AddSaksiPersonelResp>>
 
     @Headers(ACCEPT)
-    @DELETE(UPD_SAKSI_LP)
+    @DELETE("lp/saksi/{id_saksi}")
     fun delSaksiSingle(
         @Header("Authorization") tokenBearer: String,
         @Path("id_saksi") id_saksi: Int

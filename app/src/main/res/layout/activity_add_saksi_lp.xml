@@ -129,6 +129,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleText"
+                android:text="Sipil"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -216,10 +221,11 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/text_is_korban_add"
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Status Saksi ?" />
+            android:text="Apakah Saksi Korban ?" />
 
         <RadioGroup
             android:id="@+id/rg_status_saksi_lp_add"
@@ -235,7 +241,7 @@
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Saksi" />
+                android:text="Tidak" />
         </RadioGroup>
 
         <com.google.android.material.button.MaterialButton

@@ -30,17 +30,13 @@ class ListSaksiLpActivity : BaseActivity() {
         const val EDIT_SAKSI = "EDIT_SAKSI"
     }
 
-    /* private val listSaksi = arrayListOf(
-         LpSaksiResp(1, "Utuh", "bjm", "12-12-2000", "polisi", "jl xxx", 1, "", "", ""),
-         LpSaksiResp(2, "Galuh", "bjm", "20-02-2002", "konfing", "jl avx",0,"","",""),
-         LpSaksiResp(3, "Dulak", "bjb", "20-02-2002", "cafe", "jl 123",0,"","","")
-     )*/
     private lateinit var sessionManager1: SessionManager1
     private lateinit var adapterSaksiEdit: ReusableAdapter<LpSaksiResp>
     private lateinit var callbackSaksiEdit: AdapterCallback<LpSaksiResp>
     private var jenisPelanggaran: String? = null
     private var saksiLp: LpMinResp? = null
     private var dataLpFull: LpResp? = null
+    private var tempIdLp: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,13 +50,15 @@ class ListSaksiLpActivity : BaseActivity() {
         dataLpFull = intent.getParcelableExtra<LpResp>(PickPasalActivity.DATA_LP)
         if (saksiLp != null) {
             apiListSaksiEdit(saksiLp?.id)
+            tempIdLp = saksiLp?.id
         } else if (dataLpFull != null) {
             apiListSaksiEdit(dataLpFull?.id)
+            tempIdLp =dataLpFull?.id
         }else{
             val idLpOnAddSaksLp = intent.getIntExtra(AddSaksiLpActivity.ID_LP, 0)
             apiListSaksiEdit(idLpOnAddSaksLp)
+            tempIdLp =idLpOnAddSaksLp
         }
-//        getSaksiEdit()
 
         btn_add_single_saksi_edit.setOnClickListener {
             val intent = Intent(this, AddSaksiLpActivity::class.java)
@@ -75,7 +73,7 @@ class ListSaksiLpActivity : BaseActivity() {
     private fun apiListSaksiEdit(idLp: Int?) {
         rl_pb.visible()
         idLp?.let {
-            NetworkConfig().getServLp().getSaksiByIdLp(
+            NetworkConfig().getServLp().getSaksiAllByLp(
                 "Bearer ${sessionManager1.fetchAuthToken()}", it
             ).enqueue(object : Callback<ArrayList<LpSaksiResp>> {
                 override fun onFailure(call: Call<ArrayList<LpSaksiResp>>, t: Throwable) {
@@ -106,7 +104,7 @@ class ListSaksiLpActivity : BaseActivity() {
             override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
                 if(data.status_saksi == "personel"){
                     itemView.txt_detail_1.text = data.personel?.nama
-                    itemView.txt_detail_2.text = "Personel"
+                    itemView.txt_detail_2.text = "Saksi"
                 }else{
                     itemView.txt_detail_1.text = data.nama
                     if(data.is_korban == 0){
@@ -115,17 +113,6 @@ class ListSaksiLpActivity : BaseActivity() {
                         itemView.txt_detail_2.text = "Korban"
                     }
                 }
-              /*  if(data.personel != null){
-                    itemView.txt_edit_pendidikan.text = data.personel?.nama
-                }else{
-                    itemView.txt_edit_pendidikan.text = data.nama
-                }*/
-              /*  itemView.txt_detail_2.gone()
-                if (data.is_korban == 0) {
-                    itemView.txt_detail_2.text = "Saksi"
-                } else {
-                    itemView.txt_detail_2.text = "Korban"
-                }*/
             }
 
             override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {
@@ -145,12 +132,6 @@ class ListSaksiLpActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val saksiLp = intent.getParcelableExtra<LpMinResp>(EDIT_SAKSI)
-        val dataLpFull = intent.getParcelableExtra<LpResp>(PickPasalActivity.DATA_LP)
-        if (saksiLp == null) {
-            apiListSaksiEdit(saksiLp?.id)
-        } else {
-            apiListSaksiEdit(dataLpFull?.id)
-        }
+            apiListSaksiEdit(tempIdLp)
     }
 }

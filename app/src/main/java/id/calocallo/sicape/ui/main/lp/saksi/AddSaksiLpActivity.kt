@@ -56,6 +56,8 @@ class AddSaksiLpActivity : BaseActivity() {
                 jenisSaksi = "personel"
                 ll_personel_saksi_lp.visible()
                 ll_sipil_saksi_lp.gone()
+                rg_status_saksi_lp_add.gone()
+                text_is_korban_add.gone()
                 /*  saksiLpReq.nama == null
                   saksiLpReq.tempat_lahir == null
                   saksiLpReq.tanggal_lahir == null
@@ -84,11 +86,6 @@ class AddSaksiLpActivity : BaseActivity() {
                 addSaksiLp(dataLpFull?.id)
 
             }
-            /*   if (dataLpFull != null) {
-
-               } else {
-
-               }*/
         }
 
         btn_choose_personel_saksi_lp_add.setOnClickListener {
@@ -120,30 +117,6 @@ class AddSaksiLpActivity : BaseActivity() {
         Log.e("dataSaksiReq", "$saksiLpReq, $idLp")
 
         apiAddSingleSaksi(idLp)
-        /* if (isSingleAdd) {
-             apiAddSingleSaksi(idLp)
-         } else {
-             val intent = Intent().apply {
-                 this.putExtra("DATA_SAKSI", saksiLpReq)
-             }
-             setResult(PickSaksiActivity.RES_SAKSI_ADD, intent)
-             finish()
-         }*/
-        /* val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
-         val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
-         animatedDrawable.setBounds(0, 0, size, size)
-         btn_save_add_saksi.showProgress {
-             progressColor = Color.WHITE
-         }
-         btn_save_add_saksi.showDrawable(animatedDrawable) {
-             buttonTextRes = R.string.data_saved
-             textMarginRes = R.dimen.space_10dp
-         }
-
-         Handler(Looper.getMainLooper()).postDelayed({
-             btn_save_add_saksi.hideDrawable(R.string.save)
-             Log.e("add_saksi", "$saksiLpReq")
-         }, 3000)*/
     }
 
     private fun apiAddSingleSaksi(idLp: Int?) {
@@ -181,19 +154,6 @@ class AddSaksiLpActivity : BaseActivity() {
                         ) {
                             if (response.body()?.message == "Data saksi personel saved succesfully") {
                                 gotoListSaksi(response.body()?.data?.saksi?.id_lp)
-                                btn_save_add_saksi.hideProgress(R.string.data_saved)
-                                btn_save_add_saksi.showSnackbar(R.string.data_saved) {
-                                    action(R.string.next) {
-                                        val intent = Intent(
-                                            this@AddSaksiLpActivity, ListSaksiLpActivity::class.java
-                                        ).apply {
-                                            this.putExtra(
-                                                ID_LP, response.body()?.data?.saksi?.id_lp
-                                            )
-                                        }
-                                        startActivity(intent)
-                                    }
-                                }
                             } else {
                                 btn_save_add_saksi.hideProgress(R.string.not_save)
 
@@ -210,47 +170,6 @@ class AddSaksiLpActivity : BaseActivity() {
                     })
 
         }
-        /* idLp?.let {
-             NetworkConfig().getServLp().addSaksiByIdLp(
-                 "Bearer ${sessionManager1.fetchAuthToken()}", it, this.jenisSaksi, saksiLpReq
-             ).enqueue(object : Callback<Base1Resp<AddSaksiPersonelResp>> {
-                 override fun onFailure(call: Call<Base1Resp<AddSaksiPersonelResp>>, t: Throwable) {
-                     btn_save_add_saksi.hideProgress(R.string.not_save)
-                     Toast.makeText(this@AddSaksiLpActivity, R.string.error_conn, Toast.LENGTH_SHORT)
-                         .show()
-                 }
-
-                 override fun onResponse(
-                     call: Call<Base1Resp<AddSaksiPersonelResp>>,
-                     response: Response<Base1Resp<AddSaksiPersonelResp>>
-                 ) {
-                     if (response.body()?.message == "Data saksi kode etik saved succesfully") {
-                         btn_save_add_saksi.hideProgress(R.string.data_saved)
-                         *//* Handler(Looper.getMainLooper()).postDelayed({
-                             finish()
-                         }, 500)*//*
-                        val intent = Intent(
-                            this@AddSaksiLpActivity,
-                            DetailLpPidanaActivity::class.java
-                        ).apply {
-                            this.putExtra("DATA_LP_DETAIL", response.body()?.data?.id_lp)
-                            this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        }
-                        startActivity(intent)
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
-                    } else {
-                        btn_save_add_saksi.hideProgress(R.string.not_save)
-                        Toast.makeText(
-                            this@AddSaksiLpActivity,
-                            R.string.error_conn,
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    }
-                }
-            })
-        }*/
     }
 
     private fun gotoListSaksi(idLp: Int?) {
@@ -272,7 +191,7 @@ class AddSaksiLpActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == AddSingleSaksiLhpActivity.REQ_POLISI) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQ_PERSONEL) {
             val personelSaksi = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
             saksiLpReq.nama = personelSaksi?.nama
             saksiLpReq.id_personel = personelSaksi?.id
