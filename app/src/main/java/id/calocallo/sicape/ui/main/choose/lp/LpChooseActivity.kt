@@ -13,6 +13,7 @@ import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
+import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
@@ -20,6 +21,7 @@ import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lp_choose.*
+import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -64,9 +66,12 @@ class LpChooseActivity : BaseActivity() {
                 supportActionBar?.title = "Pilih Data Laporan Disiplin"
             }
         }
-        /*set jika ada ket_terlapor*/
-
-        getListLpByJenis(tempJenis)
+        /*LIST LP FOR REF PENYELIDIKAN*/
+        val isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_LP_MASUK,false)
+        if(isLpForRef){
+            getListLpRef()
+        }
+//        getListLpByJenis(tempJenis)
         /* sktt
          val sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)
          if (sktt == null) {
@@ -75,6 +80,33 @@ class LpChooseActivity : BaseActivity() {
              getListLpWithoutSktbPutkkeSktt(tempJenis)
          }
          Log.e("sktt", "$sktt")*/
+    }
+
+    private fun getListLpRef() {
+        rl_pb.visible()
+        NetworkConfig().getServLp().getLpForRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}").enqueue(
+            object : Callback<ArrayList<LpMinResp>> {
+                override fun onResponse(
+                    call: Call<ArrayList<LpMinResp>>,
+                    response: Response<ArrayList<LpMinResp>>
+                ) {
+                    if (response.isSuccessful) {
+                        rl_pb.gone()
+                        listLp(response.body())
+                    } else {
+                        rl_pb.gone()
+                        rv_list_lp_choose.gone()
+                        rl_no_data.visible()
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<LpMinResp>>, t: Throwable) {
+                    rl_pb.gone()
+                    rv_list_lp_choose.gone()
+                    rl_no_data.visible()
+                    Toast.makeText(this@LpChooseActivity, "$t", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     private fun getListLpByJenis(tempJenis: String?) {
@@ -111,7 +143,8 @@ class LpChooseActivity : BaseActivity() {
     private fun listLp(list: java.util.ArrayList<LpMinResp>?) {
         callbackLpAll = object : AdapterCallback<LpMinResp> {
             override fun initComponent(itemView: View, data: LpMinResp, itemIndex: Int) {
-                itemView.txt_edit_pendidikan.text = data.no_lp
+                itemView.txt_detail_1.text = data.no_lp
+                itemView.txt_detail_2.text = data.jenis_pelanggaran.toString().toUpperCase()
             }
 
             override fun onItemClicked(itemView: View, data: LpMinResp, itemIndex: Int) {
@@ -127,7 +160,7 @@ class LpChooseActivity : BaseActivity() {
                 .isVerticalView()
                 .filterable()
                 .addData(it)
-                .setLayout(R.layout.layout_edit_1_text)
+                .setLayout(R.layout.item_2_text)
                 .build(rv_list_lp_choose)
         }
     }

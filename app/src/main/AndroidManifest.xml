@@ -182,7 +182,7 @@
         <activity android:name=".ui.main.skhd.AddSkhdActivity" />
         <activity android:name=".ui.main.skhd.tinddisiplin.SkhdTindDisiplinActivity" />
         <activity android:name=".ui.main.skhd.PickSkhdActivity" />
-        <activity android:name=".ui.main.skhd.SkhdActivity" />
+        <activity android:name=".ui.main.skhd.ListSkhdActivity" />
         <activity android:name=".ui.main.lp.AddLpActivity" />
         <activity android:name=".ui.main.lp.PickLpActivity" />
         <activity android:name=".ui.main.lhp.EditLhpActivity" />

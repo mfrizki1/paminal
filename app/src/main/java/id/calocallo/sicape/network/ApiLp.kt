@@ -30,6 +30,12 @@ interface ApiLp {
     }
 
     @Headers(ACCEPT)
+    @GET("lp/kasus/masuk")
+    fun getLpForRefPenyelidikan(
+        @Header("Authorization") tokenBearer: String
+    ): Call<ArrayList<LpMinResp>>
+
+    @Headers(ACCEPT)
     @GET(JENIS_LP)
     fun getLpByJenis(
         @Header("Authorization") tokenBearer: String,
