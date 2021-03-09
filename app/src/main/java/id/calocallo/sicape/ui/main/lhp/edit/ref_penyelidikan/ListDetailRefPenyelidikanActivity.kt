@@ -1,4 +1,4 @@
-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
+package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
 
 import android.content.Intent
 import android.os.Bundle

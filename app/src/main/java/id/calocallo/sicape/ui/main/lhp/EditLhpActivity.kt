@@ -104,14 +104,7 @@ class EditLhpActivity : BaseActivity() {
         editLhpReq.petunjuk = edt_petunjuk_lhp_edit.text.toString()
         editLhpReq.barang_bukti = edt_barbukti_lhp_edit.text.toString()
         editLhpReq.analisa = edt_analisa_lhp_edit.text.toString()
-        rg_terbukti_edit.setOnCheckedChangeListener { group, checkedId ->
-            val radio: RadioButton = findViewById(checkedId)
-            if (radio.isChecked && radio.text == "Terbukti") {
-                editLhpReq.isTerbukti = 1
-            } else {
-                editLhpReq.isTerbukti = 0
-            }
-        }
+
         Log.e("updateLHP", "$editLhpReq")
         apiUpdLhp(editLHP)
     }
@@ -124,7 +117,7 @@ class EditLhpActivity : BaseActivity() {
                     response: Response<Base1Resp<AddLhpResp>>
                 ) {
                     if (response.body()?.message == "Data lhp updated succesfully") {
-                        btn_save_lhp_edit.hideProgress(R.string.data_saved)
+                        btn_save_lhp_edit.hideProgress(R.string.data_updated)
                         Handler(Looper.getMainLooper()).postDelayed({
                             finish()
                         },750)
@@ -158,13 +151,6 @@ class EditLhpActivity : BaseActivity() {
         edt_petunjuk_lhp_edit.setText(editLHP?.petunjuk)
         edt_barbukti_lhp_edit.setText(editLHP?.barang_bukti)
         edt_analisa_lhp_edit.setText(editLHP?.analisa)
-        if (editLHP?.isTerbukti == 0) {
-            rb_tidak_terbukti_edit.isChecked = true
-            editLhpReq.isTerbukti = 0
-        } else {
-            rb_terbukti_edit.isChecked = true
-            editLhpReq.isTerbukti = 1
-        }
-    }
+          }
 
 }

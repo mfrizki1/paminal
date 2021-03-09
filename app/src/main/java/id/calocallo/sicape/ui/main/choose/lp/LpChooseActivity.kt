@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PersonelLapor
+import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.*
+import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -19,6 +21,7 @@ import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lp_choose.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
+import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import kotlinx.android.synthetic.main.view_no_data.*
@@ -37,13 +40,8 @@ class LpChooseActivity : BaseActivity() {
     private lateinit var adapterLpChoose: ReusableAdapter<LpResp>
     private lateinit var callbackLpChoose: AdapterCallback<LpResp>
 
-    private var adapterLpKkeChoose = ReusableAdapter<LpKkeResp>(this)
-    private lateinit var callbackLpKkeChoose: AdapterCallback<LpKkeResp>
-
-    private lateinit var adapterLpDisiplinChoose: ReusableAdapter<LpDisiplinResp>
-    private lateinit var callbackLpDisiplinChoose: AdapterCallback<LpDisiplinResp>
-    private var adapterLpAll = ReusableAdapter<LpCustomResp>(this)
-    private lateinit var callbackLpAll: AdapterCallback<LpCustomResp>
+    private var adapterLpAll = ReusableAdapter<LpMinResp>(this)
+    private lateinit var callbackLpAll: AdapterCallback<LpMinResp>
     private var tempJenis: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +49,6 @@ class LpChooseActivity : BaseActivity() {
 
         sessionManager1 = SessionManager1(this)
         adapterLpChoose = ReusableAdapter(this)
-        adapterLpDisiplinChoose = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
         when (intent.extras?.getString(JENIS_LP_CHOOSE)) {
             "Pidana" -> {
@@ -60,7 +57,7 @@ class LpChooseActivity : BaseActivity() {
             }
             "Kode Etik" -> {
                 supportActionBar?.title = "Pilih Data Laporan Kode Etik"
-                tempJenis = "kode_etik"
+                tempJenis = "kode/etik"
             }
             "Disiplin" -> {
                 tempJenis = "disiplin"
@@ -69,124 +66,70 @@ class LpChooseActivity : BaseActivity() {
         }
         /*set jika ada ket_terlapor*/
 
-
-        /*sktt*/
-        val sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)
-        if (sktt == null) {
-            getListLpChoose(tempJenis)
-        } else {
-            getListLpWithoutSktbPutkkeSktt(tempJenis)
-        }
-        Log.e("sktt", "$sktt")
+        getListLpByJenis(tempJenis)
+        /* sktt
+         val sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)
+         if (sktt == null) {
+             getListLpChoose(tempJenis)
+         } else {
+             getListLpWithoutSktbPutkkeSktt(tempJenis)
+         }
+         Log.e("sktt", "$sktt")*/
     }
 
-    private fun getListLpWithoutSktbPutkkeSktt(tempJenis: String?) {
+    private fun getListLpByJenis(tempJenis: String?) {
         rl_pb.visible()
-        NetworkDummy().getService().getLpNotHaveSktbPutkkeSktt()
-            .enqueue(object : Callback<ArrayList<LpCustomResp>> {
-                override fun onFailure(call: Call<ArrayList<LpCustomResp>>, t: Throwable) {
-                    rl_pb.gone()
-                    rl_no_data.visible()
-                    rv_list_lp_choose.gone()
-                }
-
-                override fun onResponse(
-                    call: Call<ArrayList<LpCustomResp>>,
-                    response: Response<ArrayList<LpCustomResp>>
-                ) {
-                    if (response.isSuccessful) {
-                        rl_pb.gone()
-                        val listLpWithoutSktbDll =
-                            response.body()?.filter { it.jenis_pelanggaran == tempJenis }
-                        callbackLpAll = object : AdapterCallback<LpCustomResp> {
-                            override fun initComponent(
-                                itemView: View,
-                                data: LpCustomResp,
-                                itemIndex: Int
-                            ) {
-                                itemView.txt_1_clickable.text = data.no_lp
-                            }
-
-                            override fun onItemClicked(
-                                itemView: View,
-                                data: LpCustomResp,
-                                itemIndex: Int
-                            ) {
-                                itemView.img_clickable.toggleVisibility()
-                                val intent = Intent()
-                                intent.putExtra(ChooseLpActivity.GET_LP_WITHOUT_SKTBB_DLL, data)
-                                setResult(ChooseLpActivity.RES_LP_CHOOSE, intent)
-                                finish()
-                            }
+        NetworkConfig().getServLp()
+            .getLpByJenis("Bearer ${sessionManager1.fetchAuthToken()}", tempJenis).enqueue(
+                object : Callback<ArrayList<LpMinResp>> {
+                    override fun onResponse(
+                        call: Call<ArrayList<LpMinResp>>,
+                        response: Response<ArrayList<LpMinResp>>
+                    ) {
+                        if (response.isSuccessful) {
+                            rl_pb.gone()
+                            listLp(response.body())
+                        } else {
+                            rl_pb.gone()
+                            rv_list_lp_choose.gone()
+                            rl_no_data.visible()
+                            Toast.makeText(
+                                this@LpChooseActivity, R.string.error, Toast.LENGTH_SHORT
+                            ).show()
                         }
-                        listLpWithoutSktbDll?.let {
-                            adapterLpAll.adapterCallback(callbackLpAll)
-                                .isVerticalView().filterable()
-                                .addData(it)
-                                .setLayout(R.layout.layout_1_text_clickable)
-                                .build(rv_list_lp_choose)
-                        }
-                    } else {
+                    }
+
+                    override fun onFailure(call: Call<ArrayList<LpMinResp>>, t: Throwable) {
+                        Toast.makeText(this@LpChooseActivity, "$t", Toast.LENGTH_SHORT).show()
                         rl_pb.gone()
-                        rl_no_data.visible()
                         rv_list_lp_choose.gone()
+                        rl_no_data.visible()
                     }
-                }
-            })
+                })
     }
 
-    private fun getListLpChoose(jenis: String?) {
-        rl_pb.visible()
-        NetworkDummy().getService().getLpNotHaveLhp().enqueue(object :
-            Callback<ArrayList<LpCustomResp>> {
-            override fun onFailure(call: Call<ArrayList<LpCustomResp>>, t: Throwable) {
-                rl_no_data.visible()
-                rv_list_lp_choose.gone()
-                rl_pb.gone()
+    private fun listLp(list: java.util.ArrayList<LpMinResp>?) {
+        callbackLpAll = object : AdapterCallback<LpMinResp> {
+            override fun initComponent(itemView: View, data: LpMinResp, itemIndex: Int) {
+                itemView.txt_edit_pendidikan.text = data.no_lp
             }
 
-            override fun onResponse(
-                call: Call<ArrayList<LpCustomResp>>,
-                response: Response<ArrayList<LpCustomResp>>
-            ) {
-                rl_pb.gone()
-                if (response.isSuccessful) {
-                    val listLpWithoutLhp = response.body()?.filter { it.jenis_pelanggaran == jenis }
-                    callbackLpAll = object : AdapterCallback<LpCustomResp> {
-                        override fun initComponent(
-                            itemView: View,
-                            data: LpCustomResp,
-                            itemIndex: Int
-                        ) {
-                            itemView.txt_1_clickable.text = data.no_lp
-                        }
-
-                        override fun onItemClicked(
-                            itemView: View,
-                            data: LpCustomResp,
-                            itemIndex: Int
-                        ) {
-                            itemView.img_clickable.toggleVisibility()
-                            val intent = Intent()
-                            intent.putExtra(DATA_LP, data)
-                            setResult(ChooseLpActivity.RES_LP_CHOOSE, intent)
-                            finish()
-                        }
-                    }
-                    listLpWithoutLhp?.let {
-                        adapterLpAll.adapterCallback(callbackLpAll)
-                            .isVerticalView().filterable()
-                            .setLayout(R.layout.layout_1_text_clickable)
-                            .build(rv_list_lp_choose)
-                            .addData(it)
-                    }
-                } else {
-                    rl_no_data.visible()
-                    rv_list_lp_choose.gone()
+            override fun onItemClicked(itemView: View, data: LpMinResp, itemIndex: Int) {
+                val intent = Intent().apply {
+                    this.putExtra(AddLhpActivity.DATA_LP, data)
                 }
-
+                setResult(PickJenisLpActivity.RES_LP_CHOOSE, intent)
+                finish()
             }
-        })
+        }
+        list?.let {
+            adapterLpAll.adapterCallback(callbackLpAll)
+                .isVerticalView()
+                .filterable()
+                .addData(it)
+                .setLayout(R.layout.layout_edit_1_text)
+                .build(rv_list_lp_choose)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

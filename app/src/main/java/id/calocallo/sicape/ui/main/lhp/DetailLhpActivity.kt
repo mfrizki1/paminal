@@ -19,7 +19,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
-import id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.ListDetailRefPenyelidikanActivity
+import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.ListDetailRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.lhp.edit.lidik.PickLidikLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity
@@ -193,10 +193,6 @@ class DetailLhpActivity : BaseActivity() {
         txt_tugas_pokok_detail.text = dataLhp?.tugas_pokok
         txt_pokok_permasalahan_detail.text = dataLhp?.pokok_permasalahan
         txt_ket_ahli_detail.text = dataLhp?.keterangan_ahli
-        when (dataLhp?.isTerbukti) {
-            0 -> txt_isTerbukti_detail.text = "Tidak Terbukti"
-            1 -> txt_isTerbukti_detail.text = "Terbukti"
-        }
         val lidik = dataLhp?.personel_penyelidik?.find { it.is_ketua == 1 }
         txt_ketua_tim_detail.text =
             "Nama : ${lidik?.personel?.nama}\nPangkat : ${
@@ -212,7 +208,7 @@ class DetailLhpActivity : BaseActivity() {
         txt_tanggal_buat_lhp.text = "Tanggal : ${formatterTanggal(dataLhp?.tanggal_buat_laporan)}"
         listOfRefLP(dataLhp?.referensi_penyelidikan)
         listOfLidik(dataLhp?.personel_penyelidik)
-        listOfSaksi(dataLhp?.saksi)
+//        listOfSaksi(dataLhp?.saksi)
 //        listOfKetTerlapor(dataLhp?.keterangan_terlapor)
 
         if (dataLhp?.is_ada_dokumen == 1) {

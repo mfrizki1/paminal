@@ -1,4 +1,4 @@
-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
+package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,7 +16,6 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -40,10 +39,7 @@ class EditDetailRefPenyelidikanActivity : BaseActivity() {
 
         detailRef =
             intent.extras?.getParcelable<RefPenyelidikanResp>(ListDetailRefPenyelidikanActivity.REQ_DATA_LHP_FOR_DETAIL)!!
-
-        /*viewDetail*/
-        txt_no_lp_ref_edit.text = detailRef.lp?.no_lp
-        edt_ket_terlapor_ref_edit.setText(detailRef.isi_keterangan_terlapor)
+        getDetailRef(detailRef)
 
         /*set button for change lp*/
         btn_change_lp_ref_penyelidikan.setOnClickListener {
@@ -56,7 +52,7 @@ class EditDetailRefPenyelidikanActivity : BaseActivity() {
         bindProgressButton(btn_update_ref_penyelidikan)
         btn_update_ref_penyelidikan.setOnClickListener {
             refLpReq.id_lp = idLp
-            refLpReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_edit.text.toString()
+            refLpReq.detail_keterangan_terlapor = edt_ket_terlapor_ref_edit.text.toString()
             updateRef(detailRef)
             Log.e("editDetailRef", "$refLpReq")
             btn_update_ref_penyelidikan.showProgress {
@@ -75,6 +71,36 @@ class EditDetailRefPenyelidikanActivity : BaseActivity() {
         }
     }
 
+    private fun getDetailRef(detailRef: RefPenyelidikanResp) {
+        NetworkConfig().getServLhp()
+            .detailRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}", detailRef.id)
+            .enqueue(
+                object : Callback<RefPenyelidikanResp> {
+                    override fun onResponse(
+                        call: Call<RefPenyelidikanResp>,
+                        response: Response<RefPenyelidikanResp>
+                    ) {
+                        if (response.isSuccessful) {
+                            viewDetailRef(response.body())
+                        } else {
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<RefPenyelidikanResp>, t: Throwable) {
+                        Toast.makeText(
+                            this@EditDetailRefPenyelidikanActivity, "$t", Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+    }
+
+    private fun viewDetailRef(dataRef: RefPenyelidikanResp?) {
+        /*viewDetail*/
+        txt_no_lp_ref_edit.text = dataRef?.lp?.no_lp
+        edt_ket_terlapor_ref_edit.setText(dataRef?.lp?.detail_keterangan_terlapor)
+    }
+
     private fun deleteRefPenyelidikan(detailRef: RefPenyelidikanResp) {
         NetworkConfig().getServLhp()
             .delRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}", detailRef.id).enqueue(
@@ -91,7 +117,9 @@ class EditDetailRefPenyelidikanActivity : BaseActivity() {
                             }, 1000)
                         } else {
                             Toast.makeText(
-                                this@EditDetailRefPenyelidikanActivity, R.string.failed_deleted, Toast.LENGTH_SHORT
+                                this@EditDetailRefPenyelidikanActivity,
+                                R.string.failed_deleted,
+                                Toast.LENGTH_SHORT
                             ).show()
                         }
                     }
@@ -107,25 +135,25 @@ class EditDetailRefPenyelidikanActivity : BaseActivity() {
     private fun updateRef(detailRef: RefPenyelidikanResp) {
         NetworkConfig().getServLhp().updRefPenyelidikan(
             "Bearer ${sessionManager1.fetchAuthToken()}",
-            detailRef.id,
+            detailRef.lp?.id,
             refLpReq
-        ).enqueue(object : Callback<Base1Resp<AddRefPenyelidikanResp>> {
+        ).enqueue(object : Callback<Base1Resp<DokLpResp>> {
             override fun onResponse(
-                call: Call<Base1Resp<AddRefPenyelidikanResp>>,
-                response: Response<Base1Resp<AddRefPenyelidikanResp>>
+                call: Call<Base1Resp<DokLpResp>>,
+                response: Response<Base1Resp<DokLpResp>>
             ) {
-                if (response.body()?.message == "Data referensi penyelidikan updated succesfully") {
+                if (response.body()?.message == "Data keterangan terlapor updated succesfully") {
                     btn_update_ref_penyelidikan.hideProgress(R.string.data_updated)
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
-                    }, 1000)
+                    }, 750)
                 } else {
                     btn_update_ref_penyelidikan.hideProgress(R.string.not_update)
                 }
             }
 
             override fun onFailure(
-                call: Call<Base1Resp<AddRefPenyelidikanResp>>, t: Throwable
+                call: Call<Base1Resp<DokLpResp>>, t: Throwable
             ) {
                 Toast.makeText(this@EditDetailRefPenyelidikanActivity, "$t", Toast.LENGTH_SHORT)
                     .show()

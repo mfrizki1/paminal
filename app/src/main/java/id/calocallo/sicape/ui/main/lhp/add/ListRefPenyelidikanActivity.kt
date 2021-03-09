@@ -6,20 +6,20 @@ import android.util.Log
 import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
-import id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity
+import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.utils.LhpDataManager
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_referensi_penyelidikan_lhp.*
+import kotlinx.android.synthetic.main.activity_list_ref_penyelidikan.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 
-class ReferensiPenyelidikanLhpActivity : BaseActivity() {
+class ListRefPenyelidikanActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var adapteRefLpReq = ReusableAdapter<RefPenyelidikanReq>(this)
     private lateinit var callbackRefLpReq: AdapterCallback<RefPenyelidikanReq>
@@ -28,7 +28,7 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
     private lateinit var lhpDataManager: LhpDataManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_referensi_penyelidikan_lhp)
+        setContentView(R.layout.activity_list_ref_penyelidikan)
         sessionManager1 = SessionManager1(this)
         lhpDataManager = LhpDataManager(this)
         setupActionBarWithBackButton(toolbar)
@@ -49,8 +49,6 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         }
-
-        getListRefLp(refLp)
     }
 
 
@@ -65,8 +63,7 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
 
             override fun onItemClicked(
                 itemView: View, data: RefPenyelidikanReq, itemIndex: Int
-            ) {
-            }
+            ) {}
         }
         adapteRefLpReq.adapterCallback(callbackRefLpReq)
             .isVerticalView()
@@ -87,7 +84,7 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
                     data: RefPenyelidikanReq,
                     itemIndex: Int
                 ) {
-                    itemView.txt_edit_pendidikan.text = data.isi_keterangan_terlapor
+                    itemView.txt_edit_pendidikan.text = data.detail_keterangan_terlapor
                 }
 
                 override fun onItemClicked(
@@ -112,6 +109,7 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
             val dataRef =
                 data?.getParcelableExtra<RefPenyelidikanReq>(AddRefPenyelidikActivity.DATA_REF_PENYELIDIK)
             Log.e("dataRef", "$dataRef")
+            getListRefLp(refLp)
             if (dataRef != null) {
                 refLp.add(dataRef)
             }
@@ -144,5 +142,6 @@ class ReferensiPenyelidikanLhpActivity : BaseActivity() {
     companion object {
         const val LHP_ADD = "LHP_ADD"
         const val ADD_REF = 1
+        const val GET_LP_FROM_CHOOSE_LP ="GET_LP_FROM_CHOOSE_LP"
     }
 }

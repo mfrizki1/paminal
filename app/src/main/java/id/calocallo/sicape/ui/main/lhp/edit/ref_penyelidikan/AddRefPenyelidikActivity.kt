@@ -1,4 +1,4 @@
-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
+package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
 
 import android.content.Intent
 import android.graphics.Color
@@ -48,12 +48,11 @@ class AddRefPenyelidikActivity : BaseActivity() {
         bindProgressButton(btn_save_ref_penyelidik_add)
         btn_save_ref_penyelidik_add.setOnClickListener {
             refPenyelidikanReq.id_lp = idLp
-            refPenyelidikanReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
+            refPenyelidikanReq.detail_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
             if(isSingleAdd == true){
                 btn_save_ref_penyelidik_add.showProgress { progressColor = Color.WHITE }
                 addRefPenyelidikSingle(dataLhp)
             }else{
-
                 val intent = Intent().apply{
                     this.putExtra(DATA_REF_PENYELIDIK, refPenyelidikanReq)
                     this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -98,6 +97,7 @@ class AddRefPenyelidikActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_LP && resultCode == RES_LP_ON_REF) {
             val dataLp = data?.getParcelableExtra<LpMinResp>(GET_LP_FROM_CHOOSE_LP)
+            Log.e("AddRefPenyelidikan", "${dataLp?.id}")
             idLp = dataLp?.id
             txt_no_lp_ref_add.text = dataLp?.no_lp
             refPenyelidikanReq.no_lp = txt_no_lp_ref_add.text.toString()

@@ -1,32 +1,41 @@
 package id.calocallo.sicape.model
 
 import android.os.Parcelable
-import id.calocallo.sicape.network.response.KetTerlaporLhpResp
-import id.calocallo.sicape.network.response.PersonelPenyelidikResp
-import id.calocallo.sicape.network.response.RefPenyelidikanResp
-import id.calocallo.sicape.network.response.SaksiLhpResp
+import id.calocallo.sicape.network.response.*
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LhpResp(
-    var id: Int?,
-    var no_lhp: String?,
-    var referensi_penyelidikan: ArrayList<RefPenyelidikanResp>?,
-    var personel_penyelidik: ArrayList<PersonelPenyelidikResp>?,
-    var saksi: ArrayList<SaksiLhpResp>?,
-    var keterangan_terlapor: ArrayList<KetTerlaporLhpResp>?,
-    var tentang: String?,
-    var no_surat_perintah_penyelidikan: String?,
+data class AddLhpResp(
+    var lhp: LhpResp?
+) : Parcelable
 
-    var tugas_pokok: String?,
-    var pokok_permasalahan: String?,
-    var keterangan_ahli: String?,
-    var kesimpulan: String?,
-    var rekomendasi: String?,
-    var kota_buat_laporan: String?,
-    var tanggal_buat_laporan: String?,
-    var created_at: String?,
-    var updated_at: String?,
+@Parcelize
+data class LhpResp(
+    var id: Int?,/**/
+    var no_lhp: String?,/**/
+    var tentang: String?,/**/
+    var no_surat_perintah_penyelidikan: String?,/**/
+    var tugas_pokok: String?,/**/
+    var pokok_permasalahan: String?,/**/
+    var keterangan_ahli: String?,/**/
+    var kesimpulan: String?,/**/
+    var rekomendasi: String?,/**/
+    var kota_buat_laporan: String?,/**/
+    var tanggal_buat_laporan: String?,/**/
+    var status_penyelidikan: String?,/**/
+
+    var referensi_penyelidikan: ArrayList<RefPenyelidikanResp>?,/**/
+    var personel_penyelidik: ArrayList<PersonelPenyelidikResp>?,/**/
+//    var keterangan_terlapor: ArrayList<KetTerlaporLhpResp>?,
+    var is_ada_dokumen: Int?,/**/
+    var dokumen: DokResp?,
+    var user_creator: UserCreatorResp?,/**/
+    var user_updater: UserCreatorResp?,/**/
+    var user_deleter: UserCreatorResp?,/**/
+    var created_at: String?,/**/
+    var updated_at: String?,/**/
+    var deleted_at: String?,/**/
+
     //textmultiline
     var surat: String?,
     var petunjuk: String?,
@@ -36,39 +45,37 @@ data class LhpResp(
     var tanggal_mulai_penyelidikan: String?,
     var wilayah_hukum_penyelidikan: String?
 
-
-//    var lp: LpResp,
-//    var id_lp: Int?,
-//    var listLidik: ArrayList<ListLidik>?,
-//    var waktu_penugasan: String?,
-//    var daerah_penyelidikan: String?,
-//    var tugas_pokok: String?,
-//    var rencana_pelaksanaan_penyelidikan: String?,
-//    var pelaksanan: String?,
-//    var pokok_permasalahan: String?,
-//    var listSaksi: ArrayList<ListSaksi>?,
-//    var listSurat: ArrayList<ListSurat>?,
-//    var keterangan_ahli: String?,
-//    var listPetunjuk: ArrayList<ListPetunjuk>?,
-//    var listBukti: ArrayList<ListBukti>?,
-//    var listTerlapor: ArrayList<ListTerlapor>?,
-//    var listAnalisa: ArrayList<ListAnalisa>?,
-//    var kesimpulan: String?,
-//    var rekomendasi: String?,
-//
-//    var nama_ketua_tim: String?,
-//    var pangkat_ketua_tim: String?,
-//    var nrp_ketua_tim: String?,
-):Parcelable {
+) : Parcelable {
     constructor() : this(
-        0, "",
-        ArrayList(), ArrayList(), ArrayList(),
-        ArrayList(), "", "",
-        "", "", "",
-        "", "", "",
-        "", "", "",
-        "", "", "",
-        "",0,"",""
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
     )
 }
 

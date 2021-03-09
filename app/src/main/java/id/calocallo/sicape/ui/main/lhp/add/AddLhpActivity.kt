@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.RadioButton
 import id.calocallo.sicape.R
-import id.calocallo.sicape.ui.main.lhp.add.ReferensiPenyelidikanLhpActivity.Companion.LHP_ADD
 import id.calocallo.sicape.utils.LhpDataManager
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_lhp.*
@@ -60,7 +59,7 @@ class AddLhpActivity : BaseActivity() {
             lhp.setKesimpulanLHP(edt_kesimpulan_lhp.text.toString())
             lhp.setRekomendasiLHP(edt_rekomendasi_lhp.text.toString())
             isTerbukti?.let { it1 -> lhp.setIsTerbukti(it1) }
-            val intent = Intent(this, ReferensiPenyelidikanLhpActivity::class.java)
+            val intent = Intent(this, ListRefPenyelidikanActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 

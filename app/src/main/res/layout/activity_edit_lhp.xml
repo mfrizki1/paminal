@@ -350,35 +350,6 @@
 
             <include layout="@layout/layout_separator" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/space_8dp"
-                android:text="Apakah Laporan Ini Terbukti Atau Tidak?"
-                android:textSize="@dimen/text_16"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:id="@+id/rg_terbukti_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/space_12dp">
-
-                <RadioButton
-                    android:id="@+id/rb_terbukti_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Terbukti" />
-
-                <RadioButton
-                    android:id="@+id/rb_tidak_terbukti_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tidak Terbukti" />
-
-            </RadioGroup>
-
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save_lhp_edit"
                 android:layout_width="match_parent"

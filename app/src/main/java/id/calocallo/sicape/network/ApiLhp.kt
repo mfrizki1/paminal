@@ -6,21 +6,11 @@ import id.calocallo.sicape.network.request.*
 import id.calocallo.sicape.network.response.*
 import retrofit2.Call
 import retrofit2.http.*
-/*ENDPOINT LHP*/
+
 interface ApiLhp {
     companion object {
         const val LHP = "lhp"
         const val LHP_ID = "lhp/{id_lhp}"
-        const val GENERATE_LHP = "lhp/{id_lhp}/generate/document"
-
-        const val SAKSI_LHP ="lhp/{id_lhp}}/saksi"
-        const val UPD_SAKSI_LHP ="lhp/saksi/{id_saksi}"
-
-        const val REF_PENYELIDIK_LHP ="lhp/{id_lhp}/referensi/penyelidikan"
-        const val UPD_REF_PENYELIDIK_LHP ="lhp/referensi/penyelidikan/{id_penyelidikan}"
-
-        const val PENYELIDIK_LHP ="lhp/{id_lhp}/personel/penyelidik"
-        const val UPD_PENYELIDIK_LHP ="lhp/personel/penyelidik/{id_pers_lidik}"
     }
 
     @Headers(ApiLp.ACCEPT)
@@ -37,7 +27,7 @@ interface ApiLhp {
     ): Call<LhpResp>
 
     @Headers(ApiLp.ACCEPT)
-    @GET(GENERATE_LHP)
+    @GET("lhp/{id_lhp}/generate/document")
     fun generateDokLhp(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lhp") id_lhp: Int?
@@ -66,7 +56,7 @@ interface ApiLhp {
     ): Call<BaseResp>
 
     @Headers(ApiLp.ACCEPT)
-    @GET(SAKSI_LHP)
+    @GET("lhp/{id_lhp}}/saksi")
     fun getAllSaksiLhp(
         @Header("Authorization") token: String,
         @Path("id_lhp") id_lhp: Int?
@@ -74,7 +64,7 @@ interface ApiLhp {
 
 
     @Headers(ApiLp.ACCEPT)
-    @POST(SAKSI_LHP)
+    @POST("lhp/{id_lhp}}/saksi")
     fun addSaksiLhp(
         @Header("Authorization") token: String,
         @Path("id_lhp") id_lhp: Int?,
@@ -82,7 +72,7 @@ interface ApiLhp {
     ): Call<Base1Resp<AddSaksiLhpResp>>
 
     @Headers(ApiLp.ACCEPT)
-    @PATCH(UPD_SAKSI_LHP)
+    @PATCH("lhp/saksi/{id_saksi}")
     fun updSaksiLhp(
         @Header("Authorization") token: String,
         @Path("id_saksi") id_saksi: Int?,
@@ -90,65 +80,66 @@ interface ApiLhp {
     ): Call<Base1Resp<AddSaksiLhpResp>>
 
     @Headers(ApiLp.ACCEPT)
-    @DELETE(UPD_SAKSI_LHP)
+    @DELETE("lhp/saksi/{id_saksi}")
     fun delSaksiLhp(
         @Header("Authorization") token: String,
         @Path("id_saksi") id_saksi: Int?
     ): Call<BaseResp>
 
     @Headers(ApiLp.ACCEPT)
-    @GET(REF_PENYELIDIK_LHP)
+    @GET("lhp/{id_lhp}/referensi/penyelidikan")
     fun getRefPenyelidikan(
         @Header("Authorization") token: String,
         @Path("id_lhp") id_lhp: Int?
     ): Call<ArrayList<RefPenyelidikanResp>>
 
     @Headers(ApiLp.ACCEPT)
-    @GET(UPD_REF_PENYELIDIK_LHP)
+    @GET("lhp/referensi/penyelidikan/{id_penyelidikan}")
     fun detailRefPenyelidikan(
         @Header("Authorization") token: String,
         @Path("id_penyelidikan") id_penyelidikan: Int?
     ): Call<RefPenyelidikanResp>
 
     @Headers(ApiLp.ACCEPT)
-    @POST(REF_PENYELIDIK_LHP)
+    @POST("lhp/{id_lhp}/referensi/penyelidikan")
     fun addRefPenyelidikan(
         @Header("Authorization") token: String,
         @Path("id_lhp") id_lhp: Int?,
         @Body addRefPenyelidikanReq: RefPenyelidikanReq
     ): Call<Base1Resp<AddRefPenyelidikanResp>>
 
-    @Headers(ApiLp.ACCEPT)
-    @PATCH(UPD_REF_PENYELIDIK_LHP)
-    fun updRefPenyelidikan(
-        @Header("Authorization") token: String,
-        @Path("id_penyelidikan") id_penyelidikan: Int?,
-        @Body addRefPenyelidikanReq: RefPenyelidikanReq
-    ): Call<Base1Resp<AddRefPenyelidikanResp>>
 
     @Headers(ApiLp.ACCEPT)
-    @DELETE(UPD_REF_PENYELIDIK_LHP)
+    @PATCH("lp/{id_lp}/keterangan/terlapor")
+    fun updRefPenyelidikan(
+        @Header("Authorization") token: String,
+        @Path("id_lp") id_lp: Int?,
+        @Body addRefPenyelidikanReq: RefPenyelidikanReq
+    ): Call<Base1Resp<DokLpResp>>
+
+    @Headers(ApiLp.ACCEPT)
+    @DELETE("lhp/referensi/penyelidikan/{id_penyelidikan}")
     fun delRefPenyelidikan(
         @Header("Authorization") token: String,
         @Path("id_penyelidikan") id_penyelidikan: Int?
     ): Call<BaseResp>
 
     @Headers(ApiLp.ACCEPT)
-    @GET(PENYELIDIK_LHP)
+    @GET("lhp/{id_lhp}/personel/penyelidik")
     fun getAllPersLidik(
         @Header("Authorization") token: String,
         @Path("id_lhp") id_lhp: Int?
     ): Call<ArrayList<PersonelPenyelidikResp>>
 
     @Headers(ApiLp.ACCEPT)
-    @GET(UPD_PENYELIDIK_LHP)
+    @GET("lhp/personel/penyelidik/{id_pers_lidik}")
     fun detailPersLidik(
         @Header("Authorization") token: String,
         @Path("id_pers_lidik") id_pers_lidik: Int?
     ): Call<DetailPersLidikResp>
 
     @Headers(ApiLp.ACCEPT)
-    @POST(PENYELIDIK_LHP)
+    @POST("lhp/{id_lhp}/personel/penyelidik")
     fun addPersLidik(
         @Header("Authorization") token: String,
         @Path("id_lhp") id_lhp: Int?,
@@ -156,7 +147,7 @@ interface ApiLhp {
     ): Call<Base1Resp<AddPersLidikResp>>
 
     @Headers(ApiLp.ACCEPT)
-    @PATCH(UPD_PENYELIDIK_LHP)
+    @PATCH("lhp/personel/penyelidik/{id_pers_lidik}")
     fun updPersLidik(
         @Header("Authorization") token: String,
         @Path("id_pers_lidik") id_pers_lidik: Int?,
@@ -164,9 +155,12 @@ interface ApiLhp {
     ): Call<Base1Resp<AddPersLidikResp>>
 
     @Headers(ApiLp.ACCEPT)
-    @DELETE(UPD_PENYELIDIK_LHP)
+    @DELETE("lhp/personel/penyelidik/{id_pers_lidik}")
     fun delPersLidik(
         @Header("Authorization") token: String,
         @Path("id_pers_lidik") id_pers_lidik: Int?
     ): Call<BaseResp>
+
+
+
 }

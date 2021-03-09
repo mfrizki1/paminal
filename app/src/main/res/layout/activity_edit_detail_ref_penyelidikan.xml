@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.main.lhp.edit.RefPenyelidikan.EditDetailRefPenyelidikanActivity">
+    tools:context=".ui.main.lhp.edit.ref_penyelidikan.EditDetailRefPenyelidikanActivity">
 
     <include layout="@layout/layout_toolbar_white" />
 
@@ -13,6 +13,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_change_lp_ref_penyelidikan"
+        android:visibility="gone"
         style="@style/Widget.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
