@@ -2,27 +2,38 @@ package id.calocallo.sicape.ui.main.skhd
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpOnSkhd
 import id.calocallo.sicape.model.LpOnSkhd
+import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.SkhdMinResp
 import id.calocallo.sicape.network.response.SkhdResp
 import id.calocallo.sicape.ui.main.skhd.DetailSkhdActivity.Companion.DETAIL_SKHD
+import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_skhd.*
+import kotlinx.android.synthetic.main.activity_list_skhd.*
 import kotlinx.android.synthetic.main.item_skhd.view.*
+import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class SkhdActivity : BaseActivity() {
+class ListSkhdActivity : BaseActivity() {
     companion object {
         const val SKHD = "SKDH"
     }
+
+    private lateinit var sessionManager1: SessionManager1
 
 //    private lateinit var adapter: ReusableAdapter<SkhdModel>
 
@@ -33,44 +44,45 @@ class SkhdActivity : BaseActivity() {
 //    private lateinit var adapterHkmSkhd: AdapterCallback<ListHukumanSkhd>
 //    private lateinit var listHukumanSkhd: ArrayList<ListHukumanSkhd>
 //    private lateinit var listSkhd: ArrayList<SkhdModel>
-    private var listSkhd = arrayListOf<SkhdResp>()
     private var listLhpOnSkhd = LhpOnSkhd()
     private var listLpOnSkhd = LpOnSkhd()
 
-    private var adapterSkhd = ReusableAdapter<SkhdResp>(this)
-    private lateinit var callbackSkhd: AdapterCallback<SkhdResp>
+    private var adapterSkhd = ReusableAdapter<SkhdMinResp>(this)
+    private lateinit var callbackSkhd: AdapterCallback<SkhdMinResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_skhd)
+        setContentView(R.layout.activity_list_skhd)
         setupActionBarWithBackButton(toolbar)
+        sessionManager1 = SessionManager1(this)
         val jenisFromPickSkhd = intent.extras?.getString(SKHD)
         supportActionBar?.title = "Surat Keterangan Hasil Disiplin $jenisFromPickSkhd"
 //        val rvHukum = findViewById<RecyclerView>(R.id.rv_hukuman_skhd)
 
-        //TODO API JENIS SKHD
-        var tempJenis = ""
-        when (jenisFromPickSkhd) {
-            "Pidana" -> {
-                tempJenis = "pidana"
-                doAPISKHD(tempJenis)
-            }
-            "Disiplin" -> {
-                tempJenis = "disiplin"
-                doAPISKHD(tempJenis)
+        /*  var tempJenis = ""
+          when (jenisFromPickSkhd) {
+              "Pidana" -> {
+                  tempJenis = "pidana"
+                  doAPISKHD(tempJenis)
+              }
+              "Disiplin" -> {
+                  tempJenis = "disiplin"
+                  doAPISKHD(tempJenis)
 
-            }
-            else -> {
-                tempJenis = "kode_etik"
-                doAPISKHD(tempJenis)
-            }
-        }
-
+              }
+              else -> {
+                  tempJenis = "kode_etik"
+                  doAPISKHD(tempJenis)
+              }
+          }
+  */
         btn_add_skhd.setOnClickListener {
             val intent = Intent(this, AddSkhdActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         }
+
+        apiListSkhd()
 
 /*        adapter = ReusableAdapter(this)
         adapterhkm = ReusableAdapter(this)
@@ -213,79 +225,74 @@ class SkhdActivity : BaseActivity() {
  */
     }
 
-    private fun doAPISKHD(tempJenis: String) {
-//        Log.e("jenis", tempJenis)
-        listLhpOnSkhd = LhpOnSkhd(1, "LHP/1/2020/BIDPROPAM")
-        listLpOnSkhd = LpOnSkhd(1, "LP/1/2020/BIDPROPAM", "pidana")
-        listSkhd.add(
-            SkhdResp(
-                1,
-                listLhpOnSkhd,
-                listLpOnSkhd,
-                "BIDDOKES",
-                "SKHD/1/2020/BIDDOKES",
-                resources.getString(R.string.paragraf),
-                resources.getString(R.string.paragraf),
-                "ampih selama 1 bulan",
-                "12-08-2020",
-                "18.30 WITA",
-                "12-12-2021",
-                "Banjarmasin",
-                "JABATAN PIMPINAN",
-                "Galuh Pimpinan",
-                "KOMBES",
-                "123123",
-                "surat1\nsurat2",
-                null,
-                null
-            )
-        )
+    private fun apiListSkhd() {
+        rl_pb.visible()
+        NetworkConfig().getServSkhd().getSkhd("Bearer ${sessionManager1.fetchAuthToken()}").enqueue(
+            object : Callback<ArrayList<SkhdMinResp>> {
+                override fun onResponse(
+                    call: Call<ArrayList<SkhdMinResp>>,
+                    response: Response<ArrayList<SkhdMinResp>>
+                ) {
+                    if (response.isSuccessful) {
+                        rl_pb.gone()
+                        listSkhd(response.body())
+                    } else {
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                        rv_skhd.gone()
+                    }
+                }
 
-        listSkhd.add(
-            SkhdResp(
-                1, listLhpOnSkhd,
-                LpOnSkhd(1, "LP/xx/2021/BIDPROPAM", "disiplin"),
-                "BIDDOKES", "SKHD/1/2020/BIDDOKES", resources.getString(R.string.paragraf),
-                resources.getString(R.string.paragraf), "ampih selama 1 bulan", "12-08-2020",
-                "18.30 WITA", "12-12-2021", "Banjarmasin",
-                "JABATAN PIMPINAN", "Galuh Pimpinan", "KOMBES",
-                "123123", "surat1\nsurat2", null, null
-            )
-        )
+                override fun onFailure(call: Call<ArrayList<SkhdMinResp>>, t: Throwable) {
+                    Toast.makeText(this@ListSkhdActivity, "$t", Toast.LENGTH_SHORT).show()
+                    rl_pb.gone()
+                    rl_no_data.visible()
+                    rv_skhd.gone()
+                }
+            })
+    }
 
-        callbackSkhd = object : AdapterCallback<SkhdResp> {
-            override fun initComponent(itemView: View, data: SkhdResp, itemIndex: Int) {
+    private fun listSkhd(list: ArrayList<SkhdMinResp>?) {
+        callbackSkhd = object : AdapterCallback<SkhdMinResp> {
+            override fun initComponent(itemView: View, data: SkhdMinResp, itemIndex: Int) {
                 itemView.txt_no_skhd.text = data.no_skhd
-                itemView.txt_no_lhp_skhd.text = data.lhp?.no_lhp
-                itemView.txt_no_lp_skhd.text = data.lp?.no_lp
+                itemView.txt_no_lhp_skhd.gone()
+                itemView.txt_no_lp_skhd.gone()
             }
 
-            override fun onItemClicked(itemView: View, data: SkhdResp, itemIndex: Int) {
-                val intent = Intent(this@SkhdActivity, DetailSkhdActivity::class.java)
+            override fun onItemClicked(itemView: View, data: SkhdMinResp, itemIndex: Int) {
+                val intent = Intent(this@ListSkhdActivity, DetailSkhdActivity::class.java)
                 intent.putExtra(DETAIL_SKHD, data)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
-        when (tempJenis) {
-            "pidana" -> {
-                val listPidanaSkhd = listSkhd.filter { it.lp?.jenis_pelanggaran == "pidana" }
-                adapterSkhd.adapterCallback(callbackSkhd)
-                    .isVerticalView()
-                    .addData(listPidanaSkhd)
-                    .setLayout(R.layout.item_skhd)
-                    .build(rv_skhd)
-            }
-            "disiplin" -> {
-                val listDisiplinSkhd = listSkhd.filter { it.lp?.jenis_pelanggaran == "disiplin" }
-                adapterSkhd.adapterCallback(callbackSkhd)
-                    .isVerticalView()
-                    .addData(listDisiplinSkhd)
-                    .setLayout(R.layout.item_skhd)
-                    .build(rv_skhd)
-            }
+        list?.let {
+            adapterSkhd.adapterCallback(callbackSkhd)
+                .isVerticalView()
+                .filterable()
+                .addData(it)
+                .setLayout(R.layout.item_skhd)
+                .build(rv_skhd)
         }
-        //TODO API SESUAI JENIS
+        /*   when (tempJenis) {
+               "pidana" -> {
+                   val listPidanaSkhd = listSkhd.filter { it.lp?.jenis_pelanggaran == "pidana" }
+                   adapterSkhd.adapterCallback(callbackSkhd)
+                       .isVerticalView()
+                       .addData(listPidanaSkhd)
+                       .setLayout(R.layout.item_skhd)
+                       .build(rv_skhd)
+               }
+               "disiplin" -> {
+                   val listDisiplinSkhd = listSkhd.filter { it.lp?.jenis_pelanggaran == "disiplin" }
+                   adapterSkhd.adapterCallback(callbackSkhd)
+                       .isVerticalView()
+                       .addData(listDisiplinSkhd)
+                       .setLayout(R.layout.item_skhd)
+                       .build(rv_skhd)
+               }
+           }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -306,5 +313,10 @@ class SkhdActivity : BaseActivity() {
 
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        apiListSkhd()
     }
 }

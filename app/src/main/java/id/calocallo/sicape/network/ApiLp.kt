@@ -1,5 +1,6 @@
 package id.calocallo.sicape.network
 
+import id.calocallo.sicape.model.LpOnSkhd
 import id.calocallo.sicape.network.request.*
 import id.calocallo.sicape.network.response.*
 import retrofit2.Call
@@ -21,8 +22,7 @@ interface ApiLp {
 
         const val PASAL_DILANGGAR = "lp/{id_pasal}/pasal/dilanggar"
         const val UPD_PASAL_DILANGGAR = "lp/pasal/dilanggar/{id_pasal_dilanggar}"
-
-
+      
         const val SAKSI_LP = "lp/{id_lp}/saksi/kode/etik"
         const val UPD_SAKSI_LP = "lp/saksi/kode/etik/{id_saksi}"
 
@@ -34,6 +34,14 @@ interface ApiLp {
     fun getLpForRefPenyelidikan(
         @Header("Authorization") tokenBearer: String
     ): Call<ArrayList<LpMinResp>>
+
+    @Headers(ACCEPT)
+    @GET("lhp/{id_lp}/referensi/penyelidikan/kasus/{jenis}")
+    fun getLpByIdLhp(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Path("jenis") jenis: String
+    ): Call<ArrayList<LpOnSkhd>>
 
     @Headers(ACCEPT)
     @GET(JENIS_LP)

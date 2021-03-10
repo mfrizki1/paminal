@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.main.skhd.ListSkhdActivity" />
         <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity" />
         <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.EditDetailRefPenyelidikanActivity" />
         <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.ListDetailRefPenyelidikanActivity" />

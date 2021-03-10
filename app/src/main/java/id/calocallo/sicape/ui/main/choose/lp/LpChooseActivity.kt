@@ -2,22 +2,17 @@ package id.calocallo.sicape.ui.main.choose.lp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
-import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lp_choose.*
@@ -65,10 +60,13 @@ class LpChooseActivity : BaseActivity() {
                 tempJenis = "disiplin"
                 supportActionBar?.title = "Pilih Data Laporan Disiplin"
             }
+            else -> {
+                supportActionBar?.title = "Pilih Data Laporan"
+            }
         }
         /*LIST LP FOR REF PENYELIDIKAN*/
-        val isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_LP_MASUK,false)
-        if(isLpForRef){
+        val isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_LP_MASUK, false)
+        if (isLpForRef) {
             getListLpRef()
         }
 //        getListLpByJenis(tempJenis)
@@ -84,29 +82,30 @@ class LpChooseActivity : BaseActivity() {
 
     private fun getListLpRef() {
         rl_pb.visible()
-        NetworkConfig().getServLp().getLpForRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}").enqueue(
-            object : Callback<ArrayList<LpMinResp>> {
-                override fun onResponse(
-                    call: Call<ArrayList<LpMinResp>>,
-                    response: Response<ArrayList<LpMinResp>>
-                ) {
-                    if (response.isSuccessful) {
-                        rl_pb.gone()
-                        listLp(response.body())
-                    } else {
+        NetworkConfig().getServLp()
+            .getLpForRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}").enqueue(
+                object : Callback<ArrayList<LpMinResp>> {
+                    override fun onResponse(
+                        call: Call<ArrayList<LpMinResp>>,
+                        response: Response<ArrayList<LpMinResp>>
+                    ) {
+                        if (response.isSuccessful) {
+                            rl_pb.gone()
+                            listLp(response.body())
+                        } else {
+                            rl_pb.gone()
+                            rv_list_lp_choose.gone()
+                            rl_no_data.visible()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ArrayList<LpMinResp>>, t: Throwable) {
                         rl_pb.gone()
                         rv_list_lp_choose.gone()
                         rl_no_data.visible()
+                        Toast.makeText(this@LpChooseActivity, "$t", Toast.LENGTH_SHORT).show()
                     }
-                }
-
-                override fun onFailure(call: Call<ArrayList<LpMinResp>>, t: Throwable) {
-                    rl_pb.gone()
-                    rv_list_lp_choose.gone()
-                    rl_no_data.visible()
-                    Toast.makeText(this@LpChooseActivity, "$t", Toast.LENGTH_SHORT).show()
-                }
-            })
+                })
     }
 
     private fun getListLpByJenis(tempJenis: String?) {
@@ -155,7 +154,7 @@ class LpChooseActivity : BaseActivity() {
                 finish()
             }
         }
-        list?.let {
+        list?.let { sortJenisLP(it) }?.let {
             adapterLpAll.adapterCallback(callbackLpAll)
                 .isVerticalView()
                 .filterable()
@@ -187,6 +186,19 @@ class LpChooseActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    private val roles: HashMap<String, Int> = hashMapOf(
+        "pidana" to 0,
+        "kode_etik" to 1,
+        "disiplin" to 2
+    )
 
+    private fun sortJenisLP(lp: ArrayList<LpMinResp>): ArrayList<LpMinResp> {
+        val comparator = Comparator { o1: LpMinResp, o2: LpMinResp ->
+            return@Comparator roles[o1.jenis_pelanggaran]!! - roles[o2.jenis_pelanggaran]!!
+        }
+        val copy = arrayListOf<LpMinResp>().apply { addAll(lp) }
+        copy.sortWith(comparator)
+        return copy
+    }
 }
 
