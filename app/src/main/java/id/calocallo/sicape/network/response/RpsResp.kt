@@ -36,3 +36,6 @@ data class RpsResp(
         null, null, null, null
     )
 }
+
+@Parcelize
+data class AddRpsResp(var rps: RpsResp?) : Parcelable

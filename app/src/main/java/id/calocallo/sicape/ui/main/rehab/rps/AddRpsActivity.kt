@@ -2,7 +2,6 @@ package id.calocallo.sicape.ui.main.rehab.rps
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -47,8 +46,8 @@ class AddRpsActivity : BaseActivity() {
         rpsReq.isi_rekomendasi = edt_isi_rekomendasi_rps_add.text.toString()
         rpsReq.kota_penetapan = edt_kota_penetapan_rps_add.text.toString()
         rpsReq.tanggal_penetapan = edt_tanggal_penetapan_rps_add.text.toString()
-        rpsReq.nama_yang_menetapkan = edt_nama_pimpinan_rps_add.text.toString()
-        rpsReq.pangkat_yang_menetapkan = edt_pangkat_pimpinan_rps_add.text.toString()
+        rpsReq.nama_kabid_propam = edt_nama_pimpinan_rps_add.text.toString()
+        rpsReq.pangkat_kabid_propam = edt_pangkat_pimpinan_rps_add.text.toString()
         rpsReq.nrp_yang_menetapkan = edt_nrp_pimpinan_rps_add.text.toString()
         rpsReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_rps_add.text.toString()
         rpsReq.tembusan = edt_tembusan_rps_add.text.toString()
