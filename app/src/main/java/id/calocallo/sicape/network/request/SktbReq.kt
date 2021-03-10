@@ -5,23 +5,17 @@ import id.calocallo.sicape.model.SkhdOnRpsModel
 
 
 data class SktbReq(
-    var id_skhd: Int?,
-    var id_putkke: Int?,
-    var no_sktb: String?,
-    var menimbang_p2: String?,
-    var mengingat_p5: String?,
-    var tanggal_penetapan: String?,
+    var id_lp: String?,/*ADD*/
     var kota_penetapan: String?,
-    var jabatan_yang_menetapkan: String?,
+    var tanggal_penetapan: String?,
     var nama_yang_menetapkan: String?,
-    var pangkat_yang_menetapkan: String?,
-    var nrp_yang_menetapkan: String?,
+    var pangkat_kabid_propam: String?,
+    var nrp_kabid_propam: String?,
     var tembusan: String?
+
 ) {
     constructor() : this(
         null, null, null, null,
-        null, null, null, null,
-        null, null, null,
-        null
+        null, null, null
     )
 }
