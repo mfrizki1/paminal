@@ -37,6 +37,6 @@ interface ApiRpph {
     @DELETE("rpph/{id_rpph}")
     fun delRpph(
         @Header("Authorization") tokenBearer: String,
-        @Path("id_rpph") id_Rpph: Int?
+        @Path("id_rpph") id_rpph: Int?
     ): Call<BaseResp>/*Data rpph removed succesfully*/
 }
