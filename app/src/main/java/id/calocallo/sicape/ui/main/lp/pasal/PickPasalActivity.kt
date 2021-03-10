@@ -405,6 +405,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
 //                    this.putExtra("ADD_SINGLE_SAKSI", true)
                 }
                 startActivity(intent)
+                finish()
             }
         }
     }

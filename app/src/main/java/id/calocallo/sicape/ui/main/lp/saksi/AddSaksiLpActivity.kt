@@ -14,8 +14,11 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SaksiLpReq
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.AddSingleSaksiLhpActivity
+import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
+import id.calocallo.sicape.ui.main.lp.kke.ListLpKodeEtikActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickSaksiActivity
+import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
@@ -176,14 +179,51 @@ class AddSaksiLpActivity : BaseActivity() {
         btn_save_add_saksi.hideProgress(R.string.data_saved)
         btn_save_add_saksi.showSnackbar(R.string.data_saved) {
             action(R.string.next) {
-                val intent = Intent(
-                    this@AddSaksiLpActivity,
-                    ListSaksiLpActivity::class.java
-                ).apply {
-                    this.putExtra(ID_LP, idLp)
-                    this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                when (dataLpFull?.jenis_pelanggaran) {
+                    "pidana" -> {
+                        val intent = Intent(
+                            this@AddSaksiLpActivity,
+                            ListLpPidanaActivity::class.java
+                        ).apply {
+                            this.putExtra(ID_LP, idLp)
+                            this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                        startActivity(intent)
+                        finish()
+                    }
+                    "kode_etik"->{
+                        val intent = Intent(
+                            this@AddSaksiLpActivity,
+                            ListLpKodeEtikActivity::class.java
+                        ).apply {
+                            this.putExtra(ID_LP, idLp)
+                            this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                        startActivity(intent)
+                        finish()
+                    }
+                    "disiplin"->{
+                        val intent = Intent(
+                            this@AddSaksiLpActivity,
+                            ListLpDisiplinActivity::class.java
+                        ).apply {
+                            this.putExtra(ID_LP, idLp)
+                            this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                        startActivity(intent)
+                        finish()
+                    }
+                    else->{
+                        val intent = Intent(
+                            this@AddSaksiLpActivity,
+                            ListSaksiLpActivity::class.java
+                        ).apply {
+                            this.putExtra(ID_LP, idLp)
+                            this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                        startActivity(intent)
+                    }
                 }
-                startActivity(intent)
             }
         }
     }
