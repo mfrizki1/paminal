@@ -39,5 +39,5 @@ interface ApiRps {
     fun delRps(
         @Header("Authorization") tokenBearer: String,
         @Path("id_rps") id_rps: Int?
-    ): Call<BaseResp>
+    ): Call<BaseResp>/*Data rps removed succesfully*/
 }

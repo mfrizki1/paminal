@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RpsResp(
-    var lp: LpMinResp?,
+    var lp: LpResp?,
     var nama_dinas: String?,
     var no_nota_dinas: String?,
     var tanggal_nota_dinas: String?,
