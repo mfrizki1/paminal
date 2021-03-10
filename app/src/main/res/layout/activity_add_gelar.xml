@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/layout_toolbar_white" />
+        <include layout="@layout/layout_toolbar_white" />
 
         <include layout="@layout/view_separator" />
 
@@ -162,14 +161,14 @@
 
             <TextView
                 android:id="@+id/txt_pimpinan_gelar_add"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold"
-                android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Nama Pimpinan" />
+                android:text="Nama Pimpinan"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_pimpinan_gelar_add"
@@ -189,14 +188,14 @@
 
             <TextView
                 android:id="@+id/txt_pemapar_add"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold"
-                android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Nama Pemapar" />
+                android:text="Nama Pemapar"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_pemapar_gelar_add"
@@ -211,28 +210,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_peserta_add"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold"
-                android:layout_marginHorizontal="@dimen/space_12dp"
-                android:layout_width="250dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Nama Peserta Gelar Perkara" />
+            android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_peserta_gelar_add"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/space_12dp"
-                android:layout_weight="1"
                 android:text="Pilih Peserta Gelar Perkara"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_peserta_add"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:gravity="center_vertical"
+                android:text="Nama Peserta Gelar Perkara"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
+            <include layout="@layout/line_separator"/>
+
         </LinearLayout>
 
         <TextView

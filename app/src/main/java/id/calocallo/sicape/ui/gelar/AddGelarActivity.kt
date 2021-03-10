@@ -118,7 +118,7 @@ class AddGelarActivity : BaseActivity() {
                     val multiplePersonel =
                         data?.getParcelableArrayListExtra<PersonelMinResp>(ChoosePersonelActivity.DATA_MULTIPLE)
                     for (i in 0 until multiplePersonel?.size!!) {
-                        txt_peserta_add.append("${multiplePersonel[i].nama},")
+                        txt_peserta_add.append("${multiplePersonel[i].nama}\n")
                         Log.e("nama", "${multiplePersonel[i].nama}")
                         multiplePersonel[i].id?.let { idPeserta.add(it) }
                     }
