@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.rehab.rps
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import id.calocallo.sicape.R
@@ -68,11 +67,11 @@ class EditRpsActivity : BaseActivity() {
         edt_isi_rekomendasi_rps_edit.setText(dataRps?.isi_rekomendasi)
         edt_kota_penetapan_rps_edit.setText(dataRps?.kota_penetapan)
         edt_tanggal_penetapan_rps_edit.setText(dataRps?.tanggal_penetapan)
-        edt_nama_pimpinan_rps_edit.setText(dataRps?.nama_yang_menetapkan)
+        edt_nama_pimpinan_rps_edit.setText(dataRps?.nama_kabid_propam)
         edt_pangkat_pimpinan_rps_edit.setText(
-            dataRps?.pangkat_yang_menetapkan.toString().toUpperCase()
+            dataRps?.pangkat_kabid_propam.toString().toUpperCase()
         )
-        edt_nrp_pimpinan_rps_edit.setText(dataRps?.nrp_yang_menetapkan)
+        edt_nrp_pimpinan_rps_edit.setText(dataRps?.nrp_kabid_propam)
         edt_jabatan_pimpinan_rps_edit.setText(dataRps?.jabatan_yang_menetapkan)
         edt_tembusan_rps_edit.setText(dataRps?.tembusan)
     }

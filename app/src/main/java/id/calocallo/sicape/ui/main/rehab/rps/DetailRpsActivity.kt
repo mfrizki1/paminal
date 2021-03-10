@@ -15,7 +15,6 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.RpsResp
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
-import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_rps.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -69,10 +68,10 @@ class DetailRpsActivity : BaseActivity() {
         txt_kota_penetapan_rps_detail.text = "Kota : ${dataRPS?.kota_penetapan}"
         txt_tanggal_penetapan_rps_detail.text =
             "Tanggal : ${formatterTanggal(dataRPS?.tanggal_penetapan)}"
-        txt_nama_pimpinan_rps_detail.text = "Nama : ${dataRPS?.nama_yang_menetapkan}"
+        txt_nama_pimpinan_rps_detail.text = "Nama : ${dataRPS?.nama_kabid_propam}"
         txt_pangkat_nrp_pimpinan_rps_detail.text =
-            "Pangkat : ${dataRPS?.pangkat_yang_menetapkan.toString()
-                .toUpperCase()}, NRP : ${dataRPS?.nrp_yang_menetapkan}"
+            "Pangkat : ${dataRPS?.pangkat_kabid_propam.toString()
+                .toUpperCase()}, NRP : ${dataRPS?.nrp_kabid_propam}"
         txt_jabatan_pimpinan_rps_detail.text = "Jabatan : ${dataRPS?.jabatan_yang_menetapkan}"
         txt_tembusan_rps_detail.text = dataRPS?.tembusan
     }

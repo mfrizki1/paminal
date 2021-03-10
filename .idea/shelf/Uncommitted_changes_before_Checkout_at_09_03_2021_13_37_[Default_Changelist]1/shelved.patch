@@ -1,0 +1,705 @@
+Index: app/src/main/java/id/calocallo/sicape/network/ApiLp.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.network\r\n\r\nimport id.calocallo.sicape.network.request.*\r\nimport id.calocallo.sicape.network.response.*\r\nimport retrofit2.Call\r\nimport retrofit2.http.*\r\n\r\ninterface ApiLp {\r\n    companion object {\r\n        const val ACCEPT = \"Accept: application/json\"\r\n\r\n        const val JENIS_LP = \"lp/{jenis_lp}\"\r\n        const val GENERATE_LP = \"lp/{id_lp}/generate/document\"\r\n        const val LP_WITH_ID = \"lp/{id_lp}\"\r\n        const val LP_PIDANA = \"lp/pidana\"\r\n        const val LP_KKE = \"lp/kode/etik\"\r\n        const val LP_DISIPLIN = \"lp/disiplin\"\r\n\r\n        const val PASAL = \"pasal\"\r\n        const val PASAL_WITH_ID = \"pasal/{id_pasal}\"\r\n\r\n        const val PASAL_DILANGGAR = \"lp/{id_pasal}/pasal/dilanggar\"\r\n        const val UPD_PASAL_DILANGGAR = \"lp/pasal/dilanggar/{id_pasal_dilanggar}\"\r\n      \r\n        const val SAKSI_LP = \"lp/{id_lp}/saksi/kode/etik\"\r\n        const val UPD_SAKSI_LP = \"lp/saksi/kode/etik/{id_saksi}\"\r\n\r\n\r\n    }\r\n\r\n    @Headers(ACCEPT)\r\n    @GET(JENIS_LP)\r\n    fun getLpByJenis(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"jenis_lp\") jenis_lp: String\r\n    ): Call<ArrayList<LpMinResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @GET(LP_WITH_ID)\r\n    fun getLpById(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?\r\n    ): Call<LpResp>\r\n\r\n\r\n    @Headers(ACCEPT)\r\n    @GET(GENERATE_LP)\r\n    fun generateLp(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?\r\n    ): Call<Base1Resp<DokLpResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @DELETE(LP_WITH_ID)\r\n    fun delLp(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?\r\n    ): Call<BaseResp>\r\n\r\n    @Headers(ACCEPT)\r\n    @POST(LP_PIDANA)\r\n    fun addLpPidana(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Body lpPidanaReq: LpPidanaReq\r\n    ): Call<Base1Resp<DokLpResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @POST(LP_DISIPLIN)\r\n    fun addLpDisiplin(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Body lpDisiplinReq: LpDisiplinReq\r\n    ): Call<Base1Resp<DokLpResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @POST(LP_KKE)\r\n    fun addLpKke(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Body lpKkeReq: LpKkeReq\r\n    ): Call<Base1Resp<DokLpResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @PATCH(\"$LP_PIDANA/{id_lp}\")\r\n    fun updLpPidana(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?,\r\n        @Body lpPidanaReq: LpPidanaReq\r\n    ): Call<Base1Resp<DokLpResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @PATCH(\"$LP_DISIPLIN/{id_lp}\")\r\n    fun updLpDisiplin(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?,\r\n        @Body editLpDisiplinReq: LpDisiplinReq\r\n    ): Call<Base1Resp<DokLpResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @PATCH(\"$LP_KKE/{id_lp}\")\r\n    fun updLpKke(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?,\r\n        @Body editLpKkeReq: LpKkeReq\r\n    ): Call<Base1Resp<DokLpResp>>\r\n\r\n\r\n    /*PASAL*/\r\n    @Headers(ACCEPT)\r\n    @GET(PASAL)\r\n    fun getAllPasal(@Header(\"Authorization\") tokenBearer: String): Call<ArrayList<PasalResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @POST(PASAL)\r\n    fun addPasal(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Body pasalReq: PasalReq\r\n    ): Call<Base1Resp<AddPasalResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @PATCH(PASAL_WITH_ID)\r\n    fun updPasal(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_pasal\") id_pasal: Int,\r\n        @Body pasalReq: PasalReq\r\n    ): Call<Base1Resp<AddPasalResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @GET(PASAL_WITH_ID)\r\n    fun getPasalById(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_pasal\") id_pasal: Int\r\n    ): Call<PasalResp>\r\n\r\n    @Headers(ACCEPT)\r\n    @DELETE(PASAL_WITH_ID)\r\n    fun delPasal(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_pasal\") id_pasal: Int\r\n    ): Call<BaseResp>\r\n\r\n    /*PASAL DILANGGAR*/\r\n    @Headers(ACCEPT)\r\n    @GET(PASAL_DILANGGAR)\r\n    fun getPasalDilanggar(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_pasal\") id_pasal: Int\r\n    ): Call<ArrayList<PasalDilanggarResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @POST(PASAL_DILANGGAR)\r\n    fun addPasalDilanggar(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_pasal\") id_pasal: Int,\r\n        @Body idPasal: ListIdPasalReq\r\n    ): Call<Base1Resp<AddPasalDilanggarResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @PATCH(UPD_PASAL_DILANGGAR)\r\n    fun updPasalDilanggar(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_pasal_dilanggar\") id_pasal_dilanggar: Int,\r\n        @Body idPasal: ListIdPasalReq\r\n    ): Call<Base1Resp<AddPasalDilanggarResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @DELETE(UPD_PASAL_DILANGGAR)\r\n    fun delPasalDilanggar(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_pasal_dilanggar\") id_pasal_dilanggar: Int\r\n    ): Call<BaseResp>\r\n\r\n    /*SAKSI*/\r\n\r\n    @Headers(ACCEPT)\r\n    @GET(\"lp/{id_lp}/saksi\")\r\n    fun getSaksiAllByLp(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int\r\n    ): Call<ArrayList<LpSaksiResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @GET(\"lp/saksi/{id_saksi}\")\r\n    fun getSaksiById(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_saksi\") id_saksi: Int?\r\n    ): Call<LpSaksiResp>\r\n\r\n    @Headers(ACCEPT)\r\n    @POST(\"lp/{id_lp}/saksi/personel\")\r\n    fun addSaksiPersonel(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?,\r\n        @Body saksiReq: SaksiLpReq\r\n    ): Call<Base1Resp<AddSaksiPersonelResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @POST(\"lp/{id_lp}/saksi/sipil\")\r\n    fun addSaksiSipil(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?,\r\n        @Body saksiReq: SaksiLpReq\r\n    ): Call<Base1Resp<AddSaksiSipilResp>>\r\n    @Headers(ACCEPT)\r\n    @PATCH(\"lp/saksi/{id_lp}/personel\")\r\n    fun updSaksiPersonel(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?,\r\n        @Body saksiReq: SaksiLpReq\r\n    ): Call<Base1Resp<AddSaksiPersonelResp>>\r\n\r\n    @Headers(ACCEPT)\r\n    @PATCH(\"lp/saksi/{id_lp}/sipil\")\r\n    fun updSaksiSipil(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lp\") id_lp: Int?,\r\n        @Body saksiReq: SaksiLpReq\r\n    ): Call<Base1Resp<AddSaksiSipilResp>>\r\n\r\n\r\n    @Headers(ACCEPT)\r\n    @DELETE(\"lp/saksi/{id_saksi}\")\r\n    fun delSaksiSingle(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_saksi\") id_saksi: Int\r\n    ): Call<BaseResp>\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/network/ApiLp.kt	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/java/id/calocallo/sicape/network/ApiLp.kt	(date 1615271602875)
+@@ -32,7 +32,7 @@
+     @GET(JENIS_LP)
+     fun getLpByJenis(
+         @Header("Authorization") tokenBearer: String,
+-        @Path("jenis_lp") jenis_lp: String
++        @Path("jenis_lp") jenis_lp: String?
+     ): Call<ArrayList<LpMinResp>>
+ 
+     @Headers(ACCEPT)
+Index: app/src/main/java/id/calocallo/sicape/network/ApiLhp.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.network\r\n\r\nimport id.calocallo.sicape.model.AddLhpResp\r\nimport id.calocallo.sicape.model.LhpResp\r\nimport id.calocallo.sicape.network.request.*\r\nimport id.calocallo.sicape.network.response.*\r\nimport retrofit2.Call\r\nimport retrofit2.http.*\r\n/*ENDPOINT LHP*/\r\ninterface ApiLhp {\r\n    companion object {\r\n        const val LHP = \"lhp\"\r\n        const val LHP_ID = \"lhp/{id_lhp}\"\r\n        const val GENERATE_LHP = \"lhp/{id_lhp}/generate/document\"\r\n\r\n        const val SAKSI_LHP =\"lhp/{id_lhp}}/saksi\"\r\n        const val UPD_SAKSI_LHP =\"lhp/saksi/{id_saksi}\"\r\n\r\n        const val REF_PENYELIDIK_LHP =\"lhp/{id_lhp}/referensi/penyelidikan\"\r\n        const val UPD_REF_PENYELIDIK_LHP =\"lhp/referensi/penyelidikan/{id_penyelidikan}\"\r\n\r\n        const val PENYELIDIK_LHP =\"lhp/{id_lhp}/personel/penyelidik\"\r\n        const val UPD_PENYELIDIK_LHP =\"lhp/personel/penyelidik/{id_pers_lidik}\"\r\n    }\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @GET(LHP)\r\n    fun getLhpAll(\r\n        @Header(\"Authorization\") tokenBearer: String\r\n    ): Call<ArrayList<LhpMinResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @GET(LHP_ID)\r\n    fun getLhpById(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?\r\n    ): Call<LhpResp>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @GET(GENERATE_LHP)\r\n    fun generateDokLhp(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?\r\n    ): Call<Base1Resp<AddLhpResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @POST(LHP)\r\n    fun addLhp(\r\n        @Header(\"Authorization\") tokenBearer: String,\r\n        @Body lhpReq: LhpReq\r\n    ): Call<Base1Resp<AddLhpResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @PATCH(LHP_ID)\r\n    fun updLhp(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?,\r\n        @Body editLhpReq: EditLhpReq\r\n    ): Call<Base1Resp<AddLhpResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @DELETE(LHP_ID)\r\n    fun delLhp(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?\r\n    ): Call<BaseResp>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @GET(SAKSI_LHP)\r\n    fun getAllSaksiLhp(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?\r\n    ): Call<ArrayList<SaksiLhpResp>>\r\n\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @POST(SAKSI_LHP)\r\n    fun addSaksiLhp(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?,\r\n        @Body saksiLhpReq: SaksiLhpReq\r\n    ): Call<Base1Resp<AddSaksiLhpResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @PATCH(UPD_SAKSI_LHP)\r\n    fun updSaksiLhp(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_saksi\") id_saksi: Int?,\r\n        @Body saksiLhpReq: SaksiLhpReq\r\n    ): Call<Base1Resp<AddSaksiLhpResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @DELETE(UPD_SAKSI_LHP)\r\n    fun delSaksiLhp(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_saksi\") id_saksi: Int?\r\n    ): Call<BaseResp>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @GET(REF_PENYELIDIK_LHP)\r\n    fun getRefPenyelidikan(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?\r\n    ): Call<ArrayList<RefPenyelidikanResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @GET(UPD_REF_PENYELIDIK_LHP)\r\n    fun detailRefPenyelidikan(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_penyelidikan\") id_penyelidikan: Int?\r\n    ): Call<RefPenyelidikanResp>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @POST(REF_PENYELIDIK_LHP)\r\n    fun addRefPenyelidikan(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?,\r\n        @Body addRefPenyelidikanReq: RefPenyelidikanReq\r\n    ): Call<Base1Resp<AddRefPenyelidikanResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @PATCH(UPD_REF_PENYELIDIK_LHP)\r\n    fun updRefPenyelidikan(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_penyelidikan\") id_penyelidikan: Int?,\r\n        @Body addRefPenyelidikanReq: RefPenyelidikanReq\r\n    ): Call<Base1Resp<AddRefPenyelidikanResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @DELETE(UPD_REF_PENYELIDIK_LHP)\r\n    fun delRefPenyelidikan(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_penyelidikan\") id_penyelidikan: Int?\r\n    ): Call<BaseResp>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @GET(PENYELIDIK_LHP)\r\n    fun getAllPersLidik(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?\r\n    ): Call<ArrayList<PersonelPenyelidikResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @GET(UPD_PENYELIDIK_LHP)\r\n    fun detailPersLidik(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_pers_lidik\") id_pers_lidik: Int?\r\n    ): Call<DetailPersLidikResp>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @POST(PENYELIDIK_LHP)\r\n    fun addPersLidik(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_lhp\") id_lhp: Int?,\r\n        @Body personelPenyelidikReq: PersonelPenyelidikReq\r\n    ): Call<Base1Resp<AddPersLidikResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @PATCH(UPD_PENYELIDIK_LHP)\r\n    fun updPersLidik(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_pers_lidik\") id_pers_lidik: Int?,\r\n        @Body personelPenyelidikReq: PersonelPenyelidikReq\r\n    ): Call<Base1Resp<AddPersLidikResp>>\r\n\r\n    @Headers(ApiLp.ACCEPT)\r\n    @DELETE(UPD_PENYELIDIK_LHP)\r\n    fun delPersLidik(\r\n        @Header(\"Authorization\") token: String,\r\n        @Path(\"id_pers_lidik\") id_pers_lidik: Int?\r\n    ): Call<BaseResp>\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/network/ApiLhp.kt	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/java/id/calocallo/sicape/network/ApiLhp.kt	(date 1615271800737)
+@@ -6,21 +6,11 @@
+ import id.calocallo.sicape.network.response.*
+ import retrofit2.Call
+ import retrofit2.http.*
+-/*ENDPOINT LHP*/
++
+ interface ApiLhp {
+     companion object {
+         const val LHP = "lhp"
+         const val LHP_ID = "lhp/{id_lhp}"
+-        const val GENERATE_LHP = "lhp/{id_lhp}/generate/document"
+-
+-        const val SAKSI_LHP ="lhp/{id_lhp}}/saksi"
+-        const val UPD_SAKSI_LHP ="lhp/saksi/{id_saksi}"
+-
+-        const val REF_PENYELIDIK_LHP ="lhp/{id_lhp}/referensi/penyelidikan"
+-        const val UPD_REF_PENYELIDIK_LHP ="lhp/referensi/penyelidikan/{id_penyelidikan}"
+-
+-        const val PENYELIDIK_LHP ="lhp/{id_lhp}/personel/penyelidik"
+-        const val UPD_PENYELIDIK_LHP ="lhp/personel/penyelidik/{id_pers_lidik}"
+     }
+ 
+     @Headers(ApiLp.ACCEPT)
+@@ -37,7 +27,7 @@
+     ): Call<LhpResp>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @GET(GENERATE_LHP)
++    @GET("lhp/{id_lhp}/generate/document")
+     fun generateDokLhp(
+         @Header("Authorization") tokenBearer: String,
+         @Path("id_lhp") id_lhp: Int?
+@@ -66,7 +56,7 @@
+     ): Call<BaseResp>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @GET(SAKSI_LHP)
++    @GET("lhp/{id_lhp}}/saksi")
+     fun getAllSaksiLhp(
+         @Header("Authorization") token: String,
+         @Path("id_lhp") id_lhp: Int?
+@@ -74,7 +64,7 @@
+ 
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @POST(SAKSI_LHP)
++    @POST("lhp/{id_lhp}}/saksi")
+     fun addSaksiLhp(
+         @Header("Authorization") token: String,
+         @Path("id_lhp") id_lhp: Int?,
+@@ -82,7 +72,7 @@
+     ): Call<Base1Resp<AddSaksiLhpResp>>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @PATCH(UPD_SAKSI_LHP)
++    @PATCH("lhp/saksi/{id_saksi}")
+     fun updSaksiLhp(
+         @Header("Authorization") token: String,
+         @Path("id_saksi") id_saksi: Int?,
+@@ -90,65 +80,66 @@
+     ): Call<Base1Resp<AddSaksiLhpResp>>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @DELETE(UPD_SAKSI_LHP)
++    @DELETE("lhp/saksi/{id_saksi}")
+     fun delSaksiLhp(
+         @Header("Authorization") token: String,
+         @Path("id_saksi") id_saksi: Int?
+     ): Call<BaseResp>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @GET(REF_PENYELIDIK_LHP)
++    @GET("lhp/{id_lhp}/referensi/penyelidikan")
+     fun getRefPenyelidikan(
+         @Header("Authorization") token: String,
+         @Path("id_lhp") id_lhp: Int?
+     ): Call<ArrayList<RefPenyelidikanResp>>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @GET(UPD_REF_PENYELIDIK_LHP)
++    @GET("lhp/referensi/penyelidikan/{id_penyelidikan}")
+     fun detailRefPenyelidikan(
+         @Header("Authorization") token: String,
+         @Path("id_penyelidikan") id_penyelidikan: Int?
+     ): Call<RefPenyelidikanResp>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @POST(REF_PENYELIDIK_LHP)
++    @POST("lhp/{id_lhp}/referensi/penyelidikan")
+     fun addRefPenyelidikan(
+         @Header("Authorization") token: String,
+         @Path("id_lhp") id_lhp: Int?,
+         @Body addRefPenyelidikanReq: RefPenyelidikanReq
+     ): Call<Base1Resp<AddRefPenyelidikanResp>>
+ 
++
+     @Headers(ApiLp.ACCEPT)
+-    @PATCH(UPD_REF_PENYELIDIK_LHP)
++    @PATCH("lp/{id_lp}/keterangan/terlapor")
+     fun updRefPenyelidikan(
+         @Header("Authorization") token: String,
+-        @Path("id_penyelidikan") id_penyelidikan: Int?,
++        @Path("id_lp") id_lp: Int?,
+         @Body addRefPenyelidikanReq: RefPenyelidikanReq
+-    ): Call<Base1Resp<AddRefPenyelidikanResp>>
++    ): Call<Base1Resp<DokLpResp>>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @DELETE(UPD_REF_PENYELIDIK_LHP)
++    @DELETE("lhp/referensi/penyelidikan/{id_penyelidikan}")
+     fun delRefPenyelidikan(
+         @Header("Authorization") token: String,
+         @Path("id_penyelidikan") id_penyelidikan: Int?
+     ): Call<BaseResp>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @GET(PENYELIDIK_LHP)
++    @GET("lhp/{id_lhp}/personel/penyelidik")
+     fun getAllPersLidik(
+         @Header("Authorization") token: String,
+         @Path("id_lhp") id_lhp: Int?
+     ): Call<ArrayList<PersonelPenyelidikResp>>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @GET(UPD_PENYELIDIK_LHP)
++    @GET("lhp/personel/penyelidik/{id_pers_lidik}")
+     fun detailPersLidik(
+         @Header("Authorization") token: String,
+         @Path("id_pers_lidik") id_pers_lidik: Int?
+     ): Call<DetailPersLidikResp>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @POST(PENYELIDIK_LHP)
++    @POST("lhp/{id_lhp}/personel/penyelidik")
+     fun addPersLidik(
+         @Header("Authorization") token: String,
+         @Path("id_lhp") id_lhp: Int?,
+@@ -156,7 +147,7 @@
+     ): Call<Base1Resp<AddPersLidikResp>>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @PATCH(UPD_PENYELIDIK_LHP)
++    @PATCH("lhp/personel/penyelidik/{id_pers_lidik}")
+     fun updPersLidik(
+         @Header("Authorization") token: String,
+         @Path("id_pers_lidik") id_pers_lidik: Int?,
+@@ -164,9 +155,12 @@
+     ): Call<Base1Resp<AddPersLidikResp>>
+ 
+     @Headers(ApiLp.ACCEPT)
+-    @DELETE(UPD_PENYELIDIK_LHP)
++    @DELETE("lhp/personel/penyelidik/{id_pers_lidik}")
+     fun delPersLidik(
+         @Header("Authorization") token: String,
+         @Path("id_pers_lidik") id_pers_lidik: Int?
+     ): Call<BaseResp>
++
++
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/id/calocallo/sicape/ui/main/choose/lp/PickJenisLpActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.choose.lp\r\n\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.request.RefPenyelidikanReq\r\nimport id.calocallo.sicape.network.response.LpCustomResp\r\nimport id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP\r\nimport id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP\r\nimport id.calocallo.sicape.ui.main.lhp.add.ReferensiPenyelidikanLhpActivity\r\nimport id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_choose_lp.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass ChooseLpActivity : BaseActivity() {\r\n    private var sktt :String? = null\r\n    private var refLp = RefPenyelidikanReq()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_choose_lp)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Pilih Jenis Laporan Polisi\"\r\n\r\n        /*get value from sktt*/\r\n        sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)\r\n        /*set jika ad ket terlapor dari activity ListKetTerlaporLhpActivity*/\r\n        btn_lp_pidana_choose.setOnClickListener {\r\n            val intent = Intent(this, LpChooseActivity::class.java)\r\n            intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, \"Pidana\")\r\n            if (sktt != null) {\r\n                intent.putExtra(AddSkttActivity.LP_SKTT, sktt)\r\n            }\r\n            startActivityForResult(intent, REQ_LP)\r\n        }\r\n\r\n        btn_lp_kkep_choose.setOnClickListener {\r\n            val intent = Intent(this, LpChooseActivity::class.java)\r\n            intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, \"Kode Etik\")\r\n            if (sktt != null) {\r\n                intent.putExtra(AddSkttActivity.LP_SKTT, sktt)\r\n            }\r\n            startActivityForResult(intent, REQ_LP)\r\n\r\n        }\r\n        btn_lp_disiplin_choose.setOnClickListener {\r\n            val intent = Intent(this, LpChooseActivity::class.java)\r\n            intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, \"Disiplin\")\r\n            if (sktt != null) {\r\n                intent.putExtra(AddSkttActivity.LP_SKTT, sktt)\r\n            }\r\n            startActivityForResult(intent, REQ_LP)\r\n\r\n        }\r\n\r\n\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == REQ_LP) {\r\n            if(sktt == null) {\r\n                when (resultCode) {\r\n                    /*\r\n                999 -> {\r\n                    val lpPidana = data?.getParcelableExtra<LpPidanaResp>(DATA_LP)\r\n                    refLp.id_lp = lpPidana?.id\r\n                    refLp.no_lp = lpPidana?.no_lp\r\n                    intentLP.putExtra(DATA_LP, refLp)\r\n                    when (requestCode) {\r\n                        REQ_LP -> {\r\n                            setResult(Activity.RESULT_OK, intentLP)\r\n                            finish()\r\n                        }\r\n                    }\r\n                }\r\n                888 -> {\r\n                    val lpKke = data?.getParcelableExtra<LpKkeResp>(DATA_LP)\r\n                    refLp.id_lp = lpKke?.id\r\n                    refLp.no_lp = lpKke?.no_lp\r\n                    intentLP.putExtra(DATA_LP, refLp)\r\n                    when (requestCode) {\r\n                        REQ_LP -> {\r\n                            setResult(Activity.RESULT_OK, intentLP)\r\n                            finish()\r\n                        }\r\n                    }\r\n                }\r\n                777 -> {\r\n                    val lpDisiplin = data?.getParcelableExtra<LpDisiplinResp>(DATA_LP)\r\n                    refLp.id_lp = lpDisiplin?.id\r\n                    refLp.no_lp = lpDisiplin?.no_lp\r\n                    intentLP.putExtra(DATA_LP, refLp)\r\n                    when (requestCode) {\r\n                        REQ_LP -> {\r\n                            setResult(Activity.RESULT_OK, intentLP)\r\n                            finish()\r\n                        }\r\n                    }\r\n                }\r\n                 */\r\n                    RES_LP_CHOOSE -> {\r\n                        val lpAll = data?.getParcelableExtra<LpCustomResp>(DATA_LP)\r\n                        val intent = Intent()\r\n\r\n                        refLp.id_lp = lpAll?.id\r\n                        refLp.no_lp = lpAll?.no_lp\r\n                        intent.putExtra(\r\n                            ReferensiPenyelidikanLhpActivity.GET_LP_FROM_CHOOSE_LP,\r\n                            refLp\r\n                        )\r\n                        setResult(Activity.RESULT_OK, intent)\r\n                        finish()\r\n                    }\r\n                }\r\n            }else{\r\n                when(resultCode){\r\n                    RES_LP_CHOOSE->{\r\n                        val lpAll = data?.getParcelableExtra<LpCustomResp>(GET_LP_WITHOUT_SKTBB_DLL)\r\n//                        Log.e(\"lpall\",\"$lpAll\")\r\n                        val intent = Intent()\r\n                        intent.putExtra(AddSkttActivity.GET_LP_ON_SKTT,lpAll)\r\n                        setResult(Activity.RESULT_OK, intent)\r\n                        finish()\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n\r\n    }\r\n\r\n    companion object {\r\n        const val NO_LP = \"NO_LP\"\r\n        const val RES_LP_CHOOSE = 1\r\n        const val GET_LP_WITHOUT_SKTBB_DLL = \"GET_LP_WITHOUT_SKTBB_DLL\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/choose/lp/PickJenisLpActivity.kt	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/java/id/calocallo/sicape/ui/main/choose/lp/PickJenisLpActivity.kt	(date 1615271602749)
+@@ -3,23 +3,26 @@
+ import android.app.Activity
+ import android.content.Intent
+ import android.os.Bundle
++import android.util.Log
+ import id.calocallo.sicape.R
+ import id.calocallo.sicape.network.request.RefPenyelidikanReq
+ import id.calocallo.sicape.network.response.LpCustomResp
++import id.calocallo.sicape.network.response.LpMinResp
+ import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
+ import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP
+-import id.calocallo.sicape.ui.main.lhp.add.ReferensiPenyelidikanLhpActivity
++import id.calocallo.sicape.ui.main.lhp.add.ListRefPenyelidikanActivity
++import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
+ import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
+ import id.co.iconpln.smartcity.ui.base.BaseActivity
+-import kotlinx.android.synthetic.main.activity_choose_lp.*
++import kotlinx.android.synthetic.main.activity_pick_jenis_lp.*
+ import kotlinx.android.synthetic.main.layout_toolbar_white.*
+ 
+-class ChooseLpActivity : BaseActivity() {
++class PickJenisLpActivity : BaseActivity() {
+     private var sktt :String? = null
+     private var refLp = RefPenyelidikanReq()
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_choose_lp)
++        setContentView(R.layout.activity_pick_jenis_lp)
+         setupActionBarWithBackButton(toolbar)
+         supportActionBar?.title = "Pilih Jenis Laporan Polisi"
+ 
+@@ -29,27 +32,27 @@
+         btn_lp_pidana_choose.setOnClickListener {
+             val intent = Intent(this, LpChooseActivity::class.java)
+             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Pidana")
+-            if (sktt != null) {
++          /*  if (sktt != null) {
+                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
+-            }
++            }*/
+             startActivityForResult(intent, REQ_LP)
+         }
+ 
+         btn_lp_kkep_choose.setOnClickListener {
+             val intent = Intent(this, LpChooseActivity::class.java)
+             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Kode Etik")
+-            if (sktt != null) {
++           /* if (sktt != null) {
+                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
+-            }
++            }*/
+             startActivityForResult(intent, REQ_LP)
+ 
+         }
+         btn_lp_disiplin_choose.setOnClickListener {
+             val intent = Intent(this, LpChooseActivity::class.java)
+             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Disiplin")
+-            if (sktt != null) {
++           /* if (sktt != null) {
+                 intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
+-            }
++            }*/
+             startActivityForResult(intent, REQ_LP)
+ 
+         }
+@@ -101,23 +104,22 @@
+                 }
+                  */
+                     RES_LP_CHOOSE -> {
+-                        val lpAll = data?.getParcelableExtra<LpCustomResp>(DATA_LP)
++                        val lpAll = data?.getParcelableExtra<LpMinResp>(DATA_LP)
+                         val intent = Intent()
+ 
+-                        refLp.id_lp = lpAll?.id
+-                        refLp.no_lp = lpAll?.no_lp
++                       /* refLp.id_lp = lpAll?.id
++                        refLp.no_lp = lpAll?.no_lp*/
+                         intent.putExtra(
+-                            ReferensiPenyelidikanLhpActivity.GET_LP_FROM_CHOOSE_LP,
+-                            refLp
++                            ListRefPenyelidikanActivity.GET_LP_FROM_CHOOSE_LP, lpAll
+                         )
+-                        setResult(Activity.RESULT_OK, intent)
++                        setResult(AddRefPenyelidikActivity.RES_LP_ON_REF, intent)
+                         finish()
+                     }
+                 }
+             }else{
+                 when(resultCode){
+                     RES_LP_CHOOSE->{
+-                        val lpAll = data?.getParcelableExtra<LpCustomResp>(GET_LP_WITHOUT_SKTBB_DLL)
++                        val lpAll = data?.getParcelableExtra<LpMinResp>(GET_LP_WITHOUT_SKTBB_DLL)
+ //                        Log.e("lpall","$lpAll")
+                         val intent = Intent()
+                         intent.putExtra(AddSkttActivity.GET_LP_ON_SKTT,lpAll)
+Index: app/src/main/java/id/calocallo/sicape/model/LhpResp.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.model\r\n\r\nimport android.os.Parcelable\r\nimport id.calocallo.sicape.network.response.KetTerlaporLhpResp\r\nimport id.calocallo.sicape.network.response.PersonelPenyelidikResp\r\nimport id.calocallo.sicape.network.response.RefPenyelidikanResp\r\nimport id.calocallo.sicape.network.response.SaksiLhpResp\r\nimport kotlinx.android.parcel.Parcelize\r\n\r\n@Parcelize\r\ndata class LhpResp(\r\n    var id: Int?,\r\n    var no_lhp: String?,\r\n    var referensi_penyelidikan: ArrayList<RefPenyelidikanResp>?,\r\n    var personel_penyelidik: ArrayList<PersonelPenyelidikResp>?,\r\n    var saksi: ArrayList<SaksiLhpResp>?,\r\n    var keterangan_terlapor: ArrayList<KetTerlaporLhpResp>?,\r\n    var tentang: String?,\r\n    var no_surat_perintah_penyelidikan: String?,\r\n\r\n    var tugas_pokok: String?,\r\n    var pokok_permasalahan: String?,\r\n    var keterangan_ahli: String?,\r\n    var kesimpulan: String?,\r\n    var rekomendasi: String?,\r\n    var kota_buat_laporan: String?,\r\n    var tanggal_buat_laporan: String?,\r\n    var created_at: String?,\r\n    var updated_at: String?,\r\n    //textmultiline\r\n    var surat: String?,\r\n    var petunjuk: String?,\r\n    var barang_bukti: String?,\r\n    var analisa: String?,\r\n    var isTerbukti: Int?,\r\n    var tanggal_mulai_penyelidikan: String?,\r\n    var wilayah_hukum_penyelidikan: String?\r\n\r\n\r\n//    var lp: LpResp,\r\n//    var id_lp: Int?,\r\n//    var listLidik: ArrayList<ListLidik>?,\r\n//    var waktu_penugasan: String?,\r\n//    var daerah_penyelidikan: String?,\r\n//    var tugas_pokok: String?,\r\n//    var rencana_pelaksanaan_penyelidikan: String?,\r\n//    var pelaksanan: String?,\r\n//    var pokok_permasalahan: String?,\r\n//    var listSaksi: ArrayList<ListSaksi>?,\r\n//    var listSurat: ArrayList<ListSurat>?,\r\n//    var keterangan_ahli: String?,\r\n//    var listPetunjuk: ArrayList<ListPetunjuk>?,\r\n//    var listBukti: ArrayList<ListBukti>?,\r\n//    var listTerlapor: ArrayList<ListTerlapor>?,\r\n//    var listAnalisa: ArrayList<ListAnalisa>?,\r\n//    var kesimpulan: String?,\r\n//    var rekomendasi: String?,\r\n//\r\n//    var nama_ketua_tim: String?,\r\n//    var pangkat_ketua_tim: String?,\r\n//    var nrp_ketua_tim: String?,\r\n):Parcelable {\r\n    constructor() : this(\r\n        0, \"\",\r\n        ArrayList(), ArrayList(), ArrayList(),\r\n        ArrayList(), \"\", \"\",\r\n        \"\", \"\", \"\",\r\n        \"\", \"\", \"\",\r\n        \"\", \"\", \"\",\r\n        \"\", \"\", \"\",\r\n        \"\",0,\"\",\"\"\r\n    )\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/model/LhpResp.kt	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/java/id/calocallo/sicape/model/LhpResp.kt	(date 1615271602744)
+@@ -1,32 +1,41 @@
+ package id.calocallo.sicape.model
+ 
+ import android.os.Parcelable
+-import id.calocallo.sicape.network.response.KetTerlaporLhpResp
+-import id.calocallo.sicape.network.response.PersonelPenyelidikResp
+-import id.calocallo.sicape.network.response.RefPenyelidikanResp
+-import id.calocallo.sicape.network.response.SaksiLhpResp
++import id.calocallo.sicape.network.response.*
+ import kotlinx.android.parcel.Parcelize
+ 
++@Parcelize
++data class AddLhpResp(
++    var lhp: LhpResp?
++) : Parcelable
++
+ @Parcelize
+ data class LhpResp(
+-    var id: Int?,
+-    var no_lhp: String?,
+-    var referensi_penyelidikan: ArrayList<RefPenyelidikanResp>?,
+-    var personel_penyelidik: ArrayList<PersonelPenyelidikResp>?,
+-    var saksi: ArrayList<SaksiLhpResp>?,
+-    var keterangan_terlapor: ArrayList<KetTerlaporLhpResp>?,
+-    var tentang: String?,
+-    var no_surat_perintah_penyelidikan: String?,
++    var id: Int?,/**/
++    var no_lhp: String?,/**/
++    var tentang: String?,/**/
++    var no_surat_perintah_penyelidikan: String?,/**/
++    var tugas_pokok: String?,/**/
++    var pokok_permasalahan: String?,/**/
++    var keterangan_ahli: String?,/**/
++    var kesimpulan: String?,/**/
++    var rekomendasi: String?,/**/
++    var kota_buat_laporan: String?,/**/
++    var tanggal_buat_laporan: String?,/**/
++    var status_penyelidikan: String?,/**/
+ 
+-    var tugas_pokok: String?,
+-    var pokok_permasalahan: String?,
+-    var keterangan_ahli: String?,
+-    var kesimpulan: String?,
+-    var rekomendasi: String?,
+-    var kota_buat_laporan: String?,
+-    var tanggal_buat_laporan: String?,
+-    var created_at: String?,
+-    var updated_at: String?,
++    var referensi_penyelidikan: ArrayList<RefPenyelidikanResp>?,/**/
++    var personel_penyelidik: ArrayList<PersonelPenyelidikResp>?,/**/
++//    var keterangan_terlapor: ArrayList<KetTerlaporLhpResp>?,
++    var is_ada_dokumen: Int?,/**/
++    var dokumen: DokResp?,
++    var user_creator: UserCreatorResp?,/**/
++    var user_updater: UserCreatorResp?,/**/
++    var user_deleter: UserCreatorResp?,/**/
++    var created_at: String?,/**/
++    var updated_at: String?,/**/
++    var deleted_at: String?,/**/
++
+     //textmultiline
+     var surat: String?,
+     var petunjuk: String?,
+@@ -36,39 +45,37 @@
+     var tanggal_mulai_penyelidikan: String?,
+     var wilayah_hukum_penyelidikan: String?
+ 
+-
+-//    var lp: LpResp,
+-//    var id_lp: Int?,
+-//    var listLidik: ArrayList<ListLidik>?,
+-//    var waktu_penugasan: String?,
+-//    var daerah_penyelidikan: String?,
+-//    var tugas_pokok: String?,
+-//    var rencana_pelaksanaan_penyelidikan: String?,
+-//    var pelaksanan: String?,
+-//    var pokok_permasalahan: String?,
+-//    var listSaksi: ArrayList<ListSaksi>?,
+-//    var listSurat: ArrayList<ListSurat>?,
+-//    var keterangan_ahli: String?,
+-//    var listPetunjuk: ArrayList<ListPetunjuk>?,
+-//    var listBukti: ArrayList<ListBukti>?,
+-//    var listTerlapor: ArrayList<ListTerlapor>?,
+-//    var listAnalisa: ArrayList<ListAnalisa>?,
+-//    var kesimpulan: String?,
+-//    var rekomendasi: String?,
+-//
+-//    var nama_ketua_tim: String?,
+-//    var pangkat_ketua_tim: String?,
+-//    var nrp_ketua_tim: String?,
+-):Parcelable {
++) : Parcelable {
+     constructor() : this(
+-        0, "",
+-        ArrayList(), ArrayList(), ArrayList(),
+-        ArrayList(), "", "",
+-        "", "", "",
+-        "", "", "",
+-        "", "", "",
+-        "", "", "",
+-        "",0,"",""
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null,
++        null
+     )
+ }
+ 
+Index: app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/RefPenyelidikan/EditDetailRefPenyelidikanActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport android.widget.Toast\r\nimport com.github.razir.progressbutton.attachTextChangeAnimator\r\nimport com.github.razir.progressbutton.bindProgressButton\r\nimport com.github.razir.progressbutton.hideProgress\r\nimport com.github.razir.progressbutton.showProgress\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.NetworkConfig\r\nimport id.calocallo.sicape.network.request.RefPenyelidikanReq\r\nimport id.calocallo.sicape.network.response.*\r\nimport id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity\r\nimport id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity\r\nimport id.calocallo.sicape.utils.SessionManager1\r\nimport id.calocallo.sicape.utils.ext.alert\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_edit_detail_ref_penyelidikan.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Response\r\n\r\nclass EditDetailRefPenyelidikanActivity : BaseActivity() {\r\n    private var refLpReq = RefPenyelidikanReq()\r\n    private var idLp: Int? = null\r\n    private lateinit var sessionManager1: SessionManager1\r\n    private var detailRef = RefPenyelidikanResp()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        sessionManager1 = SessionManager1(this)\r\n        setContentView(R.layout.activity_edit_detail_ref_penyelidikan)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Edit Data Referensi Penyelidikan\"\r\n\r\n        detailRef =\r\n            intent.extras?.getParcelable<RefPenyelidikanResp>(ListDetailRefPenyelidikanActivity.REQ_DATA_LHP_FOR_DETAIL)!!\r\n\r\n        /*viewDetail*/\r\n        txt_no_lp_ref_edit.text = detailRef.lp?.no_lp\r\n        edt_ket_terlapor_ref_edit.setText(detailRef.isi_keterangan_terlapor)\r\n\r\n        /*set button for change lp*/\r\n        btn_change_lp_ref_penyelidikan.setOnClickListener {\r\n            val intent = Intent(this, PickJenisLpActivity::class.java)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n            startActivityForResult(intent, REQ_LP_FOR_EDIT_REF_LP)\r\n        }\r\n        /*set button for update detaul ref penyelidikan*/\r\n        btn_update_ref_penyelidikan.attachTextChangeAnimator()\r\n        bindProgressButton(btn_update_ref_penyelidikan)\r\n        btn_update_ref_penyelidikan.setOnClickListener {\r\n            refLpReq.id_lp = idLp\r\n            refLpReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_edit.text.toString()\r\n            updateRef(detailRef)\r\n            Log.e(\"editDetailRef\", \"$refLpReq\")\r\n            btn_update_ref_penyelidikan.showProgress {\r\n                progressColor = Color.WHITE\r\n            }\r\n        }\r\n\r\n        /*set button for delete detail ref penyelidikan*/\r\n        btn_delete_ref_penyelidikan.setOnClickListener {\r\n            alert(\"Yakin Hapus Data\") {\r\n                positiveButton(\"Iya\") {\r\n                    deleteRefPenyelidikan(detailRef)\r\n                }\r\n                negativeButton(\"Tidak\") {}\r\n            }.show()\r\n        }\r\n    }\r\n\r\n    private fun deleteRefPenyelidikan(detailRef: RefPenyelidikanResp) {\r\n        NetworkConfig().getServLhp()\r\n            .delRefPenyelidikan(\"Bearer ${sessionManager1.fetchAuthToken()}\", detailRef.id).enqueue(\r\n                object : Callback<BaseResp> {\r\n                    override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {\r\n                        if (response.body()?.message == \"Data referensi penyelidikan removed succesfully\") {\r\n                            Toast.makeText(\r\n                                this@EditDetailRefPenyelidikanActivity,\r\n                                R.string.data_deleted,\r\n                                Toast.LENGTH_SHORT\r\n                            ).show()\r\n                            Handler(Looper.getMainLooper()).postDelayed({\r\n                                finish()\r\n                            }, 1000)\r\n                        } else {\r\n                            Toast.makeText(\r\n                                this@EditDetailRefPenyelidikanActivity, R.string.failed_deleted, Toast.LENGTH_SHORT\r\n                            ).show()\r\n                        }\r\n                    }\r\n\r\n                    override fun onFailure(call: Call<BaseResp>, t: Throwable) {\r\n                        Toast.makeText(\r\n                            this@EditDetailRefPenyelidikanActivity, \"$t\", Toast.LENGTH_SHORT\r\n                        ).show()\r\n                    }\r\n                })\r\n    }\r\n\r\n    private fun updateRef(detailRef: RefPenyelidikanResp) {\r\n        NetworkConfig().getServLhp().updRefPenyelidikan(\r\n            \"Bearer ${sessionManager1.fetchAuthToken()}\",\r\n            detailRef.id,\r\n            refLpReq\r\n        ).enqueue(object : Callback<Base1Resp<AddRefPenyelidikanResp>> {\r\n            override fun onResponse(\r\n                call: Call<Base1Resp<AddRefPenyelidikanResp>>,\r\n                response: Response<Base1Resp<AddRefPenyelidikanResp>>\r\n            ) {\r\n                if (response.body()?.message == \"Data referensi penyelidikan updated succesfully\") {\r\n                    btn_update_ref_penyelidikan.hideProgress(R.string.data_updated)\r\n                    Handler(Looper.getMainLooper()).postDelayed({\r\n                        finish()\r\n                    }, 1000)\r\n                } else {\r\n                    btn_update_ref_penyelidikan.hideProgress(R.string.not_update)\r\n                }\r\n            }\r\n\r\n            override fun onFailure(\r\n                call: Call<Base1Resp<AddRefPenyelidikanResp>>, t: Throwable\r\n            ) {\r\n                Toast.makeText(this@EditDetailRefPenyelidikanActivity, \"$t\", Toast.LENGTH_SHORT)\r\n                    .show()\r\n                btn_update_ref_penyelidikan.hideProgress(R.string.not_update)\r\n            }\r\n        })\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        val dataRefLp =\r\n            data?.getParcelableExtra<LpMinResp>(AddRefPenyelidikActivity.GET_LP_FROM_CHOOSE_LP)\r\n        if (resultCode == AddRefPenyelidikActivity.RES_LP_ON_REF && requestCode == REQ_LP_FOR_EDIT_REF_LP) {\r\n            txt_no_lp_ref_edit.text = dataRefLp?.no_lp\r\n            idLp = dataRefLp?.id\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        const val REQ_LP_FOR_EDIT_REF_LP = 1\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/RefPenyelidikan/EditDetailRefPenyelidikanActivity.kt	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/ref_penyelidikan/EditDetailRefPenyelidikanActivity.kt	(date 1615271602859)
+@@ -1,4 +1,4 @@
+-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
++package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
+ 
+ import android.content.Intent
+ import android.graphics.Color
+@@ -16,7 +16,6 @@
+ import id.calocallo.sicape.network.request.RefPenyelidikanReq
+ import id.calocallo.sicape.network.response.*
+ import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
+-import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
+ import id.calocallo.sicape.utils.SessionManager1
+ import id.calocallo.sicape.utils.ext.alert
+ import id.co.iconpln.smartcity.ui.base.BaseActivity
+@@ -40,10 +39,7 @@
+ 
+         detailRef =
+             intent.extras?.getParcelable<RefPenyelidikanResp>(ListDetailRefPenyelidikanActivity.REQ_DATA_LHP_FOR_DETAIL)!!
+-
+-        /*viewDetail*/
+-        txt_no_lp_ref_edit.text = detailRef.lp?.no_lp
+-        edt_ket_terlapor_ref_edit.setText(detailRef.isi_keterangan_terlapor)
++        getDetailRef(detailRef)
+ 
+         /*set button for change lp*/
+         btn_change_lp_ref_penyelidikan.setOnClickListener {
+@@ -56,7 +52,7 @@
+         bindProgressButton(btn_update_ref_penyelidikan)
+         btn_update_ref_penyelidikan.setOnClickListener {
+             refLpReq.id_lp = idLp
+-            refLpReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_edit.text.toString()
++            refLpReq.detail_keterangan_terlapor = edt_ket_terlapor_ref_edit.text.toString()
+             updateRef(detailRef)
+             Log.e("editDetailRef", "$refLpReq")
+             btn_update_ref_penyelidikan.showProgress {
+@@ -75,6 +71,36 @@
+         }
+     }
+ 
++    private fun getDetailRef(detailRef: RefPenyelidikanResp) {
++        NetworkConfig().getServLhp()
++            .detailRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}", detailRef.id)
++            .enqueue(
++                object : Callback<RefPenyelidikanResp> {
++                    override fun onResponse(
++                        call: Call<RefPenyelidikanResp>,
++                        response: Response<RefPenyelidikanResp>
++                    ) {
++                        if (response.isSuccessful) {
++                            viewDetailRef(response.body())
++                        } else {
++
++                        }
++                    }
++
++                    override fun onFailure(call: Call<RefPenyelidikanResp>, t: Throwable) {
++                        Toast.makeText(
++                            this@EditDetailRefPenyelidikanActivity, "$t", Toast.LENGTH_SHORT
++                        ).show()
++                    }
++                })
++    }
++
++    private fun viewDetailRef(dataRef: RefPenyelidikanResp?) {
++        /*viewDetail*/
++        txt_no_lp_ref_edit.text = dataRef?.lp?.no_lp
++        edt_ket_terlapor_ref_edit.setText(dataRef?.lp?.detail_keterangan_terlapor)
++    }
++
+     private fun deleteRefPenyelidikan(detailRef: RefPenyelidikanResp) {
+         NetworkConfig().getServLhp()
+             .delRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}", detailRef.id).enqueue(
+@@ -91,7 +117,9 @@
+                             }, 1000)
+                         } else {
+                             Toast.makeText(
+-                                this@EditDetailRefPenyelidikanActivity, R.string.failed_deleted, Toast.LENGTH_SHORT
++                                this@EditDetailRefPenyelidikanActivity,
++                                R.string.failed_deleted,
++                                Toast.LENGTH_SHORT
+                             ).show()
+                         }
+                     }
+@@ -107,25 +135,25 @@
+     private fun updateRef(detailRef: RefPenyelidikanResp) {
+         NetworkConfig().getServLhp().updRefPenyelidikan(
+             "Bearer ${sessionManager1.fetchAuthToken()}",
+-            detailRef.id,
++            detailRef.lp?.id,
+             refLpReq
+-        ).enqueue(object : Callback<Base1Resp<AddRefPenyelidikanResp>> {
++        ).enqueue(object : Callback<Base1Resp<DokLpResp>> {
+             override fun onResponse(
+-                call: Call<Base1Resp<AddRefPenyelidikanResp>>,
+-                response: Response<Base1Resp<AddRefPenyelidikanResp>>
++                call: Call<Base1Resp<DokLpResp>>,
++                response: Response<Base1Resp<DokLpResp>>
+             ) {
+-                if (response.body()?.message == "Data referensi penyelidikan updated succesfully") {
++                if (response.body()?.message == "Data keterangan terlapor updated succesfully") {
+                     btn_update_ref_penyelidikan.hideProgress(R.string.data_updated)
+                     Handler(Looper.getMainLooper()).postDelayed({
+                         finish()
+-                    }, 1000)
++                    }, 750)
+                 } else {
+                     btn_update_ref_penyelidikan.hideProgress(R.string.not_update)
+                 }
+             }
+ 
+             override fun onFailure(
+-                call: Call<Base1Resp<AddRefPenyelidikanResp>>, t: Throwable
++                call: Call<Base1Resp<DokLpResp>>, t: Throwable
+             ) {
+                 Toast.makeText(this@EditDetailRefPenyelidikanActivity, "$t", Toast.LENGTH_SHORT)
+                     .show()
+Index: app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/RefPenyelidikan/AddRefPenyelidikActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport android.widget.Toast\r\nimport com.github.razir.progressbutton.attachTextChangeAnimator\r\nimport com.github.razir.progressbutton.bindProgressButton\r\nimport com.github.razir.progressbutton.hideProgress\r\nimport com.github.razir.progressbutton.showProgress\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.NetworkConfig\r\nimport id.calocallo.sicape.network.request.RefPenyelidikanReq\r\nimport id.calocallo.sicape.network.response.*\r\nimport id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity\r\nimport id.calocallo.sicape.utils.SessionManager1\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_add_ref_penyelidik.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Response\r\n\r\nclass AddRefPenyelidikActivity : BaseActivity() {\r\n    private lateinit var sessionManager1: SessionManager1\r\n    private var idLp: Int? = null\r\n    private var refPenyelidikanReq = RefPenyelidikanReq()\r\n    private var isSingleAdd:Boolean? = null\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_add_ref_penyelidik)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Tambah Data Referensi Penyelidikan\"\r\n        isSingleAdd = intent.getBooleanExtra(SINGLE_ADD, false)\r\n        val dataLhp = intent.getParcelableExtra<LhpMinResp>(DATA_LHP)\r\n\r\n        sessionManager1 = SessionManager1(this)\r\n        btn_add_lp_ref_penyelidikan.setOnClickListener {\r\n            val intent = Intent(this, PickJenisLpActivity::class.java)\r\n            startActivityForResult(intent, REQ_LP)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        btn_save_ref_penyelidik_add.attachTextChangeAnimator()\r\n        bindProgressButton(btn_save_ref_penyelidik_add)\r\n        btn_save_ref_penyelidik_add.setOnClickListener {\r\n            refPenyelidikanReq.id_lp = idLp\r\n            refPenyelidikanReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()\r\n            if(isSingleAdd == true){\r\n                btn_save_ref_penyelidik_add.showProgress { progressColor = Color.WHITE }\r\n                addRefPenyelidikSingle(dataLhp)\r\n            }else{\r\n\r\n                val intent = Intent().apply{\r\n                    this.putExtra(DATA_REF_PENYELIDIK, refPenyelidikanReq)\r\n                    this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP\r\n                }\r\n                setResult(RES_LP_ON_REF, intent)\r\n                finish()\r\n            }\r\n\r\n\r\n        }\r\n    }\r\n\r\n    private fun addRefPenyelidikSingle(dataLhp: LhpMinResp?) {\r\n        NetworkConfig().getServLhp()\r\n            .addRefPenyelidikan(\"Bearer ${sessionManager1.fetchAuthToken()}\", dataLhp?.id, refPenyelidikanReq)\r\n            .enqueue(object : Callback<Base1Resp<AddRefPenyelidikanResp>> {\r\n                override fun onResponse(\r\n                    call: Call<Base1Resp<AddRefPenyelidikanResp>>,\r\n                    response: Response<Base1Resp<AddRefPenyelidikanResp>>\r\n                ) {\r\n                    if (response.body()?.message == \"Data referensi penyelidikan saved succesfully\") {\r\n                        btn_save_ref_penyelidik_add.hideProgress(R.string.data_saved)\r\n                        Handler(Looper.getMainLooper()).postDelayed({\r\n                            finish()\r\n                        },1000)\r\n                    } else {\r\n                        btn_save_ref_penyelidik_add.hideProgress(R.string.not_save)\r\n                    }\r\n                }\r\n\r\n                override fun onFailure(\r\n                    call: Call<Base1Resp<AddRefPenyelidikanResp>>,\r\n                    t: Throwable\r\n                ) {\r\n                    Toast.makeText(this@AddRefPenyelidikActivity, \"$t\", Toast.LENGTH_SHORT).show()\r\n                    btn_save_ref_penyelidik_add.hideProgress(R.string.not_save)\r\n                }\r\n            })\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == REQ_LP && resultCode == RES_LP_ON_REF) {\r\n            val dataLp = data?.getParcelableExtra<LpMinResp>(GET_LP_FROM_CHOOSE_LP)\r\n            idLp = dataLp?.id\r\n            txt_no_lp_ref_add.text = dataLp?.no_lp\r\n            refPenyelidikanReq.no_lp = txt_no_lp_ref_add.text.toString()\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        const val DATA_LHP = \"DATA_REF_PENYELIDIK\"\r\n        const val SINGLE_ADD = \"SINGLE_ADD\"\r\n        const val REQ_LP = 234\r\n        const val RES_LP_ON_REF = 124\r\n        const val GET_LP_FROM_CHOOSE_LP = \"GET_LP_FROM_CHOOSE_LP\"\r\n        const val DATA_REF_PENYELIDIK = \"DATA_REF_PENYELIDIK\"\r\n\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/RefPenyelidikan/AddRefPenyelidikActivity.kt	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/ref_penyelidikan/AddRefPenyelidikActivity.kt	(date 1615271602864)
+@@ -1,4 +1,4 @@
+-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
++package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
+ 
+ import android.content.Intent
+ import android.graphics.Color
+@@ -48,12 +48,11 @@
+         bindProgressButton(btn_save_ref_penyelidik_add)
+         btn_save_ref_penyelidik_add.setOnClickListener {
+             refPenyelidikanReq.id_lp = idLp
+-            refPenyelidikanReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
++            refPenyelidikanReq.detail_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
+             if(isSingleAdd == true){
+                 btn_save_ref_penyelidik_add.showProgress { progressColor = Color.WHITE }
+                 addRefPenyelidikSingle(dataLhp)
+             }else{
+-
+                 val intent = Intent().apply{
+                     this.putExtra(DATA_REF_PENYELIDIK, refPenyelidikanReq)
+                     this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+@@ -98,6 +97,7 @@
+         super.onActivityResult(requestCode, resultCode, data)
+         if (requestCode == REQ_LP && resultCode == RES_LP_ON_REF) {
+             val dataLp = data?.getParcelableExtra<LpMinResp>(GET_LP_FROM_CHOOSE_LP)
++            Log.e("AddRefPenyelidikan", "${dataLp?.id}")
+             idLp = dataLp?.id
+             txt_no_lp_ref_add.text = dataLp?.no_lp
+             refPenyelidikanReq.no_lp = txt_no_lp_ref_add.text.toString()
+Index: app/src/main/res/layout/activity_referensi_penyelidikan_lhp.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".ui.main.lhp.add.ReferensiPenyelidikanLhpActivity\">\r\n\r\n    <include layout=\"@layout/layout_toolbar_white\" />\r\n\r\n    <include layout=\"@layout/view_separator\" />\r\n\r\n    <TextView\r\n        style=\"@style/TitleText\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Tambah Data Referensi Penyelidikan\" />\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/rv_list_add_lp\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_marginTop=\"@dimen/space_8dp\"\r\n            android:paddingHorizontal=\"@dimen/space_12dp\"\r\n            android:layout_height=\"match_parent\"\r\n            tools:listitem=\"@layout/layout_edit_1_text\" />\r\n\r\n        <include\r\n            layout=\"@layout/view_no_data\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_centerInParent=\"true\"\r\n            android:visibility=\"gone\" />\r\n\r\n        <include\r\n            layout=\"@layout/layout_progress_dialog\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_centerInParent=\"true\"\r\n            android:visibility=\"gone\" />\r\n        <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n            android:id=\"@+id/btn_add_lp_lhp\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_above=\"@+id/ll_choose_lp_lhp\"\r\n            android:layout_alignParentRight=\"true\"\r\n            android:layout_marginRight=\"@dimen/space_12dp\"\r\n            android:layout_marginBottom=\"@dimen/space_12dp\"\r\n            android:backgroundTint=\"@color/colorPrimary\"\r\n            android:src=\"@drawable/ic_add\"\r\n            android:tint=\"@color/white\" />\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/ll_choose_lp_lhp\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_alignParentBottom=\"true\"\r\n            android:background=\"@color/white\"\r\n            android:elevation=\"45dp\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <com.google.android.material.button.MaterialButton\r\n                android:id=\"@+id/btn_next_lp_lhp\"\r\n                style=\"@style/Widget.Button\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginVertical=\"@dimen/space_12dp\"\r\n                android:text=\"@string/next\" />\r\n        </LinearLayout>\r\n\r\n    </RelativeLayout>\r\n</LinearLayout>
+===================================================================
+--- app/src/main/res/layout/activity_referensi_penyelidikan_lhp.xml	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/res/layout/activity_list_ref_penyelidikan.xml	(date 1615271602841)
+@@ -5,7 +5,7 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical"
+-    tools:context=".ui.main.lhp.add.ReferensiPenyelidikanLhpActivity">
++    tools:context=".ui.main.lhp.add.ListRefPenyelidikanActivity">
+ 
+     <include layout="@layout/layout_toolbar_white" />
+ 
+Index: app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/RefPenyelidikan/ListDetailRefPenyelidikanActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.Toast\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.NetworkConfig\r\nimport id.calocallo.sicape.network.request.RefPenyelidikanReq\r\nimport id.calocallo.sicape.network.response.LhpMinResp\r\nimport id.calocallo.sicape.network.response.RefPenyelidikanResp\r\nimport id.calocallo.sicape.ui.main.lhp.DetailLhpActivity\r\nimport id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity\r\nimport id.calocallo.sicape.utils.SessionManager1\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.calocallo.sicape.utils.ext.visible\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_list_detail_ref_penyelidikan.*\r\nimport kotlinx.android.synthetic.main.layout_edit_1_text.view.*\r\nimport kotlinx.android.synthetic.main.layout_progress_dialog.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\nimport kotlinx.android.synthetic.main.view_no_data.*\r\nimport org.marproject.reusablerecyclerviewadapter.ReusableAdapter\r\nimport org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Response\r\n\r\nclass ListDetailRefPenyelidikanActivity : BaseActivity() {\r\n    private var adapterRefPenyelidikan = ReusableAdapter<RefPenyelidikanResp>(this)\r\n    private lateinit var callbackRefPenyelidikan: AdapterCallback<RefPenyelidikanResp>\r\n    private lateinit var sessionManager1: SessionManager1\r\n    private var refLpReq = RefPenyelidikanReq()\r\n    private var dataLhp = LhpMinResp()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_list_detail_ref_penyelidikan)\r\n        sessionManager1 = SessionManager1(this)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"List Data Referensi Penyelidikan\"\r\n        dataLhp = intent.extras?.getParcelable<LhpMinResp>(DetailLhpActivity.DETAIL_REF)!!\r\n        Log.e(\"list\", \"$dataLhp\")\r\n\r\n        /*set button for add single*/\r\n        btn_add_single_ref_penyelidikan.setOnClickListener {\r\n            /*val intent = Intent(this, PickJenisLpActivity::class.java)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n            startActivityForResult(intent, REQ_REF_LP_FOR_DETAIL)*/\r\n\r\n            val intent = Intent(this, AddRefPenyelidikActivity::class.java).apply {\r\n                this.putExtra(AddRefPenyelidikActivity.SINGLE_ADD, true)\r\n                this.putExtra(AddRefPenyelidikActivity.DATA_LHP, dataLhp)\r\n            }\r\n            startActivity(intent)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        apiListRefLidik(dataLhp)\r\n        /* if (refLpReq.id_lp == null) {\r\n             getListOfRefLP(lhpResp)\r\n         } else {\r\n             addRefPenyelidikanSingle(lhpResp, refLpReq)\r\n         }*/\r\n    }\r\n\r\n    private fun apiListRefLidik(dataLhp: LhpMinResp) {\r\n        rl_pb.visible()\r\n        NetworkConfig().getServLhp()\r\n            .getRefPenyelidikan(\"Bearer ${sessionManager1.fetchAuthToken()}\", dataLhp.id).enqueue(\r\n                object :\r\n                    Callback<ArrayList<RefPenyelidikanResp>> {\r\n                    override fun onResponse(\r\n                        call: Call<ArrayList<RefPenyelidikanResp>>,\r\n                        response: Response<ArrayList<RefPenyelidikanResp>>\r\n                    ) {\r\n                        if (response.isSuccessful) {\r\n                            rl_pb.gone()\r\n                            getListOfRefLP(response.body())\r\n                        } else {\r\n                            rl_pb.gone()\r\n                            rl_no_data.visible()\r\n                            rv_list_ref_penyelidikan.gone()\r\n                        }\r\n                    }\r\n\r\n                    override fun onFailure(\r\n                        call: Call<ArrayList<RefPenyelidikanResp>>,\r\n                        t: Throwable\r\n                    ) {\r\n                        Toast.makeText(\r\n                            this@ListDetailRefPenyelidikanActivity, \"$t\", Toast.LENGTH_SHORT\r\n                        )\r\n                            .show()\r\n                        rl_pb.gone()\r\n                        rl_no_data.visible()\r\n                        rv_list_ref_penyelidikan.gone()\r\n                    }\r\n                })\r\n    }\r\n\r\n    private fun getListOfRefLP(dataRefLidik: ArrayList<RefPenyelidikanResp>?) {\r\n        callbackRefPenyelidikan = object : AdapterCallback<RefPenyelidikanResp> {\r\n            override fun initComponent(itemView: View, data: RefPenyelidikanResp, itemIndex: Int) {\r\n                itemView.txt_edit_pendidikan.text = data.lp?.no_lp\r\n            }\r\n\r\n            override fun onItemClicked(itemView: View, data: RefPenyelidikanResp, itemIndex: Int) {\r\n                val intent = Intent(\r\n                    this@ListDetailRefPenyelidikanActivity,\r\n                    EditDetailRefPenyelidikanActivity::class.java\r\n                )\r\n                intent.putExtra(REQ_DATA_LHP_FOR_DETAIL, data)\r\n                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n                startActivity(intent)\r\n            }\r\n        }\r\n        dataRefLidik?.let {\r\n            adapterRefPenyelidikan.adapterCallback(callbackRefPenyelidikan)\r\n                .filterable()\r\n                .isVerticalView()\r\n                .addData(it)\r\n                .setLayout(R.layout.layout_edit_1_text)\r\n                .build(rv_list_ref_penyelidikan)\r\n        }\r\n        /*  lhpResp?.referensi_penyelidikan?.let {\r\n                adapterRefPenyelidikan.adapterCallback(callbackRefPenyelidikan)\r\n                    .isVerticalView()\r\n                    .addData(it)\r\n                    .setLayout(R.layout.layout_edit_1_text)\r\n                    .build(rv_list_ref_penyelidikan)\r\n            }*/\r\n\r\n    }\r\n\r\n    override fun onResume() {\r\n        super.onResume()\r\n        apiListRefLidik(dataLhp)\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == REQ_REF_LP_FOR_DETAIL) {\r\n            if (resultCode == RES_REF_LP_FOR_DETAIL) {\r\n//                val dataLp = data?.getParcelableExtra<LpMinResp>()\r\n                refLpReq = data?.getParcelableExtra<RefPenyelidikanReq>(AddLhpActivity.DATA_LP)!!\r\n                addRefPenyelidikanSingle(dataLhp, refLpReq)\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n    private fun addRefPenyelidikanSingle(lhpResp: LhpMinResp, refLpReq: RefPenyelidikanReq?) {\r\n        Log.e(\"add DetailRef\", \"$refLpReq\")\r\n    }\r\n\r\n\r\n    companion object {\r\n        const val REQ_REF_LP_FOR_DETAIL = 123\r\n        const val RES_REF_LP_FOR_DETAIL = 321\r\n        const val REQ_DATA_LHP_FOR_DETAIL = \"REQ_DATA_LHP_FOR_DETAIL\"\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/RefPenyelidikan/ListDetailRefPenyelidikanActivity.kt	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/java/id/calocallo/sicape/ui/main/lhp/edit/ref_penyelidikan/ListDetailRefPenyelidikanActivity.kt	(date 1615271602852)
+@@ -1,4 +1,4 @@
+-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
++package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
+ 
+ import android.content.Intent
+ import android.os.Bundle
+Index: app/src/main/java/id/calocallo/sicape/ui/main/lhp/add/ReferensiPenyelidikanLhpActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.lhp.add\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.View\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.request.RefPenyelidikanReq\r\nimport id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity\r\nimport id.calocallo.sicape.utils.LhpDataManager\r\nimport id.calocallo.sicape.utils.SessionManager1\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.calocallo.sicape.utils.ext.visible\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_referensi_penyelidikan_lhp.*\r\nimport kotlinx.android.synthetic.main.layout_edit_1_text.view.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\nimport kotlinx.android.synthetic.main.view_no_data.*\r\nimport org.marproject.reusablerecyclerviewadapter.ReusableAdapter\r\nimport org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback\r\n\r\nclass ReferensiPenyelidikanLhpActivity : BaseActivity() {\r\n    private lateinit var sessionManager1: SessionManager1\r\n    private var adapteRefLpReq = ReusableAdapter<RefPenyelidikanReq>(this)\r\n    private lateinit var callbackRefLpReq: AdapterCallback<RefPenyelidikanReq>\r\n    private var currRefLp = ArrayList<RefPenyelidikanReq>()\r\n    private var refLp = mutableListOf<RefPenyelidikanReq>()\r\n    private lateinit var lhpDataManager: LhpDataManager\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_referensi_penyelidikan_lhp)\r\n        sessionManager1 = SessionManager1(this)\r\n        lhpDataManager = LhpDataManager(this)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Tambah Data Laporan Hasil Penyelidikan\"\r\n\r\n        //set button for pick and add lp on lhp\r\n        btn_add_lp_lhp.setOnClickListener {\r\n            val intent = Intent(this, AddRefPenyelidikActivity::class.java)\r\n            startActivityForResult(intent, ADD_REF)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n//        Log.e(\"listbfr\", \"$currRefLp\")\r\n        //set button for next\r\n        btn_next_lp_lhp.setOnClickListener {\r\n            lhpDataManager.setListRefLp(refLp as ArrayList<RefPenyelidikanReq>)\r\n            val intent = Intent(this, PickPersonelPenyelidikActivity::class.java)\r\n            startActivity(intent)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n\r\n        }\r\n\r\n        getListRefLp(refLp)\r\n    }\r\n\r\n\r\n    private fun getListRefLp(listRef: MutableList<RefPenyelidikanReq>) {\r\n        Log.e(\"listRef\", \"$listRef\")\r\n        callbackRefLpReq = object : AdapterCallback<RefPenyelidikanReq> {\r\n            override fun initComponent(\r\n                itemView: View, data: RefPenyelidikanReq, itemIndex: Int\r\n            ) {\r\n                itemView.txt_edit_pendidikan.text = data.no_lp\r\n            }\r\n\r\n            override fun onItemClicked(\r\n                itemView: View, data: RefPenyelidikanReq, itemIndex: Int\r\n            ) {\r\n            }\r\n        }\r\n        adapteRefLpReq.adapterCallback(callbackRefLpReq)\r\n            .isVerticalView()\r\n            .addData(refLp)\r\n            .setLayout(R.layout.layout_edit_1_text)\r\n            .build(rv_list_add_lp)\r\n\r\n    }\r\n\r\n    private fun addLpOnLhp(currRefLp: ArrayList<RefPenyelidikanReq>) {\r\n        if (currRefLp.isNullOrEmpty()) {\r\n            rl_no_data.visible()\r\n            rv_list_add_lp.gone()\r\n        } else {\r\n            callbackRefLpReq = object : AdapterCallback<RefPenyelidikanReq> {\r\n                override fun initComponent(\r\n                    itemView: View,\r\n                    data: RefPenyelidikanReq,\r\n                    itemIndex: Int\r\n                ) {\r\n                    itemView.txt_edit_pendidikan.text = data.isi_keterangan_terlapor\r\n                }\r\n\r\n                override fun onItemClicked(\r\n                    itemView: View,\r\n                    data: RefPenyelidikanReq,\r\n                    itemIndex: Int\r\n                ) {\r\n                }\r\n\r\n            }\r\n            adapteRefLpReq.adapterCallback(callbackRefLpReq)\r\n                .isVerticalView()\r\n                .addData(currRefLp)\r\n                .setLayout(R.layout.layout_edit_1_text)\r\n                .build(rv_list_add_lp)\r\n        }\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == ADD_REF && resultCode == AddRefPenyelidikActivity.RES_LP_ON_REF) {\r\n            val dataRef =\r\n                data?.getParcelableExtra<RefPenyelidikanReq>(AddRefPenyelidikActivity.DATA_REF_PENYELIDIK)\r\n            Log.e(\"dataRef\", \"$dataRef\")\r\n            if (dataRef != null) {\r\n                refLp.add(dataRef)\r\n            }\r\n        }\r\n    }\r\n\r\n/* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        val idLP = data?.getParcelableExtra<RefPenyelidikanReq>(DATA_LP)\r\n        when (resultCode) {\r\n            Activity.RESULT_OK -> {\r\n                when (requestCode) {\r\n                    REQ_LP -> {\r\n//                        idLP?.let { refLp.add(it) }\r\n                        //add dinamic to\r\n//                        currRefLp = refLp\r\n//                        addLpOnLhp(currRefLp)\r\n                        val getLp = data?.getParcelableExtra<RefPenyelidikanReq>(GET_LP_FROM_CHOOSE_LP)\r\n                        getLp?.let { refLp.add(it) }\r\n                        currRefLp = refLp\r\n                        addLpOnLhp(currRefLp)\r\n                    }\r\n\r\n                }\r\n            }\r\n        }\r\n    }\r\n*/\r\n\r\n    companion object {\r\n        const val LHP_ADD = \"LHP_ADD\"\r\n        const val ADD_REF = 1\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/lhp/add/ReferensiPenyelidikanLhpActivity.kt	(revision b9576e31b3fd238e298df8ea86cefdf720f64966)
++++ app/src/main/java/id/calocallo/sicape/ui/main/lhp/add/ListRefPenyelidikanActivity.kt	(date 1615271602867)
+@@ -6,20 +6,20 @@
+ import android.view.View
+ import id.calocallo.sicape.R
+ import id.calocallo.sicape.network.request.RefPenyelidikanReq
+-import id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity
++import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
+ import id.calocallo.sicape.utils.LhpDataManager
+ import id.calocallo.sicape.utils.SessionManager1
+ import id.calocallo.sicape.utils.ext.gone
+ import id.calocallo.sicape.utils.ext.visible
+ import id.co.iconpln.smartcity.ui.base.BaseActivity
+-import kotlinx.android.synthetic.main.activity_referensi_penyelidikan_lhp.*
++import kotlinx.android.synthetic.main.activity_list_ref_penyelidikan.*
+ import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
+ import kotlinx.android.synthetic.main.layout_toolbar_white.*
+ import kotlinx.android.synthetic.main.view_no_data.*
+ import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
+ import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
+ 
+-class ReferensiPenyelidikanLhpActivity : BaseActivity() {
++class ListRefPenyelidikanActivity : BaseActivity() {
+     private lateinit var sessionManager1: SessionManager1
+     private var adapteRefLpReq = ReusableAdapter<RefPenyelidikanReq>(this)
+     private lateinit var callbackRefLpReq: AdapterCallback<RefPenyelidikanReq>
+@@ -28,7 +28,7 @@
+     private lateinit var lhpDataManager: LhpDataManager
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_referensi_penyelidikan_lhp)
++        setContentView(R.layout.activity_list_ref_penyelidikan)
+         sessionManager1 = SessionManager1(this)
+         lhpDataManager = LhpDataManager(this)
+         setupActionBarWithBackButton(toolbar)
+@@ -49,8 +49,6 @@
+             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+ 
+         }
+-
+-        getListRefLp(refLp)
+     }
+ 
+ 
+@@ -65,8 +63,7 @@
+ 
+             override fun onItemClicked(
+                 itemView: View, data: RefPenyelidikanReq, itemIndex: Int
+-            ) {
+-            }
++            ) {}
+         }
+         adapteRefLpReq.adapterCallback(callbackRefLpReq)
+             .isVerticalView()
+@@ -87,7 +84,7 @@
+                     data: RefPenyelidikanReq,
+                     itemIndex: Int
+                 ) {
+-                    itemView.txt_edit_pendidikan.text = data.isi_keterangan_terlapor
++                    itemView.txt_edit_pendidikan.text = data.detail_keterangan_terlapor
+                 }
+ 
+                 override fun onItemClicked(
+@@ -112,6 +109,7 @@
+             val dataRef =
+                 data?.getParcelableExtra<RefPenyelidikanReq>(AddRefPenyelidikActivity.DATA_REF_PENYELIDIK)
+             Log.e("dataRef", "$dataRef")
++            getListRefLp(refLp)
+             if (dataRef != null) {
+                 refLp.add(dataRef)
+             }
+@@ -144,5 +142,6 @@
+     companion object {
+         const val LHP_ADD = "LHP_ADD"
+         const val ADD_REF = 1
++        const val GET_LP_FROM_CHOOSE_LP ="GET_LP_FROM_CHOOSE_LP"
+     }
+ }
+\ No newline at end of file
