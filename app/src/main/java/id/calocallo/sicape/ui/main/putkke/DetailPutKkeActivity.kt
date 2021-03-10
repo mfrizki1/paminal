@@ -211,4 +211,9 @@ class DetailPutKkeActivity : BaseActivity() {
                     }
                 })
     }
+
+    override fun onResume() {
+        super.onResume()
+        apiDetailPutKke(detailPutKke)
+    }
 }

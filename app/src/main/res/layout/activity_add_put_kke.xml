@@ -96,7 +96,7 @@
                     style="@style/TitleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Laporan Hasil Penyelidikan" />
+                    android:text="Laporan Polisi" />
 
                 <include
                     layout="@layout/layout_separator"

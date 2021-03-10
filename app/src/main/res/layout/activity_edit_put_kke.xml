@@ -16,27 +16,6 @@
 
         <include layout="@layout/view_separator" />
 
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nomor PUT KKE" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:hint="No PUT KKE">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_no_put_kke_edit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textCapSentences" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,6 +69,27 @@
 
         </LinearLayout>
 
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Putusan Kke" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:enabled="false"
+            android:hint="No Putusan Kke">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_no_put_kke_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textCapCharacters" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_pick_lp_put_kke_edit"
@@ -97,13 +97,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="Pilih Data Laporan Polisi" />
+            android:text="Pilih Data Laporan Polisi"
+            android:visibility="gone" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_lp_put_kke_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
             app:strokeColor="@color/colorPrimary"
             app:strokeWidth="2dp">
 
@@ -116,7 +118,7 @@
                     style="@style/TitleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Laporan Hasil Penyelidikan" />
+                    android:text="Laporan Polisi" />
 
                 <include
                     layout="@layout/layout_separator"
@@ -231,6 +233,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/space_8dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:hint="Tanggal Surat Persangkaan">
@@ -377,6 +380,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Jabatan Ketua Komisi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_jabatan_ketua_komisi_put_kke_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
                 android:hint="Kesatuan Ketua Komisi">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -459,6 +478,22 @@
 
 
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Jabatan Wakil Ketua Komisi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_jabatan_wakil_ketua_komisi_put_kke_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -556,6 +591,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
                 android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Jabatan Anggota Komisi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_jabatan_anggota_komisi_put_kke_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
                 android:hint="Kesatuan Anggota Komisi">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -625,7 +676,6 @@
             android:layout_marginTop="@dimen/space_8dp"
             android:text="@string/save" />
     </LinearLayout>
-
 
 
 </ScrollView>

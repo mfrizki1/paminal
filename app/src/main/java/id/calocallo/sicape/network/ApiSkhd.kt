@@ -72,7 +72,7 @@ interface ApiSkhd {
         @Header("Authorization") tokenBearer: String,
         @Path("id_putkke") id_putkke: Int?,
         @Body putKkeReq: PutKkeReq?
-    ): Call<Base1Resp<AddSkhdResp>> /*Data putkke updated succesfully*/
+    ): Call<Base1Resp<AddPutKkeResp>> /*Data putkke updated succesfully*/
 
     @Headers(ApiLp.ACCEPT)
     @DELETE("putkke/{id_putkke}")
