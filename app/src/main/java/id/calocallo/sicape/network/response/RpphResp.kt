@@ -6,7 +6,27 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RpphResp(
-    var id: Int?,
+    var id:Int?,
+    var no_rpph:String?,
+    var lp:LpResp?,
+    var nama_dinas:String?,
+    var no_nota_dinas:String?,
+    var tanggal_nota_dinas:String?,
+    var penerima_salinan_keputusan:String?,
+    var kota_penetapan:String?,
+    var tanggal_penetapan:String?,
+    var nama_kabid_propam:String?,
+    var pangkat_kabid_propam:String?,
+    var nrp_kabid_propam:String?,
+    var is_ada_dokumen:Int?,
+    var dokumen:DokResp?,
+    var user_creator:String?,
+    var user_updater:String?,
+    var user_deleter:String?,
+    var created_at:String?,
+    var updated_at:String?,
+    var deleted_at:String?
+    /*var id: Int?,
     var putkke: PutKkeOnRpphModel?,
     var no_rpph: String?,
     var dasar_ph: String?,
@@ -19,12 +39,10 @@ data class RpphResp(
     var nrp_yang_menetapkan: String?,
     var tembusan: String?,
     var created_at: String?,
-    var updated_at: String?
-) : Parcelable {
-    constructor() : this(
-        null, null, null, null,
-        null, null, null, null,
-        null, null, null,
-        null, null, null
-    )
-}
+    var updated_at: String?*/
+) : Parcelable
+
+@Parcelize
+data class AddRpphResp(
+    var rpph: RpphResp?
+):Parcelable
