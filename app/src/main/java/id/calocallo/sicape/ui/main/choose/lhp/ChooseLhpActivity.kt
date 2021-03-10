@@ -14,6 +14,7 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
 import id.calocallo.sicape.ui.main.choose.lp.ListLpSkhdActivity
+import id.calocallo.sicape.ui.main.putkke.AddPutKkeActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toggleVisibility
@@ -32,25 +33,22 @@ import retrofit2.Response
 
 class ChooseLhpActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var list = arrayListOf<LhpResp>()
-    private var refPenyelidikan = ArrayList<RefPenyelidikanResp>()
-    private var personelPenyelidikan = ArrayList<PersonelPenyelidikResp>()
-    private var saksiLhp = ArrayList<SaksiLhpResp>()
-    private var ketTerlaporLhpResp = ArrayList<KetTerlaporLhpResp>()
     private var adapterChooseLhp = ReusableAdapter<LhpMinResp>(this)
     private lateinit var callbackChooseLhp: AdapterCallback<LhpMinResp>
+    private var isPutkke: Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_lhp)
         sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Data LHP"
+        isPutkke = intent.getBooleanExtra(AddPutKkeActivity.IS_PUTTKE, false)
 //        getListLhp()
         apiListLhp()
     }
 
     private fun apiListLhp() {
-      rl_pb.visible()
+        rl_pb.visible()
         NetworkConfig().getServLhp().getLhpOnSkhd("Bearer ${sessionManager1.fetchAuthToken()}")
             .enqueue(
                 object :
@@ -99,10 +97,10 @@ class ChooseLhpActivity : BaseActivity() {
                 val intent =
 //                    Intent(this@ChooseLhpActivity, ChooseLpSkhdActivity::class.java).apply {
                     Intent(this@ChooseLhpActivity, ListLpSkhdActivity::class.java).apply {
-//                        this.putExtra(PICK_SKHD_ADD, true)
+                        this.putExtra(AddPutKkeActivity.IS_PUTTKE, isPutkke)
                         this.putExtra(DATA_LHP, data)
                     }
-                startActivityForResult(intent,REQ_LHP)
+                startActivityForResult(intent, REQ_LHP)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
@@ -118,11 +116,11 @@ class ChooseLhpActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQ_LHP && resultCode == ListLpSkhdActivity.RESULT_LP){
+        if (requestCode == REQ_LHP && resultCode == ListLpSkhdActivity.RESULT_LP) {
             val dataLp = data?.getParcelableExtra<LpOnSkhd>(ListLpSkhdActivity.DATA_LP)
             Log.e(TAG, "onActivityResult: $dataLp")
             val intent = Intent().apply {
-                this.putExtra(DATA_LP,dataLp)
+                this.putExtra(DATA_LP, dataLp)
             }
             setResult(RES_LP_CHOSE_LHP, intent)
             finish()

@@ -36,10 +36,11 @@ interface ApiLp {
     ): Call<ArrayList<LpMinResp>>
 
     @Headers(ACCEPT)
-    @GET("lhp/{id_lp}/referensi/penyelidikan/kasus/pidana/disiplin")
+    @GET("lhp/{id_lp}/referensi/penyelidikan/kasus/{jenis}")
     fun getLpByIdLhp(
         @Header("Authorization") tokenBearer: String,
-        @Path("id_lp") id_lp: Int?
+        @Path("id_lp") id_lp: Int?,
+        @Path("jenis") jenis: String
     ): Call<ArrayList<LpOnSkhd>>
 
     @Headers(ACCEPT)

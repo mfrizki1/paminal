@@ -15,6 +15,7 @@ data class PutKkeResp(
     var no_keputusan_kapolda_kalsel: String?,/*!*/
     var tanggal_keputusan_kapolda_kalsel: String?,/*!*/
     var no_surat_persangkaan_pelanggaran_kode_etik: String?,/*!*/
+    var tanggal_surat_persangkaan_pelanggaran_kode_etik: String?,/*!*/
     var no_tuntutan_pelanggaran_kode_etik: String?,/*!*/
     var tanggal_tuntutan_pelanggaran_kode_etik: String?,/*!*/
     var sanksi_hasil_keputusan: String?,/**/
@@ -65,7 +66,7 @@ data class PutKkeResp(
         null, null, null, null, null, null, null, null, null, null, null, null,
         null, null, null, null,
         null, null, null, null,
-        null, null, null, null, null, null
+        null, null, null,null, null, null, null
     )
 }
 

@@ -7,10 +7,10 @@ import android.view.View
 import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LpOnSkhd
-import id.calocallo.sicape.model.PersonelLapor
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
+import id.calocallo.sicape.ui.main.putkke.AddPutKkeActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -28,17 +28,9 @@ import retrofit2.Response
 
 class ListLpSkhdActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-
-    private var listPidanaLP = ArrayList<LpResp>()
-    private var listDisiplinLP = ArrayList<LpDisiplinResp>()
-    private var personelTerLapor = PersonelLapor()
-    private var personelPeLapor = PersonelLapor()
-    private var satKerResp = SatKerResp()
-    private var listPasal = arrayListOf<PasalDilanggarResp>()
-    private var listSaksi = arrayListOf<LpSaksiResp>()
-
     private var adapterLpChoose = ReusableAdapter<LpOnSkhd>(this)
     private lateinit var callbackLpChoose: AdapterCallback<LpOnSkhd>
+    private var isPutKke :Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_lp_skhd)
@@ -52,8 +44,15 @@ class ListLpSkhdActivity : BaseActivity() {
         /*set idLHP for getlist lp*/
         val idLhp = intent.extras?.getParcelable<LhpMinResp>(ChooseLhpActivity.DATA_LHP)
         Log.e("idLP", "$idLhp")
+        var urlApi = ""
+        isPutKke = intent.getBooleanExtra(AddPutKkeActivity.IS_PUTTKE, false)
+        if(isPutKke == true){
+            urlApi = "kode/etik"
+        }else{
+            urlApi = "pidana/disiplin"
+        }
 
-        getListLpByIdLhp(idLhp?.id)
+        getListLpByIdLhp(idLhp?.id, urlApi)
         /*   Log.e("ListLpSkhd", "$idLhp")
         when (jenisLPFromSkhd) {
             "pidana" -> {
@@ -68,10 +67,10 @@ class ListLpSkhdActivity : BaseActivity() {
 
     }
 
-    private fun getListLpByIdLhp(idLhp: Int?) {
+    private fun getListLpByIdLhp(idLhp: Int?, urlApi: String) {
         rl_pb.visible()
         NetworkConfig().getServLp()
-            .getLpByIdLhp("Bearer ${sessionManager1.fetchAuthToken()}", idLhp).enqueue(
+            .getLpByIdLhp("Bearer ${sessionManager1.fetchAuthToken()}", idLhp, urlApi).enqueue(
                 object : Callback<ArrayList<LpOnSkhd>> {
                     override fun onResponse(
                         call: Call<ArrayList<LpOnSkhd>>,

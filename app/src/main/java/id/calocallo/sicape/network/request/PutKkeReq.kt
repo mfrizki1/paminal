@@ -29,8 +29,8 @@ data class PutKkeReq(
     var nama_anggota_komisi: String?,
     var pangkat_anggota_komisi: String?,
     var nrp_anggota_komisi: String?,
-    var jabatan_anggota_ketua_komisi: String?,/**/
-    var kesatuan_anggota_ketua_komisi: String?/**/
+    var jabatan_anggota_komisi: String?,/**/
+    var kesatuan_anggota_komisi: String?/**/
 
 
     /*var id_lhp: Int?,

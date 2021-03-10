@@ -42,14 +42,8 @@ class DetailPutKkeActivity : BaseActivity() {
         detailPutKke =
             intent.extras?.getParcelable<PutKkeMinResp>(ListPutKkeActivity.DETAIL_PUTKKE)
         apiDetailPutKke(detailPutKke)
-//        getDetailPutKKe(detailPutKke)
 
-        btn_edit_put_kke_detail.setOnClickListener {
-            val intent = Intent(this, EditPutKkeActivity::class.java)
-            intent.putExtra(EDIT_PUT_KKE, detailPutKke)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+
         btn_generate_put_kke_detail.attachTextChangeAnimator()
         bindProgressButton(btn_generate_put_kke_detail)
         btn_generate_put_kke_detail.setOnClickListener {
@@ -102,6 +96,14 @@ class DetailPutKkeActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getDetailPutKKe(detailPutKke: PutKkeResp?) {
+
+        btn_edit_put_kke_detail.setOnClickListener {
+            val intent = Intent(this, EditPutKkeActivity::class.java)
+            intent.putExtra(EDIT_PUT_KKE, detailPutKke)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
         txt_no_put_kke_detail.text = detailPutKke?.no_putkke
         txt_no_lp_put_kke_detail.text = detailPutKke?.lp?.no_lp
 
@@ -118,7 +120,10 @@ class DetailPutKkeActivity : BaseActivity() {
             }"
 
         txt_surat_persangkaan_put_kke_detail.text =
-            detailPutKke?.no_surat_persangkaan_pelanggaran_kode_etik
+            "No : ${detailPutKke?.no_surat_persangkaan_pelanggaran_kode_etik}, Tanggal ${
+                formatterTanggal(detailPutKke?.tanggal_surat_persangkaan_pelanggaran_kode_etik)
+            }"
+
 
         txt_tuntutan_pelanggaran_put_kke_detail.text =
             "No : ${detailPutKke?.no_tuntutan_pelanggaran_kode_etik}, Tanggal ${
@@ -126,7 +131,7 @@ class DetailPutKkeActivity : BaseActivity() {
             }"
 
         txt_sanksi_hasil_putusan_put_kke_detail.text = detailPutKke?.sanksi_hasil_keputusan
-        txt_lokasi_sidang_put_kke_detail.text = detailPutKke?.lokasi_sidang
+        txt_lokasi_sidang_put_kke_detail.text ="Lokasi : ${detailPutKke?.lokasi_sidang}"
 
         txt_tanggal_putusan_put_kke_detail.text =
             "Tanggal : ${formatterTanggal(detailPutKke?.tanggal_putusan)}"
@@ -193,7 +198,7 @@ class DetailPutKkeActivity : BaseActivity() {
                             ).show()
                             Handler(Looper.getMainLooper()).postDelayed({
                                 finish()
-                            },750)
+                            }, 750)
                         } else {
                             Toast.makeText(
                                 this@DetailPutKkeActivity, R.string.error, Toast.LENGTH_SHORT
