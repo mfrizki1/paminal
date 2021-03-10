@@ -329,6 +329,12 @@ class DetailLpDisiplinActivity : BaseActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             finish()
+                        }else if (response.body()?.message == "Data lp has been used as reference in another data") {
+                            Toast.makeText(
+                                this@DetailLpDisiplinActivity,
+                                R.string.used_on_references_lp,
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     } else {
                         Toast.makeText(
