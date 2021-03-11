@@ -8,20 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.TanggPesertaModel
+import id.calocallo.sicape.network.response.PesertaLhgResp
 import kotlinx.android.synthetic.main.item_tanggapan_peserta_gelar.view.*
 
-class AddGelar3Adapter(
+class AddTanggPesertaAdapter(
     val context: Context,
-    val list: MutableList<TanggPesertaModel>,
+    val list: MutableList<PesertaLhgResp>,
     var onClick: OnClickTanggPeserta
-) : RecyclerView.Adapter<AddGelar3Adapter.Gelar3Holder>() {
+) : RecyclerView.Adapter<AddTanggPesertaAdapter.Gelar3Holder>() {
     interface OnClickTanggPeserta {
         fun onDelete(position: Int)
     }
 
     inner class Gelar3Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(pesertaModel: TanggPesertaModel) {
+        fun bind(pesertaModel: PesertaLhgResp) {
             with(itemView) {
                 edt_nama_peserta_gelar_item.editText?.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
@@ -43,7 +43,7 @@ class AddGelar3Adapter(
                 edt_pendapat_peserta_gelar_item.editText?.addTextChangedListener(object :
                     TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
-                        pesertaModel.pendapat_peserta = s.toString()
+                        pesertaModel.pendapat = s.toString()
                     }
 
                     override fun beforeTextChanged(
@@ -59,7 +59,7 @@ class AddGelar3Adapter(
                     }
                 })
                 edt_nama_peserta_gelar_item.editText?.setText(pesertaModel.nama_peserta)
-                edt_pendapat_peserta_gelar_item.editText?.setText(pesertaModel.pendapat_peserta)
+                edt_pendapat_peserta_gelar_item.editText?.setText(pesertaModel.pendapat)
                 btn_delete_tanggapan_peserta.visibility =
                     if (adapterPosition == 0) View.GONE else View.VISIBLE
                 btn_delete_tanggapan_peserta.setOnClickListener {

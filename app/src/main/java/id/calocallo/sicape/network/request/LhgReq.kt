@@ -1,26 +1,50 @@
 package id.calocallo.sicape.network.request
 
+import android.os.Parcelable
 import id.calocallo.sicape.network.response.PesertaLhgResp
 
 data class LhgReq(
-    val id_lp: Int?,/*ADD*/
-    val dugaan: String?,
-    val pangkat_yang_menangani: String?,
-    val nama_yang_menangani: String?,
-    val dasar: String?,
-    val tanggal: String?,
-    val waktu_mulai: String?,
-    val waktu_selesai: String?,
-    val tempat: String?,
-    val pangkat_pimpinan: String?,
-    val nama_pimpinan: String?,
-    val nrp_pimpinan: String?,
-    val pangkat_pemapar: String?,
-    val nama_pemapar: String?,
-    val kronologis_kasus: String?,
-    val no_surat_perintah_penyidikan: String?,
-    val nama_notulen: String?,
-    val pangkat_notulen: String?,
-    val nrp_notulen: String?,
-    val peserta_gelar:ArrayList<PesertaLhgResp>?/*ADD*/
-)
+    var id_lp: Int?,/*ADD*/
+    var dugaan: String?,
+    /**/ var pangkat_yang_menangani: String?,
+    /**/var nama_yang_menangani: String?,
+    var dasar: String?,
+    var tanggal: String?,
+    /**/  var waktu_mulai: String?,
+    /**/var waktu_selesai: String?,
+    var tempat: String?,
+    var pangkat_pimpinan: String?,
+    var nama_pimpinan: String?,
+    var nrp_pimpinan: String?,
+    var pangkat_pemapar: String?,
+    var nama_pemapar: String?,
+    var kronologis_kasus: String?,
+    var no_surat_perintah_penyidikan: String?,
+    var nama_notulen: String?,
+    var pangkat_notulen: String?,
+    var nrp_notulen: String?,
+    var peserta_gelar: ArrayList<PesertaLhgResp>?/*ADD*/
+) {
+    constructor() : this(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    )
+}

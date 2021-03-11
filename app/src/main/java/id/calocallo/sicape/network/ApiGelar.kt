@@ -1,5 +1,6 @@
 package id.calocallo.sicape.network
 
+import id.calocallo.sicape.network.request.LhgReq
 import id.calocallo.sicape.network.response.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -22,7 +23,7 @@ interface ApiGelar {
     @POST("lhg")
     fun addLhg(
         @Header("Authorization") tokenBearer: String,
-        @Body lhgResp: LhgResp
+        @Body lhgReq: LhgReq
     ): Call<Base1Resp<AddLhgResp>>/*Data lhg saved succesfully*/
 
     @Headers(ApiLp.ACCEPT)
@@ -36,7 +37,7 @@ interface ApiGelar {
     @Headers(ApiLp.ACCEPT)
     @DELETE("lhg/{id_lhg}")
     fun delLhg(
-        @Header("Authorization") tokenBearer: String
+        @Header("Authorization") tokenBearer: String, @Path("id_lhg") id_lhg: Int?
     ): Call<BaseResp>
     /*Data lhg removed succesfully*/
     /*Data lhg has been used as reference in another data*/

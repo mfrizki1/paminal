@@ -8,13 +8,14 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.Gelar1Model
 import id.calocallo.sicape.model.PaparanGelarModel
 import id.calocallo.sicape.model.TanggPesertaModel
+import id.calocallo.sicape.network.request.LhgReq
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
 
 class GelarDataManager(context: Context) {
     private var prefsGelar: SharedPreferences =
         context.getSharedPreferences(context.getString(R.string.GELAR), Context.MODE_PRIVATE)
 
-    fun setGelar1(gelar1: Gelar1Model){
+    fun setGelar1(gelar1: LhgReq){
         val editor = prefsGelar.edit()
         val gson = Gson()
         val json = gson.toJson(gelar1)
@@ -22,11 +23,11 @@ class GelarDataManager(context: Context) {
         editor.commit()
 
     }
-    fun getGelar1():Gelar1Model{
-        val emptyUser = Gson().toJson(Gelar1Model())
+    fun getGelar1():LhgReq{
+        val emptyUser = Gson().toJson(LhgReq())
         return Gson().fromJson(
             prefsGelar.getString("GELAR_1", emptyUser),
-            object : TypeToken<Gelar1Model>() {}.type
+            object : TypeToken<LhgReq>() {}.type
         )
     }
     fun setPaparanGelar(gelar1: PaparanGelarModel){

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,202 @@
     android:orientation="vertical"
     tools:context=".ui.gelar.DetailGelarActivity">
 
-    <include layout="@layout/layout_toolbar_white" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <include layout="@layout/view_separator" />
-</LinearLayout>
+        <include layout="@layout/layout_toolbar_white" />
+
+        <include layout="@layout/view_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dugaan Tindak" />
+
+        <TextView
+            android:id="@+id/txt_dugaan_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dugaan" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dasar-Dasar LHG" />
+
+        <TextView
+            android:id="@+id/txt_dasar_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dasar-Dasar LHG" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Waktu &amp; Tempat" />
+
+        <TextView
+            android:id="@+id/txt_tgl_waktu_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal LHG" />
+
+        <TextView
+            android:id="@+id/txt_tempat_waktu_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tempat LHG" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personel Terduga"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_personel_terduga_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personel Terduga"
+            android:visibility="gone" />
+
+        <include
+            layout="@layout/line_separator"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pimpinan, Pemapar Gelar Perkara " />
+
+        <TextView
+            android:id="@+id/txt_pimpinan_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pimpinan" />
+
+        <TextView
+            android:id="@+id/txt_pemapar_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pemapar" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uraian Pelaksanaan Gelar Perkara" />
+
+        <TextView
+            android:id="@+id/txt_waktu_mulai_pelaksanaan_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Waktu Mulai" />
+
+        <TextView
+            android:id="@+id/txt_waktu_selesai_pelaksanaan_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Waktu Selesai" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kronologis Kasus" />
+
+        <TextView
+            android:id="@+id/txt_kronologis_kasus_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kronologis Kasus" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Surat Penyelidikan Perintah" />
+
+        <TextView
+            android:id="@+id/txt_surat_penyelidikan_perintah_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Surat Penyelidikan Perintah" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notulen" />
+
+        <TextView
+            android:id="@+id/txt_personel_notulen_detail_lhg"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notulen" />
+
+        <include layout="@layout/line_separator" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_edit_detail_lhg"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Data LHG" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_peserta_gelar_detail_lhg"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Data Peserta Gelar Perkara" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_generate_doc_lhg"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/generate_dokumen" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_see_doc_lhg"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lihat Dokumen"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

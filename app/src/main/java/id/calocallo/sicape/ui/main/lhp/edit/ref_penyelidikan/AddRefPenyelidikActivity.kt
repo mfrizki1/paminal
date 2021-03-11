@@ -42,7 +42,7 @@ class AddRefPenyelidikActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         btn_add_lp_ref_penyelidikan.setOnClickListener {
             val intent = Intent(this, LpChooseActivity::class.java).apply {
-                this.putExtra(IS_LP_MASUK, true)
+                this.putExtra(IS_KASUS_MASUK, true)
             }
             startActivityForResult(intent, REQ_LP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -115,7 +115,7 @@ class AddRefPenyelidikActivity : BaseActivity() {
         const val RES_LP_ON_REF = 124
         const val GET_LP_FROM_CHOOSE_LP = "GET_LP_FROM_CHOOSE_LP"
         const val DATA_REF_PENYELIDIK = "DATA_REF_PENYELIDIK"
-        const val IS_LP_MASUK = "IS_LP_MASUK"
+        const val IS_KASUS_MASUK = "IS_LP_MASUK"
 
     }
 }

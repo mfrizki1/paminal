@@ -37,7 +37,7 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
         FiturModel("CATPERS", R.drawable.ic_catpers),
         FiturModel("SKHP", R.drawable.ic_skhp),
         FiturModel("REHAB", R.drawable.ic_rehab),
-        FiturModel("Gelar Perkara", R.drawable.ic_gelar),
+        FiturModel("Laporan Hasil Gelar", R.drawable.ic_gelar),
         FiturModel("Laporan Bulanan", R.drawable.ic_laporan),
         FiturModel("Analisa", R.drawable.ic_analisa)
     )
@@ -96,7 +96,7 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
                 startActivity(Intent(activity, PickRehabActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
-            "Gelar Perkara" -> {
+            "Laporan Hasil Gelar" -> {
                 startActivity(Intent(activity, ListGelarActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }

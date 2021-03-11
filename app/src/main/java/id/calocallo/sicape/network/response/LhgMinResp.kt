@@ -19,7 +19,9 @@ data class PesertaLhgResp(
     var id_lhg: Int?,
     var nama_peserta: String?,
     var pendapat: String?
-) : Parcelable
+) : Parcelable{
+    constructor():this(null,null,null,null)
+}
 
 @Parcelize
 data class AddPesertaLhgResp(

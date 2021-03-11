@@ -21,9 +21,7 @@
         <activity android:name=".ui.main.lp.pasal.DetailPasalActivity" />
         <activity android:name=".ui.main.lp.pasal.EditPasalActivity" />
         <activity android:name=".ui.main.lp.pasal.ListPasalActivity" />
-        <activity android:name=".ui.gelar.AddGelar4Activity" />
-        <activity android:name=".ui.gelar.AddGelar3Activity" />
-        <activity android:name=".ui.gelar.AddGelar2Activity" />
+        <activity android:name=".ui.gelar.AddTanggPesertaGelarActivity" />
         <activity android:name=".ui.main.editpersonel.keluarga.PickPasanganActivity" />
         <activity android:name=".ui.main.editpersonel.keluarga.PickKeluargaActivity" />
         <activity android:name=".ui.manajemen.sipil.EditSipilOperatorActivity" />
@@ -183,7 +181,6 @@
         <activity android:name=".ui.main.skhd.AddSkhdActivity" />
         <activity android:name=".ui.main.skhd.tinddisiplin.SkhdTindDisiplinActivity" />
         <activity android:name=".ui.main.skhd.PickSkhdActivity" />
-        <activity android:name=".ui.main.skhd.ListSkhdActivity" />
         <activity android:name=".ui.main.lp.AddLpActivity" />
         <activity android:name=".ui.main.lp.PickLpActivity" />
         <activity android:name=".ui.main.lhp.EditLhpActivity" />
@@ -225,6 +222,8 @@
         <activity android:name=".ui.main.anev.AnevActivity" />
         <activity android:name=".ui.main.addpersonal.AddPersonelActivity" />
         <activity android:name=".ui.gelar.AddGelarActivity" />
+        <activity android:name=".ui.gelar.ListGelarActivity" />
+        <activity android:name=".ui.gelar.DetailGelarActivity" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

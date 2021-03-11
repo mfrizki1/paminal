@@ -3,10 +3,8 @@ package id.calocallo.sicape.ui.main.choose.lp
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
-import id.calocallo.sicape.network.response.LpCustomResp
 import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP
@@ -25,7 +23,7 @@ class PickJenisLpActivity : BaseActivity() {
         setContentView(R.layout.activity_pick_jenis_lp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Jenis Laporan Polisi"
-        val isLpRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_LP_MASUK, false)
+        val isLpRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, false)
 
         /*get value from sktt*/
         sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)
@@ -34,7 +32,7 @@ class PickJenisLpActivity : BaseActivity() {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Pidana")
             /*LP UNTUK REF PENYELIDIKAN*/
-            intent.putExtra(AddRefPenyelidikActivity.IS_LP_MASUK, isLpRef)
+            intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
             /*  if (sktt != null) {
                   intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
               }*/
@@ -45,7 +43,7 @@ class PickJenisLpActivity : BaseActivity() {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Kode Etik")
             /*LP UNTUK REF PENYELIDIKAN*/
-            intent.putExtra(AddRefPenyelidikActivity.IS_LP_MASUK, isLpRef)
+            intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
             /* if (sktt != null) {
                           intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
                       }*/
@@ -56,7 +54,7 @@ class PickJenisLpActivity : BaseActivity() {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Disiplin")
             /*LP UNTUK REF PENYELIDIKAN*/
-            intent.putExtra(AddRefPenyelidikActivity.IS_LP_MASUK, isLpRef)
+            intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
             /* if (sktt != null) {
                            intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
                        }*/

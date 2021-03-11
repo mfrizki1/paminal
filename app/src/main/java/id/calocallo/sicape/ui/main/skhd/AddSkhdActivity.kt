@@ -39,11 +39,11 @@ class AddSkhdActivity : BaseActivity() {
         supportActionBar?.title = "Tambah Data SKHD"
 
         /*set button for add id_lhp*/
-        bnt_pick_lhp_skhd_add.setOnClickListener {
+        /*bnt_pick_lhp_skhd_add.setOnClickListener {
             val intent = Intent(this, ChooseLhpActivity::class.java)
             startActivityForResult(intent, REQ_CHOOSE_LHP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+        }*/
 
         /*set button for add id_lp*/
         bnt_pick_lp_skhd_add.setOnClickListener {

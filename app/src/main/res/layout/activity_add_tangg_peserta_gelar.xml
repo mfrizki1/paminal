@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.gelar.AddGelar3Activity">
+    tools:context=".ui.gelar.AddTanggPesertaGelarActivity">
 
     <include layout="@layout/layout_toolbar_white" />
 
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_12dp"
-                android:text="@string/next"
+                android:text="@string/save"
                 android:textStyle="bold" />
 
         </LinearLayout>
