@@ -30,7 +30,6 @@ class PendidikanUmumFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pendidikan_umum, container, false)
     }
 
@@ -41,10 +40,6 @@ class PendidikanUmumFragment : Fragment() {
         sheenValidator = activity?.let { SheenValidator(it) }!!
         list = ArrayList()
         parentUmum = ParentListPendUmum(list)
-//        parentDinas = ParentListPendDinas(listDinas)
-//        parentLain = ParentListPendOther(listOther)
-
-//        recycler()
         setAdapter()
 
 
@@ -69,20 +64,6 @@ class PendidikanUmumFragment : Fragment() {
             ft.commit()
 
 
-            //berhasil
-
-            /*
-            //initAPI(param: list(ArrayList<PendUmumModel>))
-            berhasil -> lanjut ke pendDinasFrag
-            gagal -> Toast(Gangguan)
-
-             */
-
-            /*
-//            Log.e("parent", parent.pendUmumList[0].nama_pend)
-//            Log.e("parent", parent.pendUmumList[1].nama_pend)
-//            Log.e("parent", parent.pendUmumList[2].nama_pend)
-             */
         }
 
     }
@@ -93,7 +74,6 @@ class PendidikanUmumFragment : Fragment() {
             list.add(AddPendidikanModel())
             list.add(AddPendidikanModel())
             list.add(AddPendidikanModel())
-//            list.add(AddPendidikanModel())
         }
         rv_pend_umum.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -102,7 +82,7 @@ class PendidikanUmumFragment : Fragment() {
             PendUmumAdapter(it, list, object : PendUmumAdapter.OnClick {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         }!!
@@ -111,19 +91,10 @@ class PendidikanUmumFragment : Fragment() {
         btn_add_pend_umum.setOnClickListener {
             val position = if (list.isEmpty()) 0 else list.size - 1
             list.add(AddPendidikanModel())
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
 
         }
-      /*  for (i in 0 until umum.size) {
-            edt_nama_umum_custom.setText(umum[i].pendidikan)
-            edt_thn_awal_umum_custom.setText(umum[i].tahun_awal)
-            edt_thn_akhir_umum_custom.setText(umum[i].tahun_akhir)
-            edt_tempat_umum_custom.setText(umum[i].kota)
-            edt_membiayai_umum_custom.setText(umum[i].yang_membiayai)
-            edt_ket_umum_custom.setText(umum[i].keterangan)
-        }*/
-
     }
 
     override fun onResume() {
@@ -141,13 +112,7 @@ class PendidikanUmumFragment : Fragment() {
                     umum[i].keterangan
                 )
             )
-//            list.add(AddPendidikanModel("", "", "", "", "", ""))
-//            edt_nama_umum_custom.setText(umum[i].pendidikan)
-//            edt_thn_awal_umum_custom.setText(umum[i].tahun_awal)
-//            edt_thn_akhir_umum_custom.setText(umum[i].tahun_akhir)
-//            edt_tempat_umum_custom.setText(umum[i].kota)
-//            edt_membiayai_umum_custom.setText(umum[i].yang_membiayai)
-//            edt_ket_umum_custom.setText(umum[i].keterangan)
+
         }
     }
 }
