@@ -2,6 +2,7 @@ package id.calocallo.sicape.ui.main.choose.lp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
+import id.calocallo.sicape.ui.gelar.AddGelarActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -40,6 +42,9 @@ class LpChooseActivity : BaseActivity() {
     private var adapterLpAll = ReusableAdapter<LpMinResp>(this)
     private lateinit var callbackLpAll: AdapterCallback<LpMinResp>
     private var tempJenis: String? = null
+    private var isLpForRef: Boolean? = null
+    private var isLpForLhg: Boolean? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lp_choose)
@@ -65,9 +70,14 @@ class LpChooseActivity : BaseActivity() {
             }
         }
         /*LIST LP FOR REF PENYELIDIKAN*/
-        val isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_LP_MASUK, false)
-        if (isLpForRef) {
+        isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, false)
+        isLpForLhg = intent.getBooleanExtra(AddGelarActivity.IS_LHG, false)
+        if (isLpForRef == true) {
             getListLpRef()
+        }else if(isLpForLhg == true){
+            Log.e("lhg", "$isLpForLhg")
+        }else{
+            Log.e("lhg", "no DATA")
         }
 //        getListLpByJenis(tempJenis)
         /* sktt
