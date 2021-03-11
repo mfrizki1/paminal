@@ -38,4 +38,5 @@ class NetworkConfig {
     fun getServLp() = getRetrofit().create(ApiLp::class.java)
     fun getServLhp() = getRetrofit().create(ApiLhp::class.java)
     fun getServSkhd() = getRetrofit().create(ApiSkhd::class.java)
+    fun getServLhg() = getRetrofit().create(ApiGelar::class.java)
 }

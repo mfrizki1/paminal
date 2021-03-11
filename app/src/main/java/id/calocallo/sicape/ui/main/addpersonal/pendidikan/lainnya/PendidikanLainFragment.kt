@@ -21,17 +21,14 @@ import kotlinx.android.synthetic.main.fragment_pendidikan_lain.view.*
 class PendidikanLainFragment : Fragment() {
     private lateinit var sessionManager1: SessionManager1
     private lateinit var sheenValidator: SheenValidator
-//    private lateinit var parentPendidikan: LinearLayout
 
     var addPendResp = AddPendReq()
     private lateinit var listOther: ArrayList<AddPendidikanModel>
     private lateinit var adapter: PendOtherAdapter
-    private lateinit var parentList: ParentListPendOther
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pendidikan_lain, container, false)
     }
 
@@ -61,32 +58,6 @@ class PendidikanLainFragment : Fragment() {
             val intent = Intent(activity, PekerjaanPersonelActivity::class.java)
             startActivity(intent)
             activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            /*
-            NetworkConfig().getService().addPendMany(
-                "Bearer ${sessionManager.fetchAuthToken()},",
-                Constants.ID_PERSONEL, //Constansts.ID_PERSONEL
-                addPendResp
-            ).enqueue(object : Callback<BaseResp> {
-                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                    if (response.isSuccessful) {
-                        if (response.body()?.message == "Data riwayat pendidikan saved succesfully") {
-                            Log.e("berhasil pendidikan", "Berhasil Pendidikan")
-                            val intent = Intent(activity, PekerjaanPersonelActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            })
-             */
-
             sheenValidator.validate()
 
         }
@@ -104,7 +75,7 @@ class PendidikanLainFragment : Fragment() {
             PendOtherAdapter(it, listOther, object : PendOtherAdapter.OnCLickOther {
                 override fun onDelete(position: Int) {
                     listOther.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         }!!
@@ -112,8 +83,8 @@ class PendidikanLainFragment : Fragment() {
         btn_add_pend_other.setOnClickListener {
             val position = if (listOther.isEmpty()) 0 else listOther.size - 1
             listOther.add(AddPendidikanModel())
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
 
         }
     }

@@ -8,13 +8,14 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.Gelar1Model
 import id.calocallo.sicape.model.PaparanGelarModel
 import id.calocallo.sicape.model.TanggPesertaModel
+import id.calocallo.sicape.network.request.LhgReq
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
 
 class GelarDataManager(context: Context) {
     private var prefsGelar: SharedPreferences =
         context.getSharedPreferences(context.getString(R.string.GELAR), Context.MODE_PRIVATE)
 
-    fun setGelar1(gelar1: Gelar1Model){
+    fun setGelar1(gelar1: LhgReq){
         val editor = prefsGelar.edit()
         val gson = Gson()
         val json = gson.toJson(gelar1)
@@ -22,42 +23,17 @@ class GelarDataManager(context: Context) {
         editor.commit()
 
     }
-    fun getGelar1():Gelar1Model{
-        val emptyUser = Gson().toJson(Gelar1Model())
+    fun getGelar1():LhgReq{
+        val emptyUser = Gson().toJson(LhgReq())
         return Gson().fromJson(
             prefsGelar.getString("GELAR_1", emptyUser),
-            object : TypeToken<Gelar1Model>() {}.type
+            object : TypeToken<LhgReq>() {}.type
         )
     }
-    fun setPaparanGelar(gelar1: PaparanGelarModel){
+    fun clearGelar() {
         val editor = prefsGelar.edit()
-        val gson = Gson()
-        val json = gson.toJson(gelar1)
-        editor.putString("PAPARAN_GELAR", json)
+        editor.remove("GELAR_1")
         editor.commit()
-
-    }
-    fun getPaparanGelar():PaparanGelarModel{
-        val emptyUser = Gson().toJson(PaparanGelarModel())
-        return Gson().fromJson(
-            prefsGelar.getString("PAPARAN_GELAR", emptyUser),
-            object : TypeToken<PaparanGelarModel>() {}.type
-        )
     }
 
-    fun setTanggPesertaGelar(gelar1: ArrayList<TanggPesertaModel>){
-        val editor = prefsGelar.edit()
-        val gson = Gson()
-        val json = gson.toJson(gelar1)
-        editor.putString("TANGGAPAN_PESERTA", json)
-        editor.commit()
-
-    }
-    fun getTanggPesertaGelar():ArrayList<TanggPesertaModel>{
-        val emptyUser = Gson().toJson(ArrayList<TanggPesertaModel>())
-        return Gson().fromJson(
-            prefsGelar.getString("TANGGAPAN_PESERTA", emptyUser),
-            object : TypeToken<ArrayList<TanggPesertaModel>>() {}.type
-        )
-    }
 }

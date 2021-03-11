@@ -26,31 +26,6 @@ class AddAlamatActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Alamat"
         list = ArrayList()
-/*//        parentList = ParentListAlamat(list)
-
-        //personel
-//        val personel = sessionManager.getPersonel()
-//        Log.e("personel", personel.nama.toString())
-//
-//        //umum
-//        val umum = sessionManager.getPendUmum()
-//        Log.e("umum", umum.size.toString())
-//
-//        //dinas
-//        val dinas = sessionManager.getPendDinas()
-//        Log.e("dinas", dinas.size.toString())
-//
-//        //lain
-//        val lain = sessionManager.getPendOther()
-//        Log.e("lain", lain.size.toString())
-//
-//        //pekerjaan
-//        val pkrjn = sessionManager.getPekerjaan()
-//        Log.e("pkrjan", pkrjn.size.toString())
-//
-//        //diluar dinas
-//        val pkrjnDinas = sessionManager.getPekerjaanDiluar()
-//        Log.e("diluar", pkrjnDinas.size.toString())*/
 
         initRecycler(rv_alamat)
         btn_next_alamat.setOnClickListener {
@@ -60,9 +35,6 @@ class AddAlamatActivity : BaseActivity() {
 
             sessionManager1.setAlamat(list)
             Log.e("alamatSize", "alamat Size ${sessionManager1.getAlamat()}")
-            //initAPI(list)
-//            Log.e("namalamat", parentList.parenListAlamat[0].alamat.toString())
-//            parentList.parenListAlamat[0].dalam_rangka?.let { it1 -> Log.e("rangkaalamat", it1) }
             startActivity(Intent(this, MiscenaousActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -78,34 +50,20 @@ class AddAlamatActivity : BaseActivity() {
                 AlamatReq()
             )
         }
-        /*else{
-            for (i in 0 until alamatCreated.size) {
-                list.add(
-                    i, AlamatReq(
-                        alamatCreated[i].alamat,
-                        alamatCreated[i].tahun_awal,
-                        alamatCreated[i].tahun_akhir,
-                        alamatCreated[i].dalam_rangka,
-                        alamatCreated[i].keterangan
-                    )
-                )
-            }
-        }*/
         adapter = AddAlamatAdapter(this, list, object : AddAlamatAdapter.OnClickAlamat {
             override fun onDelete(position: Int) {
                 list.removeAt(position)
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(position)
             }
         })
 
         rv.adapter = adapter
         btn_add_alamat.setOnClickListener {
-            list.add(
-                AlamatReq("", "", "", "", "")
-            )
+            list.add(AlamatReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
+
         }
     }
 

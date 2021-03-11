@@ -20,30 +20,23 @@ class PekerjaanFragment : Fragment() {
     private lateinit var list: ArrayList<AddSinglePekerjaanReq>
     private lateinit var adapter: PekerjaanAdapter
 
-    //    private lateinit var parentListPekerjaan: AddPekerjaanReq
-    private var addSinglePekerjaanReq = AddSinglePekerjaanReq()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pekerjaan, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sessionManager1 = activity?.let { SessionManager1(it) }!!
-//        sessionManager.clearPekerjaan()
         list = ArrayList()
-//        parentListPekerjaan = AddPekerjaanReq(list)
         initRecycler()
 
         btn_next_pekerjaan.setOnClickListener {
             if(list.size == 0){
                 list.clear()
             }
-//            initAPI()
             sessionManager1.setPekerjaan(list)
             val pkrjanOutDinas = PekerjaanOutDinasFragment()
                 .apply {
@@ -73,7 +66,7 @@ class PekerjaanFragment : Fragment() {
             PekerjaanAdapter(it, list, object : PekerjaanAdapter.OnCLickPekerjaan {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         }!!
@@ -84,8 +77,8 @@ class PekerjaanFragment : Fragment() {
             list.add(
                 AddSinglePekerjaanReq()
             )
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
 
         }
     }
@@ -106,27 +99,3 @@ class PekerjaanFragment : Fragment() {
         }
     }
 }
-
-//private fun initAPI() {
-//
-//    NetworkConfig().getService().addPekerjaanMany(
-//        "Bearer ${sessionManager.fetchAuthToken()}",
-//        Constants.ID_PERSONEL,
-//    ).enqueue(object : Callback<BaseResp> {
-//        override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-//            Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
-//        }
-//
-//        override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-//            if(response.isSuccessful){
-//                if(response.body()?.message== "Data riwayat pekerjaan saved succesfully"){
-////                       goTo
-//                }else{
-//                    Toast.makeText(activity, "Error Tambah Data Pekerjaan", Toast.LENGTH_SHORT).show()
-//                }
-//            }else{
-//                Toast.makeText(activity, "Error Tambah Data Pekerjaan", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    })
-//}

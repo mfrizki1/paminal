@@ -6,5 +6,5 @@ data class MedInfoReq (
     var alasan: String?,
     var keterangan: String?
 ){
-    constructor():this("","","","")
+    constructor():this(null,null,null,null)
 }

@@ -205,6 +205,12 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                style="@style/TitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Sidang" />
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -221,11 +227,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                style="@style/TitleText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tanggal Sidang" />
 
             <TextView
                 style="@style/TitleText"

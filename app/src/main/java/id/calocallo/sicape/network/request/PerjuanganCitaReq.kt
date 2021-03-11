@@ -8,5 +8,5 @@ data class PerjuanganCitaReq(
     var dalam_rangka: String?,
     var keterangan:String?
 ){
-    constructor():this("","","","","","")
+    constructor():this(null,null,null,null,null,null)
 }

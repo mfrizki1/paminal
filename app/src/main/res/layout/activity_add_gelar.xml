@@ -12,25 +12,69 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/layout_toolbar_white" />
+        <include layout="@layout/layout_toolbar_white" />
 
         <include layout="@layout/view_separator" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_choose_lp_lhg_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="Pilih Laporan Polisi"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_lp_choose_lhg_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            app:cardCornerRadius="8dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/space_8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Laporan Polisi"
+                    android:textSize="@dimen/text_18"
+                    android:textStyle="bold" />
+
+                <include layout="@layout/layout_separator" />
+
+                <TextView
+                    android:id="@+id/txt_no_lp_choose_lhg_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8dp"
+                    android:text="No LP"
+                    android:textSize="@dimen/text_14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tentang" />
+            android:text="Dugaan Tindak" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edt_tentang_gelar_add"
+            android:id="@+id/edt_dugaan_tindak_lhg_add"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Tentang">
+            android:text="Dugaan Tindak">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -46,13 +90,13 @@
             android:text="Dasar-Dasar" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edt_dasar_gelar_add"
+            android:id="@+id/edt_dasar_lhg_add"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Dasar-Dasar">
+            android:hint="Dasar-Dasar LHG &amp; Paparan Gelar">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -73,7 +117,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edt_tanggal_gelar_add"
+                android:id="@+id/edt_tanggal_lhg_add"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -82,7 +126,7 @@
                 android:layout_marginEnd="8dp"
                 android:hint="Tanggal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_tanggal_gelar_add"
+                app:layout_constraintEnd_toStartOf="@+id/btn_tanggal_lhg_add"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -91,12 +135,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top|start"
-                    android:inputType="none" />
+                    android:inputType="date" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_tanggal_gelar_add"
+                android:id="@+id/btn_tanggal_lhg_add"
                 android:layout_width="150dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="12dp"
@@ -105,7 +150,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/edt_tanggal_gelar_add"
+                app:layout_constraintStart_toEndOf="@+id/edt_tanggal_lhg_add"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -114,16 +159,18 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pukul" />
+            android:text="Pukul"
+            android:visibility="gone" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edt_pukul_gelar_add"
+            android:id="@+id/edt_pukul_lhg_add"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Pukul">
+            android:hint="Pukul"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -139,7 +186,7 @@
             android:text="Tempat" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edt_tempat_gelar_add"
+            android:id="@+id/edt_tempat_lhg_add"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -153,102 +200,20 @@
                 android:gravity="top|start"
                 android:inputType="textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_pimpinan_gelar_add"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold"
-                android:layout_marginHorizontal="@dimen/space_12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Nama Pimpinan" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_pimpinan_gelar_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/space_12dp"
-                android:layout_weight="1"
-                android:text="Pilih Pimpinan"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_pemapar_add"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold"
-                android:layout_marginHorizontal="@dimen/space_12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Nama Pemapar" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_pemapar_gelar_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/space_12dp"
-                android:layout_weight="1"
-                android:text="Pilih Pemapar"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_peserta_add"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold"
-                android:layout_marginHorizontal="@dimen/space_12dp"
-                android:layout_width="250dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Nama Peserta Gelar Perkara" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_peserta_gelar_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/space_12dp"
-                android:layout_weight="1"
-                android:text="Pilih Peserta Gelar Perkara"
-                android:textStyle="bold" />
-        </LinearLayout>
-
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Uraian Laporan Gelar Perkara" />
+            android:text="Kronologis Kasus" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edt_uraian_gelar_add"
+            android:id="@+id/edt_kronologis_kasus_gelar_add"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Uraian">
+            android:hint="Kronologis Kasus">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -257,8 +222,389 @@
                 android:inputType="textCapSentences|textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Surat Perintah Penyidikan" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_surat_penyidikan_gelar_add"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Surat Perintah Penyidikan">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|top"
+                android:inputType="textCapSentences|textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:id="@+id/ll_pimpinan_lhg_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_personel_pimpinan_lhg_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Pilih Personel Pimpinan Gelar Perkara"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_pimpinan_lhg_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/space_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Personel Pimpinan Gelar Perkara"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/layout_separator" />
+
+                    <TextView
+                        android:id="@+id/txt_nama_pimpinan_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8dp"
+                        android:text="Nama Pimpinan Gelar Perkara"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_pangkat_pimpinan_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Pangkat Pimpinan Gelar Perkara"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_nrp_pimpinan_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="NRP Pimpinan Gelar Perkara"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_jabatan_pimpinan_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Jabatan Pimpinan Gelar Perkara"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_kesatuan_pimpinan_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Kesatuan Pimpinan Gelar Perkara"
+                        android:textSize="@dimen/text_14" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_pemapar_lhg_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_personel_pemapar_lhg_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Pilih Personel Pemapar Gelar Perkara"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_pemapar_lhg_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/space_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Personel Pemapar Gelar Perkara"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/layout_separator" />
+
+                    <TextView
+                        android:id="@+id/txt_nama_pemapar_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8dp"
+                        android:text="Nama Personel Pemapar Gelar Perkara"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_pangkat_pemapar_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Pangkat Personel Pemapar Gelar Perkara"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_nrp_pemapar_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="NRP Personel Pemapar Gelar Perkara"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_jabatan_pemapar_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Jabatan Personel Pemapar Gelar Perkara"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_kesatuan_pemapar_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Kesatuan Personel Pemapar Gelar Perkara"
+                        android:textSize="@dimen/text_14" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_notulen_lhg_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_personel_notulen_lhg_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Pilih Personel Notulen"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_notulen_lhg_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/space_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Personel Notulen"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/layout_separator" />
+
+                    <TextView
+                        android:id="@+id/txt_nama_notulen_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8dp"
+                        android:text="Nama Personel Notulen"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_pangkat_notulen_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Pangkat Personel Notulen"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_nrp_notulen_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="NRP Personel Notulen"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_jabatan_notulen_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Jabatan Personel Notulen"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_kesatuan_notulen_lhg_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Kesatuan Personel Notulen"
+                        android:textSize="@dimen/text_14" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_peserta_lhg_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pilih Peserta Gelar Perkara"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_peserta_add"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:gravity="center_vertical"
+                android:text="Nama Peserta Gelar Perkara"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
+
+            <include layout="@layout/line_separator" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pelaksanaan Gelar Perkara" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_waktu_mulai_lhg_add"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Waktu Mulai Pelaksanaan Gelar Perkara">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="datetime" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_waktu_selesai_lhg_add"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Waktu Selesai Pelaksanaan Gelar Perkara">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="datetime" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personel Yang Menangani Laporan" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_nama_menangani_lhg_add"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Nama Personel Yang Menangani Laporan">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textCapCharacters" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_pangkat_menangani_lhg_add"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Pangkat Personel Yang Menangani Laporan">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textCapCharacters" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_next_gelar_add"
+            android:id="@+id/btn_next_lhg_add"
             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

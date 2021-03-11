@@ -70,7 +70,6 @@ class AddFotoActivity : BaseActivity() {
         }
 
         btn_next_foto.setOnClickListener {
-            //TODO multipart foto
             fotoReq.id_foto_kanan = idKanan
             fotoReq.id_foto_kiri = idKiri
             fotoReq.id_foto_muka = idMuka

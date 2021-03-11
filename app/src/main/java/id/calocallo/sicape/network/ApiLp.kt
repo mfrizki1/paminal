@@ -22,18 +22,27 @@ interface ApiLp {
 
         const val PASAL_DILANGGAR = "lp/{id_pasal}/pasal/dilanggar"
         const val UPD_PASAL_DILANGGAR = "lp/pasal/dilanggar/{id_pasal_dilanggar}"
-      
+
         const val SAKSI_LP = "lp/{id_lp}/saksi/kode/etik"
         const val UPD_SAKSI_LP = "lp/saksi/kode/etik/{id_saksi}"
 
 
     }
 
+    /*LP FOR REF PENYELIDIKAN*/
     @Headers(ACCEPT)
     @GET("lp/kasus/masuk")
     fun getLpForRefPenyelidikan(
         @Header("Authorization") tokenBearer: String
     ): Call<ArrayList<LpMinResp>>
+
+    /*LP FOR REF PENYELIDIKAN*/
+    @Headers(ACCEPT)
+    @GET("lhp/{id_lhp}/referensi/penyelidikan/tanpa/lhg")
+    fun getLpForLhg(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lhp") id_lhp: Int?
+    ): Call<ArrayList<LpOnSkhd>>
 
     @Headers(ACCEPT)
     @GET("lhp/{id_lp}/referensi/penyelidikan/kasus/{jenis}")
@@ -214,6 +223,7 @@ interface ApiLp {
         @Path("id_lp") id_lp: Int?,
         @Body saksiReq: SaksiLpReq
     ): Call<Base1Resp<AddSaksiSipilResp>>
+
     @Headers(ACCEPT)
     @PATCH("lp/saksi/{id_lp}/personel")
     fun updSaksiPersonel(

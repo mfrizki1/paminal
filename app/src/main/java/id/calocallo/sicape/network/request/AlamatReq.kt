@@ -7,5 +7,5 @@ data class AlamatReq(
     var dalam_rangka: String?,
     var keterangan: String?
 ){
-    constructor():this("","","","","")
+    constructor():this(null,null,null,null,null)
 }
