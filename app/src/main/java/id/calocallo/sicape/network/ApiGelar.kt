@@ -31,7 +31,7 @@ interface ApiGelar {
     fun updLhg(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lhg") id_lhg: Int?,
-        @Body lhgResp: LhgResp
+        @Body lhgReq: LhgReq
     ): Call<Base1Resp<AddLhgResp>>/*Data lhg updated succesfully*/
 
     @Headers(ApiLp.ACCEPT)

@@ -14,6 +14,7 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.network.response.LhgMinResp
 import id.calocallo.sicape.network.response.LhgResp
+import id.calocallo.sicape.ui.gelar.peserta_gelar.ListPesertaGelarActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
@@ -43,7 +44,10 @@ class DetailGelarActivity : BaseActivity() {
 
     private fun buttonOnDetailLhg() {
         btn_peserta_gelar_detail_lhg.setOnClickListener {
-
+            val intent = Intent(this, ListPesertaGelarActivity::class.java)
+            intent.putExtra(DETAIL_LHG, dataLhg)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_generate_doc_lhg.setOnClickListener {
 
@@ -144,7 +148,7 @@ class DetailGelarActivity : BaseActivity() {
                             ).show()
                             Handler(Looper.getMainLooper()).postDelayed({
                                 finish()
-                            },750)
+                            }, 750)
                         } else if (response.body()?.message == "Data lhg has been used as reference in another data") {
                             Toast.makeText(
                                 this@DetailGelarActivity,

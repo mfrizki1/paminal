@@ -58,8 +58,6 @@ class AddTanggPesertaAdapter(
                     ) {
                     }
                 })
-                edt_nama_peserta_gelar_item.editText?.setText(pesertaModel.nama_peserta)
-                edt_pendapat_peserta_gelar_item.editText?.setText(pesertaModel.pendapat)
                 btn_delete_tanggapan_peserta.visibility =
                     if (adapterPosition == 0) View.GONE else View.VISIBLE
                 btn_delete_tanggapan_peserta.setOnClickListener {
@@ -82,5 +80,8 @@ class AddTanggPesertaAdapter(
 
     override fun onBindViewHolder(holder: Gelar3Holder, position: Int) {
         holder.bind(list[position])
+        val data = list[position]
+        holder.itemView.edt_nama_peserta_gelar_item.editText?.setText(data.nama_peserta)
+        holder.itemView.edt_pendapat_peserta_gelar_item.editText?.setText(data.pendapat)
     }
 }

@@ -537,7 +537,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Uraian Laporan Gelar Perkara" />
+            android:text="Pelaksanaan Gelar Perkara" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edt_waktu_mulai_lhg_add"

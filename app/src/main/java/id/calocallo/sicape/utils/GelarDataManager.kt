@@ -30,35 +30,10 @@ class GelarDataManager(context: Context) {
             object : TypeToken<LhgReq>() {}.type
         )
     }
-    fun setPaparanGelar(gelar1: PaparanGelarModel){
+    fun clearGelar() {
         val editor = prefsGelar.edit()
-        val gson = Gson()
-        val json = gson.toJson(gelar1)
-        editor.putString("PAPARAN_GELAR", json)
+        editor.remove("GELAR_1")
         editor.commit()
-
-    }
-    fun getPaparanGelar():PaparanGelarModel{
-        val emptyUser = Gson().toJson(PaparanGelarModel())
-        return Gson().fromJson(
-            prefsGelar.getString("PAPARAN_GELAR", emptyUser),
-            object : TypeToken<PaparanGelarModel>() {}.type
-        )
     }
 
-    fun setTanggPesertaGelar(gelar1: ArrayList<TanggPesertaModel>){
-        val editor = prefsGelar.edit()
-        val gson = Gson()
-        val json = gson.toJson(gelar1)
-        editor.putString("TANGGAPAN_PESERTA", json)
-        editor.commit()
-
-    }
-    fun getTanggPesertaGelar():ArrayList<TanggPesertaModel>{
-        val emptyUser = Gson().toJson(ArrayList<TanggPesertaModel>())
-        return Gson().fromJson(
-            prefsGelar.getString("TANGGAPAN_PESERTA", emptyUser),
-            object : TypeToken<ArrayList<TanggPesertaModel>>() {}.type
-        )
-    }
 }

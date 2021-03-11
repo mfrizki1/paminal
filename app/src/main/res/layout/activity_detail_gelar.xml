@@ -113,7 +113,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Uraian Pelaksanaan Gelar Perkara" />
+            android:text="Pelaksanaan Gelar Perkara" />
 
         <TextView
             android:id="@+id/txt_waktu_mulai_pelaksanaan_detail_lhg"

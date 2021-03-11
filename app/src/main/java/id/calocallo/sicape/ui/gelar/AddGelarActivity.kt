@@ -99,6 +99,7 @@ class AddGelarActivity : BaseActivity() {
         lhgReq.id_lp = idLp
         lhgReq.nama_yang_menangani = edt_nama_menangani_lhg_add.editText?.text.toString()
         lhgReq.pangkat_yang_menangani = edt_pangkat_menangani_lhg_add.editText?.text.toString()
+        gelarDataManager.setGelar1(lhgReq)
     }
 
     @SuppressLint("SetTextI18n")
