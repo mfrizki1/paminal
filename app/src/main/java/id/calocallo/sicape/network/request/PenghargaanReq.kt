@@ -10,7 +10,7 @@ data class PenghargaanReq(
     var tahun: String?,
     var keterangan: String?
 ) : Parcelable {
-    constructor() : this("", "", "", "", "")
+    constructor() : this(null, null, null, null, null)
 
     constructor(source: Parcel) : this(
         source.readString(),

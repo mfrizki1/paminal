@@ -20,11 +20,9 @@ import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.fragment_organisasi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
-
 class OrganisasiFragment : Fragment() {
     private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<OrganisasiReq>
-    private lateinit var parentList: ParentListOrganisasi
     private lateinit var adapter: OrganisasiAdapter
 
     override fun onCreateView(
@@ -41,7 +39,6 @@ class OrganisasiFragment : Fragment() {
         (activity as BaseActivity).setupActionBarWithBackButton(toolbar)
         (activity as BaseActivity).supportActionBar?.title = "Organisasi"
         list = ArrayList()
-//        parentList = ParentListOrganisasi(list)
 
         initRV(rv_organisasi)
 
@@ -53,11 +50,6 @@ class OrganisasiFragment : Fragment() {
             sessionManager1.setOrganisasi(list)
             val org_temp = sessionManager1.getOrganisasi()
             Log.e("orgSize", "$org_temp")
-            //initAPI(param: list)
-            //berhasil -> GO
-            //gagal -> toast
-//            Log.e("namaOrg", parentList.parentList[0].alamat.toString())
-//            Log.e("namaOrg", parentList.parentList[1].kedudukan.toString())
 
             val perjuanganCitaFragment = PerjuanganCitaFragment().apply {
                 enterTransition = Slide(Gravity.END)
@@ -73,24 +65,14 @@ class OrganisasiFragment : Fragment() {
     private fun initRV(rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         if (sessionManager1.getOrganisasi().size == 0) {
-            list.add(
-                OrganisasiReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(OrganisasiReq())
         }
         Log.e("size Organisasi", sessionManager1.getOrganisasi().size.toString())
         adapter = activity?.let {
             OrganisasiAdapter(it, list, object : OrganisasiAdapter.OnCLickOrg {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         }!!
@@ -98,20 +80,10 @@ class OrganisasiFragment : Fragment() {
         rv.adapter = adapter
 
         btn_add_org.setOnClickListener {
-            list.add(
-                OrganisasiReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(OrganisasiReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
     }
 

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.AddSinglePekerjaanReq
 import kotlinx.android.synthetic.main.layout_pekerjaan.view.*
+import kotlinx.android.synthetic.main.layout_pendidikan_umum.view.*
 
 class PekerjaanAdapter(
     val context: Context,
@@ -105,7 +106,7 @@ class PekerjaanAdapter(
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
-
+            btnDelete.visibility = if (adapterPosition == 0) View.GONE else View.VISIBLE
             btnDelete.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     onClickPkrjaan.onDelete(adapterPosition)
@@ -133,6 +134,7 @@ class PekerjaanAdapter(
         holder.etThnLama.setText(data.berapa_tahun.toString())
         holder.etKesatuan.setText(data.instansi)
         holder.etPangkat.setText(data.golongan)
+        holder.etKet.setText(data.keterangan)
     }
 
     interface OnCLickPekerjaan {

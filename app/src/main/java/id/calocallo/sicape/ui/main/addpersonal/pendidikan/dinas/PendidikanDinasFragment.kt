@@ -24,20 +24,13 @@ import kotlinx.android.synthetic.main.fragment_pendidikan_dinas.*
 class PendidikanDinasFragment : Fragment() {
     private lateinit var sheenValidator: SheenValidator
     private lateinit var sessionManager1: SessionManager1
-//    private lateinit var parentPendidikan: ViewGroup
-
     private lateinit var list: ArrayList<AddPendidikanModel>
-    private lateinit var listUmum: ArrayList<AddPendidikanModel>
     private lateinit var adapter: PendDinasAdapter
-    private lateinit var parentList: ParentListPendDinas
-    private lateinit var parentListUmum: ParentListPendUmum
-//    private lateinit var comunicator: Comunicator
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pendidikan_dinas, container, false)
     }
 
@@ -45,14 +38,11 @@ class PendidikanDinasFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sessionManager1 = activity?.let { SessionManager1(it) }!!
         list = ArrayList()
-//        comunicator = activity as Comunicator
         sheenValidator = activity?.let { SheenValidator(it) }!!
-//        val fragmentManager: FragmentManager = activity!!.supportFragmentManager
-//        list = ArrayList()
 
         btn_next_pend_dinas.setOnClickListener {
 
-            if(list.size == 1 && list[0].pendidikan == ""){
+            if (list.size == 1 && list[0].pendidikan == "") {
                 list.clear()
             }
             sessionManager1.setPendDinas(list)
@@ -69,10 +59,7 @@ class PendidikanDinasFragment : Fragment() {
             ft.commit()
         }
 
-
         setAdapter()
-
-
     }
 
     private fun setAdapter() {
@@ -86,7 +73,7 @@ class PendidikanDinasFragment : Fragment() {
             PendDinasAdapter(it, list, object : PendDinasAdapter.OnClickDinas {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         }!!
@@ -95,8 +82,8 @@ class PendidikanDinasFragment : Fragment() {
         btn_add_pend_dinas.setOnClickListener {
             val position = if (list.isEmpty()) 0 else list.size - 1
             list.add(AddPendidikanModel())
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
     }
 
@@ -123,12 +110,7 @@ class PendidikanDinasFragment : Fragment() {
                     dinas[i].keterangan
                 )
             )
-//            edt_nama_kedinasan.setText(dinas[i].pendidikan)
-//            edt_thn_awal_kedinasan.setText(dinas[i].tahun_awal)
-//            edt_thn_akhir_kedinasan.setText(dinas[i].tahun_akhir)
-//            edt_tempat_kedinasan.setText(dinas[i].kota)
-//            edt_membiayai_kedinasan.setText(dinas[i].yang_membiayai)
-//            edt_ket_kedinasan.setText(dinas[i].keterangan)
+
         }
 
     }

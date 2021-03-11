@@ -43,57 +43,38 @@ class AddKawanDekatActivity : BaseActivity() {
 
     private fun initRV() {
         val sahabat = sessionManager1.getSahabat()
-        if(sahabat.size == 1){
-            for(i in 0 until sahabat.size){
-                list.add(i, SahabatReq(
-                    sahabat[i].nama,
-                    sahabat[i].jenis_kelamin,
-                    sahabat[i].umur,
-                    sahabat[i].alamat,
-                    sahabat[i].pekerjaan,
-                    sahabat[i].alasan,
-                    sahabat[i].keterangan
-                )
+        if (sahabat.size == 1) {
+            for (i in 0 until sahabat.size) {
+                list.add(
+                    i, SahabatReq(
+                        sahabat[i].nama,
+                        sahabat[i].jenis_kelamin,
+                        sahabat[i].umur,
+                        sahabat[i].alamat,
+                        sahabat[i].pekerjaan,
+                        sahabat[i].alasan,
+                        sahabat[i].keterangan
+                    )
                 )
             }
-        }else{
-            list.add(
-                SahabatReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+        } else {
+            list.add(SahabatReq())
         }
         rv_kawan_dekat.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = KawanAdapter(this, list, object : KawanAdapter.OnClickKawan {
             override fun onDelete(position: Int) {
                 list.removeAt(position)
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(position)
             }
         })
         rv_kawan_dekat.adapter = adapter
 
         btn_add_kawan.setOnClickListener {
-            list.add(
-                SahabatReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(SahabatReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
     }
 }

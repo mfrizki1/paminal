@@ -55,36 +55,22 @@ class AddMedsosActivity : BaseActivity() {
                 )
             }
         } else {
-            list.add(
-                MedSosReq(
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(MedSosReq())
         }
         rv_medsos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = MedSosAdapter(this, list, object : MedSosAdapter.OnClickMedsos {
             override fun onDelete(position: Int) {
                 list.removeAt(position)
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(position)
             }
         })
         rv_medsos.adapter = adapter
 
         btn_add_medsos.setOnClickListener {
-            list.add(
-                MedSosReq(
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(MedSosReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
 
         }
     }

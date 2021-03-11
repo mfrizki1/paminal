@@ -61,7 +61,7 @@ class AddTokohDikagumiActivity : BaseActivity() {
         adapter = TokohAdapter(this, list, object : TokohAdapter.OnClickTokoh {
             override fun onDelete(position: Int) {
                 list.removeAt(position)
-                adapter.notifyDataSetChanged()
+               adapter.notifyItemRemoved(position)
             }
         })
         rv_tokoh_dikagumi.adapter = adapter
@@ -69,8 +69,8 @@ class AddTokohDikagumiActivity : BaseActivity() {
         btn_add_tokoh_dikagumi.setOnClickListener {
             list.add(TokohReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+          adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
     }
 }

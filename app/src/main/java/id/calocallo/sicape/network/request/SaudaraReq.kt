@@ -10,6 +10,6 @@ data class SaudaraReq(
     var organisasi_yang_diikuti: String?,
     var keterangan: String?
 ){
-    constructor():this("","","","","",
-    "","","")
+    constructor():this(null,null,null,null,null,
+    null,null,null)
 }

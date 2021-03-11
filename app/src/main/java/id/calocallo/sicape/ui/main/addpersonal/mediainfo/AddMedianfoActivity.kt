@@ -42,47 +42,34 @@ class AddMedianfoActivity : BaseActivity() {
 
     private fun initRV() {
         val media = sessionManager1.getMediaInfo()
-        if(media.size == 1){
-            for (i in 0 until media.size){
-                list.add(i, MedInfoReq(
-                    media[i].sumber,
-                    media[i].topik,
-                    media[i].alasan,
-                    media[i].keterangan
-                )
+        if (media.size == 1) {
+            for (i in 0 until media.size) {
+                list.add(
+                    i, MedInfoReq(
+                        media[i].sumber,
+                        media[i].topik,
+                        media[i].alasan,
+                        media[i].keterangan
+                    )
                 )
             }
-        }else {
-            list.add(
-                MedInfoReq(
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+        } else {
+            list.add(MedInfoReq())
         }
         rv_med_info.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = MediaInfoAdapter(this, list, object : MediaInfoAdapter.OnClickMedInfo {
             override fun onDelete(position: Int) {
                 list.removeAt(position)
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(position)
             }
         })
         rv_med_info.adapter = adapter
 
         btn_add_med_info.setOnClickListener {
-            list.add(
-                MedInfoReq(
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(MedInfoReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
 
     }

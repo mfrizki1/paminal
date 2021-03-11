@@ -52,9 +52,6 @@ class PerjuanganCitaFragment : Fragment() {
             }
             sessionManager1.setPerjuanganCita(list)
             Log.e("size", "size perjuangan ${sessionManager1.getPerjuanganCita()}}")
-//            Log.e("peristiwa", parentList.parentList[0].peristiwa.toString())
-//            Log.e("peristiwa", parentList.parentList[0].tmpt_peristiwa.toString())
-//            Log.e("peristiwa", parentList.parentList[1].peristiwa.toString())
 
             val penghargaanFragment = PenghargaanFragment()
                 .apply {
@@ -73,16 +70,7 @@ class PerjuanganCitaFragment : Fragment() {
         Log.e("size", "size perjuangan ${perjuangan.size}}")
 
         if (perjuangan.size == 0) {
-            list.add(
-                PerjuanganCitaReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(PerjuanganCitaReq())
         }
         Log.e("size Perjuangan", perjuangan.size.toString())
         rv.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -90,26 +78,17 @@ class PerjuanganCitaFragment : Fragment() {
             PerjuanganAdapter(it, list, object : PerjuanganAdapter.OnClickPerjuangan {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         }!!
         rv.adapter = adapter
 
         btn_add_perjuangan.setOnClickListener {
-            list.add(
-                PerjuanganCitaReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(PerjuanganCitaReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
 
     }

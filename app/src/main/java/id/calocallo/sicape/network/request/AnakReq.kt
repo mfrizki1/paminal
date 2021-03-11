@@ -11,6 +11,6 @@ data class AnakReq(
     var keterangan: String?
 ) {
     constructor() : this(
-        "", "", "", "", "", "", "", ""
+        null, null, null, null, null, null, null, null
     )
 }

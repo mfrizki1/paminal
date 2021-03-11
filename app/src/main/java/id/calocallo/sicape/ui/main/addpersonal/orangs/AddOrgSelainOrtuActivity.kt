@@ -60,18 +60,21 @@ class AddOrgSelainOrtuActivity : BaseActivity() {
         rv_org_selain_ortu.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = OrangsAdapter(
-            "Orang Yang Membantu Selain Orang Tua", this, list, object : OrangsAdapter.OnClickOrangs {
+            "Orang Yang Membantu Selain Orang Tua",
+            this,
+            list,
+            object : OrangsAdapter.OnClickOrangs {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         rv_org_selain_ortu.adapter = adapter
         btn_add_org_selain_ortu.setOnClickListener {
             list.add(OrangsReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
     }
 }

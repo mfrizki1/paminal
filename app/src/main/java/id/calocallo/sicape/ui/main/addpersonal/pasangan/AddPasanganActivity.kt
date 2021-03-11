@@ -46,22 +46,8 @@ class AddPasanganActivity : BaseActivity() {
         if (isAddSingle) {
             txt_pasangan.gone()
             txt_layout_status_pasangan_add.visible()
-        } else {
-            /* val jk = sessionManager1.getPersonel().jenis_kelamin
-             if (jk == "laki_laki") {
-                 stts_pasangan = "istri"
-                 txt_pasangan.text = "Istri"
-             } else if (jk == "perempuan") {
-                 stts_pasangan = "suami"
-                 txt_pasangan.text = "Suami"
-             } else {
-                 stts_pasangan = "istri"
-                 txt_pasangan.text = "Istri"
-             }*/
         }
 
-
-        //tod
         btn_next_pasangan.attachTextChangeAnimator()
         bindProgressButton(btn_next_pasangan)
         btn_next_pasangan.setOnClickListener {
@@ -72,8 +58,6 @@ class AddPasanganActivity : BaseActivity() {
             val suku = edt_suku_pasangan.text.toString()
             val kwg = edt_kwg_pasangan.text.toString()
             val how_to_kwg = edt_how_to_kwg_pasangan.text.toString()
-//        val agama_skrg = sp_agama_skrg_pasangan.text.toString()
-//        val agama_sblm = sp_agama_sblm_pasangan.text.toString()
             val aliran_dianut = edt_aliran_dianut_pasangan.text.toString()
             val aliran_diikuti = edt_aliran_diikuti_pasangan.text.toString()
             val almt_sblm_kwn = edt_almt_sblm_kwin_pasangan.text.toString()
@@ -145,11 +129,8 @@ class AddPasanganActivity : BaseActivity() {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
-
         }
-
         SP()
-
     }
 
     private fun addSingle() {

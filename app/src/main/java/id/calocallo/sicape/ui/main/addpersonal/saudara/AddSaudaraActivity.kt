@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.layout_toolbar_white.*
 class AddSaudaraActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private lateinit var list: ArrayList<SaudaraReq>
-    private lateinit var parentList: ParentListSaudara
     lateinit var adapter: SaudaraAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +25,6 @@ class AddSaudaraActivity : BaseActivity() {
 
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Saudara"
-//        parentList = ParentListSaudara(list)
         initRecycler()
 
         btn_next_saudara.setOnClickListener {
@@ -38,10 +36,6 @@ class AddSaudaraActivity : BaseActivity() {
 
 
             Log.e("saudara", "${sessionManager1.getSaudara()}")
-//            Log.e("dasasf", parentList.parentList[0].nama.toString()))
-//            Log.e("data 1 saudara", parentList.parentList[0].nama.toString())
-//            Log.e("data 1 jk saudara", parentList.parentList[0].jenis_kelamin.toString())
-//            Log.e("data 2 jk saudara", parentList.parentList[1].jenis_kelamin.toString())
             startActivity(Intent(this, AddOrgSelainOrtuActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -66,44 +60,22 @@ class AddSaudaraActivity : BaseActivity() {
                 )
             }
         } else {
-            list.add(
-                SaudaraReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(SaudaraReq())
         }
         rv_saudara.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = SaudaraAdapter(this, list,
             object : SaudaraAdapter.OnClickSaudara {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         rv_saudara.adapter = adapter
         btn_add_saudara.setOnClickListener {
-            list.add(
-                SaudaraReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(SaudaraReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
     }
 }

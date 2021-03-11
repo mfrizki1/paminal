@@ -47,13 +47,6 @@ class PenghargaanFragment : Fragment() {
             }
             sessionManager1.setPenghargaan(list)
             Log.e("size Penghargaan", "${sessionManager1.getPenghargaan()}")
-//            Log.e("data penghargaan", parentList.parentList[0].penghargaan.toString())
-//            Log.e("data penghargaan", parentList.parentList[0].diterima_dari.toString())
-
-            //initAPI(list)
-            //berhasil -> GO
-            //gagal -> TOAST
-
             startActivity(Intent(activity, AddPasanganActivity::class.java))
             activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -62,15 +55,7 @@ class PenghargaanFragment : Fragment() {
     private fun initRecycler(rv: RecyclerView) {
         val penghargaanCreated = sessionManager1.getPenghargaan()
         if (penghargaanCreated.size == 0) {
-            list.add(
-                PenghargaanReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(PenghargaanReq())
         }
         Log.e("size Penghargaabn", penghargaanCreated.size.toString())
         rv.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -78,7 +63,7 @@ class PenghargaanFragment : Fragment() {
             PenghargaanAdapter(it, list, object : PenghargaanAdapter.OnClickPenghargaan {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         }!!
@@ -86,18 +71,10 @@ class PenghargaanFragment : Fragment() {
         rv.adapter = adapter
 
         btn_add_penghargaan.setOnClickListener {
-            list.add(
-                PenghargaanReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(PenghargaanReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
     }
 

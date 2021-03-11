@@ -10,6 +10,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_signalement.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import kotlin.math.sign
 
 class AddSignalementActivity : BaseActivity() {
     private lateinit var signalementReq: SignalementModel
@@ -33,19 +34,7 @@ class AddSignalementActivity : BaseActivity() {
             signalementReq.rambut = edt_rambut.text.toString()
             signalementReq.sidik_jari = edt_sidik_jari.text.toString()
             signalementReq.tinggi = edt_tinggi.text.toString().toInt()
-            signalementReq.yang_mempengaruhi =edt_dapat_dipengaruhi.text.toString()
-
-         /*   signalementReq.cacat = "cacat"
-            signalementReq.kelemahan = "kelemahan"
-            signalementReq.keluarga_dekat = "keluarga"
-            signalementReq.kesenangan ="kesenangan"
-            signalementReq.lain_lainnya = "lain_lainnya"
-            signalementReq.mata = "mata"
-            signalementReq.muka = "muka"
-            signalementReq.rambut = "rambut"
-            signalementReq.sidik_jari = "sidik_jari"
-            signalementReq.tinggi = "123"
-            signalementReq.yang_mempengaruhi ="yang_mempengaruhi"*/
+            signalementReq.yang_mempengaruhi = edt_dapat_dipengaruhi.text.toString()
 
             sessionManager1.setSignalement(signalementReq)
             Log.e("signalement Size", "${sessionManager1.getSignalement()}")
@@ -70,7 +59,11 @@ class AddSignalementActivity : BaseActivity() {
         edt_muka.setText(signalement.muka)
         edt_rambut.setText(signalement.rambut)
         edt_sidik_jari.setText(signalement.sidik_jari)
-        edt_tinggi.setText(signalement.tinggi.toString())
+        if (signalement.tinggi == null) {
+            edt_tinggi.setText("0")
+        } else {
+            edt_tinggi.setText(signalement.tinggi.toString())
+        }
         edt_dapat_dipengaruhi.setText(signalement.yang_mempengaruhi)
     }
 }

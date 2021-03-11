@@ -32,18 +32,12 @@ class AddAnakActivity : BaseActivity() {
         initRecycler(rv_anak)
 
         btn_next_anak.setOnClickListener {
-            //work list[0].nama == ""
             if (list.size == 1 && list[0].nama == "") {
                 list.clear()
             }
 
             sessionManager1.setAnak(list)
             Log.e("anak", "${sessionManager1.getAnak()}")
-//            Log.e("data 1 anak", list[0].nama.toString())
-//            Log.e("data 1 jk anak", list[0].jenis_kelamin.toString())
-//            Log.e("data 1 jk anak", list[0].status_ikatan.toString())
-//            Log.e("data 2 jk anak", list[1].jenis_kelamin.toString())
-//            Log.e("data 2 jk anak", list[1].status_ikatan.toString())
             startActivity(Intent(this, AddSaudaraActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -67,54 +61,22 @@ class AddAnakActivity : BaseActivity() {
                 )
             }
         } else {
-            list.add(
-                AnakReq(
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            )
+            list.add(AnakReq())
         }
         rvAnak.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = AnakAdapter(this, list, object : AnakAdapter.OnClickAnak {
             override fun onDelete(position: Int) {
                 list.removeAt(position)
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(position)
             }
         })
         rvAnak.adapter = adapter
         btn_add_anak.setOnClickListener {
             list.add(AnakReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
 
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        list = ArrayList()
-//        val anak = sessionManager.getAnak()
-//        if(anak.size == 1){
-//            for (i in 0 until anak.size) {
-//                list.add(i, AnakReq(anak[i].nama,
-//                    anak[i].jenis_kelamin,
-//                    anak[i].tempat_lahir,
-//                    anak[i].tanggal_lahir,
-//                    anak[i].pekerjaan_atau_sekolah,
-//                    anak[i].organisasi_yang_diikuti,
-//                    anak[i].keterangan,
-//                    anak[i].status_ikatan))
-//            }
-//        }
-//        }else{
-//            list.add(AnakReq("", "", "", "", "", "", "", ""))
-//        }
-
 }

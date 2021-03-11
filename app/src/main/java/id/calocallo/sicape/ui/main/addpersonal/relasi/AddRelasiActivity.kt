@@ -63,12 +63,6 @@ class AddRelasiActivity : BaseActivity() {
 
             sessionManager1.setRelasi(listRelasi)
             sessionManager1.setHukuman(listHukum)
-//            Log.e("size Relasi", sessionManager.getRelasi().size.toString())
-//            Log.e("size Relasi", sessionManager.getRelasi()[0].lokasi.toString())
-//            Log.e("size Relasi", sessionManager.getRelasi()[1].lokasi.toString())
-//            Log.e("size Hukum", sessionManager.getHukuman().size.toString())
-//            Log.e("size Relasi", sessionManager.getHukuman()[0].perkara.toString())
-//            startActivity(Intent(this, AddCatPersActivity::class.java))
             doSavePersonel(listRelasi, listHukum)
         }
     }
@@ -239,25 +233,17 @@ class AddRelasiActivity : BaseActivity() {
         adapterRelasi = RelasiAdapter(this, listRelasi, object : RelasiAdapter.OnClickRelasi {
             override fun onDelete(position: Int) {
                 listRelasi.removeAt(position)
-                adapterRelasi.notifyDataSetChanged()
+                adapterRelasi.notifyItemRemoved(position)
             }
 
             override fun onAdd() {
                 listRelasi.add(RelasiReq())
                 val position = if (listRelasi.isEmpty()) 0 else listRelasi.size - 1
+                adapterRelasi.notifyItemChanged(position)
                 adapterRelasi.notifyItemInserted(position)
-                adapterRelasi.notifyDataSetChanged()
             }
         })
         rvRelasi.adapter = adapterRelasi
-
-//        btn_add_relasi.setOnClickListener {
-//            listRelasi.add(RelasiReq())
-//            val position = if (listRelasi.isEmpty()) 0 else listRelasi.size - 1
-//            adapterRelasi.notifyItemInserted(position)
-//            adapterRelasi.notifyDataSetChanged()
-//        }
-
 
         //Hukum
         val getHukum = sessionManager1.getHukuman()
@@ -277,14 +263,14 @@ class AddRelasiActivity : BaseActivity() {
             PernahHukumAdapter(this, listHukum, object : PernahHukumAdapter.OnClickHukum {
                 override fun onDelete(position: Int) {
                     listHukum.removeAt(position)
-                    adapterHukum.notifyDataSetChanged()
+                    adapterHukum.notifyItemRemoved(position)
                 }
 
                 override fun onAdd() {
                     listHukum.add(HukumanReq())
                     val position = if (listHukum.isEmpty()) 0 else listHukum.size - 1
+                    adapterHukum.notifyItemChanged(position)
                     adapterHukum.notifyItemInserted(position)
-                    adapterHukum.notifyDataSetChanged()
                 }
             })
         rvHukum.adapter = adapterHukum

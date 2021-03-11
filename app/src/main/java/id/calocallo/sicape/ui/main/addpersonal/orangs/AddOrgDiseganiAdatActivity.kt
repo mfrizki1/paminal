@@ -66,15 +66,15 @@ class AddOrgDiseganiAdatActivity : BaseActivity() {
             object : OrangsAdapter.OnClickOrangs {
                 override fun onDelete(position: Int) {
                     list.removeAt(position)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemRemoved(position)
                 }
             })
         rv_org_disegani_adat.adapter = adapter
         btn_add_org_disegani_adat.setOnClickListener {
             list.add(OrangsReq())
             val position = if (list.isEmpty()) 0 else list.size - 1
+            adapter.notifyItemChanged(position)
             adapter.notifyItemInserted(position)
-            adapter.notifyDataSetChanged()
         }
     }
 }
