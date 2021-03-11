@@ -1,10 +1,9 @@
-package id.calocallo.sicape.ui.main.lp.pidana.tes
+package id.calocallo.sicape.ui.main.lp.saksi.select_saksi
 
 import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.network.response.LpSaksiResp
-import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 
 class SelectedSaksiDetailsLookup(private val recyclerView: RecyclerView) :
     ItemDetailsLookup<LpSaksiResp>() {

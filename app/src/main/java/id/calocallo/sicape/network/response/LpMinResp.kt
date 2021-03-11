@@ -14,5 +14,6 @@ data class LpMinResp(
     var status_kasus: String?,
     var status_terlapor: String?,
     var created_at: String?,
-    var updated_at: String?
+    var updated_at: String?,
+    var deleted_at: String?
 ) : Parcelable

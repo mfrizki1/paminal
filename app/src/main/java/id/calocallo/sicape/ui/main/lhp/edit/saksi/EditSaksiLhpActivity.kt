@@ -1,6 +1,5 @@
 package id.calocallo.sicape.ui.main.lhp.edit.saksi
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -11,16 +10,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RadioButton
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
-import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SaksiLhpReq
-import id.calocallo.sicape.network.response.*
+import id.calocallo.sicape.network.response.SaksiLhpResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
@@ -29,19 +26,16 @@ import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.*
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_alamat_sipil_saksi
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_jabatan_saksi_edit
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_kesatuan_saksi_edit
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nama_saksi_edit
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_jabatan_saksi_lp_add
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_kesatuan_saksi_lp_add
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nama_saksi_lp_add
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nama_sipil_saksi
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nrp_saksi_edit
-import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_pangkat_saksi_edit
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_nrp_saksi_lp_add
+import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_pangkat_saksi_lp_add
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_pekerjaan_sipil_saksi
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_tanggal_lahir_sipil_saksi
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_tempat_lahir_sipil_saksi
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class EditSaksiLhpActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
@@ -55,7 +49,6 @@ class EditSaksiLhpActivity : BaseActivity() {
     private var tempTmptLhrSipil: String? = null
     private var tempTglLhrSipil: String? = null
     private var tempAlamatSipil: String? = null
-    private var tempIsKorban: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_saksi_lhp)
@@ -70,24 +63,11 @@ class EditSaksiLhpActivity : BaseActivity() {
         }
 
         val saksi = intent.extras?.getParcelable<SaksiLhpResp>(EDIT_SAKSI_LHP)
-        Log.e("model", "$saksi")
-        getViewSaksiLhp(saksi)
+//        getViewSaksiLhp(saksi)
 
         btn_save_saksi_lhp_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_saksi_lhp_edit)
         btn_save_saksi_lhp_edit.setOnClickListener {
-            btn_save_saksi_lhp_edit.showProgress {
-                progressColor = Color.WHITE
-            }
-            saksiLhpReq.status_saksi = tempStatusSaksi
-            saksiLhpReq.id_personel = idPersonelSaksi
-            saksiLhpReq.nama = tempNamaSipil
-            saksiLhpReq.tempat_lahir = tempTmptLhrSipil
-            saksiLhpReq.tanggal_lahir = tempTglLhrSipil
-            saksiLhpReq.pekerjaan = tempPekerjananSipil
-            saksiLhpReq.alamat = tempAlamatSipil
-            saksiLhpReq.isi_keterangan_saksi = edt_ket_saksi_edit.text.toString()
-            saksiLhpReq.is_korban =tempIsKorban
             updateSaksiLhp(saksi)
         }
 
@@ -133,8 +113,8 @@ class EditSaksiLhpActivity : BaseActivity() {
             .setTitle("Tambah Data Sipil Saksi")
             .setPositiveButton("Tambah") { dialog, _ ->
                 tempAlamatSipil = alamatSipilView.text.toString()
-                tempTmptLhrSipil = tempatSipilView.text.toString()
-                tempTglLhrSipil = tanggalSipilView.text.toString()
+                tempTmptLhrSipil = tanggalSipilView.text.toString()
+                tempTglLhrSipil = tempatSipilView.text.toString()
                 tempPekerjananSipil = pekerjaanSipilView.text.toString()
                 tempNamaSipil = namaSipilView.text.toString()
                 txt_nama_sipil_saksi.text = "Nama : ${tempNamaSipil}"
@@ -147,23 +127,19 @@ class EditSaksiLhpActivity : BaseActivity() {
             .show()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun getViewSaksiLhp(saksi: SaksiLhpResp?) {
-//        idPersonelSaksi = saksi?.personel?.id
-        Log.e("idPersonelSaksi", "$idPersonelSaksi")
-        if (saksi?.personel != null) {
+   /* private fun getViewSaksiLhp(saksi: SaksiLhpResp?) {
+//        idPersonelSaksi = saksi?.id_personel
+        if (saksi?.status_saksi == "polisi") {
             rb_polisi_saksi_edit.isChecked = true
             ll_sipil_saksi_edit.gone()
             ll_personel_saksi_edit.visible()
-            txt_nama_saksi_edit.text = "Nama : ${saksi.personel?.nama}"
-            txt_pangkat_saksi_edit.text =
-                "Pangkat : ${saksi.personel?.pangkat.toString().toUpperCase()}"
-            txt_nrp_saksi_edit.text = "NRP : ${saksi.personel?.nrp}"
-            txt_jabatan_saksi_edit.text = "Jabatan : ${saksi.personel?.jabatan}"
-            txt_kesatuan_saksi_edit.text =
-                "Kesatuan : ${saksi.personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
-            tempStatusSaksi = "personel"
-            idPersonelSaksi = saksi.personel?.id
+            txt_nama_saksi_lp_add.text ="Nama : ${saksi.nama}"
+            txt_pangkat_saksi_lp_add.text ="Pangkat : ${saksi.pangkat.toString().toUpperCase()}"
+            txt_nrp_saksi_lp_add.text ="NRP : ${saksi.nrp}"
+            txt_jabatan_saksi_lp_add.text ="Jabatan : ${saksi.jabatan}"
+            txt_kesatuan_saksi_lp_add.text ="Kesatuan : ${saksi.kesatuan.toString().toUpperCase()}"
+            tempStatusSaksi = "polisi"
+//            idPersonelSaksi = saksi.id_personel
 
         } else {
             rb_sipil_saksi_edit.isChecked = true
@@ -180,12 +156,11 @@ class EditSaksiLhpActivity : BaseActivity() {
             tempPekerjananSipil = saksi?.pekerjaan
             tempAlamatSipil = saksi?.alamat
             tempStatusSaksi = "sipil"
-            idPersonelSaksi = null
         }
 
         edt_ket_saksi_edit.setText(saksi?.isi_keterangan_saksi)
-        tempIsKorban = saksi?.is_korban
-        /*set for radio group and other stuff*/
+
+//        set for radio group and other stuff
         rg_saksi_edit.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             if (radio.isChecked && radio.text == "Sipil") {
@@ -195,7 +170,7 @@ class EditSaksiLhpActivity : BaseActivity() {
                 idPersonelSaksi = null
 
             } else {
-                tempStatusSaksi = "personel"
+                tempStatusSaksi = "polisi"
                 ll_sipil_saksi_edit.gone()
                 ll_personel_saksi_edit.visible()
                 tempNamaSipil = null
@@ -206,82 +181,49 @@ class EditSaksiLhpActivity : BaseActivity() {
             }
         }
 
-        if (saksi?.is_korban == 1) {
-            rb_korban_saksi_edit.isChecked = true
-        } else {
-            rb_not_korban_saksi_edit.isChecked = true
-        }
-        rg_is_korban_edit.setOnCheckedChangeListener { group, checkedId ->
-            val radio: RadioButton = findViewById(checkedId)
-            if (radio.isChecked && radio.text == "Korban") {
-                tempIsKorban = 1
-            } else {
-                tempIsKorban = 0
-            }
-        }
-
-    }
+    }*/
 
     private fun updateSaksiLhp(saksi: SaksiLhpResp?) {
-      NetworkConfig().getServLhp().updSaksiLhp("Bearer ${sessionManager1.fetchAuthToken()}", saksi?.id, saksiLhpReq).enqueue(
-          object : Callback<Base1Resp<AddSaksiLhpResp>> {
-              override fun onResponse(
-                  call: Call<Base1Resp<AddSaksiLhpResp>>,
-                  response: Response<Base1Resp<AddSaksiLhpResp>>
-              ) {
-                  if (response.body()?.message == "Data saksi updated succesfully") {
-                      btn_save_saksi_lhp_edit.hideProgress(R.string.data_updated)
-                      Handler(Looper.getMainLooper()).postDelayed({
-                          finish()
-                      },750)
+        val animatedDrawable = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+        val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
+        animatedDrawable.setBounds(0, 0, size, size)
+        btn_save_saksi_lhp_edit.showProgress {
+            progressColor = Color.WHITE
+        }
 
-                  } else {
-                      btn_save_saksi_lhp_edit.hideProgress(R.string.not_update)
 
-                  }
-              }
-
-              override fun onFailure(call: Call<Base1Resp<AddSaksiLhpResp>>, t: Throwable) {
-                  Toast.makeText(this@EditSaksiLhpActivity, "$t", Toast.LENGTH_SHORT).show()
-                    btn_save_saksi_lhp_edit.hideProgress(R.string.not_update)
-              }
-          })
-
+        btn_save_saksi_lhp_edit.showDrawable(animatedDrawable) {
+            buttonTextRes = R.string.data_updated
+            textMarginRes = R.dimen.space_10dp
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            btn_save_saksi_lhp_edit.hideDrawable(R.string.save)
+        }, 3000)
+        saksiLhpReq.status_saksi = tempStatusSaksi
+        saksiLhpReq.id_personel = idPersonelSaksi
+        saksiLhpReq.nama = tempNamaSipil
+        saksiLhpReq.tempat_lahir = tempTmptLhrSipil
+        saksiLhpReq.tanggal_lahir = tempTglLhrSipil
+        saksiLhpReq.pekerjaan = tempTglLhrSipil
+        saksiLhpReq.alamat = tempTglLhrSipil
+        saksiLhpReq.isi_keterangan_saksi = edt_ket_saksi_edit.text.toString()
         Log.e("edit Saksi", "$saksiLhpReq")
     }
 
     private fun deleteSaksiLhp(saksi: SaksiLhpResp?) {
-        NetworkConfig().getServLhp()
-            .delSaksiLhp("Bearer ${sessionManager1.fetchAuthToken()}", saksi?.id).enqueue(
-                object :
-                    Callback<BaseResp> {
-                    override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                        Toast.makeText(
-                            this@EditSaksiLhpActivity, R.string.data_deleted, Toast.LENGTH_SHORT
-                        ).show()
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            finish()
-                        }, 1000)
-                    }
 
-                    override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                        Toast.makeText(this@EditSaksiLhpActivity, "$t", Toast.LENGTH_SHORT).show()
-                    }
-                })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personelSaksi = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
+        val personelSaksi = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
         if (resultCode == Activity.RESULT_OK && requestCode == REQ_SAKSI_LHP) {
             idPersonelSaksi = personelSaksi?.id
-            txt_nama_saksi_edit.text = "Nama : ${personelSaksi?.nama}"
-            txt_pangkat_saksi_edit.text =
-                "Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
-            txt_nrp_saksi_edit.text = "NRP : ${personelSaksi?.nrp}"
-            txt_jabatan_saksi_edit.text = "Jabatan : ${personelSaksi?.jabatan}"
-            txt_kesatuan_saksi_edit.text =
-                "Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+            txt_nama_saksi_lp_add.text ="Nama : ${personelSaksi?.nama}"
+            txt_pangkat_saksi_lp_add.text ="Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
+            txt_nrp_saksi_lp_add.text ="NRP : ${personelSaksi?.nrp}"
+            txt_jabatan_saksi_lp_add.text ="Jabatan : ${personelSaksi?.jabatan}"
+            txt_kesatuan_saksi_lp_add.text ="Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
         }
     }
 

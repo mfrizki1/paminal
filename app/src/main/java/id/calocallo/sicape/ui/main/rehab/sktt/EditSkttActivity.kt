@@ -101,7 +101,7 @@ class EditSkttActivity : BaseActivity() {
         edt_jabatan_pimpinan_sktt_edit.setText(sktt?.jabatan_yang_menetapkan)
         edt_tembusan_sktt_edit.setText(sktt?.tembusan)
         txt_no_lhp_sktt_edit.text = sktt?.lhp?.no_lhp
-        txt_no_lp_sktt_edit.text = sktt?.lp?.no_lp
+//        txt_no_lp_sktt_edit.text = sktt?.lp?.no_lp
         idLhp = sktt?.lhp?.id
         idLp = sktt?.lp?.id
     }

@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class RefPenyelidikanReq (
     var id_lp: Int?,
     var no_lp: String?,
-    var isi_keterangan_terlapor: String?
+    var detail_keterangan_terlapor: String?
 ):Parcelable{
     constructor():this(null,null,null)
 }

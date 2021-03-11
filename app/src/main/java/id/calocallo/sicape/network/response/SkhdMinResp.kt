@@ -1,16 +1,14 @@
 package id.calocallo.sicape.network.response
 
+import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LhpMinResp(
+data class SkhdMinResp(
     val id: Int?,
-    val no_lhp: String?,
-    val status_penyelidikan: String?,
+    val no_skhd: String?,
     val created_at: String?,
     val updated_at: String?,
     val deleted_at: String?
-):Parcelable{
-    constructor():this(null, null, null, null, null, null)
-}
+):Parcelable

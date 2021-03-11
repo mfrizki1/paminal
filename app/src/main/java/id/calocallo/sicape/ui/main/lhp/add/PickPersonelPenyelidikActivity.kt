@@ -43,7 +43,8 @@ class PickPersonelPenyelidikActivity : BaseActivity() {
         //set next and save data on personel lidik
         btn_next_lidik_lhp.setOnClickListener {
             lhpDataManager.setListLidikLHP(templidikReq)
-            val intent = Intent(this, PickSaksiAddLhpActivity::class.java)
+//            val intent = Intent(this, PickSaksiAddLhpActivity::class.java)
+            val intent = Intent(this, OtherAddLhpActivity::class.java)
             startActivity(intent)
 //            Log.e("added Lidik", "$templidikReq")
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

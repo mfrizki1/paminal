@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.gelar.DetailGelarActivity"></activity>
-        <activity android:name=".ui.gelar.EditGelarActivity" />
-        <activity android:name=".ui.gelar.ListGelarActivity" />
-        <activity android:name=".ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity"></activity>
+        <activity android:name=".ui.main.skhd.ListSkhdActivity" />
+        <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity" />
+        <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.EditDetailRefPenyelidikanActivity" />
+        <activity android:name=".ui.main.lhp.edit.ref_penyelidikan.ListDetailRefPenyelidikanActivity" />
         <activity android:name=".ui.main.lp.pasal.AddPasalDilanggarActivity" />
         <activity android:name=".ui.main.lp.pasal.DetailPasalActivity" />
         <activity android:name=".ui.main.lp.pasal.EditPasalActivity" />
@@ -90,14 +90,12 @@
         <activity android:name=".ui.main.choose.lp.ChooseLpSkhdActivity" />
         <activity android:name=".ui.main.choose.lhp.ChooseLhpActivity" />
         <activity android:name=".ui.main.putkke.ListPutKkeActivity" />
-        <activity android:name=".ui.main.lhp.edit.RefPenyelidikan.EditDetailRefPenyelidikanActivity" />
-        <activity android:name=".ui.main.lhp.edit.RefPenyelidikan.ListDetailRefPenyelidikanActivity" />
         <activity android:name=".ui.main.lhp.add.OtherAddLhpActivity" />
         <activity android:name=".ui.main.lhp.add.ListKetTerlaporLhpActivity" />
         <activity android:name=".ui.main.lhp.add.PickSaksiAddLhpActivity" />
         <activity android:name=".ui.main.lhp.add.AddPersonelLidikActivity" />
         <activity android:name=".ui.main.lhp.add.PickPersonelPenyelidikActivity" />
-        <activity android:name=".ui.main.lhp.add.ReferensiPenyelidikanLhpActivity" />
+        <activity android:name=".ui.main.lhp.add.ListRefPenyelidikanActivity" />
         <activity android:name=".ui.main.lp.pasal.PickPasalActivity" />
         <activity android:name=".ui.main.lp.pasal.PickSaksiActivity" />
         <activity android:name=".ui.main.lp.pidana.EditLpPidanaActivity" />
@@ -135,14 +133,12 @@
         <activity android:name=".ui.main.lhp.edit.lidik.EditLidikLhpActivity" />
         <activity android:name=".ui.main.choose.lp.LpChooseActivity" />
         <activity android:name=".ui.main.choose.lp.PickJenisLpActivity" />
-        <activity android:name=".ui.main.lp.saksi.PickSaksiLpEditActivity" />
+        <activity android:name=".ui.main.lp.saksi.ListSaksiLpActivity" />
         <activity android:name=".ui.main.lp.pasal.ListPasalDilanggarActivity" />
         <activity android:name=".ui.main.lp.saksi.AddSaksiLpActivity" />
         <activity android:name=".ui.main.lp.saksi.EditSaksiLpActivity" />
-        <activity android:name=".ui.main.lp.saksi.PickSaksiLpActivity" />
         <activity android:name=".ui.main.lp.pasal.EditPasalDilanggarActivity" />
         <activity android:name=".ui.main.lp.pasal.AddPasalActivity" />
-        <activity android:name=".ui.main.pelanggaran.PickPelanggaranActivity" />
         <activity android:name=".ui.main.choose.ChoosePersonelActivity" />
         <activity android:name=".ui.main.editpersonel.relasi.AddSingleRelasiActivity" />
         <activity android:name=".ui.main.editpersonel.relasi.EditRelasiActivity" />
@@ -187,11 +183,8 @@
         <activity android:name=".ui.main.skhd.AddSkhdActivity" />
         <activity android:name=".ui.main.skhd.tinddisiplin.SkhdTindDisiplinActivity" />
         <activity android:name=".ui.main.skhd.PickSkhdActivity" />
-        <activity android:name=".ui.main.skhd.SkhdActivity" />
+        <activity android:name=".ui.main.skhd.ListSkhdActivity" />
         <activity android:name=".ui.main.lp.AddLpActivity" />
-        <activity android:name=".ui.main.lp.DetailLpActivity" />
-        <activity android:name=".ui.main.lp.EditLpActivity" />
-        <activity android:name=".ui.main.lp.LpActivity" />
         <activity android:name=".ui.main.lp.PickLpActivity" />
         <activity android:name=".ui.main.lhp.EditLhpActivity" />
         <activity android:name=".ui.main.lhp.DetailLhpActivity" />
@@ -243,7 +236,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 
 </manifest>

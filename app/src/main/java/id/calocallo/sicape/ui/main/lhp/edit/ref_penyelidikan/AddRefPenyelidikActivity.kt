@@ -1,4 +1,4 @@
-package id.calocallo.sicape.ui.main.lhp.edit.RefPenyelidikan
+package id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan
 
 import android.content.Intent
 import android.graphics.Color
@@ -15,7 +15,9 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
 import id.calocallo.sicape.network.response.*
+import id.calocallo.sicape.ui.main.choose.lp.LpChooseActivity
 import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
+import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_ref_penyelidik.*
@@ -39,7 +41,9 @@ class AddRefPenyelidikActivity : BaseActivity() {
 
         sessionManager1 = SessionManager1(this)
         btn_add_lp_ref_penyelidikan.setOnClickListener {
-            val intent = Intent(this, PickJenisLpActivity::class.java)
+            val intent = Intent(this, LpChooseActivity::class.java).apply {
+                this.putExtra(IS_LP_MASUK, true)
+            }
             startActivityForResult(intent, REQ_LP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -48,12 +52,11 @@ class AddRefPenyelidikActivity : BaseActivity() {
         bindProgressButton(btn_save_ref_penyelidik_add)
         btn_save_ref_penyelidik_add.setOnClickListener {
             refPenyelidikanReq.id_lp = idLp
-            refPenyelidikanReq.isi_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
+            refPenyelidikanReq.detail_keterangan_terlapor = edt_ket_terlapor_ref_add.text.toString()
             if(isSingleAdd == true){
                 btn_save_ref_penyelidik_add.showProgress { progressColor = Color.WHITE }
                 addRefPenyelidikSingle(dataLhp)
             }else{
-
                 val intent = Intent().apply{
                     this.putExtra(DATA_REF_PENYELIDIK, refPenyelidikanReq)
                     this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -96,8 +99,9 @@ class AddRefPenyelidikActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_LP && resultCode == RES_LP_ON_REF) {
-            val dataLp = data?.getParcelableExtra<LpMinResp>(GET_LP_FROM_CHOOSE_LP)
+        if (requestCode == REQ_LP && resultCode == PickJenisLpActivity.RES_LP_CHOOSE) {
+            val dataLp = data?.getParcelableExtra<LpMinResp>(AddLhpActivity.DATA_LP)
+            Log.e("AddRefPenyelidikan", "${dataLp?.id}")
             idLp = dataLp?.id
             txt_no_lp_ref_add.text = dataLp?.no_lp
             refPenyelidikanReq.no_lp = txt_no_lp_ref_add.text.toString()
@@ -111,6 +115,7 @@ class AddRefPenyelidikActivity : BaseActivity() {
         const val RES_LP_ON_REF = 124
         const val GET_LP_FROM_CHOOSE_LP = "GET_LP_FROM_CHOOSE_LP"
         const val DATA_REF_PENYELIDIK = "DATA_REF_PENYELIDIK"
+        const val IS_LP_MASUK = "IS_LP_MASUK"
 
     }
 }

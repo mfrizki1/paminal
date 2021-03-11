@@ -59,7 +59,7 @@ class DetailSkttActivity : BaseActivity() {
     private fun getDetailSktt(sktt: SkttResp?) {
         txt_no_sktt_detail.text = sktt?.no_sktt
         txt_no_lhp_sktt_detail.text = sktt?.lhp?.no_lhp
-        txt_no_lp_sktt_detail.text = sktt?.lp?.no_lp
+//        txt_no_lp_sktt_detail.text = sktt?.lp?.no_lp
         txt_menimbang_sktt_detail.text = sktt?.menimbang
         txt_mengingat_p5_sktt_detail.text = sktt?.mengingat_p5
         txt_kota_penetapan_sktt_detail.text = "Kota : ${sktt?.kota_penetapan}"

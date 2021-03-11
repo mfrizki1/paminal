@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.main.lhp.edit.RefPenyelidikan.AddRefPenyelidikActivity">
+    tools:context=".ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity">
 
     <include layout="@layout/layout_toolbar_white" />
 
@@ -50,6 +50,7 @@
 
     <TextView
         style="@style/TitleText"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Keterangan Terlapor" />
@@ -57,6 +58,7 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="150dp"
         android:layout_marginHorizontal="@dimen/space_12dp"
         android:layout_marginTop="@dimen/space_8dp"

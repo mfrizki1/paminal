@@ -73,6 +73,8 @@
     <string name="back">Kembali</string>
     <string name="failed_login">Gagal Login</string>
     <string name="failed_deleted">Error Koneksi / Lakukan Beberapa Saat</string>
+    <string name="add_data_saksi">Tambah Data Saksi</string>
+    <string name="used_on_references_lp">Data LP Tidak Bisa Dihapus Karena Digunakan Sebagai Referensi</string>
 
 
     <string-array name="satker">

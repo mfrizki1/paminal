@@ -6,130 +6,252 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.main.lp.saksi.AddSaksiLpActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <include layout="@layout/layout_toolbar_white" />
+        <include layout="@layout/layout_toolbar_white" />
 
-    <include layout="@layout/view_separator" />
+        <include layout="@layout/view_separator" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Nama Saksi">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_nama_saksi_single"
+        <TextView
+            style="@style/TitleText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text|textCapSentences" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:text="Jenis Saksi ?" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:orientation="horizontal">
+        <RadioGroup
+            android:id="@+id/rg_jenis_saksi_lp_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/space_12dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Polisi" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sipil" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/ll_personel_saksi_lp"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_personel_saksi_lp_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pilih Personel Saksi"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_personel_saksi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/space_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Personel Saksi"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/layout_separator" />
+
+                    <TextView
+                        android:id="@+id/txt_nama_saksi_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8dp"
+                        android:text="Nama Personel Saksi"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_pangkat_saksi_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Pangkat Personel Saksi"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_nrp_saksi_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="NRP Personel Saksi"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_jabatan_saksi_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Jabatan Personel Saksi"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:id="@+id/txt_kesatuan_saksi_lp_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_half"
+                        android:text="Kesatuan Personel Saksi"
+                        android:textSize="@dimen/text_14" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_sipil_saksi_lp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TitleText"
+                android:text="Sipil"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Nama Saksi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_nama_saksi_single"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_12dp"
+                    android:layout_weight="1"
+                    android:hint="Tempat Lahir Saksi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_tempat_lahir_saksi_single"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text|textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/space_12dp"
+                    android:layout_weight="1"
+                    android:hint="Tanggal Lahir Saksi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_tanggal_lahir_saksi_single"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="datetime"
+                        android:maxLength="10" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Pekerjaan Saksi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_pekerjaan_saksi_single"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:hint="Alamat Saksi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_alamat_saksi_single"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine|textCapSentences" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_is_korban_add"
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apakah Saksi Korban ?" />
+
+        <RadioGroup
+            android:id="@+id/rg_status_saksi_lp_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/space_12dp">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Korban" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tidak" />
+        </RadioGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_add_saksi"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_weight="1"
-            android:hint="Tempat Lahir Saksi">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_tempat_lahir_saksi_single"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text|textCapSentences" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/space_12dp"
-            android:layout_weight="1"
-            android:hint="Tanggal Lahir Saksi">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_tanggal_lahir_saksi_single"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="datetime"
-                android:maxLength="10" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Pekerjaan Saksi">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_pekerjaan_saksi_single"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text|textCapSentences" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:hint="Alamat Saksi">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_alamat_saksi_single"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textMultiLine|textCapSentences" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        style="@style/TitleText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Status Saksi ?" />
-
-    <RadioGroup
-        android:id="@+id/rg_korban_saksi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/space_12dp">
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Korban" />
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Saksi" />
-    </RadioGroup>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_save_add_saksi"
-        style="@style/Widget.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_12dp"
-        android:layout_marginTop="@dimen/space_8dp"
-        android:text="@string/save" />
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="@string/save" />
     </LinearLayout>
 
 </ScrollView>

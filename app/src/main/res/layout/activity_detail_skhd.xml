@@ -29,23 +29,9 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="No SKHD/ / / "
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
 
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No Laporan Hasil Penyelidikan" />
-
-        <TextView
-            android:id="@+id/txt_no_lhp_skhd_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_half"
-            android:fontFamily="sans-serif-light"
-            android:text="No LHP/ / / "
-            android:textSize="@dimen/text_14" />
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -61,7 +47,9 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="No LP/ / / "
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -77,7 +65,52 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="BIDDOKES"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personel Terhukum" />
+
+        <TextView
+            android:id="@+id/txt_nama_personel_detail_skhd"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Personel : " />
+
+        <TextView
+            android:id="@+id/txt_pangkat_personel_detail_skhd"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pangkat Personel : " />
+
+        <TextView
+            android:id="@+id/txt_nrp_personel_detail_skhd"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NRP Personel : " />
+
+        <TextView
+            android:id="@+id/txt_jabatan_personel_detail_skhd"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jabatan Personel : " />
+
+        <TextView
+            android:id="@+id/txt_kesatuan_personel_detail_skhd"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kesatuan Personel : " />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -93,13 +126,15 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="DP3"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hasil Pemeriksaan Saksi" />
+            android:text="Tanggal Sidang Hasil Pemeriksaan" />
 
         <TextView
             android:id="@+id/txt_berkas_pemeriksaan_skhd_detail"
@@ -109,7 +144,9 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="@string/paragraf"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -125,7 +162,15 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="hukuman\nhukumna\nhukuman"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Waktu Disampaikan Ke Terlapor" />
 
         <TextView
             android:id="@+id/txt_tanggal_disampaikan_skhd_detail"
@@ -135,13 +180,7 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="12-08-2020"
-            android:textSize="@dimen/text_14" />
-
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Waktu Disampaikan Ke Terlapor" />
+            android:textSize="@dimen/text_16" />
 
         <TextView
             android:id="@+id/txt_waktu_disampaikan_skhd_detail"
@@ -151,7 +190,9 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="Pukul 12:34 WITA"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -167,7 +208,9 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="Banjarmasin"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -183,7 +226,9 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="12-12-2000"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -199,7 +244,7 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="12-12-2000"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
 
         <TextView
             android:id="@+id/txt_pangkat_nrp_pimpinan_skhd_detail"
@@ -209,7 +254,7 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="Pangkat: NRP:"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
 
         <TextView
             android:id="@+id/txt_jabatan_pimpinan_skhd_detail"
@@ -219,7 +264,19 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="Jabatan:"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/txt_kesatuan_pimpinan_skhd_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:fontFamily="sans-serif-light"
+            android:text="Kesatuan:"
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -235,7 +292,9 @@
             android:layout_marginTop="@dimen/space_half"
             android:fontFamily="sans-serif-light"
             android:text="tembusan\ntembusan"
-            android:textSize="@dimen/text_14" />
+            android:textSize="@dimen/text_16" />
+
+        <include layout="@layout/line_separator" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_skhd"
@@ -245,6 +304,7 @@
             android:layout_marginTop="@dimen/space_8dp"
             android:text="@string/edit_data"
             android:textStyle="bold" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_generate_skhd"
             android:layout_width="match_parent"

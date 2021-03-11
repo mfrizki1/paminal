@@ -14,6 +14,13 @@ interface ApiLhp {
     }
 
     @Headers(ApiLp.ACCEPT)
+    @GET("lhp/proses")
+    fun getLhpOnSkhd(
+        @Header("Authorization") tokenBearer: String
+    ): Call<ArrayList<LhpMinResp>>
+
+
+    @Headers(ApiLp.ACCEPT)
     @GET(LHP)
     fun getLhpAll(
         @Header("Authorization") tokenBearer: String
@@ -108,13 +115,14 @@ interface ApiLhp {
         @Body addRefPenyelidikanReq: RefPenyelidikanReq
     ): Call<Base1Resp<AddRefPenyelidikanResp>>
 
+
     @Headers(ApiLp.ACCEPT)
-    @PATCH("lhp/referensi/penyelidikan/{id_penyelidikan}")
+    @PATCH("lp/{id_lp}/keterangan/terlapor")
     fun updRefPenyelidikan(
         @Header("Authorization") token: String,
-        @Path("id_penyelidikan") id_penyelidikan: Int?,
+        @Path("id_lp") id_lp: Int?,
         @Body addRefPenyelidikanReq: RefPenyelidikanReq
-    ): Call<Base1Resp<AddRefPenyelidikanResp>>
+    ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ApiLp.ACCEPT)
     @DELETE("lhp/referensi/penyelidikan/{id_penyelidikan}")

@@ -25,14 +25,20 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.*
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.DokLpResp
+import id.calocallo.sicape.ui.main.MainActivity
 import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
+import id.calocallo.sicape.ui.main.lp.kke.ListLpKodeEtikActivity
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesAdapter
 import id.calocallo.sicape.ui.main.lp.pasal.tes.PasalTesItemKeyProvider
 import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
-import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpActivity.Companion.ID_PELAPOR_SAKSI
+import id.calocallo.sicape.ui.main.lp.saksi.AddSaksiLpActivity
+import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.action
+import id.calocallo.sicape.utils.ext.showSnackbar
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal.*
+import kotlinx.android.synthetic.main.activity_pick_saksi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -87,7 +93,9 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 listIdPasal.add(ListIdPasalReq(selectedIdPasal[i].id))
             }
 
-            if (sessionManager1.getJenisLP() != "kode_etik") {
+            addAllLp(sessionManager1.getJenisLP(), idPelapor, sipil)
+
+            /*if (sessionManager1.getJenisLP() != "kode_etik") {
                 addAllLp(sessionManager1.getJenisLP(), idPelapor, sipil)
             } else {
                 sessionManager1.setListPasalLP(listIdPasal)
@@ -95,7 +103,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 intent.putExtra(ID_PELAPOR_SAKSI, idPelapor)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
+            }*/
         }
 
         btn_add_single_pasal.setOnClickListener {
@@ -183,10 +191,10 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpPidanaReq.id_satuan_kerja = sessionManager1.getIDPersonelTerlapor()
                 lpPidanaReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
 //                lpPidanaReq.id_personel_pelapor = idPelapor
-                lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
-                lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
-                lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
-                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
+                lpPidanaReq.nama_kep_spkt = sessionManager1.getNamaPimpBidLp()
+                lpPidanaReq.pangkat_kep_spkt = sessionManager1.getPangkatPimpBidLp()
+                lpPidanaReq.nrp_kep_spkt = sessionManager1.getNrpPimpBidLp()
+                lpPidanaReq.jabatan_kep_spkt = sessionManager1.getJabatanPimpBidLp()
 //                lpPidanaReq.status_pelapor = sessionManager1.getPelapor()
 //                lpPidanaReq.pembukaan_laporan = sessionManager1.getPembukaanLpLP()
                 lpPidanaReq.isi_laporan = sessionManager1.getIsiLapLP()
@@ -214,28 +222,99 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpDisiplinReq.id_satuan_kerja = sessionManager1.getIDPersonelTerlapor()
                 lpDisiplinReq.waktu_buat_laporan = sessionManager1.getWaktuBuatLaporan()
                 lpDisiplinReq.no_lp = sessionManager1.getNoLP()
-                lpDisiplinReq.uraian_pelanggaran = jenisLP
+                lpDisiplinReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
 //                lpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id
                 lpDisiplinReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
                 lpDisiplinReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
                 lpDisiplinReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
-                lpDisiplinReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
-                lpDisiplinReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
-                lpDisiplinReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
-                lpDisiplinReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
+                lpDisiplinReq.nama_kabid_propam = sessionManager1.getNamaPimpBidLp()
+                lpDisiplinReq.pangkat_kabid_propam = sessionManager1.getPangkatPimpBidLp()
+                lpDisiplinReq.nrp_kabid_propam = sessionManager1.getNrpPimpBidLp()
+                lpDisiplinReq.jabatan_kabid_propam = sessionManager1.getJabatanPimpBidLp()
                 lpDisiplinReq.id_personel_pelapor = idPelapor
                 lpDisiplinReq.macam_pelanggaran = sessionManager1.getMacamPelanggaranLP()
                 lpDisiplinReq.keterangan_pelapor = sessionManager1.getKetPelaporLP()
                 lpDisiplinReq.kronologis_dari_pelapor = sessionManager1.getKronologisPelapor()
                 lpDisiplinReq.rincian_pelanggaran_disiplin = sessionManager1.getRincianDisiplin()
                 lpDisiplinReq.pasal_dilanggar = listIdPasal
-                lpDisiplinReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
+//                lpDisiplinReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
                 Log.e("addDisipin", "$lpDisiplinReq")
                 apiAddLpDisiplin()
+            }
+            "kode_etik" -> {
+                //                lpKKeReq.no_lp = sessionManager1.getNoLP()
+//                lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
+                lpKKeReq.id_satuan_kerja = 123
+                lpKKeReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
+                lpKKeReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
+                lpKKeReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
+                lpKKeReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
+                lpKKeReq.id_personel_pelapor = idPelapor
+//                lpKKeReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
+                lpKKeReq.nama_kabid_propam = sessionManager1.getNamaPimpBidLp()
+                lpKKeReq.pangkat_kabid_propam = sessionManager1.getPangkatPimpBidLp()
+                lpKKeReq.nrp_kabid_propam = sessionManager1.getNrpPimpBidLp()
+                lpKKeReq.jabatan_kabid_propam = sessionManager1.getJabatanPimpBidLp()
+                lpKKeReq.alat_bukti = sessionManager1.getAlatBukiLP()
+                lpKKeReq.isi_laporan = sessionManager1.getIsiLapLP()
+                lpKKeReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
+                lpKKeReq.pasal_dilanggar = listIdPasal
 
+//                lpKKeReq.saksi_kode_etik = listSaksi as ArrayList<SaksiReq>
+//                lpKKeReq.saksi_kode_etik = selectedSaksi as ArrayList<LpSaksiResp>
+//                lpKKeReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
+                Log.e("KKE", "$lpKKeReq")
+                apiAddKke()
             }
         }
 
+    }
+
+    private fun apiAddKke() {
+        NetworkConfig().getServLp().addLpKke("Bearer ${sessionManager1.fetchAuthToken()}", lpKKeReq)
+            .enqueue(object :
+                Callback<Base1Resp<DokLpResp>> {
+                override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
+                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                        .show()
+                    btn_save_lp_all.hideDrawable(R.string.not_save)
+                }
+
+                override fun onResponse(
+                    call: Call<Base1Resp<DokLpResp>>,
+                    response: Response<Base1Resp<DokLpResp>>
+                ) {
+                    if (response.body()?.message == "Data lp kode etik saved succesfully") {
+                        val animatedDrawable =
+                            ContextCompat.getDrawable(
+                                this@PickPasalActivity,
+                                R.drawable.animated_check
+                            )!!
+                        val drawableSize = resources.getDimensionPixelSize(R.dimen.space_25dp)
+                        animatedDrawable.setBounds(0, 0, drawableSize, drawableSize)
+                        btn_save_lp_all.showDrawable(animatedDrawable) {
+                            buttonTextRes = R.string.data_saved
+                            textMarginRes = R.dimen.space_10dp
+                        }
+                        gotoAddSaksiLp(response.body()?.data)
+                       /* Handler(Looper.getMainLooper()).postDelayed({
+                            val intent =
+                                Intent(this@PickPasalActivity, ListLpKodeEtikActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
+                            finish()
+                        }, 500)*/
+                    } else {
+                        Toast.makeText(
+                            this@PickPasalActivity,
+                            R.string.error_conn,
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        btn_save_lp_all.hideDrawable(R.string.not_save)
+                    }
+                }
+            })
     }
 
     private fun apiAddLpDisiplin() {
@@ -254,13 +333,14 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 ) {
                     if (response.body()?.message == "Data lp disiplin saved succesfully") {
                         btn_save_lp_all.hideDrawable(R.string.data_saved)
-                        Handler(Looper.getMainLooper()).postDelayed({
+                      /*  Handler(Looper.getMainLooper()).postDelayed({
                             val intent =
                                 Intent(this@PickPasalActivity, ListLpDisiplinActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
                             finish()
-                        }, 500)
+                        }, 500)*/
+                        gotoAddSaksiLp(response.body()?.data)
                     } else {
                         Toast.makeText(
                             this@PickPasalActivity,
@@ -301,13 +381,15 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
                         }
-                        Handler(Looper.getMainLooper()).postDelayed({
+                        gotoAddSaksiLp(response.body()?.data)
+
+                     /*   Handler(Looper.getMainLooper()).postDelayed({
                             val intent =
                                 Intent(this@PickPasalActivity, ListLpPidanaActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
                             finish()
-                        }, 500)
+                        }, 500)*/
                     } else {
                         btn_save_lp_all.hideDrawable(R.string.not_save)
                     }
@@ -315,9 +397,23 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
             })
     }
 
+    private fun gotoAddSaksiLp(data: DokLpResp?) {
+        btn_save_lp_all.showSnackbar(R.string.data_saved){
+            action(R.string.add_data_saksi) {
+                val intent = Intent(this@PickPasalActivity, AddSaksiLpActivity::class.java).apply {
+                    this.putExtra(DATA_LP, data?.lp)
+//                    this.putExtra("ADD_SINGLE_SAKSI", true)
+                }
+                startActivity(intent)
+                finish()
+            }
+        }
+    }
+
 
     companion object {
         const val ID_PELAPOR = "ID_PELAPOR"
+        const val DATA_LP = "DATA_LP"
         const val SIPIL = "SIPIL"
     }
 

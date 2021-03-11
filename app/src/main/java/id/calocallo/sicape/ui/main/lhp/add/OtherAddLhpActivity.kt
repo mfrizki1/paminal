@@ -98,13 +98,13 @@ class OtherAddLhpActivity : BaseActivity() {
                             }
                         }
                     } else {
-                        btn_add_all_lhp.hideProgress(R.string.data_saved)
+                        btn_add_all_lhp.hideProgress(R.string.not_save)
                     }
                 }
 
                 override fun onFailure(call: Call<Base1Resp<AddLhpResp>>, t: Throwable) {
                     Toast.makeText(this@OtherAddLhpActivity, "$t", Toast.LENGTH_SHORT).show()
-                    btn_add_all_lhp.hideProgress(R.string.data_saved)
+                    btn_add_all_lhp.hideProgress(R.string.not_save)
                 }
             })
     }

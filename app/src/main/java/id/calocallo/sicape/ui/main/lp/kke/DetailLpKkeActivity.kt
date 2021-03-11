@@ -23,8 +23,8 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.kke.EditLpKkeActivity.Companion.EDIT_KKE
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
-import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpEditActivity
-import id.calocallo.sicape.ui.main.lp.saksi.PickSaksiLpEditActivity.Companion.EDIT_SAKSI_KKE
+import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
+import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity.Companion.EDIT_SAKSI
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
@@ -72,10 +72,10 @@ class DetailLpKkeActivity : BaseActivity() {
 
         //EDIT LP KKE (SAKSI)
         btn_edit_saksi_kke.setOnClickListener {
-            val intent = Intent(this, PickSaksiLpEditActivity::class.java)
-            intent.putExtra(EDIT_SAKSI_KKE, detailKKe)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            val intent = Intent(this, ListSaksiLpActivity::class.java)
+            intent.putExtra(EDIT_SAKSI, detailKKe)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         //EDIT LP KKE (PASAL)
@@ -132,7 +132,7 @@ class DetailLpKkeActivity : BaseActivity() {
             })
     }
 
-    private fun saveDocLpKke(lp: LpPidanaResp?) {
+    private fun saveDocLpKke(lp: LpResp?) {
         Handler(Looper.getMainLooper()).postDelayed({
             btn_generate_kke.hideProgress(R.string.success_generate_doc)
             alert("Lihat Dokumen") {
@@ -147,7 +147,7 @@ class DetailLpKkeActivity : BaseActivity() {
         }, 2000)
     }
 
-    private fun viewDokKke(lp: LpPidanaResp?) {
+    private fun viewDokKke(lp: LpResp?) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(lp?.dokumen?.url)))
 //        finish()
     }
@@ -155,15 +155,15 @@ class DetailLpKkeActivity : BaseActivity() {
     private fun apiDetailKKe(kke: LpMinResp?) {
         NetworkConfig().getServLp().getLpById("Bearer ${sessionManager1.fetchAuthToken()}", kke?.id)
             .enqueue(object :
-                Callback<LpPidanaResp> {
-                override fun onFailure(call: Call<LpPidanaResp>, t: Throwable) {
+                Callback<LpResp> {
+                override fun onFailure(call: Call<LpResp>, t: Throwable) {
                     Toast.makeText(this@DetailLpKkeActivity, "Error Koneksi", Toast.LENGTH_SHORT)
                         .show()
                 }
 
                 override fun onResponse(
-                    call: Call<LpPidanaResp>,
-                    response: Response<LpPidanaResp>
+                    call: Call<LpResp>,
+                    response: Response<LpResp>
                 ) {
                     if (response.isSuccessful) {
                         getViewKke(response.body())
@@ -180,7 +180,7 @@ class DetailLpKkeActivity : BaseActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getViewKke(detailKKe: LpPidanaResp?) {
+    private fun getViewKke(detailKKe: LpResp?) {
         //EDIT LP KKE
         btn_edit_kke.setOnClickListener {
             val intent = Intent(this, EditLpKkeActivity::class.java)
@@ -220,14 +220,14 @@ class DetailLpKkeActivity : BaseActivity() {
         txt_detail_tgl_buat_kke.text =
             "Tanggal : ${formatterTanggal(detailKKe?.tanggal_buat_laporan)}"
         txt_detail_nama_pimpinan_kke.text =
-            "Nama : ${detailKKe?.detail_laporan?.nama_yang_mengetahui}"
+            "Nama : ${detailKKe?.detail_laporan?.nama_kabid_propam}"
         txt_detail_pangkat_nrp_pimpinan_kke.text =
-            "Pangkat : ${detailKKe?.detail_laporan?.pangkat_yang_mengetahui.toString()
-                .toUpperCase()}, NRP : ${detailKKe?.detail_laporan?.nrp_yang_mengetahui}"
+            "Pangkat : ${detailKKe?.detail_laporan?.pangkat_kabid_propam.toString()
+                .toUpperCase()}, NRP : ${detailKKe?.detail_laporan?.nrp_kabid_propam}"
 //        txt_detail_kesatuan_pimpinan_kke.text =
 //            "Kesatuan : ${detailKKe?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
         txt_detail_jabatan_pimpinan_kke.text =
-            "Jabatan : ${detailKKe?.detail_laporan?.jabatan_yang_mengetahui.toString()
+            "Jabatan : ${detailKKe?.detail_laporan?.jabatan_kabid_propam.toString()
                 .toUpperCase()}"
 
         //pasal
@@ -248,10 +248,16 @@ class DetailLpKkeActivity : BaseActivity() {
         //saksi
         callbackDetailSaksiKke = object : AdapterCallback<LpSaksiResp> {
             override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
-                itemView.txt_detail_1.text = data.nama
-                when (data.is_korban) {
-                    1 -> itemView.txt_detail_2.text = "Korban"
-                    0 -> itemView.txt_detail_2.text = "Saksi"
+                if(data.status_saksi == "personel"){
+                    itemView.txt_detail_1.text = data.personel?.nama
+                    itemView.txt_detail_2.text = "Personel"
+                }else{
+                    itemView.txt_detail_1.text = data.nama
+                    if(data.is_korban == 0){
+                        itemView.txt_detail_2.text = "Saksi"
+                    }else{
+                        itemView.txt_detail_2.text = "Korban"
+                    }
                 }
 
             }
@@ -259,7 +265,7 @@ class DetailLpKkeActivity : BaseActivity() {
             override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {
             }
         }
-        detailKKe?.saksi_kode_etik?.let {
+        detailKKe?.saksi?.let {
             adapterDetailSaksiKke.adapterCallback(callbackDetailSaksiKke)
                 .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
                 .build(rv_detail_saksi_kke)
@@ -328,6 +334,12 @@ class DetailLpKkeActivity : BaseActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             finish()
+                        }else if (response.body()?.message == "Data lp has been used as reference in another data") {
+                            Toast.makeText(
+                                this@DetailLpKkeActivity,
+                                R.string.used_on_references_lp,
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     } else {
                         Toast.makeText(
