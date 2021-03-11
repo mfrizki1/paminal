@@ -1,0 +1,587 @@
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/DetailSktbActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sktb\r\n\r\nimport android.annotation.SuppressLint\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.view.Menu\r\nimport android.view.MenuItem\r\nimport com.github.razir.progressbutton.attachTextChangeAnimator\r\nimport com.github.razir.progressbutton.bindProgressButton\r\nimport com.github.razir.progressbutton.hideProgress\r\nimport com.github.razir.progressbutton.showProgress\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.response.SktbResp\r\nimport id.calocallo.sicape.utils.ext.alert\r\nimport id.calocallo.sicape.utils.ext.formatterTanggal\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_detail_sktb.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass DetailSktbActivity : BaseActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_detail_sktb)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Detail Data SKTB\"\r\n        val detailSktb = intent.extras?.getParcelable<SktbResp>(DETAIL_SKTB)\r\n        getDetailSktb(detailSktb)\r\n        btn_edit_sktb_detail.setOnClickListener {\r\n            val intent = Intent(this, EditSktbActivity::class.java)\r\n            intent.putExtra(EditSktbActivity.EDIT_SKTB, detailSktb)\r\n            startActivity(intent)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        btn_generate_sktb_detail.attachTextChangeAnimator()\r\n        bindProgressButton(btn_generate_sktb_detail)\r\n        btn_generate_sktb_detail.setOnClickListener {\r\n            btn_generate_sktb_detail.showProgress {\r\n                progressColor = Color.WHITE\r\n            }\r\n            Handler(Looper.getMainLooper()).postDelayed({\r\n                btn_generate_sktb_detail.hideProgress(getString(R.string.success_generate_doc))\r\n                alert(getString(R.string.download)) {\r\n                    positiveButton(getString(R.string.iya)) {\r\n                        btn_generate_sktb_detail.hideProgress(R.string.generate_dokumen)\r\n                    }\r\n                    negativeButton(getString(R.string.tidak)) {\r\n                        btn_generate_sktb_detail.hideProgress(R.string.generate_dokumen)\r\n\r\n                    }\r\n                }.show()\r\n            }, 2000)\r\n        }\r\n\r\n\r\n    }\r\n\r\n    @SuppressLint(\"SetTextI18n\")\r\n    private fun getDetailSktb(detailSktb: SktbResp?) {\r\n        txt_no_sktb_detail.text = detailSktb?.no_sktb\r\n\r\n        if (detailSktb?.skhd?.id != null) {\r\n            txt_title_skhd_putkke_sktb_detail.text = \"No SKHD\"\r\n            txt_no_skhd_putkke_sktb_detail.text = detailSktb.skhd!!.no_skhd\r\n        } else if (detailSktb?.putkke?.id != null) {\r\n            txt_title_skhd_putkke_sktb_detail.text = \"No PUT KKE\"\r\n            txt_no_skhd_putkke_sktb_detail.text = detailSktb.putkke!!.no_putkke\r\n        }\r\n        txt_menimbang_p2_sktb_detail.text = detailSktb?.menimbang_p2\r\n        txt_mengingat_p5_sktb_detail.text = detailSktb?.mengingat_p5\r\n        txt_kota_penetapan_sktb_detail.text = \"Kota : ${detailSktb?.kota_penetapan}\"\r\n        txt_tanggal_penetapan_sktb_detail.text =\r\n            \"Tanggal : ${formatterTanggal(detailSktb?.tanggal_penetapan)}\"\r\n        txt_nama_pimpinan_sktb_detail.text = detailSktb?.nama_yang_menetapkan\r\n        txt_pangkat_nrp_sktb_detail.text =\r\n            \"Pangkat ${detailSktb?.pangkat_yang_menetapkan.toString()\r\n                .toUpperCase()}, NRP : ${detailSktb?.nrp_yang_menetapkan}\"\r\n        txt_jabatan_pimpinan_sktb_detail.text = detailSktb?.jabatan_yang_menetapkan\r\n        txt_tembusan_sktb_detail.text = detailSktb?.tembusan\r\n    }\r\n\r\n    override fun onCreateOptionsMenu(menu: Menu?): Boolean {\r\n        val inflater = menuInflater\r\n        inflater.inflate(R.menu.toolbar_delete, menu)\r\n        return super.onCreateOptionsMenu(menu)\r\n    }\r\n\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        when (item.itemId) {\r\n            R.id.btn_delete_item -> {\r\n                alertDialogDelete()\r\n            }\r\n        }\r\n        return super.onOptionsItemSelected(item)\r\n    }\r\n\r\n    private fun alertDialogDelete() {\r\n        this.alert(\"Yakin Hapus Data?\") {\r\n            positiveButton(\"Iya\") {\r\n//                ApiDelete()\r\n                finish()\r\n            }\r\n            negativeButton(\"Tidak\") {\r\n            }\r\n        }.show()\r\n    }\r\n\r\n    companion object {\r\n        const val DETAIL_SKTB = \"DETAIL_SKTB\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/DetailSktbActivity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/DetailSktbActivity.kt	(date 1615397083867)
+@@ -3,7 +3,6 @@
+ import android.annotation.SuppressLint
+ import android.content.Intent
+ import android.graphics.Color
+-import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.os.Handler
+ import android.os.Looper
+@@ -75,10 +74,10 @@
+         txt_kota_penetapan_sktb_detail.text = "Kota : ${detailSktb?.kota_penetapan}"
+         txt_tanggal_penetapan_sktb_detail.text =
+             "Tanggal : ${formatterTanggal(detailSktb?.tanggal_penetapan)}"
+-        txt_nama_pimpinan_sktb_detail.text = detailSktb?.nama_yang_menetapkan
++        txt_nama_pimpinan_sktb_detail.text = detailSktb?.nama_kabid_propam
+         txt_pangkat_nrp_sktb_detail.text =
+-            "Pangkat ${detailSktb?.pangkat_yang_menetapkan.toString()
+-                .toUpperCase()}, NRP : ${detailSktb?.nrp_yang_menetapkan}"
++            "Pangkat ${detailSktb?.pangkat_kabid_propam.toString()
++                .toUpperCase()}, NRP : ${detailSktb?.nrp_kabid_propam}"
+         txt_jabatan_pimpinan_sktb_detail.text = detailSktb?.jabatan_yang_menetapkan
+         txt_tembusan_sktb_detail.text = detailSktb?.tembusan
+     }
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/EditSkttActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sktt\r\n\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport androidx.core.content.ContextCompat\r\nimport com.github.razir.progressbutton.*\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.LhpResp\r\nimport id.calocallo.sicape.network.request.SkttReq\r\nimport id.calocallo.sicape.network.response.LpCustomResp\r\nimport id.calocallo.sicape.network.response.SkttResp\r\nimport id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity\r\nimport id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity\r\nimport id.calocallo.sicape.utils.SessionManager1\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_edit_sktt.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass EditSkttActivity : BaseActivity() {\r\n    private lateinit var sessionManager1: SessionManager1\r\n    private var idLhp: Int? = null\r\n    private var idLp: Int? = null\r\n    private var skttReq = SkttReq()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_edit_sktt)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Edit Data SKTT\"\r\n        val getSktt = intent.extras?.getParcelable<SkttResp>(EDIT_SKTT)\r\n        getViewEditSktt(getSktt)\r\n        btn_pick_lhp_sktt_edit.setOnClickListener {\r\n            startActivityForResult(\r\n                Intent(this, ChooseLhpActivity::class.java),\r\n                AddSkttActivity.REQ_LHP_ON_SKTT\r\n            )\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        btn_pick_lp_sktt_edit.setOnClickListener {\r\n            val intent = Intent(this, PickJenisLpActivity::class.java)\r\n            intent.putExtra(AddSkttActivity.LP_SKTT, AddSkttActivity.LP_SKTT)\r\n            startActivityForResult(intent, AddSkttActivity.REQ_LP_ON_SKTT)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        btn_save_sktt_edit.attachTextChangeAnimator()\r\n        bindProgressButton(btn_save_sktt_edit)\r\n        btn_save_sktt_edit.setOnClickListener {\r\n            updateSktt(getSktt)\r\n        }\r\n    }\r\n\r\n    private fun updateSktt(sktt: SkttResp?) {\r\n\r\n        skttReq.no_sktt = edt_no_sktt_edit.text.toString()\r\n        skttReq.menimbang = edt_menimbang_sktt_edit.text.toString()\r\n        skttReq.mengingat_p5 = edt_mengingat_p5_sktt_edit.text.toString()\r\n        skttReq.kota_penetapan = edt_kota_penetapan_sktt_edit.text.toString()\r\n        skttReq.tanggal_penetapan = edt_tanggal_penetapan_sktt_edit.text.toString()\r\n        skttReq.nama_yang_menetapkan = edt_nama_pimpinan_sktt_edit.text.toString()\r\n        skttReq.pangkat_yang_menetapkan = edt_pangkat_pimpinan_sktt_edit.text.toString()\r\n        skttReq.nrp_yang_menetapkan = edt_nrp_pimpinan_sktt_edit.text.toString()\r\n        skttReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_sktt_edit.text.toString()\r\n        skttReq.tembusan = edt_tembusan_sktt_edit.text.toString()\r\n        skttReq.id_lhp = idLhp\r\n        skttReq.id_lp = idLp\r\n        Log.e(\"edit SKTT\", \"$skttReq\")\r\n\r\n\r\n        val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!\r\n        val size = resources.getDimensionPixelSize(R.dimen.space_25dp)\r\n        animated.setBounds(0, 0, size, size)\r\n        btn_save_sktt_edit.showProgress {\r\n            progressColor = Color.WHITE\r\n        }\r\n        btn_save_sktt_edit.showDrawable(animated) {\r\n            textMarginRes = R.dimen.space_10dp\r\n            buttonTextRes = R.string.data_updated\r\n        }\r\n        Handler(Looper.getMainLooper()).postDelayed({\r\n            btn_save_sktt_edit.hideDrawable(R.string.save)\r\n        }, 2000)\r\n    }\r\n\r\n    private fun getViewEditSktt(sktt: SkttResp?) {\r\n        edt_no_sktt_edit.setText(sktt?.no_sktt)\r\n        edt_menimbang_sktt_edit.setText(sktt?.menimbang)\r\n        edt_mengingat_p5_sktt_edit.setText(sktt?.mengingat_p5)\r\n        edt_kota_penetapan_sktt_edit.setText(sktt?.kota_penetapan)\r\n        edt_tanggal_penetapan_sktt_edit.setText(sktt?.tanggal_penetapan)\r\n        edt_nama_pimpinan_sktt_edit.setText(sktt?.nama_yang_menetapkan)\r\n        edt_pangkat_pimpinan_sktt_edit.setText(\r\n            sktt?.pangkat_yang_menetapkan.toString().toUpperCase()\r\n        )\r\n        edt_nrp_pimpinan_sktt_edit.setText(sktt?.nrp_yang_menetapkan)\r\n        edt_jabatan_pimpinan_sktt_edit.setText(sktt?.jabatan_yang_menetapkan)\r\n        edt_tembusan_sktt_edit.setText(sktt?.tembusan)\r\n        txt_no_lhp_sktt_edit.text = sktt?.lhp?.no_lhp\r\n//        txt_no_lp_sktt_edit.text = sktt?.lp?.no_lp\r\n        idLhp = sktt?.lhp?.id\r\n        idLp = sktt?.lp?.id\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == AddSkttActivity.REQ_LHP_ON_SKTT) {\r\n            when (resultCode) {\r\n                Activity.RESULT_OK -> {\r\n                    val lhpResp = data?.getParcelableExtra<LhpResp>(\"CHOOSE_LHP\")\r\n                    idLhp = lhpResp?.id\r\n                    txt_no_lhp_sktt_edit.text = lhpResp?.no_lhp\r\n                }\r\n            }\r\n        }\r\n        if (requestCode == AddSkttActivity.REQ_LP_ON_SKTT) {\r\n            when (resultCode) {\r\n                Activity.RESULT_OK -> {\r\n                    val getLpWithoutSktt =\r\n                        data?.getParcelableExtra<LpCustomResp>(AddSkttActivity.GET_LP_ON_SKTT)\r\n                    idLp = getLpWithoutSktt?.id\r\n                    txt_no_lp_sktt_edit.text = getLpWithoutSktt?.no_lp\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        const val EDIT_SKTT = \"EDIT_SKTT\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/EditSkttActivity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/EditSkttActivity.kt	(date 1615397910788)
+@@ -62,9 +62,9 @@
+         skttReq.mengingat_p5 = edt_mengingat_p5_sktt_edit.text.toString()
+         skttReq.kota_penetapan = edt_kota_penetapan_sktt_edit.text.toString()
+         skttReq.tanggal_penetapan = edt_tanggal_penetapan_sktt_edit.text.toString()
+-        skttReq.nama_yang_menetapkan = edt_nama_pimpinan_sktt_edit.text.toString()
+-        skttReq.pangkat_yang_menetapkan = edt_pangkat_pimpinan_sktt_edit.text.toString()
+-        skttReq.nrp_yang_menetapkan = edt_nrp_pimpinan_sktt_edit.text.toString()
++        skttReq.nama_kabid_propam = edt_nama_pimpinan_sktt_edit.text.toString()
++        skttReq.pangkat_kabid_propam = edt_pangkat_pimpinan_sktt_edit.text.toString()
++        skttReq.nrp_kabid_propam = edt_nrp_pimpinan_sktt_edit.text.toString()
+         skttReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_sktt_edit.text.toString()
+         skttReq.tembusan = edt_tembusan_sktt_edit.text.toString()
+         skttReq.id_lhp = idLhp
+@@ -93,11 +93,11 @@
+         edt_mengingat_p5_sktt_edit.setText(sktt?.mengingat_p5)
+         edt_kota_penetapan_sktt_edit.setText(sktt?.kota_penetapan)
+         edt_tanggal_penetapan_sktt_edit.setText(sktt?.tanggal_penetapan)
+-        edt_nama_pimpinan_sktt_edit.setText(sktt?.nama_yang_menetapkan)
++        edt_nama_pimpinan_sktt_edit.setText(sktt?.nama_kabid_propam)
+         edt_pangkat_pimpinan_sktt_edit.setText(
+-            sktt?.pangkat_yang_menetapkan.toString().toUpperCase()
++            sktt?.pangkat_kabid_propam.toString().toUpperCase()
+         )
+-        edt_nrp_pimpinan_sktt_edit.setText(sktt?.nrp_yang_menetapkan)
++        edt_nrp_pimpinan_sktt_edit.setText(sktt?.nrp_kabid_propam)
+         edt_jabatan_pimpinan_sktt_edit.setText(sktt?.jabatan_yang_menetapkan)
+         edt_tembusan_sktt_edit.setText(sktt?.tembusan)
+         txt_no_lhp_sktt_edit.text = sktt?.lhp?.no_lhp
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/DetailSkttActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sktt\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.view.Menu\r\nimport android.view.MenuItem\r\nimport com.github.razir.progressbutton.attachTextChangeAnimator\r\nimport com.github.razir.progressbutton.bindProgressButton\r\nimport com.github.razir.progressbutton.hideProgress\r\nimport com.github.razir.progressbutton.showProgress\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.response.SkttResp\r\nimport id.calocallo.sicape.utils.ext.alert\r\nimport id.calocallo.sicape.utils.ext.formatterTanggal\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_detail_sktt.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass DetailSkttActivity : BaseActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_detail_sktt)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Detail Data SKTT\"\r\n\r\n        val getSktt = intent.extras?.getParcelable<SkttResp>(DETAIL_SKTT)\r\n        getDetailSktt(getSktt)\r\n        btn_edit_sktt.setOnClickListener {\r\n            val intent = Intent(this, EditSkttActivity::class.java)\r\n            intent.putExtra(EditSkttActivity.EDIT_SKTT, getSktt)\r\n            startActivity(intent)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        btn_generate_sktt.attachTextChangeAnimator()\r\n        bindProgressButton(btn_generate_sktt)\r\n        btn_generate_sktt.setOnClickListener {\r\n            btn_generate_sktt.showProgress{\r\n                progressColor = Color.WHITE\r\n            }\r\n            Handler(Looper.getMainLooper()).postDelayed({\r\n                btn_generate_sktt.hideProgress(R.string.success_generate_doc)\r\n                alert(R.string.download) {\r\n                    positiveButton(R.string.iya){\r\n                        btn_generate_sktt.hideProgress(R.string.generate_dokumen)\r\n                    }\r\n                    negativeButton(R.string.tidak){\r\n                        btn_generate_sktt.hideProgress(R.string.generate_dokumen)\r\n                    }\r\n                }.show()\r\n            },2000)\r\n        }\r\n    }\r\n\r\n    private fun getDetailSktt(sktt: SkttResp?) {\r\n        txt_no_sktt_detail.text = sktt?.no_sktt\r\n        txt_no_lhp_sktt_detail.text = sktt?.lhp?.no_lhp\r\n//        txt_no_lp_sktt_detail.text = sktt?.lp?.no_lp\r\n        txt_menimbang_sktt_detail.text = sktt?.menimbang\r\n        txt_mengingat_p5_sktt_detail.text = sktt?.mengingat_p5\r\n        txt_kota_penetapan_sktt_detail.text = \"Kota : ${sktt?.kota_penetapan}\"\r\n        txt_tanggal_penetapan_sktt_detail.text =\r\n            \"Tanggal : ${formatterTanggal(sktt?.tanggal_penetapan)}\"\r\n        txt_nama_pimpinan_sktt_detail.text = \"Nama : ${sktt?.nama_yang_menetapkan}\"\r\n        txt_pangkat_nrp_pimpinan_sktt_detail.text =\r\n            \"Pangkat : ${sktt?.pangkat_yang_menetapkan.toString()\r\n                .toUpperCase()}, NRP : ${sktt?.nrp_yang_menetapkan}\"\r\n        txt_jabatan_pimpinan_sktt_detail.text = \"Jabatan : ${sktt?.jabatan_yang_menetapkan}\"\r\n        txt_tembusan_sktt_detail.text = sktt?.no_sktt\r\n    }\r\n\r\n    override fun onCreateOptionsMenu(menu: Menu?): Boolean {\r\n        val inflater = menuInflater\r\n        inflater.inflate(R.menu.toolbar_delete, menu)\r\n        return super.onCreateOptionsMenu(menu)\r\n    }\r\n\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        when (item.itemId) {\r\n            R.id.btn_delete_item -> {\r\n                alertDialogDelete()\r\n            }\r\n        }\r\n        return super.onOptionsItemSelected(item)\r\n    }\r\n\r\n    private fun alertDialogDelete() {\r\n        this.alert(\"Yakin Hapus Data?\") {\r\n            positiveButton(\"Iya\") {\r\n//                ApiDelete()\r\n                finish()\r\n            }\r\n            negativeButton(\"Tidak\") {\r\n            }\r\n        }.show()\r\n    }\r\n\r\n    companion object {\r\n        const val DETAIL_SKTT = \"DETAIL_SKTT\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/DetailSkttActivity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/DetailSkttActivity.kt	(date 1615397675641)
+@@ -2,7 +2,6 @@
+ 
+ import android.content.Intent
+ import android.graphics.Color
+-import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.os.Handler
+ import android.os.Looper
+@@ -65,10 +64,10 @@
+         txt_kota_penetapan_sktt_detail.text = "Kota : ${sktt?.kota_penetapan}"
+         txt_tanggal_penetapan_sktt_detail.text =
+             "Tanggal : ${formatterTanggal(sktt?.tanggal_penetapan)}"
+-        txt_nama_pimpinan_sktt_detail.text = "Nama : ${sktt?.nama_yang_menetapkan}"
++        txt_nama_pimpinan_sktt_detail.text = "Nama : ${sktt?.nama_kabid_propam}"
+         txt_pangkat_nrp_pimpinan_sktt_detail.text =
+-            "Pangkat : ${sktt?.pangkat_yang_menetapkan.toString()
+-                .toUpperCase()}, NRP : ${sktt?.nrp_yang_menetapkan}"
++            "Pangkat : ${sktt?.pangkat_kabid_propam.toString()
++                .toUpperCase()}, NRP : ${sktt?.nrp_kabid_propam}"
+         txt_jabatan_pimpinan_sktt_detail.text = "Jabatan : ${sktt?.jabatan_yang_menetapkan}"
+         txt_tembusan_sktt_detail.text = sktt?.no_sktt
+     }
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/AddSkttActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sktt\r\n\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport androidx.core.content.ContextCompat\r\nimport com.github.razir.progressbutton.*\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.LhpResp\r\nimport id.calocallo.sicape.network.request.SkttReq\r\nimport id.calocallo.sicape.network.response.LpCustomResp\r\nimport id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity\r\nimport id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_add_sktt.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass AddSkttActivity : BaseActivity() {\r\n    private var idLhp: Int? = null\r\n    private var idLp: Int? = null\r\n    private var skttReq = SkttReq()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_add_sktt)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Tambah Data SKTT\"\r\n\r\n        btn_save_sktt_add.attachTextChangeAnimator()\r\n        bindProgressButton(btn_save_sktt_add)\r\n        btn_save_sktt_add.setOnClickListener {\r\n            addSktt()\r\n        }\r\n        btn_pick_lhp_sktt_add.setOnClickListener {\r\n            startActivityForResult(Intent(this, ChooseLhpActivity::class.java), REQ_LHP_ON_SKTT)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n\r\n        btn_pick_lp_sktt_add.setOnClickListener {\r\n            val intent = Intent(this, PickJenisLpActivity::class.java)\r\n            intent.putExtra(LP_SKTT, LP_SKTT)\r\n            startActivityForResult(intent, REQ_LP_ON_SKTT)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n        txt_no_lp_sktt_add\r\n    }\r\n\r\n    private fun addSktt() {\r\n        skttReq.id_lhp = idLhp\r\n        skttReq.id_lp = idLp\r\n        skttReq.no_sktt = edt_no_sktt_add.text.toString()\r\n        skttReq.menimbang = edt_menimbang_sktt_add.text.toString()\r\n        skttReq.mengingat_p5 = edt_mengingat_p5_sktt_add.text.toString()\r\n        skttReq.kota_penetapan = edt_kota_penetapan_sktt_add.text.toString()\r\n        skttReq.tanggal_penetapan = edt_tanggal_penetapan_sktt_add.text.toString()\r\n        skttReq.nama_yang_menetapkan = edt_nama_pimpinan_sktt_add.text.toString()\r\n        skttReq.pangkat_yang_menetapkan =\r\n            edt_pangkat_pimpinan_sktt_add.text.toString().toUpperCase()\r\n        skttReq.nrp_yang_menetapkan = edt_nrp_pimpinan_sktt_add.text.toString()\r\n        skttReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_sktt_add.text.toString()\r\n        skttReq.tembusan = edt_tembusan_sktt_add.text.toString()\r\n        Log.e(\"add SKTT\", \"$skttReq\")\r\n\r\n        val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!\r\n        val size = resources.getDimensionPixelSize(R.dimen.space_25dp)\r\n        animated.setBounds(0, 0, size, size)\r\n        btn_save_sktt_add.showProgress {\r\n            progressColor = Color.WHITE\r\n        }\r\n        btn_save_sktt_add.showDrawable(animated) {\r\n            textMarginRes = R.dimen.space_10dp\r\n            buttonTextRes = R.string.data_saved\r\n        }\r\n        Handler(Looper.getMainLooper()).postDelayed({\r\n            btn_save_sktt_add.hideDrawable(R.string.save)\r\n        }, 2000)\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == REQ_LHP_ON_SKTT) {\r\n            when (resultCode) {\r\n                Activity.RESULT_OK -> {\r\n                    val lhpResp = data?.getParcelableExtra<LhpResp>(\"CHOOSE_LHP\")\r\n                    idLhp = lhpResp?.id\r\n                    txt_no_lhp_sktt_add.text = lhpResp?.no_lhp\r\n                }\r\n            }\r\n        }\r\n        if (requestCode == REQ_LP_ON_SKTT) {\r\n            when (resultCode) {\r\n                Activity.RESULT_OK -> {\r\n                    val getLpWithoutSktt = data?.getParcelableExtra<LpCustomResp>(GET_LP_ON_SKTT)\r\n                    idLp = getLpWithoutSktt?.id\r\n                    txt_no_lp_sktt_add.text = getLpWithoutSktt?.no_lp\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        const val REQ_LHP_ON_SKTT = 1\r\n        const val REQ_LP_ON_SKTT = 2\r\n        const val GET_LP_ON_SKTT = \"GET_LP_ON_SKTT\"\r\n        const val LP_SKTT = \"LP_SKTT\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/AddSkttActivity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktt/AddSkttActivity.kt	(date 1615397910774)
+@@ -57,10 +57,10 @@
+         skttReq.mengingat_p5 = edt_mengingat_p5_sktt_add.text.toString()
+         skttReq.kota_penetapan = edt_kota_penetapan_sktt_add.text.toString()
+         skttReq.tanggal_penetapan = edt_tanggal_penetapan_sktt_add.text.toString()
+-        skttReq.nama_yang_menetapkan = edt_nama_pimpinan_sktt_add.text.toString()
+-        skttReq.pangkat_yang_menetapkan =
++        skttReq.nama_kabid_propam = edt_nama_pimpinan_sktt_add.text.toString()
++        skttReq.pangkat_kabid_propam =
+             edt_pangkat_pimpinan_sktt_add.text.toString().toUpperCase()
+-        skttReq.nrp_yang_menetapkan = edt_nrp_pimpinan_sktt_add.text.toString()
++        skttReq.nrp_kabid_propam = edt_nrp_pimpinan_sktt_add.text.toString()
+         skttReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_sktt_add.text.toString()
+         skttReq.tembusan = edt_tembusan_sktt_add.text.toString()
+         Log.e("add SKTT", "$skttReq")
+Index: app/src/main/java/id/calocallo/sicape/network/DummyApi.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.network\r\n\r\nimport id.calocallo.sicape.model.PutKkeOnRpphModel\r\nimport id.calocallo.sicape.model.SkhdOnRpsModel\r\nimport id.calocallo.sicape.model.SktbOnSp3\r\nimport id.calocallo.sicape.model.SkttOnSp3\r\nimport id.calocallo.sicape.network.response.*\r\nimport retrofit2.Call\r\nimport retrofit2.http.GET\r\n\r\ninterface DummyApi {\r\n\r\n    @GET(\"v1/8754f1b7\")\r\n    fun getSkhdOnRps(): Call<ArrayList<SkhdOnRpsModel>>\r\n\r\n    @GET(\"v1/cd882765\")\r\n    fun getRps(): Call<ArrayList<RpsResp>>\r\n\r\n\r\n    @GET(\"v1/0b23c533\")\r\n    fun getRpph(): Call<ArrayList<RpphResp>>\r\n\r\n    @GET(\"v1/c1d3f140\")\r\n    fun getPutKkeOnRpph(): Call<ArrayList<PutKkeOnRpphModel>>\r\n\r\n    @GET(\"v1/1950e0a6\")\r\n    fun getSktb(): Call<ArrayList<SktbResp>>\r\n\r\n    @GET(\"v1/93babfa8\")\r\n    fun getSktt(): Call<ArrayList<SkttResp>>\r\n\r\n    @GET(\"v1/5fdd423a\")\r\n    fun getSp3(): Call<ArrayList<Sp3Resp>>\r\n\r\n    //lp without lhp\r\n    @GET(\"v1/0c6c4a1b\")\r\n    fun getLpNotHaveLhp(): Call<ArrayList<LpCustomResp>>\r\n\r\n    //lp with lhp but without skhd/putkke/sktt\r\n    @GET(\"v1/0c6c4a1b\")\r\n    fun getLpNotHaveSktbPutkkeSktt(): Call<ArrayList<LpCustomResp>>\r\n\r\n    /*sktb without sp4*/\r\n    @GET(\"v1/2f89f427\")\r\n    fun getSktbWithoutSp3(): Call<ArrayList<SktbOnSp3>>\r\n\r\n    /*sktt without sp4*/\r\n    @GET(\"v1/b827c5db\")\r\n    fun getSkttWithoutSp3(): Call<ArrayList<SkttOnSp3>>\r\n\r\n    @GET(\"v1/3d2d96a4\")\r\n    fun getCatpers(): Call<ArrayList<CatpersResp>>\r\n\r\n    @GET(\"v1/07f03497\")\r\n    fun getSkhp(): Call<ArrayList<SkhpResp>>\r\n\r\n    @GET(\"v1/491bcab8\")\r\n    fun getWanjak(): Call<ArrayList<WanjakResp>>\r\n\r\n    @GET(\"v1/953c2a3e\")\r\n    fun getLapbul(): Call<ArrayList<LapBulResp>>\r\n\r\n    @GET(\"v1/ab70f006\")\r\n    fun getAnev(): Call<ArrayList<AnevResp>>\r\n\r\n    @GET(\"v1/4a245c34\")\r\n    fun getFilterKesatuan(): Call<ArrayList<AnevResp>>\r\n\r\n    @GET(\"v1/0af80f7f\")\r\n    fun getFilterPangkat(): Call<ArrayList<FilterPangkatResp>>\r\n\r\n    @GET(\"v1/911a895e\")\r\n    fun getFilterPelanggaran(): Call<ArrayList<FilterPelanggaranResp>>\r\n\r\n    @GET(\"v1/b5ae1dad\")\r\n    fun getAdmin(): Call<ArrayList<AdminResp>>\r\n\r\n    @GET(\"v1/af0598a5\")\r\n    fun getOperator(): Call<ArrayList<OperatorResp>>\r\n\r\n    @GET(\"v1/cbbe4742\")\r\n    fun getPolresAll(): Call<ArrayList<PolresResp>>\r\n\r\n    @GET(\"v1/ab0e07a3\")\r\n    fun getSatResBjm(): Call<ArrayList<SatPolresResp>>\r\n\r\n    @GET(\"v1/7512d391\")\r\n    fun getUnitSekBjm(): Call<ArrayList<UnitPolsekResp>>\r\n\r\n    @GET(\"v1/3691308f\")\r\n    fun getPolsek(): Call<ArrayList<PolsekResp>>\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/network/DummyApi.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/network/DummyApi.kt	(date 1615398153931)
+@@ -30,7 +30,7 @@
+     fun getSktt(): Call<ArrayList<SkttResp>>
+ 
+     @GET("v1/5fdd423a")
+-    fun getSp3(): Call<ArrayList<Sp3Resp>>
++    fun getSp3(): Call<ArrayList<Sp4Resp>>
+ 
+     //lp without lhp
+     @GET("v1/0c6c4a1b")
+Index: app/src/main/java/id/calocallo/sicape/network/response/LapBulResp.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.network.response\r\n\r\nimport android.os.Parcelable\r\nimport id.calocallo.sicape.model.*\r\nimport id.calocallo.sicape.ui.main.catpers.PasalOnCatpersAdapter\r\nimport kotlinx.android.parcel.Parcelize\r\n\r\n@Parcelize\r\ndata class LapBulResp(\r\n    var id: Int?,\r\n    var lp:LpOnWanjakModel?,\r\n    var skhd:SkhdOnRpsModel?,\r\n    var putkke:PutKkeOnRpphModel?,\r\n    var rps:RpsResp?,\r\n    var rpph:RpphResp?,\r\n    var sktb: SktbOnSp3?,\r\n    var sktt: SkttOnSp3?,\r\n    var sp4:Sp3Resp?,\r\n    var personel_terlapor: PersonelLapor?,\r\n    var pasal_dilanggar: ArrayList<PasalResp>?,\r\n    var status_kasus: String?,\r\n    var is_ada_dokumen: Int?,\r\n    var url_dokumen: String?,\r\n    var created_at: String?,\r\n    var updated_at : String?\r\n) : Parcelable
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/network/response/LapBulResp.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/network/response/LapBulResp.kt	(date 1615398153918)
+@@ -2,7 +2,6 @@
+ 
+ import android.os.Parcelable
+ import id.calocallo.sicape.model.*
+-import id.calocallo.sicape.ui.main.catpers.PasalOnCatpersAdapter
+ import kotlinx.android.parcel.Parcelize
+ 
+ @Parcelize
+@@ -15,7 +14,7 @@
+     var rpph:RpphResp?,
+     var sktb: SktbOnSp3?,
+     var sktt: SkttOnSp3?,
+-    var sp4:Sp3Resp?,
++    var sp4:Sp4Resp?,
+     var personel_terlapor: PersonelLapor?,
+     var pasal_dilanggar: ArrayList<PasalResp>?,
+     var status_kasus: String?,
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/EditSp3Activity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sp3\r\n\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.widget.RadioButton\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.SktbOnSp3\r\nimport id.calocallo.sicape.model.SkttOnSp3\r\nimport id.calocallo.sicape.network.request.Sp3Req\r\nimport id.calocallo.sicape.network.response.Sp3Resp\r\nimport id.calocallo.sicape.ui.main.choose.ChooseSktbSkttActivity\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.calocallo.sicape.utils.ext.visible\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_edit_sp3.*\r\nimport kotlinx.android.synthetic.main.activity_edit_sp3.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass EditSp3Activity : BaseActivity() {\r\n    companion object {\r\n        const val EDT_SP3 = \"EDT_SP3\"\r\n        const val REQ_SKTB_ON_SP3_EDIT = 1\r\n        const val REQ_SKTT_ON_SP3_EDIT = 2\r\n    }\r\n    private var idSktb: Int? = null\r\n    private var idSktt: Int? = null\r\n    private var sp3Req = Sp3Req()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_edit_sp3)\r\n\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Edit Data SP3\"\r\n        val getDetailSp3 = intent.extras?.getParcelable<Sp3Resp>(EDT_SP3)\r\n        getViewSp3Edit(getDetailSp3)\r\n        rg_sktb_sktt_sp3_edit.setOnCheckedChangeListener { group, checkedId ->\r\n            val radio: RadioButton = findViewById(checkedId)\r\n            if (radio.isChecked && radio.text == \"SKTB\") {\r\n                ll_sktb_sp3_edit.visible()\r\n                ll_sktt_sp3_edit.gone()\r\n            } else {\r\n                ll_sktb_sp3_edit.gone()\r\n                ll_sktt_sp3_edit.visible()\r\n            }\r\n        }\r\n\r\n        btn_pick_sktb_sp3_edit.setOnClickListener {\r\n            val intent = Intent(this, ChooseSktbSkttActivity::class.java)\r\n            startActivityForResult(intent, REQ_SKTB_ON_SP3_EDIT)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n\r\n        btn_pick_sktt_sp3_edit.setOnClickListener {\r\n            val intent = Intent(this, ChooseSktbSkttActivity::class.java)\r\n            intent.putExtra(AddSp3Activity.SKTT_ON_SP3, AddSp3Activity.SKTT_ON_SP3)\r\n            startActivityForResult(intent, REQ_SKTT_ON_SP3_EDIT)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n        btn_save_sp3_edit.setOnClickListener {\r\n            updateSp3(getDetailSp3)\r\n        }\r\n    }\r\n\r\n    private fun updateSp3(detailSp3: Sp3Resp?) {\r\n        sp3Req.no_sp4 = edt_no_sp3_edit.text.toString()\r\n        sp3Req.mengingat_p4 = edt_mengingat_p4_sp3_edit.text.toString()\r\n        sp3Req.mengingat_p5 = edt_mengingat_p5_sp3_edit.text.toString()\r\n        sp3Req.menetapkan_p1 = edt_menetapkan_p1_sp3_edit.text.toString()\r\n        sp3Req.kota_keluar = edt_kota_dikeluarkan_sp3_edit.text.toString()\r\n        sp3Req.tanggal_keluar = edt_tanggal_dikeluarkan_sp3_edit.text.toString()\r\n        sp3Req.nama_akreditor = edt_nama_akreditor_sp3_edit.text.toString()\r\n        sp3Req.pangkat_akreditor = edt_pangkat_akreditor_sp3_edit.text.toString().toUpperCase()\r\n        sp3Req.nrp_akreditor = edt_nrp_akreditor_sp3_edit.text.toString()\r\n        if (idSktt != null) {\r\n            sp3Req.id_sktt = idSktt\r\n            sp3Req.id_sktb = null\r\n        } else {\r\n            sp3Req.id_sktb = idSktb\r\n            sp3Req.id_sktt = null\r\n        }\r\n        Log.e(\"edti SP3\", \"$sp3Req\")\r\n    }\r\n\r\n    private fun getViewSp3Edit(detailSp3: Sp3Resp?) {\r\n\r\n        edt_no_sp3_edit.setText(detailSp3?.no_sp4)\r\n        edt_mengingat_p4_sp3_edit.setText(detailSp3?.mengingat_p4)\r\n        edt_mengingat_p5_sp3_edit.setText(detailSp3?.mengingat_p5)\r\n        edt_menetapkan_p1_sp3_edit.setText(detailSp3?.menetapkan_p1)\r\n        edt_kota_dikeluarkan_sp3_edit.setText(detailSp3?.kota_keluar)\r\n        edt_tanggal_dikeluarkan_sp3_edit.setText(detailSp3?.tanggal_keluar)\r\n        edt_nama_akreditor_sp3_edit.setText(detailSp3?.nama_akreditor)\r\n        edt_pangkat_akreditor_sp3_edit.setText(\r\n            detailSp3?.pangkat_akreditor.toString().toUpperCase()\r\n        )\r\n        edt_nrp_akreditor_sp3_edit.setText(detailSp3?.nrp_akreditor)\r\n        txt_sktb_sp3_edit.text = detailSp3?.sktb?.no_sktb\r\n        txt_sktt_sp3_edit.text = detailSp3?.sktt?.no_sktt\r\n        if (detailSp3?.sktb?.id != null) {\r\n            rb_sktb_sp3_edit.isChecked = true\r\n            ll_sktb_sp3_edit.visible()\r\n            ll_sktt_sp3_edit.gone()\r\n            txt_sktb_sp3_edit.text = detailSp3?.sktb?.no_sktb\r\n\r\n        } else {\r\n            rb_sktt_sp3_edit.isChecked = true\r\n            ll_sktb_sp3_edit.gone()\r\n            ll_sktt_sp3_edit.visible()\r\n            txt_sktt_sp3_edit.text = detailSp3?.sktt?.no_sktt\r\n        }\r\n        idSktb = detailSp3?.sktb?.id\r\n        idSktt = detailSp3?.sktt?.id\r\n\r\n\r\n    }\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == AddSp3Activity.REQ_SKTB_ON_SP3) {\r\n            if (resultCode == Activity.RESULT_OK) {\r\n                val sktb = data?.getParcelableExtra<SktbOnSp3>(ChooseSktbSkttActivity.GET_SKTB)\r\n//                Log.e(\"skhd\", \"$sktb\")\r\n                if (sktb == null) {\r\n                    txt_sktb_sp3_edit.text = \"No SKTB\"\r\n                } else {\r\n                    txt_sktb_sp3_edit.text = sktb.no_sktb\r\n                    idSktb = sktb.id\r\n                    idSktt = null\r\n                    txt_sktt_sp3_edit.text = \"No SKTT\"\r\n                }\r\n            }\r\n        }\r\n\r\n        if (requestCode == AddSp3Activity.REQ_SKTT_ON_SP3) {\r\n            if (resultCode == Activity.RESULT_OK) {\r\n                val sktt =\r\n                    data?.getParcelableExtra<SkttOnSp3>(ChooseSktbSkttActivity.GET_SKTT)\r\n                Log.e(\"putKKe\", \"$sktt\")\r\n                if (sktt == null) {\r\n                    txt_sktt_sp3_edit.text = \"No SKTT\"\r\n                } else {\r\n                    idSktt = sktt.id\r\n                    txt_sktt_sp3_edit.text = sktt.no_sktt\r\n                    idSktb = null\r\n                    txt_sktb_sp3_edit.text = \"No SKTB\"\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/EditSp3Activity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/EditSp3Activity.kt	(date 1615398153974)
+@@ -8,14 +8,13 @@
+ import id.calocallo.sicape.R
+ import id.calocallo.sicape.model.SktbOnSp3
+ import id.calocallo.sicape.model.SkttOnSp3
+-import id.calocallo.sicape.network.request.Sp3Req
+-import id.calocallo.sicape.network.response.Sp3Resp
++import id.calocallo.sicape.network.request.Sp4Req
++import id.calocallo.sicape.network.response.Sp4Resp
+ import id.calocallo.sicape.ui.main.choose.ChooseSktbSkttActivity
+ import id.calocallo.sicape.utils.ext.gone
+ import id.calocallo.sicape.utils.ext.visible
+ import id.co.iconpln.smartcity.ui.base.BaseActivity
+ import kotlinx.android.synthetic.main.activity_edit_sp3.*
+-import kotlinx.android.synthetic.main.activity_edit_sp3.*
+ import kotlinx.android.synthetic.main.layout_toolbar_white.*
+ 
+ class EditSp3Activity : BaseActivity() {
+@@ -26,14 +25,14 @@
+     }
+     private var idSktb: Int? = null
+     private var idSktt: Int? = null
+-    private var sp3Req = Sp3Req()
++    private var sp3Req = Sp4Req()
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_edit_sp3)
+ 
+         setupActionBarWithBackButton(toolbar)
+         supportActionBar?.title = "Edit Data SP3"
+-        val getDetailSp3 = intent.extras?.getParcelable<Sp3Resp>(EDT_SP3)
++        val getDetailSp3 = intent.extras?.getParcelable<Sp4Resp>(EDT_SP3)
+         getViewSp3Edit(getDetailSp3)
+         rg_sktb_sktt_sp3_edit.setOnCheckedChangeListener { group, checkedId ->
+             val radio: RadioButton = findViewById(checkedId)
+@@ -64,7 +63,7 @@
+         }
+     }
+ 
+-    private fun updateSp3(detailSp3: Sp3Resp?) {
++    private fun updateSp3(detailSp4: Sp4Resp?) {
+         sp3Req.no_sp4 = edt_no_sp3_edit.text.toString()
+         sp3Req.mengingat_p4 = edt_mengingat_p4_sp3_edit.text.toString()
+         sp3Req.mengingat_p5 = edt_mengingat_p5_sp3_edit.text.toString()
+@@ -84,35 +83,35 @@
+         Log.e("edti SP3", "$sp3Req")
+     }
+ 
+-    private fun getViewSp3Edit(detailSp3: Sp3Resp?) {
++    private fun getViewSp3Edit(detailSp4: Sp4Resp?) {
+ 
+-        edt_no_sp3_edit.setText(detailSp3?.no_sp4)
+-        edt_mengingat_p4_sp3_edit.setText(detailSp3?.mengingat_p4)
+-        edt_mengingat_p5_sp3_edit.setText(detailSp3?.mengingat_p5)
+-        edt_menetapkan_p1_sp3_edit.setText(detailSp3?.menetapkan_p1)
+-        edt_kota_dikeluarkan_sp3_edit.setText(detailSp3?.kota_keluar)
+-        edt_tanggal_dikeluarkan_sp3_edit.setText(detailSp3?.tanggal_keluar)
+-        edt_nama_akreditor_sp3_edit.setText(detailSp3?.nama_akreditor)
++        edt_no_sp3_edit.setText(detailSp4?.no_sp4)
++        edt_mengingat_p4_sp3_edit.setText(detailSp4?.mengingat_p4)
++        edt_mengingat_p5_sp3_edit.setText(detailSp4?.mengingat_p5)
++        edt_menetapkan_p1_sp3_edit.setText(detailSp4?.menetapkan_p1)
++        edt_kota_dikeluarkan_sp3_edit.setText(detailSp4?.kota_keluar)
++        edt_tanggal_dikeluarkan_sp3_edit.setText(detailSp4?.tanggal_keluar)
++        edt_nama_akreditor_sp3_edit.setText(detailSp4?.nama_akreditor)
+         edt_pangkat_akreditor_sp3_edit.setText(
+-            detailSp3?.pangkat_akreditor.toString().toUpperCase()
++            detailSp4?.pangkat_akreditor.toString().toUpperCase()
+         )
+-        edt_nrp_akreditor_sp3_edit.setText(detailSp3?.nrp_akreditor)
+-        txt_sktb_sp3_edit.text = detailSp3?.sktb?.no_sktb
+-        txt_sktt_sp3_edit.text = detailSp3?.sktt?.no_sktt
+-        if (detailSp3?.sktb?.id != null) {
++        edt_nrp_akreditor_sp3_edit.setText(detailSp4?.nrp_akreditor)
++        txt_sktb_sp3_edit.text = detailSp4?.sktb?.no_sktb
++        txt_sktt_sp3_edit.text = detailSp4?.sktt?.no_sktt
++        if (detailSp4?.sktb?.id != null) {
+             rb_sktb_sp3_edit.isChecked = true
+             ll_sktb_sp3_edit.visible()
+             ll_sktt_sp3_edit.gone()
+-            txt_sktb_sp3_edit.text = detailSp3?.sktb?.no_sktb
++            txt_sktb_sp3_edit.text = detailSp4?.sktb?.no_sktb
+ 
+         } else {
+             rb_sktt_sp3_edit.isChecked = true
+             ll_sktb_sp3_edit.gone()
+             ll_sktt_sp3_edit.visible()
+-            txt_sktt_sp3_edit.text = detailSp3?.sktt?.no_sktt
++            txt_sktt_sp3_edit.text = detailSp4?.sktt?.no_sktt
+         }
+-        idSktb = detailSp3?.sktb?.id
+-        idSktt = detailSp3?.sktt?.id
++        idSktb = detailSp4?.sktb?.id
++        idSktt = detailSp4?.sktt?.id
+ 
+ 
+     }
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/ListSp3Activity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sp3\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.view.Menu\r\nimport android.view.View\r\nimport androidx.appcompat.widget.SearchView\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.NetworkDummy\r\nimport id.calocallo.sicape.network.response.Sp3Resp\r\nimport id.calocallo.sicape.utils.SessionManager1\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.calocallo.sicape.utils.ext.visible\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_list_sp3.*\r\nimport kotlinx.android.synthetic.main.layout_edit_1_text.view.*\r\nimport kotlinx.android.synthetic.main.layout_progress_dialog.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\nimport kotlinx.android.synthetic.main.view_no_data.*\r\nimport org.marproject.reusablerecyclerviewadapter.ReusableAdapter\r\nimport org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Response\r\n\r\nclass ListSp3Activity : BaseActivity() {\r\n    private lateinit var callbackSp3: AdapterCallback<Sp3Resp>\r\n    private var adapterSp3 = ReusableAdapter<Sp3Resp>(this)\r\n    private lateinit var sessionManager1: SessionManager1\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_list_sp3)\r\n\r\n        sessionManager1 = SessionManager1(this)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"List Data SP3\"\r\n\r\n        btn_add_single_sp3.setOnClickListener {\r\n            startActivity(Intent(this, AddSp3Activity::class.java))\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n        getListSp3()\r\n    }\r\n\r\n    private fun getListSp3() {\r\n        rl_pb.visible()\r\n        NetworkDummy().getService().getSp3().enqueue(object : Callback<ArrayList<Sp3Resp>> {\r\n            override fun onFailure(call: Call<ArrayList<Sp3Resp>>, t: Throwable) {\r\n                rl_pb.gone()\r\n                rl_no_data.visible()\r\n                rv_list_sp3.gone()\r\n            }\r\n\r\n            override fun onResponse(\r\n                call: Call<ArrayList<Sp3Resp>>,\r\n                response: Response<ArrayList<Sp3Resp>>\r\n            ) {\r\n                if (response.isSuccessful) {\r\n                    rl_pb.gone()\r\n                    callbackSp3 = object : AdapterCallback<Sp3Resp> {\r\n                        override fun initComponent(itemView: View, data: Sp3Resp, itemIndex: Int) {\r\n                            itemView.txt_edit_pendidikan.text = data.no_sp4\r\n                        }\r\n\r\n                        override fun onItemClicked(itemView: View, data: Sp3Resp, itemIndex: Int) {\r\n                            val intent = Intent(this@ListSp3Activity, DetailSp3Activity::class.java)\r\n                            intent.putExtra(DetailSp3Activity.DETAIL_SP3, data)\r\n                            startActivity(intent)\r\n                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n                        }\r\n                    }\r\n                    response.body()?.let {\r\n                        adapterSp3.adapterCallback(callbackSp3)\r\n                            .isVerticalView().filterable()\r\n                            .addData(it)\r\n                            .setLayout(R.layout.layout_edit_1_text)\r\n                            .build(rv_list_sp3)\r\n                    }\r\n                } else {\r\n                    rl_pb.gone()\r\n                    rl_no_data.visible()\r\n                    rv_list_sp3.gone()\r\n                }\r\n            }\r\n        })\r\n    }\r\n    override fun onCreateOptionsMenu(menu: Menu?): Boolean {\r\n        menuInflater.inflate(R.menu.search_bar, menu)\r\n        val item = menu?.findItem(R.id.action_search)\r\n        val searchView = item?.actionView as SearchView\r\n        searchView.queryHint = \"Cari SP3\"\r\n\r\n        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {\r\n            override fun onQueryTextSubmit(query: String?): Boolean {\r\n                return false\r\n            }\r\n\r\n            override fun onQueryTextChange(newText: String?): Boolean {\r\n                adapterSp3.filter.filter(newText)\r\n                return true\r\n            }\r\n\r\n        })\r\n        return super.onCreateOptionsMenu(menu)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/ListSp3Activity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/ListSp3Activity.kt	(date 1615398153893)
+@@ -7,7 +7,7 @@
+ import androidx.appcompat.widget.SearchView
+ import id.calocallo.sicape.R
+ import id.calocallo.sicape.network.NetworkDummy
+-import id.calocallo.sicape.network.response.Sp3Resp
++import id.calocallo.sicape.network.response.Sp4Resp
+ import id.calocallo.sicape.utils.SessionManager1
+ import id.calocallo.sicape.utils.ext.gone
+ import id.calocallo.sicape.utils.ext.visible
+@@ -24,8 +24,8 @@
+ import retrofit2.Response
+ 
+ class ListSp3Activity : BaseActivity() {
+-    private lateinit var callbackSp3: AdapterCallback<Sp3Resp>
+-    private var adapterSp3 = ReusableAdapter<Sp3Resp>(this)
++    private lateinit var callbackSp4: AdapterCallback<Sp4Resp>
++    private var adapterSp3 = ReusableAdapter<Sp4Resp>(this)
+     private lateinit var sessionManager1: SessionManager1
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -44,25 +44,25 @@
+ 
+     private fun getListSp3() {
+         rl_pb.visible()
+-        NetworkDummy().getService().getSp3().enqueue(object : Callback<ArrayList<Sp3Resp>> {
+-            override fun onFailure(call: Call<ArrayList<Sp3Resp>>, t: Throwable) {
++        NetworkDummy().getService().getSp3().enqueue(object : Callback<ArrayList<Sp4Resp>> {
++            override fun onFailure(call: Call<ArrayList<Sp4Resp>>, t: Throwable) {
+                 rl_pb.gone()
+                 rl_no_data.visible()
+                 rv_list_sp3.gone()
+             }
+ 
+             override fun onResponse(
+-                call: Call<ArrayList<Sp3Resp>>,
+-                response: Response<ArrayList<Sp3Resp>>
++                call: Call<ArrayList<Sp4Resp>>,
++                response: Response<ArrayList<Sp4Resp>>
+             ) {
+                 if (response.isSuccessful) {
+                     rl_pb.gone()
+-                    callbackSp3 = object : AdapterCallback<Sp3Resp> {
+-                        override fun initComponent(itemView: View, data: Sp3Resp, itemIndex: Int) {
++                    callbackSp4 = object : AdapterCallback<Sp4Resp> {
++                        override fun initComponent(itemView: View, data: Sp4Resp, itemIndex: Int) {
+                             itemView.txt_edit_pendidikan.text = data.no_sp4
+                         }
+ 
+-                        override fun onItemClicked(itemView: View, data: Sp3Resp, itemIndex: Int) {
++                        override fun onItemClicked(itemView: View, data: Sp4Resp, itemIndex: Int) {
+                             val intent = Intent(this@ListSp3Activity, DetailSp3Activity::class.java)
+                             intent.putExtra(DetailSp3Activity.DETAIL_SP3, data)
+                             startActivity(intent)
+@@ -70,7 +70,7 @@
+                         }
+                     }
+                     response.body()?.let {
+-                        adapterSp3.adapterCallback(callbackSp3)
++                        adapterSp3.adapterCallback(callbackSp4)
+                             .isVerticalView().filterable()
+                             .addData(it)
+                             .setLayout(R.layout.layout_edit_1_text)
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/AddSp3Activity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sp3\r\n\r\nimport android.app.Activity\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport android.widget.RadioButton\r\nimport androidx.core.content.ContextCompat\r\nimport com.github.razir.progressbutton.*\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.SktbOnSp3\r\nimport id.calocallo.sicape.model.SkttOnSp3\r\nimport id.calocallo.sicape.network.request.Sp3Req\r\nimport id.calocallo.sicape.ui.main.choose.ChooseSktbSkttActivity\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.calocallo.sicape.utils.ext.visible\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_add_sp3.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass AddSp3Activity : BaseActivity() {\r\n    companion object {\r\n        const val SKHD_ON_SP3 = \"SKHD_ON_SP3\"\r\n        const val SKTT_ON_SP3 = \"SKTT_ON_SP3\"\r\n        const val REQ_SKTB_ON_SP3 = 1\r\n        const val REQ_SKTT_ON_SP3 = 2\r\n    }\r\n\r\n    private var idSktb: Int? = null\r\n    private var idSktt: Int? = null\r\n    private var sp3Req = Sp3Req()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_add_sp3)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Tambah Data SP3\"\r\n        ll_sktb_sp3_add\r\n        btn_pick_sktb_sp3_add.setOnClickListener {\r\n            val intent = Intent(this, ChooseSktbSkttActivity::class.java)\r\n            startActivityForResult(intent, REQ_SKTB_ON_SP3)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n\r\n        btn_pick_sktt_sp3_add.setOnClickListener {\r\n            val intent = Intent(this, ChooseSktbSkttActivity::class.java)\r\n            intent.putExtra(SKTT_ON_SP3, SKTT_ON_SP3)\r\n            startActivityForResult(intent, REQ_SKTT_ON_SP3)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        rg_sktb_sktt_sp3_add.setOnCheckedChangeListener { group, checkedId ->\r\n            val radio = findViewById<RadioButton>(checkedId)\r\n            if (radio.isChecked && radio.text == \"SKTB\") {\r\n                ll_sktb_sp3_add.visible()\r\n                ll_sktt_sp3_add.gone()\r\n            } else {\r\n                ll_sktb_sp3_add.gone()\r\n                ll_sktt_sp3_add.visible()\r\n            }\r\n        }\r\n        btn_save_sp3_add.attachTextChangeAnimator()\r\n        bindProgressButton(btn_save_sp3_add)\r\n        btn_save_sp3_add.setOnClickListener {\r\n            sp3Req.no_sp4 = edt_no_sp3_add.text.toString()\r\n            sp3Req.mengingat_p4 = edt_mengingat_p4_sp3_add.text.toString()\r\n            sp3Req.mengingat_p5 = edt_mengingat_p5_sp3_add.text.toString()\r\n            sp3Req.menetapkan_p1 = edt_menetapkan_p1_sp3_add.text.toString()\r\n            sp3Req.kota_keluar = edt_kota_dikeluarkan_sp3_add.text.toString()\r\n            sp3Req.tanggal_keluar = edt_tanggal_dikeluarkan_sp3_add.text.toString()\r\n            sp3Req.nama_akreditor = edt_nama_akreditor_sp3_add.text.toString()\r\n            sp3Req.pangkat_akreditor = edt_pangkat_akreditor_sp3_add.text.toString().toUpperCase()\r\n            sp3Req.nrp_akreditor = edt_nrp_akreditor_sp3_add.text.toString()\r\n            if (idSktt != null) {\r\n                sp3Req.id_sktt = idSktt\r\n                sp3Req.id_sktb = null\r\n            } else {\r\n                sp3Req.id_sktb = idSktb\r\n                sp3Req.id_sktt = null\r\n            }\r\n            Log.e(\"add Sp3\", \"$sp3Req\")\r\n\r\n\r\n            val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!\r\n            val size = resources.getDimensionPixelSize(R.dimen.space_25dp)\r\n            animated.setBounds(0, 0, size, size)\r\n            btn_save_sp3_add.showProgress {\r\n                progressColor = Color.WHITE\r\n            }\r\n            btn_save_sp3_add.showDrawable(animated) {\r\n                textMarginRes = R.dimen.space_10dp\r\n                buttonTextRes = R.string.data_updated\r\n            }\r\n            Handler(Looper.getMainLooper()).postDelayed({\r\n                btn_save_sp3_add.hideDrawable(R.string.save)\r\n            }, 2000)\r\n        }\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == REQ_SKTB_ON_SP3) {\r\n            if (resultCode == Activity.RESULT_OK) {\r\n                val sktb = data?.getParcelableExtra<SktbOnSp3>(ChooseSktbSkttActivity.GET_SKTB)\r\n//                Log.e(\"skhd\", \"$sktb\")\r\n                if (sktb == null) {\r\n                    txt_sktb_sp3_add.text = \"No SKTB\"\r\n                } else {\r\n                    txt_sktb_sp3_add.text = sktb.no_sktb\r\n                    idSktb = sktb.id\r\n                }\r\n            }\r\n        }\r\n\r\n        if (requestCode == REQ_SKTT_ON_SP3) {\r\n            if (resultCode == Activity.RESULT_OK) {\r\n                val sktt =\r\n                    data?.getParcelableExtra<SkttOnSp3>(ChooseSktbSkttActivity.GET_SKTT)\r\n                Log.e(\"putKKe\", \"$sktt\")\r\n                if (sktt == null) {\r\n                    txt_sktt_sp3_add.text = \"No SKTT\"\r\n                } else {\r\n                    idSktt = sktt.id\r\n                    txt_sktt_sp3_add.text = sktt.no_sktt\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/AddSp3Activity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/AddSp3Activity.kt	(date 1615398153983)
+@@ -13,7 +13,7 @@
+ import id.calocallo.sicape.R
+ import id.calocallo.sicape.model.SktbOnSp3
+ import id.calocallo.sicape.model.SkttOnSp3
+-import id.calocallo.sicape.network.request.Sp3Req
++import id.calocallo.sicape.network.request.Sp4Req
+ import id.calocallo.sicape.ui.main.choose.ChooseSktbSkttActivity
+ import id.calocallo.sicape.utils.ext.gone
+ import id.calocallo.sicape.utils.ext.visible
+@@ -31,7 +31,7 @@
+ 
+     private var idSktb: Int? = null
+     private var idSktt: Int? = null
+-    private var sp3Req = Sp3Req()
++    private var sp3Req = Sp4Req()
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_add_sp3)
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/DetailSp3Activity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sp3\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.view.Menu\r\nimport android.view.MenuItem\r\nimport com.github.razir.progressbutton.attachTextChangeAnimator\r\nimport com.github.razir.progressbutton.bindProgressButton\r\nimport com.github.razir.progressbutton.hideProgress\r\nimport com.github.razir.progressbutton.showProgress\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.network.response.Sp3Resp\r\nimport id.calocallo.sicape.utils.ext.alert\r\nimport id.calocallo.sicape.utils.ext.formatterTanggal\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_detail_sp3.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass DetailSp3Activity : BaseActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_detail_sp3)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Detail Data SP3\"\r\n\r\n        val getSp3 = intent.extras?.getParcelable<Sp3Resp>(DETAIL_SP3)\r\n        getDataSp3View(getSp3)\r\n        btn_edit_sp3_detail.setOnClickListener {\r\n            val intent = Intent(this, EditSp3Activity::class.java)\r\n            intent.putExtra(EditSp3Activity.EDT_SP3, getSp3)\r\n            startActivity(intent)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n        btn_generate_sp3_detail.attachTextChangeAnimator()\r\n        bindProgressButton(btn_generate_sp3_detail)\r\n        btn_generate_sp3_detail.setOnClickListener {\r\n            btn_generate_sp3_detail.showProgress {\r\n                progressColor = Color.WHITE\r\n            }\r\n\r\n            Handler(Looper.getMainLooper()).postDelayed({\r\n                btn_generate_sp3_detail.hideProgress(R.string.success_generate_doc)\r\n                alert(R.string.download) {\r\n                    positiveButton(R.string.iya) {\r\n                        btn_generate_sp3_detail.hideProgress(R.string.generate_dokumen)\r\n\r\n                    }\r\n                    negativeButton(R.string.tidak) {\r\n                        btn_generate_sp3_detail.hideProgress(R.string.generate_dokumen)\r\n\r\n                    }\r\n                }.show()\r\n            }, 2000)\r\n        }\r\n\r\n    }\r\n\r\n    private fun getDataSp3View(sp3: Sp3Resp?) {\r\n        txt_no_sp3_detail.text = sp3?.no_sp4\r\n        txt_mengingat_p4_sp3_detail.text = sp3?.mengingat_p4\r\n        txt_mengingat_p5_sp3_detail.text = sp3?.mengingat_p5\r\n        txt_menetapkan_p1_sp3_detail.text = sp3?.menetapkan_p1\r\n        txt_kota_keluar_sp3_detail.text = \"Kota : ${sp3?.kota_keluar}\"\r\n        txt_tanggal_keluar_sp3_detail.text = \"Tanggal : ${formatterTanggal(sp3?.tanggal_keluar)}\"\r\n        txt_nama_akreditor_sp3_detail.text = \"Nama : ${sp3?.nama_akreditor}\"\r\n        txt_pangkat_nrp_akreditor_sp3_detail.text = \"Pangkat : ${sp3?.pangkat_akreditor.toString()\r\n            .toUpperCase()}, NRP : ${sp3?.nrp_akreditor}\"\r\n\r\n        if (sp3?.sktb?.id != null) {\r\n            txt_title_sktb_sktt__sp3_detail.text = \"No SKTB\"\r\n            txt_no_sktb_sktt_sp3_detail.text = sp3.sktb?.no_sktb\r\n        } else {\r\n            txt_title_sktb_sktt__sp3_detail.text = \"No SKTT\"\r\n            txt_no_sktb_sktt_sp3_detail.text = sp3?.sktt?.no_sktt\r\n        }\r\n\r\n    }\r\n\r\n    override fun onCreateOptionsMenu(menu: Menu?): Boolean {\r\n        val inflater = menuInflater\r\n        inflater.inflate(R.menu.toolbar_delete, menu)\r\n        return super.onCreateOptionsMenu(menu)\r\n    }\r\n\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        when (item.itemId) {\r\n            R.id.btn_delete_item -> {\r\n                alertDialogDelete()\r\n            }\r\n        }\r\n        return super.onOptionsItemSelected(item)\r\n    }\r\n\r\n    private fun alertDialogDelete() {\r\n        this.alert(\"Yakin Hapus Data?\") {\r\n            positiveButton(\"Iya\") {\r\n//                ApiDelete()\r\n                finish()\r\n            }\r\n            negativeButton(\"Tidak\") {\r\n            }\r\n        }.show()\r\n    }\r\n\r\n    companion object {\r\n        const val DETAIL_SP3 = \"DETAIL_SP3\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/DetailSp3Activity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sp3/DetailSp3Activity.kt	(date 1615398154008)
+@@ -12,7 +12,7 @@
+ import com.github.razir.progressbutton.hideProgress
+ import com.github.razir.progressbutton.showProgress
+ import id.calocallo.sicape.R
+-import id.calocallo.sicape.network.response.Sp3Resp
++import id.calocallo.sicape.network.response.Sp4Resp
+ import id.calocallo.sicape.utils.ext.alert
+ import id.calocallo.sicape.utils.ext.formatterTanggal
+ import id.co.iconpln.smartcity.ui.base.BaseActivity
+@@ -26,7 +26,7 @@
+         setupActionBarWithBackButton(toolbar)
+         supportActionBar?.title = "Detail Data SP3"
+ 
+-        val getSp3 = intent.extras?.getParcelable<Sp3Resp>(DETAIL_SP3)
++        val getSp3 = intent.extras?.getParcelable<Sp4Resp>(DETAIL_SP3)
+         getDataSp3View(getSp3)
+         btn_edit_sp3_detail.setOnClickListener {
+             val intent = Intent(this, EditSp3Activity::class.java)
+@@ -58,23 +58,23 @@
+ 
+     }
+ 
+-    private fun getDataSp3View(sp3: Sp3Resp?) {
+-        txt_no_sp3_detail.text = sp3?.no_sp4
+-        txt_mengingat_p4_sp3_detail.text = sp3?.mengingat_p4
+-        txt_mengingat_p5_sp3_detail.text = sp3?.mengingat_p5
+-        txt_menetapkan_p1_sp3_detail.text = sp3?.menetapkan_p1
+-        txt_kota_keluar_sp3_detail.text = "Kota : ${sp3?.kota_keluar}"
+-        txt_tanggal_keluar_sp3_detail.text = "Tanggal : ${formatterTanggal(sp3?.tanggal_keluar)}"
+-        txt_nama_akreditor_sp3_detail.text = "Nama : ${sp3?.nama_akreditor}"
+-        txt_pangkat_nrp_akreditor_sp3_detail.text = "Pangkat : ${sp3?.pangkat_akreditor.toString()
+-            .toUpperCase()}, NRP : ${sp3?.nrp_akreditor}"
++    private fun getDataSp3View(sp4: Sp4Resp?) {
++        txt_no_sp3_detail.text = sp4?.no_sp4
++        txt_mengingat_p4_sp3_detail.text = sp4?.mengingat_p4
++        txt_mengingat_p5_sp3_detail.text = sp4?.mengingat_p5
++        txt_menetapkan_p1_sp3_detail.text = sp4?.menetapkan_p1
++        txt_kota_keluar_sp3_detail.text = "Kota : ${sp4?.kota_keluar}"
++        txt_tanggal_keluar_sp3_detail.text = "Tanggal : ${formatterTanggal(sp4?.tanggal_keluar)}"
++        txt_nama_akreditor_sp3_detail.text = "Nama : ${sp4?.nama_akreditor}"
++        txt_pangkat_nrp_akreditor_sp3_detail.text = "Pangkat : ${sp4?.pangkat_akreditor.toString()
++            .toUpperCase()}, NRP : ${sp4?.nrp_akreditor}"
+ 
+-        if (sp3?.sktb?.id != null) {
++        if (sp4?.sktb?.id != null) {
+             txt_title_sktb_sktt__sp3_detail.text = "No SKTB"
+-            txt_no_sktb_sktt_sp3_detail.text = sp3.sktb?.no_sktb
++            txt_no_sktb_sktt_sp3_detail.text = sp4.sktb?.no_sktb
+         } else {
+             txt_title_sktb_sktt__sp3_detail.text = "No SKTT"
+-            txt_no_sktb_sktt_sp3_detail.text = sp3?.sktt?.no_sktt
++            txt_no_sktb_sktt_sp3_detail.text = sp4?.sktt?.no_sktt
+         }
+ 
+     }
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/rpph/EditRpphActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.rpph\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport androidx.core.content.ContextCompat\r\nimport com.github.razir.progressbutton.*\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.PutKkeOnRpphModel\r\nimport id.calocallo.sicape.network.request.RpphReq\r\nimport id.calocallo.sicape.network.response.RpphResp\r\nimport id.calocallo.sicape.ui.main.choose.skhd.ChooseSkhdActivity\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_add_rpph.*\r\nimport kotlinx.android.synthetic.main.activity_edit_rpph.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass EditRpphActivity : BaseActivity() {\r\n    private var rpphReq = RpphReq()\r\n    private var idPutKke: Int? = null\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_edit_rpph)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Edit Data RPPH\"\r\n\r\n        val dataRpph = intent.extras?.getParcelable<RpphResp>(EDIT_RPPH_EDIT)\r\n        getDataRpph(dataRpph)\r\n\r\n        btn_save_rpph_edit.attachTextChangeAnimator()\r\n        bindProgressButton(btn_save_rpph_edit)\r\n        btn_save_rpph_edit.setOnClickListener {\r\n            updateRpph(dataRpph)\r\n        }\r\n\r\n        btn_pick_put_kke_rps_edit.setOnClickListener {\r\n            val intent = Intent(this, ChooseSkhdActivity::class.java)\r\n            intent.putExtra(ChooseSkhdActivity.PUT_KKE, ChooseSkhdActivity.PUT_KKE)\r\n            startActivityForResult(intent, REQ_PUT_KKE_ON_RPPH_EDIT)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == REQ_PUT_KKE_ON_RPPH_EDIT) {\r\n            if (resultCode == RES_PUT_KKE_ON_RPPH_EDIT) {\r\n                val putKkeModel = data?.getParcelableExtra<PutKkeOnRpphModel>(GET_RPPH_EDIT)\r\n                idPutKke = putKkeModel?.id\r\n                txt_put_kke_rps_edit.text = putKkeModel?.no_putkke\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun updateRpph(dataRpph: RpphResp?) {\r\n        rpphReq.no_rpph = edt_no_rpph_edit.text.toString()\r\n        rpphReq.dasar_ph = edt_dasar_rpph_edit.text.toString()\r\n        rpphReq.isi_rekomendasi = edt_isi_rekomendasi_rpph_edit.text.toString()\r\n        rpphReq.kota_penetapan = edt_kota_penetapan_rpph_edit.text.toString()\r\n        rpphReq.tanggal_penetapan = edt_tanggal_penetapan_rpph_edit.text.toString()\r\n        rpphReq.nama_yang_menetapkan = edt_nama_pimpinan_rpph_edit.text.toString()\r\n        rpphReq.pangkat_yang_menetapkan =\r\n            edt_pangkat_pimpinan_rpph_edit.text.toString().toUpperCase()\r\n        rpphReq.nrp_yang_menetapkan = edt_nrp_pimpinan_rpph_edit.text.toString()\r\n        rpphReq.tembusan = edt_tembusan_rpph_edit.text.toString()\r\n        rpphReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_rpph_edit.text.toString()\r\n        rpphReq.id_putkke = idPutKke\r\n        Log.e(\"edit RPPH\", \"$rpphReq\")\r\n\r\n        val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!\r\n        val size = resources.getDimensionPixelSize(R.dimen.space_25dp)\r\n        animated.setBounds(0, 0, size, size)\r\n        btn_save_rpph_edit.showProgress {\r\n            progressColor = Color.WHITE\r\n        }\r\n\r\n        btn_save_rpph_edit.showDrawable(animated) {\r\n            textMarginRes = R.dimen.space_10dp\r\n            buttonTextRes = R.string.data_updated\r\n        }\r\n\r\n        Handler(Looper.getMainLooper()).postDelayed({\r\n            btn_save_rpph_edit.hideDrawable(R.string.save)\r\n\r\n        }, 2000)\r\n    }\r\n\r\n    private fun getDataRpph(dataRpph: RpphResp?) {\r\n        txt_put_kke_rps_edit.text = dataRpph?.putkke?.no_putkke\r\n        idPutKke = dataRpph?.putkke?.id\r\n        edt_no_rpph_edit.setText(dataRpph?.no_rpph)\r\n        edt_dasar_rpph_edit.setText(dataRpph?.dasar_ph)\r\n        edt_isi_rekomendasi_rpph_edit.setText(dataRpph?.isi_rekomendasi)\r\n        edt_kota_penetapan_rpph_edit.setText(dataRpph?.kota_penetapan)\r\n        edt_tanggal_penetapan_rpph_edit.setText(dataRpph?.tanggal_penetapan)\r\n        edt_nama_pimpinan_rpph_edit.setText(dataRpph?.nama_yang_menetapkan)\r\n        edt_pangkat_pimpinan_rpph_edit.setText(\r\n            dataRpph?.pangkat_yang_menetapkan.toString().toUpperCase()\r\n        )\r\n        edt_nrp_pimpinan_rpph_edit.setText(dataRpph?.nrp_yang_menetapkan)\r\n        edt_jabatan_pimpinan_rpph_edit.setText(dataRpph?.jabatan_yang_menetapkan)\r\n        edt_tembusan_rpph_edit.setText(dataRpph?.tembusan)\r\n    }\r\n\r\n    companion object {\r\n        const val EDIT_RPPH_EDIT = \"EDIT_RPPH\"\r\n        const val GET_RPPH_EDIT = \"GET_RPPH\"\r\n        const val REQ_PUT_KKE_ON_RPPH_EDIT = 1\r\n        const val RES_PUT_KKE_ON_RPPH_EDIT = 2\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/rpph/EditRpphActivity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/rpph/EditRpphActivity.kt	(date 1615396412337)
+@@ -2,7 +2,6 @@
+ 
+ import android.content.Intent
+ import android.graphics.Color
+-import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.os.Handler
+ import android.os.Looper
+@@ -62,10 +61,10 @@
+         rpphReq.isi_rekomendasi = edt_isi_rekomendasi_rpph_edit.text.toString()
+         rpphReq.kota_penetapan = edt_kota_penetapan_rpph_edit.text.toString()
+         rpphReq.tanggal_penetapan = edt_tanggal_penetapan_rpph_edit.text.toString()
+-        rpphReq.nama_yang_menetapkan = edt_nama_pimpinan_rpph_edit.text.toString()
+-        rpphReq.pangkat_yang_menetapkan =
++        rpphReq.nama_kabid_propam = edt_nama_pimpinan_rpph_edit.text.toString()
++        rpphReq.pangkat_kabid_propam =
+             edt_pangkat_pimpinan_rpph_edit.text.toString().toUpperCase()
+-        rpphReq.nrp_yang_menetapkan = edt_nrp_pimpinan_rpph_edit.text.toString()
++        rpphReq.nrp_kabid_propam = edt_nrp_pimpinan_rpph_edit.text.toString()
+         rpphReq.tembusan = edt_tembusan_rpph_edit.text.toString()
+         rpphReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_rpph_edit.text.toString()
+         rpphReq.id_putkke = idPutKke
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/rpph/AddRpphActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.rpph\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.core.content.ContextCompat\r\nimport com.github.razir.progressbutton.hideDrawable\r\nimport com.github.razir.progressbutton.showDrawable\r\nimport com.github.razir.progressbutton.showProgress\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.PutKkeOnRpphModel\r\nimport id.calocallo.sicape.network.request.RpphReq\r\nimport id.calocallo.sicape.network.response.RpphResp\r\nimport id.calocallo.sicape.ui.main.choose.skhd.ChooseSkhdActivity\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_add_rpph.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass AddRpphActivity : BaseActivity() {\r\n    private var rpphReq = RpphReq()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_add_rpph)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Tambah Data RPPH\"\r\n\r\n\r\n        btn_pick_put_kke_rps_add.setOnClickListener {\r\n            val intent = Intent(this, ChooseSkhdActivity::class.java)\r\n            intent.putExtra(ChooseSkhdActivity.PUT_KKE, ChooseSkhdActivity.PUT_KKE)\r\n            startActivityForResult(intent, REQ_PUT_KKE_ON_RPPH)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n        btn_save_rpph_add.setOnClickListener {\r\n            rpphReq.no_rpph = edt_no_rpph_add.text.toString()\r\n            rpphReq.dasar_ph = edt_dasar_rpph_add.text.toString()\r\n            rpphReq.isi_rekomendasi = edt_isi_rekomendasi_rpph_add.text.toString()\r\n            rpphReq.kota_penetapan = edt_kota_penetapan_rpph_add.text.toString()\r\n            rpphReq.tanggal_penetapan = edt_tanggal_penetapan_rpph_add.text.toString()\r\n            rpphReq.nama_yang_menetapkan = edt_nama_pimpinan_rpph_add.text.toString()\r\n            rpphReq.pangkat_yang_menetapkan = edt_pangkat_pimpinan_rpph_add.text.toString().toUpperCase()\r\n            rpphReq.nrp_yang_menetapkan = edt_nrp_pimpinan_rpph_add.text.toString()\r\n            rpphReq.tembusan = edt_tembusan_rpph_add.text.toString()\r\n            rpphReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_rpph_add.text.toString()\r\n            val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!\r\n            val size = resources.getDimensionPixelSize(R.dimen.space_25dp)\r\n            animated.setBounds(0,0,size,size)\r\n\r\n            btn_save_rpph_add.showProgress{\r\n                    progressColor = Color.WHITE\r\n                }\r\n\r\n            btn_save_rpph_add.showDrawable(animated){\r\n                    textMarginRes = R.dimen.space_10dp\r\n                    buttonTextRes = R.string.data_saved\r\n                }\r\n\r\n            btn_save_rpph_add.hideDrawable(R.string.save)\r\n            Log.e(\"add Data RPPH\",\"$rpphReq\")\r\n        }\r\n\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == REQ_PUT_KKE_ON_RPPH) {\r\n            if (resultCode == RES_PUT_KKE_ON_RPPH) {\r\n                val putKkeModel = data?.getParcelableExtra<PutKkeOnRpphModel>(GET_RPPH)\r\n                rpphReq.id_putkke = putKkeModel?.id\r\n                txt_put_kke_rps_add.text = putKkeModel?.no_putkke\r\n            }\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        const val GET_RPPH = \"GET_RPPH\"\r\n        const val REQ_PUT_KKE_ON_RPPH = 1\r\n        const val RES_PUT_KKE_ON_RPPH = 2\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/rpph/AddRpphActivity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/rpph/AddRpphActivity.kt	(date 1615396412347)
+@@ -2,7 +2,6 @@
+ 
+ import android.content.Intent
+ import android.graphics.Color
+-import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import android.util.Log
+ import androidx.core.content.ContextCompat
+@@ -12,7 +11,6 @@
+ import id.calocallo.sicape.R
+ import id.calocallo.sicape.model.PutKkeOnRpphModel
+ import id.calocallo.sicape.network.request.RpphReq
+-import id.calocallo.sicape.network.response.RpphResp
+ import id.calocallo.sicape.ui.main.choose.skhd.ChooseSkhdActivity
+ import id.co.iconpln.smartcity.ui.base.BaseActivity
+ import kotlinx.android.synthetic.main.activity_add_rpph.*
+@@ -40,9 +38,9 @@
+             rpphReq.isi_rekomendasi = edt_isi_rekomendasi_rpph_add.text.toString()
+             rpphReq.kota_penetapan = edt_kota_penetapan_rpph_add.text.toString()
+             rpphReq.tanggal_penetapan = edt_tanggal_penetapan_rpph_add.text.toString()
+-            rpphReq.nama_yang_menetapkan = edt_nama_pimpinan_rpph_add.text.toString()
+-            rpphReq.pangkat_yang_menetapkan = edt_pangkat_pimpinan_rpph_add.text.toString().toUpperCase()
+-            rpphReq.nrp_yang_menetapkan = edt_nrp_pimpinan_rpph_add.text.toString()
++            rpphReq.nama_kabid_propam = edt_nama_pimpinan_rpph_add.text.toString()
++            rpphReq.pangkat_kabid_propam = edt_pangkat_pimpinan_rpph_add.text.toString().toUpperCase()
++            rpphReq.nrp_kabid_propam = edt_nrp_pimpinan_rpph_add.text.toString()
+             rpphReq.tembusan = edt_tembusan_rpph_add.text.toString()
+             rpphReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_rpph_add.text.toString()
+             val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
+Index: app/src/main/java/id/calocallo/sicape/model/KasusWanjakModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.model\r\n\r\nimport android.os.Parcelable\r\nimport id.calocallo.sicape.network.response.RpphResp\r\nimport id.calocallo.sicape.network.response.RpsResp\r\nimport id.calocallo.sicape.network.response.Sp3Resp\r\nimport kotlinx.android.parcel.Parcelize\r\n\r\n@Parcelize\r\ndata class KasusWanjakModel(\r\n    var lp:LpOnWanjakModel?,\r\n    var skhd:SkhdOnRpsModel?,\r\n    var putkke:PutKkeOnRpphModel?,\r\n    var rps:RpsResp?,\r\n    var rpph:RpphResp?,\r\n    var sktb:SktbOnSp3?,\r\n    var sktt:SkttOnSp3?,\r\n    var sp4:Sp3Resp?,\r\n    var status_terlapor:String?,\r\n    var status_kasus:String?\r\n) : Parcelable
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/model/KasusWanjakModel.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/model/KasusWanjakModel.kt	(date 1615398154013)
+@@ -3,7 +3,7 @@
+ import android.os.Parcelable
+ import id.calocallo.sicape.network.response.RpphResp
+ import id.calocallo.sicape.network.response.RpsResp
+-import id.calocallo.sicape.network.response.Sp3Resp
++import id.calocallo.sicape.network.response.Sp4Resp
+ import kotlinx.android.parcel.Parcelize
+ 
+ @Parcelize
+@@ -15,7 +15,7 @@
+     var rpph:RpphResp?,
+     var sktb:SktbOnSp3?,
+     var sktt:SkttOnSp3?,
+-    var sp4:Sp3Resp?,
++    var sp4:Sp4Resp?,
+     var status_terlapor:String?,
+     var status_kasus:String?
+ ) : Parcelable
+\ No newline at end of file
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/AddSktbActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sktb\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport android.widget.RadioButton\r\nimport androidx.core.content.ContextCompat\r\nimport com.github.razir.progressbutton.*\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.PutKkeOnRpphModel\r\nimport id.calocallo.sicape.model.SkhdOnRpsModel\r\nimport id.calocallo.sicape.network.request.SktbReq\r\nimport id.calocallo.sicape.ui.main.choose.skhd.ChooseSkhdActivity\r\nimport id.calocallo.sicape.ui.main.rehab.rpph.AddRpphActivity\r\nimport id.calocallo.sicape.ui.main.rehab.rps.AddRpsActivity\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.calocallo.sicape.utils.ext.visible\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_add_sktb.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass AddSktbActivity : BaseActivity() {\r\n    private var idSkhd: Int? = null\r\n    private var idPutkke: Int? = null\r\n    private var sktbReq = SktbReq()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_add_sktb)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Tambah Data SKTB\"\r\n\r\n        btn_save_sktb_add.attachTextChangeAnimator()\r\n        bindProgressButton(btn_save_sktb_add)\r\n        btn_save_sktb_add.setOnClickListener {\r\n            addSktb()\r\n        }\r\n\r\n\r\n\r\n        btn_pick_skhd_sktb_add.setOnClickListener {\r\n            val intent = Intent(this, ChooseSkhdActivity::class.java)\r\n            startActivityForResult(intent, AddRpsActivity.REQ_ID_SKHD)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n\r\n        btn_pick_put_kke_sktb_add.setOnClickListener {\r\n            val intent = Intent(this, ChooseSkhdActivity::class.java)\r\n            intent.putExtra(ChooseSkhdActivity.PUT_KKE, ChooseSkhdActivity.PUT_KKE)\r\n            startActivityForResult(intent, AddRpphActivity.REQ_PUT_KKE_ON_RPPH)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n\r\n\r\n        rg_skhd_putkke_sktb_add.setOnCheckedChangeListener { group, checkedId ->\r\n            val radio: RadioButton = findViewById(checkedId)\r\n            if (radio.isChecked && radio.text == \"SKHD\") {\r\n                ll_skhd_sktb_add.visible()\r\n                ll_put_kke_sktb_add.gone()\r\n\r\n            } else {\r\n                ll_put_kke_sktb_add.visible()\r\n                ll_skhd_sktb_add.gone()\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun addSktb() {\r\n        val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!\r\n        val size = resources.getDimensionPixelSize(R.dimen.space_25dp)\r\n        animated.setBounds(0, 0, size, size)\r\n\r\n        sktbReq.no_sktb = edt_no_sktb_add.text.toString()\r\n        sktbReq.menimbang_p2 = edt_menimbang_p2_sktb_add.text.toString()\r\n        sktbReq.mengingat_p5 = edt_mengingat_p5_sktb_add.text.toString()\r\n        sktbReq.kota_penetapan = edt_kota_penetapan_sktb_add.text.toString()\r\n        sktbReq.tanggal_penetapan = edt_tanggal_penetapan_sktb_add.text.toString()\r\n        sktbReq.nama_yang_menetapkan = edt_nama_pimpinan_sktb_add.text.toString()\r\n        sktbReq.pangkat_yang_menetapkan =\r\n            edt_pangkat_pimpinan_sktb_add.text.toString().toUpperCase()\r\n        sktbReq.nrp_yang_menetapkan = edt_nrp_pimpinan_sktb_add.text.toString()\r\n        sktbReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_sktb_add.text.toString()\r\n        sktbReq.tembusan = edt_tembusan_sktb_add.text.toString()\r\n        sktbReq.id_skhd = idSkhd\r\n        sktbReq.id_putkke = idPutkke\r\n\r\n        btn_save_sktb_add.showProgress {\r\n            progressColor = Color.WHITE\r\n        }\r\n        btn_save_sktb_add.showDrawable(animated) {\r\n            textMarginRes = R.dimen.space_10dp\r\n            buttonTextRes = R.string.data_saved\r\n        }\r\n        Handler(Looper.getMainLooper()).postDelayed({\r\n            btn_save_sktb_add.hideDrawable(R.string.save)\r\n        }, 2000)\r\n        Log.e(\"Add SKTB\", \"$sktbReq\")\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == AddRpsActivity.REQ_ID_SKHD) {\r\n            if (resultCode == AddRpsActivity.RES_ID_SKHD) {\r\n                val getSkhd = data?.getParcelableExtra<SkhdOnRpsModel>(AddRpsActivity.GET_SKHD)\r\n                Log.e(\"skhd\", \"$getSkhd\")\r\n                if (getSkhd == null) {\r\n                    txt_skhd_sktb_add.text = \"No SKHD\"\r\n                } else {\r\n                    txt_skhd_sktb_add.text = getSkhd.no_skhd\r\n                    idSkhd = getSkhd.id\r\n                }\r\n            }\r\n        }\r\n\r\n        if (requestCode == AddRpphActivity.REQ_PUT_KKE_ON_RPPH) {\r\n            if (resultCode == AddRpphActivity.RES_PUT_KKE_ON_RPPH) {\r\n                val putKkeModel =\r\n                    data?.getParcelableExtra<PutKkeOnRpphModel>(AddRpphActivity.GET_RPPH)\r\n                Log.e(\"putKKe\", \"$putKkeModel\")\r\n                if (putKkeModel == null) {\r\n                    txt_put_kke_sktb_add.text = \"No PUTKKE\"\r\n                } else {\r\n                    idPutkke = putKkeModel.id\r\n                    txt_put_kke_sktb_add.text = putKkeModel.no_putkke\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        const val REQ_SKHD_ON_SKTB = 1\r\n        const val REQ_PUTKKE_ON_SKTB = 2\r\n        const val RES_SKHD_ON_SKTB = 3\r\n        const val RES_PUTKKE_ON_SKTB = 4\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/AddSktbActivity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/AddSktbActivity.kt	(date 1615397225368)
+@@ -79,9 +79,9 @@
+         sktbReq.kota_penetapan = edt_kota_penetapan_sktb_add.text.toString()
+         sktbReq.tanggal_penetapan = edt_tanggal_penetapan_sktb_add.text.toString()
+         sktbReq.nama_yang_menetapkan = edt_nama_pimpinan_sktb_add.text.toString()
+-        sktbReq.pangkat_yang_menetapkan =
++        sktbReq.pangkat_kabid_propam =
+             edt_pangkat_pimpinan_sktb_add.text.toString().toUpperCase()
+-        sktbReq.nrp_yang_menetapkan = edt_nrp_pimpinan_sktb_add.text.toString()
++        sktbReq.nrp_kabid_propam = edt_nrp_pimpinan_sktb_add.text.toString()
+         sktbReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_sktb_add.text.toString()
+         sktbReq.tembusan = edt_tembusan_sktb_add.text.toString()
+         sktbReq.id_skhd = idSkhd
+Index: app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/EditSktbActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package id.calocallo.sicape.ui.main.rehab.sktb\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.util.Log\r\nimport android.widget.RadioButton\r\nimport androidx.core.content.ContextCompat\r\nimport com.github.razir.progressbutton.*\r\nimport id.calocallo.sicape.R\r\nimport id.calocallo.sicape.model.PutKkeOnRpphModel\r\nimport id.calocallo.sicape.model.SkhdOnRpsModel\r\nimport id.calocallo.sicape.network.request.SktbReq\r\nimport id.calocallo.sicape.network.response.SktbResp\r\nimport id.calocallo.sicape.ui.main.choose.skhd.ChooseSkhdActivity\r\nimport id.calocallo.sicape.ui.main.rehab.rpph.EditRpphActivity\r\nimport id.calocallo.sicape.ui.main.rehab.rps.AddRpsActivity\r\nimport id.calocallo.sicape.ui.main.rehab.rps.EditRpsActivity\r\nimport id.calocallo.sicape.utils.ext.gone\r\nimport id.calocallo.sicape.utils.ext.visible\r\nimport id.co.iconpln.smartcity.ui.base.BaseActivity\r\nimport kotlinx.android.synthetic.main.activity_edit_sktb.*\r\nimport kotlinx.android.synthetic.main.layout_toolbar_white.*\r\n\r\nclass EditSktbActivity : BaseActivity() {\r\n    private var idSkhd: Int? = null\r\n    private var idSkhdResult: Int? = null\r\n    private var idPutkke: Int? = null\r\n    private var idPutkkeResult: Int? = null\r\n    private var sktbReq = SktbReq()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_edit_sktb)\r\n        setupActionBarWithBackButton(toolbar)\r\n        supportActionBar?.title = \"Edit Data SKTB\"\r\n        val dataSktb = intent.extras?.getParcelable<SktbResp>(EDIT_SKTB)\r\n        getViewSktb(dataSktb)\r\n\r\n        btn_save_sktb_edit.attachTextChangeAnimator()\r\n        bindProgressButton(btn_save_sktb_edit)\r\n        btn_save_sktb_edit.setOnClickListener {\r\n            updateSktb(dataSktb)\r\n        }\r\n\r\n        rg_skhd_putkke_sktb_edit.setOnCheckedChangeListener { group, checkedId ->\r\n            val radio: RadioButton = findViewById(checkedId)\r\n            if (radio.isChecked && radio.text == \"SKHD\") {\r\n                ll_skhd_sktb_edit.visible()\r\n                ll_put_kke_sktb_edit.gone()\r\n\r\n            } else if (radio.isChecked && radio.text == \"PUT KKE\") {\r\n                ll_skhd_sktb_edit.gone()\r\n                ll_put_kke_sktb_edit.visible()\r\n            }\r\n        }\r\n        btn_pick_put_kke_sktb_edit.setOnClickListener {\r\n            val intent = Intent(this, ChooseSkhdActivity::class.java)\r\n            intent.putExtra(ChooseSkhdActivity.PUT_KKE, ChooseSkhdActivity.PUT_KKE)\r\n            startActivityForResult(intent, EditRpphActivity.REQ_PUT_KKE_ON_RPPH_EDIT)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n        btn_pick_skhd_sktb_edit.setOnClickListener {\r\n            val intent = Intent(this, ChooseSkhdActivity::class.java)\r\n            startActivityForResult(intent, EditRpsActivity.REQ_ID_SKHD_EDIT_RPS)\r\n            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)\r\n        }\r\n    }\r\n\r\n    private fun updateSktb(dataSktb: SktbResp?) {\r\n        val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!\r\n        val size = resources.getDimensionPixelSize(R.dimen.space_25dp)\r\n        animated.setBounds(0, 0, size, size)\r\n\r\n        sktbReq.no_sktb = edt_no_sktb_edit.text.toString()\r\n        sktbReq.menimbang_p2 = edt_menimbang_p2_sktb_edit.text.toString()\r\n        sktbReq.mengingat_p5 = edt_mengingat_p5_sktb_edit.text.toString()\r\n        sktbReq.kota_penetapan = edt_kota_penetapan_sktb_edit.text.toString()\r\n        sktbReq.tanggal_penetapan = edt_tanggal_penetapan_sktb_edit.text.toString()\r\n        sktbReq.nama_yang_menetapkan = edt_nama_pimpinan_sktb_edit.text.toString()\r\n        sktbReq.pangkat_yang_menetapkan =\r\n            edt_pangkat_pimpinan_sktb_edit.text.toString().toUpperCase()\r\n        sktbReq.nrp_yang_menetapkan = edt_nrp_pimpinan_sktb_edit.text.toString()\r\n        sktbReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_sktb_edit.text.toString()\r\n        sktbReq.tembusan = edt_tembusan_sktb_edit.text.toString()\r\n//        if (idPutkke == dataSktb?.putkke?.id) {\r\n        sktbReq.id_putkke = idPutkke\r\n//            sktbReq.id_skhd = null\r\n//        } else {\r\n        sktbReq.id_skhd = idSkhd\r\n//            sktbReq.id_putkke = null\r\n//        }\r\n\r\n        btn_save_sktb_edit.showProgress {\r\n            progressColor = Color.WHITE\r\n        }\r\n        btn_save_sktb_edit.showDrawable(animated) {\r\n            textMarginRes = R.dimen.space_10dp\r\n            buttonTextRes = R.string.data_saved\r\n        }\r\n        Handler(Looper.getMainLooper()).postDelayed({\r\n            btn_save_sktb_edit.hideDrawable(R.string.save)\r\n        }, 2000)\r\n        Log.e(\"Edit SKTB\", \"$sktbReq\")\r\n    }\r\n\r\n    private fun getViewSktb(dataSktb: SktbResp?) {\r\n        if (dataSktb?.putkke?.id != null) {\r\n            rb_put_kke_sktb_edit.isChecked = true\r\n            ll_skhd_sktb_edit.gone()\r\n            ll_put_kke_sktb_edit.visible()\r\n        }\r\n        if (dataSktb?.skhd?.id != null) {\r\n            rb_skhd_sktb_edit.isChecked = true\r\n            ll_skhd_sktb_edit.visible()\r\n            ll_put_kke_sktb_edit.gone()\r\n        }\r\n\r\n        edt_no_sktb_edit.setText(dataSktb?.no_sktb)\r\n        edt_menimbang_p2_sktb_edit.setText(dataSktb?.menimbang_p2)\r\n        edt_mengingat_p5_sktb_edit.setText(dataSktb?.mengingat_p5)\r\n        edt_kota_penetapan_sktb_edit.setText(dataSktb?.kota_penetapan)\r\n        edt_tanggal_penetapan_sktb_edit.setText(dataSktb?.tanggal_penetapan)\r\n        edt_nama_pimpinan_sktb_edit.setText(dataSktb?.nama_yang_menetapkan)\r\n        edt_pangkat_pimpinan_sktb_edit.setText(\r\n            dataSktb?.pangkat_yang_menetapkan.toString().toUpperCase()\r\n        )\r\n        edt_nrp_pimpinan_sktb_edit.setText(dataSktb?.nrp_yang_menetapkan)\r\n        edt_jabatan_pimpinan_sktb_edit.setText(dataSktb?.jabatan_yang_menetapkan)\r\n        edt_tembusan_sktb_edit.setText(dataSktb?.tembusan)\r\n        txt_skhd_sktb_edit.text = dataSktb?.skhd?.no_skhd\r\n        txt_put_kke_sktb_edit.text = dataSktb?.putkke?.no_putkke\r\n        idSkhd = dataSktb?.skhd?.id\r\n        idPutkke = dataSktb?.putkke?.id\r\n\r\n    }\r\n\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n        if (requestCode == EditRpsActivity.REQ_ID_SKHD_EDIT_RPS) {\r\n            if (resultCode == AddRpsActivity.RES_ID_SKHD) {\r\n                val getSkhd = data?.getParcelableExtra<SkhdOnRpsModel>(AddRpsActivity.GET_SKHD)\r\n                if (getSkhd?.id == null) {\r\n                    txt_skhd_sktb_edit.text = \"No SKHD\"\r\n                } else {\r\n                    txt_skhd_sktb_edit.text = getSkhd.no_skhd\r\n                    idSkhd = getSkhd.id\r\n                    idPutkke = null\r\n                }\r\n            }\r\n        }\r\n        if (requestCode == EditRpphActivity.REQ_PUT_KKE_ON_RPPH_EDIT) {\r\n            if (resultCode == EditRpphActivity.RES_PUT_KKE_ON_RPPH_EDIT) {\r\n                val putKkeModel =\r\n                    data?.getParcelableExtra<PutKkeOnRpphModel>(EditRpphActivity.GET_RPPH_EDIT)\r\n                if (putKkeModel?.id == null) {\r\n                    txt_put_kke_sktb_edit.text = \"No PUT KKE\"\r\n                } else {\r\n                    idPutkke = putKkeModel.id\r\n                    txt_put_kke_sktb_edit.text = putKkeModel.no_putkke\r\n                    idSkhd = null\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    companion object {\r\n        const val EDIT_SKTB = \"EDIT_SKTB\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/EditSktbActivity.kt	(revision f2730b4f73b1dbf81c266d3b63352b253d9c5003)
++++ app/src/main/java/id/calocallo/sicape/ui/main/rehab/sktb/EditSktbActivity.kt	(date 1615397225395)
+@@ -79,9 +79,9 @@
+         sktbReq.kota_penetapan = edt_kota_penetapan_sktb_edit.text.toString()
+         sktbReq.tanggal_penetapan = edt_tanggal_penetapan_sktb_edit.text.toString()
+         sktbReq.nama_yang_menetapkan = edt_nama_pimpinan_sktb_edit.text.toString()
+-        sktbReq.pangkat_yang_menetapkan =
++        sktbReq.pangkat_kabid_propam =
+             edt_pangkat_pimpinan_sktb_edit.text.toString().toUpperCase()
+-        sktbReq.nrp_yang_menetapkan = edt_nrp_pimpinan_sktb_edit.text.toString()
++        sktbReq.nrp_kabid_propam = edt_nrp_pimpinan_sktb_edit.text.toString()
+         sktbReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_sktb_edit.text.toString()
+         sktbReq.tembusan = edt_tembusan_sktb_edit.text.toString()
+ //        if (idPutkke == dataSktb?.putkke?.id) {
+@@ -122,11 +122,11 @@
+         edt_mengingat_p5_sktb_edit.setText(dataSktb?.mengingat_p5)
+         edt_kota_penetapan_sktb_edit.setText(dataSktb?.kota_penetapan)
+         edt_tanggal_penetapan_sktb_edit.setText(dataSktb?.tanggal_penetapan)
+-        edt_nama_pimpinan_sktb_edit.setText(dataSktb?.nama_yang_menetapkan)
++        edt_nama_pimpinan_sktb_edit.setText(dataSktb?.nama_kabid_propam)
+         edt_pangkat_pimpinan_sktb_edit.setText(
+-            dataSktb?.pangkat_yang_menetapkan.toString().toUpperCase()
++            dataSktb?.pangkat_kabid_propam.toString().toUpperCase()
+         )
+-        edt_nrp_pimpinan_sktb_edit.setText(dataSktb?.nrp_yang_menetapkan)
++        edt_nrp_pimpinan_sktb_edit.setText(dataSktb?.nrp_kabid_propam)
+         edt_jabatan_pimpinan_sktb_edit.setText(dataSktb?.jabatan_yang_menetapkan)
+         edt_tembusan_sktb_edit.setText(dataSktb?.tembusan)
+         txt_skhd_sktb_edit.text = dataSktb?.skhd?.no_skhd
