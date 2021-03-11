@@ -16,7 +16,9 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.LhgReq
 import id.calocallo.sicape.network.response.AddLhgResp
 import id.calocallo.sicape.network.response.Base1Resp
+import id.calocallo.sicape.network.response.LhgMinResp
 import id.calocallo.sicape.network.response.PesertaLhgResp
+import id.calocallo.sicape.ui.gelar.peserta_gelar.ListPesertaGelarActivity
 import id.calocallo.sicape.utils.GelarDataManager
 import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -74,11 +76,11 @@ class AddTanggPesertaGelarActivity : BaseActivity() {
             btn_next_tanggapan_peserta_gelar.showProgress {
                 progressColor = Color.WHITE
             }
-            apiGelar()
+            apiAddGelar()
         }
     }
 
-    private fun apiGelar() {
+    private fun apiAddGelar() {
         NetworkConfig().getServLhg().addLhg("Bearer ${sessionManager1.fetchAuthToken()}", lhgReq)
             .enqueue(
                 object :
@@ -90,12 +92,15 @@ class AddTanggPesertaGelarActivity : BaseActivity() {
                         if (response.body()?.message == "Data lhg saved succesfully") {
                             btn_next_tanggapan_peserta_gelar.hideProgress(R.string.data_saved)
                             val intent =
-                                Intent(this@AddTanggPesertaGelarActivity, ListGelarActivity::class.java)
+                                Intent(
+                                    this@AddTanggPesertaGelarActivity,
+                                    ListGelarActivity::class.java
+                                )
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             startActivity(intent)
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                            gelarDataManager.clearGelar()
                             finish()
-
                         } else {
                             btn_next_tanggapan_peserta_gelar.hideProgress(R.string.not_save)
 
@@ -104,7 +109,8 @@ class AddTanggPesertaGelarActivity : BaseActivity() {
 
                     override fun onFailure(call: Call<Base1Resp<AddLhgResp>>, t: Throwable) {
                         btn_next_tanggapan_peserta_gelar.hideProgress(R.string.not_save)
-                        Toast.makeText(this@AddTanggPesertaGelarActivity, "$t", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AddTanggPesertaGelarActivity, "$t", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 })
     }
@@ -117,18 +123,21 @@ class AddTanggPesertaGelarActivity : BaseActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         adapterTanggPeserta =
-            AddTanggPesertaAdapter(this, listTanggapan, object : AddTanggPesertaAdapter.OnClickTanggPeserta {
-                override fun onDelete(position: Int) {
-                    listTanggapan.removeAt(position)
-                    adapterTanggPeserta.notifyDataSetChanged()
-                }
-            })
+            AddTanggPesertaAdapter(
+                this,
+                listTanggapan,
+                object : AddTanggPesertaAdapter.OnClickTanggPeserta {
+                    override fun onDelete(position: Int) {
+                        listTanggapan.removeAt(position)
+                        adapterTanggPeserta.notifyItemRemoved(position)
+                    }
+                })
         rv_tanggapan_peserta_gelar.adapter = adapterTanggPeserta
         btn_add_item_tanggapan_peserta_gelar.setOnClickListener {
             val position = if (listTanggapan.isEmpty()) 0 else listTanggapan.size - 1
             listTanggapan.add(PesertaLhgResp())
             adapterTanggPeserta.notifyItemChanged(position)
-            adapterTanggPeserta.notifyDataSetChanged()
+            adapterTanggPeserta.notifyItemInserted(position)
         }
     }
 
