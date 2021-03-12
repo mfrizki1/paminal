@@ -5,7 +5,7 @@ import id.calocallo.sicape.model.SkhdOnRpsModel
 import kotlinx.android.parcel.Parcelize
 
 data class RpsReq(
-    var id_lp: String?,/*ADD*/
+    var id_lp: Int?,/*ADD*/
     var nama_dinas: String?,
     var no_nota_dinas: String?,
     var tanggal_nota_dinas: String?,

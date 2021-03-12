@@ -16,6 +16,7 @@ import id.calocallo.sicape.ui.gelar.AddGelarActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
 import id.calocallo.sicape.ui.main.choose.lp.ListLpSkhdActivity
 import id.calocallo.sicape.ui.main.putkke.AddPutKkeActivity
+import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
@@ -39,6 +40,7 @@ class ChooseLhpActivity : BaseActivity() {
     private lateinit var callbackChooseLhp: AdapterCallback<LhpMinResp>
     private var isPutkke: Boolean? = null
     private var isLhg: Boolean? = null
+    private var isSktt: Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_lhp)
@@ -47,6 +49,7 @@ class ChooseLhpActivity : BaseActivity() {
         supportActionBar?.title = "Pilih Data LHP"
         isPutkke = intent.getBooleanExtra(AddPutKkeActivity.IS_PUTTKE, false)
         isLhg = intent.getBooleanExtra(AddGelarActivity.IS_LHG, false)
+        isSktt = intent.getBooleanExtra(AddSkttActivity.LP_SKTT, false)
 //        getListLhp()
         apiListLhp()
     }
@@ -108,7 +111,15 @@ class ChooseLhpActivity : BaseActivity() {
                         }
                     startActivityForResult(intent, REQ_LHP)
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                }else {
+                }else if(isSktt == true){
+                    val intent = Intent(this@ChooseLhpActivity, ListLpSkhdActivity::class.java).apply {
+                        this.putExtra(AddSkttActivity.LP_SKTT,true)
+                        this.putExtra(DATA_LHP, data)
+                    }
+                    startActivityForResult(intent, REQ_LHP)
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                else {
                     /*SKHD/PUTKKE*/
                     val intent =
 //                    Intent(this@ChooseLhpActivity, ChooseLpSkhdActivity::class.java).apply {

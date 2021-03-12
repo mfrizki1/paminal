@@ -26,7 +26,7 @@ class EditRpsActivity : BaseActivity() {
         btn_save_rps_edit.setOnClickListener {
             updateRps(getDataRps)
         }
-        btn_pick_skhd_rps_edit.setOnClickListener {
+        btn_pick_lp_rps_edit.setOnClickListener {
             val intent = Intent(this, ChooseSkhdActivity::class.java)
             startActivityForResult(intent, REQ_ID_SKHD_EDIT_RPS)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -38,33 +38,32 @@ class EditRpsActivity : BaseActivity() {
         if (requestCode == REQ_ID_SKHD_EDIT_RPS) {
             if (resultCode == AddRpsActivity.RES_ID_SKHD) {
                 val getSkhd = data?.getParcelableExtra<SkhdOnRpsModel>(AddRpsActivity.GET_SKHD)
-                txt_skhd_rps_edit.text = getSkhd?.no_skhd
+                txt_lp_rps_edit.text = getSkhd?.no_skhd
                 idSkhd = getSkhd?.id
             }
         }
     }
 
     private fun updateRps(dataRps: RpsResp?) {
-        rpsReq.no_rps = edt_no_rps_edit.text.toString()
-        rpsReq.dasar_pe = edt_nota_dinas_rps_edit.text.toString()
-        rpsReq.isi_rekomendasi = edt_isi_rekomendasi_rps_edit.text.toString()
+        rpsReq.nama_dinas = edt_nama_dinas_rps_edit.text.toString()
+        rpsReq.no_nota_dinas = edt_no_nota_dinas_rps_edit.text.toString()
+        rpsReq.tanggal_nota_dinas = edt_tanggal_nota_dinas_rps_edit.text.toString()
         rpsReq.kota_penetapan = edt_kota_penetapan_rps_edit.text.toString()
         rpsReq.tanggal_penetapan = edt_tanggal_penetapan_rps_edit.text.toString()
         rpsReq.nama_kabid_propam = edt_nama_pimpinan_rps_edit.text.toString()
         rpsReq.pangkat_kabid_propam = edt_pangkat_pimpinan_rps_edit.text.toString()
-        rpsReq.nrp_yang_menetapkan = edt_nrp_pimpinan_rps_edit.text.toString()
-        rpsReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_rps_edit.text.toString()
+        rpsReq.nrp_kabid_propam = edt_nrp_pimpinan_rps_edit.text.toString()
         rpsReq.tembusan = edt_tembusan_rps_edit.text.toString()
-        rpsReq.id_skhd = idSkhd
         Log.e("edit RPs", "$rpsReq")
     }
 
     private fun getViewDataRps(dataRps: RpsResp?) {
-        idSkhd = dataRps?.skhd?.id
-        txt_skhd_rps_edit.text = dataRps?.skhd?.no_skhd
         edt_no_rps_edit.setText(dataRps?.no_rps)
-        edt_nota_dinas_rps_edit.setText(dataRps?.dasar_pe)
-        edt_isi_rekomendasi_rps_edit.setText(dataRps?.isi_rekomendasi)
+        txt_lp_rps_edit.text = dataRps?.lp?.no_lp
+        edt_no_rps_edit.setText(dataRps?.no_rps)
+        edt_nama_dinas_rps_edit.setText(dataRps?.nama_dinas)
+        edt_no_nota_dinas_rps_edit.setText(dataRps?.no_nota_dinas)
+        edt_tanggal_nota_dinas_rps_edit.setText(dataRps?.tanggal_nota_dinas)
         edt_kota_penetapan_rps_edit.setText(dataRps?.kota_penetapan)
         edt_tanggal_penetapan_rps_edit.setText(dataRps?.tanggal_penetapan)
         edt_nama_pimpinan_rps_edit.setText(dataRps?.nama_kabid_propam)
@@ -72,7 +71,6 @@ class EditRpsActivity : BaseActivity() {
             dataRps?.pangkat_kabid_propam.toString().toUpperCase()
         )
         edt_nrp_pimpinan_rps_edit.setText(dataRps?.nrp_kabid_propam)
-        edt_jabatan_pimpinan_rps_edit.setText(dataRps?.jabatan_yang_menetapkan)
         edt_tembusan_rps_edit.setText(dataRps?.tembusan)
     }
 

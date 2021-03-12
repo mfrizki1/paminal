@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.catpers
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +22,6 @@ import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_catpers.*
-import kotlinx.android.synthetic.main.activity_detail_sp3.*
 import kotlinx.android.synthetic.main.item_catpers.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -71,6 +71,7 @@ class DetailCatpersActivity : BaseActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getDataCatper(dataCatpers: CatpersResp?) {
         txt_nama_personel_catpers_detail.text = dataCatpers?.personel_terlapor?.nama
         txt_pangkat_nrp_personel_catpers_detail.text =

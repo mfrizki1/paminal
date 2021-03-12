@@ -57,9 +57,9 @@
         <activity android:name=".ui.main.catpers.EditCatpersActivity" />
         <activity android:name=".ui.main.catpers.DetailCatpersActivity" />
         <activity android:name=".ui.main.choose.ChooseSktbSkttActivity" />
-        <activity android:name=".ui.main.rehab.sp3.DetailSp3Activity" />
-        <activity android:name=".ui.main.rehab.sp3.EditSp3Activity" />
-        <activity android:name=".ui.main.rehab.sp3.AddSp3Activity" />
+        <activity android:name=".ui.main.rehab.sp4.DetailSp4Activity" />
+        <activity android:name=".ui.main.rehab.sp4.EditSp4Activity" />
+        <activity android:name=".ui.main.rehab.sp4.AddSp4Activity" />
         <activity android:name=".ui.main.rehab.sktt.DetailSkttActivity" />
         <activity android:name=".ui.main.rehab.sktt.EditSkttActivity" />
         <activity android:name=".ui.main.rehab.sktt.AddSkttActivity" />
@@ -73,7 +73,7 @@
         <activity android:name=".ui.main.choose.skhd.ChooseSkhdActivity" />
         <activity android:name=".ui.main.rehab.rps.AddRpsActivity" />
         <activity android:name=".ui.main.rehab.rps.DetailRpsActivity" />
-        <activity android:name=".ui.main.rehab.sp3.ListSp3Activity" />
+        <activity android:name=".ui.main.rehab.sp4.ListSp4Activity" />
         <activity android:name=".ui.main.rehab.sktt.ListSkttActivity" />
         <activity android:name=".ui.main.rehab.sktb.ListSktbActivity" />
         <activity android:name=".ui.main.rehab.rpph.ListRpphActivity" />

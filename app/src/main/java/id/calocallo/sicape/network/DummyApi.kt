@@ -30,7 +30,7 @@ interface DummyApi {
     fun getSktt(): Call<ArrayList<SkttResp>>
 
     @GET("v1/5fdd423a")
-    fun getSp3(): Call<ArrayList<Sp3Resp>>
+    fun getSp3(): Call<ArrayList<Sp4Resp>>
 
     //lp without lhp
     @GET("v1/0c6c4a1b")

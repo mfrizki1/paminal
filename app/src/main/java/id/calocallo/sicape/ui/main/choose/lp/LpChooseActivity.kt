@@ -13,6 +13,10 @@ import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.gelar.AddGelarActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
+import id.calocallo.sicape.ui.main.rehab.rpph.AddRpphActivity
+import id.calocallo.sicape.ui.main.rehab.sktb.AddSktbActivity
+import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
+import id.calocallo.sicape.ui.main.rehab.sp4.AddSp4Activity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -44,6 +48,10 @@ class LpChooseActivity : BaseActivity() {
     private var tempJenis: String? = null
     private var isLpForRef: Boolean? = null
     private var isLpForLhg: Boolean? = null
+    private var isLpForRpph: Boolean? = null
+    private var isLpForSktb: Boolean? = null
+    private var isLpForSp4: Boolean? = null
+    private var urlKasus: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,13 +80,30 @@ class LpChooseActivity : BaseActivity() {
         /*LIST LP FOR REF PENYELIDIKAN*/
         isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, false)
         isLpForLhg = intent.getBooleanExtra(AddGelarActivity.IS_LHG, false)
-        if (isLpForRef == true) {
-            getListLpRef()
-        }else if(isLpForLhg == true){
-            Log.e("lhg", "$isLpForLhg")
-        }else{
-            Log.e("lhg", "no DATA")
+        isLpForRpph = intent.getBooleanExtra(AddRpphActivity.IS_RPPH, false)
+        isLpForSktb = intent.getBooleanExtra(AddSktbActivity.IS_SKTB, false)
+        isLpForSp4 = intent.getBooleanExtra(AddSp4Activity.IS_SP4, false)
+        when {
+            isLpForRef == true -> {
+                urlKasus = "masuk"
+            }
+            isLpForLhg == true -> {
+                Log.e("lhg", "$isLpForLhg")
+            }
+            isLpForRpph == true -> {
+                urlKasus = "masa/hukuman/kode/etik"
+            }
+            isLpForSktb == true -> {
+                urlKasus = "masa/hukuman"
+            }
+            isLpForSp4 == true -> {
+                urlKasus = "masa/rehab"
+            }
+            else -> {
+                Log.e("lhg", "no DATA")
+            }
         }
+        getListLpRef()
 //        getListLpByJenis(tempJenis)
         /* sktt
          val sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)
@@ -93,7 +118,8 @@ class LpChooseActivity : BaseActivity() {
     private fun getListLpRef() {
         rl_pb.visible()
         NetworkConfig().getServLp()
-            .getLpForRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}").enqueue(
+            .getLpForRefPenyelidikan("Bearer ${sessionManager1.fetchAuthToken()}", urlKasus)
+            .enqueue(
                 object : Callback<ArrayList<LpMinResp>> {
                     override fun onResponse(
                         call: Call<ArrayList<LpMinResp>>,

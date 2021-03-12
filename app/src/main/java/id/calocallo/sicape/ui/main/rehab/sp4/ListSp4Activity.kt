@@ -1,21 +1,18 @@
-package id.calocallo.sicape.ui.main.rehab.rps
+package id.calocallo.sicape.ui.main.rehab.sp4
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.NetworkDummy
-import id.calocallo.sicape.network.response.RpsMinResp
+import id.calocallo.sicape.network.response.Sp4MinResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_list_rps.*
+import kotlinx.android.synthetic.main.activity_list_sp3.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -26,81 +23,87 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ListRpsActivity : BaseActivity() {
-    private var adapterRps = ReusableAdapter<RpsMinResp>(this)
-    private lateinit var callbackRps: AdapterCallback<RpsMinResp>
+class ListSp4Activity : BaseActivity() {
+    private lateinit var callbackSp4: AdapterCallback<Sp4MinResp>
+    private var adapterSp4 = ReusableAdapter<Sp4MinResp>(this)
     private lateinit var sessionManager1: SessionManager1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_rps)
-        setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title = "List Data RPS"
-        sessionManager1 = SessionManager1(this)
+        setContentView(R.layout.activity_list_sp3)
 
-        btn_add_single_rps.setOnClickListener {
-            startActivity(Intent(this, AddRpsActivity::class.java))
+        sessionManager1 = SessionManager1(this)
+        setupActionBarWithBackButton(toolbar)
+        supportActionBar?.title = "List Data SP3"
+
+        btn_add_single_sp3.setOnClickListener {
+            startActivity(Intent(this, AddSp4Activity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        getListRps()
+        getListSp3()
     }
 
-    private fun getListRps() {
+    private fun getListSp3() {
         rl_pb.visible()
-        NetworkConfig().getServRps().getListRps("Bearer ${sessionManager1.fetchAuthToken()}")
-            .enqueue(object : Callback<ArrayList<RpsMinResp>> {
-                override fun onFailure(call: Call<ArrayList<RpsMinResp>>, t: Throwable) {
-                    rl_no_data.toggleVisibility()
-                    rv_list_rps.toggleVisibility()
+        NetworkConfig().getServSp4().getListSp4("Bearer ${sessionManager1.fetchAuthToken()}")
+            .enqueue(object : Callback<ArrayList<Sp4MinResp>> {
+                override fun onFailure(call: Call<ArrayList<Sp4MinResp>>, t: Throwable) {
+                    rl_pb.gone()
+                    rl_no_data.visible()
+                    rv_list_sp3.gone()
                 }
 
                 override fun onResponse(
-                    call: Call<ArrayList<RpsMinResp>>,
-                    response: Response<ArrayList<RpsMinResp>>
+                    call: Call<ArrayList<Sp4MinResp>>,
+                    response: Response<ArrayList<Sp4MinResp>>
                 ) {
                     if (response.isSuccessful) {
-                        callbackRps = object : AdapterCallback<RpsMinResp> {
+                        rl_pb.gone()
+                        callbackSp4 = object : AdapterCallback<Sp4MinResp> {
                             override fun initComponent(
                                 itemView: View,
-                                data: RpsMinResp,
+                                data: Sp4MinResp,
                                 itemIndex: Int
                             ) {
-                                itemView.txt_edit_pendidikan.text = data.no_rps
+                                itemView.txt_edit_pendidikan.text = data.no_sp4
                             }
 
                             override fun onItemClicked(
                                 itemView: View,
-                                data: RpsMinResp,
+                                data: Sp4MinResp,
                                 itemIndex: Int
                             ) {
                                 val intent =
-                                    Intent(this@ListRpsActivity, DetailRpsActivity::class.java)
-                                intent.putExtra(DetailRpsActivity.DETAIL_RPS, data)
+                                    Intent(this@ListSp4Activity, DetailSp4Activity::class.java)
+                                intent.putExtra(DetailSp4Activity.DETAIL_SP4, data)
                                 startActivity(intent)
                                 overridePendingTransition(
-                                    R.anim.slide_in_right, R.anim.slide_out_left
+                                    R.anim.slide_in_right,
+                                    R.anim.slide_out_left
                                 )
                             }
                         }
-                        adapterRps.adapterCallback(callbackRps)
-                            .isVerticalView().filterable()
-                            .addData(response.body()!!)
-                            .setLayout(R.layout.layout_edit_1_text)
-                            .build(rv_list_rps)
-                        rl_pb.gone()
+                        response.body()?.let {
+                            adapterSp4.adapterCallback(callbackSp4)
+                                .isVerticalView().filterable()
+                                .addData(it)
+                                .setLayout(R.layout.layout_edit_1_text)
+                                .build(rv_list_sp3)
+                        }
                     } else {
                         rl_pb.gone()
                         rl_no_data.visible()
+                        rv_list_sp3.gone()
                     }
                 }
             })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_bar, menu)
         val item = menu?.findItem(R.id.action_search)
         val searchView = item?.actionView as SearchView
-        searchView.queryHint = "Cari RPS"
+        searchView.queryHint = "Cari SP3"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -108,16 +111,16 @@ class ListRpsActivity : BaseActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                adapterRps.filter.filter(newText)
+                adapterSp4.filter.filter(newText)
                 return true
             }
 
         })
         return super.onCreateOptionsMenu(menu)
     }
-
     override fun onResume() {
         super.onResume()
-        getListRps()
+        getListSp3()
     }
+
 }

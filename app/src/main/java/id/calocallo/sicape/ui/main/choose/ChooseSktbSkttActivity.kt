@@ -41,7 +41,6 @@ class ChooseSktbSkttActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_sktb_sktt)
         setupActionBarWithBackButton(toolbar)
-        getIsSkttFromSp3 = intent.extras?.getString(AddSp4Activity.SKTT_ON_SP3)
         if (getIsSkttFromSp3.isNullOrBlank()) {
             getListSktb()
             supportActionBar?.title = "Pilih Data SKTB"

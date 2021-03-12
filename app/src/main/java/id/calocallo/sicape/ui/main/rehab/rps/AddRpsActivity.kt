@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_add_rps.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class AddRpsActivity : BaseActivity() {
-    private var idSkhd: Int? = null
+    private var idLp: Int? = null
     private var rpsReq = RpsReq()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class AddRpsActivity : BaseActivity() {
             addRps()
         }
 
-        btn_pick_skhd_rps_add.setOnClickListener {
+        btn_pick_lp_rps_add.setOnClickListener {
             val intent = Intent(this, ChooseSkhdActivity::class.java)
             startActivityForResult(intent, REQ_ID_SKHD)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -40,18 +40,16 @@ class AddRpsActivity : BaseActivity() {
         val animated = ContextCompat.getDrawable(this, R.drawable.animated_check)!!
         val size = resources.getDimensionPixelSize(R.dimen.space_25dp)
         animated.setBounds(0, 0, size, size)
-
-        rpsReq.no_rps = edt_no_rps_add.text.toString()
-        rpsReq.dasar_pe = edt_nota_dinas_rps_add.text.toString()
-        rpsReq.isi_rekomendasi = edt_isi_rekomendasi_rps_add.text.toString()
+        rpsReq.id_lp = idLp
+        rpsReq.nama_dinas = edt_nama_dinas_rps_add.text.toString()
+        rpsReq.no_nota_dinas = edt_no_nota_dinas_rps_add.text.toString()
+        rpsReq.tanggal_nota_dinas = edt_tanggal_nota_dinas_rps_add.text.toString()
         rpsReq.kota_penetapan = edt_kota_penetapan_rps_add.text.toString()
         rpsReq.tanggal_penetapan = edt_tanggal_penetapan_rps_add.text.toString()
         rpsReq.nama_kabid_propam = edt_nama_pimpinan_rps_add.text.toString()
         rpsReq.pangkat_kabid_propam = edt_pangkat_pimpinan_rps_add.text.toString()
-        rpsReq.nrp_yang_menetapkan = edt_nrp_pimpinan_rps_add.text.toString()
-        rpsReq.jabatan_yang_menetapkan = edt_jabatan_pimpinan_rps_add.text.toString()
+        rpsReq.nrp_kabid_propam = edt_nrp_pimpinan_rps_add.text.toString()
         rpsReq.tembusan = edt_tembusan_rps_add.text.toString()
-        rpsReq.id_skhd = idSkhd
         Log.e("add RPS", "$rpsReq")
         btn_save_rps_add.showProgress {
             progressColor = Color.WHITE
@@ -67,11 +65,11 @@ class AddRpsActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_ID_SKHD) {
-            if (resultCode == RES_ID_SKHD) {
+          /*  if (resultCode == RES_ID_SKHD) {
                 val getSkhd = data?.getParcelableExtra<SkhdOnRpsModel>(GET_SKHD)
-                txt_skhd_rps_add.text = getSkhd?.no_skhd
-                idSkhd = getSkhd?.id
-            }
+                txt_lp_rps_add.text = getSkhd?.no_skhd
+                idLp = getSkhd?.id
+            }*/
         }
     }
 

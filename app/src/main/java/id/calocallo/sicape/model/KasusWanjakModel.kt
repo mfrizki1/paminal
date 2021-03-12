@@ -3,7 +3,7 @@ package id.calocallo.sicape.model
 import android.os.Parcelable
 import id.calocallo.sicape.network.response.RpphResp
 import id.calocallo.sicape.network.response.RpsResp
-import id.calocallo.sicape.network.response.Sp3Resp
+import id.calocallo.sicape.network.response.Sp4Resp
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -15,7 +15,7 @@ data class KasusWanjakModel(
     var rpph:RpphResp?,
     var sktb:SktbOnSp3?,
     var sktt:SkttOnSp3?,
-    var sp4:Sp3Resp?,
+    var sp4:Sp4Resp?,
     var status_terlapor:String?,
     var status_kasus:String?
 ) : Parcelable

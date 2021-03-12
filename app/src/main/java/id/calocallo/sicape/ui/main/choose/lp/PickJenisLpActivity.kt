@@ -32,10 +32,11 @@ class PickJenisLpActivity : BaseActivity() {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Pidana")
             /*LP UNTUK REF PENYELIDIKAN*/
-            intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
-            /*  if (sktt != null) {
-                  intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
-              }*/
+            if (sktt != null) {
+                intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
+            } else {
+                intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
+            }
             startActivityForResult(intent, REQ_LP)
         }
 
@@ -43,10 +44,12 @@ class PickJenisLpActivity : BaseActivity() {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Kode Etik")
             /*LP UNTUK REF PENYELIDIKAN*/
-            intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
-            /* if (sktt != null) {
-                          intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
-                      }*/
+            if (sktt != null) {
+                intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
+            }else{
+                intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
+
+            }
             startActivityForResult(intent, REQ_LP)
 
         }
@@ -54,10 +57,11 @@ class PickJenisLpActivity : BaseActivity() {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Disiplin")
             /*LP UNTUK REF PENYELIDIKAN*/
-            intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
-            /* if (sktt != null) {
-                           intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
-                       }*/
+            if (sktt != null) {
+                intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
+            }else{
+                intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
+            }
             startActivityForResult(intent, REQ_LP)
 
         }

@@ -29,14 +29,15 @@ interface ApiLp {
 
     }
 
-    /*LP FOR REF PENYELIDIKAN*/
+    /*LP FOR REF PENYELIDIKAN/RPPH*/
     @Headers(ACCEPT)
-    @GET("lp/kasus/masuk")
+    @GET("lp/kasus/{jenis}")
     fun getLpForRefPenyelidikan(
-        @Header("Authorization") tokenBearer: String
+        @Header("Authorization") tokenBearer: String,
+        @Path("jenis") jenis: String?
     ): Call<ArrayList<LpMinResp>>
 
-    /*LP FOR REF PENYELIDIKAN*/
+    /*LP FOR REF PENYELIDIKAN/SKHD/LHG*/
     @Headers(ACCEPT)
     @GET("lhp/{id_lhp}/referensi/penyelidikan/tanpa/lhg")
     fun getLpForLhg(
@@ -44,13 +45,21 @@ interface ApiLp {
         @Path("id_lhp") id_lhp: Int?
     ): Call<ArrayList<LpOnSkhd>>
 
+    /*LP FOR REF PENYELIDIKAN/SKHD/LHG*/
     @Headers(ACCEPT)
-    @GET("lhp/{id_lp}/referensi/penyelidikan/kasus/{jenis}")
+    @GET("lhp/{id_lhp}/referensi/penyelidikan/lhg")
+    fun getLpForSktt(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lhp") id_lhp: Int?
+    ): Call<ArrayList<LpOnSkhd>>
+
+    @Headers(ACCEPT)
+    @GET("lhp/{id_lp}/referensi/penyelidikan/{jenis}")
     fun getLpByIdLhp(
         @Header("Authorization") tokenBearer: String,
         @Path("id_lp") id_lp: Int?,
         @Path("jenis") jenis: String
-    ): Call<ArrayList<LpOnSkhd>>
+    ): Call<ArrayList<LpOnSkhd>>/*PICK SKHD/PUTKKE/LHG*/
 
     @Headers(ACCEPT)
     @GET(JENIS_LP)

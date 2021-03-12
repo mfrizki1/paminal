@@ -11,8 +11,10 @@ data class Sp4Req(
     var tanggal_hasil_audit: String?,
     var tanggal_gelar_audit: String?,
     var kota_penetapan: String?,
-    var tanggal_penetapan: String?
-
+    var tanggal_penetapan: String?,
+    var nama_akreditor: String?,
+    var pangkat_akreditor: String?,
+    var nrp_akreditor: String?
     /*  var id_sktb: Int?,
       var id_sktt: Int?,
       var no_sp4: String?,
@@ -28,7 +30,7 @@ data class Sp4Req(
 
 ) {
     constructor() : this(
-        null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null, null,
         null, null
     )
 }

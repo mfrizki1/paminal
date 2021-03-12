@@ -12,6 +12,7 @@ import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.gelar.AddGelarActivity
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.putkke.AddPutKkeActivity
+import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -31,8 +32,9 @@ class ListLpSkhdActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var adapterLpChoose = ReusableAdapter<LpOnSkhd>(this)
     private lateinit var callbackLpChoose: AdapterCallback<LpOnSkhd>
-    private var isPutKke :Boolean? = null
-    private var isLhg :Boolean? = null
+    private var isPutKke: Boolean? = null
+    private var isLhg: Boolean? = null
+    private var isSktt: Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_lp_skhd)
@@ -48,17 +50,23 @@ class ListLpSkhdActivity : BaseActivity() {
         Log.e("idLP", "$idLhp")
         var urlApi = ""
         isPutKke = intent.getBooleanExtra(AddPutKkeActivity.IS_PUTTKE, false)
-        isLhg = intent.getBooleanExtra(AddGelarActivity.IS_LHG,false)
-        if(isPutKke == true){
-            urlApi = "kode/etik"
-        }else{
-            urlApi = "pidana/disiplin"
+        isLhg = intent.getBooleanExtra(AddGelarActivity.IS_LHG, false)
+        isSktt = intent.getBooleanExtra(AddSkttActivity.LP_SKTT, false)
+        when {
+            isPutKke == true -> { urlApi = "kasus/kode/etik" }
+            isLhg == true -> { urlApi = "tanpa/lhg" }
+            isSktt == true -> { urlApi = "lhg" }
+            else -> { urlApi = "kasus/pidana/disiplin" }
         }
-        if(isLhg == true){
-            getListForLhg(idLhp?.id)
-        }else{
-            getListLpByIdLhp(idLhp?.id, urlApi)
-        }
+
+        getListLpByIdLhp(idLhp?.id, urlApi)
+
+        /*  if (isLhg == true) {
+              getListForLhg(idLhp?.id)
+          } else if (isSktt == true) {
+              getListLpForSktt(idLhp?.id)
+          } else {
+          }*/
         /*   Log.e("ListLpSkhd", "$idLhp")
         when (jenisLPFromSkhd) {
             "pidana" -> {
@@ -71,6 +79,36 @@ class ListLpSkhdActivity : BaseActivity() {
             }
         }*/
 
+    }
+
+    private fun getListLpForSktt(id: Int?) {
+        rl_pb.visible()
+        NetworkConfig().getServLp().getLpForSktt("Bearer ${sessionManager1.fetchAuthToken()}", id)
+            .enqueue(object : Callback<ArrayList<LpOnSkhd>> {
+                override fun onResponse(
+                    call: Call<ArrayList<LpOnSkhd>>,
+                    response: Response<ArrayList<LpOnSkhd>>
+                ) {
+                    if (response.isSuccessful) {
+                        rl_pb.gone()
+                        listLpSkhd(response.body())
+                    } else {
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                        rv_choose_lp_skhd.gone()
+                        Toast.makeText(
+                            this@ListLpSkhdActivity, R.string.error, Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<LpOnSkhd>>, t: Throwable) {
+                    Toast.makeText(this@ListLpSkhdActivity, "$t", Toast.LENGTH_SHORT).show()
+                    rl_no_data.visible()
+                    rl_pb.gone()
+                    rv_choose_lp_skhd.gone()
+                }
+            })
     }
 
     private fun getListForLhg(id: Int?) {

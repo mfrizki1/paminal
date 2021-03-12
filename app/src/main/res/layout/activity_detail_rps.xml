@@ -31,49 +31,39 @@
             android:text="No RPS" />
 
         <include layout="@layout/line_separator" />
-
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Surat Keterangan Hasil Disiplin" />
+            android:text="Referensi Laporan Polisi" />
 
         <TextView
-            android:id="@+id/txt_no_skhd_rps_detail"
+            android:id="@+id/txt_no_lp_rps_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No SKHD" />
+            android:text="No LP" />
 
         <include layout="@layout/line_separator" />
-
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dasar RPS" />
+            android:text="Dinas" />
 
         <TextView
-            android:id="@+id/txt_dasar_pe_rps_detail"
+            android:id="@+id/txt_nama_dinas_rps_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nota DinasNota DinasNota DinasNota DinasNota DinasNota DinasNota DinasNota DinasNota DinasNota Dinas\nNota DinasNota DinasNota DinasNota DinasNota Dinas" />
-
-        <include layout="@layout/line_separator" />
+            android:text="Nama Dinas" />
 
         <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Isi Rekomendasi" />
-
-        <TextView
-            android:id="@+id/txt_isi_rekomedasi_detail"
+            android:id="@+id/txt_no_nota_dinas_rps_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Isi RekomendasiIsi RekomendasiIsi RekomendasiIsi RekomendasiIsi RekomendasiIsi Rekomendasi\nIsi RekomendasiIsi RekomendasiIsi Rekomendasi" />
+            android:text="No Nota Dinas " />
 
         <include layout="@layout/line_separator" />
 
@@ -119,13 +109,6 @@
             android:layout_height="wrap_content"
             android:text="Pangkat : NRP :  " />
 
-        <TextView
-            android:id="@+id/txt_jabatan_pimpinan_rps_detail"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Jabatan  " />
-
         <include layout="@layout/line_separator" />
 
         <TextView
@@ -157,6 +140,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/generate_dokumen" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_lihat_rps_detail"
+            style="@style/Widget.Button"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lihat Dokumen" />
 
     </LinearLayout>
 

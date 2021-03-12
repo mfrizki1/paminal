@@ -15,7 +15,7 @@ data class LapBulResp(
     var rpph:RpphResp?,
     var sktb: SktbOnSp3?,
     var sktt: SkttOnSp3?,
-    var sp4:Sp3Resp?,
+    var sp4:Sp4Resp?,
     var personel_terlapor: PersonelLapor?,
     var pasal_dilanggar: ArrayList<PasalResp>?,
     var status_kasus: String?,
