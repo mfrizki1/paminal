@@ -20,9 +20,9 @@ data class RpphResp(
     var nrp_kabid_propam:String?,
     var is_ada_dokumen:Int?,
     var dokumen:DokResp?,
-    var user_creator:String?,
-    var user_updater:String?,
-    var user_deleter:String?,
+    var user_creator:UserResp?,
+    var user_updater:UserResp?,
+    var user_deleter:UserResp?,
     var created_at:String?,
     var updated_at:String?,
     var deleted_at:String?

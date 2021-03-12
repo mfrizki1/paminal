@@ -24,7 +24,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:enabled="false"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="No RPPH">
@@ -38,12 +37,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_pick_put_kke_rps_edit"
+            android:id="@+id/btn_pick_lp_rpph_edit"
             style="@style/Widget.Button"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
-            android:text="Pilih Data Putusan Sidang Kode Etik" />
+            android:text="Pilih Data Laporan Polisi" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_lhp_put_kke_edit"
@@ -63,7 +63,7 @@
                     style="@style/TitleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Putusan Sidang Kode Etik" />
+                    android:text="Laporan Polisi" />
 
                 <include
                     layout="@layout/layout_separator"
@@ -73,12 +73,12 @@
                     android:layout_marginVertical="@dimen/space_half" />
 
                 <TextView
-                    android:id="@+id/txt_put_kke_rps_edit"
+                    android:id="@+id/txt_lp_rpph_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/space_12dp"
                     android:layout_marginBottom="@dimen/space_8dp"
-                    android:text="No PUTKKE"
+                    android:text="No LP"
                     android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -88,22 +88,51 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dasar" />
+            android:text="Dinas" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Contoh : Keputusan Kapolda\nSurat Kapolsek ">
+            android:hint="Nama Dinas">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_dasar_rpph_edit"
+                android:id="@+id/edt_nama_dinas_rpph_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="top|start"
-                android:inputType="textMultiLine|textCapSentences" />
+                android:inputType="textCapSentences" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="No Nota Dinas">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_no_nota_dinas_rpph_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textCapSentences" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Tanggal Nota Dinas">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_tgl_nota_dinas_rpph_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textCapSentences" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,7 +140,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Isi Rekomendasi" />
+            android:text="Penerima Salinan Keputusan" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -119,10 +148,10 @@
             android:layout_height="150dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Isi Rekomendasi ">
+            android:hint="Penerima Salinan Keputusan ">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_isi_rekomendasi_rpph_edit"
+                android:id="@+id/edt_penerima_salinan_keputusan_rpph_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"
@@ -236,23 +265,10 @@
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Jabatan Pimpinan ">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_jabatan_pimpinan_rpph_edit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text|textCapSentences" />
-
-        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             style="@style/TitleText"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tembusan" />
@@ -261,6 +277,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:visibility="gone"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="Tembusan ">

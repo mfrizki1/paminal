@@ -7,8 +7,9 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.PutKkeOnRpphModel
+import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.NetworkDummy
-import id.calocallo.sicape.network.response.RpphResp
+import id.calocallo.sicape.network.response.RpphMinResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -26,15 +27,15 @@ import retrofit2.Response
 
 class ListRpphActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var listRpph = arrayListOf<RpphResp>()
-    private var adapterRpph = ReusableAdapter<RpphResp>(this)
-    private lateinit var callbackRpph: AdapterCallback<RpphResp>
+    private var adapterRpph = ReusableAdapter<RpphMinResp>(this)
+    private lateinit var callbackRpph: AdapterCallback<RpphMinResp>
     private var putKkeOnRpphModel = PutKkeOnRpphModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_rpph)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data RPPH"
+        sessionManager1 = SessionManager1(this)
 
         getListRpph()
         btn_add_single_rpph.setOnClickListener {
@@ -44,46 +45,31 @@ class ListRpphActivity : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        getListRpph()
+    }
+
     private fun getListRpph() {
         rl_pb.visible()
-        /*putKkeOnRpphModel = PutKkeOnRpphModel(1, "PUTKKE1/2020/xxx")
-        listRpph.add(
-            RpphResp(
-                1, putKkeOnRpphModel,
-                "RPPH/1/2020/xxx", "dasarPE\nini adada,dsah per", resources.getString(R.string.kop),
-                "12-20-2000", "Banjarmasin", "Jabatan", "Faisal Rizki", "bripda",
-                "123456", "tembusan abc abc abc\nabc\n abc", "", ""
-            )
-        )
-
-        listRpph.add(
-            RpphResp(
-                2, PutKkeOnRpphModel(2, "PUTKKE2/2021/XXX"),
-                "RPPH/1/2020/xxx", "dasarPE\nini adada,dsah per", resources.getString(R.string.kop),
-                "12-20-2000", "Banjarmasin", "Jabatan", "Faisal Rizki", "bripda",
-                "123456", "tembusan abc abc abc\nabc\n abc", "", ""
-            )
-        )
-
-         */
-        NetworkDummy().getService().getRpph().enqueue(object : Callback<ArrayList<RpphResp>> {
-            override fun onFailure(call: Call<ArrayList<RpphResp>>, t: Throwable) {
+        NetworkConfig().getServRpph().getListRpph("Bearer ${sessionManager1.fetchAuthToken()}").enqueue(object : Callback<ArrayList<RpphMinResp>> {
+            override fun onFailure(call: Call<ArrayList<RpphMinResp>>, t: Throwable) {
                 rl_no_data.visible()
                 rv_list_rpph.gone()
             }
 
             override fun onResponse(
-                call: Call<ArrayList<RpphResp>>,
-                response: Response<ArrayList<RpphResp>>
+                call: Call<ArrayList<RpphMinResp>>,
+                response: Response<ArrayList<RpphMinResp>>
             ) {
                 rl_pb.gone()
                 if (response.isSuccessful) {
-                    callbackRpph = object : AdapterCallback<RpphResp> {
-                        override fun initComponent(itemView: View, data: RpphResp, itemIndex: Int) {
+                    callbackRpph = object : AdapterCallback<RpphMinResp> {
+                        override fun initComponent(itemView: View, data: RpphMinResp, itemIndex: Int) {
                             itemView.txt_edit_pendidikan.text = data.no_rpph
                         }
 
-                        override fun onItemClicked(itemView: View, data: RpphResp, itemIndex: Int) {
+                        override fun onItemClicked(itemView: View, data: RpphMinResp, itemIndex: Int) {
                             val intent =
                                 Intent(this@ListRpphActivity, DetailRpphActivity::class.java)
                             intent.putExtra(DetailRpphActivity.DETAIL_RPPH, data)

@@ -4,7 +4,7 @@ import id.calocallo.sicape.model.PutKkeOnRpphModel
 
 data class RpphReq(
     var no_rpph:String?,
-    var id_lp:String?,
+    var id_lp:Int?,
     var nama_dinas:String?,
     var no_nota_dinas:String?,
     var tanggal_nota_dinas:String?,
