@@ -10,7 +10,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.SktbOnSp3
 import id.calocallo.sicape.model.SkttOnSp3
 import id.calocallo.sicape.network.NetworkDummy
-import id.calocallo.sicape.ui.main.rehab.sp3.AddSp3Activity
+import id.calocallo.sicape.ui.main.rehab.sp4.AddSp4Activity
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
@@ -41,7 +41,7 @@ class ChooseSktbSkttActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_sktb_sktt)
         setupActionBarWithBackButton(toolbar)
-        getIsSkttFromSp3 = intent.extras?.getString(AddSp3Activity.SKTT_ON_SP3)
+        getIsSkttFromSp3 = intent.extras?.getString(AddSp4Activity.SKTT_ON_SP3)
         if (getIsSkttFromSp3.isNullOrBlank()) {
             getListSktb()
             supportActionBar?.title = "Pilih Data SKTB"

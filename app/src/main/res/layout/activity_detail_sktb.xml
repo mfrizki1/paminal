@@ -28,45 +28,22 @@
             android:layout_height="wrap_content"
             android:text="No SKTB" />
 
-        <TextView
-            android:id="@+id/txt_title_skhd_putkke_sktb_detail"
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No SKHD / PUT KKE" />
-
-        <TextView
-            android:id="@+id/txt_no_skhd_putkke_sktb_detail"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No SKHD / PUT KKE" />
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Menimbang" />
+            android:text="Referensi Laporan Polisi" />
 
         <TextView
-            android:id="@+id/txt_menimbang_p2_sktb_detail"
+            android:id="@+id/txt_no_lp_sktb_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="lorem\nipsum\ndolow" />
+            android:text="No LP" />
 
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mengingat" />
-
-        <TextView
-            android:id="@+id/txt_mengingat_p5_sktb_detail"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="lorem\nipsum\ndolow" />
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -86,7 +63,9 @@
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kota" />
+            android:text="Tanggal" />
+
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -106,14 +85,9 @@
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PAngkat: NRP" />
+            android:text="Pangkat: NRP" />
 
-        <TextView
-            android:id="@+id/txt_jabatan_pimpinan_sktb_detail"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Jabatan " />
+        <include layout="@layout/line_separator" />
 
         <TextView
             style="@style/TitleText"
@@ -128,6 +102,8 @@
             android:layout_height="wrap_content"
             android:text="Nama " />
 
+        <include layout="@layout/line_separator" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_sktb_detail"
             style="@style/Widget.Button"
@@ -135,6 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
             android:text="@string/edit_data" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_generate_sktb_detail"
             style="@style/Widget.Button"
