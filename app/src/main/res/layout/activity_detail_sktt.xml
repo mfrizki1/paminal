@@ -34,22 +34,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No LHP" />
-
-        <TextView
-            android:id="@+id/txt_no_lhp_sktt_detail"
-            style="@style/JustText"
-            android:text="No LHP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <include layout="@layout/line_separator" />
-
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No LHP" />
+            android:text="Referensi Laporan" />
 
         <TextView
             android:id="@+id/txt_no_lp_sktt_detail"
@@ -58,35 +43,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <include layout="@layout/line_separator" />
-
         <TextView
-            style="@style/TitleText"
+            android:id="@+id/txt_no_laporan_audit_sktt_detail"
+            style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Menimbang" />
-
-        <TextView
-            android:id="@+id/txt_menimbang_sktt_detail"
-            style="@style/JustText"
-            android:text="Menimbang\nmnimbang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <include layout="@layout/line_separator" />
-
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mengingat" />
-
-        <TextView
-            android:id="@+id/txt_mengingat_p5_sktt_detail"
-            style="@style/JustText"
-            android:text="Mengingat\Mengingat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:text="No Laporan Hasil Audit Investigasi" />
 
         <include layout="@layout/line_separator" />
 
