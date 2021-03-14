@@ -15,11 +15,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
+import id.calocallo.sicape.model.EmptyModel
+import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.request.AnevReq
-import id.calocallo.sicape.network.response.AnevResp
-import id.calocallo.sicape.network.response.FilterPangkatResp
-import id.calocallo.sicape.network.response.FilterPelanggaranResp
+import id.calocallo.sicape.network.request.FilterReq
+import id.calocallo.sicape.network.response.*
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -30,14 +32,18 @@ import kotlinx.android.synthetic.main.view_no_data.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AnevActivity : BaseActivity() {
+    private lateinit var sessionManager1: SessionManager1
     private var filterJenis: String? = null
     private var filterRentang: String? = null
     private var filterSmstr: String? = null
     private var filterBulan: String? = null
     private var filterJenisKesatuan: String? = null
+    private var filterReq = FilterReq()
     private lateinit var pie: Pie
     private var anevReq = AnevReq()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +51,7 @@ class AnevActivity : BaseActivity() {
         setContentView(R.layout.activity_anev)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Analisa & Evaluasi"
+        sessionManager1 = SessionManager1(this)
         pie = AnyChart.pie()
         btn_filter_anev.setOnClickListener {
             filterView()
@@ -56,27 +63,32 @@ class AnevActivity : BaseActivity() {
     }
 
     private fun default() {
+        filterReq.tahun = "2021"
+        filterReq.filter = "kesatuan"
+        filterReq.rentang = "full"
         rl_pb.visible()
-        NetworkDummy().getService().getAnev().enqueue(object : Callback<ArrayList<AnevResp>> {
-            override fun onFailure(call: Call<ArrayList<AnevResp>>, t: Throwable) {
-                rl_pb.gone()
-                rl_no_data.visible()
-            }
-
-            override fun onResponse(
-                call: Call<ArrayList<AnevResp>>,
-                response: Response<ArrayList<AnevResp>>
-            ) {
-                if (response.isSuccessful) {
-                    rl_pb.gone()
-                    defaultPie(response.body())
-//                   tesPie()
-                } else {
+        NetworkConfig().getServCatpers()
+            .getListAnev("Bearer ${sessionManager1.fetchAuthToken()}", filterReq)
+            .enqueue(object : Callback<BaseAnev> {
+                override fun onFailure(call: Call<BaseAnev>, t: Throwable) {
                     rl_pb.gone()
                     rl_no_data.visible()
                 }
-            }
-        })
+
+                override fun onResponse(
+                    call: Call<BaseAnev>,
+                    response: Response<BaseAnev>
+                ) {
+                    if (response.isSuccessful) {
+                        rl_pb.gone()
+                        defaultPie(response.body())
+//                   tesPie()
+                    } else {
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                    }
+                }
+            })
     }
 
     private fun filterView() {
@@ -126,7 +138,7 @@ class AnevActivity : BaseActivity() {
             btnPolresFilter.setTextColor(resources.getColor(R.color.colorPrimary))
             btnPolsekFilter.setBackgroundColor(resources.getColor(R.color.white))
             btnPolsekFilter.setTextColor(resources.getColor(R.color.colorPrimary))
-            filterJenisKesatuan = "polda"
+            filterJenisKesatuan = "subsatker_polda"
         }
         btnPolresFilter.setOnClickListener {
             btnPolresFilter.setBackgroundColor(resources.getColor(R.color.colorPrimary))
@@ -169,7 +181,7 @@ class AnevActivity : BaseActivity() {
 
             btnPangkat.setBackgroundColor(resources.getColor(R.color.white))
             btnPangkat.setTextColor(resources.getColor(R.color.colorPrimary))
-            filterJenis = "pelanggaran"
+            filterJenis = "jenis_pelanggaran"
             layoutJenisKesatuan.gone()
         }
 
@@ -196,7 +208,7 @@ class AnevActivity : BaseActivity() {
 
             btnFullTahun.setBackgroundColor(resources.getColor(R.color.white))
             btnFullTahun.setTextColor(resources.getColor(R.color.colorPrimary))
-            filterRentang = "semester"
+//            filterRentang = "semester"
             ll6Bln.visible()
             ll1Bln.gone()
 
@@ -210,7 +222,7 @@ class AnevActivity : BaseActivity() {
 
             btn6Month.setBackgroundColor(resources.getColor(R.color.white))
             btn6Month.setTextColor(resources.getColor(R.color.colorPrimary))
-            filterRentang = "tahun"
+            filterRentang = "full"
             ll6Bln.gone()
             ll1Bln.gone()
         }
@@ -222,7 +234,7 @@ class AnevActivity : BaseActivity() {
 
             btnSmstrAkhir.setBackgroundColor(resources.getColor(R.color.white))
             btnSmstrAkhir.setTextColor(resources.getColor(R.color.colorPrimary))
-            filterSmstr = "awal"
+            filterRentang = "semester_1"
         }
         btnSmstrAkhir.setOnClickListener {
             btnSmstrAkhir.setBackgroundColor(resources.getColor(R.color.colorPrimary))
@@ -230,7 +242,7 @@ class AnevActivity : BaseActivity() {
 
             btnSmstrAwal.setBackgroundColor(resources.getColor(R.color.white))
             btnSmstrAwal.setTextColor(resources.getColor(R.color.colorPrimary))
-            filterSmstr = "akhir"
+            filterRentang = "semester_2"
         }
 
         /*filter 1 bulan*/
@@ -238,7 +250,20 @@ class AnevActivity : BaseActivity() {
             ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.month))
         spinnerBulan.setAdapter(adapter)
         spinnerBulan.setOnItemClickListener { parent, view, position, id ->
-            filterBulan = parent.getItemAtPosition(position).toString()
+            when(position){
+                0-> filterBulan = "01"
+                1-> filterBulan = "02"
+                2-> filterBulan = "03"
+                3-> filterBulan = "04"
+                4-> filterBulan = "05"
+                5-> filterBulan = "06"
+                6-> filterBulan = "07"
+                7-> filterBulan = "08"
+                8-> filterBulan = "09"
+                9-> filterBulan = "10"
+                10-> filterBulan = "11"
+                11-> filterBulan = "12"
+            }
         }
 
         btnFilter.setOnClickListener {
@@ -279,32 +304,35 @@ class AnevActivity : BaseActivity() {
     }
 
     private fun doFilterPie(
-        jenis: String?, rentang: String?, tahun: String?,
+        filter: String?, rentang: String?, tahun: String?,
         semester: String?, bulan: String?, jenisKesatuan: String?
     ) {
 //        Log.e("semesterFilter", "$semester")
 //        Log.e("tahunFilter", "$tahun")
         Log.e("jenisKesatuan", "$jenisKesatuan")
-        anevReq.berdasarkan = jenis
-        anevReq.rentang = rentang
-        anevReq.tahun = tahun
-        anevReq.semester = semester
-        anevReq.bulan = bulan
-        when (jenis) {
-            "kesatuan" -> {
-                Log.e("ini kesatuan", jenis)
-                filterKesatuan(anevReq)
-            }
-            "pangkat" -> {
-                Log.e("ini pangkat", jenis)
-                filterPangkat(anevReq)
-            }
-            "pelanggaran" -> {
-                Log.e("ini pelanggaran", jenis)
-                filterPelanggaran(anevReq)
-//                tesPie()
-            }
-        }
+        filterReq.filter = filter
+        filterReq.rentang = rentang
+        filterReq.tahun = tahun
+        filterReq.jenis = jenisKesatuan
+//        filterReq.semester = semester
+        filterReq.bulan = bulan
+        filter?.let { apiFilter(filterReq, it) }
+
+        /* when (filter) {
+             "kesatuan" -> {
+                 Log.e("ini kesatuan", filter)
+                 apiFilter(filterReq, filter)
+             }
+             "pangkat" -> {
+                 Log.e("ini pangkat", filter)
+                 filterPangkat(filterRentang)
+             }
+             "pelanggaran" -> {
+                 Log.e("ini pelanggaran", filter)
+                 filterPelanggaran(anevReq)
+ //                tesPie()
+             }
+         }*/
     }
 
     private fun filterPelanggaran(req: AnevReq) {
@@ -327,7 +355,8 @@ class AnevActivity : BaseActivity() {
                         for (i in 0 until response.body()?.size!!) {
                             pelanggaran.add(
                                 ValueDataEntry(
-                                    response.body()!![i].jenis_pelanggaran.toString().toUpperCase(),
+                                    response.body()!![i].jenis_pelanggaran.toString().toUpperCase(
+                                        Locale.ROOT),
                                     response.body()!![i].jumlah_kasus
                                 )
                             )
@@ -454,84 +483,47 @@ class AnevActivity : BaseActivity() {
 
     }
 
-    private fun filterKesatuan(req: AnevReq) {
+    private fun apiFilter(req: FilterReq, filter: String) {
         rl_pb.visible()
-        NetworkDummy().getService().getFilterKesatuan()
-            .enqueue(object : Callback<ArrayList<AnevResp>> {
-                override fun onFailure(call: Call<ArrayList<AnevResp>>, t: Throwable) {
+        NetworkConfig().getServCatpers()
+            .getListAnev("Bearer ${sessionManager1.fetchAuthToken()}", filterReq)
+            .enqueue(object : Callback<BaseAnev> {
+                override fun onFailure(call: Call<BaseAnev>, t: Throwable) {
                     rl_pb.gone()
                     rl_no_data.visible()
                 }
 
                 override fun onResponse(
-                    call: Call<ArrayList<AnevResp>>,
-                    response: Response<ArrayList<AnevResp>>
+                    call: Call<BaseAnev>,
+                    response: Response<BaseAnev>
                 ) {
                     if (response.isSuccessful) {
-                        rl_pb.gone()
-                        pie_anev.clear()
-                        val totalKasus = arrayListOf<DataEntry>()
-                        for (i in 0 until response.body()?.size!!) {
-                            totalKasus.add(
-                                ValueDataEntry(
-                                    response.body()!![i].kesatuan,
-                                    response.body()!![i].jumlah_kasus
-                                )
-                            )
-                        }
-                        pie.data(totalKasus)
-                        pie.setOnClickListener(object :
-                            ListenersInterface.OnClickListener(arrayOf("x", "value")) {
-                            override fun onClick(event: Event) {
-                                Toast.makeText(
-                                    this@AnevActivity,
-                                    event.data["x"].toString() + ":" + event.data["value"],
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                        if(response.body()?.grand_total == 0){
+                            Log.e("null", "NULL")
+                            rl_pb.gone()
+                            rl_no_data.visible()
+                            pie_anev.clear()
+                            pie_anev.gone()
+                        }else{
+                            rl_pb.gone()
+                            rl_no_data.gone()
+                            pie_anev.visible()
+                            pie_anev.clear()
+                            val data = response.body()
+                            when (filter) {
+                                "kesatuan" -> pieKesatuan(data, req)
+                                "pangkat" -> piePangkat(data, req)
+                                "jenis_pelanggaran" -> piePelanggaran(data, req)
                             }
-                        })
-                        pie.title("Kesatuan")
-                        pie.labels().position("outside")
-                        pie.title().fontColor("#101010").fontSize(18).align(Align.LEFT)
-                        when {
-                            req.tahun != null -> {
-                                when {
-                                    req.rentang == "tahun" -> {
-                                        pie.legend().title().enabled(true)
-                                        pie.legend().title()
-                                            .text("Tahun ${req.tahun}").fontSize(16)
-                                            .padding(0.0, 0.0, 10.0, 0.0)
-                                            .fontColor("#101010")
-//                        pie_anev.setChart(pie)
-                                    }
-                                    req.semester != null -> {
-                                        pie.legend().title().enabled(true)
-                                        pie.legend().title()
-                                            .text("Tahun ${req.tahun}, Semester ${req.semester}")
-                                            .fontSize(16)
-                                            .padding(0.0, 0.0, 10.0, 0.0)
-                                            .fontColor("#101010")
-//                        pie_anev.setChart(pie)
-                                    }
-                                    req.rentang == "bulan" -> {
-                                        pie.legend().title().enabled(true)
-                                        pie.legend().title()
-                                            .text("Tahun ${req.tahun}, Bulan ${req.bulan}")
-                                            .fontSize(16)
-                                            .padding(0.0, 0.0, 10.0, 0.0)
-                                            .fontColor("#101010")
-//                        pie_anev.setChart(pie)
-                                    }
-                                }
-                            }
-
                         }
 
-                        pie_anev.setChart(pie)
+//                        }
 //                   tesPie()
                     } else {
                         rl_pb.gone()
                         rl_no_data.visible()
+                        pie_anev.gone()
+                        pie_anev.clear()
                     }
                 }
             })
@@ -546,8 +538,240 @@ class AnevActivity : BaseActivity() {
  */
     }
 
+    private fun piePelanggaran(anevResp: BaseAnev?, req: FilterReq) {
+        convertMonth(req)
+        val totalKasus = arrayListOf<DataEntry>()
+        for (i in 0 until anevResp?.data?.size!!) {
+            totalKasus.add(
+                ValueDataEntry(
+                    anevResp.data?.get(i)?.jenis_pelanggaran.toString().toUpperCase(),
+                    anevResp.data?.get(i)?.total
+                )
+            )
+        }
+        pie.data(totalKasus)
+        pie.setOnClickListener(object :
+            ListenersInterface.OnClickListener(arrayOf("x", "value")) {
+            override fun onClick(event: Event) {
+                Toast.makeText(
+                    this@AnevActivity,
+                    event.data["x"].toString() + ":" + event.data["value"],
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
 
-    private fun defaultPie(list: ArrayList<AnevResp>?) {
+        /*pangkat*/
+        pie.title("Statistika Analisis Pelanggaran")
+        pie.labels().position("outside")
+        pie.title().fontColor("#101010").fontSize(18).align(Align.LEFT)
+        when {
+            req.tahun != null -> {
+                when {
+                    req.rentang == "tahun" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}").fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+//                        pie_anev.setChart(pie)
+                    }
+                    /*  req.semester != null -> {
+                          pie.legend().title().enabled(true)
+                          pie.legend().title()
+                              .text("Tahun ${req.tahun}, Semester ${req.semester}")
+                              .fontSize(16)
+                              .padding(0.0, 0.0, 10.0, 0.0)
+                              .fontColor("#101010")
+//                        pie_anev.setChart(pie)*/
+                    req.rentang == "bulan" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Bulan ${convertMonth(req)}")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                    req.rentang == "semester_1" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Semester Awal")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                    req.rentang == "semester_2" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Semester Akhir")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                }
+            }
+
+        }
+        pie_anev.setChart(pie)
+
+    }
+
+    private fun piePangkat(anevResp: BaseAnev?, req: FilterReq) {
+        val totalKasus = arrayListOf<DataEntry>()
+        for (i in 0 until anevResp?.data?.size!!) {
+            totalKasus.add(
+                ValueDataEntry(
+                    anevResp.data?.get(i)?.pangkat,
+                    anevResp.data?.get(i)?.total
+                )
+            )
+        }
+        pie.data(totalKasus)
+        pie.setOnClickListener(object :
+            ListenersInterface.OnClickListener(arrayOf("x", "value")) {
+            override fun onClick(event: Event) {
+                Toast.makeText(
+                    this@AnevActivity,
+                    event.data["x"].toString() + ":" + event.data["value"],
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+        /*pangkat*/
+        pie.title("Statistika Analisis Pangkat")
+        pie.labels().position("outside")
+        pie.title().fontColor("#101010").fontSize(18).align(Align.LEFT)
+        when {
+            req.tahun != null -> {
+                when {
+                    req.rentang == "tahun" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}").fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+//                        pie_anev.setChart(pie)
+                    }
+                    /*  req.semester != null -> {
+                          pie.legend().title().enabled(true)
+                          pie.legend().title()
+                              .text("Tahun ${req.tahun}, Semester ${req.semester}")
+                              .fontSize(16)
+                              .padding(0.0, 0.0, 10.0, 0.0)
+                              .fontColor("#101010")
+//                        pie_anev.setChart(pie)*/
+                    req.rentang == "bulan" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Bulan ${convertMonth(req)}")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                    req.rentang == "semester_1" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Semester Awal")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                    req.rentang == "semester_2" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Semester Akhir")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                }
+            }
+
+        }
+        pie_anev.setChart(pie)
+
+
+    }
+
+    private fun pieKesatuan(anevResp: BaseAnev?, req: FilterReq) {
+        val totalKasus = arrayListOf<DataEntry>()
+        for (i in 0 until anevResp?.data?.size!!) {
+            totalKasus.add(
+                ValueDataEntry(
+                    anevResp.data?.get(i)?.kesatuan,
+                    anevResp.data?.get(i)?.total
+                )
+            )
+        }
+        pie.data(totalKasus)
+        pie.setOnClickListener(object :
+            ListenersInterface.OnClickListener(arrayOf("x", "value")) {
+            override fun onClick(event: Event) {
+                Toast.makeText(
+                    this@AnevActivity,
+                    event.data["x"].toString() + ":" + event.data["value"],
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+        /*kesatuan*/
+        pie.title("Statistika Analisis Kesatuan")
+        pie.labels().position("outside")
+        pie.title().fontColor("#101010").fontSize(18).align(Align.LEFT)
+        when {
+            req.tahun != null -> {
+                when {
+                    req.rentang == "tahun" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}").fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+//                        pie_anev.setChart(pie)
+                    }
+                    /*  req.semester != null -> {
+                          pie.legend().title().enabled(true)
+                          pie.legend().title()
+                              .text("Tahun ${req.tahun}, Semester ${req.semester}")
+                              .fontSize(16)
+                              .padding(0.0, 0.0, 10.0, 0.0)
+                              .fontColor("#101010")
+//                        pie_anev.setChart(pie)*/
+                    req.rentang == "bulan" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Bulan ${convertMonth(req)}")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                    req.rentang == "semester_1" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Semester Awal")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                    req.rentang == "semester_2" -> {
+                        pie.legend().title().enabled(true)
+                        pie.legend().title()
+                            .text("Tahun ${req.tahun}, Semester Akhir")
+                            .fontSize(16)
+                            .padding(0.0, 0.0, 10.0, 0.0)
+                            .fontColor("#101010")
+                    }
+                }
+            }
+
+        }
+
+        pie_anev.setChart(pie)
+    }
+
+    /**/  private fun defaultPie(resp: BaseAnev?) {
         pie = AnyChart.pie()
 
         pie.setOnClickListener(object :
@@ -563,24 +787,32 @@ class AnevActivity : BaseActivity() {
 
         /*set for data entry pie*/
 //        val totalKasus = arrayListOf<PieEntry>()
+//        Log.e("respSize", "${resp?.data}")
         val totalKasus = arrayListOf<DataEntry>()
-        for (i in 0 until list?.size!!) {
-            totalKasus.add(ValueDataEntry(list[i].kesatuan, list[i].jumlah_kasus))
+        for (i in 0 until resp?.data!!.size) {
+            totalKasus.add(ValueDataEntry(resp.data?.get(i)?.kesatuan, resp.data?.get(i)?.total))
         }
         pie.data(totalKasus)
 
         pie.innerRadius(5)
         pie.connectorLength(10)
         pie.hover(2)
-        pie.title("Statistika Analisis")
+        pie.title("Statistika Analisis Kesatuan")
         pie.labels().position("outside")
         pie.title().fontColor("#101010").fontSize(18).align(Align.LEFT)
 
         pie.legend().title().enabled(true)
-        pie.legend().title()
-            .text("Kesatuan").fontSize(16)
-            .padding(0.0, 0.0, 10.0, 0.0)
-            .fontColor("#101010")
+        if (resp.bulan == null) {
+            pie.legend().title()
+                .text("Tahun ${resp.tahun}").fontSize(16)
+                .padding(0.0, 0.0, 10.0, 0.0)
+                .fontColor("#101010")
+        } else {
+            pie.legend().title()
+                .text("Tahun ${resp.tahun}, Bulan ${resp.bulan}").fontSize(16)
+                .padding(0.0, 0.0, 10.0, 0.0)
+                .fontColor("#101010")
+        }
 
         pie.legend()
             .position("bottom")
@@ -616,7 +848,7 @@ class AnevActivity : BaseActivity() {
             )
         )
         pie_anev.setChart(pie)
-//        val pieDataSet = PieDataSet(totalKasus, "")
+/*//        val pieDataSet = PieDataSet(totalKasus, "")
 //        pieDataSet.valueTextSize = 20f
 //        pieDataSet.valueTextColor = Color.WHITE
 
@@ -632,7 +864,26 @@ class AnevActivity : BaseActivity() {
 //        pie_anev.centerTextRadiusPercent = 0f
 //        pie_anev.isDrawHoleEnabled = true
 //        pie_anev.legend.isEnabled = false
-//        pie_anev.description.isEnabled = true
+//        pie_anev.description.isEnabled = true*/
+    }
+
+    private fun convertMonth(req: FilterReq):String {
+        var bulan = ""
+        when(req.bulan){
+            "01"->bulan = "Januari"
+            "02"->bulan = "Februari"
+            "03"->bulan = "Maret"
+            "04"->bulan = "April"
+            "05"->bulan = "Mei"
+            "06"->bulan = "Juni"
+            "07"->bulan = "Juli"
+            "08"->bulan = "Agustus"
+            "09"->bulan = "September"
+            "10"->bulan = "Oktober"
+            "11"->bulan = "November"
+            "12"->bulan = "Desember"
+        }
+        return bulan
     }
 
     private fun tesPie() {

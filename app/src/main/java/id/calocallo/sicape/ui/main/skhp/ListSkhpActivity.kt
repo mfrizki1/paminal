@@ -1,15 +1,15 @@
 package id.calocallo.sicape.ui.main.skhp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.Adapter
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.NetworkDummy
-import id.calocallo.sicape.network.response.SkhpResp
+import id.calocallo.sicape.network.NetworkConfig
+import id.calocallo.sicape.network.response.SkhpMinResp
+import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.co.iconpln.smartcity.ui.base.BaseActivity
@@ -25,60 +25,71 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ListSkhpActivity : BaseActivity() {
-    private var adapteSkhp = ReusableAdapter<SkhpResp>(this)
-    private lateinit var callbackSkhp: AdapterCallback<SkhpResp>
+    private lateinit var sessionManager1: SessionManager1
+    private var adapteSkhp = ReusableAdapter<SkhpMinResp>(this)
+    private lateinit var callbackSkhp: AdapterCallback<SkhpMinResp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_skhp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data SKHP"
+        sessionManager1 = SessionManager1(this)
+
         btn_add_skhp.setOnClickListener {
             startActivity(Intent(this, AddSkhpActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        getListSkhp()
+        apiListSkhp()
     }
 
-    private fun getListSkhp() {
+
+    private fun apiListSkhp() {
         rl_pb.visible()
-        NetworkDummy().getService().getSkhp().enqueue(object : Callback<ArrayList<SkhpResp>> {
-            override fun onFailure(call: Call<ArrayList<SkhpResp>>, t: Throwable) {
-                rl_pb.gone()
-                rl_no_data.visible()
-                rv_list_skhp.gone()
-            }
-
-            override fun onResponse(
-                call: Call<ArrayList<SkhpResp>>,
-                response: Response<ArrayList<SkhpResp>>
-            ) {
-                if (response.isSuccessful) {
-                    rl_pb.gone()
-                    callbackSkhp = object : AdapterCallback<SkhpResp> {
-                        override fun initComponent(itemView: View, data: SkhpResp, itemIndex: Int) {
-                            itemView.txt_edit_pendidikan.text = data.no_skhp
-                        }
-
-                        override fun onItemClicked(itemView: View, data: SkhpResp, itemIndex: Int) {
-                            val intent =
-                                Intent(this@ListSkhpActivity, DetailSkhpActivity::class.java)
-                            intent.putExtra(DetailSkhpActivity.DETAIL_SKHP, data)
-                            startActivity(intent)
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        NetworkConfig().getServSkhp().getListSkhp("Bearer ${sessionManager1.fetchAuthToken()}")
+            .enqueue(
+                object : Callback<ArrayList<SkhpMinResp>> {
+                    override fun onResponse(
+                        call: Call<ArrayList<SkhpMinResp>>,
+                        response: Response<ArrayList<SkhpMinResp>>
+                    ) {
+                        if (response.isSuccessful) {
+                            rl_pb.gone()
+                            getListSkhp(response.body())
+                        } else {
+                            rl_pb.gone()
+                            rl_no_data.visible()
+                            rv_list_skhp.gone()
                         }
                     }
-                    response.body()?.let {
-                        adapteSkhp.adapterCallback(callbackSkhp)
-                            .isVerticalView().filterable().addData(it)
-                            .setLayout(R.layout.layout_edit_1_text).build(rv_list_skhp)
+
+                    override fun onFailure(call: Call<ArrayList<SkhpMinResp>>, t: Throwable) {
+                        Toast.makeText(this@ListSkhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                        rv_list_skhp.gone()
                     }
-                } else {
-                    rl_pb.gone()
-                    rl_no_data.visible()
-                    rv_list_skhp.gone()
-                }
+                })
+    }
+
+    private fun getListSkhp(body: ArrayList<SkhpMinResp>?) {
+
+        callbackSkhp = object : AdapterCallback<SkhpMinResp> {
+            override fun initComponent(itemView: View, data: SkhpMinResp, itemIndex: Int) {
+                itemView.txt_edit_pendidikan.text = data.no_skhp
             }
-        })
+
+            override fun onItemClicked(itemView: View, data: SkhpMinResp, itemIndex: Int) {
+                val intent =
+                    Intent(this@ListSkhpActivity, DetailSkhpActivity::class.java)
+                intent.putExtra(DetailSkhpActivity.DETAIL_SKHP, data)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+        }
+        body?.let {
+            adapteSkhp.adapterCallback(callbackSkhp).isVerticalView().filterable().addData(it)
+                .setLayout(R.layout.layout_edit_1_text).build(rv_list_skhp)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -100,4 +111,10 @@ class ListSkhpActivity : BaseActivity() {
         })
         return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onResume() {
+        super.onResume()
+        apiListSkhp()
+    }
+
 }

@@ -28,6 +28,7 @@
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
             android:text="Nama Personel" />
 
         <TextView
@@ -35,6 +36,7 @@
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
             android:text="Pangkat / NRP Personel" />
 
         <TextView
@@ -42,6 +44,7 @@
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
             android:text="Jabatan Personel" />
 
         <TextView
@@ -49,6 +52,7 @@
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
             android:text="Kesatuan Personel" />
 
         <include layout="@layout/layout_separator" />
@@ -58,7 +62,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kasus" />
+            android:text="Referensi" />
 
         <TextView
             android:id="@+id/txt_no_lp_lapbul"
@@ -67,55 +71,68 @@
             android:layout_height="wrap_content"
             android:text="No LP" />
 
+        <include layout="@layout/layout_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uraian Pelanggaran" />
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/txt_uraian_pelanggaran_lapbul"
+            style="@style/JustText"
+            app:trimLength="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uraian Pelanggaran" />
+
+        <include layout="@layout/layout_separator" />
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Putusan / Hukuman" />
+
         <TextView
             android:id="@+id/txt_no_skhd_putkke_lapbul"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No SKHD/PUTKKE" />
+
+        <TextView
+            android:id="@+id/txt_hukuman_putusan_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_half"
+            android:text="Hukuman" />
+
+        <include layout="@layout/layout_separator" />
+
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rehab" />
-        <TextView
-            android:id="@+id/txt_no_rps_lapbul"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No RPS" />
-        <TextView
-            android:id="@+id/txt_no_rpph_lapbul"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No RPPH" />
-        <TextView
-            android:id="@+id/txt_no_sktb_lapbul"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No SKTB" />
-        <TextView
-            android:id="@+id/txt_no_sktt_lapbul"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No SKTT" />
-        <TextView
-            android:id="@+id/txt_no_s4_lapbul"
-            style="@style/JustText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No SP4" />
-
+            android:text="Surat Rehab" />
 
         <TextView
-            android:id="@+id/txt_stts_kasus_lapbul"
+            android:id="@+id/txt_no_data_lapbul"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Status Kasus: proses/dalam_masa_hukuman/selesai" />
+            android:text="Tidak ada"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_rehab_lapbul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_2_text" />
 
         <include layout="@layout/layout_separator" />
 
@@ -125,16 +142,30 @@
             android:layout_height="wrap_content"
             android:text="Pasal Dilanggar" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <TextView
+            android:id="@+id/txt_no_data_pasal_lapbul"
+            style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_pasal_lp"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:id="@+id/rv_pasal_lapbul"/>
+            android:text="Tidak ada"
+            android:visibility="gone" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_pasal_lapbul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_pasal_lp" />
 
         <include layout="@layout/layout_separator" />
 
+        <TextView
+            android:id="@+id/txt_stts_kasus_lapbul"
+            style="@style/JustText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Keterangan: proses/dalam_masa_hukuman/selesai" />
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -49,7 +49,7 @@ interface DummyApi {
     fun getSkttWithoutSp3(): Call<ArrayList<SkttOnSp3>>
 
     @GET("v1/3d2d96a4")
-    fun getCatpers(): Call<ArrayList<CatpersResp>>
+    fun getCatpers(): Call<ArrayList<CatpersLapbulResp>>
 
     @GET("v1/07f03497")
     fun getSkhp(): Call<ArrayList<SkhpResp>>

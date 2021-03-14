@@ -72,10 +72,10 @@ fun View.toggleVisibility(): View {
     return this
 }
 
-fun formatterTanggal(tgl: String?): String {
+fun formatterTanggal(tgl: String?): String? {
     val tanggalFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
     val tanggal = tanggalFormatter.parse(tgl)
-    return DateTimeFormatter.ofPattern("dd MMM yyyy", Locale("id", "ID")).format(tanggal)
+    return DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale("id", "ID")).format(tanggal)
 }
 
 

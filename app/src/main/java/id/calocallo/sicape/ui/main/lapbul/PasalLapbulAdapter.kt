@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.network.response.LapBulResp
+import id.calocallo.sicape.network.response.CatpersLapbulResp
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 
 class PasalLapbulAdapter(
-    val listPasal: LapBulResp
+    val listPasal: CatpersLapbulResp
 ) : RecyclerView.Adapter<PasalLapbulAdapter.PasalLapbulHolder>() {
     inner class PasalLapbulHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtItem1: TextView = itemView.txt_item_1
@@ -28,7 +28,7 @@ class PasalLapbulAdapter(
     }
 
     override fun onBindViewHolder(holder: PasalLapbulHolder, position: Int) {
-        holder.txtItem1.text = listPasal.pasal_dilanggar!![position].nama_pasal
+        holder.txtItem1.text = listPasal.pasal_dilanggar?.get(position)
 
     }
 }

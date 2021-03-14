@@ -2,43 +2,22 @@ package id.calocallo.sicape.network.response
 
 import android.os.Parcel
 import android.os.Parcelable
+import id.calocallo.sicape.network.request.HukumanReq
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class PernahDihukumResp(
-    var id: Int?,
-    var id_personel: Int?,
-    var perkara: String?,
-    var created_at: String?,
-    var updated_at: String?,
-    var deleted_at: String?
-) : Parcelable {
-    constructor(source: Parcel) : this(
-        source.readValue(Int::class.java.classLoader) as Int?,
-        source.readValue(Int::class.java.classLoader) as Int?,
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString()
-    )
+    /*CATPERS RESP*/
+    val status: String?,
+    val surat: String?,
+    val no_surat: String?,
+    val tanggal: String?,
 
-    override fun describeContents() = 0
+    /*PERSONEL RESP*/
+    var id_lp: Int?,
+    var id_putkke: Int?,
+    var jenis_pelanggaran: String?,
 
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeValue(id)
-        writeValue(id_personel)
-        writeString(perkara)
-        writeString(created_at)
-        writeString(updated_at)
-        writeString(deleted_at)
-    }
-
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<PernahDihukumResp> =
-            object : Parcelable.Creator<PernahDihukumResp> {
-                override fun createFromParcel(source: Parcel): PernahDihukumResp =
-                    PernahDihukumResp(source)
-
-                override fun newArray(size: Int): Array<PernahDihukumResp?> = arrayOfNulls(size)
-            }
-    }
-}
+    /*BOTH*/
+    var hukuman: ArrayList<String>?
+) : Parcelable

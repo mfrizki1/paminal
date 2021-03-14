@@ -89,7 +89,6 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
             }
             "CATPERS" -> {
                 startActivity(Intent(activity, CatpersActivity::class.java))
-                Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             "REHAB" -> {

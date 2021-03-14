@@ -11,6 +11,7 @@ data class PersonelMinResp(
     var pangkat: String?,
     var nrp: String?,
     var satuan_kerja: SatKerResp?,
+    var status_pelanggaran: String?,
     var created_at: String?,
     var updated_at: String?,
     var deleted_at: String?

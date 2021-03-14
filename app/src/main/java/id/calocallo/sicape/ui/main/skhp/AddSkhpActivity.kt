@@ -1,4 +1,4 @@
-package id.calocallo.sicape.ui.main.skhp
+    package id.calocallo.sicape.ui.main.skhp
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -47,7 +47,7 @@ class AddSkhpActivity : BaseActivity() {
             kotaSkhp = parent.getItemAtPosition(position).toString()
         }
         btn_save_skhp_add.setOnClickListener {
-            skhpReq.no_skhp = edt_no_skhp_add.text.toString()
+         /*   skhpReq.no_skhp = edt_no_skhp_add.text.toString()
             skhpReq.hasil_keputusan = edt_isi_skhp_add.text.toString()
 //            skhpReq.kota_keluar = edt_kota_keluar_skhp_add.text.toString()
             skhpReq.kota_keluar = kotaSkhp
@@ -61,7 +61,7 @@ class AddSkhpActivity : BaseActivity() {
             skhpReq.is_memiliki_pelanggaran_pidana = isPidana
             skhpReq.is_memiliki_pelanggaran_kode_etik = isKke
             skhpReq.is_memiliki_pelanggaran_disiplin = isDisiplin
-            skhpReq.is_status_selesai = tempSttsCatPelanggaran
+            skhpReq.is_status_selesai = tempSttsCatPelanggaran*/
             skhpReq.id_personel = idPersonel
             Log.e("add SKHP", "$skhpReq")
         }

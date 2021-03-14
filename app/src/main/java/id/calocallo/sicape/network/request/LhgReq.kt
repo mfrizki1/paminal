@@ -23,9 +23,11 @@ data class LhgReq(
     var nama_notulen: String?,
     var pangkat_notulen: String?,
     var nrp_notulen: String?,
+    var pasal_kuh_pidana: String?,
     var peserta_gelar: ArrayList<PesertaLhgResp>?/*ADD*/
 ) {
     constructor() : this(
+        null,
         null,
         null,
         null,

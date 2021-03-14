@@ -11,6 +11,14 @@
 
     <include layout="@layout/view_separator" />
 
+    <TextView
+        android:id="@+id/txt_tahun_bulan_filter_lapbul"
+        style="@style/TitleText"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tahun, Bulan" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,6 +27,7 @@
             android:id="@+id/rv_list_lapbul"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:listitem="@layout/item_lapbul"
             android:layout_above="@+id/btn_filter" />
 
         <include

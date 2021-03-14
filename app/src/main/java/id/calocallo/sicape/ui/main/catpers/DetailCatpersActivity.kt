@@ -3,7 +3,6 @@ package id.calocallo.sicape.ui.main.catpers
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,8 +14,7 @@ import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LpOnCatpersModel
-import id.calocallo.sicape.network.response.CatpersResp
+import id.calocallo.sicape.network.response.CatpersLapbulResp
 import id.calocallo.sicape.network.response.PasalResp
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
@@ -40,7 +38,7 @@ class DetailCatpersActivity : BaseActivity() {
         setContentView(R.layout.activity_detail_catpers)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Data Catatan Personel"
-        val dataCatpers = intent.extras?.getParcelable<CatpersResp>(DETAIL_CATPERS)
+        val dataCatpers = intent.extras?.getParcelable<CatpersLapbulResp>(DETAIL_CATPERS)
         getDataCatper(dataCatpers)
 
         btn_edit_catpers_detail.setOnClickListener {
@@ -72,8 +70,8 @@ class DetailCatpersActivity : BaseActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getDataCatper(dataCatpers: CatpersResp?) {
-        txt_nama_personel_catpers_detail.text = dataCatpers?.personel_terlapor?.nama
+    private fun getDataCatper(dataCatpers: CatpersLapbulResp?) {
+     /*   txt_nama_personel_catpers_detail.text = dataCatpers?.personel_terlapor?.nama
         txt_pangkat_nrp_personel_catpers_detail.text =
             "Pangkat : ${dataCatpers?.personel_terlapor?.pangkat.toString()
                 .toUpperCase()}  ${dataCatpers?.personel_terlapor?.nrp}"
@@ -112,7 +110,7 @@ class DetailCatpersActivity : BaseActivity() {
                 .isVerticalView().filterable()
                 .addData(it).setLayout(R.layout.item_pasal_lp)
                 .build(rv_pasal_catpers_detail)
-        }
+        }*/
 
     }
 

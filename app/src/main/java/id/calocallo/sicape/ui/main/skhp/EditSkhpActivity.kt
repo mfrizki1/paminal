@@ -4,20 +4,23 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.RadioButton
+import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
+import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SkhpReq
+import id.calocallo.sicape.network.response.SkhpMinResp
 import id.calocallo.sicape.network.response.SkhpResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.ui.main.skhd.tinddisiplin.AddTindDisiplinSkhdActivity
-import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.visible
+import id.calocallo.sicape.utils.SessionManager1
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_skhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -26,6 +29,7 @@ class EditSkhpActivity : BaseActivity() {
         const val EDIT_SKHP = "EDIT_SKHP"
     }
 
+    private lateinit var sessionManager1: SessionManager1
     private var skhpReq = SkhpReq()
     private var idPersonel: Int? = null
     private var tempSttsCatPelanggaran: Int? = null
@@ -38,9 +42,10 @@ class EditSkhpActivity : BaseActivity() {
         setContentView(R.layout.activity_edit_skhp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data SKHP"
+        sessionManager1 = SessionManager1(this)
 
-        val getDetailSkhp = intent.extras?.getParcelable<SkhpResp>(EDIT_SKHP)
-        getViewSkhpEdit(getDetailSkhp)
+        val getDetailSkhp = intent.extras?.getParcelable<SkhpMinResp>(EDIT_SKHP)
+        apiEditSkhp(getDetailSkhp)
         btn_save_skhp_edit.setOnClickListener {
             updateSkhp(getDetailSkhp)
         }
@@ -86,9 +91,33 @@ class EditSkhpActivity : BaseActivity() {
         }
     }
 
+    private fun apiEditSkhp(detailSkhp: SkhpMinResp?) {
+        NetworkConfig().getServSkhp()
+            .detailSkhp("Bearer ${sessionManager1.fetchAuthToken()}", detailSkhp?.id).enqueue(
+                object :
+                    Callback<SkhpResp> {
+                    override fun onResponse(call: Call<SkhpResp>, response: Response<SkhpResp>) {
+                        if (response.isSuccessful) {
+                            getViewSkhpEdit(response.body())
+                        } else {
+                            Toast.makeText(
+                                this@EditSkhpActivity, R.string.error, Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<SkhpResp>, t: Throwable) {
+                        Toast.makeText(
+                            this@EditSkhpActivity, "$t", Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+    }
+
     @SuppressLint("SetTextI18n")
     private fun getViewSkhpEdit(detailSkhp: SkhpResp?) {
         edt_no_skhp_edit.setText(detailSkhp?.no_skhp)
+        /*edt_no_skhp_edit.setText(detailSkhp?.no_skhp)
         edt_isi_skhp_edit.setText(detailSkhp?.hasil_keputusan)
         edt_kota_keluar_skhp_edit.setText(detailSkhp?.kota_keluar)
         edt_tanggal_keluar_skhp_edit.setText(detailSkhp?.tanggal_keluar)
@@ -169,29 +198,29 @@ class EditSkhpActivity : BaseActivity() {
         edt_kota_keluar_skhp_edit.setAdapter(adapterKota)
         edt_kota_keluar_skhp_edit.setOnItemClickListener { parent, view, position, id ->
             kotaSkhp = parent.getItemAtPosition(position).toString()
-        }
+        }*/
     }
 
-    private fun updateSkhp(detailSkhp: SkhpResp?) {
+    private fun updateSkhp(detailSkhp: SkhpMinResp?) {
 
-        skhpReq.is_memiliki_pelanggaran_pidana = isPidana
-        skhpReq.is_memiliki_pelanggaran_kode_etik = isKke
-        skhpReq.is_memiliki_pelanggaran_disiplin = isDisiplin
-        skhpReq.is_status_selesai = tempSttsCatPelanggaran
-        skhpReq.id_personel = idPersonel
+        /*    skhpReq.is_memiliki_pelanggaran_pidana = isPidana
+            skhpReq.is_memiliki_pelanggaran_kode_etik = isKke
+            skhpReq.is_memiliki_pelanggaran_disiplin = isDisiplin
+            skhpReq.is_status_selesai = tempSttsCatPelanggaran
+            skhpReq.id_personel = idPersonel
 
-        skhpReq.no_skhp = edt_no_skhp_edit.text.toString()
-        skhpReq.hasil_keputusan = edt_isi_skhp_edit.text.toString()
-        skhpReq.kota_keluar =kotaSkhp
-        skhpReq.tanggal_keluar = edt_tanggal_keluar_skhp_edit.text.toString()
-        skhpReq.nama_yang_mengeluarkan = edt_nama_pimpinan_skhp_edit.text.toString()
-        skhpReq.pangkat_yang_mengeluarkan =
-            edt_pangkat_pimpinan_skhp_edit.text.toString().toUpperCase()
-        skhpReq.nrp_yang_mengeluarkan = edt_nrp_pimpinan_skhp_edit.text.toString()
-        skhpReq.jabatan_yang_mengeluarkan = edt_jabatan_pimpinan_skhp_edit.text.toString()
-        skhpReq.kepada = edt_kepada_skhp_edit.text.toString()
+            skhpReq.no_skhp = edt_no_skhp_edit.text.toString()
+            skhpReq.hasil_keputusan = edt_isi_skhp_edit.text.toString()
+            skhpReq.kota_keluar =kotaSkhp
+            skhpReq.tanggal_keluar = edt_tanggal_keluar_skhp_edit.text.toString()
+            skhpReq.nama_yang_mengeluarkan = edt_nama_pimpinan_skhp_edit.text.toString()
+            skhpReq.pangkat_yang_mengeluarkan =
+                edt_pangkat_pimpinan_skhp_edit.text.toString().toUpperCase()
+            skhpReq.nrp_yang_mengeluarkan = edt_nrp_pimpinan_skhp_edit.text.toString()
+            skhpReq.jabatan_yang_mengeluarkan = edt_jabatan_pimpinan_skhp_edit.text.toString()
+            skhpReq.kepada = edt_kepada_skhp_edit.text.toString()
 
-        Log.e("edit Skhp", "$skhpReq")
+            Log.e("edit Skhp", "$skhpReq")*/
     }
 
     @SuppressLint("SetTextI18n")
@@ -214,8 +243,10 @@ class EditSkhpActivity : BaseActivity() {
                 val desiredFormat =
                     DateTimeFormatter.ofPattern("dd, MMM yyyy", Locale("id", "ID")).format(date)
 
-                txt_ttl_personel_skhp_edit.text = "TTL :${personel?.tempat_lahir.toString()
-                    .toUpperCase()}, $desiredFormat"
+                txt_ttl_personel_skhp_edit.text = "TTL :${
+                    personel?.tempat_lahir.toString()
+                        .toUpperCase()
+                }, $desiredFormat"
 
                 when (personel?.jenis_kelamin) {
                     "laki_laki" -> {

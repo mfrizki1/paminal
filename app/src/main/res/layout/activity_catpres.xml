@@ -11,9 +11,40 @@
 
     <include layout="@layout/view_separator" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_weight="1"
+            android:hint="Tahun">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_tahun_catpers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="date"
+                android:maxLength="4" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_filter_catpers"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Filter" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <include
             layout="@layout/view_no_data"
@@ -26,6 +57,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_catpers"
             android:layout_width="match_parent"
+            tools:itemCount="1"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_catpers" />
 

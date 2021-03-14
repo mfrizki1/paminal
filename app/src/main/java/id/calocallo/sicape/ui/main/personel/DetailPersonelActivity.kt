@@ -22,7 +22,6 @@ import id.calocallo.sicape.ui.main.editpersonel.media_info.PickMedInfoActivity
 import id.calocallo.sicape.ui.main.editpersonel.orangs.PickOrangsActivity
 import id.calocallo.sicape.ui.main.editpersonel.organisasi_dll.PickMenuOrganisasiDllActivity
 import id.calocallo.sicape.ui.main.editpersonel.pekerjaan.EditPekerjaanActivity
-import id.calocallo.sicape.ui.main.editpersonel.pernah_dihukum.PickPernahDihukumActivity
 import id.calocallo.sicape.ui.main.editpersonel.relasi.PickRelasiActivity
 import id.calocallo.sicape.ui.main.editpersonel.sahabat.PickSahabatActivity
 import id.calocallo.sicape.ui.main.editpersonel.saudara.PickSaudaraActivity
@@ -230,14 +229,6 @@ class DetailPersonelActivity : BaseActivity() {
             intent.putExtra("PERSONEL_DETAIL", detail)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
-        }
-        btn_edit_pernah_dihukum.setOnClickListener {
-            val intent = Intent(this, PickPernahDihukumActivity::class.java)
-            intent.putExtra("PERSONEL_DETAIL", detail)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-//            Toast.makeText(this, "Relasi", Toast.LENGTH_SHORT).show()
         }
     }
 

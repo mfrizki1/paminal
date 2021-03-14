@@ -143,9 +143,6 @@
         <activity android:name=".ui.main.choose.ChoosePersonelActivity" />
         <activity android:name=".ui.main.editpersonel.relasi.AddSingleRelasiActivity" />
         <activity android:name=".ui.main.editpersonel.relasi.EditRelasiActivity" />
-        <activity android:name=".ui.main.editpersonel.pernah_dihukum.EditPernahDihukumActivity" />
-        <activity android:name=".ui.main.editpersonel.pernah_dihukum.AddSinglePernahDihukumActivity" />
-        <activity android:name=".ui.main.editpersonel.pernah_dihukum.PickPernahDihukumActivity" />
         <activity android:name=".ui.main.editpersonel.orangs.AddSingleOrangsActivity" />
         <activity android:name=".ui.main.editpersonel.orangs.EditOrangsActivity" />
         <activity android:name=".ui.main.editpersonel.signalement.EditSignalementActivity" />
