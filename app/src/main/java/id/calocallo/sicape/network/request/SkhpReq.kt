@@ -2,7 +2,7 @@ package id.calocallo.sicape.network.request
 
 data class SkhpReq(
     var id_personel: Int?,
-    var var_memenuhi_syarat: Int?,
+    var is_memenuhi_syarat: Int?,
     var tanggal_kenaikan_pangkat: String?,
     var kota_keluar: String?,
     var tanggal_keluar: String?,

@@ -36,6 +36,7 @@ class DetailSkhpActivity : BaseActivity() {
     }
 
     private lateinit var sessionManager1: SessionManager1
+
     private var getDataSkhp: SkhpMinResp? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,5 +207,10 @@ class DetailSkhpActivity : BaseActivity() {
                         Toast.makeText(this@DetailSkhpActivity, "$t", Toast.LENGTH_SHORT).show()
                     }
                 })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        apiDetailSkhp(getDataSkhp)
     }
 }
