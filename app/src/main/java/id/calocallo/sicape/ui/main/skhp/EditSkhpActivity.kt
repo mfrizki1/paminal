@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.Toast
@@ -125,9 +126,11 @@ class EditSkhpActivity : BaseActivity() {
 
 
         if (detailSkhp?.is_memenuhi_syarat == 0) {
-            rb_memenuhi_syarat_tidak_skhp_edit.isChecked
+            Log.e("asd","Asd")
+            rb_memenuhi_syarat_tidak_skhp_edit.isChecked = true
         } else {
-            rb_memenuhi_syarat_ya_skhp_edit.isChecked
+            Log.e("123","123")
+            rb_memenuhi_syarat_ya_skhp_edit.isChecked= true
         }
         edt_no_skhp_edit.setText(detailSkhp?.no_skhp)
         edt_tgl_kenaikan_pangkat_skhp_edit.setText(detailSkhp?.tanggal_kenaikan_pangkat)

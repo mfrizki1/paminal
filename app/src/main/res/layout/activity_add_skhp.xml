@@ -470,7 +470,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Kepada">
+            android:hint="Kota Penerima">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_kota_penerima_skhp_add"

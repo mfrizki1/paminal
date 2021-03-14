@@ -293,7 +293,6 @@
                 android:id="@+id/rb_memenuhi_syarat_ya_skhp_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:layout_weight="1"
                 android:text="Ya" />
 
@@ -472,7 +471,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Kepada">
+            android:hint="Kota Penerima">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_kota_penerima_skhp_edit"
