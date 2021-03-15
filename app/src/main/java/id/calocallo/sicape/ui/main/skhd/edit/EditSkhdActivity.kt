@@ -6,10 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.github.razir.progressbutton.hideDrawable
 import com.github.razir.progressbutton.hideProgress
-import com.github.razir.progressbutton.showDrawable
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
@@ -21,7 +18,7 @@ import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
 import id.calocallo.sicape.ui.main.skhd.DetailSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.showSnackbar
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_skhd.*
 import kotlinx.android.synthetic.main.activity_edit_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*

@@ -28,15 +28,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.request.AyahReq
 import id.calocallo.sicape.network.request.FilterReq
-import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.CatpersLapbulResp
-import id.calocallo.sicape.network.response.DokLapbulResp
-import id.calocallo.sicape.network.response.DokResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_catpres.*
 import kotlinx.android.synthetic.main.activity_list_lapbul.*
 import kotlinx.android.synthetic.main.item_catpers.view.*
@@ -100,15 +96,16 @@ class ListLapbulActivity : BaseActivity() {
                     call: Call<Base1Resp<DokLapbulResp>>,
                     response: Response<Base1Resp<DokLapbulResp>>
                 ) {
-//                    if (response.body()?.message == "Document lapbul generated successfully") {
-                    if (response.isSuccessful) {
+                    if (response.body()?.message == "Document lapbul generated successfully") {
+//                    if (response.isSuccessful) {
                         Log.e("dataLapbul","${response.body()?.data?.lapbul}")
                         alert(R.string.download) {
                             positiveButton(R.string.iya) {
+                                btn_generate_lapbul.hideProgress(R.string.success_generate_doc)
                                 downloadLapbul(response.body()?.data?.lapbul)
                             }
                             negativeButton(R.string.tidak) {
-                                btn_generate_lapbul.hideProgress(R.string.generate_dokumen)
+                                apiDelDokLapbul(response.body()?.data?.lapbul)
                             }
                         }.show()
                     } else {
@@ -119,6 +116,23 @@ class ListLapbulActivity : BaseActivity() {
                 override fun onFailure(call: Call<Base1Resp<DokLapbulResp>>, t: Throwable) {
                     Toast.makeText(this@ListLapbulActivity, "$t", Toast.LENGTH_SHORT).show()
                     btn_generate_lapbul.hideProgress(R.string.failed_generate_doc)
+                }
+            })
+    }
+
+    private fun apiDelDokLapbul(lapbul: DokResp?) {
+        NetworkConfig().getServCatpers().delDokLapbul("Bearer ${sessionManager1.fetchAuthToken()}", lapbul?.id).enqueue(
+            object : Callback<BaseResp> {
+                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                    if (response.body()?.message == "Lapbul document deleted successfully") {
+                        btn_generate_lapbul.hideProgress(R.string.generate_dokumen)
+                    } else {
+                        Toast.makeText(this@ListLapbulActivity, R.string.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                    Toast.makeText(this@ListLapbulActivity, "$t", Toast.LENGTH_SHORT).show()
                 }
             })
     }

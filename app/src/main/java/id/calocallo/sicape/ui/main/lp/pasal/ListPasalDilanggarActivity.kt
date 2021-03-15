@@ -9,7 +9,7 @@ import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_pasal_dilanggar.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -49,9 +49,6 @@ class ListPasalDilanggarActivity : BaseActivity() {
         adapterPasalDilanggarEdit = ReusableAdapter(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data Pasal Dilanggar"
-        val pidana = intent.extras?.getParcelable<LpResp>(EDIT_PASAL_PIDANA)
-        val kodeEtik = intent.extras?.getParcelable<LpResp>(EDIT_PASAL_KKE)
-        val disiplin = intent.extras?.getParcelable<LpResp>(EDIT_PASAL_DISIPLIN)
         val detailLp = intent.extras?.getParcelable<LpMinResp>(EDIT_PASAL_DILANGGAR)
         jenisPelanggaran = sessionManager1.getJenisLP()
      /*   if (pidana != null) {

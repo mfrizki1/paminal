@@ -25,14 +25,13 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_rps.*
 import kotlinx.android.synthetic.main.activity_detail_skhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailSkhpActivity : BaseActivity() {

@@ -10,7 +10,7 @@ import id.calocallo.sicape.network.request.PersonelPenyelidikReq
 import id.calocallo.sicape.network.response.PersonelPenyelidikResp
 import id.calocallo.sicape.utils.LhpDataManager
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_personel_penyelidik.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*

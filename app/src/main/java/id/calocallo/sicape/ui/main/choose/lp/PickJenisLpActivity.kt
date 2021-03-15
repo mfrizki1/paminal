@@ -11,7 +11,7 @@ import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP
 import id.calocallo.sicape.ui.main.lhp.add.ListRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_jenis_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

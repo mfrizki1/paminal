@@ -11,7 +11,7 @@ import id.calocallo.sicape.network.response.LpSaksiResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.toggleVisibility
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_lp_kke_put_kke.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*

@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.*
@@ -22,11 +21,10 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
-import id.calocallo.sicape.ui.main.lp.pidana.DetailLpPidanaActivity
 import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.activity_detail_put_kke.*

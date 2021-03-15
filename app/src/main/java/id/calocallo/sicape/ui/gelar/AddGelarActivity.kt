@@ -15,7 +15,7 @@ import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.GelarDataManager
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_gelar.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import java.text.SimpleDateFormat
@@ -166,6 +166,7 @@ class AddGelarActivity : BaseActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun datePick() {
         val c = Calendar.getInstance(Locale("id", "ID"))
         val year = c.get(Calendar.YEAR)
@@ -173,7 +174,7 @@ class AddGelarActivity : BaseActivity() {
         val day = c.get(Calendar.DAY_OF_MONTH)
         val dpd = DatePickerDialog(
             this,
-            DatePickerDialog.OnDateSetListener { view, mYear, monthOfYear, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, mYear, monthOfYear, dayOfMonth ->
 
                 val simpleDateFormat = SimpleDateFormat("EEEE", Locale("id", "ID"))
                 val date = Date(mYear, month, dayOfMonth - 1)

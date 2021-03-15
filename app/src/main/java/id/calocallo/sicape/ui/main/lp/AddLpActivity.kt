@@ -17,7 +17,7 @@ import id.calocallo.sicape.ui.main.lp.pidana.AddLpPidanaActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -123,7 +123,7 @@ class AddLpActivity : BaseActivity() {
         val adapterSatker =
             ArrayAdapter(this, R.layout.item_spinner, resources.getStringArray(R.array.satker))
         spinner_kesatuan_lp_add.setAdapter(adapterSatker)
-        spinner_kesatuan_lp_add.setOnItemClickListener { parent, view, position, id ->
+        spinner_kesatuan_lp_add.setOnItemClickListener { parent, _, position, _ ->
             sessionManager1.setKesatuanPimpBidLp(parent.getItemAtPosition(position) as String)
         }
     }

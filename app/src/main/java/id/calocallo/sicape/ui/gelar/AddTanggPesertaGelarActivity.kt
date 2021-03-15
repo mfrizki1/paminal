@@ -16,12 +16,10 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.LhgReq
 import id.calocallo.sicape.network.response.AddLhgResp
 import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.LhgMinResp
 import id.calocallo.sicape.network.response.PesertaLhgResp
-import id.calocallo.sicape.ui.gelar.peserta_gelar.ListPesertaGelarActivity
 import id.calocallo.sicape.utils.GelarDataManager
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_tangg_peserta_gelar.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call

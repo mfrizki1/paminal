@@ -10,11 +10,10 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.SktbOnSp3
 import id.calocallo.sicape.model.SkttOnSp3
 import id.calocallo.sicape.network.NetworkDummy
-import id.calocallo.sicape.ui.main.rehab.sp4.AddSp4Activity
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_choose_sktb_sktt.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*

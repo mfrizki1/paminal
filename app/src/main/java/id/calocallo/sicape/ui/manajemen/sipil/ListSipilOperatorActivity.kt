@@ -8,12 +8,11 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.HakAksesSipil
 import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_sipil_operator.*
 import kotlinx.android.synthetic.main.activity_manajemen_operator.*
 import kotlinx.android.synthetic.main.item_account.view.*

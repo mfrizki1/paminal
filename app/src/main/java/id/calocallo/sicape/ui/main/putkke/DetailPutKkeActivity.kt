@@ -25,7 +25,7 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_put_kke.*
 import kotlinx.android.synthetic.main.activity_detail_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -160,7 +160,7 @@ class DetailPutKkeActivity : BaseActivity() {
         if (detailPutKke?.is_ada_dokumen == 1) {
             btn_see_doc_put_kke_detail.visible()
             btn_see_doc_put_kke_detail.setOnClickListener {
-                val uri = Uri.parse(detailPutKke?.dokumen?.url)
+                val uri = Uri.parse(detailPutKke.dokumen?.url)
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
             }
         }

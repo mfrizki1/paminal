@@ -15,7 +15,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.utils.hideKeyboard
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.activity_change_pass.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -34,7 +34,6 @@ class ChangePassActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
         supportActionBar?.title = "Ubah Password"
-        val userSipil = sessionManager1.fetchUserSipil()
         val userPersonel = sessionManager1.fetchUser()
         txt_nama_change_pass.text = "Nama : ${userPersonel?.nama}"
         txt_user_nrp_change_pass.text = "NRP : ${userPersonel?.username}"

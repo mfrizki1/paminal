@@ -9,9 +9,8 @@ import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.response.WanjakResp
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_wanjak.*
-import kotlinx.android.synthetic.main.item_wanjak.*
 import kotlinx.android.synthetic.main.item_wanjak.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -65,12 +64,12 @@ class ListWanjakActivity : BaseActivity() {
                             itemView.txt_nama_personel_wanjak.text = "Nama : ${data.personel?.nama}"
                             itemView.txt_pangkat_nrp_personel_wanjak.text =
                                 "Pangkat : ${data.personel?.pangkat.toString()
-                                    .toUpperCase()} / ${data?.personel?.nrp}"
+                                    .toUpperCase()} / ${data.personel?.nrp}"
                             itemView.txt_jabatan_personel_wanjak.text =
-                                "Jabatan : ${data?.personel?.jabatan}"
+                                "Jabatan : ${data.personel?.jabatan}"
                             itemView.txt_kesatuan_personel_wanjak.text =
-                                "Kesatuan : ${data?.personel?.kesatuan.toString().toUpperCase()}"
-                            itemView.txt_no_lp_wanjak.text = "No LP : ${data?.kasus?.lp?.no_lp}"
+                                "Kesatuan : ${data.personel?.kesatuan.toString().toUpperCase()}"
+                            itemView.txt_no_lp_wanjak.text = "No LP : ${data.kasus?.lp?.no_lp}"
                             if (data.kasus?.skhd?.id != null) {
                                 itemView.txt_no_skhd_putkke_wanjak.text =
                                     "No SKHD : ${data.kasus?.skhd?.no_skhd}"

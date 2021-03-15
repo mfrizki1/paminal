@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.OrganisasiReq
-import id.calocallo.sicape.model.ParentListOrganisasi
 import id.calocallo.sicape.ui.main.addpersonal.misc.perjuangan.PerjuanganCitaFragment
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.fragment_organisasi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

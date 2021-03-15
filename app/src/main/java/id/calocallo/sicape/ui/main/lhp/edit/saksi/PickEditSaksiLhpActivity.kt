@@ -7,16 +7,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.LhpMinResp
 import id.calocallo.sicape.network.response.SaksiLhpResp
-import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
 import id.calocallo.sicape.ui.main.lhp.EditLhpActivity.Companion.EDIT_LHP
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.AddSingleSaksiLhpActivity.Companion.ADD_SAKSI_LHP
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.EditSaksiLhpActivity.Companion.EDIT_SAKSI_LHP
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_edit_saksi_lhp.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*

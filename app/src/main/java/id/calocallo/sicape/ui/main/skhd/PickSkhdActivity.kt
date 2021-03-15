@@ -5,7 +5,7 @@ import android.os.Bundle
 import id.calocallo.sicape.R
 import id.calocallo.sicape.ui.main.putkke.ListPutKkeActivity
 import id.calocallo.sicape.ui.main.skhd.tinddisiplin.SkhdTindDisiplinActivity
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.hideProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
@@ -24,7 +25,7 @@ import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_operator.*
 import kotlinx.android.synthetic.main.activity_add_personel.*
 import kotlinx.android.synthetic.main.activity_edit_operator.*
@@ -59,7 +60,7 @@ class EditOperatorActivity : BaseActivity() {
             txt_nrp_personel_operator_edit.text = "NRP : ${this?.username}"
             if (this?.is_aktif == 1) {
                 spinner_status_operator_edit.setText("Aktif")
-                isAktif = this?.is_aktif
+                isAktif = this.is_aktif
             } else {
                 spinner_status_operator_edit.setText("Tidak")
                 isAktif = this?.is_aktif
@@ -74,7 +75,7 @@ class EditOperatorActivity : BaseActivity() {
         val item = listOf("Aktif", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinner_status_operator_edit.setAdapter(adapter)
-        spinner_status_operator_edit.setOnItemClickListener { parent, view, position, id ->
+        spinner_status_operator_edit.setOnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> isAktif = 1
                 1 -> isAktif = 0
@@ -105,14 +106,26 @@ class EditOperatorActivity : BaseActivity() {
 
     private fun changeButton() {
         btn_personel_edit_polda_polisi_oper.setOnClickListener {
-            btn_personel_edit_polda_polisi_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_edit_polda_polisi_oper.setTextColor(resources.getColor(R.color.white))
+            btn_personel_edit_polda_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.colorPrimary)
+            )
+            btn_personel_edit_polda_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
 
-            btn_personel_edit_polre_polisi_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_edit_polre_polisi_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polre_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
+            btn_personel_edit_polre_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.colorPrimary)
+            )
 
-            btn_personel_edit_polsek_polisi_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_edit_polsek_polisi_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polsek_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
+            btn_personel_edit_polsek_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
             startActivityForResult(
                 Intent(this, PoldaActivity::class.java), AddPersonelActivity.REQ_POLDA
             )
@@ -121,14 +134,29 @@ class EditOperatorActivity : BaseActivity() {
             txt_satker_polisi_oper_edit.text = ""
         }
         btn_personel_edit_polre_polisi_oper.setOnClickListener {
-            btn_personel_edit_polre_polisi_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_edit_polre_polisi_oper.setTextColor(resources.getColor(R.color.white))
+            btn_personel_edit_polre_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.colorPrimary
+                )
+            )
+            btn_personel_edit_polre_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
 
-            btn_personel_edit_polda_polisi_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_edit_polda_polisi_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polda_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
+            btn_personel_edit_polda_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.colorPrimary)
+            )
 
-            btn_personel_edit_polsek_polisi_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_edit_polsek_polisi_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polsek_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
+            btn_personel_edit_polsek_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.colorPrimary)
+            )
             startActivityForResult(
                 Intent(this, PolresActivity::class.java),
                 AddPersonelActivity.REQ_POLRES
@@ -139,14 +167,26 @@ class EditOperatorActivity : BaseActivity() {
             txt_satker_polisi_oper_edit.text = ""
         }
         btn_personel_edit_polsek_polisi_oper.setOnClickListener {
-            btn_personel_edit_polsek_polisi_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_edit_polsek_polisi_oper.setTextColor(resources.getColor(R.color.white))
+            btn_personel_edit_polsek_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.colorPrimary)
+            )
+            btn_personel_edit_polsek_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
 
-            btn_personel_edit_polre_polisi_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_edit_polre_polisi_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polre_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
+            btn_personel_edit_polre_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.colorPrimary)
+            )
 
-            btn_personel_edit_polda_polisi_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_edit_polda_polisi_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_edit_polda_polisi_oper.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
+            btn_personel_edit_polda_polisi_oper.setTextColor(
+                ContextCompat.getColor(this, R.color.colorPrimary)
+            )
             val intent = Intent(this, PolsekActivity::class.java)
             startActivityForResult(intent, AddPersonelActivity.REQ_POLSEK)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

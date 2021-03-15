@@ -21,7 +21,7 @@ import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.choose.lp.ChooseLpSkhdActivity
 import id.calocallo.sicape.ui.main.choose.lp.ListLpKkePutKkeActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_put_kke.*
 import kotlinx.android.synthetic.main.activity_edit_put_kke.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*

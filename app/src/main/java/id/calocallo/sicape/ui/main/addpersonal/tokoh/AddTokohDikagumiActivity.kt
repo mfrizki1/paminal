@@ -9,7 +9,7 @@ import id.calocallo.sicape.model.ParentListTokoh
 import id.calocallo.sicape.network.request.TokohReq
 import id.calocallo.sicape.ui.main.addpersonal.kawan.AddKawanDekatActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_tokoh_dikagumi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

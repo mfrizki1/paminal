@@ -26,7 +26,7 @@ import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.skhd.edit.EditSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.activity_detail_skhd.*
 import kotlinx.android.synthetic.main.activity_detail_sp4.*
@@ -95,7 +95,7 @@ class DetailSkhdActivity : BaseActivity() {
                         btn_generate_skhd.hideProgress(R.string.success_generate_doc)
                         alert("Lihat Dokumen") {
                             positiveButton(R.string.iya) {
-                                downloadSkhd(response?.body()?.data)
+                                downloadSkhd(response.body()?.data)
                             }
                             negativeButton(R.string.tidak) { btn_generate_pidana.hideProgress(R.string.generate_dokumen) }
                         }.show()

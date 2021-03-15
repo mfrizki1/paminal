@@ -30,7 +30,7 @@ import id.calocallo.sicape.ui.main.lp.saksi.select_saksi.SelectedSaksiAdapter
 import id.calocallo.sicape.ui.main.lp.saksi.select_saksi.SelectedSaksiDetailsLookup
 import id.calocallo.sicape.ui.main.lp.saksi.select_saksi.SelectedSaksiItemKeyProvider
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_saksi.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*

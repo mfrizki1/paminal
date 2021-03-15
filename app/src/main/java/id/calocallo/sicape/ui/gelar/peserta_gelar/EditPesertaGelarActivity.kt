@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.gelar.peserta_gelar
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,12 +17,11 @@ import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.network.response.PesertaLhgResp
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_peserta_gelar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.function.LongBinaryOperator
 
 class EditPesertaGelarActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1

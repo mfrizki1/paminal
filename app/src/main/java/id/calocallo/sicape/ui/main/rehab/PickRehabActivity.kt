@@ -8,7 +8,7 @@ import id.calocallo.sicape.ui.main.rehab.rps.ListRpsActivity
 import id.calocallo.sicape.ui.main.rehab.sktb.ListSktbActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.ListSkttActivity
 import id.calocallo.sicape.ui.main.rehab.sp4.ListSp4Activity
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_rehab.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

@@ -21,7 +21,7 @@ import id.calocallo.sicape.network.response.LhgResp
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_gelar.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call

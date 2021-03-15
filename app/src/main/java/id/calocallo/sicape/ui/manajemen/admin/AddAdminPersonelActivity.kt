@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.manajemen.admin
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -17,7 +18,7 @@ import id.calocallo.sicape.ui.manajemen.AddOperatorActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.activity_add_admin_personel.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -55,7 +56,7 @@ class AddAdminPersonelActivity : BaseActivity() {
         val item = listOf("Masih", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinner_status_admin.setAdapter(adapter)
-        spinner_status_admin.setOnItemClickListener { parent, view, position, id ->
+        spinner_status_admin.setOnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> isAktif = 1
                 1 -> isAktif = 0
@@ -114,6 +115,7 @@ class AddAdminPersonelActivity : BaseActivity() {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

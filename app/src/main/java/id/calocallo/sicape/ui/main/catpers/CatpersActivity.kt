@@ -14,8 +14,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,13 +28,10 @@ import com.google.android.material.textfield.TextInputLayout
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.FilterReq
-import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.CatpersLapbulResp
-import id.calocallo.sicape.network.response.DokCatpersResp
-import id.calocallo.sicape.network.response.DokResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_catpres.*
 import kotlinx.android.synthetic.main.activity_detail_catpers.*
 import kotlinx.android.synthetic.main.activity_detail_rps.*
@@ -155,7 +150,7 @@ class CatpersActivity : BaseActivity() {
                                     downloadCatpers(response.body()?.data?.catpers)
                                 }
                                 negativeButton(R.string.tidak) {
-                                    btn_generate_catpers.hideProgress(R.string.generate_dokumen)
+                                    apiDelDoc(response.body()?.data?.catpers)
                                 }
                             }.show()
                         } else {
@@ -168,6 +163,25 @@ class CatpersActivity : BaseActivity() {
                         btn_generate_catpers.hideProgress(R.string.failed_generate_doc)
                     }
                 })
+    }
+
+    private fun apiDelDoc(catpers: DokResp?) {
+        NetworkConfig().getServCatpers().delDokCatpers("Bearer ${sessionManager1.fetchAuthToken()}",catpers?.id).enqueue(
+            object : Callback<BaseResp> {
+                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                    if (response.body()?.message == "Catpers document deleted successfully") {
+                        btn_generate_catpers.hideProgress(R.string.generate_dokumen)
+                    } else {
+                        Toast.makeText(this@CatpersActivity, R.string.error, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                    Toast.makeText(this@CatpersActivity, "$t", Toast.LENGTH_SHORT).show()
+                }
+            })
+
     }
 
     private fun downloadCatpers(catpers: DokResp?) {

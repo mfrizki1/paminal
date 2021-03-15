@@ -1,12 +1,10 @@
 package id.calocallo.sicape.ui.main.catpers
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import id.calocallo.sicape.R
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_catpers.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

@@ -19,7 +19,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_saksi_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -93,7 +93,7 @@ class EditSaksiLpActivity : BaseActivity() {
             startActivityForResult(intent, REQ_PERSONEL)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        rg_korban_saksi_edit.setOnCheckedChangeListener { group, checkedId ->
+        rg_korban_saksi_edit.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             if (radio.isChecked && radio.text == "Korban") {
                 isKorban = 1
@@ -180,7 +180,7 @@ class EditSaksiLpActivity : BaseActivity() {
             rb_saksi.isChecked = true
         }
 
-        /* rg_korban_saksi_edit.setOnCheckedChangeListener { group, checkedId ->
+        /* rg_korban_saksi_edit.setOnCheckedChangeListener { _, checkedId ->
              val radio: RadioButton = findViewById(checkedId)
              if (radio.text.toString().toLowerCase() == "korban") {
                  radio.isChecked = true

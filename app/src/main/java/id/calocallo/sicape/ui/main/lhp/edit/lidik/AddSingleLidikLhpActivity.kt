@@ -13,7 +13,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LhpResp
 import id.calocallo.sicape.model.ListLidik
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_lidik_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

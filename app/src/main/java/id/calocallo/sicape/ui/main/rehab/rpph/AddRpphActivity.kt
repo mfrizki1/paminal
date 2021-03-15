@@ -3,13 +3,9 @@ package id.calocallo.sicape.ui.main.rehab.rpph
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.github.razir.progressbutton.hideDrawable
 import com.github.razir.progressbutton.hideProgress
-import com.github.razir.progressbutton.showDrawable
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
@@ -23,7 +19,7 @@ import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_rpph.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -80,7 +76,7 @@ class AddRpphActivity : BaseActivity() {
                         call: Call<Base1Resp<AddRpphResp>>,
                         response: Response<Base1Resp<AddRpphResp>>
                     ) {
-                        if (response?.body()?.message == "Data rpph saved succesfully") {
+                        if (response.body()?.message == "Data rpph saved succesfully") {
                             btn_save_rpph_add.hideProgress(R.string.data_saved)
                             btn_save_rpph_add.showSnackbar(R.string.data_saved) {
                                 action(R.string.next) {

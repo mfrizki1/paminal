@@ -23,10 +23,8 @@ import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.ui.main.skhd.tinddisiplin.AddTindDisiplinSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
-import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.showSnackbar
-import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_skhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -61,7 +59,7 @@ class AddSkhpActivity : BaseActivity() {
         var listKotaSkhp = listOf("Banjarmasin", "Banjarbaru")
         val adapterKota = ArrayAdapter(this, R.layout.item_spinner, listKotaSkhp)
         edt_kota_keluar_skhp_add.setAdapter(adapterKota)
-        edt_kota_keluar_skhp_add.setOnItemClickListener { parent, view, position, id ->
+        edt_kota_keluar_skhp_add.setOnItemClickListener { parent, _, position, _ ->
             kotaSkhp = parent.getItemAtPosition(position).toString()
         }
         btn_save_skhp_add.attachTextChangeAnimator()
@@ -126,7 +124,7 @@ class AddSkhpActivity : BaseActivity() {
     }
 
     private fun radioGroupSkhp() {
-        rg_memenuhi_syarat_skhp_add.setOnCheckedChangeListener { group, checkedId ->
+        rg_memenuhi_syarat_skhp_add.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             if (radio.isChecked && radio.text == "Ya") {
                 isSyarat = 1
@@ -134,7 +132,7 @@ class AddSkhpActivity : BaseActivity() {
                 isSyarat = 0
             }
         }
-        rg_memiliki_pidana.setOnCheckedChangeListener { group, checkedId ->
+        rg_memiliki_pidana.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             isPidana = if (radio.isChecked && radio.text == "Memiliki") {
                 1
@@ -143,7 +141,7 @@ class AddSkhpActivity : BaseActivity() {
             }
         }
 
-        rg_memiliki_kke.setOnCheckedChangeListener { group, checkedId ->
+        rg_memiliki_kke.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             isKke = if (radio.isChecked && radio.text == "Memiliki") {
                 1
@@ -152,7 +150,7 @@ class AddSkhpActivity : BaseActivity() {
             }
         }
 
-        rg_memiliki_disiplin.setOnCheckedChangeListener { group, checkedId ->
+        rg_memiliki_disiplin.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             isDisiplin = if (radio.isChecked && radio.text == "Memiliki") {
                 1
@@ -160,7 +158,7 @@ class AddSkhpActivity : BaseActivity() {
                 0
             }
         }
-        rg_status_cat_pelanggaran_skhp_add.setOnCheckedChangeListener { group, checkedId ->
+        rg_status_cat_pelanggaran_skhp_add.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             tempSttsCatPelanggaran = if (radio.isChecked && radio.text == "Selesai") {
                 1

@@ -20,7 +20,7 @@ import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.RpsResp
 import id.calocallo.sicape.ui.main.choose.skhd.ChooseSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_rps.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call

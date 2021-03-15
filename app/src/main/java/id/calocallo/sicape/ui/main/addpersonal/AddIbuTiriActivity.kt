@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.addpersonal
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +10,7 @@ import android.widget.AutoCompleteTextView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.KeluargaReq
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_ayah_tiri.*
-import kotlinx.android.synthetic.main.activity_add_ibu_kandung.*
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_ibu_tiri.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -30,41 +29,6 @@ class AddIbuTiriActivity : BaseActivity() {
         supportActionBar?.title = "Ibu Tiri / Angkat"
 
         initSpinner(spinner_pekerjaan_ibu_tiri, spinner_stts_hidup_ibu_tiri, sp_agama_ibu_tiri)
-
-        val nama_lengkap = edt_nama_lngkp_ibu_tiri.text.toString()
-        val alias = edt_alias_ibu_tiri.text.toString()
-        val tempat_lhr = edt_tmpt_ttl_ibu_tiri.text.toString()
-        val tgl_lhr = edt_tgl_ttl_ibu_tiri.text.toString()
-        val agama = sp_agama_ibu_tiri.text.toString()
-        val aliran_dianut = edt_aliran_dianut_ibu_tiri.text.toString()
-        val suku = edt_suku_ibu_tiri.text.toString()
-        val kwg = edt_kwg_ibu_tiri.text.toString()
-        val how_to_kwg = edt_how_to_kwg_ibu_tiri.text.toString()
-        val almt_skrg = edt_almt_skrg_ibu_tiri.text.toString()
-        val no_telp_rmh = edt_no_telp_ibu_tiri.text.toString()
-        val almt_sblm = edt_almt_rmh_sblm_ibu_tiri.text.toString()
-        val pkrjaan = edt_pekerjaan_ibu_tiri.text.toString()
-        val almt_kantor = edt_almt_kntr_ibu_tiri.text.toString()
-        val no_tlp_kantor = edt_no_telp_kntr_ibu_tiri.text.toString()
-        val pekerjaan_sblm = edt_pekerjaan_sblm_ibu_tiri.text.toString()
-        val pend_terakhir = edt_pend_trkhr_ibu_tiri.text.toString()
-
-        //organisasi yang diikuti
-        val kddkn_org_diikuti = edt_kddkn_org_diikuti_ibu_tiri.text.toString()
-        val thn_org_diikut = edt_thn_org_diikuti_ibu_tiri.text.toString()
-        val alasan_org_diikuti = edt_alasan_org_diikuti_ibu_tiri.text.toString()
-        val almt_org_diikuti = edt_almt_org_diikuti_ibu_tiri.text.toString()
-
-        //organisasi yang pernah diikuti
-        val kddkn_org_prnh = edt_kddkn_org_prnh_ibu_tiri.text.toString()
-        val thn_org_prnh = edt_thn_org_prnh_ibu_tiri.text.toString()
-        val alasan_org_prnh = edt_alasan_org_prnh_ibu_tiri.text.toString()
-        val almt_org_prnh = edt_almt_org_prnh_ibu_tiri.text.toString()
-
-        //status hidup
-        val bagaimana_hidup = edt_tahun_kematian_ibu_tiri.text.toString()
-        val dimana_hidup = edt_dimana_ibu_tiri.text.toString()
-        val penyebab_hidup = edt_penyebab_ibu_tiri.text.toString()
 
         btn_next_ibu_tiri.setOnClickListener {
             keluargaReq.nama = edt_nama_lngkp_ibu_tiri.text.toString()
@@ -132,7 +96,7 @@ class AddIbuTiriActivity : BaseActivity() {
         val item = listOf("Masih", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinnerPekerjaanIbuTiri.setAdapter(adapter)
-        spinnerPekerjaanIbuTiri.setOnItemClickListener { parent, view, position, id ->
+        spinnerPekerjaanIbuTiri.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 txt_layout_nama_kantor_ibu_tiri.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_ibu_tiri.visibility = View.VISIBLE
@@ -157,7 +121,7 @@ class AddIbuTiriActivity : BaseActivity() {
         val itemHidup = listOf("Masih", "Tidak")
         val adapterHidup = ArrayAdapter(this, R.layout.item_spinner, itemHidup)
         spinnerSttsHidupIbuTiri.setAdapter(adapterHidup)
-        spinnerSttsHidupIbuTiri.setOnItemClickListener { parent, view, position, id ->
+        spinnerSttsHidupIbuTiri.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 txt_layout_penyebab_ibu_tiri.visibility = View.GONE
                 txt_layout_dimana_ibu_tiri.visibility = View.GONE
@@ -177,7 +141,7 @@ class AddIbuTiriActivity : BaseActivity() {
         val agama = listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Konghuchu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agama)
         spAgamaIbuTiri.setAdapter(adapterAgama)
-        spAgamaIbuTiri.setOnItemClickListener { parent, view, position, id ->
+        spAgamaIbuTiri.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 agama_skrg = "islam"
             } else if (position == 1) {
@@ -200,6 +164,7 @@ class AddIbuTiriActivity : BaseActivity() {
         initSpinner(spinner_pekerjaan_ibu_tiri, spinner_stts_hidup_ibu_tiri, sp_agama_ibu_tiri)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun test(ibuTiri: KeluargaReq) {
         edt_nama_lngkp_ibu_tiri.setText(ibuTiri.nama)
         edt_alias_ibu_tiri.setText(ibuTiri.nama_alias)

@@ -7,7 +7,7 @@ import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
 import id.calocallo.sicape.ui.main.lp.kke.ListLpKodeEtikActivity
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalActivity
 import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pick_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

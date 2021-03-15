@@ -9,7 +9,7 @@ import id.calocallo.sicape.network.request.MedInfoReq
 import id.calocallo.sicape.model.ParentListMedInfo
 import id.calocallo.sicape.ui.main.addpersonal.medsos.AddMedsosActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_media_informasi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

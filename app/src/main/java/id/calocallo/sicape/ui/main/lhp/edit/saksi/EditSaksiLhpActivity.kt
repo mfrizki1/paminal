@@ -9,7 +9,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,8 +21,7 @@ import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.*
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_alamat_sipil_saksi
 import kotlinx.android.synthetic.main.activity_edit_saksi_lhp.txt_jabatan_saksi_lp_add

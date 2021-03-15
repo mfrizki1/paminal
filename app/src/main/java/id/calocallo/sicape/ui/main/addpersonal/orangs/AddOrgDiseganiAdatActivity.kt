@@ -9,7 +9,7 @@ import id.calocallo.sicape.network.request.OrangsReq
 import id.calocallo.sicape.model.ParentListOrangs
 import id.calocallo.sicape.ui.main.addpersonal.tokoh.AddTokohDikagumiActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_org_disegani_adat.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

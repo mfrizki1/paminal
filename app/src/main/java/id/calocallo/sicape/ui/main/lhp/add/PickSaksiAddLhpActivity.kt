@@ -7,7 +7,7 @@ import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.SaksiLhpReq
 import id.calocallo.sicape.ui.main.lhp.edit.saksi.AddSingleSaksiLhpActivity
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import id.calocallo.sicape.utils.LhpDataManager
 import kotlinx.android.synthetic.main.activity_pick_saksi_add_lhp.*
 import kotlinx.android.synthetic.main.item_2_text.view.*

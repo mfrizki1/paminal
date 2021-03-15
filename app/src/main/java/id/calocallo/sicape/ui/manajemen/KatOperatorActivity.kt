@@ -1,12 +1,11 @@
 package id.calocallo.sicape.ui.manajemen
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import id.calocallo.sicape.R
 import id.calocallo.sicape.ui.manajemen.sipil.ListSipilOperatorActivity
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_kat_operator.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

@@ -11,12 +11,11 @@ import id.calocallo.sicape.model.LhpOnSkhd
 import id.calocallo.sicape.model.LpOnSkhd
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.SkhdMinResp
-import id.calocallo.sicape.network.response.SkhdResp
 import id.calocallo.sicape.ui.main.skhd.DetailSkhdActivity.Companion.DETAIL_SKHD
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_skhd.*
 import kotlinx.android.synthetic.main.item_skhd.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*

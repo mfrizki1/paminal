@@ -16,12 +16,11 @@ import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikAct
 import id.calocallo.sicape.ui.main.rehab.rpph.AddRpphActivity
 import id.calocallo.sicape.ui.main.rehab.rps.AddRpsActivity
 import id.calocallo.sicape.ui.main.rehab.sktb.AddSktbActivity
-import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.ui.main.rehab.sp4.AddSp4Activity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_lp_choose.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*

@@ -3,17 +3,10 @@ package id.calocallo.sicape.ui.main.addpersonal.pendidikan
 import android.os.Bundle
 import android.transition.Slide
 import android.view.Gravity
-import android.widget.LinearLayout
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.ParentListPendUmum
-import id.calocallo.sicape.model.AddPendidikanModel
 import id.calocallo.sicape.ui.main.addpersonal.pendidikan.umum.PendidikanUmumFragment
-import id.calocallo.sicape.utils.Constants
-import id.co.iconpln.smartcity.ui.base.BaseActivity
-import id.rizmaulana.sheenvalidator.lib.SheenValidator
-import kotlinx.android.synthetic.main.fragment_pendidikan_umum.*
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 

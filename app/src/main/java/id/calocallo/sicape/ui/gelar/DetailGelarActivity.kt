@@ -26,7 +26,7 @@ import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.gelar.peserta_gelar.ListPesertaGelarActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_gelar.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -163,7 +163,7 @@ class DetailGelarActivity : BaseActivity() {
         if (lhgResp?.is_ada_dokumen == 1) {
             btn_see_doc_lhg.visible()
             btn_see_doc_lhg.setOnClickListener {
-                val uri = Uri.parse(lhgResp?.dokumen?.url)
+                val uri = Uri.parse(lhgResp.dokumen?.url)
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
             }
         }

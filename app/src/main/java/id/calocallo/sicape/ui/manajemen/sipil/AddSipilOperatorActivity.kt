@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
@@ -26,7 +27,7 @@ import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.activity_add_operator.*
 import kotlinx.android.synthetic.main.activity_add_personel.*
@@ -58,7 +59,7 @@ class AddSipilOperatorActivity : BaseActivity() {
         val item = listOf("Masih", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinner_status_operator_sipil.setAdapter(adapter)
-        spinner_status_operator_sipil.setOnItemClickListener { parent, view, position, id ->
+        spinner_status_operator_sipil.setOnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> isAktif = 1
                 1 -> isAktif = 0
@@ -86,14 +87,14 @@ class AddSipilOperatorActivity : BaseActivity() {
 
     private fun changeButton() {
         btn_personel_add_polda_sipil_oper.setOnClickListener {
-            btn_personel_add_polda_sipil_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polda_sipil_oper.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polda_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polda_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.white))
 
-            btn_personel_add_polres_sipil_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polres_sipil_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polres_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polres_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
 
-            btn_personel_add_polsek_sipil_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polsek_sipil_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polsek_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polsek_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
             startActivityForResult(
                 Intent(this, PoldaActivity::class.java), AddPersonelActivity.REQ_POLDA
             )
@@ -102,14 +103,14 @@ class AddSipilOperatorActivity : BaseActivity() {
             txt_satker_sipil_oper_add.text = ""
         }
         btn_personel_add_polres_sipil_oper.setOnClickListener {
-            btn_personel_add_polda_sipil_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polda_sipil_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polda_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polda_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
 
-            btn_personel_add_polres_sipil_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polres_sipil_oper.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polres_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polres_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.white))
 
-            btn_personel_add_polsek_sipil_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polsek_sipil_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polsek_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polsek_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
             startActivityForResult(
                 Intent(this, PolresActivity::class.java),
                 AddPersonelActivity.REQ_POLRES
@@ -119,14 +120,14 @@ class AddSipilOperatorActivity : BaseActivity() {
             txt_satker_sipil_oper_add.text = ""
         }
         btn_personel_add_polsek_sipil_oper.setOnClickListener {
-            btn_personel_add_polda_sipil_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polda_sipil_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polda_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polda_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
 
-            btn_personel_add_polres_sipil_oper.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polres_sipil_oper.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polres_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polres_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
 
-            btn_personel_add_polsek_sipil_oper.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polsek_sipil_oper.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polsek_sipil_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polsek_sipil_oper.setTextColor(ContextCompat.getColor(this,R.color.white))
             val intent = Intent(this, PolsekActivity::class.java)
             startActivityForResult(intent, AddPersonelActivity.REQ_POLSEK)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

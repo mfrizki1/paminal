@@ -5,18 +5,16 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.ListIdPasalReq
-import id.calocallo.sicape.network.request.PasalReq
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_pasal_dilanggar.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -37,7 +35,7 @@ class EditPasalDilanggarActivity : BaseActivity() {
         setContentView(R.layout.activity_edit_pasal_dilanggar)
         sessionManager1 = SessionManager1(this)
         val pasal = intent.extras?.getParcelable<PasalDilanggarResp>("DETAIL_EDIT_PASAL")
-        val namaJenis = intent.extras?.getString("NAMA_JENIS")
+//        val namaJenis = intent.extras?.getString("NAMA_JENIS")
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Pasal Yang Dilanggar"
         /* when (namaJenis) {

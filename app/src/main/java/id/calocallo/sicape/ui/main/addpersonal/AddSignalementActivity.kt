@@ -7,10 +7,9 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.SignalementModel
 import id.calocallo.sicape.ui.main.addpersonal.relasi.AddRelasiActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_signalement.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
-import kotlin.math.sign
 
 class AddSignalementActivity : BaseActivity() {
     private lateinit var signalementReq: SignalementModel

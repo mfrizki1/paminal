@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.gelar
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -10,7 +9,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.LhgMinResp
 import id.calocallo.sicape.utils.GelarDataManager
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_gelar.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter

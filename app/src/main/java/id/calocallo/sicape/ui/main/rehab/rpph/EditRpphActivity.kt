@@ -1,26 +1,20 @@
 package id.calocallo.sicape.ui.main.rehab.rpph
 
-import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.PutKkeOnRpphModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.RpphReq
 import id.calocallo.sicape.network.response.AddRpphResp
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.RpphResp
-import id.calocallo.sicape.ui.main.choose.skhd.ChooseSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_edit_rpph.*
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_rpph.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call

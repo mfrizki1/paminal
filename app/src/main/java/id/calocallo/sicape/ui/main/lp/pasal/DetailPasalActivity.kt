@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.main.lp.pasal
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,7 +11,7 @@ import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.network.response.PasalResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_pasal.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call

@@ -15,7 +15,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.EmptyModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.NetworkDummy
 import id.calocallo.sicape.network.request.AnevReq
@@ -24,7 +23,7 @@ import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_anev.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*

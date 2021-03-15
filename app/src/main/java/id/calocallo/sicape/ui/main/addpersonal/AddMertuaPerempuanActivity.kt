@@ -1,19 +1,16 @@
 package id.calocallo.sicape.ui.main.addpersonal
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.KeluargaReq
 import id.calocallo.sicape.ui.main.addpersonal.anak.AddAnakActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_mertua_laki.*
-import kotlinx.android.synthetic.main.activity_add_mertua_perempuan.*
-import kotlinx.android.synthetic.main.activity_add_mertua_perempuan.*
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_mertua_perempuan.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -103,7 +100,7 @@ class AddMertuaPerempuanActivity : BaseActivity() {
         val item = listOf("Masih", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinner_pekerjaan_mertua_perempuan.setAdapter(adapter)
-        spinner_pekerjaan_mertua_perempuan.setOnItemClickListener { parent, view, position, id ->
+        spinner_pekerjaan_mertua_perempuan.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 txt_layout_nama_kantor_mertua_perempuan.visibility = View.VISIBLE
                 txt_layout_alamat_kantor_mertua_perempuan.visibility = View.VISIBLE
@@ -129,7 +126,7 @@ class AddMertuaPerempuanActivity : BaseActivity() {
         val itemHidup = listOf("Masih", "Tidak")
         val adapterHidup = ArrayAdapter(this, R.layout.item_spinner, itemHidup)
         spinner_stts_hidup_mertua_perempuan.setAdapter(adapterHidup)
-        spinner_stts_hidup_mertua_perempuan.setOnItemClickListener { parent, view, position, id ->
+        spinner_stts_hidup_mertua_perempuan.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 txt_layout_penyebab_mertua_perempuan.visibility = View.GONE
                 txt_layout_dimana_mertua_perempuan.visibility = View.GONE
@@ -148,7 +145,7 @@ class AddMertuaPerempuanActivity : BaseActivity() {
         val agama = listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Konghuchu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agama)
         sp_agama_mertua_perempuan.setAdapter(adapterAgama)
-        sp_agama_mertua_perempuan.setOnItemClickListener { parent, view, position, id ->
+        sp_agama_mertua_perempuan.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 agama_skrg = "islam"
             } else if (position == 1) {
@@ -171,6 +168,7 @@ class AddMertuaPerempuanActivity : BaseActivity() {
         initSpinner()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun test(mertua2: KeluargaReq) {
         edt_nama_lngkp_mertua_perempuan.setText(mertua2.nama)
         edt_alias_mertua_perempuan.setText(mertua2.nama_alias)

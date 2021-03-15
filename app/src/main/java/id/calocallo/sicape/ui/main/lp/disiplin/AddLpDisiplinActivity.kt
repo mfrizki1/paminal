@@ -5,12 +5,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_lp_disiplin.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

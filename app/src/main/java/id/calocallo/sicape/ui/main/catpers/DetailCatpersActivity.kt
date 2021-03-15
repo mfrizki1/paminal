@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
@@ -17,11 +16,8 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.CatpersLapbulResp
 import id.calocallo.sicape.network.response.PasalResp
 import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_catpers.*
-import kotlinx.android.synthetic.main.item_catpers.view.*
-import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback

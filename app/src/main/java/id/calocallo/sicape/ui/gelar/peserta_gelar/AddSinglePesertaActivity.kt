@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.gelar.peserta_gelar
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.github.razir.progressbutton.attachTextChangeAnimator
@@ -17,7 +16,7 @@ import id.calocallo.sicape.network.response.PesertaLhgResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_single_peserta.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call

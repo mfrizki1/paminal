@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.RadioButton
 import id.calocallo.sicape.R
 import id.calocallo.sicape.utils.LhpDataManager
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

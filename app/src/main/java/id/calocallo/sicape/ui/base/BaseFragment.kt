@@ -1,6 +1,7 @@
 package id.co.iconpln.smartcity.ui.base
 
 import androidx.fragment.app.Fragment
+import id.calocallo.sicape.ui.base.BaseActivity
 
 
 /**

@@ -1,7 +1,6 @@
 package id.calocallo.sicape.ui.gelar.peserta_gelar
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,13 +8,11 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.LhgMinResp
 import id.calocallo.sicape.network.response.PesertaLhgResp
-import id.calocallo.sicape.ui.gelar.AddTanggPesertaGelarActivity
 import id.calocallo.sicape.ui.gelar.DetailGelarActivity
-import id.calocallo.sicape.ui.gelar.EditGelarActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_list_peserta_gelar.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*

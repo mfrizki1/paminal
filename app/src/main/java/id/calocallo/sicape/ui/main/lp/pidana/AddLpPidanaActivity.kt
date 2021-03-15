@@ -18,7 +18,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -86,7 +86,7 @@ class AddLpPidanaActivity : BaseActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        rg_pidana.setOnCheckedChangeListener { group, checkedId ->
+        rg_pidana.setOnCheckedChangeListener { _, checkedId ->
             val radio = findViewById<RadioButton>(checkedId)
             if (radio.isChecked) sessionManager1.setPelapor(radio.text.toString().toLowerCase())
             if (radio.text == "Polisi") {
@@ -126,17 +126,11 @@ class AddLpPidanaActivity : BaseActivity() {
         val tempatLahirSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tempat_lahir_sipil)
         val tglLahirSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tanggal_lahir_sipil)
 
-
-
-
-        val ll = sipilAlertDialog.findViewById<LinearLayout>(R.id.ll_add_sipil)
-        val pb = sipilAlertDialog.findViewById<RelativeLayout>(R.id.rl_pb)
-
         val agamaItem =
             listOf("Islam", "Katolik", "Protestan", "Buddha", "Hindu", "Khonghucu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
         spAgama.setAdapter(adapterAgama)
-        spAgama.setOnItemClickListener { parent, view, position, id ->
+        spAgama.setOnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> {
                     agamaSipil = "islam"
@@ -169,7 +163,7 @@ class AddLpPidanaActivity : BaseActivity() {
         val jkItem = listOf("Laki-Laki", "Perempuan")
         val adapterJk = ArrayAdapter(this, R.layout.item_spinner, jkItem)
         jkSipilView.setAdapter(adapterJk)
-        jkSipilView.setOnItemClickListener { parent, view, position, id ->
+        jkSipilView.setOnItemClickListener { parent, _, position, _ ->
             txt_jk_sipil_pidana_lp_add.text ="Jenis Kelamin : ${parent.getItemAtPosition(position).toString()}"
             when(position){
                 0->jkSipil = "laki_laki"
@@ -180,7 +174,7 @@ class AddLpPidanaActivity : BaseActivity() {
         materialAlertDialogBuilder.setView(sipilAlertDialog)
             .setTitle("Tambah Data Sipil")
 //            .setMessage("Masukkan Data Sipil")
-            .setPositiveButton("Tambah") { dialog, _ ->
+            .setPositiveButton("Tambah") { _, _ ->
                 namaSipil = namaSipilView.text.toString()
                 txt_nama_sipil_pidana_lp_add.text ="Nama : ${namaSipilView.text.toString()}"
 
@@ -206,7 +200,7 @@ class AddLpPidanaActivity : BaseActivity() {
 //                dialog.dismiss()
 
             }
-            .setNegativeButton("Batal") { dialog, _ ->
+            .setNegativeButton("Batal") { _, _ ->
 //                displayMessage("Operation cancelled!")
 //                dialog.dismiss()
             }

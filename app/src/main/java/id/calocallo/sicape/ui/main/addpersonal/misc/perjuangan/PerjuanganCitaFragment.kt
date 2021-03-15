@@ -16,7 +16,7 @@ import id.calocallo.sicape.model.*
 import id.calocallo.sicape.network.request.PerjuanganCitaReq
 import id.calocallo.sicape.ui.main.addpersonal.misc.penghargaan.PenghargaanFragment
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.fragment_perjuangan_cita.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

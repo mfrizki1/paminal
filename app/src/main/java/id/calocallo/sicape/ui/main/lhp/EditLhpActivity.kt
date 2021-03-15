@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.RadioButton
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.*
@@ -17,7 +15,7 @@ import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.LhpMinResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call

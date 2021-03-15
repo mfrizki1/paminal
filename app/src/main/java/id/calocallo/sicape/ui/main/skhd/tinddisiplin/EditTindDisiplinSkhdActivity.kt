@@ -14,7 +14,6 @@ import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.TindDisiplinReq
 import id.calocallo.sicape.network.response.AddTindDisplResp
@@ -23,7 +22,7 @@ import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.network.response.TindDisplResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_tind_disiplin_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -60,7 +59,7 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
         )
         val adapter = ArrayAdapter(this, R.layout.item_spinner, itemTind)
         spinner_tind_disiplin_edit.setAdapter(adapter)
-        spinner_tind_disiplin_edit.setOnItemClickListener { parent, view, position, id ->
+        spinner_tind_disiplin_edit.setOnItemClickListener { parent, _, position, _ ->
             tindakan = parent.getItemAtPosition(position).toString()
         }
 

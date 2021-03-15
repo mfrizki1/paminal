@@ -9,7 +9,7 @@ import android.widget.AutoCompleteTextView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.KeluargaReq
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_ayah_kandung.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -164,7 +164,7 @@ class AddAyahKandungActivity : BaseActivity() {
         val item = listOf("Masih", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinner.setAdapter(adapter)
-        spinner.setOnItemClickListener { parent, view, position, id ->
+        spinner.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) { // masih
 //                Log.e("stts_kerja_spinner", parent.getItemAtPosition(position).toString())
 
@@ -197,7 +197,7 @@ class AddAyahKandungActivity : BaseActivity() {
         val itemHidup = listOf("Masih", "Tidak")
         val adapterHidup = ArrayAdapter(this, R.layout.item_spinner, itemHidup)
         spinnerSttsHidup.setAdapter(adapterHidup)
-        spinnerSttsHidup.setOnItemClickListener { parent, view, position, id ->
+        spinnerSttsHidup.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 txt_layout_penyebab_ayah.visibility = View.GONE
                 txt_layout_bagaimana_stts_ayah.visibility = View.GONE
@@ -220,7 +220,7 @@ class AddAyahKandungActivity : BaseActivity() {
         val agama = listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Konghuchu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agama)
         spAgamaAyah.setAdapter(adapterAgama)
-        spAgamaAyah.setOnItemClickListener { parent, view, position, id ->
+        spAgamaAyah.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 agama_skrg = "islam"
             } else if (position == 1) {

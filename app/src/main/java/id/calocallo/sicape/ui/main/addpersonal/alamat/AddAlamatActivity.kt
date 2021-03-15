@@ -10,7 +10,7 @@ import id.calocallo.sicape.network.request.AlamatReq
 import id.calocallo.sicape.model.ParentListAlamat
 import id.calocallo.sicape.ui.main.addpersonal.misc.MiscenaousActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_alamat.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

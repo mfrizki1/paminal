@@ -9,7 +9,7 @@ import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.kesatuan.polda.PoldaActivity
 import id.calocallo.sicape.ui.kesatuan.polres.PolresActivity
 import id.calocallo.sicape.ui.kesatuan.polsek.PolsekActivity
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_kat_personel.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

@@ -16,24 +16,18 @@ import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SkhpReq
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.ui.main.skhd.tinddisiplin.AddTindDisiplinSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_edit_skhp.*
-import kotlinx.android.synthetic.main.activity_edit_skhp.*
-import kotlinx.android.synthetic.main.activity_edit_skhp.*
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_skhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class EditSkhpActivity : BaseActivity() {

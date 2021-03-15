@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.personel
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -32,7 +33,7 @@ import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.setFromUrl
 import id.calocallo.sicape.utils.ext.toggleVisibility
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_personel.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -264,6 +265,7 @@ class DetailPersonelActivity : BaseActivity() {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getViewDetailPersonel(data: AllPersonelModel1?) {
         img_personel.setFromUrl(data?.foto_muka?.url.toString())
         txt_kesatuan_personel.text = data?.satuan_kerja?.kesatuan
@@ -281,10 +283,11 @@ class DetailPersonelActivity : BaseActivity() {
             "protestas" -> txt_agama.text = "Protestan"
             "budha" -> txt_agama.text = "Budha"
             "hindu" -> txt_agama.text = "Hindu"
-            else -> "Khonghucu"
+            "khonhucu" -> txt_agama.text = "Hindu"
+            else -> txt_agama.text = "Khonghucu"
         }
 
-        txt_pangkat_nrp.text =" ${data?.pangkat.toString().toUpperCase()} / ${data?.nrp}"
+        txt_pangkat_nrp.text = " ${data?.pangkat.toString().toUpperCase()} / ${data?.nrp}"
         txt_jabatan_personel.text = data?.jabatan
         txt_alamat_kantor_personel.text = data?.satuan_kerja?.alamat_kantor
     }

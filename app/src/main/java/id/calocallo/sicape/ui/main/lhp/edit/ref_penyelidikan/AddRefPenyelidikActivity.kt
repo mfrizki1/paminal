@@ -19,7 +19,7 @@ import id.calocallo.sicape.ui.main.choose.lp.LpChooseActivity
 import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_ref_penyelidik.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call

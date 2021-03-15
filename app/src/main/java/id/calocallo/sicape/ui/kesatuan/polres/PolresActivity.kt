@@ -17,7 +17,7 @@ import id.calocallo.sicape.ui.main.personel.PersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_polres.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -177,9 +177,9 @@ class PolresActivity : BaseActivity() {
         when(requestCode){
             REQ_PICK_POLRES->{
                 if(resultCode == 123){
-                    val data = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
+                    val dataPersonel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
                     val intent = Intent().apply {
-                        this.putExtra("ID_PERSONEL", data)
+                        this.putExtra("ID_PERSONEL", dataPersonel)
                     }
                     setResult(123, intent)
                     finish()
@@ -206,85 +206,6 @@ class PolresActivity : BaseActivity() {
 
         })
         return super.onCreateOptionsMenu(menu)
-    }
-    private fun clickedSingle(data: SatKerResp) {
-        /*
-        if(intent.extras?.getString(KatPersonelActivity.KAT_POLSEK)?.isNotEmpty()!!){
-            val intent = Intent(this@PolresActivity, PolsekActivity::class.java)
-            intent.putExtra(PersonelActivity.IS_POLSEK,true)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }else{
-            val intent = Intent(this@PolresActivity, PolsekActivity::class.java)
-            intent.putExtra(PolsekActivity.NAMA_POLRES, data.nama_polres)
-            startActivityForResult(intent, REQ_TO_ADD)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-        if(intent.extras?.getString(KatPersonelActivity.KAT_POLRES) == KatPersonelActivity.KAT_POLRES){
-            namaPolres = data.nama_polres.toString()
-            val intent = Intent(this@PolresActivity, SatPolresActivity::class.java)
-            intent.putExtra(SatPolresActivity.NAMA_POLRES, data.nama_polres)
-            intent.putExtra(PersonelActivity.IS_POLRES, true)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-        if(intent.extras?.getString(IS_POLSEK).isNullOrEmpty()){
-            namaPolres = data.nama_polres.toString()
-            val intent = Intent(this@PolresActivity, SatPolresActivity::class.java)
-            intent.putExtra(SatPolresActivity.NAMA_POLRES, data.nama_polres)
-            startActivityForResult(intent, REQ_POLRES_SAT)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-
-         */
-        /*when {
-            intent.extras?.getString(KatPersonelActivity.KAT_POLSEK) != null -> {
-                val intent = Intent(this@PolresActivity, PolsekActivity::class.java)
-                intent.putExtra(PersonelActivity.IS_POLSEK,true)
-                startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            intent.extras?.getString(KatPersonelActivity.KAT_POLRES) == KatPersonelActivity.KAT_POLRES -> {
-                namaPolres = data.nama_polres.toString()
-                val intent = Intent(this@PolresActivity, SatPolresActivity::class.java)
-                intent.putExtra(SatPolresActivity.NAMA_POLRES, data.nama_polres)
-                intent.putExtra(PersonelActivity.IS_POLRES, true)
-                startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-
-            intent.extras?.getBoolean(KatPersonelActivity.PICK_PERSONEL_2) == true->{
-                namaPolres = data.nama_polres.toString()
-                val intent = Intent(this@PolresActivity, PolsekActivity::class.java)
-                intent.putExtra(KatPersonelActivity.PICK_PERSONEL_2, true)
-                intent.putExtra(SatPolresActivity.NAMA_POLRES, data.nama_polres)
-                startActivityForResult(intent, REQ_PICK_POLSEK)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            intent.extras?.getBoolean(KatPersonelActivity.PICK_PERSONEL) == true->{
-                namaPolres = data.nama_polres.toString()
-                val intent = Intent(this@PolresActivity, SatPolresActivity::class.java)
-                intent.putExtra(SatPolresActivity.NAMA_POLRES, data.nama_polres)
-                intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
-                startActivityForResult(intent, REQ_PICK_POLRES)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            intent.extras?.getString(IS_POLSEK).isNullOrEmpty() -> {
-                namaPolres = data.nama_polres.toString()
-                val intent = Intent(this@PolresActivity, SatPolresActivity::class.java)
-                intent.putExtra(SatPolresActivity.NAMA_POLRES, data.nama_polres)
-                startActivityForResult(intent, REQ_POLRES_SAT)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-
-
-           else -> {
-                val intent = Intent(this@PolresActivity, PolsekActivity::class.java)
-                intent.putExtra(PolsekActivity.NAMA_POLRES, data.nama_polres)
-                startActivityForResult(intent, REQ_TO_ADD)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-        }*/
     }
 
 }

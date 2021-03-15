@@ -20,7 +20,7 @@ import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_admin_personel.*
 import kotlinx.android.synthetic.main.activity_add_operator.*
 import kotlinx.android.synthetic.main.activity_edit_admin_personel.*
@@ -52,7 +52,7 @@ class EditAdminPersonelActivity : BaseActivity() {
         val item = listOf("Masih", "Tidak")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinner_status_admin_edit.setAdapter(adapter)
-        spinner_status_admin_edit.setOnItemClickListener { parent, view, position, id ->
+        spinner_status_admin_edit.setOnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> isAktif = 1
                 1 -> isAktif = 0
@@ -114,7 +114,7 @@ class EditAdminPersonelActivity : BaseActivity() {
     private fun viewEditAdmin(detailAdmin: UserResp?) {
         if (detailAdmin?.is_aktif == 1) {
             spinner_status_admin_edit.setText("Masih")
-            isAktif = detailAdmin?.is_aktif
+            isAktif = detailAdmin.is_aktif
         } else {
             spinner_status_admin_edit.setText("TIdak")
             isAktif = detailAdmin?.is_aktif

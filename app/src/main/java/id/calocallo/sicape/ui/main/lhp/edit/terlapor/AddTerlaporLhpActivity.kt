@@ -18,7 +18,7 @@ import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity
 import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity.Companion.GET_TERLAPOR
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_terlapor_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 

@@ -32,7 +32,7 @@ import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity.Companion.EDIT_SAKSI
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_kke.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*

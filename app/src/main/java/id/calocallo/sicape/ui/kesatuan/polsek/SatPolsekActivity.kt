@@ -13,7 +13,7 @@ import id.calocallo.sicape.ui.main.personel.PersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_polsek.*
 import kotlinx.android.synthetic.main.activity_sat_polsek.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*

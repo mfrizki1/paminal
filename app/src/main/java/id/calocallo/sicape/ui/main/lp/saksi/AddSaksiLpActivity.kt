@@ -13,11 +13,9 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SaksiLpReq
 import id.calocallo.sicape.network.response.*
-import id.calocallo.sicape.ui.main.lhp.edit.saksi.AddSingleSaksiLhpActivity
 import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
 import id.calocallo.sicape.ui.main.lp.kke.ListLpKodeEtikActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
-import id.calocallo.sicape.ui.main.lp.pasal.PickSaksiActivity
 import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
@@ -25,7 +23,7 @@ import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.utils.ext.visible
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.*
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.txt_jabatan_saksi_lp_add
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.txt_kesatuan_saksi_lp_add
@@ -53,7 +51,7 @@ class AddSaksiLpActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         isSingleAdd = intent.getBooleanExtra("ADD_SINGLE_SAKSI", false)
 
-        rg_jenis_saksi_lp_add.setOnCheckedChangeListener { group, checkedId ->
+        rg_jenis_saksi_lp_add.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             if (radio.isChecked && radio.text == "Polisi") {
                 jenisSaksi = "personel"

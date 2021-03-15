@@ -5,9 +5,8 @@ import android.transition.Slide
 import android.view.Gravity
 import androidx.fragment.app.FragmentTransaction
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.model.AllPersonelModel1
-import id.co.iconpln.smartcity.ui.base.BaseActivity
+import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class EditPendidikanActivity : BaseActivity() {
