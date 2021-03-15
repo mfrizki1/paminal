@@ -1,11 +1,18 @@
 package id.calocallo.sicape.ui.main.skhp
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -15,13 +22,11 @@ import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.network.response.SkhpMinResp
-import id.calocallo.sicape.network.response.SkhpResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_detail_rps.*
 import kotlinx.android.synthetic.main.activity_detail_skhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -36,15 +41,22 @@ class DetailSkhpActivity : BaseActivity() {
     }
 
     private lateinit var sessionManager1: SessionManager1
-
+    private lateinit var downloadID: Any
     private var getDataSkhp: SkhpMinResp? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_skhp)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Data Surat Keterangan Hasil Penelitian"
-        sessionManager1 = SessionManager1(this)
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
+
+        sessionManager1 = SessionManager1(this)
+        val hak = sessionManager1.fetchHakAkses()
+        if (hak == "operator") {
+            btn_generate_skhp_detail.gone()
+            btn_edit_skhp_detail.gone()
+        }
         getDataSkhp = intent.extras?.getParcelable<SkhpMinResp>(DETAIL_SKHP)
         apiDetailSkhp(getDataSkhp)
 //        getViewSkhp(getDataSkhp)
@@ -60,7 +72,8 @@ class DetailSkhpActivity : BaseActivity() {
             btn_generate_skhp_detail.showProgress {
                 progressColor = Color.WHITE
             }
-            Handler(Looper.getMainLooper()).postDelayed({
+            apiDocSkhp(getDataSkhp)
+/*            Handler(Looper.getMainLooper()).postDelayed({
                 btn_generate_skhp_detail.hideProgress("Berhasil Generate Dokumen")
                 alert("Download") {
                     positiveButton("Iya") {
@@ -70,11 +83,74 @@ class DetailSkhpActivity : BaseActivity() {
                         btn_generate_skhp_detail.hideProgress(R.string.generate_dokumen)
                     }
                 }.show()
-            }, 2000)
+            }, 2000)*/
 
 
         }
 
+    }
+
+    private fun apiDocSkhp(dataSkhp: SkhpMinResp?) {
+        NetworkConfig().getServSkhp()
+            .docSkhp("Bearer ${sessionManager1.fetchAuthToken()}", dataSkhp?.id).enqueue(
+                object : Callback<Base1Resp<AddSkhpResp>> {
+                    override fun onResponse(
+                        call: Call<Base1Resp<AddSkhpResp>>,
+                        response: Response<Base1Resp<AddSkhpResp>>
+                    ) {
+
+                        if (response.body()?.message == "Document skhp generated successfully") {
+                            btn_generate_skhp_detail.hideProgress(R.string.success_generate_doc)
+                            alert("Download") {
+                                positiveButton("Iya") {
+                                    downloadSkhp(response.body()?.data?.skhp)
+                                }
+                                negativeButton("Tidak") {
+                                    btn_generate_skhp_detail.hideProgress(R.string.generate_dokumen)
+                                }
+                            }.show()
+                            btn_generate_skhp_detail.hideProgress(R.string.success_generate_doc)
+
+                        } else {
+                            btn_generate_skhp_detail.hideProgress(R.string.failed_generate_doc)
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Base1Resp<AddSkhpResp>>, t: Throwable) {
+                        Toast.makeText(this@DetailSkhpActivity, "$t", Toast.LENGTH_SHORT).show()
+                        btn_generate_skhp_detail.hideProgress(R.string.failed_generate_doc)
+                    }
+                })
+    }
+
+    private fun downloadSkhp(skhp: SkhpResp?) {
+        Log.e("data", "${skhp?.dokumen}")
+        val url = skhp?.dokumen?.url
+        val filename: String = "${skhp?.no_skhp}.${skhp?.dokumen?.jenis}"
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_skhp_detail.hideProgress(R.string.generate_dokumen)
+                btn_generate_skhp_detail.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_skhp_detail.hideProgress(R.string.generate_dokumen)
+                    }
+                }
+            }
+        }
     }
 
     private fun apiDetailSkhp(dataSkhp: SkhpMinResp?) {
@@ -99,6 +175,13 @@ class DetailSkhpActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getViewSkhp(dataSkhp: SkhpResp?) {
+        if (dataSkhp?.is_ada_dokumen == 1) {
+            btn_lihat_doc_skhp_detail.visible()
+            btn_lihat_doc_skhp_detail.setOnClickListener {
+                val uri = Uri.parse(dataSkhp.dokumen?.url)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
+            }
+        }
         txt_no_skhp_detail.text = dataSkhp?.no_skhp
         txt_nama_personel_skhp_detail.text = "Nama : ${dataSkhp?.personel?.nama}"
 
@@ -136,14 +219,9 @@ class DetailSkhpActivity : BaseActivity() {
         } else {
             txt_isi_skhp_detail.text = "Tidak Memenuhi Syarat"
         }
-
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val date = formatter.parse(dataSkhp?.personel?.tanggal_lahir)
-        val desiredFormat =
-            DateTimeFormatter.ofPattern("dd, MMMM yyyy", Locale("id", "ID")).format(date)
         txt_ttl_personel_skhp_detail.text = "TTL : ${
             dataSkhp?.personel?.tempat_lahir.toString().toUpperCase()
-        },Tanggal $desiredFormat"
+        },Tanggal ${formatterTanggal(dataSkhp?.personel?.tanggal_lahir)}"
 
         txt_kota_keluar_skhp_detail.text = "Kota ${dataSkhp?.kota_keluar}"
 

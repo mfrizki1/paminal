@@ -237,6 +237,14 @@
             android:layout_height="wrap_content"
             android:text="Generate Dokumen" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_lihat_doc_skhp_detail"
+            style="@style/Widget.Button"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lihat Dokumen" />
+
 
     </LinearLayout>
 

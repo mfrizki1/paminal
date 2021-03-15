@@ -50,7 +50,7 @@ class DetailSktbActivity : BaseActivity() {
         apiDetailSktb(detailSktb)
 //        getDetailSktb(detailSktb)
         val hak = sessionManager1.fetchHakAkses()
-        if(hak == "operator"){
+        if (hak == "operator") {
             btn_edit_sktb_detail.gone()
             btn_generate_sktb_detail.gone()
         }
@@ -130,7 +130,12 @@ class DetailSktbActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_sktb_detail.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_sktb_detail.hideProgress(R.string.generate_dokumen)
+                btn_generate_sktb_detail.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_sktb_detail.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }

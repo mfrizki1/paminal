@@ -26,14 +26,16 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_rpph.*
+import kotlinx.android.synthetic.main.activity_detail_sktt.*
 import kotlinx.android.synthetic.main.activity_detail_sp4.*
+import kotlinx.android.synthetic.main.activity_detail_sp4.txt_no_lp_sktt_detail
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DetailSp4Activity : BaseActivity() {
-private lateinit var downloadID:Any
+    private lateinit var downloadID: Any
     private var getSp4: Sp4MinResp? = null
     private lateinit var sessionManager1: SessionManager1
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,11 +123,17 @@ private lateinit var downloadID:Any
         downloadID = manager.enqueue(request)
 
     }
+
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_sp4_detail.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_sp4_detail.hideProgress(R.string.generate_dokumen)
+                btn_generate_sp4_detail.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_sp4_detail.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }

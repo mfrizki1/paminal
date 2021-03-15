@@ -117,7 +117,12 @@ class DetailPutKkeActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_put_kke_detail.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_put_kke_detail.hideProgress(R.string.generate_dokumen)
+                btn_generate_put_kke_detail.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_put_kke_detail.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }

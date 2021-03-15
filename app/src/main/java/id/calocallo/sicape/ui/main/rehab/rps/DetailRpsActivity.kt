@@ -90,7 +90,6 @@ class DetailRpsActivity : BaseActivity() {
                         alert(R.string.download) {
                             positiveButton(R.string.iya) {
                                 btn_generate_rps_detail.hideProgress(R.string.success_generate_doc)
-
                                 downloadRps(response.body()?.data?.rps)
                             }
                             negativeButton(R.string.tidak) {
@@ -128,7 +127,12 @@ class DetailRpsActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_rps_detail.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_rps_detail.hideProgress(R.string.generate_dokumen)
+                btn_generate_rps_detail.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_rps_detail.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }

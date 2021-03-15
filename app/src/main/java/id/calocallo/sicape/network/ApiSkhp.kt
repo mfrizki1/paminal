@@ -21,6 +21,13 @@ interface ApiSkhp {
     ): Call<SkhpResp>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("skhp/{id_skhp}/generate/document")
+    fun docSkhp(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_skhp") id_skhp: Int?
+    ): Call<Base1Resp<AddSkhpResp>>
+
+    @Headers(ApiLp.ACCEPT)
     @POST("skhp")
     fun addSkhp(
         @Header("Authorization") tokenBearer: String,

@@ -10,14 +10,33 @@
     <include layout="@layout/layout_toolbar_white" />
 
     <include layout="@layout/view_separator" />
-
-    <TextView
-        android:id="@+id/txt_tahun_bulan_filter_lapbul"
-        style="@style/TitleText"
-        android:visibility="gone"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tahun, Bulan" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_tahun_bulan_filter_lapbul"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Tahun, Bulan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_filter_lapbul"
+            style="@style/Widget.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_lapbul"
-            android:layout_above="@+id/btn_filter" />
+            android:layout_above="@+id/btn_generate_lapbul" />
 
         <include
             layout="@layout/layout_progress_dialog"
@@ -39,13 +58,13 @@
             android:visibility="gone" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_filter"
+            android:id="@+id/btn_generate_lapbul"
             style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/space_12dp"
-            android:text="Filter" />
+            android:text="@string/generate_dokumen" />
 
     </RelativeLayout>
 

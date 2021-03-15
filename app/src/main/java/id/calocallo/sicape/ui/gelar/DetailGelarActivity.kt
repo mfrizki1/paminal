@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -87,9 +88,9 @@ class DetailGelarActivity : BaseActivity() {
                             btn_generate_doc_lhg.hideProgress(R.string.success_generate_doc)
                             alert("Lihat Dokumen") {
                                 positiveButton(R.string.iya) {
-                                    downloadLhg(response.body()?.data)
+                                    downloadLhg(response.body()?.data?.lhg)
                                 }
-                                negativeButton(R.string.tidak) {}
+                                negativeButton(R.string.tidak) { btn_generate_doc_lhg.hideProgress(R.string.generate_dokumen) }
                             }.show()
 
                         } else {
@@ -105,20 +106,20 @@ class DetailGelarActivity : BaseActivity() {
                 })
     }
 
-    private fun downloadLhg(dok: AddLhgResp?) {
-        Log.e("asd", "${dok?.lhg}")
-//        val url = dok?.dokumen?.url
-//        val filename = "LHG${dok?.id}.${dok?.dokumen?.jenis}"
-//        Log.e("url", "$url, $filename")
-        /* val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
-                 .setTitle(filename)
-                 .setDescription("Downloading")
-                 .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
-                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+    private fun downloadLhg(dok: LhgResp?) {
+//        Log.e("asd", "${dok?.lhg}")
+        val url = dok?.dokumen?.url
+        val filename = "LHG-${dok?.id}.${dok?.dokumen?.jenis}"
+        Log.e("url", "$url, $filename")
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
 
-             val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-             downloadID = manager.enqueue(request)*/
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
 
     }
 
@@ -126,7 +127,12 @@ class DetailGelarActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_doc_lhg.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_doc_lhg.hideProgress(R.string.generate_dokumen)
+                btn_generate_doc_lhg.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_doc_lhg.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }

@@ -34,3 +34,13 @@ data class SuratRehabResp(
     var surat:String?,
     var no_surat:String?
 ): Parcelable
+
+@Parcelize
+data class DokCatpersResp(
+    var catpers:DokResp?
+):Parcelable
+
+@Parcelize
+data class DokLapbulResp(
+    var lapbul:DokResp?
+):Parcelable

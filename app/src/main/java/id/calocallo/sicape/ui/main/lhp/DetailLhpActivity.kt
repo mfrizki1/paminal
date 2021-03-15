@@ -182,7 +182,12 @@ class DetailLhpActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_lhp.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+                btn_generate_lhp.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }

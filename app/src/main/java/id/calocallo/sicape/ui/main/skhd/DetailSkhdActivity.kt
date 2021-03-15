@@ -29,6 +29,7 @@ import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.activity_detail_skhd.*
+import kotlinx.android.synthetic.main.activity_detail_sp4.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -129,7 +130,12 @@ class DetailSkhdActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_skhd.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_skhd.hideProgress(R.string.generate_dokumen)
+                btn_generate_skhd.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_skhd.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }

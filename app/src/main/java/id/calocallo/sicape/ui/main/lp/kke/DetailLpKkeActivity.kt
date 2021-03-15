@@ -33,6 +33,7 @@ import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity.Companion.EDIT_S
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_kke.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
@@ -166,14 +167,21 @@ class DetailLpKkeActivity : BaseActivity() {
 
 
     }
+
     private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_kke.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_kke.hideProgress(R.string.generate_dokumen)
+                btn_generate_kke.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_kke.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }
+
     private fun viewDokKke(lp: LpResp?) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(lp?.dokumen?.url)))
 //        finish()
@@ -223,24 +231,32 @@ class DetailLpKkeActivity : BaseActivity() {
         //terlapor
         txt_detail_nama_terlapor_kke.text = "Nama : ${detailKKe?.personel_terlapor?.nama}"
         txt_detail_pangkat_nrp_terlapor_kke.text =
-            "Pangkat : ${detailKKe?.personel_terlapor?.pangkat.toString()
-                .toUpperCase()}, NRP : ${detailKKe?.personel_terlapor?.nrp}"
+            "Pangkat : ${
+                detailKKe?.personel_terlapor?.pangkat.toString()
+                    .toUpperCase()
+            }, NRP : ${detailKKe?.personel_terlapor?.nrp}"
         txt_detail_jabatan_terlapor_kke.text = "Jabatan : ${detailKKe?.personel_terlapor?.jabatan}"
         txt_detail_kesatuan_terlapor_kke.text =
-            "Kesatuan : ${detailKKe?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                detailKKe?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase()
+            }"
 
         //pelapor
         txt_detail_nama_pelapor_kke.text =
             "Nama : ${detailKKe?.detail_laporan?.personel_pelapor?.nama}"
         txt_detail_pangkat_nrp_pelapor_kke.text =
-            "Pangkat : ${detailKKe?.detail_laporan?.personel_pelapor?.pangkat.toString()
-                .toUpperCase()}, NRP : ${detailKKe?.detail_laporan?.personel_pelapor?.nrp}"
+            "Pangkat : ${
+                detailKKe?.detail_laporan?.personel_pelapor?.pangkat.toString()
+                    .toUpperCase()
+            }, NRP : ${detailKKe?.detail_laporan?.personel_pelapor?.nrp}"
         txt_detail_jabatan_pelapor_kke.text =
             "Jabatan : ${detailKKe?.detail_laporan?.personel_pelapor?.jabatan}"
         txt_detail_kesatuan_pelapor_kke.text =
-            "Kesatuan : ${detailKKe?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
-                .toUpperCase()}"
+            "Kesatuan : ${
+                detailKKe?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
+                    .toUpperCase()
+            }"
 
         txt_detail_alat_bukti_kke.text = detailKKe?.detail_laporan?.alat_bukti
         txt_detail_kota_buat_kke.text = "Kota : ${detailKKe?.kota_buat_laporan}"
@@ -249,13 +265,17 @@ class DetailLpKkeActivity : BaseActivity() {
         txt_detail_nama_pimpinan_kke.text =
             "Nama : ${detailKKe?.detail_laporan?.nama_kabid_propam}"
         txt_detail_pangkat_nrp_pimpinan_kke.text =
-            "Pangkat : ${detailKKe?.detail_laporan?.pangkat_kabid_propam.toString()
-                .toUpperCase()}, NRP : ${detailKKe?.detail_laporan?.nrp_kabid_propam}"
+            "Pangkat : ${
+                detailKKe?.detail_laporan?.pangkat_kabid_propam.toString()
+                    .toUpperCase()
+            }, NRP : ${detailKKe?.detail_laporan?.nrp_kabid_propam}"
 //        txt_detail_kesatuan_pimpinan_kke.text =
 //            "Kesatuan : ${detailKKe?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
         txt_detail_jabatan_pimpinan_kke.text =
-            "Jabatan : ${detailKKe?.detail_laporan?.jabatan_kabid_propam.toString()
-                .toUpperCase()}"
+            "Jabatan : ${
+                detailKKe?.detail_laporan?.jabatan_kabid_propam.toString()
+                    .toUpperCase()
+            }"
 
         //pasal
         callbackDetailPasalDilanggarKke = object : AdapterCallback<PasalDilanggarResp> {
@@ -275,14 +295,14 @@ class DetailLpKkeActivity : BaseActivity() {
         //saksi
         callbackDetailSaksiKke = object : AdapterCallback<LpSaksiResp> {
             override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
-                if(data.status_saksi == "personel"){
+                if (data.status_saksi == "personel") {
                     itemView.txt_detail_1.text = data.personel?.nama
                     itemView.txt_detail_2.text = "Personel"
-                }else{
+                } else {
                     itemView.txt_detail_1.text = data.nama
-                    if(data.is_korban == 0){
+                    if (data.is_korban == 0) {
                         itemView.txt_detail_2.text = "Saksi"
-                    }else{
+                    } else {
                         itemView.txt_detail_2.text = "Korban"
                     }
                 }
@@ -361,7 +381,7 @@ class DetailLpKkeActivity : BaseActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             finish()
-                        }else if (response.body()?.message == "Data lp has been used as reference in another data") {
+                        } else if (response.body()?.message == "Data lp has been used as reference in another data") {
                             Toast.makeText(
                                 this@DetailLpKkeActivity,
                                 R.string.used_on_references_lp,

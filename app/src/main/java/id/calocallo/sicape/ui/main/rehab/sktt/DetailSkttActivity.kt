@@ -50,7 +50,7 @@ class DetailSkttActivity : BaseActivity() {
         apiDetailSktt(getSktt)
 //        getDetailSktt(getSktt)
         val hak = sessionManager1.fetchHakAkses()
-        if(hak == "operator"){
+        if (hak == "operator") {
             btn_edit_sktt.gone()
             btn_generate_sktt.gone()
         }
@@ -125,7 +125,12 @@ class DetailSkttActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_sktt.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_sktt.hideProgress(R.string.generate_dokumen)
+                btn_generate_sktt.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_sktt.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }

@@ -53,7 +53,7 @@ class DetailRpphActivity : BaseActivity() {
 //        getViewRpph(detailRpph)
 
         val hak = sessionManager1.fetchHakAkses()
-        if(hak == "operator"){
+        if (hak == "operator") {
             btn_edit_rpph_detail.gone()
             btn_generate_dok_rpph_detail.gone()
         }
@@ -128,7 +128,12 @@ class DetailRpphActivity : BaseActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             if (completedId == downloadID) {
-                btn_generate_dok_rpph_detail.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+                btn_generate_dok_rpph_detail.hideProgress(R.string.generate_dokumen)
+                btn_generate_dok_rpph_detail.showSnackbar(R.string.success_download_doc) {
+                    action(R.string.action_ok) {
+                        btn_generate_dok_rpph_detail.hideProgress(R.string.generate_dokumen)
+                    }
+                }
             }
         }
     }
