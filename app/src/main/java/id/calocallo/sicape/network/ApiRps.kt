@@ -13,6 +13,13 @@ interface ApiRps {
     ): Call<ArrayList<RpsMinResp>>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("rps/{id_rps}/generate/document")
+    fun docRps(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_rps") id_rps: Int?
+    ): Call<Base1Resp<AddRpsResp>>
+
+    @Headers(ApiLp.ACCEPT)
     @GET("rps/{id_rps}")
     fun detailRps(
         @Header("Authorization") tokenBearer: String,

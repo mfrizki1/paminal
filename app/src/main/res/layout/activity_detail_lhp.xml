@@ -80,12 +80,13 @@
             android:layout_height="wrap_content"
             android:text="Isi Pengaduan" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_pengaduan_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LoremImpsum asdnsjffdsjkja;f aufdjsfnasudf danfjdfuidahf adfjndfiuadhfdn fjadfiudfhdslfnkjdnfudhfidsjfafuidhfdsfjsanufhdfndsjfdsuiflahfndfnu" />
+            android:text="LoremImpsum asdnsjffdsjkja;f aufdjsfnasudf danfjdfuidahf adfjndfiuadhfdn fjadfiudfhdslfnkjdnfudhfidsjfafuidhfdsfjsanufhdfndsjfdsuiflahfndfnu"
+            app:trimLength="100" />
 
         <include layout="@layout/layout_separator" />
 
@@ -161,11 +162,11 @@
 
         <TextView
             android:id="@+id/txt_tempat_penyelidikan_detail"
-            android:visibility="gone"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Polda Banjarmasin" />
+            android:text="Polda Banjarmasin"
+            android:visibility="gone" />
 
         <include layout="@layout/layout_separator" />
 
@@ -175,12 +176,13 @@
             android:layout_height="wrap_content"
             android:text="Tugas Pokok" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_tugas_pokok_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LOrem Imafsfjdefndsjbfwjfkdefoidnfj dfndfndsfknwoensdfwfjrndzgiufhgmrepagjaerhgnejgeriugb" />
+            android:text="LOrem Imafsfjdefndsjbfwjfkdefoidnfj dfndfndsfknwoensdfwfjrndzgiufhgmrepagjaerhgnejgeriugb"
+            app:trimLength="100" />
 
         <include layout="@layout/layout_separator" />
 
@@ -190,19 +192,20 @@
             android:layout_height="wrap_content"
             android:text="Pokok Permasalahan" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_pokok_permasalahan_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
+            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj"
+            app:trimLength="100" />
 
         <include layout="@layout/layout_separator" />
 
         <RelativeLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/txt_2"
@@ -230,9 +233,6 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/layout_separator" />
-
-
         <TextView
             android:id="@+id/txt_3"
             style="@style/TitleText"
@@ -240,12 +240,13 @@
             android:layout_height="wrap_content"
             android:text="Surat" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_surat_detail_lhp"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
+            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj"
+            app:trimLength="100" />
 
 
         <include layout="@layout/layout_separator" />
@@ -256,12 +257,13 @@
             android:layout_height="wrap_content"
             android:text="Keterangan Ahli" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_ket_ahli_detail"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
+            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj"
+            app:trimLength="100" />
 
         <include layout="@layout/layout_separator" />
 
@@ -271,16 +273,15 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Petunjuk"
+            android:text="Petunjuk" />
 
-            />
-
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_petunjuk_detail_lhp"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
+            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj"
+            app:trimLength="100" />
 
         <include layout="@layout/layout_separator" />
 
@@ -291,43 +292,48 @@
             android:layout_height="wrap_content"
             android:text="Barang Bukti" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_barbukti_detail_lhp"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj" />
+            android:text="Lorem ipsum dolor amfafum ofrehfekfsf[weewnefewuf efefekfwidfswkfjewi effifke efsifsdkfj"
+            app:trimLength="100" />
 
 
         <include layout="@layout/layout_separator" />
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/txt_5"
+            style="@style/TitleText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="Personel Terlapor" />
+        <TextView
+            android:id="@+id/txt_nama_terlapor_lhp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/JustText"
+            android:text="Nama"/>
+        <TextView
+            android:id="@+id/txt_pangkat_nrp_terlapor_lhp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/JustText"
+            android:text="Pangkat / NRP"/>
+        <TextView
+            android:id="@+id/txt_jabatan_terlapor_lhp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/JustText"
+            android:text="Jabatan"/>
+        <TextView
+            android:id="@+id/txt_kesatuan_terlapor_lhp_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/JustText"
+            android:text="Kesatuan"/>
 
-            <TextView
-                android:id="@+id/txt_5"
-                style="@style/TitleText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Keterangan Terlapor" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_ket_terlapor_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_5"
-                android:layout_marginHorizontal="@dimen/space_18dp" />
-
-
-            <include
-                android:id="@+id/rl_no_data_terlapor"
-                layout="@layout/view_no_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_5"
-                android:visibility="gone" />
-        </RelativeLayout>
 
         <include layout="@layout/layout_separator" />
 
@@ -339,8 +345,9 @@
             android:layout_height="wrap_content"
             android:text="Analisa" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_analisa_detail_lhp"
+            app:trimLength="100"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -355,8 +362,9 @@
             android:layout_height="wrap_content"
             android:text="Kesimpulan" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_kesimpulan_detail"
+            app:trimLength="100"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -370,9 +378,10 @@
             android:layout_height="wrap_content"
             android:text="Rekomendasi" />
 
-        <TextView
+        <com.borjabravo.readmoretextview.ReadMoreTextView
             android:id="@+id/txt_rekomendasi_detail"
             style="@style/JustText"
+            app:trimLength="100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Detail rekomendasi" />

@@ -1,25 +1,33 @@
 package id.calocallo.sicape.ui.gelar
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.IntentFilter
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.network.response.LhgMinResp
-import id.calocallo.sicape.network.response.LhgResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.gelar.peserta_gelar.ListPesertaGelarActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_gelar.*
+import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +37,7 @@ import java.util.*
 class DetailGelarActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var dataLhg: LhgMinResp? = null
+    private lateinit var downloadID: Any
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_gelar)
@@ -37,9 +46,17 @@ class DetailGelarActivity : BaseActivity() {
         supportActionBar?.title = "Detail Data Gelar Perkara"
 
         dataLhg = intent.getParcelableExtra(ListGelarActivity.DATA_LHG)
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         apiDetailLhg(dataLhg)
         buttonOnDetailLhg()
+
+        val hak = sessionManager1.fetchHakAkses()
+        if (hak == "operator") {
+            btn_peserta_gelar_detail_lhg.gone()
+            btn_generate_doc_lhg.gone()
+            btn_see_doc_lhg.gone()
+        }
     }
 
     private fun buttonOnDetailLhg() {
@@ -49,11 +66,68 @@ class DetailGelarActivity : BaseActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
+        btn_generate_doc_lhg.attachTextChangeAnimator()
+        bindProgressButton(btn_generate_doc_lhg)
         btn_generate_doc_lhg.setOnClickListener {
-
+            btn_generate_doc_lhg.showProgress { progressColor = Color.WHITE }
+            apiGenDocLhg(dataLhg)
         }
-        btn_see_doc_lhg.setOnClickListener {
+    }
 
+    private fun apiGenDocLhg(dataLhg: LhgMinResp?) {
+        NetworkConfig().getServLhg()
+            .docLhg("Bearer ${sessionManager1.fetchAuthToken()}", dataLhg?.id).enqueue(
+                object : Callback<Base1Resp<AddLhgResp>> {
+                    override fun onResponse(
+                        call: Call<Base1Resp<AddLhgResp>>,
+                        response: Response<Base1Resp<AddLhgResp>>
+                    ) {
+                        if (response.body()?.message == "Document lhg generated successfully") {
+                            Log.e("data", "${response.body()?.data}")
+                            btn_generate_doc_lhg.hideProgress(R.string.success_generate_doc)
+                            alert("Lihat Dokumen") {
+                                positiveButton(R.string.iya) {
+                                    downloadLhg(response.body()?.data)
+                                }
+                                negativeButton(R.string.tidak) {}
+                            }.show()
+
+                        } else {
+                            btn_generate_doc_lhg.hideProgress(R.string.generate_dokumen)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Base1Resp<AddLhgResp>>, t: Throwable) {
+                        Toast.makeText(this@DetailGelarActivity, "$t", Toast.LENGTH_SHORT).show()
+                        btn_generate_doc_lhg.hideProgress(R.string.failed_generate_doc)
+
+                    }
+                })
+    }
+
+    private fun downloadLhg(dok: AddLhgResp?) {
+        Log.e("asd", "${dok?.lhg}")
+//        val url = dok?.dokumen?.url
+//        val filename = "LHG${dok?.id}.${dok?.dokumen?.jenis}"
+//        Log.e("url", "$url, $filename")
+        /* val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+                 .setTitle(filename)
+                 .setDescription("Downloading")
+                 .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+             val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+             downloadID = manager.enqueue(request)*/
+
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_doc_lhg.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+            }
         }
     }
 
@@ -80,6 +154,14 @@ class DetailGelarActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun viewDetailLhg(lhgResp: LhgResp?) {
+        if (lhgResp?.is_ada_dokumen == 1) {
+            btn_see_doc_lhg.visible()
+            btn_see_doc_lhg.setOnClickListener {
+                val uri = Uri.parse(lhgResp?.dokumen?.url)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
+            }
+        }
+        txt_pasal_kuh_pidana_detail_lhg.text = lhgResp?.pasal_kuh_pidana
         txt_dugaan_detail_lhg.text = lhgResp?.dugaan
         txt_dasar_detail_lhg.text = lhgResp?.dasar
         txt_tgl_waktu_detail_lhg.text = "Tanggal: ${formatterTanggal(lhgResp?.tanggal)}"

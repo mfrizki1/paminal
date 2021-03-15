@@ -17,7 +17,7 @@ data class SktbResp(
     var nrp_kabid_propam:String?,
     var tembusan:String?,
     var is_ada_dokumen:Int?,
-    var dokumen:String?,
+    var dokumen:DokResp?,
     var user_creator:UserResp?,
     var user_updater:UserResp?,
     var user_deleter:UserResp?,

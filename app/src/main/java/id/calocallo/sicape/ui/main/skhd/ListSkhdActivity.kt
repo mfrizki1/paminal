@@ -56,25 +56,11 @@ class ListSkhdActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         val jenisFromPickSkhd = intent.extras?.getString(SKHD)
         supportActionBar?.title = "Surat Keterangan Hasil Disiplin $jenisFromPickSkhd"
-//        val rvHukum = findViewById<RecyclerView>(R.id.rv_hukuman_skhd)
 
-        /*  var tempJenis = ""
-          when (jenisFromPickSkhd) {
-              "Pidana" -> {
-                  tempJenis = "pidana"
-                  doAPISKHD(tempJenis)
-              }
-              "Disiplin" -> {
-                  tempJenis = "disiplin"
-                  doAPISKHD(tempJenis)
-
-              }
-              else -> {
-                  tempJenis = "kode_etik"
-                  doAPISKHD(tempJenis)
-              }
-          }
-  */
+        val hak = sessionManager1.fetchHakAkses()
+        if(hak == "operator"){
+            btn_add_skhd.gone()
+        }
         btn_add_skhd.setOnClickListener {
             val intent = Intent(this, AddSkhdActivity::class.java)
             startActivity(intent)

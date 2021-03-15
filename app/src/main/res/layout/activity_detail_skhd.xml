@@ -313,6 +313,15 @@
             android:text="@string/generate_dokumen"
             android:textStyle="bold" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_see_doc_skhd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:text="Lihat Dokumen"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </ScrollView>

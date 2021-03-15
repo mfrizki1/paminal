@@ -13,6 +13,13 @@ interface ApiSktt {
     ): Call<ArrayList<SkttMinResp>>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("sktt/{id_sktt}/generate/document")
+    fun docSktt(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_sktt") id_sktt: Int?
+    ): Call<Base1Resp<AddSkttResp>>
+
+    @Headers(ApiLp.ACCEPT)
     @GET("sktt/{id_sktt}")
     fun detailSktt(
         @Header("Authorization") tokenBearer: String,

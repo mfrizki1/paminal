@@ -13,6 +13,13 @@ interface ApiSp4 {
     ): Call<ArrayList<Sp4MinResp>>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("sp4/{id_sp4}/generate/document")
+    fun docSp4(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_sp4") id_sp4: Int?
+    ): Call<Base1Resp<AddSp4Resp>>
+
+    @Headers(ApiLp.ACCEPT)
     @GET("sp4/{id_sp4}")
     fun detailSp4(
         @Header("Authorization") tokenBearer: String,

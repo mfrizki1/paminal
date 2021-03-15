@@ -75,6 +75,7 @@
     <string name="failed_deleted">Error Koneksi / Lakukan Beberapa Saat</string>
     <string name="add_data_saksi">Tambah Data Saksi</string>
     <string name="used_on_references_lp">Data Tidak Bisa Dihapus Karena Digunakan Sebagai Referensi</string>
+    <string name="success_download_doc">Berhasil Download Berkas</string>
 
 
     <string-array name="satker">

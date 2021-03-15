@@ -34,7 +34,7 @@ class ListSp4Activity : BaseActivity() {
 
         sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title = "List Data SP3"
+        supportActionBar?.title = "List Data SP4"
 
         btn_add_single_sp3.setOnClickListener {
             startActivity(Intent(this, AddSp4Activity::class.java))

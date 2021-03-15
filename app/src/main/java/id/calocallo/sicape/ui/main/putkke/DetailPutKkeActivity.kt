@@ -1,12 +1,18 @@
 package id.calocallo.sicape.ui.main.putkke
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -16,20 +22,19 @@ import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.network.response.PutKkeMinResp
-import id.calocallo.sicape.network.response.PutKkeResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_put_kke.*
+import kotlinx.android.synthetic.main.activity_detail_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DetailPutKkeActivity : BaseActivity() {
+    private lateinit var downloadID: Any
     private lateinit var sessionManager1: SessionManager1
     private var detailPutKke: PutKkeMinResp? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +43,17 @@ class DetailPutKkeActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Data Putusan Kode Etik"
         sessionManager1 = SessionManager1(this)
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         detailPutKke =
             intent.extras?.getParcelable<PutKkeMinResp>(ListPutKkeActivity.DETAIL_PUTKKE)
         apiDetailPutKke(detailPutKke)
+
+        val hakAkses = sessionManager1.fetchHakAkses()
+        if (hakAkses == "operator") {
+            btn_edit_put_kke_detail.gone()
+            btn_generate_put_kke_detail.gone()
+        }
 
 
         btn_generate_put_kke_detail.attachTextChangeAnimator()
@@ -49,19 +61,63 @@ class DetailPutKkeActivity : BaseActivity() {
         btn_generate_put_kke_detail.setOnClickListener {
             btn_generate_put_kke_detail.showProgress {
                 progressColor = Color.WHITE
-                Handler(Looper.getMainLooper()).postDelayed({
-                    btn_generate_put_kke_detail.hideProgress(R.string.success_generate_doc)
-                    alert(R.string.download) {
-                        positiveButton(R.string.iya) {
-                            btn_generate_put_kke_detail.hideProgress(R.string.generate_dokumen)
+                apiDocPutKke(detailPutKke)
+            }
+        }
+    }
 
-                        }
-                        negativeButton(R.string.tidak) {
-                            btn_generate_put_kke_detail.hideProgress(R.string.generate_dokumen)
+    private fun apiDocPutKke(detailPutKke: PutKkeMinResp?) {
+        NetworkConfig().getServSkhd()
+            .docPutKke("Bearer ${sessionManager1.fetchAuthToken()}", detailPutKke?.id).enqueue(
+                object : Callback<Base1Resp<AddPutKkeResp>> {
+                    override fun onResponse(
+                        call: Call<Base1Resp<AddPutKkeResp>>,
+                        response: Response<Base1Resp<AddPutKkeResp>>
+                    ) {
+                        if (response.body()?.message == "Document putkke generated successfully") {
+                            btn_generate_put_kke_detail.hideProgress(R.string.success_generate_doc)
+                            alert(R.string.download) {
+                                positiveButton(R.string.iya) {
+                                    downloadDocPutKke(response.body()?.data?.putkke)
 
+                                }
+                                negativeButton(R.string.tidak) {
+                                    btn_generate_put_kke_detail.hideProgress(R.string.generate_dokumen)
+                                }
+                            }.show()
+                        } else {
+                            btn_generate_put_kke_detail.hideProgress(R.string.failed_generate_doc)
                         }
-                    }.show()
-                }, 2000)
+                    }
+
+                    override fun onFailure(call: Call<Base1Resp<AddPutKkeResp>>, t: Throwable) {
+                        Toast.makeText(this@DetailPutKkeActivity, "$t", Toast.LENGTH_SHORT).show()
+                        btn_generate_put_kke_detail.hideProgress(R.string.failed_generate_doc)
+
+                    }
+                })
+    }
+
+    private fun downloadDocPutKke(putkke: PutKkeResp?) {
+        Log.e("putKKe", "$putkke")
+        val url = putkke?.dokumen?.url
+        val filename = "${putkke?.no_putkke}.${putkke?.dokumen?.jenis}"
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_put_kke_detail.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
             }
         }
     }
@@ -96,7 +152,13 @@ class DetailPutKkeActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getDetailPutKKe(detailPutKke: PutKkeResp?) {
-
+        if (detailPutKke?.is_ada_dokumen == 1) {
+            btn_see_doc_put_kke_detail.visible()
+            btn_see_doc_put_kke_detail.setOnClickListener {
+                val uri = Uri.parse(detailPutKke?.dokumen?.url)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
+            }
+        }
         btn_edit_put_kke_detail.setOnClickListener {
             val intent = Intent(this, EditPutKkeActivity::class.java)
             intent.putExtra(EDIT_PUT_KKE, detailPutKke)
@@ -131,7 +193,7 @@ class DetailPutKkeActivity : BaseActivity() {
             }"
 
         txt_sanksi_hasil_putusan_put_kke_detail.text = detailPutKke?.sanksi_hasil_keputusan
-        txt_lokasi_sidang_put_kke_detail.text ="Lokasi : ${detailPutKke?.lokasi_sidang}"
+        txt_lokasi_sidang_put_kke_detail.text = "Lokasi : ${detailPutKke?.lokasi_sidang}"
 
         txt_tanggal_putusan_put_kke_detail.text =
             "Tanggal : ${formatterTanggal(detailPutKke?.tanggal_putusan)}"

@@ -223,5 +223,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/generate_dokumen" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_see_doc_put_kke_detail"
+            style="@style/Widget.Button"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="Lihat Dokumen" />
     </LinearLayout>
 </ScrollView>

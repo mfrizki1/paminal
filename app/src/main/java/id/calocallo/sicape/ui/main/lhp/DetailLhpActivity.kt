@@ -1,10 +1,15 @@
 package id.calocallo.sicape.ui.main.lhp
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.Menu
@@ -28,6 +33,7 @@ import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lhp.*
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
+import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -52,12 +58,15 @@ class DetailLhpActivity : BaseActivity() {
     private var adapterketTerlapor = ReusableAdapter<KetTerlaporLhpResp>(this)
     private lateinit var callbackketTerlapor: AdapterCallback<KetTerlaporLhpResp>
     var terbukti = ""
+    private lateinit var downloadID: Any
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lhp)
         sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Laporan Hasil Penyelidikan"
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         val dataLhp = intent.extras?.getParcelable<LhpMinResp>(DETAIL_LHP)
         apiDetailLhp(dataLhp)
@@ -138,23 +147,44 @@ class DetailLhpActivity : BaseActivity() {
     }
 
     private fun saveDocLhp(dataDoc: LhpResp?) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            btn_generate_lhp.hideProgress(R.string.success_generate_doc)
-            alert("Lihat Dokumen") {
-                positiveButton(R.string.iya) {
-                    viewDocLhp(dataDoc)
-                    btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+        btn_generate_lhp.hideProgress(R.string.success_generate_doc)
+        alert("Lihat Dokumen") {
+            positiveButton(R.string.iya) {
+                downloadLhp(dataDoc)
+//                    viewDocLhp(dataDoc)
+            }
+            negativeButton(R.string.tidak) {
+                btn_generate_lhp.hideProgress(R.string.generate_dokumen)
+            }
+        }.show()
+    }
 
-                }
-                negativeButton(R.string.tidak) {
-                    btn_generate_lhp.hideProgress(R.string.generate_dokumen)
-                }
-            }.show()
-        }, 1000)
+    private fun downloadLhp(lhp: LhpResp?) {
+        val url = lhp?.dokumen?.url
+        val filename: String = "${lhp?.no_lhp}.${lhp?.dokumen?.jenis}"
+
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
     }
 
     private fun viewDocLhp(dataDoc: LhpResp?) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(dataDoc?.dokumen?.url)))
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_lhp.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+            }
+        }
     }
 
     private fun apiDetailLhp(dataLhp: LhpMinResp?) {
@@ -181,6 +211,16 @@ class DetailLhpActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getDetailLHP(dataLhp: LhpResp?) {
+        /* *//*personel terlapor*//*
+        val terlapor = dataLhp?.referensi_penyelidikan
+        for(i in 0 until terlapor?.size!!){
+
+        }
+        txt_nama_terlapor_lhp_detail.text = "Nama: ${dataLhp.referensi_penyelidikan?.}"
+        txt_pangkat_nrp_terlapor_lhp_detail.text = "Nama: ${dataLhp}"
+        txt_jabatan_terlapor_lhp_detail.text = "Nama: ${dataLhp}"
+        txt_kesatuan_terlapor_lhp_detail.text = "Nama: ${dataLhp}"*/
+
         txt_no_lhp_detail.text = dataLhp?.no_lhp
         txt_kesimpulan_detail.text = dataLhp?.kesimpulan
         txt_rekomendasi_detail.text = dataLhp?.rekomendasi
@@ -220,24 +260,6 @@ class DetailLhpActivity : BaseActivity() {
             btn_lihat_doc_lhp.gone()
         }
 
-    }
-
-    private fun listOfKetTerlapor(listTerlapor: ArrayList<KetTerlaporLhpResp>?) {
-        callbackketTerlapor = object : AdapterCallback<KetTerlaporLhpResp> {
-            override fun initComponent(itemView: View, data: KetTerlaporLhpResp, itemIndex: Int) {
-                itemView.txt_item_1.text = data.nama
-            }
-
-            override fun onItemClicked(itemView: View, data: KetTerlaporLhpResp, itemIndex: Int) {
-            }
-        }
-        listTerlapor?.let {
-            adapterketTerlapor.adapterCallback(callbackketTerlapor)
-                .isVerticalView()
-                .addData(it)
-                .build(rv_ket_terlapor_detail)
-                .setLayout(R.layout.item_pasal_lp)
-        }
     }
 
     private fun listOfSaksi(saksi: ArrayList<SaksiLhpResp>?) {
@@ -304,8 +326,16 @@ class DetailLhpActivity : BaseActivity() {
 
     private fun listOfRefLP(referensiPenyelidikan: ArrayList<RefPenyelidikanResp>?) {
         callbackRefLP = object : AdapterCallback<RefPenyelidikanResp> {
+            @SuppressLint("SetTextI18n")
             override fun initComponent(itemView: View, data: RefPenyelidikanResp, itemIndex: Int) {
-                itemView.txt_item_1.text = data.lp?.no_lp
+                itemView.txt_detail_1.text = data.lp?.no_lp
+                itemView.txt_detail_2.text = "Terlapor\n" +
+                        "Nama: ${data.lp?.personel_terlapor?.nama}, " +
+                        "Pangkat: ${
+                            data?.lp?.personel_terlapor?.pangkat.toString().toUpperCase()
+                        }/" +
+                        "NRP: ${data.lp?.personel_terlapor?.nrp}\n" +
+                        "Kesatuan: ${data.lp?.personel_terlapor?.satuan_kerja?.kesatuan}"
             }
 
             override fun onItemClicked(itemView: View, data: RefPenyelidikanResp, itemIndex: Int) {
@@ -315,7 +345,7 @@ class DetailLhpActivity : BaseActivity() {
             adapterRefLP.adapterCallback(callbackRefLP)
                 .isVerticalView()
                 .addData(it)
-                .setLayout(R.layout.item_pasal_lp)
+                .setLayout(R.layout.item_2_text)
                 .build(rv_detail_ref)
         }
     }

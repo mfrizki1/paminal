@@ -1,12 +1,15 @@
 package id.calocallo.sicape.ui.main.lp.disiplin
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,12 +22,10 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
+import id.calocallo.sicape.ui.main.lp.pidana.DetailLpPidanaActivity
 import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
-import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.visible
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
@@ -39,6 +40,8 @@ import retrofit2.Response
 import java.util.*
 
 class DetailLpDisiplinActivity : BaseActivity() {
+    private lateinit var downloadID: Any
+
     private lateinit var sessionManager1: SessionManager1
     private var adapterDetailPasalDisiplin = ReusableAdapter<PasalDilanggarResp>(this)
     private lateinit var callbackDetailPasalDilanggarDisiplin: AdapterCallback<PasalDilanggarResp>
@@ -85,6 +88,8 @@ class DetailLpDisiplinActivity : BaseActivity() {
             }
             apiGenerateDoc(disiplin)
         }
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
     }
 
     private fun apiGenerateDoc(disiplin: LpMinResp?) {
@@ -120,15 +125,41 @@ class DetailLpDisiplinActivity : BaseActivity() {
             btn_generate_disiplin.hideProgress(R.string.success_generate_doc)
             alert("Lihat Dokumen") {
                 positiveButton(R.string.iya) {
-                    viewDocDispl(lp)
-                    btn_generate_disiplin.hideProgress(R.string.generate_dokumen)
-
+                    downloadDok(lp)
                 }
                 negativeButton(R.string.tidak) {
                     btn_generate_disiplin.hideProgress(R.string.generate_dokumen)
                 }
             }.show()
         }, 2000)
+    }
+
+    private fun downloadDok(dok: LpResp?) {
+        //getting url from user
+        val url = dok?.dokumen?.url
+        //getting filename
+        val filename: String = "${dok?.no_lp}.${dok?.dokumen?.jenis}"
+        //download request
+
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
+
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_disiplin.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+            }
+        }
     }
 
     private fun viewDocDispl(lp: LpResp?) {
@@ -329,7 +360,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             finish()
-                        }else if (response.body()?.message == "Data lp has been used as reference in another data") {
+                        } else if (response.body()?.message == "Data lp has been used as reference in another data") {
                             Toast.makeText(
                                 this@DetailLpDisiplinActivity,
                                 R.string.used_on_references_lp,

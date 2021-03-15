@@ -23,7 +23,7 @@ data class Sp4Resp(
     var pangkat_akreditor: String?,
     var nrp_akreditor: String?,
     var is_ada_dokumen: Int?,
-    var dokumen: String?,
+    var dokumen: DokResp?,
     var user_creator: UserResp?,
     var user_updater: UserResp?,
     var user_deleter: UserResp?,

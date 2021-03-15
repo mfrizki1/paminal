@@ -12,6 +12,13 @@ interface ApiRpph {
     ): Call<ArrayList<RpphMinResp>>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("rpph/{id_rpph}/generate/document")
+    fun docRpph(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_rpph") id_rpph: Int?
+    ): Call<Base1Resp<AddRpphResp>>
+
+    @Headers(ApiLp.ACCEPT)
     @GET("rpph/{id_rpph}")
     fun detailRpph(
         @Header("Authorization") tokenBearer: String,

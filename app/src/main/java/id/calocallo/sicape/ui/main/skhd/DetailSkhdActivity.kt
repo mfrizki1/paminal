@@ -1,10 +1,15 @@
 package id.calocallo.sicape.ui.main.skhd
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -17,15 +22,12 @@ import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.network.response.SkhdMinResp
-import id.calocallo.sicape.network.response.SkhdResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.skhd.edit.EditSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
-import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.activity_detail_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -39,6 +41,8 @@ class DetailSkhdActivity : BaseActivity() {
         const val DETAIL_SKHD = "DETAIL_SKHD"
     }
 
+    private lateinit var downloadID: Any
+
     private lateinit var sessionManager1: SessionManager1
     private var detailSKHD: SkhdMinResp? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +54,8 @@ class DetailSkhdActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         detailSKHD = intent.extras?.getParcelable<SkhdMinResp>(DETAIL_SKHD)
 //        Log.e("detailSKHD", "$detailSKHD")
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
         apiDetailSkhd(detailSKHD)
         val hakAkses = sessionManager1.fetchHakAkses()
         if (hakAkses == "operator") {
@@ -71,21 +77,61 @@ class DetailSkhdActivity : BaseActivity() {
             btn_generate_skhd.showProgress {
                 progressColor = Color.WHITE
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                btn_generate_skhd.hideProgress(R.string.success_generate_doc)
-                alert(R.string.download) {
-                    positiveButton(R.string.iya) {
-                        btn_generate_skhd.hideProgress(R.string.generate_dokumen)
-
-                    }
-                    negativeButton(R.string.tidak) {
-                        btn_generate_skhd.hideProgress(R.string.generate_dokumen)
-
-                    }
-                }.show()
-            }, 2000)
+            apiDocSkhd(detailSKHD)
         }
 
+    }
+
+    private fun apiDocSkhd(detailSKHD: SkhdMinResp?) {
+        NetworkConfig().getServSkhd()
+            .docSkhd("Bearer ${sessionManager1.fetchAuthToken()}", detailSKHD?.id)
+            .enqueue(object : Callback<Base1Resp<AddSkhdResp>> {
+                override fun onResponse(
+                    call: Call<Base1Resp<AddSkhdResp>>,
+                    response: Response<Base1Resp<AddSkhdResp>>
+                ) {
+                    if (response.isSuccessful) {
+                        btn_generate_skhd.hideProgress(R.string.success_generate_doc)
+                        alert("Lihat Dokumen") {
+                            positiveButton(R.string.iya) {
+                                downloadSkhd(response?.body()?.data)
+                            }
+                            negativeButton(R.string.tidak) { btn_generate_pidana.hideProgress(R.string.generate_dokumen) }
+                        }.show()
+                    } else {
+
+                    }
+                }
+
+                override fun onFailure(call: Call<Base1Resp<AddSkhdResp>>, t: Throwable) {
+                    Toast.makeText(this@DetailSkhdActivity, "$t", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+    }
+
+    private fun downloadSkhd(skhd: AddSkhdResp?) {
+        Log.e("skhd", "${skhd?.skhd?.dokumen}")
+        val url = skhd?.skhd?.dokumen?.url
+        val filename: String = "${skhd?.skhd?.no_skhd}.${skhd?.skhd?.dokumen?.jenis}"
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_skhd.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+            }
+        }
     }
 
     private fun apiDetailSkhd(detailSKHD: SkhdMinResp?) {
@@ -113,6 +159,14 @@ class DetailSkhdActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getDetailSkhd(detailSKHD: SkhdResp?) {
+        if (detailSKHD?.is_ada_dokumen == 1) {
+            btn_see_doc_skhd.visible()
+            btn_see_doc_skhd.setOnClickListener {
+                val uri = Uri.parse(detailSKHD.dokumen?.url)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
+            }
+        }
+
         txt_no_skhd_detail.text = detailSKHD?.no_skhd
         /*   txt_no_lhp_skhd_detail.text = detailSKHD?.lhp?.no_lhp*/
         txt_no_lp_skhd_detail.text = detailSKHD?.lp?.no_lp
@@ -158,7 +212,6 @@ class DetailSkhdActivity : BaseActivity() {
                     .toUpperCase(Locale.ROOT)
             }"
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater

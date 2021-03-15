@@ -141,12 +141,12 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_tanggal_lhg_add"
                 android:layout_width="150dp"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="12dp"
                 android:text="Tanggal"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -200,6 +200,7 @@
                 android:gravity="top|start"
                 android:inputType="textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
@@ -243,6 +244,29 @@
                 android:gravity="start|top"
                 android:inputType="textCapSentences|textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pasal KUH Pidana" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_pasal_kuh_pidana_gelar_add"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Pasal KUH Pidana">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|top"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:id="@+id/ll_pimpinan_lhg_add"
             android:layout_width="match_parent"
@@ -417,6 +441,7 @@
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_notulen_lhg_add"
             android:layout_width="match_parent"
@@ -505,12 +530,12 @@
 
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_peserta_lhg_add"
@@ -553,6 +578,7 @@
                 android:layout_height="match_parent"
                 android:inputType="datetime" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edt_waktu_selesai_lhg_add"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -588,6 +614,7 @@
                 android:layout_height="match_parent"
                 android:inputType="textCapCharacters" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edt_pangkat_menangani_lhg_add"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

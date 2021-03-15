@@ -16,6 +16,13 @@ interface ApiSkhd {
     ): Call<ArrayList<SkhdMinResp>>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("skhd/{id_skhd}/generate/document")
+    fun docSkhd(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_skhd") id_skhd: Int?
+    ): Call<Base1Resp<AddSkhdResp>>
+
+    @Headers(ApiLp.ACCEPT)
     @GET("skhd/{id_skhd}")
     fun detailSkhd(
         @Header("Authorization") tokenBearer: String,
@@ -53,6 +60,13 @@ interface ApiSkhd {
     ): Call<ArrayList<PutKkeMinResp>>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("putkke/{id_putkke}/generate/document")
+    fun docPutKke(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_putkke") id_putkke: Int?
+    ): Call<Base1Resp<AddPutKkeResp>>
+
+    @Headers(ApiLp.ACCEPT)
     @GET("putkke/{id_putkke}")
     fun detailPutKke(
         @Header("Authorization") tokenBearer: String,
@@ -80,7 +94,6 @@ interface ApiSkhd {
         @Header("Authorization") tokenBearer: String,
         @Path("id_putkke") id_putkke: Int?
     ): Call<BaseResp> /*Data putkke removed succesfully */
-
 
 
     /*------------------TINDAKAN DISIPLIN-------------------*/

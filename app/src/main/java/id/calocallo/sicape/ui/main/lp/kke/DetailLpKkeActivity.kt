@@ -1,10 +1,15 @@
 package id.calocallo.sicape.ui.main.lp.kke
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -26,12 +31,10 @@ import id.calocallo.sicape.ui.main.lp.pasal.ListPasalDilanggarActivity
 import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity.Companion.EDIT_SAKSI
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
-import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.visible
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_kke.*
+import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -48,6 +51,7 @@ class DetailLpKkeActivity : BaseActivity() {
 
     private var adapterDetailSaksiKke = ReusableAdapter<LpSaksiResp>(this)
     private lateinit var callbackDetailSaksiKke: AdapterCallback<LpSaksiResp>
+    private lateinit var downloadID: Any
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +73,7 @@ class DetailLpKkeActivity : BaseActivity() {
             btn_edit_kke.gone()
         }
 
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         //EDIT LP KKE (SAKSI)
         btn_edit_saksi_kke.setOnClickListener {
@@ -137,8 +142,7 @@ class DetailLpKkeActivity : BaseActivity() {
             btn_generate_kke.hideProgress(R.string.success_generate_doc)
             alert("Lihat Dokumen") {
                 positiveButton(R.string.iya) {
-                    btn_generate_kke.hideProgress(R.string.generate_dokumen)
-                    viewDokKke(lp)
+                    downloadLpKke(lp)
                 }
                 negativeButton(R.string.tidak) {
                     btn_generate_kke.hideProgress(R.string.generate_dokumen)
@@ -147,6 +151,29 @@ class DetailLpKkeActivity : BaseActivity() {
         }, 2000)
     }
 
+    private fun downloadLpKke(dok: LpResp?) {
+        val url = dok?.dokumen?.url
+        val filename: String = "${dok?.no_lp}.${dok?.dokumen?.jenis}"
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
+
+
+    }
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_kke.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+            }
+        }
+    }
     private fun viewDokKke(lp: LpResp?) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(lp?.dokumen?.url)))
 //        finish()

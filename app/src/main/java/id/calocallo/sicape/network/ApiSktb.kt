@@ -14,6 +14,12 @@ interface ApiSktb {
     ): Call<ArrayList<SktbMinResp>>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("sktb/{id_sktb}/generate/document")
+    fun docSktb(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_sktb") id_sktb: Int?
+    ): Call<Base1Resp<AddSktbResp>>
+    @Headers(ApiLp.ACCEPT)
     @GET("sktb/{id_sktb}")
     fun detailSktb(
         @Header("Authorization") tokenBearer: String,

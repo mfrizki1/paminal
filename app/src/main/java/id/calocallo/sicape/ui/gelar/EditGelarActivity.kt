@@ -80,6 +80,7 @@ class EditGelarActivity : BaseActivity() {
 
     private fun setLhgReq(): LhgReq {
         lhgReq.dugaan = edt_dugaan_tindak_lhg_edit.editText?.text.toString()
+        lhgReq.pasal_kuh_pidana = edt_pasal_kuh_pidana_gelar_edit.editText?.text.toString()
         lhgReq.pangkat_yang_menangani = edt_pangkat_menangani_lhg_edit.editText?.text.toString()
         lhgReq.nama_yang_menangani = edt_nama_menangani_lhg_edit.editText?.text.toString()
         lhgReq.dasar = edt_dasar_lhg_edit.editText?.text.toString()
@@ -131,6 +132,7 @@ class EditGelarActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun viewEditLhg(detailLhg: LhgResp?) {
 //        txt_no_lp_choose_lhg_edit.text= "No LP: ${detailLhg?.}"
+        edt_pasal_kuh_pidana_gelar_edit.editText?.setText(detailLhg?.pasal_kuh_pidana)
         edt_dugaan_tindak_lhg_edit.editText?.setText(detailLhg?.dugaan)
         edt_dasar_lhg_edit.editText?.setText(detailLhg?.dasar)
         edt_tanggal_lhg_edit.editText?.setText(detailLhg?.tanggal)

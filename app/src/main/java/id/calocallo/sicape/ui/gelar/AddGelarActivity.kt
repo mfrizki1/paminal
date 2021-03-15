@@ -87,6 +87,7 @@ class AddGelarActivity : BaseActivity() {
     }
 
     private fun saveGelar() {
+        lhgReq.pasal_kuh_pidana = edt_pasal_kuh_pidana_gelar_add.editText?.text.toString()
         lhgReq.dugaan = edt_dugaan_tindak_lhg_add.editText?.text.toString()
         lhgReq.dasar = edt_dasar_lhg_add.editText?.text.toString()
         lhgReq.tanggal = edt_tanggal_lhg_add.editText?.text.toString()

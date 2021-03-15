@@ -1,11 +1,18 @@
 package id.calocallo.sicape.ui.main.rehab.rps
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -15,13 +22,12 @@ import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.RpsMinResp
-import id.calocallo.sicape.network.response.RpsResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_rps.*
+import kotlinx.android.synthetic.main.activity_detail_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +35,7 @@ import retrofit2.Response
 
 class DetailRpsActivity : BaseActivity() {
     private var idSkhd: Int? = null
+    private lateinit var downloadID: Any
     private lateinit var sessionManager1: SessionManager1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +44,12 @@ class DetailRpsActivity : BaseActivity() {
         supportActionBar?.title = "Detail Data RPS"
         sessionManager1 = SessionManager1(this)
         val dataMinRps = intent.extras?.getParcelable<RpsMinResp>(DETAIL_RPS)
-
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        val hak = sessionManager1.fetchHakAkses()
+        if (hak == "operator") {
+            btn_generate_rps_detail.gone()
+            btn_edit_rps.gone()
+        }
         apiDetailRps(dataMinRps)
 //        getViewRps(dataMinRps)
 
@@ -47,22 +59,78 @@ class DetailRpsActivity : BaseActivity() {
             btn_generate_rps_detail.showProgress {
                 progressColor = Color.WHITE
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                btn_generate_rps_detail.hideProgress("Berhasil Generate Dokumen")
-//                btn_download_rps_detail.visible()
-                alert("Download") {
-                    positiveButton("Iya") {
+            apiDocRps(dataMinRps)
+/*            Handler(Looper.getMainLooper()).postDelayed({
+                btn_generate_rps_detail.hideProgress(R.string.success_generate_doc)
+                alert(R.string.download) {
+                    positiveButton(R.string.iya) {
                         btn_generate_rps_detail.hideProgress(R.string.generate_dokumen)
 
                     }
-                    negativeButton("Tidak") {
+                    negativeButton(R.string.tidak) {
                         btn_generate_rps_detail.hideProgress(R.string.generate_dokumen)
 
                     }
                 }.show()
-            }, 2000)
+            }, 2000)*/
         }
 
+    }
+
+    private fun apiDocRps(dataMinRps: RpsMinResp?) {
+        NetworkConfig().getServRps()
+            .docRps("Bearer ${sessionManager1.fetchAuthToken()}", dataMinRps?.id)
+            .enqueue(object : Callback<Base1Resp<AddRpsResp>> {
+                override fun onResponse(
+                    call: Call<Base1Resp<AddRpsResp>>,
+                    response: Response<Base1Resp<AddRpsResp>>
+                ) {
+                    if (response.body()?.message == "Document rps generated successfully") {
+                        Log.e("data", "${response.body()?.data?.rps}")
+                        alert(R.string.download) {
+                            positiveButton(R.string.iya) {
+                                btn_generate_rps_detail.hideProgress(R.string.success_generate_doc)
+
+                                downloadRps(response.body()?.data?.rps)
+                            }
+                            negativeButton(R.string.tidak) {
+                                btn_generate_rps_detail.hideProgress(R.string.generate_dokumen)
+                            }
+                        }.show()
+                    } else {
+                        btn_generate_rps_detail.hideProgress(R.string.failed_generate_doc)
+                    }
+                }
+
+                override fun onFailure(call: Call<Base1Resp<AddRpsResp>>, t: Throwable) {
+                    Toast.makeText(this@DetailRpsActivity, "$t", Toast.LENGTH_SHORT).show()
+                    btn_generate_rps_detail.hideProgress(R.string.failed_generate_doc)
+
+                }
+            })
+    }
+
+    private fun downloadRps(rps: RpsResp?) {
+        val url = rps?.dokumen?.url
+        val filename: String = "${rps?.no_rps}.${rps?.dokumen?.jenis}"
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_rps_detail.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+            }
+        }
     }
 
     private fun apiDetailRps(dataMinRps: RpsMinResp?) {
@@ -88,6 +156,13 @@ class DetailRpsActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getViewRps(dataRPS: RpsResp?) {
+        if (dataRPS?.is_ada_dokumen == 1) {
+            btn_lihat_rps_detail.visible()
+            btn_lihat_rps_detail.setOnClickListener {
+                val uri = Uri.parse(dataRPS.dokumen?.url)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
+            }
+        }
         btn_edit_rps.setOnClickListener {
             val intent = Intent(this, EditRpsActivity::class.java)
             intent.putExtra(EditRpsActivity.EDIT_RPS, dataRPS)

@@ -1,12 +1,19 @@
 package id.calocallo.sicape.ui.main.rehab.rpph
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -16,14 +23,12 @@ import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.BaseResp
-import id.calocallo.sicape.network.response.RpphMinResp
-import id.calocallo.sicape.network.response.RpphResp
+import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.alert
-import id.calocallo.sicape.utils.ext.formatterTanggal
+import id.calocallo.sicape.utils.ext.*
 import id.co.iconpln.smartcity.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_rpph.*
+import kotlinx.android.synthetic.main.activity_detail_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,7 +37,7 @@ import java.util.*
 
 class DetailRpphActivity : BaseActivity() {
 
-
+    private lateinit var downloadID: Any
     private lateinit var sessionManager1: SessionManager1
     private var detailRpph: RpphMinResp? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,29 +46,90 @@ class DetailRpphActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Data RPPH"
         sessionManager1 = SessionManager1(this)
+        registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         detailRpph = intent.extras?.getParcelable<RpphMinResp>(DETAIL_RPPH)
         apiDetailRpph(detailRpph)
 //        getViewRpph(detailRpph)
 
+        val hak = sessionManager1.fetchHakAkses()
+        if(hak == "operator"){
+            btn_edit_rpph_detail.gone()
+            btn_generate_dok_rpph_detail.gone()
+        }
         btn_generate_dok_rpph_detail.attachTextChangeAnimator()
         bindProgressButton(btn_generate_dok_rpph_detail)
         btn_generate_dok_rpph_detail.setOnClickListener {
             btn_generate_dok_rpph_detail.showProgress {
                 progressColor = Color.WHITE
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                btn_generate_dok_rpph_detail.hideProgress("Berhasil Generate Dokumen")
-                alert("Download") {
-                    positiveButton("Iya") {
+            apiDocRpph(detailRpph)
+            /*Handler(Looper.getMainLooper()).postDelayed({
+                btn_generate_dok_rpph_detail.hideProgress(R.string.success_generate_doc)
+                alert(R.string.download) {
+                    positiveButton(R.string.iya) {
                         btn_generate_dok_rpph_detail.hideProgress(R.string.generate_dokumen)
 
                     }
-                    negativeButton("TIdak") {
-                        btn_generate_dok_rpph_detail.hideProgress(R.string.generate_dokumen)
-                    }
+                    negativeButton(R.string.tidak) {}
                 }.show()
-            }, 2000)
+            }, 2000)*/
+        }
+    }
+
+    private fun apiDocRpph(detailRpph: RpphMinResp?) {
+        NetworkConfig().getServRpph()
+            .docRpph("Bearer ${sessionManager1.fetchAuthToken()}", detailRpph?.id).enqueue(
+                object : Callback<Base1Resp<AddRpphResp>> {
+                    override fun onResponse(
+                        call: Call<Base1Resp<AddRpphResp>>,
+                        response: Response<Base1Resp<AddRpphResp>>
+                    ) {
+                        if (response.body()?.message == "Document rpph generated successfully") {
+                            Log.e("response", "${response.body()?.data?.rpph}")
+                            btn_generate_dok_rpph_detail.hideProgress(R.string.success_generate_doc)
+                            btn_generate_dok_rpph_detail.hideProgress(R.string.success_generate_doc)
+                            alert(R.string.download) {
+                                positiveButton(R.string.iya) {
+                                    downloadRpph(response.body()?.data?.rpph)
+                                }
+                                negativeButton(R.string.tidak) {
+                                    btn_generate_dok_rpph_detail.hideProgress(R.string.generate_dokumen)
+                                }
+                            }.show()
+                        } else {
+                            btn_generate_dok_rpph_detail.hideProgress(R.string.failed_generate_doc)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Base1Resp<AddRpphResp>>, t: Throwable) {
+                        Toast.makeText(this@DetailRpphActivity, "$t", Toast.LENGTH_SHORT).show()
+                        btn_generate_dok_rpph_detail.hideProgress(R.string.failed_generate_doc)
+                    }
+                })
+    }
+
+    private fun downloadRpph(rpph: RpphResp?) {
+        Log.e("rpph", "$rpph")
+        val url = rpph?.dokumen?.url
+        val filename: String = "${rpph?.no_rpph}.${rpph?.dokumen?.jenis}"
+        val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(url))
+            .setTitle(filename)
+            .setDescription("Downloading")
+            .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
+
+        val manager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = manager.enqueue(request)
+    }
+
+    private val onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val completedId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completedId == downloadID) {
+                btn_generate_dok_rpph_detail.showSnackbar(R.string.success_download_doc) { action(R.string.action_ok) {} }
+            }
         }
     }
 
@@ -92,7 +158,13 @@ class DetailRpphActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getViewRpph(detailRpph: RpphResp?) {
-
+        if (detailRpph?.is_ada_dokumen == 1) {
+            btn_lihat_dok_rpph_detail.visible()
+            btn_lihat_dok_rpph_detail.setOnClickListener {
+                val uri = Uri.parse(detailRpph.dokumen?.url)
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString())))
+            }
+        }
         btn_edit_rpph_detail.setOnClickListener {
             val intent = Intent(this, EditRpphActivity::class.java)
             intent.putExtra(EditRpphActivity.EDIT_RPPH_EDIT, detailRpph)
@@ -155,7 +227,7 @@ class DetailRpphActivity : BaseActivity() {
                             ).show()
                             Handler(Looper.getMainLooper()).postDelayed({
                                 finish()
-                            },750)
+                            }, 750)
                         } else {
                             Toast.makeText(
                                 this@DetailRpphActivity,

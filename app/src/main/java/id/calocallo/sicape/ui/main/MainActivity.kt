@@ -1,18 +1,21 @@
 package id.calocallo.sicape.ui.main
 
+import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.FiturModel
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.response.HakAksesPersonel1
-import id.calocallo.sicape.network.response.HakAksesSipil
 import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.ui.main.profil.ProfilFragment
 import id.calocallo.sicape.utils.SessionManager1
@@ -23,8 +26,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class MainActivity : BaseActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener {
+    BottomNavigationView.OnNavigationItemSelectedListener, MultiplePermissionsListener {
     private lateinit var sessionmanager: SessionManager1
     lateinit var list: ArrayList<FiturModel>
     private var isSipilLogin: Boolean? = null
@@ -36,29 +40,9 @@ class MainActivity : BaseActivity(),
 
         sessionmanager = SessionManager1(this)
 
-        /*
-        list = ArrayList<FiturModel>()
-        list.add(FiturModel("Personel", R.drawable.ic_catpers))
-        list.add(FiturModel("Laporan Polisi", R.drawable.ic_paminal))
-        list.add(FiturModel("Laporan Hasil Penyelidikan", R.drawable.))
-        list.add(FiturModel("SKHD", R.drawable.ic_paminal))
-        list.add(FiturModel("CATPERS", R.drawable.ic_paminal))
-        list.add(FiturModel("SKHP", R.drawable.ic_paminal))
-        list.add(FiturModel("WANJAK", R.drawable.ic_paminal))
-        list.add(FiturModel("Laporan", R.drawable.ic_paminal))
-        list.add(FiturModel("Analisa", R.drawable.ic_paminal))
-         */
-
         setSupportActionBar(toolbar_logo)
         supportActionBar?.title = "Dashboard"
         isSipilLogin = intent.extras?.getBoolean("IS_SIPIL")
-       /* if (isSipilLogin == true) {
-            getSipil()
-        } else if(isSipilLogin == false) {
-            getPersonel()
-        }else{
-            getSuperAdmin()
-        }*/
 
         getUser()
         initBottom()
@@ -66,6 +50,12 @@ class MainActivity : BaseActivity(),
             bottom_navigation.selectedItemId = R.id.nav_home
         }
 
+        Dexter.withContext(this)
+            .withPermissions(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ).withListener(this)
+            .check()
     }
 
     private fun initBottom() {
@@ -79,7 +69,8 @@ class MainActivity : BaseActivity(),
                     if (response.isSuccessful) {
                         sessionmanager.saveUser(response.body())
                     } else {
-                        Toast.makeText(this@MainActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
 
@@ -200,5 +191,18 @@ class MainActivity : BaseActivity(),
             return true
         }
         return false
+    }
+
+    override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+        if(report?.areAllPermissionsGranted() == true){
+            Toast.makeText(this, "Izin Diberikan", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onPermissionRationaleShouldBeShown(
+        permissions: MutableList<PermissionRequest>?,
+        token: PermissionToken?
+    ) {
+        token?.continuePermissionRequest()
     }
 }

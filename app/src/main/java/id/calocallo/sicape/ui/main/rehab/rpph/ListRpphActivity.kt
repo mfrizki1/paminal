@@ -36,7 +36,10 @@ class ListRpphActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data RPPH"
         sessionManager1 = SessionManager1(this)
-
+        val hak = sessionManager1.fetchHakAkses()
+        if(hak == "operator"){
+            btn_add_single_rpph.gone()
+        }
         getListRpph()
         btn_add_single_rpph.setOnClickListener {
             startActivity(Intent(this, AddRpphActivity::class.java))

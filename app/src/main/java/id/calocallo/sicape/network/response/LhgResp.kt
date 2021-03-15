@@ -24,6 +24,7 @@ data class LhgResp(
     val nama_notulen: String?,
     val pangkat_notulen: String?,
     val nrp_notulen: String?,
+    val pasal_kuh_pidana: String?,
     val peserta_gelar: ArrayList<PesertaLhgResp>?,
     val is_ada_dokumen: Int?,
     val dokumen: DokResp?,

@@ -13,6 +13,13 @@ interface ApiGelar {
     ): Call<ArrayList<LhgMinResp>>
 
     @Headers(ApiLp.ACCEPT)
+    @GET("lhg/{id_lhg}/generate/document")
+    fun docLhg(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lhg") id_lhg: Int?
+    ): Call<Base1Resp<AddLhgResp>>
+
+    @Headers(ApiLp.ACCEPT)
     @GET("lhg/{id_lhg}")
     fun detailLhg(
         @Header("Authorization") tokenBearer: String,

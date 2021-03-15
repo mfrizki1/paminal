@@ -47,6 +47,7 @@ class AddTanggPesertaGelarActivity : BaseActivity() {
 
         val mLhgReq = gelarDataManager.getGelar1()
         lhgReq.id_lp = mLhgReq.id_lp
+        lhgReq.pasal_kuh_pidana = mLhgReq.pasal_kuh_pidana
         lhgReq.dugaan = mLhgReq.dugaan
         lhgReq.pangkat_yang_menangani = mLhgReq.pangkat_yang_menangani
         lhgReq.nama_yang_menangani = mLhgReq.nama_yang_menangani

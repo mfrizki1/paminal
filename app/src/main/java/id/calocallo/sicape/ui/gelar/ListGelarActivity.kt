@@ -22,6 +22,7 @@ import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.network.NetworkConfig
+import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.view_no_data.*
@@ -40,6 +41,11 @@ class ListGelarActivity : BaseActivity() {
         supportActionBar?.title = "List Data Gelar Perkara"
         apiListGelar()
 
+        val hak = sessionManager1.fetchHakAkses()
+        if (hak == "operator") {
+            btn_add_single_gelar.gone()
+        }
+
         btn_add_single_gelar.setOnClickListener {
             startActivity(Intent(this, AddGelarActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -48,6 +54,7 @@ class ListGelarActivity : BaseActivity() {
         /*PICK GELAR*/
 
     }
+
     private fun apiListGelar() {
         rl_pb.visible()
         NetworkConfig().getServLhg().getListLhg("Bearer ${sessionManager1.fetchAuthToken()}")
