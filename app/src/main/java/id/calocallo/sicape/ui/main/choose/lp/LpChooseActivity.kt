@@ -14,6 +14,7 @@ import id.calocallo.sicape.ui.gelar.AddGelarActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.ui.main.rehab.rpph.AddRpphActivity
+import id.calocallo.sicape.ui.main.rehab.rps.AddRpsActivity
 import id.calocallo.sicape.ui.main.rehab.sktb.AddSktbActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.ui.main.rehab.sp4.AddSp4Activity
@@ -48,6 +49,7 @@ class LpChooseActivity : BaseActivity() {
     private var tempJenis: String? = null
     private var isLpForRef: Boolean? = null
     private var isLpForLhg: Boolean? = null
+    private var isLpForRps: Boolean? = null
     private var isLpForRpph: Boolean? = null
     private var isLpForSktb: Boolean? = null
     private var isLpForSp4: Boolean? = null
@@ -80,6 +82,7 @@ class LpChooseActivity : BaseActivity() {
         /*LIST LP FOR REF PENYELIDIKAN*/
         isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, false)
         isLpForLhg = intent.getBooleanExtra(AddGelarActivity.IS_LHG, false)
+        isLpForRps = intent.getBooleanExtra(AddRpsActivity.IS_RPS, false)
         isLpForRpph = intent.getBooleanExtra(AddRpphActivity.IS_RPPH, false)
         isLpForSktb = intent.getBooleanExtra(AddSktbActivity.IS_SKTB, false)
         isLpForSp4 = intent.getBooleanExtra(AddSp4Activity.IS_SP4, false)
@@ -89,6 +92,9 @@ class LpChooseActivity : BaseActivity() {
             }
             isLpForLhg == true -> {
                 Log.e("lhg", "$isLpForLhg")
+            }
+            isLpForRps == true -> {
+                urlKasus = "masa/hukuman/pidana/disiplin"
             }
             isLpForRpph == true -> {
                 urlKasus = "masa/hukuman/kode/etik"

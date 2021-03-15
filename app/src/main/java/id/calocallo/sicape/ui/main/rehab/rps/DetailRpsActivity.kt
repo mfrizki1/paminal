@@ -37,13 +37,14 @@ class DetailRpsActivity : BaseActivity() {
     private var idSkhd: Int? = null
     private lateinit var downloadID: Any
     private lateinit var sessionManager1: SessionManager1
+    private var dataMinRps: RpsMinResp? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_rps)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Detail Data RPS"
         sessionManager1 = SessionManager1(this)
-        val dataMinRps = intent.extras?.getParcelable<RpsMinResp>(DETAIL_RPS)
+        dataMinRps = intent.extras?.getParcelable<RpsMinResp>(DETAIL_RPS)
         registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
@@ -75,6 +76,11 @@ class DetailRpsActivity : BaseActivity() {
             }, 2000)*/
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        apiDetailRps(dataMinRps)
     }
 
     private fun apiDocRps(dataMinRps: RpsMinResp?) {
@@ -210,12 +216,43 @@ class DetailRpsActivity : BaseActivity() {
     private fun alertDialogDelete() {
         this.alert("Yakin Hapus Data?") {
             positiveButton("Iya") {
-//                ApiDelete()
+                ApiDelete(dataMinRps)
                 finish()
             }
             negativeButton("Tidak") {
             }
         }.show()
+    }
+
+    private fun ApiDelete(dataMinRps: RpsMinResp?) {
+        NetworkConfig().getServRps()
+            .delRps("Bearer ${sessionManager1.fetchAuthToken()}", dataMinRps?.id).enqueue(
+                object : Callback<BaseResp> {
+                    override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                        if (response.body()?.message == "Data rps removed succesfully") {
+                            Toast.makeText(
+                                this@DetailRpsActivity,
+                                R.string.data_deleted,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                finish()
+                            }, 750)
+                        } else {
+                            Toast.makeText(
+                                this@DetailRpsActivity,
+                                R.string.failed_deleted,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                        Toast.makeText(
+                            this@DetailRpsActivity, "$t", Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
     }
 
     companion object {
