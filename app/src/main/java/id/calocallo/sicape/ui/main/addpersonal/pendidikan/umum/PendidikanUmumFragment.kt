@@ -72,8 +72,6 @@ class PendidikanUmumFragment : Fragment() {
         val umum = sessionManager1.getPendUmum()
         if (umum.size == 0) {
             list.add(AddPendidikanModel())
-            list.add(AddPendidikanModel())
-            list.add(AddPendidikanModel())
         }
         rv_pend_umum.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)

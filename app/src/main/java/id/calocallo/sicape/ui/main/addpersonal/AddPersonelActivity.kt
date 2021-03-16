@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import id.calocallo.sicape.R
@@ -89,13 +90,13 @@ class AddPersonelActivity : BaseActivity(){
          */
 
         btn_personel_add_polda.setOnClickListener {
-            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polda.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polda.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polda.setTextColor(ContextCompat.getColor(this,R.color.white))
 
-            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polres.setTextColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polres.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polres.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polsek.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polsek.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
             startActivityForResult(Intent(this, PoldaActivity::class.java), REQ_POLDA)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
@@ -119,13 +120,13 @@ class AddPersonelActivity : BaseActivity(){
 //            spinner_satker_add.hint = "Satker Polres"
 //            txt_layout_satker_personel_add.visible()
 
-            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polres.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polres.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polres.setTextColor(ContextCompat.getColor(this,R.color.white))
 
-            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polda.setTextColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polda.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polda.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polsek.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polsek.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
 //            satker("polres")
             startActivityForResult(Intent(this, PolresActivity::class.java), REQ_POLRES)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -143,13 +144,13 @@ class AddPersonelActivity : BaseActivity(){
 //            spinner_satker_add.hint = "Satker Polsek"
 //            txt_layout_satker_personel_add.visible()
 
-            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polsek.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polsek.setTextColor(ContextCompat.getColor(this,R.color.white))
 
-            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polda.setTextColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polres.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polda.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polda.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polres.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polres.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
 //            satker("polsek")
 //            intent.putExtra(PolresActivity.IS_POLSEK, PolresActivity.IS_POLSEK)
             val intent = Intent(this, PolsekActivity::class.java)
@@ -191,7 +192,7 @@ class AddPersonelActivity : BaseActivity(){
             addPersonelReq.cara_peroleh_kewarganegaraan = edt_how_to_kwg.text.toString()
             addPersonelReq.hobi = edt_hobi.text.toString()
             addPersonelReq.jabatan = edt_pekerjaan.text.toString()
-            addPersonelReq.jumlah_anak = edt_jmlh_anak.text.toString().toInt()
+//            addPersonelReq.jumlah_anak = edt_jmlh_anak.text.toString().toInt()
             addPersonelReq.kebiasaan = edt_kebiasaan.text.toString()
 
             addPersonelReq.kewarganegaraan = edt_kwg.text.toString()
@@ -395,7 +396,7 @@ class AddPersonelActivity : BaseActivity(){
         val jkItems = listOf("Laki-Laki", "Perempuan")
         val adapterJk = ArrayAdapter(this, R.layout.item_spinner, jkItems)
         spinner_jk.setAdapter(adapterJk)
-        spinner_jk.setOnItemClickListener { parent, view, position, id ->
+        spinner_jk.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 jk = "laki_laki"
             } else {
@@ -418,10 +419,10 @@ class AddPersonelActivity : BaseActivity(){
             }
         }
 
-        val agamaItem = listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu")
+        val agamaItem = listOf("Islam", "Katolik", "Protestan", "Buddha", "Hindu", "Khonghucu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
         sp_agm_now.setAdapter(adapterAgama)
-        sp_agm_now.setOnItemClickListener { parent, view, position, id ->
+        sp_agm_now.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 agmNow = "islam"
             } else if (position == 1) {
@@ -429,7 +430,7 @@ class AddPersonelActivity : BaseActivity(){
             } else if (position == 2) {
                 agmNow = "protestan"
             } else if (position == 3) {
-                agmNow = "budha"
+                agmNow = "buddha"
             } else if (position == 4) {
                 agmNow = "hindu"
             } else {
@@ -437,7 +438,7 @@ class AddPersonelActivity : BaseActivity(){
             }
         }
         sp_agm_before.setAdapter(adapterAgama)
-        sp_agm_before.setOnItemClickListener { parent, view, position, id ->
+        sp_agm_before.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 agmBefore = "islam"
             } else if (position == 1) {
@@ -484,13 +485,13 @@ class AddPersonelActivity : BaseActivity(){
         super.onResume()
 
         btn_personel_add_polda.setOnClickListener {
-            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polda.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polda.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polda.setTextColor(ContextCompat.getColor(this,R.color.white))
 
-            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polres.setTextColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polres.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polres.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polsek.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polsek.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
             startActivityForResult(Intent(this, PoldaActivity::class.java), REQ_POLDA)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
@@ -514,13 +515,13 @@ class AddPersonelActivity : BaseActivity(){
 //            spinner_satker_add.hint = "Satker Polres"
 //            txt_layout_satker_personel_add.visible()
 
-            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polres.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polres.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polres.setTextColor(ContextCompat.getColor(this,R.color.white))
 
-            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polda.setTextColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polda.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polda.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polsek.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polsek.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
 //            satker("polres")
             startActivityForResult(Intent(this, PolresActivity::class.java), REQ_POLRES)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -538,13 +539,13 @@ class AddPersonelActivity : BaseActivity(){
 //            spinner_satker_add.hint = "Satker Polsek"
 //            txt_layout_satker_personel_add.visible()
 
-            btn_personel_add_polsek.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polsek.setTextColor(resources.getColor(R.color.white))
+            btn_personel_add_polsek.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polsek.setTextColor(ContextCompat.getColor(this,R.color.white))
 
-            btn_personel_add_polda.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polda.setTextColor(resources.getColor(R.color.colorPrimary))
-            btn_personel_add_polres.setBackgroundColor(resources.getColor(R.color.white))
-            btn_personel_add_polres.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn_personel_add_polda.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polda.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
+            btn_personel_add_polres.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+            btn_personel_add_polres.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary))
 //            satker("polsek")
 //            intent.putExtra(PolresActivity.IS_POLSEK, PolresActivity.IS_POLSEK)
             val intent = Intent(this, PolsekActivity::class.java)

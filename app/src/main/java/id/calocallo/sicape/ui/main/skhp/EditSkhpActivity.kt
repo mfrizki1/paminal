@@ -62,7 +62,7 @@ class EditSkhpActivity : BaseActivity() {
             updateSkhp(getDetailSkhp)
         }
 
-        rg_memenuhi_syarat_skhp_edit.setOnCheckedChangeListener { group, checkedId ->
+        rg_memenuhi_syarat_skhp_edit.setOnCheckedChangeListener { _, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             if (radio.isChecked && radio.text == "Ya") {
                 isSyarat = 1

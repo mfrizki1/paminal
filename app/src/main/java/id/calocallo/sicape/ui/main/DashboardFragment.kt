@@ -33,13 +33,14 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
         FiturModel("Personel", R.drawable.ic_personel),
         FiturModel("Laporan Polisi", R.drawable.ic_lp),
         FiturModel("Laporan Hasil Penyelidikan", R.drawable.ic_lhp),
-        FiturModel("SKHD", R.drawable.ic_skhd),
-        FiturModel("CATPERS", R.drawable.ic_catpers),
-        FiturModel("SKHP", R.drawable.ic_skhp),
-        FiturModel("REHAB", R.drawable.ic_rehab),
+        FiturModel("Surat Keputusan Hukuman Disiplin", R.drawable.ic_skhd),
+//        FiturModel("Putusan Komisi Kode Etik", R.drawable.ic_putkke),
+        FiturModel("Catatan Personel", R.drawable.ic_catpers),
+        FiturModel("Surat Keterangan Hasil Penelitian", R.drawable.ic_skhp),
+        FiturModel("Rehab", R.drawable.ic_rehab),
         FiturModel("Laporan Hasil Gelar", R.drawable.ic_gelar),
         FiturModel("Laporan Bulanan", R.drawable.ic_laporan),
-        FiturModel("Analisa", R.drawable.ic_analisa)
+        FiturModel("Analisa & Evaluasi", R.drawable.ic_analisa)
     )
 
     override fun onCreateView(
@@ -80,18 +81,23 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
                 startActivity(Intent(activity, LhpActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
-            "SKHD" -> {
+            "Surat Keputusan Hukuman Disiplin" -> {
                 startActivity(Intent(activity, PickSkhdActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }"SKHP" -> {
-            startActivity(Intent(activity, ListSkhpActivity::class.java))
-            activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
-            "CATPERS" -> {
+           /* "Putusan Komisi Kode Etik" -> {
+                startActivity(Intent(activity, PickSkhdActivity::class.java))
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }*/
+            "Surat Keterangan Hasil Penelitian" -> {
+                startActivity(Intent(activity, ListSkhpActivity::class.java))
+                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+            "Catatan Personel" -> {
                 startActivity(Intent(activity, CatpersActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
-            "REHAB" -> {
+            "Rehab" -> {
                 startActivity(Intent(activity, PickRehabActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
@@ -103,7 +109,7 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
                 startActivity(Intent(activity, ListLapbulActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
-            "Analisa" -> {
+            "Analisa & Evaluasi" -> {
                 startActivity(Intent(activity, AnevActivity::class.java))
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }

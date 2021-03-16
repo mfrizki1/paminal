@@ -1,20 +1,23 @@
 package id.calocallo.sicape.ui.main.addpersonal.relasi
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.razir.progressbutton.attachTextChangeAnimator
+import com.github.razir.progressbutton.bindProgressButton
+import com.github.razir.progressbutton.hideProgress
+import com.github.razir.progressbutton.showProgress
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AddAllPersonelModel
 import id.calocallo.sicape.model.AddPendidikanModel
 import id.calocallo.sicape.network.NetworkConfig
-import id.calocallo.sicape.network.request.HukumanReq
-import id.calocallo.sicape.network.request.KeluargaReq
-import id.calocallo.sicape.network.request.RelasiReq
+import id.calocallo.sicape.network.request.*
 import id.calocallo.sicape.network.response.AddPersonelResp
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.ui.main.MainActivity
@@ -51,7 +54,8 @@ class AddRelasiActivity : BaseActivity() {
 
         hideKeyboard()
         initRV(rv_relasi, rv_pernah_dihukum)
-
+        btn_next_relasi.attachTextChangeAnimator()
+        bindProgressButton(btn_next_relasi)
         btn_next_relasi.setOnClickListener {
             if (listRelasi.size == 1 && listRelasi[0].nama == "") {
                 listRelasi.clear()
@@ -64,6 +68,7 @@ class AddRelasiActivity : BaseActivity() {
             sessionManager1.setRelasi(listRelasi)
             sessionManager1.setHukuman(listHukum)
             doSavePersonel(listRelasi, listHukum)
+            btn_next_relasi.showProgress { progressColor = Color.WHITE }
         }
     }
 
@@ -125,11 +130,7 @@ class AddRelasiActivity : BaseActivity() {
         allPersonelModel.relasi = listRelasi
         allPersonelModel.pernah_dihukum = listHukum
 //        allPersonelModel.catatan_personel = sessionManager1.getCatpers()
-        val listPend = arrayListOf<AddPendidikanModel>()
-        listPend.addAll(sessionManager1.getPendUmum())
-        listPend.addAll(sessionManager1.getPendDinas())
-        listPend.addAll(sessionManager1.getPendOther())
-        allPersonelModel.riwayat_pendidikan = listPend
+
 //        allPersonelModel.riwayat_pendidikan_kedinasan = sessionManager1.getPendDinas()
 //        allPersonelModel.riwayat_pendidikan_lain_lain = sessionManager1.getPendOther()
         allPersonelModel.riwayat_pekerjaan = sessionManager1.getPekerjaan()
@@ -137,7 +138,7 @@ class AddRelasiActivity : BaseActivity() {
         if (pekerjaanLuar[0].pekerjaan != "") {
             allPersonelModel.pekerjaan_diluar_dinas = pekerjaanLuar
         }
-        allPersonelModel.riwayat_alamat = sessionManager1.getAlamat()
+//        allPersonelModel.riwayat_alamat = sessionManager1.getAlamat()
         allPersonelModel.riwayat_organisasi = sessionManager1.getOrganisasi()
         allPersonelModel.riwayat_penghargaan = sessionManager1.getPenghargaan()
         allPersonelModel.riwayat_perjuangan = sessionManager1.getPerjuanganCita()
@@ -155,14 +156,107 @@ class AddRelasiActivity : BaseActivity() {
         allPersonelModel.sahabat = sessionManager1.getSahabat()
         allPersonelModel.media_disenangi = sessionManager1.getMediaInfo()
         allPersonelModel.media_sosial = sessionManager1.getMedsos()
-
+        validateReq()
         val pasangan = sessionManager1.getPasangan()
         if (pasangan[0].nama != "") {
             allPersonelModel.pasangan = sessionManager1.getPasangan()
         }
+
+        /*  val ayah = sessionManager1.getAyahKandung()
+          val listKeluarga = ArrayList<KeluargaReq>()
+          if (ayah.nama != "") {
+              listKeluarga.add(ayah)
+          }
+          val ayahTiri = sessionManager1.getAyahTiri()
+          if (ayahTiri.nama != "")
+              listKeluarga.add(ayahTiri)
+          val ibu = sessionManager1.getIbu()
+          if (ibu.nama != "")
+              listKeluarga.add(ibu)
+          val ibuTiri = sessionManager1.getIbuTiri()
+          if (ibuTiri.nama != "")
+              listKeluarga.add(ibuTiri)
+          val mertuaLaki = sessionManager1.getMertuaLaki()
+          if (mertuaLaki.nama != "")
+              listKeluarga.add(mertuaLaki)
+          val mertuaPerempuan = sessionManager1.getMertuaPerempuan()
+          if (mertuaPerempuan.nama != "")
+              listKeluarga.add(mertuaPerempuan)*/
+//        allPersonelModel.keluarga = listKeluarga
+
+        Logger.e("$allPersonelModel")
+
+        NetworkConfig().getServPers().addAllPersonel(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            allPersonelModel
+        ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {
+            override fun onFailure(call: Call<Base1Resp<AddPersonelResp>>, t: Throwable) {
+                Log.e("error", "$t")
+                Toast.makeText(this@AddRelasiActivity, "$t", Toast.LENGTH_SHORT).show()
+                btn_next_relasi.hideProgress(R.string.not_save)
+            }
+
+            override fun onResponse(
+                call: Call<Base1Resp<AddPersonelResp>>,
+                response: Response<Base1Resp<AddPersonelResp>>
+            ) {
+                if (response.body()?.message == "Data personel saved succesfully") {
+                    hideKeyboard()
+                    sessionManager1.clearAllPers()
+                    btn_next_relasi.hideProgress(R.string.data_saved)
+                    btn_next_relasi.showSnackbar(R.string.data_saved) {
+                        action(R.string.next) {
+                            val intent = Intent(this@AddRelasiActivity, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME)
+                            startActivity(intent)
+                        }
+                    }
+                } else {
+                    btn_next_relasi.hideProgress(R.string.not_save)
+                    Toast.makeText(this@AddRelasiActivity, "Gagal Menyimpan", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        })
+    }
+
+    private fun validateReq() {
+        /*pendidikan*/
+        val listPend = arrayListOf<AddPendidikanModel>()
+        val pendUmum = sessionManager1.getPendUmum()
+        if (pendUmum[0].pendidikan != "") {
+            listPend.addAll(pendUmum)
+        }
+        val pendDinas = sessionManager1.getPendDinas()
+        if (pendDinas.isNotEmpty()) {
+            listPend.addAll(pendDinas)
+        }
+        val pendOther = sessionManager1.getPendOther()
+        if (pendOther.isNotEmpty()) {
+            listPend.addAll(pendOther)
+        }
+        allPersonelModel.riwayat_pendidikan = listPend
+
+        /*alamat*/
+        val listAlamat = arrayListOf<AlamatReq>()
+        val alamat = sessionManager1.getAlamat()
+        if (alamat[0].alamat != "") {
+            listAlamat.addAll(alamat)
+        }
+        allPersonelModel.riwayat_alamat = listAlamat
+
+        /*Pekerjaan*/
+        val listPekerjaan = arrayListOf<AddSinglePekerjaanReq>()
+        val pekerjaan = sessionManager1.getPekerjaan()
+        if (pekerjaan[0].pekerjaan != "") {
+            listPekerjaan.addAll(pekerjaan)
+        }
+        allPersonelModel.riwayat_pekerjaan = listPekerjaan
+
+        /*Keluarga*/
         val ayah = sessionManager1.getAyahKandung()
         val listKeluarga = ArrayList<KeluargaReq>()
-        if (ayah.nama != null) {
+        if (ayah.nama != "") {
             listKeluarga.add(ayah)
         }
         val ayahTiri = sessionManager1.getAyahTiri()
@@ -181,38 +275,6 @@ class AddRelasiActivity : BaseActivity() {
         if (mertuaPerempuan.nama != "")
             listKeluarga.add(mertuaPerempuan)
         allPersonelModel.keluarga = listKeluarga
-
-        Logger.e("$allPersonelModel")
-
-        NetworkConfig().getServPers().addAllPersonel(
-            "Bearer ${sessionManager1.fetchAuthToken()}",
-            allPersonelModel
-        ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {
-            override fun onFailure(call: Call<Base1Resp<AddPersonelResp>>, t: Throwable) {
-                Log.e("error", "$t")
-                Toast.makeText(this@AddRelasiActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(
-                call: Call<Base1Resp<AddPersonelResp>>,
-                response: Response<Base1Resp<AddPersonelResp>>
-            ) {
-                if (response.isSuccessful) {
-                    hideKeyboard()
-                    sessionManager1.clearAllPers()
-                    btn_next_relasi.showSnackbar(R.string.data_saved) {
-                        action(R.string.next) {
-                            val intent = Intent(this@AddRelasiActivity, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME)
-                            startActivity(intent)
-                        }
-                    }
-                } else {
-                    Toast.makeText(this@AddRelasiActivity, "Gagal Menyimpan", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        })
     }
 
     private fun initRV(rvRelasi: RecyclerView, rvHukum: RecyclerView) {

@@ -137,7 +137,7 @@ class KawanAdapter(
                 val item = listOf("Laki-Laki", "Perempuan")
                 val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
                 spJk.setAdapter(adapter)
-                spJk.setOnItemClickListener { parent, view, position, id ->
+                spJk.setOnItemClickListener { _, _, position, _ ->
                     when(position){
                         0->sahabatReq.jenis_kelamin = "laki_laki"
                         1->sahabatReq.jenis_kelamin = "perempuan"
@@ -182,7 +182,7 @@ class KawanAdapter(
                 val item = listOf("Laki-Laki", "Perempuan")
         val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
         holder.spJk.setAdapter(adapter)
-        holder.spJk.setOnItemClickListener { parent, view, position, id ->
+        holder.spJk.setOnItemClickListener { _, _, position, _ ->
             when(position){
                 0->data.jenis_kelamin = "laki_laki"
                 1->data.jenis_kelamin = "perempuan"

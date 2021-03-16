@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.AnakReq
 import kotlinx.android.synthetic.main.layout_anak.view.*
@@ -22,7 +23,7 @@ class AnakAdapter(
         val spJK = itemView.spinner_jk_anak
         val etTmptLhr = itemView.edt_tmpt_ttl_anak
         val etTglLhr = itemView.edt_tgl_ttl_anak
-        val etPekerjaan = itemView.edt_pekerjaan_anak
+        val etPekerjaan: TextInputEditText = itemView.edt_pekerjaan_anak
         val etOrganisasi = itemView.edt_organisasi_anak
         val etKet = itemView.edt_ket_anak
         val btnDelete = itemView.btn_delete_anak
@@ -37,7 +38,7 @@ class AnakAdapter(
                 val itemIkatan = listOf("Kandung", "Tiri", "Angkat")
                 val adapterIkatan = ArrayAdapter(context, R.layout.item_spinner, itemIkatan)
                 spJenis.setAdapter(adapterIkatan)
-                spJenis.setOnItemClickListener { parent, view, position, id ->
+                spJenis.setOnItemClickListener { _, _, position, _ ->
                     if (position == 0) {
                         anakReq.status_ikatan = "kandung"
                     } else if (position == 1) {
@@ -177,7 +178,7 @@ class AnakAdapter(
                 val item = listOf("Laki-Laki", "Perempuan")
                 val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
                 spJK.setAdapter(adapter)
-                spJK.setOnItemClickListener { parent, view, position, id ->
+                spJK.setOnItemClickListener { _, _, position, _ ->
                     when (position) {
                         0 -> anakReq.jenis_kelamin = "laki_laki"
                         1 -> anakReq.jenis_kelamin = "perempuan"
@@ -221,7 +222,7 @@ class AnakAdapter(
         val itemIkatan = listOf("Kandung", "Tiri", "Angkat")
         val adapterIkatan = ArrayAdapter(context, R.layout.item_spinner, itemIkatan)
         holder.spJenis.setAdapter(adapterIkatan)
-        holder.spJenis.setOnItemClickListener { parent, view, position, id ->
+        holder.spJenis.setOnItemClickListener { _, _, position, _ ->
             if (position == 0) {
                 data.status_ikatan = "kandung"
             } else if (position == 1) {
@@ -234,7 +235,7 @@ class AnakAdapter(
         val item = listOf("Laki-Laki", "Perempuan")
         val adapter = ArrayAdapter(context, R.layout.item_spinner, item)
         holder.spJK.setAdapter(adapter)
-        holder.spJK.setOnItemClickListener { parent, view, position, id ->
+        holder.spJK.setOnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> data.jenis_kelamin = "laki_laki"
                 1 -> data.jenis_kelamin = "perempuan"
