@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LpOnSkhd
@@ -20,6 +19,7 @@ import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_choose_lhp.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -68,9 +68,7 @@ class ChooseLhpActivity : BaseActivity() {
                             rl_pb.gone()
                             rl_no_data.visible()
                             rv_choose_lhp.gone()
-                            Toast.makeText(
-                                this@ChooseLhpActivity, R.string.error, Toast.LENGTH_SHORT
-                            ).show()
+                           toast(R.string.error)
                         }
                     }
 
@@ -78,8 +76,7 @@ class ChooseLhpActivity : BaseActivity() {
                         rl_pb.gone()
                         rl_no_data.visible()
                         rv_choose_lhp.gone()
-                        Toast.makeText(this@ChooseLhpActivity, "$t", Toast.LENGTH_SHORT)
-                            .show()
+                        toast("$t")
                     }
                 })
     }

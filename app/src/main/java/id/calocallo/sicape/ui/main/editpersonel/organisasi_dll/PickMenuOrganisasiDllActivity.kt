@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.response.OrganisasiResp
 import id.calocallo.sicape.network.response.PenghargaanResp
@@ -15,6 +14,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_pick_menu_organisasi_dll.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -107,11 +107,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                     override fun onFailure(call: Call<ArrayList<OrganisasiResp>>, t: Throwable) {
                         rl_pb.gone()
                         rl_no_data.visible()
-                        Toast.makeText(
-                            this@PickMenuOrganisasiDllActivity,
-                            "Error Koneksi",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toast("$t")
                     }
 
                     override fun onResponse(
@@ -130,11 +126,8 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                             }
                         } else {
                             rl_no_data.visible()
-                            Toast.makeText(
-                                this@PickMenuOrganisasiDllActivity,
-                                "Error",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast(R.string.error)
+
                         }
                     }
                 })
@@ -148,11 +141,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                     override fun onFailure(call: Call<ArrayList<PerjuanganResp>>, t: Throwable) {
                         rl_pb.gone()
                         rl_no_data.visible()
-                        Toast.makeText(
-                            this@PickMenuOrganisasiDllActivity,
-                            "Error Koneksi",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toast("$t")
                     }
 
                     override fun onResponse(
@@ -171,11 +160,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                             }
                         } else {
                             rl_no_data.visible()
-                            Toast.makeText(
-                                this@PickMenuOrganisasiDllActivity,
-                                "Error",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast(R.string.error)
                         }
                     }
                 })
@@ -189,11 +174,8 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                     override fun onFailure(call: Call<ArrayList<PenghargaanResp>>, t: Throwable) {
                         rl_pb.gone()
                         rl_no_data.visible()
-                        Toast.makeText(
-                            this@PickMenuOrganisasiDllActivity,
-                            "Error Koneksi",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toast("$t")
+
                     }
 
                     override fun onResponse(
@@ -212,11 +194,7 @@ class PickMenuOrganisasiDllActivity : BaseActivity() {
                             }
                         } else {
                             rl_no_data.visible()
-                            Toast.makeText(
-                                this@PickMenuOrganisasiDllActivity,
-                                "Error",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast(R.string.error)
                         }
                     }
                 })

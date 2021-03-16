@@ -370,7 +370,8 @@ class EditPersonelActivity : BaseActivity() {
             AddPersonelActivity.REQ_POLSEK -> {
                 if (resultCode == AddPersonelActivity.RES_POLSEK) {
                     val polsek = data?.extras
-                    val dataPolsek = polsek?.getParcelable<SatKerResp>(SatPolsekActivity.UNIT_POLSEK)
+                    val dataPolsek =
+                        polsek?.getParcelable<SatKerResp>(SatPolsekActivity.UNIT_POLSEK)
                     txt_sat_polsek_edit.visible()
                     txt_sat_polsek_edit.text = "Satuan Kerja : ${dataPolsek?.kesatuan}"
                     jenisKesatuan = "polsek"
@@ -388,7 +389,7 @@ class EditPersonelActivity : BaseActivity() {
             "Bearer ${sessionManager1.fetchAuthToken()}"
         ).enqueue(object : Callback<ArrayList<SatKerResp>> {
             override fun onFailure(call: Call<ArrayList<SatKerResp>>, t: Throwable) {
-                Toast.makeText(this@EditPersonelActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                Toast.makeText(this@EditPersonelActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -485,7 +486,7 @@ class EditPersonelActivity : BaseActivity() {
                 addPersonelReq
             ).enqueue(object : Callback<Base1Resp<PersonelModelMax1>> {
                 override fun onFailure(call: Call<Base1Resp<PersonelModelMax1>>, t: Throwable) {
-                    Toast.makeText(this@EditPersonelActivity, "Gagal Update", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditPersonelActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                     btn_save_personel_edit.hideDrawable(R.string.save)
 
@@ -507,12 +508,19 @@ class EditPersonelActivity : BaseActivity() {
                             }, 500)
 
                         } else {
+                            Toast.makeText(
+                                this@EditPersonelActivity, "${response.body()?.message}",Toast.LENGTH_SHORT
+                            )
+                                .show()
                             Handler(Looper.getMainLooper()).postDelayed({
                                 btn_save_personel_edit.hideDrawable(R.string.save)
                             }, 3000)
                             btn_save_personel_edit.hideDrawable(R.string.not_update)
                         }
                     } else {
+                        Toast.makeText(
+                            this@EditPersonelActivity, "${response.body()?.message}",Toast.LENGTH_SHORT
+                        )
                         Handler(Looper.getMainLooper()).postDelayed({
                             btn_save_personel_edit.hideDrawable(R.string.save)
                         }, 3000)

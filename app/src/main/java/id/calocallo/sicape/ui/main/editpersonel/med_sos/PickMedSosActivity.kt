@@ -69,7 +69,7 @@ class PickMedSosActivity : BaseActivity() {
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<MedSosResp>> {
             override fun onFailure(call: Call<ArrayList<MedSosResp>>, t: Throwable) {
-                Toast.makeText(this@PickMedSosActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PickMedSosActivity,"$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(

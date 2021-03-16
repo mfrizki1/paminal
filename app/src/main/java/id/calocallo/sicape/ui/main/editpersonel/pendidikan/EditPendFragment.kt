@@ -103,20 +103,23 @@ class EditPendFragment : Fragment() {
             pendidikan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
                     if (response.body()?.message == "Data riwayat pendidikan personel removed succesfully") {
-                        Toast.makeText(activity, "Berhasil Hapus", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, R.string.data_deleted, Toast.LENGTH_SHORT).show()
 //                        activity?.finish()
                         fragmentManager?.popBackStack()
                     } else {
-                        Toast.makeText(activity, "Gagal Hapus", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "${response.body()?.message}", Toast.LENGTH_SHORT)
+                            .show()
+
                     }
                 } else {
-                    Toast.makeText(activity, "Gagal Hapus", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "${response.body()?.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })

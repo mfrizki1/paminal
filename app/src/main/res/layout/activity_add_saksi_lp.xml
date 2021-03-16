@@ -43,10 +43,10 @@
         <LinearLayout
             android:id="@+id/ll_personel_saksi_lp"
             android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_choose_personel_saksi_lp_add"
@@ -129,11 +129,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone">
+
             <TextView
+                style="@style/TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TitleText"
-                android:text="Sipil"/>
+                android:text="Sipil" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -220,29 +221,39 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_is_korban_add"
-            style="@style/TitleText"
+        <LinearLayout
+            android:id="@+id/ll_saksi_korban_saksi_add"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
-            android:text="Apakah Saksi Korban ?" />
+            android:orientation="vertical">
 
-        <RadioGroup
-            android:id="@+id/rg_status_saksi_lp_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/space_12dp">
-
-            <RadioButton
+            <TextView
+                android:id="@+id/text_is_korban_add"
+                style="@style/TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Korban" />
+                android:text="Apakah Saksi Korban ?" />
 
-            <RadioButton
+            <RadioGroup
+                android:id="@+id/rg_status_saksi_lp_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tidak" />
-        </RadioGroup>
+                android:paddingHorizontal="@dimen/space_12dp">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Korban" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tidak" />
+            </RadioGroup>
+
+        </LinearLayout>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_add_saksi"

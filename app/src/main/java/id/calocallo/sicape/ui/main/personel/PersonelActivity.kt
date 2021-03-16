@@ -16,6 +16,8 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.addpersonal.relasi.AddRelasiActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_personel.*
 import kotlinx.android.synthetic.main.item_personel.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -49,85 +51,43 @@ class PersonelActivity : BaseActivity() {
         val isPolda = intent.extras?.getParcelable<SatKerResp>(IS_POLDA)
         val isPolres = intent.extras?.getParcelable<SatKerResp>(IS_POLRES)
         val isPolsek = intent.extras?.getParcelable<SatKerResp>(IS_POLSEK)
-//        Log.e("isPolda", "$isPolda")
-//        Log.e("isPOlres", "$isPolres")
-//        Log.e("isPolsek", "$isPolsek")
+        val fromAddPersonel = intent.extras?.getParcelable<SatKerResp>(AddRelasiActivity.ID_SATKER)
         when {
             isPolda != null -> {
                 Log.e("isPolda", "$isPolda")
+                supportActionBar?.title = "Personel ${isPolda.kesatuan}"
                 apiPersonelBySatker(isPolda)
             }
             isPolres != null -> {
                 Log.e("isPOlres", "$isPolres")
+                supportActionBar?.title = "Personel ${isPolres.kesatuan}"
                 apiPersonelBySatker(isPolres)
             }
             isPolsek != null -> {
                 Log.e("isPolsek", "$isPolsek")
+                supportActionBar?.title = "Personel ${isPolsek.kesatuan}"
                 apiPersonelBySatker(isPolsek)
+            }
+            fromAddPersonel != null -> {
+                supportActionBar?.title = "Personel ${fromAddPersonel.kesatuan}"
+                apiPersonelBySatker(fromAddPersonel)
+
             }
 //            else -> initAPI()
 
         }
-
-
-        //set adapter
-//        adapter = ReusableAdapter(this)
-
-
-        //create adapter callback
-        /*
-        adapterCallback = object : AdapterCallback<PersonelModel> {
-            override fun initComponent(itemView: View, data: PersonelModel, itemIndex: Int) {
-                when (data.id_satuan_kerja) {
-                    1 -> itemView.txt_personel_kesatuan.text = "POLRESTA BANJARMASIN"
-                    2 -> itemView.txt_personel_kesatuan.text = "POLRES BANJARBARU"
-                    3 -> itemView.txt_personel_kesatuan.text = "POLRES BANJAR"
-                    4 -> itemView.txt_personel_kesatuan.text = "POLRES TAPIN"
-                    5 -> itemView.txt_personel_kesatuan.text = "POLRES HULU SUNGAI SELATAN"
-                    6 -> itemView.txt_personel_kesatuan.text = "POLRES HULU SUNGAI TENGAH"
-                    7 -> itemView.txt_personel_kesatuan.text = "POLRES HULU SUNGAI UTARA"
-                    8 -> itemView.txt_personel_kesatuan.text = "POLRES BALANGAN"
-                    9 -> itemView.txt_personel_kesatuan.text = "POLRES TABALONG"
-                    10 -> itemView.txt_personel_kesatuan.text = "POLRES TANAH LAUT"
-                    11 -> itemView.txt_personel_kesatuan.text = "POLRES TANAH BUMBU"
-                    12 -> itemView.txt_personel_kesatuan.text = "POLRES KOTABARU"
-                    13 -> itemView.txt_personel_kesatuan.text = "POLRES BATOLA"
-                    14 -> itemView.txt_personel_kesatuan.text = "SAT BRIMOB"
-                    15 -> itemView.txt_personel_kesatuan.text = "SAT POLAIR"
-                    16 -> itemView.txt_personel_kesatuan.text = "SPN BANJARBARU"
-                    17 -> itemView.txt_personel_kesatuan.text = "POLDA KALSEL"
-                    18 -> itemView.txt_personel_kesatuan.text = "SARPRAS"
-                }
-                itemView.txt_personel_nama.text = data.nama
-                itemView.txt_personel_nrp.text = data.nrp
-                itemView.txt_personel_pangkat.text = data.pangkat
-                itemView.txt_personel_jabatan.text = data.jabatan
-            }
-
-            override fun onItemClicked(itemView: View, data: PersonelModel, itemIndex: Int) {
-//                Log.e("klik", data.nama.toString())
-                val bundle = Bundle()
-                val intent = Intent(this@PersonelActivity, DetailPersonelActivity::class.java)
-                bundle.putParcelable("PERSONEL", data)
-                intent.putExtras(bundle)
-                startActivity(intent)
-            }
-
-        }
-         */
-
-
         btn_personel_add.setOnClickListener {
             startActivity(Intent(this, AddPersonelActivity::class.java))
         }
     }
 
-    private fun apiPersonelBySatker(satker: SatKerResp) {
+    private fun apiPersonelBySatker(satker: SatKerResp?) {
         rl_pb.visible()
         NetworkConfig().getServPers().showPersonelBySatker(
-            "Bearer ${sessionManager1.fetchAuthToken()}", satker.id.toString()
+            "Bearer ${sessionManager1.fetchAuthToken()}", satker?.id.toString()
         ).enqueue(object : Callback<ArrayList<PersonelMinResp>> {
             override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {
+               toast("$t")
                 rl_no_data.visible()
                 rl_pb.gone()
                 rv_personel.gone()
@@ -147,6 +107,7 @@ class PersonelActivity : BaseActivity() {
                         listPersonelBySatker(response.body())
                     }
                 } else {
+                    toast(R.string.error)
                     rl_no_data.visible()
                     rl_pb.gone()
                     rv_personel.gone()
@@ -253,19 +214,27 @@ class PersonelActivity : BaseActivity() {
         val isPolda = intent.extras?.getParcelable<SatKerResp>(IS_POLDA)
         val isPolres = intent.extras?.getParcelable<SatKerResp>(IS_POLRES)
         val isPolsek = intent.extras?.getParcelable<SatKerResp>(IS_POLSEK)
-
+        val fromAddPersonel = intent.extras?.getParcelable<SatKerResp>(AddRelasiActivity.ID_SATKER)
         when {
             isPolda != null -> {
                 Log.e("isPolda", "$isPolda")
+                supportActionBar?.title = "Personel ${isPolda.kesatuan}"
                 apiPersonelBySatker(isPolda)
             }
             isPolres != null -> {
                 Log.e("isPOlres", "$isPolres")
+                supportActionBar?.title = "Personel ${isPolres.kesatuan}"
+                apiPersonelBySatker(isPolres)
             }
             isPolsek != null -> {
                 Log.e("isPolsek", "$isPolsek")
+                supportActionBar?.title = "Personel ${isPolsek.kesatuan}"
+                apiPersonelBySatker(isPolsek)
             }
-//            else -> initAPI()
+            fromAddPersonel != null -> {
+                supportActionBar?.title = "Personel ${fromAddPersonel.kesatuan}"
+                apiPersonelBySatker(fromAddPersonel)
+            }
 
         }
 

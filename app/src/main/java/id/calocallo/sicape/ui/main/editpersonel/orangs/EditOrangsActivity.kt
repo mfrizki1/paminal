@@ -82,7 +82,7 @@ class EditOrangsActivity : BaseActivity() {
 //        spinner_orangs.setText(currMenu)
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinner_orangs_edit.setAdapter(adapter)
-        spinner_orangs_edit.setOnItemClickListener { parent, view, position, id ->
+        spinner_orangs_edit.setOnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> menu = "berjasa"
                 1 -> menu = "disegani"
@@ -105,7 +105,7 @@ class EditOrangsActivity : BaseActivity() {
             "Bearer ${sessionManager1.fetchAuthToken()}", menu.toString(), orangs?.id.toString()
         ).enqueue(object : Callback<OrangsResp> {
             override fun onFailure(call: Call<OrangsResp>, t: Throwable) {
-                Toast.makeText(this@EditOrangsActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditOrangsActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<OrangsResp>, response: Response<OrangsResp>) {
@@ -162,7 +162,7 @@ class EditOrangsActivity : BaseActivity() {
             orangsReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditOrangsActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditOrangsActivity, "$t", Toast.LENGTH_SHORT).show()
                 btn_save_orangs_edit.hideDrawable(R.string.save)
             }
 
@@ -175,12 +175,16 @@ class EditOrangsActivity : BaseActivity() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 500)
-//                    Toast.makeText(this@EditOrangsActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_orangs_edit.hideDrawable(R.string.save)
                     }, 3000)
                     btn_save_orangs_edit.hideDrawable(R.string.not_update)
+                    Toast.makeText(
+                        this@EditOrangsActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
@@ -200,12 +204,14 @@ class EditOrangsActivity : BaseActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@EditOrangsActivity,
-                        "Berhasil Hapus Data",
+                        R.string.data_deleted,
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
                 } else {
-                    Toast.makeText(this@EditOrangsActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditOrangsActivity, "${response.body()?.message}", Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 

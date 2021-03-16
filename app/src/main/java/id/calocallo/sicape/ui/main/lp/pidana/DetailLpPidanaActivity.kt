@@ -141,7 +141,7 @@ class DetailLpPidanaActivity : BaseActivity() {
         Log.e("urlDok", "${dok?.dokumen?.url}")
         Handler(Looper.getMainLooper()).postDelayed({
             btn_generate_pidana.hideProgress(R.string.success_generate_doc)
-            alert("Lihat Dokumen") {
+            alert(R.string.download) {
                 positiveButton(R.string.iya) {
                     downloadDok(dok)
 
@@ -418,7 +418,7 @@ class DetailLpPidanaActivity : BaseActivity() {
                     } else {
                         Toast.makeText(
                             this@DetailLpPidanaActivity,
-                            R.string.error_conn,
+                            "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

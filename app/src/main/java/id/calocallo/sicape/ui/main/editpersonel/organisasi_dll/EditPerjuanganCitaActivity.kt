@@ -18,6 +18,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_edit_perjuangan_cita.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -68,17 +69,16 @@ class EditPerjuanganCitaActivity : BaseActivity() {
     private fun getDetailPerjuangan(perjuangan: PerjuanganResp?) {
         NetworkConfig().getServPers().getDetailPerjuangan(
             "Bearer ${sessionManager1.fetchAuthToken()}", perjuangan?.id.toString()
-        ).enqueue(object :Callback<DetailPerjuanganResp>{
+        ).enqueue(object : Callback<DetailPerjuanganResp> {
             override fun onFailure(call: Call<DetailPerjuanganResp>, t: Throwable) {
-                Toast.makeText(this@EditPerjuanganCitaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                    .show()
+                toast("$t")
             }
 
             override fun onResponse(
                 call: Call<DetailPerjuanganResp>,
                 response: Response<DetailPerjuanganResp>
             ) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     val data = response.body()
                     edt_peristiwa_edit.setText(data?.peristiwa)
                     edt_tempat_peristiwa_edit.setText(data?.lokasi)
@@ -86,8 +86,8 @@ class EditPerjuanganCitaActivity : BaseActivity() {
                     edt_thn_akhir_perjuangan_edit.setText(data?.tahun_akhir)
                     edt_rangka_perjuangan_edit.setText(data?.dalam_rangka)
                     edt_ket_perjuangan_edit.setText(data?.keterangan)
-                }else{
-                    Toast.makeText(this@EditPerjuanganCitaActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                } else {
+                    toast(R.string.error_conn)
                 }
             }
         })
@@ -118,8 +118,7 @@ class EditPerjuanganCitaActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_perjuangan_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditPerjuanganCitaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                    .show()
+                toast("$t")
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
@@ -128,7 +127,6 @@ class EditPerjuanganCitaActivity : BaseActivity() {
                         buttonTextRes = R.string.data_updated
                         textMarginRes = R.dimen.space_10dp
                     }
-//                    Toast.makeText(this@EditPerjuanganCitaActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 500)
@@ -149,22 +147,16 @@ class EditPerjuanganCitaActivity : BaseActivity() {
             perjuangan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditPerjuanganCitaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                    .show()
+                toast("$t")
 
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@EditPerjuanganCitaActivity,
-                        "Berhasil Hapus Data Perjuangan Cita-Cita",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toast(R.string.data_deleted)
                     finish()
                 } else {
-                    Toast.makeText(this@EditPerjuanganCitaActivity, "Error", Toast.LENGTH_SHORT)
-                        .show()
+                    toast("${response.body()?.message}")
                 }
             }
         })

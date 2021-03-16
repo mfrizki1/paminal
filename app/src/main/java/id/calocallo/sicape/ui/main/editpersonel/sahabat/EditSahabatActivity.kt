@@ -80,7 +80,7 @@ class EditSahabatActivity : BaseActivity() {
             .getDetailSahabat("Bearer ${sessionManager1.fetchAuthToken()}", sahabat?.id.toString())
             .enqueue(object : Callback<SahabatResp> {
                 override fun onFailure(call: Call<SahabatResp>, t: Throwable) {
-                    Toast.makeText(this@EditSahabatActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditSahabatActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -139,7 +139,7 @@ class EditSahabatActivity : BaseActivity() {
             sahabatReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditSahabatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditSahabatActivity, "$t", Toast.LENGTH_SHORT).show()
                 btn_save_sahabat_edit.hideDrawable(R.string.save)
             }
 
@@ -154,6 +154,12 @@ class EditSahabatActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
+                    Toast.makeText(
+                        this@EditSahabatActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_sahabat_edit.hideDrawable(R.string.save)
                     }, 3000)
@@ -169,19 +175,23 @@ class EditSahabatActivity : BaseActivity() {
             sahabat?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditSahabatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditSahabatActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@EditSahabatActivity,
-                        "Berhasil Hapus Data Sahabat",
+                        R.string.data_deleted,
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
                 } else {
-                    Toast.makeText(this@EditSahabatActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditSahabatActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

@@ -109,6 +109,12 @@ class EditSkhpActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getViewSkhpEdit(detailSkhp: SkhpResp?) {
+        var listKotaSkhp = listOf("Banjarmasin", "Banjarbaru")
+        val adapterKota = ArrayAdapter(this, R.layout.item_spinner, listKotaSkhp)
+        edt_kota_keluar_skhp_edit.setAdapter(adapterKota)
+        edt_kota_keluar_skhp_edit.setOnItemClickListener { parent, view, position, id ->
+            kotaSkhp = parent.getItemAtPosition(position).toString()
+        }
         txt_nama_personel_skhp_edit.text = "Nama : ${detailSkhp?.personel?.nama}"
         txt_pangkat_personel_skhp_edit.text =
             "Pangkat ${detailSkhp?.personel?.pangkat.toString().toUpperCase()}: "
@@ -137,21 +143,6 @@ class EditSkhpActivity : BaseActivity() {
         edt_kota_penerima_skhp_edit.setText(detailSkhp?.kota_penerima)
         idPersonel = detailSkhp?.personel?.id
 
-        /*   skhpReq.no_skhp = edt_no_skhp_edit.text.toString()
-           skhpReq.hasil_keputusan = edt_isi_skhp_edit.text.toString()
-//            skhpReq.kota_keluar = edt_kota_keluar_skhp_edit.text.toString()
-           skhpReq.kota_keluar = kotaSkhp
-           skhpReq.tanggal_keluar = edt_tanggal_keluar_skhp_edit.text.toString()
-           skhpReq.nama_yang_mengeluarkan = edt_nama_pimpinan_skhp_edit.text.toString()
-           skhpReq.pangkat_yang_mengeluarkan =
-               edt_pangkat_pimpinan_skhp_edit.text.toString().toUpperCase()
-           skhpReq.nrp_yang_mengeluarkan = edt_nrp_pimpinan_skhp_edit.text.toString()
-           skhpReq.jabatan_yang_mengeluarkan = edt_jabatan_pimpinan_skhp_edit.text.toString()
-           skhpReq.kepada = edt_kepada_skhp_edit.text.toString()
-           skhpReq.is_memiliki_pelanggaran_pidana = isPidana
-           skhpReq.is_memiliki_pelanggaran_kode_etik = isKke
-           skhpReq.is_memiliki_pelanggaran_disiplin = isDisiplin
-           skhpReq.is_status_selesai = tempSttsCatPelanggaran*/
         isSyarat = detailSkhp?.is_memenuhi_syarat
         kotaSkhp = detailSkhp?.kota_keluar
         edt_no_skhp_edit.setText(detailSkhp?.no_skhp)

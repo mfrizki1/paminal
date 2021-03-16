@@ -73,12 +73,12 @@ class AddSingleRelasiActivity : BaseActivity() {
             relasiReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@AddSingleRelasiActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddSingleRelasiActivity, "$t", Toast.LENGTH_SHORT).show()
                 btn_save_single_relasi.hideDrawable(R.string.save)
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     btn_save_single_relasi.showDrawable(animatedDrawable) {
                         buttonTextRes = R.string.data_saved
                         textMarginRes = R.dimen.space_10dp
@@ -86,10 +86,15 @@ class AddSingleRelasiActivity : BaseActivity() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 500)
-                }else{
+                } else {
+                    Toast.makeText(
+                        this@AddSingleRelasiActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_single_relasi.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_single_relasi.hideDrawable(R.string.not_save)
                 }
             }

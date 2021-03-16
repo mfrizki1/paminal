@@ -62,7 +62,7 @@ class AddSingleMedInfoActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_single_med_info.hideDrawable(R.string.save)
-                Toast.makeText(this@AddSingleMedInfoActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                Toast.makeText(this@AddSingleMedInfoActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -72,15 +72,20 @@ class AddSingleMedInfoActivity : BaseActivity() {
                         buttonTextRes = R.string.data_saved
                         textMarginRes = R.dimen.space_10dp
                     }
-//                    Toast.makeText(this@AddSingleMedInfoActivity, R.string.data_saved, Toast.LENGTH_SHORT).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 500)
                 } else {
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_single_med_info.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_single_med_info.hideDrawable(R.string.not_save)
+                    Toast.makeText(
+                        this@AddSingleMedInfoActivity,
+                       "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
             }
         })

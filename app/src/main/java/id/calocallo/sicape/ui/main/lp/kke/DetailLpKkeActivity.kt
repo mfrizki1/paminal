@@ -141,7 +141,7 @@ class DetailLpKkeActivity : BaseActivity() {
     private fun saveDocLpKke(lp: LpResp?) {
         Handler(Looper.getMainLooper()).postDelayed({
             btn_generate_kke.hideProgress(R.string.success_generate_doc)
-            alert("Lihat Dokumen") {
+            alert(R.string.download) {
                 positiveButton(R.string.iya) {
                     downloadLpKke(lp)
                 }
@@ -391,7 +391,7 @@ class DetailLpKkeActivity : BaseActivity() {
                     } else {
                         Toast.makeText(
                             this@DetailLpKkeActivity,
-                            R.string.error_conn,
+                          "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

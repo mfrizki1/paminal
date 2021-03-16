@@ -57,7 +57,7 @@ class EditFotoActivity : BaseActivity() {
 
         val detailPersonel = intent.extras?.getParcelable<AllPersonelModel1>("PERSONEL_DETAIL")
         setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title ="Edit Foto ${detailPersonel?.nama.toString()}"
+        supportActionBar?.title = "Edit Foto ${detailPersonel?.nama.toString()}"
 
         btn_edit_foto_depan_edit.setOnClickListener {
             picker(DEPAN)
@@ -112,7 +112,7 @@ class EditFotoActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_foto_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditFotoActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                Toast.makeText(this@EditFotoActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -123,6 +123,11 @@ class EditFotoActivity : BaseActivity() {
                         textMarginRes = R.dimen.space_10dp
                     }
                 } else {
+                    Toast.makeText(
+                        this@EditFotoActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_foto_edit.hideDrawable(R.string.save)
                     }, 3000)
@@ -375,16 +380,16 @@ class EditFotoActivity : BaseActivity() {
                 response: Response<Base1Resp<ArrayList<AllPersonelModel1>>>
             ) {
                 if (response.isSuccessful) {
-                    if(response.body()?.message == "Data foto personel updated succesfully") {
+                    if (response.body()?.message == "Data foto personel updated succesfully") {
                         setImg(jenis, response.body())
                     }
-                   /* pb_foto_depan_edit.gone()
-                    img_foto_depan_null.gone()
-                    img_foto_depan_edit.visible()
-                    Log.e("depan", "${response.body()?.data?.foto}")
-//                                img_foto_depan_edit.setLocalImage(file, false)
-                    mDepanUrl = response.body()?.data?.foto?.foto_muka?.url
-                    mDepanUrl?.let { img_foto_depan_edit.setFromUrl(it, false) }*/
+                    /* pb_foto_depan_edit.gone()
+                     img_foto_depan_null.gone()
+                     img_foto_depan_edit.visible()
+                     Log.e("depan", "${response.body()?.data?.foto}")
+ //                                img_foto_depan_edit.setLocalImage(file, false)
+                     mDepanUrl = response.body()?.data?.foto?.foto_muka?.url
+                     mDepanUrl?.let { img_foto_depan_edit.setFromUrl(it, false) }*/
 //                                idDepan = response.body()?.data?.get(0)?.id
                 } else {
                     Toast.makeText(
@@ -403,8 +408,8 @@ class EditFotoActivity : BaseActivity() {
         jenis: String,
         body: Base1Resp<ArrayList<AllPersonelModel1>>?
     ) {
-        when (jenis){
-            "foto_muka"->{
+        when (jenis) {
+            "foto_muka" -> {
                 pb_foto_depan_edit.gone()
                 img_foto_depan_null.gone()
                 img_foto_depan_edit.visible()
@@ -413,7 +418,7 @@ class EditFotoActivity : BaseActivity() {
                 mDepanUrl = body?.data?.get(0)?.foto_muka?.url
                 mDepanUrl?.let { img_foto_depan_edit.setFromUrl(it, false) }
             }
-            "foto_kanan"->{
+            "foto_kanan" -> {
                 pb_foto_kanan_edit.gone()
                 img_foto_kanan_null.gone()
                 img_foto_kanan_edit.visible()
@@ -422,7 +427,7 @@ class EditFotoActivity : BaseActivity() {
                 mKananUrl = body?.data?.get(0)?.foto_kanan?.url
                 mKananUrl?.let { img_foto_kanan_edit.setFromUrl(it, false) }
             }
-            "foto_kiri"->{
+            "foto_kiri" -> {
                 pb_foto_kiri_edit.gone()
                 img_foto_kiri_null.gone()
                 img_foto_kiri_edit.visible()

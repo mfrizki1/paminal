@@ -3,6 +3,7 @@ package id.calocallo.sicape.ui.main.editpersonel.keluarga
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
@@ -52,6 +53,7 @@ class PickKeluargaActivity : BaseActivity() {
             "Bearer ${sessionManager1.fetchAuthToken()}", personel?.id.toString()
         ).enqueue(object : Callback<ArrayList<KeluargaMinResp>> {
             override fun onFailure(call: Call<ArrayList<KeluargaMinResp>>, t: Throwable) {
+                Toast.makeText(this@PickKeluargaActivity, "$t", Toast.LENGTH_SHORT).show()
                 rl_pb.gone()
                 rl_no_data.visible()
                 rv_list_keluarga.gone()

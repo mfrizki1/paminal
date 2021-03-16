@@ -268,7 +268,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
             .enqueue(object :
                 Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
-                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                    Toast.makeText(this@PickPasalActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                     btn_save_lp_all.hideDrawable(R.string.not_save)
                 }
@@ -290,17 +290,11 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             textMarginRes = R.dimen.space_10dp
                         }
                         gotoAddSaksiLp(response.body()?.data)
-                       /* Handler(Looper.getMainLooper()).postDelayed({
-                            val intent =
-                                Intent(this@PickPasalActivity, ListLpKodeEtikActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            startActivity(intent)
-                            finish()
-                        }, 500)*/
+
                     } else {
                         Toast.makeText(
                             this@PickPasalActivity,
-                            R.string.error_conn,
+                            "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         )
                             .show()
@@ -315,7 +309,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
             .addLpDisiplin("Bearer ${sessionManager1.fetchAuthToken()}", lpDisiplinReq)
             .enqueue(object : Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
-                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                    Toast.makeText(this@PickPasalActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                     btn_save_lp_all.hideDrawable(R.string.not_save)
                 }
@@ -326,18 +320,11 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 ) {
                     if (response.body()?.message == "Data lp disiplin saved succesfully") {
                         btn_save_lp_all.hideDrawable(R.string.data_saved)
-                      /*  Handler(Looper.getMainLooper()).postDelayed({
-                            val intent =
-                                Intent(this@PickPasalActivity, ListLpDisiplinActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            startActivity(intent)
-                            finish()
-                        }, 500)*/
                         gotoAddSaksiLp(response.body()?.data)
                     } else {
                         Toast.makeText(
                             this@PickPasalActivity,
-                            R.string.error_conn,
+                         "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                         btn_save_lp_all.hideDrawable(R.string.not_save)
@@ -351,7 +338,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
             .addLpPidana("Bearer ${sessionManager1.fetchAuthToken()}", lpPidanaReq)
             .enqueue(object : Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
-                    Toast.makeText(this@PickPasalActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                    Toast.makeText(this@PickPasalActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                     btn_save_lp_all.hideDrawable(R.string.not_save)
                     Log.e("t", "$t")
@@ -376,14 +363,12 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                         }
                         gotoAddSaksiLp(response.body()?.data)
 
-                     /*   Handler(Looper.getMainLooper()).postDelayed({
-                            val intent =
-                                Intent(this@PickPasalActivity, ListLpPidanaActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            startActivity(intent)
-                            finish()
-                        }, 500)*/
                     } else {
+                        Toast.makeText(
+                            this@PickPasalActivity,
+                            "${response.body()?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         btn_save_lp_all.hideDrawable(R.string.not_save)
                     }
                 }
@@ -391,7 +376,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
     }
 
     private fun gotoAddSaksiLp(data: DokLpResp?) {
-        btn_save_lp_all.showSnackbar(R.string.data_saved){
+        btn_save_lp_all.showSnackbar(R.string.data_saved) {
             action(R.string.add_data_saksi) {
                 val intent = Intent(this@PickPasalActivity, AddSaksiLpActivity::class.java).apply {
                     this.putExtra(DATA_LP, data?.lp)

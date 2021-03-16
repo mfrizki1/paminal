@@ -75,7 +75,7 @@ class PickSahabatActivity : BaseActivity() {
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<SahabatResp>> {
             override fun onFailure(call: Call<ArrayList<SahabatResp>>, t: Throwable) {
-                Toast.makeText(this@PickSahabatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PickSahabatActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(

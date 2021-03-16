@@ -59,7 +59,7 @@ class AddSingleMedSosActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_single_medsos.hideDrawable(R.string.save)
-                Toast.makeText(this@AddSingleMedSosActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddSingleMedSosActivity,"$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
@@ -77,6 +77,7 @@ class AddSingleMedSosActivity : BaseActivity() {
                         btn_save_single_medsos.hideDrawable(R.string.save)
                     },3000)
                     btn_save_single_medsos.hideDrawable(R.string.not_save)
+                    Toast.makeText(this@AddSingleMedSosActivity,"${response.body()?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         })

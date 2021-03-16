@@ -61,7 +61,7 @@ class PickSaudaraActivity : BaseActivity() {
             override fun onFailure(call: Call<ArrayList<SaudaraResp>>, t: Throwable) {
                 rl_pb.gone()
                 rl_no_data.visible()
-                Toast.makeText(this@PickSaudaraActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PickSaudaraActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(

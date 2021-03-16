@@ -90,7 +90,7 @@ class AddSinglePendFragment : Fragment() {
             singlePendReq
         ).enqueue(object : Callback<Base1Resp<AddSinglePendResp>> {
             override fun onFailure(call: Call<Base1Resp<AddSinglePendResp>>, t: Throwable) {
-                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
                 btn_save_add_pend_single.hideDrawable(R.string.save)
             }
 
@@ -109,12 +109,14 @@ class AddSinglePendFragment : Fragment() {
                         }, 500)
 //                        activity?.finish()
                     } else {
+                        Toast.makeText(activity, "${response.body()?.message}", Toast.LENGTH_SHORT).show()
                         Handler(Looper.getMainLooper()).postDelayed({
                             btn_save_add_pend_single.hideDrawable(R.string.save)
                         }, 3000)
                         btn_save_add_pend_single.hideDrawable(R.string.not_save)
                     }
                 } else {
+                    Toast.makeText(activity, "${response.body()?.message}", Toast.LENGTH_SHORT).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_add_pend_single.hideDrawable(R.string.save)
                     }, 3000)

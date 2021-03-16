@@ -123,7 +123,7 @@ class EditOrganisasiActivity : BaseActivity() {
         ).enqueue(object : Callback<Base1Resp<AddOrganisasiResp>> {
             override fun onFailure(call: Call<Base1Resp<AddOrganisasiResp>>, t: Throwable) {
                 btn_save_organisasi_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditOrganisasiActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                Toast.makeText(this@EditOrganisasiActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -136,7 +136,6 @@ class EditOrganisasiActivity : BaseActivity() {
                         buttonTextRes = R.string.data_updated
                         textMarginRes = R.dimen.space_10dp
                     }
-//                    Toast.makeText(this@EditOrganisasiActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 500)
@@ -145,6 +144,11 @@ class EditOrganisasiActivity : BaseActivity() {
                         btn_save_organisasi_edit.hideDrawable(R.string.save)
                     }, 3000)
                     btn_save_organisasi_edit.hideDrawable(R.string.not_update)
+                    Toast.makeText(
+                        this@EditOrganisasiActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 }
             }
@@ -166,12 +170,16 @@ class EditOrganisasiActivity : BaseActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@EditOrganisasiActivity,
-                        "Berhasil Hapus Data Organisasi",
+                        R.string.data_deleted,
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
                 } else {
-                    Toast.makeText(this@EditOrganisasiActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditOrganisasiActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

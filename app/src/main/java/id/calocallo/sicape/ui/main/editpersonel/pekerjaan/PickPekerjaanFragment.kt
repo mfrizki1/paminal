@@ -95,7 +95,7 @@ class PickPekerjaanFragment : Fragment() {
                 override fun onFailure(call: Call<ArrayList<PekerjaanModel>>, t: Throwable) {
                     rl_pb.gone()
                     rl_no_data.visible()
-                    Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(
@@ -127,7 +127,7 @@ class PickPekerjaanFragment : Fragment() {
                 sessionManager1.fetchID().toString()
             ).enqueue(object : Callback<ArrayList<PekerjaanLuarResp>> {
                 override fun onFailure(call: Call<ArrayList<PekerjaanLuarResp>>, t: Throwable) {
-                    Toast.makeText(activity, "Eror Koneksi", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
                     rl_pb.gone()
                     rl_no_data.visible()
                 }
@@ -149,7 +149,7 @@ class PickPekerjaanFragment : Fragment() {
                         }
                     } else {
                         rl_no_data.visible()
-                        Toast.makeText(activity, "Eror", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
                     }
                 }
             })

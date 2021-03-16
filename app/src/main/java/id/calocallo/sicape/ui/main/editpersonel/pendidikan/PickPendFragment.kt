@@ -78,7 +78,7 @@ class PickPendFragment : Fragment() {
             override fun onFailure(call: Call<ArrayList<PendidikanModel>>, t: Throwable) {
                 rl_pb.gone()
                 rl_no_data.visible()
-                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(

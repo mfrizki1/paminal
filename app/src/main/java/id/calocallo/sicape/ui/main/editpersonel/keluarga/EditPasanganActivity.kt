@@ -68,7 +68,7 @@ class EditPasanganActivity : BaseActivity() {
             "Bearer ${sessionManager1.fetchAuthToken()}", pasangan?.id.toString()
         ).enqueue(object : Callback<PasanganResp> {
             override fun onFailure(call: Call<PasanganResp>, t: Throwable) {
-                Toast.makeText(this@EditPasanganActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                Toast.makeText(this@EditPasanganActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -204,6 +204,7 @@ class EditPasanganActivity : BaseActivity() {
             pasangan?.id.toString(), pasanganReq
         ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {
             override fun onFailure(call: Call<Base1Resp<AddPersonelResp>>, t: Throwable) {
+                Toast.makeText(this@EditPasanganActivity, "$t", Toast.LENGTH_SHORT).show()
                 btn_save_pasangan_edit.hideDrawable(R.string.not_update)
             }
 
@@ -218,24 +219,15 @@ class EditPasanganActivity : BaseActivity() {
                     }, 500)
                 } else {
                     btn_save_pasangan_edit.hideDrawable(R.string.not_update)
+                    Toast.makeText(
+                        this@EditPasanganActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 }
             }
         })
-//        Netw
-        /* Handler(Looper.getMainLooper()).postDelayed({
-             finish()
-         }, 500)
-
-         //no Inet
-         btn_save_pasangan_edit.hideDrawable(R.string.save)
-
-         //error
-         Handler(Looper.getMainLooper()).postDelayed({
-             btn_save_pasangan_edit.hideDrawable(R.string.save)
-         }, 3000)
-         btn_save_pasangan_edit.hideDrawable(R.string.not_update)*/
-
     }
 
     private fun doDeletePasangan(pasangan: PasanganMinResp?) {
@@ -258,8 +250,10 @@ class EditPasanganActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
-                    Toast.makeText(this@EditPasanganActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        this@EditPasanganActivity, "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

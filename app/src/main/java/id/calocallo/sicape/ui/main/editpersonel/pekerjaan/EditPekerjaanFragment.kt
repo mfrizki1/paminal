@@ -21,6 +21,7 @@ import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.fragment_edit_pekerjaan.*
 import kotlinx.android.synthetic.main.fragment_edit_pekerjaan.view.*
 import retrofit2.Call
@@ -75,7 +76,7 @@ class EditPekerjaanFragment : Fragment() {
             pekerjaan?.id.toString()
         ).enqueue(object :Callback<PekerjaanModel>{
             override fun onFailure(call: Call<PekerjaanModel>, t: Throwable) {
-                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                activity?.toast("$t")
             }
 
             override fun onResponse(
@@ -90,7 +91,7 @@ class EditPekerjaanFragment : Fragment() {
                    edt_kesatuan_pekerjaan_edit.setText(data?.instansi.toString().toUpperCase())
                    edt_ket_pekerjaan_edit.setText(data?.keterangan)
                }else{
-                   Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                   activity?.toast(R.string.error)
                }
             }
         })
@@ -120,7 +121,7 @@ class EditPekerjaanFragment : Fragment() {
             singlePekerjaanReq
         ).enqueue(object : Callback<Base1Resp<AddPekerjaanResp>> {
             override fun onFailure(call: Call<Base1Resp<AddPekerjaanResp>>, t: Throwable) {
-                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                activity?.toast("$t")
                 btn_save_edit_pekerjaan.hideDrawable(R.string.save)
             }
 
@@ -135,6 +136,7 @@ class EditPekerjaanFragment : Fragment() {
                         fragmentManager?.popBackStack()
                     }, 500)
                 } else {
+                    activity?.toast("${response.body()?.message}")
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_edit_pekerjaan.hideDrawable(R.string.save)
                     }, 3000)
@@ -155,11 +157,11 @@ class EditPekerjaanFragment : Fragment() {
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(activity, "Berhasil Hapus", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.data_deleted, Toast.LENGTH_SHORT).show()
 //                    activity?.finish()
                     fragmentManager?.popBackStack()
                 } else {
-                    Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                    activity?.toast("${response.body()?.message}")
                 }
             }
         })

@@ -61,22 +61,6 @@ class PickAnakActivity : BaseActivity() {
     }
 
     private fun doFilterStatusAnak() {
-        /*
-        val listFilterAnak = list?.filter { it.status_ikatan == name }
-//        tempList = listFilterAnak
-        if (listFilterAnak != null) {
-            if (listFilterAnak.isEmpty()) {
-                rv_status_anak.gone()
-                rl_no_data.visible()
-            } else {
-                rv_status_anak.visible()
-                rl_no_data.gone()
-            }
-        } else {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-        }
-
-         */
         rl_pb.visible()
         NetworkConfig().getServPers().showAnak(
             "Bearer ${sessionManager1.fetchAuthToken()}",
@@ -85,7 +69,7 @@ class PickAnakActivity : BaseActivity() {
             override fun onFailure(call: Call<ArrayList<AnakResp>>, t: Throwable) {
                 rl_pb.gone()
                 rl_no_data.visible()
-                Toast.makeText(this@PickAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PickAnakActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(

@@ -66,7 +66,7 @@ class EditMedSosActivity : BaseActivity() {
             .getDetailMedSos("Bearer ${sessionManager1.fetchAuthToken()}", medsos?.id.toString())
             .enqueue(object : Callback<MedSosResp> {
                 override fun onFailure(call: Call<MedSosResp>, t: Throwable) {
-                    Toast.makeText(this@EditMedSosActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditMedSosActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -108,7 +108,7 @@ class EditMedSosActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_medsos_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditMedSosActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                Toast.makeText(this@EditMedSosActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -127,6 +127,11 @@ class EditMedSosActivity : BaseActivity() {
                         btn_save_medsos_edit.hideDrawable(R.string.save)
                     }, 3000)
                     btn_save_medsos_edit.hideDrawable(R.string.not_update)
+                    Toast.makeText(
+                        this@EditMedSosActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -155,8 +160,10 @@ class EditMedSosActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
-                    Toast.makeText(this@EditMedSosActivity, R.string.error, Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        this@EditMedSosActivity, "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 

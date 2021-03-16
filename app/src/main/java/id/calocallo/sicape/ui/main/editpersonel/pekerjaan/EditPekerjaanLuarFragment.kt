@@ -72,29 +72,31 @@ class EditPekerjaanLuarFragment : Fragment() {
     }
 
     private fun apiDetail(pekerjaan: PekerjaanLuarResp?) {
-        NetworkConfig().getServPers().getDetailPekerjaanLuar("Bearer ${sessionManager1.fetchAuthToken()}",
-        pekerjaan?.id.toString()).enqueue(object :Callback<DetailPekerjaanLuar>{
+        NetworkConfig().getServPers().getDetailPekerjaanLuar(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            pekerjaan?.id.toString()
+        ).enqueue(object : Callback<DetailPekerjaanLuar> {
             override fun onFailure(call: Call<DetailPekerjaanLuar>, t: Throwable) {
-                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(
                 call: Call<DetailPekerjaanLuar>,
                 response: Response<DetailPekerjaanLuar>
             ) {
-                if(response.isSuccessful){
-                    val data  =response.body()
+                if (response.isSuccessful) {
+                    val data = response.body()
                     edt_nama_pekerjaan_luar_edit.setText(data?.pekerjaan)
                     edt_thn_awal_pekerjaan_luar_edit.setText(data?.tahun_awal.toString())
-                    if(data?.tahun_akhir == null){
+                    if (data?.tahun_akhir == null) {
                         edt_thn_akhir_pekerjaan_luar_edit.setText("")
-                    }else{
+                    } else {
                         edt_thn_akhir_pekerjaan_luar_edit.setText(data?.tahun_akhir.toString())
                     }
                     edt_instansi_pekerjaan_luar_edit.setText(data?.instansi)
                     edt_rangka_pekerjaan_luar_edit.setText(data?.dalam_rangka)
                     edt_ket_pekerjaan_luar_edit.setText(data?.keterangan)
-                }else{
+                } else {
                     Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -109,16 +111,17 @@ class EditPekerjaanLuarFragment : Fragment() {
             pekerjaan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(activity, "Data Sudah Berhasil Di Hapus", Toast.LENGTH_SHORT)
+                    Toast.makeText(activity, R.string.data_deleted, Toast.LENGTH_SHORT)
                         .show()
                     fragmentManager?.popBackStack()
                 } else {
-                    Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "${response.body()?.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
@@ -149,7 +152,7 @@ class EditPekerjaanLuarFragment : Fragment() {
             pekerjaanLuarReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
                 btn_save_pekerjaan_luar_edit.hideDrawable(R.string.save)
 
             }
@@ -166,9 +169,11 @@ class EditPekerjaanLuarFragment : Fragment() {
                         fragmentManager?.popBackStack()
                     }, 500)
                 } else {
+                    Toast.makeText(activity, "${response.body()?.message}", Toast.LENGTH_SHORT)
+                        .show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_pekerjaan_luar_edit.hideDrawable(R.string.save)
-                    },3000)
+                    }, 3000)
                     btn_save_pekerjaan_luar_edit.hideDrawable(R.string.not_update)
                 }
             }

@@ -87,17 +87,17 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         ll_organisasi.visible()
         ll_penghargaan.gone()
         ll_perjuangan.gone()
-        btn_pick_organisasi.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-        btn_pick_organisasi.setTextColor(resources.getColor(R.color.white))
+        btn_pick_organisasi.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        btn_pick_organisasi.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-        btn_pick_perjuangan.setBackgroundColor(resources.getColor(R.color.white))
+        btn_pick_perjuangan.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         btn_pick_perjuangan.typeface = Typeface.DEFAULT_BOLD
-        btn_pick_perjuangan.setTextColor(resources.getColor(R.color.colorPrimary))
+        btn_pick_perjuangan.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
 
-        btn_pick_penghargaan.setBackgroundColor(resources.getColor(R.color.white))
+        btn_pick_penghargaan.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         btn_pick_penghargaan.typeface = Typeface.DEFAULT_BOLD
-        btn_pick_penghargaan.setTextColor(resources.getColor(R.color.colorPrimary))
+        btn_pick_penghargaan.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
     private fun viewPerjuangan() {
@@ -105,16 +105,16 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         ll_perjuangan.visible()
         ll_penghargaan.gone()
         ll_organisasi.gone()
-        btn_pick_perjuangan.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-        btn_pick_perjuangan.setTextColor(resources.getColor(R.color.white))
+        btn_pick_perjuangan.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        btn_pick_perjuangan.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-        btn_pick_organisasi.setBackgroundColor(resources.getColor(R.color.white))
+        btn_pick_organisasi.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         btn_pick_organisasi.typeface = Typeface.DEFAULT_BOLD
-        btn_pick_organisasi.setTextColor(resources.getColor(R.color.colorPrimary))
+        btn_pick_organisasi.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-        btn_pick_penghargaan.setBackgroundColor(resources.getColor(R.color.white))
+        btn_pick_penghargaan.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         btn_pick_penghargaan.typeface = Typeface.DEFAULT_BOLD
-        btn_pick_penghargaan.setTextColor(resources.getColor(R.color.colorPrimary))
+        btn_pick_penghargaan.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
     private fun viewPenghargaan() {
@@ -123,16 +123,16 @@ class AddSingleOrganisasiActivity : BaseActivity() {
         ll_penghargaan.visible()
         ll_organisasi.gone()
 
-        btn_pick_penghargaan.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-        btn_pick_penghargaan.setTextColor(resources.getColor(R.color.white))
+        btn_pick_penghargaan.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        btn_pick_penghargaan.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-        btn_pick_organisasi.setBackgroundColor(resources.getColor(R.color.white))
+        btn_pick_organisasi.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         btn_pick_organisasi.typeface = Typeface.DEFAULT_BOLD
-        btn_pick_organisasi.setTextColor(resources.getColor(R.color.colorPrimary))
+        btn_pick_organisasi.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-        btn_pick_perjuangan.setBackgroundColor(resources.getColor(R.color.white))
+        btn_pick_perjuangan.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         btn_pick_perjuangan.typeface = Typeface.DEFAULT_BOLD
-        btn_pick_perjuangan.setTextColor(resources.getColor(R.color.colorPrimary))
+        btn_pick_perjuangan.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
     }
 
     private fun doPerjuanganApi() {
@@ -163,7 +163,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
                 btn_save_single_perjuangan.hideDrawable(R.string.save)
                 Toast.makeText(
                     this@AddSingleOrganisasiActivity,
-                    "Error Koneksi",
+                    "$t",
                     Toast.LENGTH_SHORT
                 ).show()
                 rl_pb.gone()
@@ -182,6 +182,11 @@ class AddSingleOrganisasiActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
+                    Toast.makeText(
+                        this@AddSingleOrganisasiActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_single_perjuangan.hideDrawable(R.string.save)
                     }, 3000)
@@ -220,7 +225,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
                 btn_save_single_penghargaan.hideDrawable(R.string.save)
                 Toast.makeText(
                     this@AddSingleOrganisasiActivity,
-                    "Error Koneksi",
+                    "$t",
                     Toast.LENGTH_SHORT
                 ).show()
                 rl_pb.gone()
@@ -248,6 +253,11 @@ class AddSingleOrganisasiActivity : BaseActivity() {
 
                     rl_pb.gone()
                     ll_penghargaan.visible()
+                    Toast.makeText(
+                        this@AddSingleOrganisasiActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -283,7 +293,7 @@ class AddSingleOrganisasiActivity : BaseActivity() {
                 btn_save_single_organisasi.hideDrawable(R.string.save)
                 Toast.makeText(
                     this@AddSingleOrganisasiActivity,
-                    "Error Koneksi",
+                    "$t",
                     Toast.LENGTH_SHORT
                 ).show()
                 rl_pb.gone()
@@ -315,6 +325,11 @@ class AddSingleOrganisasiActivity : BaseActivity() {
 
                     rl_pb.gone()
                     ll_organisasi.visible()
+                    Toast.makeText(
+                        this@AddSingleOrganisasiActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

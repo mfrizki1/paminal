@@ -60,7 +60,7 @@ class AddSingleTokohActivity : BaseActivity() {
                 tokohReq
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(this@AddSingleTokohActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@AddSingleTokohActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                     btn_save_single_tokoh.hideDrawable(R.string.save)
                 }
@@ -77,9 +77,14 @@ class AddSingleTokohActivity : BaseActivity() {
                             finish()
                         }, 500)
                     } else {
+                        Toast.makeText(
+                            this@AddSingleTokohActivity,
+                            "${response.body()?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         Handler(Looper.getMainLooper()).postDelayed({
                             btn_save_single_tokoh.hideDrawable(R.string.save)
-                        },3000)
+                        }, 3000)
                         btn_save_single_tokoh.hideDrawable(R.string.not_save)
                     }
                 }

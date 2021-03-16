@@ -26,6 +26,9 @@ import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.utils.hideKeyboard
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
+import id.calocallo.sicape.ui.main.personel.PersonelActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_relasi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -191,8 +194,7 @@ class AddRelasiActivity : BaseActivity() {
             allPersonelModel
         ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {
             override fun onFailure(call: Call<Base1Resp<AddPersonelResp>>, t: Throwable) {
-                Log.e("error", "$t")
-                Toast.makeText(this@AddRelasiActivity, "$t", Toast.LENGTH_SHORT).show()
+               toast("$t")
                 btn_next_relasi.hideProgress(R.string.not_save)
             }
 
@@ -206,15 +208,17 @@ class AddRelasiActivity : BaseActivity() {
                     btn_next_relasi.hideProgress(R.string.data_saved)
                     btn_next_relasi.showSnackbar(R.string.data_saved) {
                         action(R.string.next) {
-                            val intent = Intent(this@AddRelasiActivity, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME)
+                            val intent = Intent(this@AddRelasiActivity, PersonelActivity::class.java).apply {
+                                this.putExtra(ID_SATKER,response.body()?.data?.personel?.satuan_kerja)
+                            }
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
+                            finish()
                         }
                     }
                 } else {
                     btn_next_relasi.hideProgress(R.string.not_save)
-                    Toast.makeText(this@AddRelasiActivity, "Gagal Menyimpan", Toast.LENGTH_SHORT)
-                        .show()
+                 toast("${response.body()?.message}")
                 }
             }
         })
@@ -224,7 +228,7 @@ class AddRelasiActivity : BaseActivity() {
         /*pendidikan*/
         val listPend = arrayListOf<AddPendidikanModel>()
         val pendUmum = sessionManager1.getPendUmum()
-        if (pendUmum[0].pendidikan != "") {
+        if (pendUmum.isNotEmpty()) {
             listPend.addAll(pendUmum)
         }
         val pendDinas = sessionManager1.getPendDinas()
@@ -342,5 +346,9 @@ class AddRelasiActivity : BaseActivity() {
 //            adapterHukum.notifyItemInserted(position)
 //            adapterHukum.notifyDataSetChanged()
 //        }
+    }
+
+    companion object {
+        const val ID_SATKER = "ID_SATKER"
     }
 }

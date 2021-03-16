@@ -75,7 +75,7 @@ class EditSignalementActivity : BaseActivity() {
                 btn_save_signalement_edit.hideDrawable(R.string.not_update)
                 Toast.makeText(
                     this@EditSignalementActivity,
-                    R.string.error_conn,
+                    "$t",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -87,6 +87,8 @@ class EditSignalementActivity : BaseActivity() {
                         textMarginRes = R.dimen.space_10dp
                     }
                 } else {
+                    Toast.makeText(this@EditSignalementActivity, "${response.body()?.message}", Toast.LENGTH_SHORT).show()
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_signalement_edit.hideDrawable(R.string.not_update)
                     }, 3000)

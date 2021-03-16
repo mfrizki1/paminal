@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.selection.SelectionPredicates
@@ -28,6 +27,8 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.addpersonal.relasi.AddRelasiActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_choose_personel.*
 import kotlinx.android.synthetic.main.item_choose_personel.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -72,23 +73,28 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
         val isPolda = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLDA)
         val isPolres = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLRES)
         val isPolsek = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLSEK)
+        val fromAddPersonel = intent.extras?.getInt(AddRelasiActivity.ID_SATKER)
         val isMultipleSelect = intent.getBooleanExtra(MULTIPLE, false)
         if (isMultipleSelect) {
             getPersonel()
             ll_button_choose.visible()
         } else {
             when {
+                fromAddPersonel != null->{
+                    apiChoosePersonelBySatker(fromAddPersonel)
+
+                }
                 isPolda != null -> {
                     Log.e("isPolda", "$isPolda")
-                    apiChoosePersonelBySatker(isPolda)
+                    apiChoosePersonelBySatker(isPolda.id)
                 }
                 isPolres != null -> {
                     Log.e("isPOlres", "$isPolres")
-                    apiChoosePersonelBySatker(isPolres)
+                    apiChoosePersonelBySatker(isPolres.id)
                 }
                 isPolsek != null -> {
                     Log.e("isPolsek", "$isPolsek")
-                    apiChoosePersonelBySatker(isPolsek)
+                    apiChoosePersonelBySatker(isPolsek.id)
                 }
 //            else -> initAPI()
 
@@ -105,10 +111,10 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
 //        }*/
     }
 
-    private fun apiChoosePersonelBySatker(satker: SatKerResp) {
+    private fun apiChoosePersonelBySatker(id_satker: Int?) {
         rl_pb.visible()
         NetworkConfig().getServPers().showPersonelBySatker(
-            "Bearer ${sessionManager1.fetchAuthToken()}", satker.id.toString()
+            "Bearer ${sessionManager1.fetchAuthToken()}", id_satker.toString()
         ).enqueue(object : Callback<ArrayList<PersonelMinResp>> {
             override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {
                 rl_no_data.visible()
@@ -183,8 +189,7 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
             override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {
                 rl_pb.gone()
                 rl_no_data.visible()
-                Toast.makeText(this@ChoosePersonelActivity, R.string.error_conn, Toast.LENGTH_SHORT)
-                    .show()
+                toast("$t")
 
             }
 
@@ -203,8 +208,7 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
                         rvMultipleSelect(response.body())
                     }
                 } else {
-                    Toast.makeText(this@ChoosePersonelActivity, R.string.error, Toast.LENGTH_SHORT)
-                        .show()
+                    toast(R.string.error)
                     rl_no_data.visible()
                     rl_pb.gone()
                     rv_list_choose_personel.gone()
@@ -289,7 +293,7 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
                 for(i in 0 until selectedPersonel.size){
                     selectedPersonel[i].nama?.let { listNamaPers.add(it) }
                 }
-                Toast.makeText(this, "$listNamaPers", Toast.LENGTH_SHORT).show()
+                toast("$listNamaPers")
             }
         }
         return true

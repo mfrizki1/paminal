@@ -57,8 +57,7 @@ class AddSaksiLpActivity : BaseActivity() {
                 jenisSaksi = "personel"
                 ll_personel_saksi_lp.visible()
                 ll_sipil_saksi_lp.gone()
-                rg_status_saksi_lp_add.gone()
-                text_is_korban_add.gone()
+                ll_saksi_korban_saksi_add.gone()
                 /*  saksiLpReq.nama == null
                   saksiLpReq.tempat_lahir == null
                   saksiLpReq.tanggal_lahir == null
@@ -67,8 +66,10 @@ class AddSaksiLpActivity : BaseActivity() {
                   saksiLpReq.is_korban == null*/
             } else {
                 jenisSaksi = "sipil"
+                ll_saksi_korban_saksi_add.visible()
                 ll_sipil_saksi_lp.visible()
                 ll_personel_saksi_lp.gone()
+
             }
         }
 

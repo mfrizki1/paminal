@@ -3,6 +3,7 @@ package id.calocallo.sicape.ui.main.anev
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.core.content.ContextCompat
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
@@ -24,6 +25,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_anev.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -119,108 +121,108 @@ class AnevActivity : BaseActivity() {
 
         /*filter jenis*/
         btnKesatuan.setOnClickListener {
-            btnKesatuan.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnKesatuan.setTextColor(resources.getColor(R.color.white))
+            btnKesatuan.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnKesatuan.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            btnPangkat.setBackgroundColor(resources.getColor(R.color.white))
-            btnPangkat.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnPangkat.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnPangkat.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-            btnJenis.setBackgroundColor(resources.getColor(R.color.white))
-            btnJenis.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnJenis.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnJenis.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterJenis = "kesatuan"
             layoutJenisKesatuan.visible()
         }
         btnPoldaFilter.setOnClickListener {
-            btnPoldaFilter.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnPoldaFilter.setTextColor(resources.getColor(R.color.white))
-            btnPolresFilter.setBackgroundColor(resources.getColor(R.color.white))
-            btnPolresFilter.setTextColor(resources.getColor(R.color.colorPrimary))
-            btnPolsekFilter.setBackgroundColor(resources.getColor(R.color.white))
-            btnPolsekFilter.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnPoldaFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnPoldaFilter.setTextColor(ContextCompat.getColor(this, R.color.white))
+            btnPolresFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnPolresFilter.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnPolsekFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnPolsekFilter.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterJenisKesatuan = "subsatker_polda"
         }
         btnPolresFilter.setOnClickListener {
-            btnPolresFilter.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnPolresFilter.setTextColor(resources.getColor(R.color.white))
-            btnPoldaFilter.setBackgroundColor(resources.getColor(R.color.white))
-            btnPoldaFilter.setTextColor(resources.getColor(R.color.colorPrimary))
-            btnPolsekFilter.setBackgroundColor(resources.getColor(R.color.white))
-            btnPolsekFilter.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnPolresFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnPolresFilter.setTextColor(ContextCompat.getColor(this, R.color.white))
+            btnPoldaFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnPoldaFilter.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnPolsekFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnPolsekFilter.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterJenisKesatuan = "polres"
         }
         btnPolsekFilter.setOnClickListener {
-            btnPolsekFilter.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnPolsekFilter.setTextColor(resources.getColor(R.color.white))
-            btnPoldaFilter.setBackgroundColor(resources.getColor(R.color.white))
-            btnPoldaFilter.setTextColor(resources.getColor(R.color.colorPrimary))
-            btnPolresFilter.setBackgroundColor(resources.getColor(R.color.white))
-            btnPolresFilter.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnPolsekFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnPolsekFilter.setTextColor(ContextCompat.getColor(this, R.color.white))
+            btnPoldaFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnPoldaFilter.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnPolresFilter.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnPolresFilter.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterJenisKesatuan = "polsek"
         }
         btnPangkat.setOnClickListener {
-            btnPangkat.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnPangkat.setTextColor(resources.getColor(R.color.white))
+            btnPangkat.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnPangkat.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            btnKesatuan.setBackgroundColor(resources.getColor(R.color.white))
-            btnKesatuan.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnKesatuan.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnKesatuan.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-            btnJenis.setBackgroundColor(resources.getColor(R.color.white))
-            btnJenis.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnJenis.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnJenis.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterJenis = "pangkat"
             layoutJenisKesatuan.gone()
 
         }
 
         btnJenis.setOnClickListener {
-            btnJenis.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnJenis.setTextColor(resources.getColor(R.color.white))
+            btnJenis.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnJenis.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            btnKesatuan.setBackgroundColor(resources.getColor(R.color.white))
-            btnKesatuan.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnKesatuan.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnKesatuan.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-            btnPangkat.setBackgroundColor(resources.getColor(R.color.white))
-            btnPangkat.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnPangkat.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnPangkat.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterJenis = "jenis_pelanggaran"
             layoutJenisKesatuan.gone()
         }
 
         /*filter rentang*/
         btn1Month.setOnClickListener {
-            btn1Month.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn1Month.setTextColor(resources.getColor(R.color.white))
+            btn1Month.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btn1Month.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            btn6Month.setBackgroundColor(resources.getColor(R.color.white))
-            btn6Month.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn6Month.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btn6Month.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-            btnFullTahun.setBackgroundColor(resources.getColor(R.color.white))
-            btnFullTahun.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnFullTahun.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnFullTahun.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterRentang = "bulan"
             ll1Bln.visible()
             ll6Bln.gone()
         }
         btn6Month.setOnClickListener {
-            btn6Month.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btn6Month.setTextColor(resources.getColor(R.color.white))
+            btn6Month.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btn6Month.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            btn1Month.setBackgroundColor(resources.getColor(R.color.white))
-            btn1Month.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn1Month.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btn1Month.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-            btnFullTahun.setBackgroundColor(resources.getColor(R.color.white))
-            btnFullTahun.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnFullTahun.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnFullTahun.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 //            filterRentang = "semester"
             ll6Bln.visible()
             ll1Bln.gone()
 
         }
         btnFullTahun.setOnClickListener {
-            btnFullTahun.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnFullTahun.setTextColor(resources.getColor(R.color.white))
+            btnFullTahun.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnFullTahun.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            btn1Month.setBackgroundColor(resources.getColor(R.color.white))
-            btn1Month.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn1Month.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btn1Month.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
-            btn6Month.setBackgroundColor(resources.getColor(R.color.white))
-            btn6Month.setTextColor(resources.getColor(R.color.colorPrimary))
+            btn6Month.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btn6Month.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterRentang = "full"
             ll6Bln.gone()
             ll1Bln.gone()
@@ -228,19 +230,19 @@ class AnevActivity : BaseActivity() {
 
         /*filter semester*/
         btnSmstrAwal.setOnClickListener {
-            btnSmstrAwal.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnSmstrAwal.setTextColor(resources.getColor(R.color.white))
+            btnSmstrAwal.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnSmstrAwal.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            btnSmstrAkhir.setBackgroundColor(resources.getColor(R.color.white))
-            btnSmstrAkhir.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnSmstrAkhir.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnSmstrAkhir.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterRentang = "semester_1"
         }
         btnSmstrAkhir.setOnClickListener {
-            btnSmstrAkhir.setBackgroundColor(resources.getColor(R.color.colorPrimary))
-            btnSmstrAkhir.setTextColor(resources.getColor(R.color.white))
+            btnSmstrAkhir.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            btnSmstrAkhir.setTextColor(ContextCompat.getColor(this, R.color.white))
 
-            btnSmstrAwal.setBackgroundColor(resources.getColor(R.color.white))
-            btnSmstrAwal.setTextColor(resources.getColor(R.color.colorPrimary))
+            btnSmstrAwal.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            btnSmstrAwal.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             filterRentang = "semester_2"
         }
 
@@ -488,6 +490,7 @@ class AnevActivity : BaseActivity() {
             .getListAnev("Bearer ${sessionManager1.fetchAuthToken()}", filterReq)
             .enqueue(object : Callback<BaseAnev> {
                 override fun onFailure(call: Call<BaseAnev>, t: Throwable) {
+                    toast("$t")
                     rl_pb.gone()
                     rl_no_data.visible()
                 }
@@ -516,8 +519,6 @@ class AnevActivity : BaseActivity() {
                             }
                         }
 
-//                        }
-//                   tesPie()
                     } else {
                         rl_pb.gone()
                         rl_no_data.visible()

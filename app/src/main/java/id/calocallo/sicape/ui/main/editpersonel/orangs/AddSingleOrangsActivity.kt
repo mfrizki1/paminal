@@ -92,7 +92,7 @@ class AddSingleOrangsActivity : BaseActivity() {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     Toast.makeText(
                         this@AddSingleOrangsActivity,
-                        "Error Koneksi",
+                        "$t",
                         Toast.LENGTH_SHORT
                     ).show()
                     btn_save_single_orangs.hideDrawable(R.string.save)
@@ -104,15 +104,20 @@ class AddSingleOrangsActivity : BaseActivity() {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
                         }
-//                        Toast.makeText(this@AddSingleOrangsActivity, R.string.data_saved, Toast.LENGTH_SHORT).show()
                         Handler(Looper.getMainLooper()).postDelayed({
                             finish()
                         }, 500)
                     } else {
                         Handler(Looper.getMainLooper()).postDelayed({
                             btn_save_single_orangs.hideDrawable(R.string.save)
-                        },3000)
+                        }, 3000)
                         btn_save_single_orangs.hideDrawable(R.string.not_save)
+                        Toast.makeText(
+                            this@AddSingleOrangsActivity,
+                            "${response.body()?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
                     }
                 }
             })

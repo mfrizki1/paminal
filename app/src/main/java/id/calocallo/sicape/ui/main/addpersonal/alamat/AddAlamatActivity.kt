@@ -34,7 +34,6 @@ class AddAlamatActivity : BaseActivity() {
             }
 
             sessionManager1.setAlamat(list)
-            Log.e("alamatSize", "alamat Size ${sessionManager1.getAlamat()}")
             startActivity(Intent(this, MiscenaousActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
@@ -43,7 +42,6 @@ class AddAlamatActivity : BaseActivity() {
     private fun initRecycler(rv: RecyclerView) {
         rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val alamatCreated = sessionManager1.getAlamat()
-        Log.e("alamatSize", "alamat Size ${alamatCreated.size}")
 
         if (alamatCreated.size == 0) {
             list.add(

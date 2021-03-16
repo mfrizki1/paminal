@@ -67,7 +67,7 @@ class AddSingleSahabatActivity : BaseActivity() {
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                     btn_save_single_sahabat.hideDrawable(R.string.not_save)
-                    Toast.makeText(this@AddSingleSahabatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddSingleSahabatActivity, "$t", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
@@ -81,9 +81,15 @@ class AddSingleSahabatActivity : BaseActivity() {
                             finish()
                         }, 500)
                     } else {
+                        Toast.makeText(
+                            this@AddSingleSahabatActivity,
+                            "${response.body()?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
                         Handler(Looper.getMainLooper()).postDelayed({
                             btn_save_single_sahabat.hideDrawable(R.string.not_save)
-                        },3000)
+                        }, 3000)
                         btn_save_single_sahabat.hideDrawable(R.string.save)
                     }
                 }

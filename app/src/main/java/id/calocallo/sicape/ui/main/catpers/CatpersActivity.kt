@@ -159,7 +159,7 @@ class CatpersActivity : BaseActivity() {
                     }
 
                     override fun onFailure(call: Call<Base1Resp<DokCatpersResp>>, t: Throwable) {
-                        Toast.makeText(this@CatpersActivity, "$t", Toast.LENGTH_SHORT).show()
+                        toast("$t")
                         btn_generate_catpers.hideProgress(R.string.failed_generate_doc)
                     }
                 })
@@ -178,7 +178,7 @@ class CatpersActivity : BaseActivity() {
                 }
 
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(this@CatpersActivity, "$t", Toast.LENGTH_SHORT).show()
+                   toast("$t")
                 }
             })
 

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
@@ -21,6 +20,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_lp_choose.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
@@ -144,7 +144,7 @@ class LpChooseActivity : BaseActivity() {
                         rl_pb.gone()
                         rv_list_lp_choose.gone()
                         rl_no_data.visible()
-                        Toast.makeText(this@LpChooseActivity, "$t", Toast.LENGTH_SHORT).show()
+                        toast("$t")
                     }
                 })
     }
@@ -165,14 +165,12 @@ class LpChooseActivity : BaseActivity() {
                             rl_pb.gone()
                             rv_list_lp_choose.gone()
                             rl_no_data.visible()
-                            Toast.makeText(
-                                this@LpChooseActivity, R.string.error, Toast.LENGTH_SHORT
-                            ).show()
+                            toast(R.string.error)
                         }
                     }
 
                     override fun onFailure(call: Call<ArrayList<LpMinResp>>, t: Throwable) {
-                        Toast.makeText(this@LpChooseActivity, "$t", Toast.LENGTH_SHORT).show()
+                        toast("$t")
                         rl_pb.gone()
                         rv_list_lp_choose.gone()
                         rl_no_data.visible()

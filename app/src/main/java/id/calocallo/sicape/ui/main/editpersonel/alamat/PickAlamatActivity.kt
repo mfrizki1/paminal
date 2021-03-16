@@ -3,7 +3,6 @@ package id.calocallo.sicape.ui.main.editpersonel.alamat
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel1
 import id.calocallo.sicape.network.NetworkConfig
@@ -12,6 +11,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_pick_alamat.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -73,7 +73,7 @@ class PickAlamatActivity : BaseActivity() {
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<AlamatResp>> {
             override fun onFailure(call: Call<ArrayList<AlamatResp>>, t: Throwable) {
-                Toast.makeText(this@PickAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                toast("$t")
                 rl_no_data.visible()
                 rl_pb.gone()
             }
@@ -99,7 +99,7 @@ class PickAlamatActivity : BaseActivity() {
                     }
                 } else {
                     rl_no_data.visible()
-                    Toast.makeText(this@PickAlamatActivity, "Error", Toast.LENGTH_SHORT).show()
+                    toast(R.string.error)
                 }
             }
         })

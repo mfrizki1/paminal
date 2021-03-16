@@ -65,7 +65,7 @@ class EditTokohActivity : BaseActivity() {
             .getDetailTokoh("Bearer ${sessionManager1.fetchAuthToken()}", tokoh?.id.toString())
             .enqueue(object : Callback<TokohResp> {
                 override fun onFailure(call: Call<TokohResp>, t: Throwable) {
-                    Toast.makeText(this@EditTokohActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditTokohActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -109,7 +109,7 @@ class EditTokohActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_tokoh_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditTokohActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditTokohActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
@@ -124,6 +124,11 @@ class EditTokohActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
+                    Toast.makeText(
+                        this@EditTokohActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_tokoh_edit.hideDrawable(R.string.save)
                     }, 3000)
@@ -139,19 +144,23 @@ class EditTokohActivity : BaseActivity() {
             tokoh?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditTokohActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditTokohActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@EditTokohActivity,
-                        "Berhasil Hapus Data Tokoh",
+                        R.string.data_deleted,
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
                 } else {
-                    Toast.makeText(this@EditTokohActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditTokohActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

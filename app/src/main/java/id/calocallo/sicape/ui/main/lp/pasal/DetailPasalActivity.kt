@@ -53,7 +53,7 @@ class DetailPasalActivity : BaseActivity() {
                 override fun onFailure(call: Call<PasalResp>, t: Throwable) {
                     Toast.makeText(
                         this@DetailPasalActivity,
-                        R.string.error_conn,
+                        "$t",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -103,24 +103,27 @@ class DetailPasalActivity : BaseActivity() {
                 .delPasal("Bearer ${sessionManager1.fetchAuthToken()}", it)
                 .enqueue(object : Callback<BaseResp> {
                     override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                        Toast.makeText(this@DetailPasalActivity, "Gagal Koneksi", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(
+                            this@DetailPasalActivity,
+                            "$t",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                     override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                         if (response.isSuccessful) {
                             if (response.body()?.message == "Data pasal removed succesfully") {
                                 finish()
-                            } else {
+                            } else if (response.body()?.message == "Data lp has been used as reference in another data") {
                                 Toast.makeText(
                                     this@DetailPasalActivity,
-                                    "Error Hapus",
-                                    Toast.LENGTH_SHORT
+                                    R.string.used_on_references_lp,
+                                    Toast.LENGTH_LONG
                                 ).show()
                             }
 
                         } else {
-                            Toast.makeText(this@DetailPasalActivity, "Error", Toast.LENGTH_SHORT)
+                            Toast.makeText(this@DetailPasalActivity, "${response.body()?.message}", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }

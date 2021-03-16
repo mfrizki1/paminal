@@ -65,7 +65,7 @@ class EditSaudaraActivity : BaseActivity() {
         NetworkConfig().getServPers()
             .getDetailSaudara("Bearer ${sessionManager1.fetchAuthToken()}", saudara?.id.toString()).enqueue(object :Callback<SaudaraResp>{
                 override fun onFailure(call: Call<SaudaraResp>, t: Throwable) {
-                    Toast.makeText(this@EditSaudaraActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditSaudaraActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -150,7 +150,7 @@ class EditSaudaraActivity : BaseActivity() {
             saudaraReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditSaudaraActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditSaudaraActivity, "$t", Toast.LENGTH_SHORT).show()
                 btn_save_saudara_edit.hideDrawable(R.string.save)
             }
 
@@ -165,6 +165,8 @@ class EditSaudaraActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
+                    Toast.makeText(this@EditSaudaraActivity, "${response.body()?.message}", Toast.LENGTH_SHORT).show()
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_saudara_edit.hideDrawable(R.string.save)
                     }, 3000)
@@ -180,19 +182,20 @@ class EditSaudaraActivity : BaseActivity() {
             saudara?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditSaudaraActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditSaudaraActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@EditSaudaraActivity,
-                        "Berhasil Hapus Data Saudara",
+                        R.string.data_deleted,
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
                 } else {
-                    Toast.makeText(this@EditSaudaraActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@EditSaudaraActivity, "${response.body()?.message}", Toast.LENGTH_SHORT).show()
+
                 }
             }
         })

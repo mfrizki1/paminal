@@ -73,7 +73,7 @@ class PickTokohActivity : BaseActivity() {
             sessionManager1.fetchID().toString()
         ).enqueue(object : Callback<ArrayList<TokohResp>> {
             override fun onFailure(call: Call<ArrayList<TokohResp>>, t: Throwable) {
-                Toast.makeText(this@PickTokohActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PickTokohActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(

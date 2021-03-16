@@ -76,7 +76,7 @@ class PickMedInfoActivity : BaseActivity() {
             sessionManager1.fetchID().toString()
             ).enqueue(object : Callback<ArrayList<MedInfoResp>> {
             override fun onFailure(call: Call<ArrayList<MedInfoResp>>, t: Throwable) {
-                Toast.makeText(this@PickMedInfoActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PickMedInfoActivity, "$t", Toast.LENGTH_SHORT).show()
                 rl_no_data.visible()
                 rl_pb.gone()
             }

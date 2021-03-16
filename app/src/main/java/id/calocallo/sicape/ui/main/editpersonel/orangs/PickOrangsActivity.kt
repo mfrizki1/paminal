@@ -60,7 +60,7 @@ class PickOrangsActivity : BaseActivity() {
         val item = listOf("Orang Berjasa Selain Orang Tua", "Orang Disegani Karena Adat")
         val adapter = ArrayAdapter(this, R.layout.item_spinner, item)
         spinner_orangs.setAdapter(adapter)
-        spinner_orangs.setOnItemClickListener { parent, view, position, id ->
+        spinner_orangs.setOnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> {
                     menu = "berjasa"
@@ -83,7 +83,7 @@ class PickOrangsActivity : BaseActivity() {
             menu.toString()
         ).enqueue(object : Callback<ArrayList<OrangsResp>> {
             override fun onFailure(call: Call<ArrayList<OrangsResp>>, t: Throwable) {
-                Toast.makeText(this@PickOrangsActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PickOrangsActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(

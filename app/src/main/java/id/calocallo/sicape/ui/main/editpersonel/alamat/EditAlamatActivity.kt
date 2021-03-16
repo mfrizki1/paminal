@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
@@ -18,6 +17,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_edit_alamat.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -70,8 +70,7 @@ class EditAlamatActivity : BaseActivity() {
             .getDetailAlamat("Bearer ${sessionManager1.fetchAuthToken()}", alamat?.id.toString())
             .enqueue(object : Callback<DetailAlamatResp> {
                 override fun onFailure(call: Call<DetailAlamatResp>, t: Throwable) {
-                    Toast.makeText(this@EditAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                        .show()
+                    toast("$t")
                 }
 
                 override fun onResponse(
@@ -86,8 +85,7 @@ class EditAlamatActivity : BaseActivity() {
                         edt_rangka_alamat_edit.setText(data?.dalam_rangka)
                         edt_ket_alamat_edit.setText(data?.keterangan)
                     } else {
-                        Toast.makeText(this@EditAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                            .show()
+                        toast(R.string.error_conn)
                     }
                 }
             })
@@ -100,15 +98,16 @@ class EditAlamatActivity : BaseActivity() {
             alamat.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                toast("$t")
 
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
+                    toast(R.string.data_deleted)
                     finish()
                 } else {
-                    Toast.makeText(this@EditAlamatActivity, "Error", Toast.LENGTH_SHORT).show()
+                    toast("${response.body()?.message}")
                 }
             }
         })
@@ -136,7 +135,7 @@ class EditAlamatActivity : BaseActivity() {
             alamatReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditAlamatActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                toast("$t")
                 btn_save_alamat_edit.hideDrawable(R.string.save)
             }
 
@@ -150,6 +149,7 @@ class EditAlamatActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
+                    toast("${response.body()?.message}")
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_alamat_edit.hideDrawable(R.string.save)
                     }, 3000)

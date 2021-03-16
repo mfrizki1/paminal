@@ -18,6 +18,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_edit_penghargaan.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -67,25 +68,24 @@ class EditPenghargaanActivity : BaseActivity() {
     private fun getDetailPenghargaan(penghargaan: PenghargaanResp?) {
         NetworkConfig().getServPers().getDetailPenghargaan(
             "Bearer ${sessionManager1.fetchAuthToken()}", penghargaan?.id.toString()
-        ).enqueue(object :Callback<DetailPenghargaanResp>{
+        ).enqueue(object : Callback<DetailPenghargaanResp> {
             override fun onFailure(call: Call<DetailPenghargaanResp>, t: Throwable) {
-                Toast.makeText(this@EditPenghargaanActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                    .show()
+                toast("$t")
             }
 
             override fun onResponse(
                 call: Call<DetailPenghargaanResp>,
                 response: Response<DetailPenghargaanResp>
             ) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     val data = response.body()
                     edt_nama_penghargaan_edit.setText(data?.penghargaan)
                     edt_diterima_penghargaan_edit.setText(data?.diterima_dari)
                     edt_rangka_penghargaan_edit.setText(data?.dalam_rangka)
                     edt_tgl_penghargaan_edit.setText(data?.tahun)
                     edt_ket_penghargaan_edit.setText(data?.keterangan)
-                }else{
-                    Toast.makeText(this@EditPenghargaanActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                } else {
+                 toast(R.string.error_conn)
                 }
             }
         })
@@ -116,8 +116,7 @@ class EditPenghargaanActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_penghargaan_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditPenghargaanActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                    .show()
+                toast("$t")
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
@@ -126,7 +125,6 @@ class EditPenghargaanActivity : BaseActivity() {
                         buttonTextRes = R.string.data_updated
                         textMarginRes = R.dimen.space_10dp
                     }
-//                    Toast.makeText(this@EditPenghargaanActivity, R.string.data_updated, Toast.LENGTH_SHORT).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 500)
@@ -135,6 +133,7 @@ class EditPenghargaanActivity : BaseActivity() {
                         btn_save_penghargaan_edit.hideDrawable(R.string.save)
                     }, 3000)
                     btn_save_penghargaan_edit.hideDrawable(R.string.not_update)
+                    toast("${response.body()?.message}")
                 }
             }
         })
@@ -146,21 +145,16 @@ class EditPenghargaanActivity : BaseActivity() {
             penghargaan?.id.toString()
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditPenghargaanActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                    .show()
-
+                toast("$t")
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@EditPenghargaanActivity,
-                        "Berhasil Hapus Data Penghargaan",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toast(R.string.data_deleted)
                     finish()
                 } else {
-                    Toast.makeText(this@EditPenghargaanActivity, "Error", Toast.LENGTH_SHORT).show()
+                    toast("${response.body()?.message}")
+
                 }
             }
         })

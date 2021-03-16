@@ -66,7 +66,7 @@ class EditAnakActivity : BaseActivity() {
             .getDetailAnak("Bearer ${sessionManager1.fetchAuthToken()}", anak?.id.toString())
             .enqueue(object : Callback<AnakResp> {
                 override fun onFailure(call: Call<AnakResp>, t: Throwable) {
-                    Toast.makeText(this@EditAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditAnakActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -156,7 +156,7 @@ class EditAnakActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_single_anak_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditAnakActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
@@ -170,6 +170,12 @@ class EditAnakActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
+                    Toast.makeText(
+                        this@EditAnakActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_single_anak_edit.hideDrawable(R.string.save)
                     }, 3000)
@@ -193,12 +199,15 @@ class EditAnakActivity : BaseActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@EditAnakActivity,
-                        "Berhasil Hapus Data Anak",
+                        R.string.data_deleted,
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
                 } else {
-                    Toast.makeText(this@EditAnakActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditAnakActivity, "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

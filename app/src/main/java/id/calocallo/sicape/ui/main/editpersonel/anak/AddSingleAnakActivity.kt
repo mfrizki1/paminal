@@ -89,7 +89,7 @@ class AddSingleAnakActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_single_anak.hideDrawable(R.string.save)
-                Toast.makeText(this@AddSingleAnakActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                Toast.makeText(this@AddSingleAnakActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -104,6 +104,12 @@ class AddSingleAnakActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
+                    Toast.makeText(
+                        this@AddSingleAnakActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_single_anak.hideDrawable(R.string.save)
                     }, 3000)

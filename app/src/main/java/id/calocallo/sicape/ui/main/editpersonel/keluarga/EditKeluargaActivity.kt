@@ -79,14 +79,13 @@ class EditKeluargaActivity : BaseActivity() {
         }
 
 
+        /* if (isEmptyKeluarga == true) {
+             btn_save_keluarga_edit.setOnClickListener {
+                 addKeluarga(keluarga)
+             }
+         } else {
 
-       /* if (isEmptyKeluarga == true) {
-            btn_save_keluarga_edit.setOnClickListener {
-                addKeluarga(keluarga)
-            }
-        } else {
-
-        }*/
+         }*/
 
         /*Delete*/
         btn_delete_keluarga_edit.setOnClickListener {
@@ -100,7 +99,7 @@ class EditKeluargaActivity : BaseActivity() {
                         override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                             Toast.makeText(
                                 this@EditKeluargaActivity,
-                                "Error Koneksi",
+                                "$t",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -112,14 +111,14 @@ class EditKeluargaActivity : BaseActivity() {
                             if (response.isSuccessful) {
                                 Toast.makeText(
                                     this@EditKeluargaActivity,
-                                    "Berhasil Hapus Data",
+                                    R.string.data_deleted,
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 finish()
                             } else {
                                 Toast.makeText(
                                     this@EditKeluargaActivity,
-                                    "Error",
+                                    "${response.body()?.message}",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -141,7 +140,7 @@ class EditKeluargaActivity : BaseActivity() {
             keluarga?.id.toString()
         ).enqueue(object : Callback<KeluargaResp> {
             override fun onFailure(call: Call<KeluargaResp>, t: Throwable) {
-                Toast.makeText(this@EditKeluargaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                Toast.makeText(this@EditKeluargaActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -154,7 +153,7 @@ class EditKeluargaActivity : BaseActivity() {
                         viewKeluarga(response.body()!!)
                     }
                 } else {
-                    Toast.makeText(this@EditKeluargaActivity, "Error", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditKeluargaActivity, R.string.error, Toast.LENGTH_SHORT)
                         .show()
                 }
             }
@@ -307,7 +306,7 @@ class EditKeluargaActivity : BaseActivity() {
             keluargaReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditKeluargaActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                Toast.makeText(this@EditKeluargaActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -319,8 +318,14 @@ class EditKeluargaActivity : BaseActivity() {
                     }
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
-                    },500)
+                    }, 500)
                 } else {
+                    Toast.makeText(
+                        this@EditKeluargaActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_keluarga_edit.hideDrawable(R.string.save)
                     }, 3000)
@@ -386,7 +391,7 @@ class EditKeluargaActivity : BaseActivity() {
             keluargaReq
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                Toast.makeText(this@EditKeluargaActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                Toast.makeText(this@EditKeluargaActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -405,7 +410,11 @@ class EditKeluargaActivity : BaseActivity() {
                         btn_save_keluarga_edit.hideDrawable(R.string.save)
                     }, 3000)
                     btn_save_keluarga_edit.hideDrawable(R.string.not_update)
-//                    Toast.makeText(this@EditKeluargaActivity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@EditKeluargaActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

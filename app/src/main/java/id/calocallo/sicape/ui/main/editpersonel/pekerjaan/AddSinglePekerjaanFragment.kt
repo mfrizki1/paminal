@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
@@ -21,6 +20,7 @@ import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.BaseResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
+import id.calocallo.sicape.utils.ext.toast
 import id.calocallo.sicape.utils.ext.visible
 import kotlinx.android.synthetic.main.fragment_add_single_pekerjaan.*
 import kotlinx.android.synthetic.main.fragment_add_single_pekerjaan.view.*
@@ -100,14 +100,12 @@ class AddSinglePekerjaanFragment : Fragment() {
                 singlePekerjaanReq
             ).enqueue(object : Callback<Base1Resp<AddPekerjaanResp>> {
                 override fun onFailure(call: Call<Base1Resp<AddPekerjaanResp>>, t: Throwable) {
-                    Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                    activity?.toast("$t")
                     btn_save_add_add_single.hideDrawable(R.string.save)
                 }
 
                 override fun onResponse(call: Call<Base1Resp<AddPekerjaanResp>>, response: Response<Base1Resp<AddPekerjaanResp>>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(activity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT)
-                            .show()
                         view?.btn_save_add_add_single?.showDrawable(animatedDrawable) {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
@@ -117,6 +115,7 @@ class AddSinglePekerjaanFragment : Fragment() {
                             fragmentManager?.popBackStack()
                         }, 500)
                     } else {
+                        activity?.toast("${response.body()?.message}")
                         Handler(Looper.getMainLooper()).postDelayed({
                             btn_save_add_add_single.hideDrawable(R.string.save)
                         },3000)
@@ -151,7 +150,7 @@ class AddSinglePekerjaanFragment : Fragment() {
                 pekerjaanLuarReq
             ).enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(activity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                    activity?.toast("$t")
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
@@ -160,9 +159,6 @@ class AddSinglePekerjaanFragment : Fragment() {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
                         }
-//                        Toast.makeText(activity, R.string.data_saved, Toast.LENGTH_SHORT)
-//                            .show()
-//                     activity?.finish()
                         Handler(Looper.getMainLooper()).postDelayed({
                             fragmentManager?.popBackStack()
                         },500)

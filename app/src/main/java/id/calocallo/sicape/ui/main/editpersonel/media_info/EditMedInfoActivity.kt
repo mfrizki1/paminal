@@ -66,7 +66,7 @@ class EditMedInfoActivity : BaseActivity() {
             .getDetailMedInfo("Bearer ${sessionManager1.fetchAuthToken()}", medInfo?.id.toString())
             .enqueue(object : Callback<MedInfoResp> {
                 override fun onFailure(call: Call<MedInfoResp>, t: Throwable) {
-                    Toast.makeText(this@EditMedInfoActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditMedInfoActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
                 }
 
@@ -114,7 +114,7 @@ class EditMedInfoActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_med_info_edit.hideDrawable(R.string.save)
-                Toast.makeText(this@EditMedInfoActivity, "Error Koneksi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EditMedInfoActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
@@ -123,7 +123,6 @@ class EditMedInfoActivity : BaseActivity() {
                         buttonTextRes = R.string.data_updated
                         textMarginRes = R.dimen.space_10dp
                     }
-//                    Toast.makeText(this@EditMedInfoActivity, R.string.data_saved, Toast.LENGTH_SHORT).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         finish()
                     }, 500)
@@ -132,6 +131,12 @@ class EditMedInfoActivity : BaseActivity() {
                         btn_save_med_info_edit.hideDrawable(R.string.save)
                     }, 3000)
                     btn_save_med_info_edit.hideDrawable(R.string.not_update)
+                    Toast.makeText(
+                        this@EditMedInfoActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
             }
         })
@@ -155,8 +160,11 @@ class EditMedInfoActivity : BaseActivity() {
                     ).show()
                     finish()
                 } else {
-                    Toast.makeText(this@EditMedInfoActivity, R.string.error, Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        this@EditMedInfoActivity,
+                        "${response.body()?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

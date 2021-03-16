@@ -86,8 +86,7 @@ class PickRelasiActivity : BaseActivity() {
             override fun onFailure(call: Call<ArrayList<RelasiResp>>, t: Throwable) {
                 rl_no_data.visible()
                 rl_pb.gone()
-                Toast.makeText(this@PickRelasiActivity, R.string.error_conn, Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this@PickRelasiActivity, "$t", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(

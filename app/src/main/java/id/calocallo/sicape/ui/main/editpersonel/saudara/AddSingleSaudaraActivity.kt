@@ -95,7 +95,7 @@ class AddSingleSaudaraActivity : BaseActivity() {
         ).enqueue(object : Callback<BaseResp> {
             override fun onFailure(call: Call<BaseResp>, t: Throwable) {
                 btn_save_single_saudara.hideDrawable(R.string.save)
-                Toast.makeText(this@AddSingleSaudaraActivity, "Error Koneksi", Toast.LENGTH_SHORT)
+                Toast.makeText(this@AddSingleSaudaraActivity, "$t", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -110,6 +110,7 @@ class AddSingleSaudaraActivity : BaseActivity() {
                         finish()
                     }, 500)
                 } else {
+                    Toast.makeText(this@AddSingleSaudaraActivity, "${response.body()?.message}", Toast.LENGTH_SHORT).show()
                     Handler(Looper.getMainLooper()).postDelayed({
                         btn_save_single_saudara.hideDrawable(R.string.save)
                     },3000)

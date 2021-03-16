@@ -122,7 +122,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
     private fun saveDocLpDisiplin(lp: LpResp?) {
         Handler(Looper.getMainLooper()).postDelayed({
             btn_generate_disiplin.hideProgress(R.string.success_generate_doc)
-            alert("Lihat Dokumen") {
+            alert(R.string.download) {
                 positiveButton(R.string.iya) {
                     downloadDok(lp)
                 }
@@ -374,7 +374,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
                     } else {
                         Toast.makeText(
                             this@DetailLpDisiplinActivity,
-                            R.string.error_conn,
+                            "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
