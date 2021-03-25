@@ -17,6 +17,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_put_kke.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -151,14 +152,18 @@ class AddPutKkeActivity : BaseActivity() {
                     ) {
                         if (response.body()?.message == "Data putkke saved succesfully") {
                             btn_save_put_kke_add.hideProgress(R.string.data_saved)
-                            btn_save_put_kke_add.showSnackbar(R.string.data_saved){
-                                action(R.string.next){
-                                    val intent = Intent(this@AddPutKkeActivity, ListPutKkeActivity::class.java)
+                            btn_save_put_kke_add.showSnackbar(R.string.data_saved) {
+                                action(R.string.next) {
+                                    val intent = Intent(
+                                        this@AddPutKkeActivity,
+                                        ListPutKkeActivity::class.java
+                                    )
                                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 }
                                 startActivity(intent)
                             }
                         } else {
+                            toast("${response.body()?.message}")
                             btn_save_put_kke_add.hideProgress(R.string.not_save)
                         }
                     }

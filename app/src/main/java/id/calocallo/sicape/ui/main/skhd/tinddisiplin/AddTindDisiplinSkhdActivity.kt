@@ -22,6 +22,7 @@ import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_tind_disiplin_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -94,7 +95,7 @@ class AddTindDisiplinSkhdActivity : BaseActivity() {
                             }, 750)
                         } else {
                             btn_save_tind_disiplin_add.hideProgress(R.string.not_save)
-
+                            toast("${response.body()?.message}")
                         }
                     }
 

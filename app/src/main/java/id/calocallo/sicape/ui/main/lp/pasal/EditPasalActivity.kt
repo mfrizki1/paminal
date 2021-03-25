@@ -15,6 +15,7 @@ import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.PasalResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_edit_pasal.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -77,11 +78,7 @@ class EditPasalActivity : BaseActivity() {
                             btn_save_edit_pasal.hideProgress(R.string.not_update)
                         }
                     } else {
-                        Toast.makeText(
-                            this@EditPasalActivity,
-                            R.string.error_conn,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toast("${response.body()?.message}")
                         btn_save_edit_pasal.hideProgress(R.string.not_update)
                     }
                 }

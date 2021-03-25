@@ -146,6 +146,7 @@ class CatpersActivity : BaseActivity() {
                         if (response.body()?.message == "Document catpers generated successfully") {
                             btn_generate_catpers.hideProgress(R.string.success_generate_doc)
                             alert(R.string.download) {
+                                this.cancelable = false
                                 positiveButton(R.string.iya) {
                                     downloadCatpers(response.body()?.data?.catpers)
                                 }
@@ -387,10 +388,10 @@ class CatpersActivity : BaseActivity() {
                 data: CatpersLapbulResp,
                 itemIndex: Int
             ) {
-                val intent = Intent(this@CatpersActivity, DetailCatpersActivity::class.java)
+              /*  val intent = Intent(this@CatpersActivity, DetailCatpersActivity::class.java)
                 intent.putExtra(DetailCatpersActivity.DETAIL_CATPERS, data)
                 startActivity(intent)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)*/
             }
 
         }

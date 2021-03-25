@@ -22,7 +22,9 @@ import id.calocallo.sicape.ui.main.rehab.PickRehabActivity
 import id.calocallo.sicape.ui.main.skhd.PickSkhdActivity
 import id.calocallo.sicape.ui.main.skhp.ListSkhpActivity
 import id.calocallo.sicape.ui.main.wanjak.ListWanjakActivity
+import id.calocallo.sicape.ui.satker.KatSatkerActivity
 import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 
@@ -31,6 +33,7 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
     lateinit var list: ArrayList<FiturModel>
     val listFitur = listOf(
         FiturModel("Personel", R.drawable.ic_personel),
+        FiturModel("Satuan Kerja", R.drawable.ic_personel),
         FiturModel("Laporan Polisi", R.drawable.ic_lp),
         FiturModel("Laporan Hasil Penyelidikan", R.drawable.ic_lhp),
         FiturModel("Surat Keputusan Hukuman Disiplin", R.drawable.ic_skhd),
@@ -66,57 +69,79 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
     }
 
     override fun onClick(position: Int) {
-        when (listFitur[position].nameFitur) {
-            "Personel" -> {
-                startActivity(Intent(activity, KatPersonelActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        val hak = sessionmanager.fetchHakAkses()
+        if(hak == "operator"){
+            when (listFitur[position].nameFitur) {
+                "Personel" -> {
+                    startActivity(Intent(activity, KatPersonelActivity::class.java))
+                    activity!!.overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
 
+                }
+                else->{
+                    activity?.toast("Fitur ini bisa dibuka Admin")
+                }
             }
-            "Laporan Polisi" -> {
-                startActivity(Intent(activity, PickLpActivity::class.java))
+        }else{
+            when (listFitur[position].nameFitur) {
+                "Personel" -> {
+                    startActivity(Intent(activity, KatPersonelActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+                }
+                "Satuan Kerja" -> {
+                    startActivity(Intent(activity, KatSatkerActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+                }
+                "Laporan Polisi" -> {
+                    startActivity(Intent(activity, PickLpActivity::class.java))
 //                Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            "Laporan Hasil Penyelidikan" -> {
-                startActivity(Intent(activity, LhpActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            "Surat Keputusan Hukuman Disiplin" -> {
-                startActivity(Intent(activity, PickSkhdActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-           /* "Putusan Komisi Kode Etik" -> {
-                startActivity(Intent(activity, PickSkhdActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }*/
-            "Surat Keterangan Hasil Penelitian" -> {
-                startActivity(Intent(activity, ListSkhpActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            "Catatan Personel" -> {
-                startActivity(Intent(activity, CatpersActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            "Rehab" -> {
-                startActivity(Intent(activity, PickRehabActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            "Laporan Hasil Gelar" -> {
-                startActivity(Intent(activity, ListGelarActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            "Laporan Bulanan" -> {
-                startActivity(Intent(activity, ListLapbulActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
-            "Analisa & Evaluasi" -> {
-                startActivity(Intent(activity, AnevActivity::class.java))
-                activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-            }
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Laporan Hasil Penyelidikan" -> {
+                    startActivity(Intent(activity, LhpActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Surat Keputusan Hukuman Disiplin" -> {
+                    startActivity(Intent(activity, PickSkhdActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                /* "Putusan Komisi Kode Etik" -> {
+                     startActivity(Intent(activity, PickSkhdActivity::class.java))
+                     activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                 }*/
+                "Surat Keterangan Hasil Penelitian" -> {
+                    startActivity(Intent(activity, ListSkhpActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Catatan Personel" -> {
+                    startActivity(Intent(activity, CatpersActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Rehab" -> {
+                    startActivity(Intent(activity, PickRehabActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Laporan Hasil Gelar" -> {
+                    startActivity(Intent(activity, ListGelarActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Laporan Bulanan" -> {
+                    startActivity(Intent(activity, ListLapbulActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Analisa & Evaluasi" -> {
+                    startActivity(Intent(activity, AnevActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
 
-            else -> {
-            }
+                else -> {
+                }
 
+            }
         }
     }
 }

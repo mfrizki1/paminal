@@ -111,6 +111,7 @@ class DetailSkhpActivity : BaseActivity() {
                             btn_generate_skhp_detail.hideProgress(R.string.success_generate_doc)
 
                         } else {
+                            toast("${response.body()?.message}")
                             btn_generate_skhp_detail.hideProgress(R.string.failed_generate_doc)
 
                         }
@@ -274,9 +275,8 @@ class DetailSkhpActivity : BaseActivity() {
                                 finish()
                             }, 750)
                         } else {
-                            Toast.makeText(
-                                this@DetailSkhpActivity, R.string.failed_deleted, Toast.LENGTH_SHORT
-                            ).show()
+                            toast("${response.body()?.message}")
+
                         }
                     }
 

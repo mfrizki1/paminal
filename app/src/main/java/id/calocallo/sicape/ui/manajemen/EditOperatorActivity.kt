@@ -21,11 +21,8 @@ import id.calocallo.sicape.ui.kesatuan.polsek.SatPolsekActivity
 import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.action
-import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.showSnackbar
-import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.*
 import kotlinx.android.synthetic.main.activity_add_operator.*
 import kotlinx.android.synthetic.main.activity_add_personel.*
 import kotlinx.android.synthetic.main.activity_edit_operator.*
@@ -217,12 +214,7 @@ class EditOperatorActivity : BaseActivity() {
                             }
                         }
                     } else {
-                        Toast.makeText(
-                            this@EditOperatorActivity,
-                            "Error Koneksi",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        toast("${response.body()?.message}")
                     }
                 }
             })

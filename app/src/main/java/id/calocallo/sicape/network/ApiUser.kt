@@ -22,30 +22,6 @@ interface ApiUser {
     @GET(GET_USER)
     fun getUser(@Header("Authorization") tokenBearer: String): Call<UserResp>
 
-  /*  @Headers(ApiPersonel.ACCEPT)
-    @POST(LOGIN)
-    fun loginSuper(@Body loginReq: LoginReq): Call<LoginSuperAdminResp>
-
-    @Headers(ApiPersonel.ACCEPT)
-    @POST(LOGIN)
-    fun loginSipil(@Body loginReq: LoginReq): Call<LoginSipilResp>
-
-    @Headers(ApiPersonel.ACCEPT)
-    @POST(LOGIN)
-    fun loginPersonel(@Body loginReq: LoginReq): Call<LoginPersonelResp>
-
-    @Headers(ApiPersonel.ACCEPT)
-    @GET(GET_USER)
-    fun getUserSipil(@Header("Authorization") tokenBearer: String): Call<HakAksesSipil>
-
-    @Headers(ApiPersonel.ACCEPT)
-    @GET(GET_USER)
-    fun getUserSuper(@Header("Authorization") tokenBearer: String): Call<HakAksesPersonel1>
-
-    @Headers(ApiPersonel.ACCEPT)
-    @GET(GET_USER)
-    fun getUserPersonel(@Header("Authorization") tokenBearer: String): Call<HakAksesPersonel1>*/
-
     @Headers(ApiPersonel.ACCEPT)
     @GET(LOGOUT)
     fun logout(@Header("Authorization") token: String): Call<BaseResp>

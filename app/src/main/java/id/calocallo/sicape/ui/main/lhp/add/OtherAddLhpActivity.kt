@@ -17,6 +17,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_relasi.*
 import kotlinx.android.synthetic.main.activity_other_add_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -94,6 +95,7 @@ class OtherAddLhpActivity : BaseActivity() {
                             }
                         }
                     } else {
+                        toast("${response.body()?.message}")
                         btn_add_all_lhp.hideProgress(R.string.not_save)
                     }
                 }

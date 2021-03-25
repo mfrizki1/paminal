@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.gelar.peserta_gelar.AddSinglePesertaActivity"></activity>
+        <activity android:name=".ui.satker.ListSatkerActivity" />
+        <activity android:name=".ui.satker.EditSatkerActivity" />
+        <activity android:name=".ui.satker.AddSatkerActivity" />
+        <activity android:name=".ui.gelar.peserta_gelar.AddSinglePesertaActivity" />
         <activity android:name=".ui.gelar.peserta_gelar.EditPesertaGelarActivity" />
         <activity android:name=".ui.gelar.peserta_gelar.ListPesertaGelarActivity" />
         <activity android:name=".ui.main.skhd.ListSkhdActivity" />
@@ -111,21 +114,9 @@
         <activity android:name=".ui.main.lp.disiplin.AddLpDisiplinActivity" />
         <activity android:name=".ui.main.lp.kke.AddLpKodeEtikActivity" />
         <activity android:name=".ui.main.lp.pidana.AddLpPidanaActivity" />
-        <activity android:name=".ui.main.lhp.edit.analisa.EditAnalisaLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.analisa.AddAnalisaLhpActivity" />
         <activity android:name=".ui.main.lhp.edit.terlapor.EditTerlaporLhpActivity" />
         <activity android:name=".ui.main.lhp.edit.terlapor.AddTerlaporLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.analisa.PickAnalisaLhpActivity" />
         <activity android:name=".ui.main.lhp.edit.terlapor.PickTerlaporLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.barangbukti.EditBarBuktiLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.barangbukti.AddBarBuktiLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.barangbukti.PickBarBuktiLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.petunjuk.EditPetunjukLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.petunjuk.AddPetunjukLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.petunjuk.PickPetunjukActivity" />
-        <activity android:name=".ui.main.lhp.edit.surat.EditSuratLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.surat.AddSingleSuratLhpActivity" />
-        <activity android:name=".ui.main.lhp.edit.surat.PickSuratLhpActivity" />
         <activity android:name=".ui.main.lhp.edit.saksi.EditSaksiLhpActivity" />
         <activity android:name=".ui.main.lhp.edit.saksi.AddSingleSaksiLhpActivity" />
         <activity android:name=".ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity" />
@@ -190,7 +181,6 @@
         <activity android:name=".ui.main.lhp.LhpActivity" />
         <activity android:name=".ui.main.editpersonel.EditPersonelActivity" />
         <activity android:name=".ui.main.editpersonel.pendidikan.EditPendidikanActivity" />
-        <activity android:name=".ui.main.addpersonal.AddCatPersActivity" />
         <activity android:name=".ui.main.addpersonal.AddFotoActivity" />
         <activity android:name=".ui.main.addpersonal.AddSignalementActivity" />
         <activity android:name=".ui.main.addpersonal.medsos.AddMedsosActivity" />
@@ -225,6 +215,7 @@
         <activity android:name=".ui.gelar.ListGelarActivity" />
         <activity android:name=".ui.gelar.DetailGelarActivity" />
         <activity android:name=".ui.gelar.EditGelarActivity" />
+        <activity android:name=".ui.satker.KatSatkerActivity" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

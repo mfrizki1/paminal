@@ -23,6 +23,7 @@ import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.ui.main.skhd.tinddisiplin.AddTindDisiplinSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_edit_skhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -52,7 +53,7 @@ class EditSkhpActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
 
         val getDetailSkhp = intent.extras?.getParcelable<SkhpMinResp>(EDIT_SKHP)
-        apiEditSkhp(getDetailSkhp)
+        apiDetailEditSkhp(getDetailSkhp)
         btn_save_skhp_edit.attachTextChangeAnimator()
         bindProgressButton(btn_save_skhp_edit)
         btn_save_skhp_edit.setOnClickListener {
@@ -84,7 +85,7 @@ class EditSkhpActivity : BaseActivity() {
         }
     }
 
-    private fun apiEditSkhp(detailSkhp: SkhpMinResp?) {
+    private fun apiDetailEditSkhp(detailSkhp: SkhpMinResp?) {
         NetworkConfig().getServSkhp()
             .detailSkhp("Bearer ${sessionManager1.fetchAuthToken()}", detailSkhp?.id).enqueue(
                 object :
@@ -109,12 +110,7 @@ class EditSkhpActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getViewSkhpEdit(detailSkhp: SkhpResp?) {
-        var listKotaSkhp = listOf("Banjarmasin", "Banjarbaru")
-        val adapterKota = ArrayAdapter(this, R.layout.item_spinner, listKotaSkhp)
-        edt_kota_keluar_skhp_edit.setAdapter(adapterKota)
-        edt_kota_keluar_skhp_edit.setOnItemClickListener { parent, view, position, id ->
-            kotaSkhp = parent.getItemAtPosition(position).toString()
-        }
+
         txt_nama_personel_skhp_edit.text = "Nama : ${detailSkhp?.personel?.nama}"
         txt_pangkat_personel_skhp_edit.text =
             "Pangkat ${detailSkhp?.personel?.pangkat.toString().toUpperCase()}: "
@@ -146,88 +142,12 @@ class EditSkhpActivity : BaseActivity() {
         isSyarat = detailSkhp?.is_memenuhi_syarat
         kotaSkhp = detailSkhp?.kota_keluar
         edt_no_skhp_edit.setText(detailSkhp?.no_skhp)
-        /*edt_no_skhp_edit.setText(detailSkhp?.no_skhp)
-        edt_isi_skhp_edit.setText(detailSkhp?.hasil_keputusan)
-        edt_kota_keluar_skhp_edit.setText(detailSkhp?.kota_keluar)
-        edt_tanggal_keluar_skhp_edit.setText(detailSkhp?.tanggal_keluar)
-        edt_nama_pimpinan_skhp_edit.setText(detailSkhp?.nama_yang_mengeluarkan)
-        edt_pangkat_pimpinan_skhp_edit.setText(detailSkhp?.pangkat_yang_mengeluarkan)
-        edt_nrp_pimpinan_skhp_edit.setText(detailSkhp?.nrp_yang_mengeluarkan)
-        edt_jabatan_pimpinan_skhp_edit.setText(detailSkhp?.jabatan_yang_mengeluarkan)
-        edt_kepada_skhp_edit.setText(detailSkhp?.kepada)
-        txt_nama_personel_skhp_edit.text = "Nama : ${detailSkhp?.personel?.nama}"
-        txt_pangkat_personel_skhp_edit.text =
-            "Pangkat ${detailSkhp?.personel?.pangkat.toString().toUpperCase()}: "
-        txt_nrp_personel_skhp_edit.text = "NRP : ${detailSkhp?.personel?.nrp}"
-        txt_jabatan_personel_skhp_edit.text = "Jabatan : ${detailSkhp?.personel?.jabatan}"
-        txt_kesatuan_personel_skhp_edit.text =
-            "Kesatuan : ${detailSkhp?.personel?.kesatuan.toString().toUpperCase()}"
-        if (detailSkhp?.is_status_selesai == 1) {
-            rb_status_selesai_skhp_edit.isChecked = true
-        } else {
-            rb_status_tidak_skhp_edit.isChecked = true
-
-        }
-        if (detailSkhp?.is_memiliki_pelanggaran_pidana == 1) {
-            rb_have_pidana_skhp.isChecked = true
-            ll_status_pelanggaran_skhp_edit.visible()
-        } else {
-            rb_have_not_pidana_skhp.isChecked = true
-            ll_status_pelanggaran_skhp_edit.gone()
-        }
-
-        if (detailSkhp?.is_memiliki_pelanggaran_kode_etik == 1) {
-            rb_have_kke_skhp.isChecked = true
-            ll_status_pelanggaran_skhp_edit.visible()
-        } else {
-            rb_have_not_kke_skhp.isChecked = true
-            ll_status_pelanggaran_skhp_edit.gone()
-        }
-        if (detailSkhp?.is_memiliki_pelanggaran_disiplin == 1) {
-            rb_have_disiplin_skhp.isChecked = true
-            ll_status_pelanggaran_skhp_edit.visible()
-        } else {
-            rb_have_not_disiplin_skhp.isChecked = true
-            ll_status_pelanggaran_skhp_edit.gone()
-        }
-
-
-        tempSttsCatPelanggaran = detailSkhp?.is_status_selesai
-        isPidana = detailSkhp?.is_memiliki_pelanggaran_pidana
-        isKke = detailSkhp?.is_memiliki_pelanggaran_kode_etik
-        isDisiplin = detailSkhp?.is_memiliki_pelanggaran_disiplin
-        idPersonel = detailSkhp?.personel?.id
-
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        val date = formatter.parse(detailSkhp?.personel?.tanggal_lahir)
-        val desiredFormat =
-            DateTimeFormatter.ofPattern("dd, MMM yyyy", Locale("id", "ID")).format(date)
-
-        txt_ttl_personel_skhp_edit.text = "TTL :${detailSkhp?.personel?.tempat_lahir.toString()
-            .toUpperCase()}, $desiredFormat"
-
-        when (detailSkhp?.personel?.jenis_kelamin) {
-            "laki_laki" -> {
-                txt_jk_personel_skhp_edit.text = "Jenis Kelamin : Laki-Laki"
-            }
-            "perempuan" -> {
-                txt_jk_personel_skhp_edit.text = "Jenis Kelamin : Perempuan"
-            }
-        }
-        when (detailSkhp?.personel?.agama_sekarang) {
-            "islam" -> txt_agaman_personel_skhp_edit.text = "Agama : Islam"
-            "buddha" -> txt_agaman_personel_skhp_edit.text = "Agama : Buddha"
-            "katolik" -> txt_agaman_personel_skhp_edit.text = "Agama : Katolik"
-            "hindu" -> txt_agaman_personel_skhp_edit.text = "Agama : Hindu"
-            "protestan" -> txt_agaman_personel_skhp_edit.text = "Agama : Protestan"
-            "konghuchu" -> txt_agaman_personel_skhp_edit.text = "Agama : Konghuchu"
-        }
         var listKotaSkhp = listOf("Banjarmasin", "Banjarbaru")
         val adapterKota = ArrayAdapter(this, R.layout.item_spinner, listKotaSkhp)
         edt_kota_keluar_skhp_edit.setAdapter(adapterKota)
         edt_kota_keluar_skhp_edit.setOnItemClickListener { parent, view, position, id ->
             kotaSkhp = parent.getItemAtPosition(position).toString()
-        }*/
+        }
     }
 
     private fun updateSkhp(detailSkhp: SkhpMinResp?) {
@@ -275,6 +195,7 @@ class EditSkhpActivity : BaseActivity() {
                             finish()
                         },750)
                     } else {
+                        toast("${response.body()?.message}")
                         btn_save_skhp_edit.hideProgress(R.string.not_update)
                     }
                 }

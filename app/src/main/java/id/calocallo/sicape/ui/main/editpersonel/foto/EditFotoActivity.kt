@@ -24,8 +24,10 @@ import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_edit_foto.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -242,11 +244,13 @@ class EditFotoActivity : BaseActivity() {
                     mDepanFile = file
                     pb_foto_depan_edit.visible()
                     img_foto_depan_edit.gone()
-                    val requestBody = RequestBody.create(MediaType.parse("*/*"), mDepanFile)
+                    val requestBody = mDepanFile?.asRequestBody("*/*".toMediaTypeOrNull())
                     val filePart =
-                        MultipartBody.Part.createFormData("foto", mDepanFile!!.name, requestBody)
+                        requestBody?.let {
+                            MultipartBody.Part.createFormData("foto", mDepanFile!!.name, it)
+                        }
 //                    img_foto_depan_edit.setLocalImage(file, false)
-                    uploadEdit(detailPersonel, "foto_muka", filePart)
+                    filePart?.let { uploadEdit(detailPersonel, "foto_muka", it) }
                     //                    uploadFoto(mDepanFile)
                 }
                 KANAN -> {
@@ -254,10 +258,12 @@ class EditFotoActivity : BaseActivity() {
                     pb_foto_kanan_edit.visible()
                     img_foto_kanan_edit.gone()
 //                    uploadFoto(mKananFile)
-                    val requestBody = RequestBody.create(MediaType.parse("*/*"), mKananFile)
+                    val requestBody = mKananFile?.asRequestBody("*/*".toMediaTypeOrNull())
                     val filePart =
-                        MultipartBody.Part.createFormData("foto", mKananFile!!.name, requestBody)
-                    uploadEdit(detailPersonel, "foto_kanan", filePart)
+                        requestBody?.let {
+                            MultipartBody.Part.createFormData("foto", mKananFile!!.name, it)
+                        }
+                    filePart?.let { uploadEdit(detailPersonel, "foto_kanan", it) }
                     /*  NetworkConfig().getService().uploadKanan(
                         "Bearer ${sessionManager1.fetchAuthToken()}",
                         filePart
@@ -303,10 +309,12 @@ class EditFotoActivity : BaseActivity() {
 //                    uploadFoto(mKiriFile)
                     pb_foto_kiri_edit.visible()
                     img_foto_kiri_edit.gone()
-                    val requestBody = RequestBody.create(MediaType.parse("*/*"), mKiriFile)
+                    val requestBody = mKiriFile?.asRequestBody("*/*".toMediaTypeOrNull())
                     val filePart =
-                        MultipartBody.Part.createFormData("foto", mKiriFile!!.name, requestBody)
-                    uploadEdit(detailPersonel, "foto_kiri", filePart)
+                        requestBody?.let {
+                            MultipartBody.Part.createFormData("foto", mKiriFile!!.name, it)
+                        }
+                    filePart?.let { uploadEdit(detailPersonel, "foto_kiri", it) }
 
                     /* NetworkConfig().getService().uploadKiri(
                         "Bearer ${sessionManager1.fetchAuthToken()}",

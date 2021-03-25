@@ -113,6 +113,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
                             saveDocLpDisiplin(response.body()?.data?.lp)
                         }
                     } else {
+                        toast("${response.body()?.message}")
                         btn_generate_disiplin.hideProgress(R.string.failed_generate_doc)
                     }
                 }

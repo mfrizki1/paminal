@@ -95,6 +95,7 @@ class DetailSp4Activity : BaseActivity() {
                             }
                         }.show()
                     } else {
+                        toast("${response.body()?.message}")
                         btn_generate_sp4_detail.hideProgress(R.string.failed_generate_doc)
                     }
                 }
@@ -234,11 +235,8 @@ class DetailSp4Activity : BaseActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            Toast.makeText(
-                                this@DetailSp4Activity,
-                                R.string.failed_deleted,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast("${response.body()?.message}")
+
                         }
                     }
 

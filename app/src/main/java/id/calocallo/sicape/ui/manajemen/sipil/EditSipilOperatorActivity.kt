@@ -22,11 +22,8 @@ import id.calocallo.sicape.ui.kesatuan.polsek.SatPolsekActivity
 import id.calocallo.sicape.ui.main.addpersonal.AddPersonelActivity
 import id.calocallo.sicape.ui.manajemen.AddOperatorActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.action
-import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.showSnackbar
-import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.*
 import kotlinx.android.synthetic.main.activity_add_operator.*
 import kotlinx.android.synthetic.main.activity_add_personel.*
 import kotlinx.android.synthetic.main.activity_edit_sipil_operator.*
@@ -190,6 +187,7 @@ class EditSipilOperatorActivity : BaseActivity() {
                         }
                     }
                 } else {
+                    toast("${response.body()?.message}")
                     btn_save_operator_sipil_edit.hideProgress("Gagal Simpan")
                 }
             }

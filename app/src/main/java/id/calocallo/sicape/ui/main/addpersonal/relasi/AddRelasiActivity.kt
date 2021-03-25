@@ -194,7 +194,7 @@ class AddRelasiActivity : BaseActivity() {
             allPersonelModel
         ).enqueue(object : Callback<Base1Resp<AddPersonelResp>> {
             override fun onFailure(call: Call<Base1Resp<AddPersonelResp>>, t: Throwable) {
-               toast("$t")
+                toast("$t")
                 btn_next_relasi.hideProgress(R.string.not_save)
             }
 
@@ -208,9 +208,13 @@ class AddRelasiActivity : BaseActivity() {
                     btn_next_relasi.hideProgress(R.string.data_saved)
                     btn_next_relasi.showSnackbar(R.string.data_saved) {
                         action(R.string.next) {
-                            val intent = Intent(this@AddRelasiActivity, PersonelActivity::class.java).apply {
-                                this.putExtra(ID_SATKER,response.body()?.data?.personel?.satuan_kerja)
-                            }
+                            val intent =
+                                Intent(this@AddRelasiActivity, PersonelActivity::class.java).apply {
+                                    this.putExtra(
+                                        ID_SATKER,
+                                        response.body()?.data?.personel?.satuan_kerja
+                                    )
+                                }
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
                             finish()
@@ -218,7 +222,7 @@ class AddRelasiActivity : BaseActivity() {
                     }
                 } else {
                     btn_next_relasi.hideProgress(R.string.not_save)
-                 toast("${response.body()?.message}")
+                    toast("${response.body()?.message}")
                 }
             }
         })

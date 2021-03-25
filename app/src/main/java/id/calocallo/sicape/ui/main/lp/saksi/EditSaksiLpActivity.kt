@@ -20,6 +20,7 @@ import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_edit_saksi_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -249,9 +250,8 @@ class EditSaksiLpActivity : BaseActivity() {
                             }, 750)
                         } else {
                             btn_save_edit_saksi_lp.hideProgress(R.string.not_update)
-                            Toast.makeText(
-                                this@EditSaksiLpActivity, R.string.error, Toast.LENGTH_SHORT
-                            ).show()
+                            toast("${response.body()?.message}")
+
                         }
                     }
 
@@ -277,6 +277,7 @@ class EditSaksiLpActivity : BaseActivity() {
                         btn_save_edit_saksi_lp.hideProgress(R.string.data_updated)
                     } else {
                         btn_save_edit_saksi_lp.hideProgress(R.string.not_update)
+                        toast("${response.body()?.message}")
 
                     }
                 }
@@ -307,9 +308,8 @@ class EditSaksiLpActivity : BaseActivity() {
                         ).show()
                         finish()
                     } else {
-                        Toast.makeText(
-                            this@EditSaksiLpActivity, R.string.error_conn, Toast.LENGTH_SHORT
-                        ).show()
+                        toast("${response.body()?.message}")
+
                     }
                 }
 

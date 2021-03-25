@@ -18,6 +18,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.satker.AddSatkerActivity
 import kotlinx.android.synthetic.main.activity_polres.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -52,6 +53,13 @@ class PolresActivity : BaseActivity() {
         supportActionBar?.title = "Data Kepolisian Resort"
 
         getListPolres()
+        btn_add_single_satker_polres.setOnClickListener {
+            val intent  = Intent(this, AddSatkerActivity::class.java).apply {
+                this.putExtra(AddSatkerActivity.JENIS_SATKERN, "polres")
+            }
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
         Log.e("polresACtivity", "katPOLSEK : ${intent.extras?.getString(KatPersonelActivity.KAT_POLSEK)},\n" +
                 "KA_POLRES ${intent.extras?.getString(KatPersonelActivity.KAT_POLRES)},\n" +
                 "IS_POLSEK ${intent.extras?.getString(IS_POLSEK)},\n")

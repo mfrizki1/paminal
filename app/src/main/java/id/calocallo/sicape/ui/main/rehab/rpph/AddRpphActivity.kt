@@ -20,6 +20,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_rpph.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -84,6 +85,7 @@ class AddRpphActivity : BaseActivity() {
                                 }
                             }
                         } else {
+                            toast("${response.body()?.message}")
                             btn_save_rpph_add.hideProgress(R.string.not_save)
                         }
                     }

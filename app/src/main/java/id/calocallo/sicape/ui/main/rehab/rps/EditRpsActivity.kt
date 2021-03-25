@@ -21,6 +21,7 @@ import id.calocallo.sicape.network.response.RpsResp
 import id.calocallo.sicape.ui.main.choose.skhd.ChooseSkhdActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_edit_rps.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -93,6 +94,7 @@ class EditRpsActivity : BaseActivity() {
                             finish()
                         },750)
                     }else{
+                        toast("${response.body()?.message}")
                         btn_save_rps_edit.hideProgress(R.string.not_update)
                     }
                 }

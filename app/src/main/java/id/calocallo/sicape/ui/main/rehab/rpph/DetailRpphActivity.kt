@@ -97,6 +97,7 @@ class DetailRpphActivity : BaseActivity() {
                                 }
                             }.show()
                         } else {
+                            toast("${response.body()?.message}")
                             btn_generate_dok_rpph_detail.hideProgress(R.string.failed_generate_doc)
                         }
                     }
@@ -233,11 +234,7 @@ class DetailRpphActivity : BaseActivity() {
                                 finish()
                             }, 750)
                         } else {
-                            Toast.makeText(
-                                this@DetailRpphActivity,
-                                R.string.failed_deleted,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast("${response.body()?.message}")
                         }
                     }
 

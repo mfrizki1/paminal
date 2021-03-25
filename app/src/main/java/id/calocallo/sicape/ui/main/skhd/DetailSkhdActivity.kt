@@ -100,6 +100,7 @@ class DetailSkhdActivity : BaseActivity() {
                             negativeButton(R.string.tidak) { btn_generate_pidana.hideProgress(R.string.generate_dokumen) }
                         }.show()
                     } else {
+                        toast("${response.body()?.message}")
 
                     }
                 }
@@ -258,10 +259,7 @@ class DetailSkhdActivity : BaseActivity() {
                                 finish()
                             }, 750)
                         } else {
-                            Toast.makeText(
-                                this@DetailSkhdActivity, R.string.failed_deleted, Toast.LENGTH_SHORT
-                            ).show()
-
+                            toast("${response.body()?.message}")
                         }
                     }
 

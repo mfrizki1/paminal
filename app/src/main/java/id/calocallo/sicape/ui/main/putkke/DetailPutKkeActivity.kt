@@ -86,6 +86,7 @@ class DetailPutKkeActivity : BaseActivity() {
                                 }
                             }.show()
                         } else {
+                            toast("${response.body()?.message}")
                             btn_generate_put_kke_detail.hideProgress(R.string.failed_generate_doc)
                         }
                     }
@@ -267,9 +268,7 @@ class DetailPutKkeActivity : BaseActivity() {
                                 finish()
                             }, 750)
                         } else {
-                            Toast.makeText(
-                                this@DetailPutKkeActivity, R.string.error, Toast.LENGTH_SHORT
-                            ).show()
+                            toast("${response.body()?.message}")
                         }
                     }
 

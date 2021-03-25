@@ -126,11 +126,8 @@ class DetailLpKkeActivity : BaseActivity() {
                             saveDocLpKke(response.body()?.data?.lp)
                         }
                     } else {
-                        Toast.makeText(
-                            this@DetailLpKkeActivity,
-                            R.string.error_conn,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toast("${response.body()?.message}")
+
                         btn_generate_kke.hideProgress(R.string.failed_generate_doc)
 
                     }

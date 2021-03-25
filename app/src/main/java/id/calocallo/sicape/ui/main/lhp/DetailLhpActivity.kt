@@ -135,6 +135,7 @@ class DetailLhpActivity : BaseActivity() {
                         if (response.body()?.message == "Document lhp generated successfully") {
                             saveDocLhp(response.body()?.data?.lhp)
                         } else {
+                            toast("${response.body()?.message}")
                             btn_generate_lhp.hideProgress(R.string.failed_generate_doc)
                         }
                     }
@@ -398,6 +399,8 @@ class DetailLhpActivity : BaseActivity() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             finish()
                         }, 1000)
+                    }else{
+                        toast("${response.body()?.message}")
                     }
                 }
 

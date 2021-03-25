@@ -46,4 +46,5 @@ class NetworkConfig {
     fun getServSp4() = getRetrofit().create(ApiSp4::class.java)
     fun getServCatpers() = getRetrofit().create(ApiCatpers::class.java)
     fun getServSkhp() = getRetrofit().create(ApiSkhp::class.java)
+    fun getSatker() = getRetrofit().create(ApiSatker::class.java)
 }

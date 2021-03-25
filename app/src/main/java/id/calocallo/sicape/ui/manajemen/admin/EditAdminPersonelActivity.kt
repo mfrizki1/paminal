@@ -21,6 +21,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_admin_personel.*
 import kotlinx.android.synthetic.main.activity_add_operator.*
 import kotlinx.android.synthetic.main.activity_edit_admin_personel.*
@@ -103,8 +104,7 @@ class EditAdminPersonelActivity : BaseActivity() {
                     }
 
                 }else{
-                    Toast.makeText(this@EditAdminPersonelActivity, "Error Koneksi", Toast.LENGTH_SHORT)
-                        .show()
+                    toast("${response.body()?.message}")
                     btn_save_admin_edit.hideProgress(R.string.not_update)
                 }
             }

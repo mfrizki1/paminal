@@ -19,6 +19,7 @@ import id.calocallo.sicape.ui.login.KatUserActivity
 import id.calocallo.sicape.ui.manajemen.KatOperatorActivity
 import id.calocallo.sicape.ui.manajemen.admin.ListAdminPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
+import id.calocallo.sicape.utils.ext.toast
 import id.calocallo.sicape.utils.ext.visible
 import kotlinx.android.synthetic.main.fragment_profil.*
 import retrofit2.Call
@@ -103,8 +104,7 @@ class ProfilFragment : Fragment() {
                         startActivity(intent)
                         activity?.finish()
                     } else {
-                        Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
-                    }
+                        activity?.toast("${response.body()?.message}") }
                 }
 
             })

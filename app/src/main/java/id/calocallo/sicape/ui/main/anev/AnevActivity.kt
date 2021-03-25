@@ -54,6 +54,7 @@ class AnevActivity : BaseActivity() {
         supportActionBar?.title = "Analisa & Evaluasi"
         sessionManager1 = SessionManager1(this)
         pie = AnyChart.pie()
+        pie.animation(true)
         btn_filter_anev.setOnClickListener {
             filterView()
         }
@@ -283,6 +284,9 @@ class AnevActivity : BaseActivity() {
                 }
                 edtYear.text.isNullOrBlank() -> {
                     Toast.makeText(this, "Tahun Tidak Boleh Kosong", Toast.LENGTH_SHORT).show()
+                }
+                filterRentang.isNullOrEmpty()->{
+                    toast("Piih Salah Satu dari Rentang Waktu")
                 }
                 else -> {
 

@@ -100,6 +100,7 @@ class ListLapbulActivity : BaseActivity() {
 //                    if (response.isSuccessful) {
                         Log.e("dataLapbul","${response.body()?.data?.lapbul}")
                         alert(R.string.download) {
+                            this.cancelable = false
                             positiveButton(R.string.iya) {
                                 btn_generate_lapbul.hideProgress(R.string.success_generate_doc)
                                 downloadLapbul(response.body()?.data?.lapbul)
@@ -109,6 +110,7 @@ class ListLapbulActivity : BaseActivity() {
                             }
                         }.show()
                     } else {
+                        toast("${response.body()?.message}")
                         btn_generate_lapbul.hideProgress(R.string.failed_generate_doc)
                     }
                 }
@@ -127,7 +129,7 @@ class ListLapbulActivity : BaseActivity() {
                     if (response.body()?.message == "Lapbul document deleted successfully") {
                         btn_generate_lapbul.hideProgress(R.string.generate_dokumen)
                     } else {
-                        Toast.makeText(this@ListLapbulActivity, R.string.error, Toast.LENGTH_SHORT).show()
+                        toast("${response.body()?.message}")
                     }
                 }
 

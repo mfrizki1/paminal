@@ -92,6 +92,7 @@ class DetailSkttActivity : BaseActivity() {
                                 }
                             }.show()
                         } else {
+                            toast("${response.body()?.message}")
                             btn_generate_sktt.hideProgress(R.string.failed_generate_doc)
                         }
                     }
@@ -226,11 +227,7 @@ class DetailSkttActivity : BaseActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            Toast.makeText(
-                                this@DetailSkttActivity,
-                                R.string.failed_deleted,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast("${response.body()?.message}")
                         }
                     }
 

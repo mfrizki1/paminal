@@ -15,6 +15,7 @@ import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_edit_pasal_dilanggar.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -115,6 +116,7 @@ class EditPasalDilanggarActivity : BaseActivity() {
                             finish()
                         }, 500)
                     } else {
+                        toast("${response.body()?.message}")
                         btn_save_single_pasal_edit.hideDrawable(R.string.not_update)
                     }
                 }
@@ -136,6 +138,7 @@ class EditPasalDilanggarActivity : BaseActivity() {
                     if(response.body()?.message == "Data pasal dilanggar removed succesfully"){
                         finish()
                     }else{
+                        toast("${response.body()?.message}")
                         Toast.makeText(this@EditPasalDilanggarActivity, R.string.error_conn, Toast.LENGTH_SHORT).show()
                     }
                 }

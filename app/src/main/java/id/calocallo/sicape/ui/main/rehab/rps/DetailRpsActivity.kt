@@ -103,6 +103,7 @@ class DetailRpsActivity : BaseActivity() {
                             }
                         }.show()
                     } else {
+                        toast("${response.body()?.message}")
                         btn_generate_rps_detail.hideProgress(R.string.failed_generate_doc)
                     }
                 }

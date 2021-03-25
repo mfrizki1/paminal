@@ -16,6 +16,7 @@ import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.utils.hideKeyboard
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import id.rizmaulana.sheenvalidator.lib.SheenValidator
 import kotlinx.android.synthetic.main.activity_change_pass.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -78,6 +79,7 @@ class ChangePassActivity : BaseActivity() {
                                 }
                             }
                         } else {
+                            toast("${response.body()?.message}")
                             btn_save_change_pass.hideProgress("Password Harus Sama")
                         }
                     }

@@ -19,11 +19,8 @@ import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.action
-import id.calocallo.sicape.utils.ext.gone
-import id.calocallo.sicape.utils.ext.showSnackbar
-import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.*
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.*
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.txt_jabatan_saksi_lp_add
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.txt_kesatuan_saksi_lp_add
@@ -134,6 +131,7 @@ class AddSaksiLpActivity : BaseActivity() {
                             if (response.body()?.message == "Data saksi sipil saved succesfully") {
                                 gotoListSaksi(response.body()?.data?.saksi?.id_lp)
                             } else {
+                                toast("${response.body()?.message}")
                                 btn_save_add_saksi.hideProgress(R.string.not_save)
                             }
                         }
@@ -157,6 +155,7 @@ class AddSaksiLpActivity : BaseActivity() {
                             if (response.body()?.message == "Data saksi personel saved succesfully") {
                                 gotoListSaksi(response.body()?.data?.saksi?.id_lp)
                             } else {
+                                toast("${response.body()?.message}")
                                 btn_save_add_saksi.hideProgress(R.string.not_save)
 
                             }

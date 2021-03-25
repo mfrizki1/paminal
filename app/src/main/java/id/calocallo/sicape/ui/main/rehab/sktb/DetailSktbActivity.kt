@@ -99,6 +99,7 @@ class DetailSktbActivity : BaseActivity() {
                                 }
                             }.show()
                         } else {
+                            toast("${response.body()?.message}")
                             btn_generate_sktb_detail.hideProgress(R.string.failed_generate_doc)
                         }
                     }
@@ -235,11 +236,8 @@ class DetailSktbActivity : BaseActivity() {
                                 finish()
                             }, 750)
                         } else {
-                            Toast.makeText(
-                                this@DetailSktbActivity,
-                                R.string.failed_deleted,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            toast("${response.body()?.message}")
+
                         }
                     }
 

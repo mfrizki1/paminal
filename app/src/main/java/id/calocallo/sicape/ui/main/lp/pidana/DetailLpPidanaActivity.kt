@@ -125,11 +125,8 @@ class DetailLpPidanaActivity : BaseActivity() {
 
                         }
                     } else {
-                        Toast.makeText(
-                            this@DetailLpPidanaActivity,
-                            R.string.error_conn,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toast("${response.body()?.message}")
+
                         btn_generate_pidana.hideProgress(R.string.failed_generate_doc)
 
                     }

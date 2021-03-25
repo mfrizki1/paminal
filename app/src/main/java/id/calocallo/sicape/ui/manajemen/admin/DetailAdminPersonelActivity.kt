@@ -16,6 +16,7 @@ import id.calocallo.sicape.network.response.UserResp
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.alert
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_detail_admin_personel.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -151,11 +152,7 @@ class DetailAdminPersonelActivity : BaseActivity() {
                         ).show()
                         finish()
                     } else {
-                        Toast.makeText(
-                            this@DetailAdminPersonelActivity,
-                            R.string.failed_deleted,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toast("${response.body()?.message}")
                     }
                 }
             })
