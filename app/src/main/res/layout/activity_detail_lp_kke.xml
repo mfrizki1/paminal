@@ -81,6 +81,7 @@
             android:id="@+id/ll_detail_personel_kke"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <TextView
@@ -126,6 +127,105 @@
                 android:textSize="@dimen/text_16" />
 
             <include layout="@layout/layout_separator" />
+
+        </LinearLayout>
+        <!--sipil pelapor-->
+        <LinearLayout
+            android:id="@+id/ll_detail_sipil_kke"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sipil Pelapor" />
+
+            <TextView
+                android:id="@+id/txt_detail_nama_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Nama : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_ttl_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="TTL : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_jk_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Jenis Kelamin : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_agama_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Agama : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_pekerjaan_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Pekerjaan : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_kwg_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Kewarganegaraan : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_alamat_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Alamat : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_no_telp_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="No Telp : "
+                android:textSize="@dimen/text_16" />
+
+            <TextView
+                android:id="@+id/txt_detail_nik_sipil_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:layout_marginTop="@dimen/space_half"
+                android:text="Nik Ktp : "
+                android:textSize="@dimen/text_16" />
+
+            <include layout="@layout/line_separator" />
+
 
         </LinearLayout>
 
@@ -253,49 +353,53 @@
             android:layout_marginTop="@dimen/space_half"
             android:text="Jabatan : "
             android:textSize="@dimen/text_16" />
+
         <TextView
             android:id="@+id/txt_detail_kesatuan_pimpinan_kke"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_half"
-            android:visibility="gone"
             android:text="Kesatuan : "
-            android:textSize="@dimen/text_16" />
+            android:textSize="@dimen/text_16"
+            android:visibility="gone" />
 
         <include layout="@layout/layout_separator" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_kke"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Button"
-            android:text="Edit Data Laporan"/>
+            android:text="Edit Data Laporan" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_pasal_kke"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Button"
-            android:text="Edit Data Pasal Yang Dilanggar"/>
+            android:text="Edit Data Pasal Yang Dilanggar" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_edit_saksi_kke"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Button"
-            android:text="Edit Data Saksi"/>
+            android:text="Edit Data Saksi" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_generate_kke"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Button"
-            android:text="@string/generate_dokumen"/>
+            android:text="@string/generate_dokumen" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_lihat_dok_kke"
+            style="@style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.Button"
-            android:text="Lihat Dokumen"/>
+            android:text="Lihat Dokumen" />
     </LinearLayout>
 
 

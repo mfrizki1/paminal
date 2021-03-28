@@ -276,5 +276,24 @@ interface ApiLp {
         @Body lpPidanaReq: LpPidanaReq
     ): Call<Base1Resp<DokLpResp>>
 
+    @Headers(ACCEPT)
+    @POST("lp/kode/etik/{jenis_lhp}/lhp/pelapor/{jenis_pelapor}")
+    fun addLpKkeWithLhp(
+        @Header("Authorization") tokenBearer: String,
+        @Path("jenis_pelapor") jenis_pelapor: String?,
+        @Path("jenis_lhp") jenis_lhp: String?,
+        @Body lpKkeReq: LpKkeReq
+    ): Call<Base1Resp<DokLpResp>>
+
+    @Headers(ACCEPT)
+    @PATCH("lp/kode/etik/{id_lp}/{jenis_lhp}/lhp/pelapor/{jenis_pelapor}")
+    fun updLpKke(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Path("jenis_pelapor") jenis_pelapor: String?,
+        @Path("jenis_lhp") jenis_lhp: String?,
+        @Body lpKkeReq: LpKkeReq
+    ): Call<Base1Resp<DokLpResp>>
+
 
 }

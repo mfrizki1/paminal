@@ -181,7 +181,6 @@ class DetailLpKkeActivity : BaseActivity() {
 
     private fun viewDokKke(lp: LpResp?) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(lp?.dokumen?.url)))
-//        finish()
     }
 
     private fun apiDetailKKe(kke: LpMinResp?) {
@@ -226,51 +225,92 @@ class DetailLpKkeActivity : BaseActivity() {
         txt_detail_isi_laporan_kke.text = detailKKe?.detail_laporan?.isi_laporan
 
         //terlapor
-        txt_detail_nama_terlapor_kke.text = "Nama : ${detailKKe?.personel_terlapor?.nama}"
-        txt_detail_pangkat_nrp_terlapor_kke.text =
-            "Pangkat : ${
-                detailKKe?.personel_terlapor?.pangkat.toString()
-                    .toUpperCase()
-            }, NRP : ${detailKKe?.personel_terlapor?.nrp}"
-        txt_detail_jabatan_terlapor_kke.text = "Jabatan : ${detailKKe?.personel_terlapor?.jabatan}"
-        txt_detail_kesatuan_terlapor_kke.text =
-            "Kesatuan : ${
-                detailKKe?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                    .toUpperCase()
-            }"
+        when {
+            detailKKe?.personel_terlapor != null -> {
+                txt_detail_nama_terlapor_kke.text = "Nama : ${detailKKe.personel_terlapor?.nama}"
+                txt_detail_pangkat_nrp_terlapor_kke.text =
+                    "Pangkat : ${
+                        detailKKe.personel_terlapor?.pangkat.toString()
+                            .toUpperCase()
+                    }, NRP : ${detailKKe.personel_terlapor?.nrp}"
+                txt_detail_jabatan_terlapor_kke.text =
+                    "Jabatan : ${detailKKe.personel_terlapor?.jabatan}"
+                txt_detail_kesatuan_terlapor_kke.text =
+                    "Kesatuan : ${
+                        detailKKe.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+            detailKKe?.personel_terlapor_lhp != null -> {
+                txt_detail_nama_terlapor_kke.text =
+                    "Nama : ${detailKKe.personel_terlapor_lhp?.personel?.nama}"
+                txt_detail_pangkat_nrp_terlapor_kke.text =
+                    "Pangkat : ${
+                        detailKKe.personel_terlapor_lhp?.personel?.pangkat.toString()
+                            .toUpperCase()
+                    }, NRP : ${detailKKe.personel_terlapor_lhp?.personel?.nrp}"
+                txt_detail_jabatan_terlapor_kke.text =
+                    "Jabatan : ${detailKKe.personel_terlapor_lhp?.personel?.jabatan}"
+                txt_detail_kesatuan_terlapor_kke.text =
+                    "Kesatuan : ${
+                        detailKKe.personel_terlapor_lhp?.personel?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+        }
+        when {
+            detailKKe?.status_pelapor == "sipil" -> {
+                ll_detail_sipil_kke.visible()
+                txt_detail_nama_sipil_kke.text = "Nama: ${detailKKe.nama_pelapor}"
+                txt_detail_ttl_sipil_kke.text =
+                    "TTL: ${detailKKe.tempat_lahir_pelapor}, ${formatterDiffTanggal(detailKKe.tanggal_lahir_pelapor)}"
+                txt_detail_jk_sipil_kke.text = "Jenis Kelamin: ${detailKKe.jenis_kelamin_pelapor}"
+                txt_detail_agama_sipil_kke.text = "Agama: ${detailKKe.agama_pelapor}"
+                txt_detail_pekerjaan_sipil_kke.text = "Pekerjaan: ${detailKKe.pekerjaan_pelapor}"
+                txt_detail_kwg_sipil_kke.text =
+                    "Kewarganegaraan: ${detailKKe.kewarganegaraan_pelapor}"
+                txt_detail_alamat_sipil_kke.text = "Alamat: ${detailKKe.nama_pelapor}"
+                txt_detail_no_telp_sipil_kke.text = "No Telepon: ${detailKKe.nama_pelapor}"
+                txt_detail_nik_sipil_kke.text = "NIK KTP: ${detailKKe.nama_pelapor}"
+            }
+            detailKKe?.status_pelapor == "personel" -> {
+                ll_detail_personel_kke.visible()
+                txt_detail_nama_pelapor_kke.text =
+                    "Nama : ${detailKKe.personel_pelapor?.nama}"
+                txt_detail_pangkat_nrp_pelapor_kke.text =
+                    "Pangkat : ${
+                        detailKKe.personel_pelapor?.pangkat.toString()
+                            .toUpperCase()
+                    }, NRP : ${detailKKe.personel_pelapor?.nrp}"
+                txt_detail_jabatan_pelapor_kke.text =
+                    "Jabatan : ${detailKKe.personel_pelapor?.jabatan}"
+                txt_detail_kesatuan_pelapor_kke.text =
+                    "Kesatuan : ${
+                        detailKKe.personel_pelapor?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+        }
+
 
         //pelapor
-        txt_detail_nama_pelapor_kke.text =
-            "Nama : ${detailKKe?.detail_laporan?.personel_pelapor?.nama}"
-        txt_detail_pangkat_nrp_pelapor_kke.text =
-            "Pangkat : ${
-                detailKKe?.detail_laporan?.personel_pelapor?.pangkat.toString()
-                    .toUpperCase()
-            }, NRP : ${detailKKe?.detail_laporan?.personel_pelapor?.nrp}"
-        txt_detail_jabatan_pelapor_kke.text =
-            "Jabatan : ${detailKKe?.detail_laporan?.personel_pelapor?.jabatan}"
-        txt_detail_kesatuan_pelapor_kke.text =
-            "Kesatuan : ${
-                detailKKe?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
-                    .toUpperCase()
-            }"
 
         txt_detail_alat_bukti_kke.text = detailKKe?.detail_laporan?.alat_bukti
         txt_detail_kota_buat_kke.text = "Kota : ${detailKKe?.kota_buat_laporan}"
         txt_detail_tgl_buat_kke.text =
             "Tanggal : ${formatterTanggal(detailKKe?.tanggal_buat_laporan)}"
         txt_detail_nama_pimpinan_kke.text =
-            "Nama : ${detailKKe?.detail_laporan?.nama_kabid_propam}"
+            "Nama : ${detailKKe?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_kke.text =
             "Pangkat : ${
-                detailKKe?.detail_laporan?.pangkat_kabid_propam.toString()
+                detailKKe?.pangkat_yang_mengetahui.toString()
                     .toUpperCase()
-            }, NRP : ${detailKKe?.detail_laporan?.nrp_kabid_propam}"
+            }, NRP : ${detailKKe?.nrp_yang_mengetahui}"
 //        txt_detail_kesatuan_pimpinan_kke.text =
 //            "Kesatuan : ${detailKKe?.kesatuan_yang_mengetahui.toString().toUpperCase()}"
         txt_detail_jabatan_pimpinan_kke.text =
             "Jabatan : ${
-                detailKKe?.detail_laporan?.jabatan_kabid_propam.toString()
+                detailKKe?.jabatan_yang_mengetahui.toString()
                     .toUpperCase()
             }"
 
@@ -388,7 +428,7 @@ class DetailLpKkeActivity : BaseActivity() {
                     } else {
                         Toast.makeText(
                             this@DetailLpKkeActivity,
-                          "${response.body()?.message}",
+                            "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

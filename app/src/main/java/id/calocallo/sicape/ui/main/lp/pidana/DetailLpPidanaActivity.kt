@@ -237,13 +237,6 @@ class DetailLpPidanaActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getDetailPidana(pidana: LpResp?) {
-        /*if (pidana?.status_pelapor == "polisi") {
-            ll_detail_personel_pidana.visible()
-            ll_detail_sipil_pidana.gone()
-        } else {
-            ll_detail_personel_pidana.gone()
-            ll_detail_sipil_pidana.visible()
-        }*/
         if(pidana?.lhp != null){
             ll_ref_lp_detail.visible()
             txt_ref_lp_detail.text = "No LHP: ${pidana?.lhp?.no_lhp}"
