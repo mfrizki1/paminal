@@ -60,7 +60,7 @@ class OtherAddLhpActivity : BaseActivity() {
         lhpReq.kesimpulan = lhpDataManager.getKesimpulanLHP()
         lhpReq.rekomendasi = lhpDataManager.getRekomendasiLHP()
         lhpReq.tugas_pokok = lhpDataManager.getTugasPokokLHP()
-        lhpReq.isTerbukti = lhpDataManager.getIsTerbukti()
+        lhpReq.is_terbukti = lhpDataManager.getIsTerbukti()
         lhpReq.referensi_penyelidikan = lhpDataManager.getListRefLp()
         lhpReq.personel_penyelidik = lhpDataManager.getListLidikLHP()
         lhpReq.saksi = lhpDataManager.getListSaksiLHP()

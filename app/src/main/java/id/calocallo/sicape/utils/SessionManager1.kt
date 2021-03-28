@@ -742,6 +742,16 @@ class SessionManager1(context: Context) {
         return prefsLP.getString("JENIS_LP", null)
     }
 
+    fun setWithLhp(isLhp: Boolean) {
+        val editor = prefsLP.edit()
+        editor.putBoolean("IS_LHP", isLhp)
+        editor.apply()
+    }
+
+    fun getWithLhp(): Boolean? {
+        return prefsLP.getBoolean("IS_LHP", false)
+    }
+
     fun setNoLP(noLP: String) {
         val editor = prefsLP.edit()
         editor.putString("NO_LP", noLP)
@@ -751,6 +761,17 @@ class SessionManager1(context: Context) {
 
     fun getNoLP(): String? {
         return prefsLP.getString("NO_LP", null)
+    }
+
+    fun setIdLhp(idLhp: Int) {
+        val editor = prefsLP.edit()
+        editor.putInt("ID_LHP", idLhp)
+        editor.apply()
+    }
+
+
+    fun getIdLhp(): Int? {
+        return prefsLP.getInt("ID_LHP", 0)
     }
 
     fun setTglBuatLp(tgl: String) {
@@ -1023,6 +1044,16 @@ class SessionManager1(context: Context) {
 
     fun getPembukaanLpLP(): String? {
         return prefsLP.getString("PEMBUAKAAN_LAPORAN", null)
+    }
+
+    fun setJenisPelapor(jenis_pelapor: String) {
+        val editor = prefsLP.edit()
+        editor.putString("JENIS_PELAPOR", jenis_pelapor)
+        editor.apply()
+    }
+
+    fun getJenisPelapor(): String? {
+        return prefsLP.getString("JENIS_PELAPOR", null)
     }
 
 

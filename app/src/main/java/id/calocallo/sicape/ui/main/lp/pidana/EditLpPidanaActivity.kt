@@ -21,13 +21,18 @@ import id.calocallo.sicape.network.request.LpPidanaReq
 import id.calocallo.sicape.network.response.*
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
-import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
+import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
+import id.calocallo.sicape.ui.main.lp.AddLpActivity
+import id.calocallo.sicape.utils.ext.*
+import kotlinx.android.synthetic.main.activity_add_lp.*
 import kotlinx.android.synthetic.main.activity_edit_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class EditLpPidanaActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
@@ -39,11 +44,15 @@ class EditLpPidanaActivity : BaseActivity() {
         const val EDIT_PIDANA = "EDIT_PIDANA"
         const val REQ_PELAPOR = 202
         const val REQ_TERLAPOR = 101
+        const val REQ_LHP = 102
+        const val REQ_TERLAPOR_LHP = 103
+        const val IS_LHP_PERSONEL = "IS_LHP_PERSONEL"
 
     }
 
     private var changedIdPelapor: Int? = null
     private var changedIdTerlapor: Int? = null
+    private var _idLhp: Int? = null
     private var namaSatker: String? = null
     private var namaSipil: String? = null
     private var jkSipil: String? = null
@@ -70,6 +79,13 @@ class EditLpPidanaActivity : BaseActivity() {
         val pidana = intent.extras?.getParcelable<LpResp>(EDIT_PIDANA)
         getViewEditPidana(pidana)
 
+        btn_choose_lhp_lp_edit.setOnClickListener {
+
+            val intent = Intent(this, ChooseLhpActivity::class.java)
+            startActivityForResult(intent, REQ_LHP)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
         btn_choose_personel_pelapor_pidana_edit.setOnClickListener {
             val intent = Intent(this, KatPersonelActivity::class.java)
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
@@ -77,21 +93,13 @@ class EditLpPidanaActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        btn_choose_personel_terlapor_pidana_edit.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
-            intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
-            startActivityForResult(intent, REQ_TERLAPOR)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
+
         btn_save_edit_lp_pidana.attachTextChangeAnimator()
         bindProgressButton(btn_save_edit_lp_pidana)
         btn_save_edit_lp_pidana.setOnClickListener {
             btn_save_edit_lp_pidana.showProgress {
                 progressColor = Color.WHITE
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                btn_save_edit_lp_pidana.hideDrawable(R.string.save)
-            }, 3000)
             updateLpPidana(pidana)
         }
 
@@ -101,7 +109,7 @@ class EditLpPidanaActivity : BaseActivity() {
         btn_sipil_edit.setOnClickListener {
             sipilAlertDialog = LayoutInflater.from(this)
                 .inflate(R.layout.item_sipil_pidana, null, false)
-            launchSipilView()
+            launchSipilView(pidana)
 //            }
         }
         val adapterSatker =
@@ -116,17 +124,14 @@ class EditLpPidanaActivity : BaseActivity() {
     }
 
     private fun updateLpPidana(pidana: LpResp?) {
-        changedIdTerlapor = pidana?.personel_terlapor?.id
-        editLpPidana.nama_kep_spkt = edt_nama_pimpinan_bidang_edit.text.toString()
-        editLpPidana.pangkat_kep_spkt = edt_pangkat_pimpinan_bidang_edit.text.toString()
-        editLpPidana.nrp_kep_spkt = edt_nrp_pimpinan_bidang_edit.text.toString()
-        editLpPidana.jabatan_kep_spkt = edt_jabatan_pimpinan_bidang_edit.text.toString()
-//        editLpPidana.no_lp = edt_no_lp_pidana_edit.text.toString()
-//        editLpPidana.pembukaan_laporan = edt_pembukaan_laporan_pidana_edit.text.toString()
+        editLpPidana.nama_yang_mengetahui = edt_nama_pimpinan_bidang_edit.text.toString()
+        editLpPidana.pangkat_yang_mengetahui = edt_pangkat_pimpinan_bidang_edit.text.toString()
+        editLpPidana.nrp_yang_mengetahui = edt_nrp_pimpinan_bidang_edit.text.toString()
+        editLpPidana.jabatan_yang_mengetahui = edt_jabatan_pimpinan_bidang_edit.text.toString()
+        editLpPidana.no_lp = edt_no_lp_pidana_edit.text.toString()
         editLpPidana.isi_laporan = edt_isi_laporan_pidana_edit.text.toString()
         editLpPidana.kota_buat_laporan = edt_kota_buat_edit_lp.text.toString()
         editLpPidana.tanggal_buat_laporan = edt_tgl_buat_edit.text.toString()
-        editLpPidana.id_satuan_kerja = 123
         editLpPidana.uraian_pelanggaran = edt_uraian_pelanggaran_pidana_edit.text.toString()
 //        lpPidanaReq.id_personel_operator = sessionManager.fetchUser()?.id
 //        lpPidanaReq.id_satuan_kerja = sessionManager.getJenisLP().toString().toLowerCase()
@@ -141,8 +146,9 @@ class EditLpPidanaActivity : BaseActivity() {
 //            editLpPidana.id_personel_terlapor = pidana?.personel_pelapor?.id
         } else {
         }*/
+        editLpPidana.id_personel_pelapor = changedIdPelapor
         editLpPidana.id_personel_terlapor = changedIdTerlapor
-
+        editLpPidana.id_personel_terlapor_lhp = changedIdTerlapor
         editLpPidana.nama_pelapor = namaSipil
         editLpPidana.agama_pelapor = agamaSipil
         editLpPidana.pekerjaan_pelapor = pekerjaanSipil
@@ -154,14 +160,27 @@ class EditLpPidanaActivity : BaseActivity() {
         editLpPidana.tempat_lahir_pelapor = tmptSipil
         editLpPidana.tanggal_lahir_pelapor = tglSipil
         editLpPidana.waktu_buat_laporan = edt_pukul_buat_edit.text.toString()
-        apiUpdPidana(pidana)
+        editLpPidana.id_lhp = _idLhp
+        var jenisLhp: String? = null
+        if (pidana?.is_ada_lhp == 1) {
+            jenisLhp = "dengan"
+        } else {
+            jenisLhp = "tanpa"
+        }
+        apiUpdPidana(pidana, jenisLhp)
 
         Log.e("update", "$editLpPidana")
     }
 
-    private fun apiUpdPidana(pidana: LpResp?) {
+    private fun apiUpdPidana(pidana: LpResp?, jenisLhp: String) {
         NetworkConfig().getServLp()
-            .updLpPidana("Bearer ${sessionManager1.fetchAuthToken()}", pidana?.id, editLpPidana)
+            .updLpPidana(
+                "Bearer ${sessionManager1.fetchAuthToken()}",
+                pidana?.id,
+                pidana?.status_pelapor,
+                jenisLhp,
+                editLpPidana
+            )
             .enqueue(object :
                 Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
@@ -191,8 +210,10 @@ class EditLpPidanaActivity : BaseActivity() {
                         }
                         finish()
                     } else {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_edit_lp_pidana.hideDrawable(R.string.save)
+                        }, 1000)
                         btn_save_edit_lp_pidana.hideDrawable(R.string.not_update)
-
                     }
                 }
             })
@@ -200,51 +221,159 @@ class EditLpPidanaActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getViewEditPidana(pidana: LpResp?) {
-        //general
-        edt_no_lp_pidana_edit.setText(pidana?.no_lp)
-//        edt_pembukaan_laporan_pidana_edit.setText(pidana?.pembukaan_laporan)
-        edt_isi_laporan_pidana_edit.setText(pidana?.detail_laporan?.isi_laporan)
+        changedIdPelapor = pidana?.personel_pelapor?.id
+        _idLhp = pidana?.lhp?.id
 
-        //dibuat
+        edt_no_lp_pidana_edit.setText(pidana?.no_lp)
+        txt_no_lhp_lp_edit.setText(pidana?.lhp?.no_lhp)
+
+        when {
+            pidana?.personel_terlapor != null -> {
+                changedIdTerlapor = pidana.personel_terlapor?.id
+                txt_nama_terlapor_lp_edit.text = "Nama : ${pidana?.personel_terlapor?.nama}"
+                txt_pangkat_terlapor_lp_edit.text =
+                    "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}"
+                txt_nrp_terlapor_lp_edit.text = "NRP : ${pidana?.personel_terlapor?.nrp}"
+                txt_jabatan_terlapor_lp_edit.text =
+                    "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
+                txt_kesatuan_terlapor_lp_edit.text =
+                    "Kesatuan : ${
+                        pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+            pidana?.personel_terlapor_lhp != null -> {
+                changedIdTerlapor = pidana.personel_terlapor_lhp?.id
+                txt_nama_terlapor_lp_edit.text =
+                    "Nama : ${pidana?.personel_terlapor_lhp?.personel?.nama}"
+                txt_pangkat_terlapor_lp_edit.text =
+                    "Pangkat : ${
+                        pidana?.personel_terlapor_lhp?.personel?.pangkat.toString().toUpperCase()
+                    }"
+                txt_nrp_terlapor_lp_edit.text =
+                    "NRP : ${pidana?.personel_terlapor_lhp?.personel?.nrp}"
+                txt_jabatan_terlapor_lp_edit.text =
+                    "Jabatan : ${pidana?.personel_terlapor_lhp?.personel?.jabatan}"
+                txt_kesatuan_terlapor_lp_edit.text =
+                    "Kesatuan : ${
+                        pidana?.personel_terlapor_lhp?.personel?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+        }
+        when (pidana?.status_pelapor) {
+            "sipil" -> {
+                ll_personel_edit.gone()
+                ll_sipil_edit.visible()
+                txt_nama_sipil_pidana_lp_edit.text = "Nama :  ${pidana.nama_pelapor}"
+                txt_ttl_sipil_pidana_lp_edit.text =
+                    "TTL : ${pidana.tempat_lahir_pelapor}, ${formatterDiffTanggal(pidana.tanggal_lahir_pelapor)}"
+                txt_agama_sipil_pidana_lp_edit.text = "Agama : ${pidana.agama_pelapor}"
+                txt_pekerjaan_sipil_pidana_lp_edit.text =
+                    "Pekerjaan : ${pidana.pekerjaan_pelapor}"
+                txt_kwg_sipil_pidana_lp_edit.text =
+                    "Kewarganegaraan : ${pidana.kewarganegaraan_pelapor}"
+                txt_alamat_sipil_pidana_lp_edit.text = "Alamat : ${pidana.alamat_pelapor}"
+                txt_no_telp_sipil_pidana_lp_edit.text =
+                    "No Telepon : ${pidana.no_telp_pelapor}"
+                txt_nik_ktp_sipil_pidana_lp_edit.text =
+                    "NIK KTP : ${pidana.nik_ktp_pelapor}"
+                txt_jk_sipil_pidana_lp_edit.text =
+                    "Jenis Kelamin : ${pidana.jenis_kelamin_pelapor}"
+
+                namaSipil = pidana.nama_pelapor
+                jkSipil = pidana.jenis_kelamin_pelapor
+                agamaSipil = pidana.agama_pelapor
+                noTelpSipil = pidana.no_telp_pelapor
+                nikSipil = pidana.nik_ktp_pelapor
+                alamatSipil = pidana.alamat_pelapor
+                kwgSipil = pidana.kewarganegaraan_pelapor
+                pekerjaanSipil = pidana.pekerjaan_pelapor
+                tglSipil = reverseTanggal(pidana.tanggal_lahir_pelapor)
+                tmptSipil = pidana.tempat_lahir_pelapor
+            }
+            "personel" -> {
+                ll_personel_edit.visible()
+                ll_sipil_edit.gone()
+                txt_nama_pelapor_pidana_lp_edit.text = "Nama: ${pidana.personel_pelapor?.nama}"
+                txt_pangkat_pelapor_pidana_lp_edit.text =
+                    "Pangkat: ${pidana.personel_pelapor?.pangkat.toString().toUpperCase()}"
+                txt_nrp_pelapor_pidana_lp_edit.text = "NRP: ${pidana.personel_pelapor?.nrp}"
+                txt_jabatan_pelapor_pidana_lp_edit.text =
+                    "Jabatan: ${pidana.personel_pelapor?.jabatan}"
+                txt_kesatuan_pelapor_pidana_lp_edit.text = "Kesatuan: ${
+                    pidana.personel_pelapor?.satuan_kerja?.kesatuan.toString().toUpperCase()
+                }"
+            }
+        }
+        if (pidana?.is_ada_lhp == 1) {
+            ll_pick_lhp_lp_edit.visible()
+        }
+        btn_choose_personel_terlapor_pidana_edit.setOnClickListener {
+            if (_idLhp == null || _idLhp == 0) {
+                val intent = Intent(this, KatPersonelActivity::class.java)
+                intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
+                startActivityForResult(intent, REQ_TERLAPOR)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            } else {
+                val intent = Intent(this, ChoosePersonelActivity::class.java).apply {
+                    this.putExtra(AddLpActivity.IS_LHP_PERSONEL, _idLhp!!)
+                }
+                startActivityForResult(intent, REQ_TERLAPOR_LHP)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
+            }
+        }
+
+        edt_isi_laporan_pidana_edit.setText(pidana?.detail_laporan?.isi_laporan)
+        edt_uraian_pelanggaran_pidana_edit.setText(pidana?.uraian_pelanggaran)
         edt_kota_buat_edit_lp.setText(pidana?.kota_buat_laporan)
         edt_tgl_buat_edit.setText(pidana?.tanggal_buat_laporan)
         edt_pukul_buat_edit.setText(pidana?.detail_laporan?.waktu_buat_laporan)
 
-        /*sipil*/
-        namaSipil = pidana?.detail_laporan?.nama_pelapor
-        jkSipil = pidana?.detail_laporan?.jenis_kelamin_pelapor
-        agamaSipil = pidana?.detail_laporan?.agama_pelapor
-        noTelpSipil = pidana?.detail_laporan?.no_telp_pelapor
-        nikSipil = pidana?.detail_laporan?.nik_ktp_pelapor
-        alamatSipil = pidana?.detail_laporan?.alamat_pelapor
-        kwgSipil = pidana?.detail_laporan?.kewarganegaraan_pelapor
-        pekerjaanSipil = pidana?.detail_laporan?.pekerjaan_pelapor
-        tglSipil = pidana?.detail_laporan?.tanggal_lahir_pelapor
-        tmptSipil = pidana?.detail_laporan?.tempat_lahir_pelapor
-
-        txt_nama_sipil_pidana_lp_edit.text = "Nama :  ${pidana?.detail_laporan?.nama_pelapor}"
-        txt_ttl_sipil_pidana_lp_edit.text =
-            "TTL : ${pidana?.detail_laporan?.tempat_lahir_pelapor}, ${formatterTanggal(pidana?.detail_laporan?.tanggal_lahir_pelapor)}"
-        txt_agama_sipil_pidana_lp_edit.text = "Agama : ${pidana?.detail_laporan?.agama_pelapor}"
-        txt_pekerjaan_sipil_pidana_lp_edit.text =
-            "Pekerjaan : ${pidana?.detail_laporan?.pekerjaan_pelapor}"
-        txt_kwg_sipil_pidana_lp_edit.text =
-            "Kewarganegaraan : ${pidana?.detail_laporan?.kewarganegaraan_pelapor}"
-        txt_alamat_sipil_pidana_lp_edit.text = "Alamat : ${pidana?.detail_laporan?.alamat_pelapor}"
-        txt_no_telp_sipil_pidana_lp_edit.text =
-            "No Telepon : ${pidana?.detail_laporan?.no_telp_pelapor}"
-        txt_nik_ktp_sipil_pidana_lp_edit.text =
-            "NIK KTP : ${pidana?.detail_laporan?.nik_ktp_pelapor}"
-        txt_jk_sipil_pidana_lp_edit.text =
-            "Jenis Kelamin : ${pidana?.detail_laporan?.jenis_kelamin_pelapor}"
-
-        //pimpinan
-        edt_nama_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.nama_kep_spkt)
-        edt_pangkat_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.pangkat_kep_spkt)
-        edt_nrp_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.nrp_kep_spkt)
-        edt_jabatan_pimpinan_bidang_edit.setText(
-            pidana?.detail_laporan?.jabatan_kep_spkt.toString().toUpperCase()
+        edt_nama_pimpinan_bidang_edit.setText(pidana?.nama_yang_mengetahui)
+        edt_pangkat_pimpinan_bidang_edit.setText(
+            pidana?.pangkat_yang_mengetahui.toString().toUpperCase()
         )
+        edt_nrp_pimpinan_bidang_edit.setText(pidana?.nrp_yang_mengetahui)
+        edt_jabatan_pimpinan_bidang_edit.setText(pidana?.jabatan_yang_mengetahui)
+
+
+        /*  //general
+  //        edt_pembukaan_laporan_pidana_edit.setText(pidana?.pembukaan_laporan)
+          edt_isi_laporan_pidana_edit.setText(pidana?.detail_laporan?.isi_laporan)
+
+          //dibuat
+          edt_kota_buat_edit_lp.setText(pidana?.kota_buat_laporan)
+          edt_tgl_buat_edit.setText(pidana?.tanggal_buat_laporan)
+          edt_pukul_buat_edit.setText(pidana?.detail_laporan?.waktu_buat_laporan)
+
+          *//*sipil*//*
+
+
+            txt_nama_sipil_pidana_lp_edit.text = "Nama :  ${pidana?.nama_pelapor}"
+            txt_ttl_sipil_pidana_lp_edit.text =
+                "TTL : ${pidana?.tempat_lahir_pelapor}, ${formatterDiffTanggal(pidana?.tanggal_lahir_pelapor)}"
+            txt_agama_sipil_pidana_lp_edit.text = "Agama : ${pidana?.agama_pelapor}"
+            txt_pekerjaan_sipil_pidana_lp_edit.text =
+                "Pekerjaan : ${pidana?.pekerjaan_pelapor}"
+            txt_kwg_sipil_pidana_lp_edit.text =
+                "Kewarganegaraan : ${pidana?.kewarganegaraan_pelapor}"
+            txt_alamat_sipil_pidana_lp_edit.text = "Alamat : ${pidana?.alamat_pelapor}"
+            txt_no_telp_sipil_pidana_lp_edit.text =
+                "No Telepon : ${pidana?.no_telp_pelapor}"
+            txt_nik_ktp_sipil_pidana_lp_edit.text =
+                "NIK KTP : ${pidana?.nik_ktp_pelapor}"
+            txt_jk_sipil_pidana_lp_edit.text =
+                "Jenis Kelamin : ${pidana?.jenis_kelamin_pelapor}"
+
+            //pimpinan
+            edt_nama_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.nama_kep_spkt)
+            edt_pangkat_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.pangkat_kep_spkt)
+            edt_nrp_pimpinan_bidang_edit.setText(pidana?.detail_laporan?.nrp_kep_spkt)
+            edt_jabatan_pimpinan_bidang_edit.setText(
+                pidana?.detail_laporan?.jabatan_kep_spkt.toString().toUpperCase()
+            )*/
 
         /*  spinner_kesatuan_pimpinan_bidang_edit.setText(
              pidana?.kesatuan_yang_mengetahui.toString().toUpperCase()
@@ -296,26 +425,10 @@ class EditLpPidanaActivity : BaseActivity() {
           }
     */
 
-        //personel terlapor
-//                lpPidanaReq.id_personel_terlapor = pidana?.personel_terlapor
-        editLpPidana.id_personel_terlapor = pidana?.personel_terlapor?.id
-        txt_nama_terlapor_lp_edit.text = "Nama : ${pidana?.personel_terlapor?.nama}"
-        txt_pangkat_terlapor_lp_edit.text =
-            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}"
-        txt_nrp_terlapor_lp_edit.text = "NRP : ${pidana?.personel_terlapor?.nrp}"
-        txt_jabatan_terlapor_lp_edit.text =
-            "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
-        txt_kesatuan_terlapor_lp_edit.text =
-            "Kesatuan : ${
-                pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                    .toUpperCase()
-            }"
-        //uraiain
-        edt_uraian_pelanggaran_pidana_edit.setText(pidana?.uraian_pelanggaran)
     }
 
     @SuppressLint("SetTextI18n")
-    private fun launchSipilView() {
+    private fun launchSipilView(pidana: LpResp?) {
         val spAgama =
             sipilAlertDialog.findViewById<AutoCompleteTextView>(R.id.spinner_agama_sipil)
         val jkSipilView =
@@ -333,6 +446,42 @@ class EditLpPidanaActivity : BaseActivity() {
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tempat_lahir_sipil)
         val tglSipilView =
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tanggal_lahir_sipil)
+
+        /*getData*/
+        namaSipilView.setText(pidana?.nama_pelapor)
+        pekerjaanSipilView.setText(pidana?.pekerjaan_pelapor)
+        kwgSipilView.setText(pidana?.kewarganegaraan_pelapor)
+        alamatSipilView.setText(pidana?.alamat_pelapor)
+        noTelpSipilView.setText(pidana?.no_telp_pelapor)
+        nikSipilView.setText(pidana?.nik_ktp_pelapor)
+        tmptSipilView.setText(pidana?.tempat_lahir_pelapor)
+        tglSipilView.setText(reverseTanggal(pidana?.tanggal_lahir_pelapor))
+
+        namaSipil = namaSipilView.text.toString()
+        jkSipil = pidana?.jenis_kelamin_pelapor
+        agamaSipil = pidana?.agama_pelapor
+        noTelpSipil = noTelpSipilView.text.toString()
+        nikSipil = nikSipilView.text.toString()
+        alamatSipil = alamatSipilView.text.toString()
+        kwgSipil = kwgSipilView.text.toString()
+        pekerjaanSipil = pekerjaanSipilView.text.toString()
+        tglSipil = tglSipilView.text.toString()
+        tmptSipil = tmptSipilView.text.toString()
+
+        if (pidana?.jenis_kelamin_pelapor == "laki_laki") {
+            jkSipilView.setText("Laki-Laki")
+        } else {
+            jkSipilView.setText("Perempuan")
+        }
+        when (pidana?.agama_pelapor) {
+            "islam" -> spAgama.setText("Islam")
+            "katolik" -> spAgama.setText("Katolik")
+            "protestan" -> spAgama.setText("Protestan")
+            "buddha" -> spAgama.setText("Buddha")
+            "hindu" -> spAgama.setText("Hindu")
+            "khonghuchu" -> spAgama.setText("Khonghuchu")
+        }
+
         val jkItem = listOf("Laki-Laki", "Perempuan")
         val adapterJk = ArrayAdapter(this, R.layout.item_spinner, jkItem)
         jkSipilView.setAdapter(adapterJk)
@@ -346,7 +495,7 @@ class EditLpPidanaActivity : BaseActivity() {
         }
 
         val agamaItem =
-            listOf("Islam", "Katolik", "Protestan", "Budha", "Hindu", "Khonghucu")
+            listOf("Islam", "Katolik", "Protestan", "Buddha", "Hindu", "Khonghucu")
         val adapterAgama = ArrayAdapter(this, R.layout.item_spinner, agamaItem)
         spAgama.setAdapter(adapterAgama)
         spAgama.setOnItemClickListener { _, _, position, _ ->
@@ -438,6 +587,21 @@ class EditLpPidanaActivity : BaseActivity() {
                                     .toUpperCase()
                             }"
                     }
+                    REQ_TERLAPOR_LHP -> {
+                        val dataPersLhp =
+                            data?.getParcelableExtra<PersonelPenyelidikResp>(ChoosePersonelActivity.DATA_PERSONEL)
+                        changedIdTerlapor = dataPersLhp?.id
+                        txt_nama_terlapor_lp_edit.text = "Nama : ${dataPersLhp?.personel?.nama}"
+                        txt_pangkat_terlapor_lp_edit.text =
+                            "Pangkat : ${dataPersLhp?.personel?.pangkat.toString().toUpperCase()}"
+                        txt_nrp_terlapor_lp_edit.text = "NRP : ${dataPersLhp?.personel?.nrp}"
+                        txt_jabatan_terlapor_lp_edit.text = "Jabatan : ${dataPersLhp?.personel?.jabatan}"
+                        txt_kesatuan_terlapor_lp_edit.text =
+                            "Kesatuan : ${
+                                dataPersLhp?.personel?.satuan_kerja?.kesatuan.toString()
+                                    .toUpperCase()
+                            }"
+                    }
                     REQ_PELAPOR -> {
 //                            personel?.id?.let { sessionManager.setIDPersonelPelapor(it) }
                         changedIdPelapor = personel?.id
@@ -451,6 +615,12 @@ class EditLpPidanaActivity : BaseActivity() {
                                 personel?.satuan_kerja?.kesatuan.toString()
                                     .toUpperCase()
                             }"
+                    }
+                    REQ_LHP -> {
+                        val dataLhp =
+                            data?.getParcelableExtra<LhpMinResp>(ChooseLhpActivity.DATA_LP)
+                        _idLhp = dataLhp?.id
+                        txt_no_lhp_lp_edit.text = "No LHP: ${dataLhp?.no_lhp}"
                     }
                 }
             }

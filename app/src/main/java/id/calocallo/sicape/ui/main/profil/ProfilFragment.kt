@@ -91,7 +91,8 @@ class ProfilFragment : Fragment() {
       NetworkConfig().getServUser().logout("Bearer ${sessionManager.fetchAuthToken()}")
             .enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(activity, "Gagal Logout", Toast.LENGTH_SHORT).show()
+                    btn_logout.hideProgress("Logout")
+                    Toast.makeText(activity, "$t", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {

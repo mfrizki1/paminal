@@ -235,6 +235,56 @@
                 android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="Kesimpulan Saksi"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:hint="Kesimpulan Keterangan">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_kesimpulan_ket_saksi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Saksi?" />
+
+        <RadioGroup
+            android:id="@+id/rg_korban_saksi_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_12dp">
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Korban"/>
+
+            <RadioButton
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tidak Korban" />
+        </RadioGroup>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add_saksi_lhp_single"
             android:layout_width="match_parent"

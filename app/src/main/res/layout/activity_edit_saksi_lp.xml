@@ -199,8 +199,26 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kesimpulan Keterangan Saksi" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Kesimpulan Keterangan Saksi">
 
-
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_kesimpulan_ket_saksi_edit_single_lp"
+                android:layout_width="match_parent"
+                android:gravity="start|top"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine|textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/text_is_korban_edit"
             style="@style/TitleText"

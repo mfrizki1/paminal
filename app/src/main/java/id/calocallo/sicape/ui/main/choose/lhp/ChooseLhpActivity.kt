@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.choose.lhp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -53,7 +54,7 @@ class ChooseLhpActivity : BaseActivity() {
 
     private fun apiListLhp() {
         rl_pb.visible()
-        NetworkConfig().getServLhp().getLhpOnSkhd("Bearer ${sessionManager1.fetchAuthToken()}")
+        NetworkConfig().getServLhp().getLhpAll("Bearer ${sessionManager1.fetchAuthToken()}")
             .enqueue(
                 object :
                     Callback<ArrayList<LhpMinResp>> {
@@ -90,13 +91,19 @@ class ChooseLhpActivity : BaseActivity() {
 
             override fun onItemClicked(itemView: View, data: LhpMinResp, itemIndex: Int) {
                 itemView.img_clickable.toggleVisibility()
+
+                val intent = Intent().apply {
+                    this.putExtra(DATA_LP, data)
+                }
+                setResult(Activity.RESULT_OK, intent)
+                finish()
                 /*   val intent = Intent()
                    intent.putExtra("CHOOSE_LHP", data)
                    setResult(RESULT_OK, intent)
                    finish()*/
                 /*Goto Pick LP from ID LHP*/
                 /*LHG*/
-                if(isLhg == true){
+                /*if(isLhg == true){
                     val intent =
 //                    Intent(this@ChooseLhpActivity, ChooseLpSkhdActivity::class.java).apply {
                         Intent(this@ChooseLhpActivity, ListLpSkhdActivity::class.java).apply {
@@ -114,7 +121,7 @@ class ChooseLhpActivity : BaseActivity() {
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 }
                 else {
-                    /*SKHD/PUTKKE*/
+                    *//*SKHD/PUTKKE*//*
                     val intent =
 //                    Intent(this@ChooseLhpActivity, ChooseLpSkhdActivity::class.java).apply {
                         Intent(this@ChooseLhpActivity, ListLpSkhdActivity::class.java).apply {
@@ -123,7 +130,8 @@ class ChooseLhpActivity : BaseActivity() {
                         }
                     startActivityForResult(intent, REQ_LHP)
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                }
+                }*/
+
             }
 
         }

@@ -15,6 +15,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.lp.KatAddLpActivity
 import kotlinx.android.synthetic.main.activity_list_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
@@ -45,7 +46,8 @@ class ListLpPidanaActivity : BaseActivity() {
         }
 
         btn_add_lp_pidana.setOnClickListener {
-            val intent = Intent(this, AddLpActivity::class.java)
+//            val intent = Intent(this, AddLpActivity::class.java)
+            val intent = Intent(this, KatAddLpActivity::class.java)
             intent.putExtra("JENIS_LP", "pidana")
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

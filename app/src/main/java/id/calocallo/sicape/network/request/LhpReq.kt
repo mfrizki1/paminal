@@ -1,10 +1,6 @@
 package id.calocallo.sicape.network.request
 
 import android.os.Parcelable
-import id.calocallo.sicape.network.response.KetTerlaporLhpResp
-import id.calocallo.sicape.network.response.PersonelPenyelidikResp
-import id.calocallo.sicape.network.response.RefPenyelidikanResp
-import id.calocallo.sicape.network.response.SaksiLhpResp
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -31,7 +27,7 @@ data class LhpReq(
     var petunjuk: String?,
     var barang_bukti: String?,
     var analisa: String?,
-    var isTerbukti: Int?,
+    var is_terbukti: Int?,
     var tanggal_mulai_penyelidikan: String?
 //    var wilayah_hukum_penyelidikan: String?
 

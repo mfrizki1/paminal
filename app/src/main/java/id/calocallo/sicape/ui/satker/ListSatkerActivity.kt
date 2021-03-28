@@ -7,12 +7,14 @@ import android.view.View
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.SatKerResp
+import id.calocallo.sicape.ui.base.BaseActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import kotlinx.android.synthetic.main.activity_list_satker.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
+import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import kotlinx.android.synthetic.main.view_no_data.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
@@ -20,7 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ListSatkerActivity : AppCompatActivity() {
+class ListSatkerActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var adapterSatker = ReusableAdapter<SatKerResp>(this)
     private lateinit var callbackSatker: AdapterCallback<SatKerResp>
@@ -28,6 +30,8 @@ class ListSatkerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_satker)
+    setupActionBarWithBackButton(toolbar)
+        supportActionBar?.title = "List Data Satker/Satwil"
         sessionManager1 = SessionManager1(this)
 
         jenis = intent.getStringExtra(AddSatkerActivity.JENIS_SATKERN)

@@ -25,7 +25,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:enabled="false"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:hint="No LP">
@@ -61,6 +60,57 @@
                 android:gravity="top|start"
                 android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:id="@+id/ll_pick_lhp_lp_edit"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_lhp_lp_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:text="Pilih Laporan Hasil Penyelidikan"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/space_8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Laporan Hasil Penyelidikan"
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/layout_separator" />
+
+                    <TextView
+                        android:id="@+id/txt_no_lhp_lp_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8dp"
+                        android:text="No LHP"
+                        android:textSize="@dimen/text_14"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 
 
         <!--button for choose personel terlapor-->
@@ -306,6 +356,7 @@
             android:id="@+id/ll_sipil_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
             android:orientation="vertical">

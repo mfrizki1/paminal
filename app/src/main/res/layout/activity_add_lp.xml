@@ -31,9 +31,9 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_layout_no_lp_add"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:id="@+id/txt_layout_no_lp_add"
                 android:layout_height="75dp"
                 android:hint="NO LP">
 
@@ -44,81 +44,140 @@
                     android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_choose_personel_terlapor_lp_add"
+            <LinearLayout
+                android:id="@+id/ll_pick_lhp_lp_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8dp"
-                android:text="Pilih Personel Terlapor"
-                android:textStyle="bold" />
+                android:visibility="gone"
+                android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cv_personel_terlapor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:strokeColor="@color/colorPrimary"
-                app:strokeWidth="2dp">
-
-                <LinearLayout
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_choose_lhp_lp_add"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/space_8dp"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8dp"
+                    android:text="Pilih Laporan Hasil Penyelidikan"
+                    android:textStyle="bold" />
 
-                    <TextView
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Personel Terlapor"
-                        android:textSize="@dimen/text_18"
-                        android:textStyle="bold" />
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/space_8dp"
+                        android:orientation="vertical">
 
-                    <include layout="@layout/layout_separator" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Laporan Hasil Penyelidikan"
+                            android:textSize="@dimen/text_18"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txt_nama_terlapor_lp_add"
+                        <include layout="@layout/layout_separator" />
+
+                        <TextView
+                            android:id="@+id/txt_no_lhp_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_8dp"
+                            android:text="No LHP"
+                            android:textSize="@dimen/text_14"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_personel_terlapor_add_all_not_lhp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_choose_personel_terlapor_lp_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8dp"
+                    android:text="Pilih Personel Terlapor"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_personel_terlapor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_8dp"
-                        android:text="Nama Personel Terlapor"
-                        android:textSize="@dimen/text_14"
-                        android:textStyle="bold" />
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/space_8dp"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/txt_pangkat_terlapor_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_half"
-                        android:text="Pangkat Personel Terlapor"
-                        android:textSize="@dimen/text_14" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Personel Terlapor"
+                            android:textSize="@dimen/text_18"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txt_nrp_terlapor_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_half"
-                        android:text="NRP Personel Terlapor"
-                        android:textSize="@dimen/text_14" />
+                        <include layout="@layout/layout_separator" />
 
-                    <TextView
-                        android:id="@+id/txt_jabatan_terlapor_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_half"
-                        android:text="Jabatan Personel Terlapor"
-                        android:textSize="@dimen/text_14" />
+                        <TextView
+                            android:id="@+id/txt_nama_terlapor_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_8dp"
+                            android:text="Nama Personel Terlapor"
+                            android:textSize="@dimen/text_14"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txt_kesatuan_terlapor_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        <TextView
+                            android:id="@+id/txt_pangkat_terlapor_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Pangkat Personel Terlapor"
+                            android:textSize="@dimen/text_14" />
 
-                        android:layout_marginTop="@dimen/space_half"
-                        android:text="Kesatuan Personel Terlapor"
-                        android:textSize="@dimen/text_14" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/txt_nrp_terlapor_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="NRP Personel Terlapor"
+                            android:textSize="@dimen/text_14" />
 
-            </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/txt_jabatan_terlapor_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Jabatan Personel Terlapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_kesatuan_terlapor_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Kesatuan Personel Terlapor"
+                            android:textSize="@dimen/text_14" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
 
             <!--            <com.google.android.material.button.MaterialButton-->
             <!--                android:id="@+id/btn_choose_pelanggaran_lp_add"-->
@@ -205,7 +264,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:text="Pimpinan Kabid Propam"
+                android:text="Pimpinan Yang Mengetahui"
                 android:textSize="@dimen/text_18"
                 android:textStyle="bold" />
 
@@ -215,7 +274,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Nama Kabid Propam">
+                android:hint="Nama Yang Mengetahui">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_nama_pimpinan_bidang_add"
@@ -238,7 +297,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/space_8dp"
                     android:layout_weight="1"
-                    android:hint="Pangkat Kabid Propam">
+                    android:hint="Pangkat Yang Mengetahui">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_pangkat_pimpinan_bidang_add"
@@ -253,7 +312,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="NRP Kabid Propam">
+                    android:hint="NRP Yang Mengetahui">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_nrp_pimpinan_bidang_add"
@@ -271,7 +330,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"
                 android:layout_weight="1"
-                android:hint="Jabatan Kabid Propam">
+                android:hint="Jabatan Yang Mengetahui">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_jabatan_pimpinan_bidang_add"
@@ -285,9 +344,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Kesatuan Kabid Propam">
+                android:hint="Kesatuan Yang Mengetahui"
+                android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/spinner_kesatuan_lp_add"

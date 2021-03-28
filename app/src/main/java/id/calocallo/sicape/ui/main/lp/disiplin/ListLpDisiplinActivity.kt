@@ -33,12 +33,7 @@ import retrofit2.Response
 
 class ListLpDisiplinActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var listDisiplin = arrayListOf<LpDisiplinResp>()
-    private var listPasal = arrayListOf<PasalDilanggarResp>()
-    private var personelTerLapor = PersonelLapor()
-    private var personelPeLapor = PersonelLapor()
-    private var satKerResp = SatKerResp()
-    private var adapterLpDisiplin = ReusableAdapter<LpMinResp>(this)
+            private var adapterLpDisiplin = ReusableAdapter<LpMinResp>(this)
     private lateinit var callbackLpDisiplin: AdapterCallback<LpMinResp>
     private val viewPool = RecyclerView.RecycledViewPool()
     override fun onCreate(savedInstanceState: Bundle?) {

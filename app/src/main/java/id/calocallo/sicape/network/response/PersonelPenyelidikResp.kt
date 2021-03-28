@@ -8,7 +8,8 @@ data class PersonelPenyelidikResp(
     var id: Int?,
     var id_lhp: Int?,
     var personel: PersonelMinResp?,
-    var is_ketua: Int?
+    var is_ketua: Int?,
+    var detail_keterangan: String?
 ) : Parcelable {
-    constructor() : this(null,null,null,null)
+    constructor() : this(null,null,null,null,null)
 }

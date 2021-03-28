@@ -8,6 +8,7 @@ data class LpSaksiResp(
     var id: Int?,
     var id_lp: Int?,
     var status_saksi:String?,
+    var kesimpulan_keterangan:String?,
     var personel: PersonelMinResp?,
     var nama:String?,
     var tempat_lahir: String?,

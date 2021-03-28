@@ -244,6 +244,10 @@ class DetailLpPidanaActivity : BaseActivity() {
             ll_detail_personel_pidana.gone()
             ll_detail_sipil_pidana.visible()
         }*/
+        if(pidana?.lhp != null){
+            ll_ref_lp_detail.visible()
+            txt_ref_lp_detail.text = "No LHP: ${pidana?.lhp?.no_lhp}"
+        }
         //general
         txt_detail_no_lp.text = "No LP : ${pidana?.no_lp}"
 //        txt_detail_pembukaan_laporan_pidana.text = pidana?.detail_laporan?.pembukaan_laporan
@@ -253,24 +257,43 @@ class DetailLpPidanaActivity : BaseActivity() {
             "Tanggal : ${formatterTanggal(pidana?.tanggal_buat_laporan)}"
 
         //pimpinan
-        txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.detail_laporan?.nama_kep_spkt}"
+        txt_detail_nama_pimpinan_pidana.text = "Nama : ${pidana?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_pidana.text =
-            "Pangkat : ${pidana?.detail_laporan?.pangkat_kep_spkt.toString().toUpperCase()}," +
-                    " NRP : ${pidana?.detail_laporan?.nrp_kep_spkt}"
+            "Pangkat : ${
+                pidana?.pangkat_yang_mengetahui.toString().toUpperCase()
+            }," + " NRP : ${pidana?.nrp_yang_mengetahui}"
         txt_detail_jabatan_pimpinan_pidana.text =
-            "Jabatan : ${pidana?.detail_laporan?.jabatan_kep_spkt}"
+            "Jabatan : ${pidana?.jabatan_yang_mengetahui}"
 
 
         //terlapor
-        txt_detail_nama_terlapor.text = "Nama : ${pidana?.personel_terlapor?.nama}"
-        txt_detail_pangkat_nrp_terlapor.text =
-            "Pangkat : ${pidana?.personel_terlapor?.pangkat.toString().toUpperCase()}," +
-                    " NRP : ${pidana?.personel_terlapor?.nrp}"
-        txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana?.personel_terlapor?.jabatan}"
-        txt_detail_kesatuan_terlapor.text =
-            "Kesatuan : ${
-                pidana?.personel_terlapor?.satuan_kerja?.kesatuan.toString().toUpperCase()
-            }"
+        when {
+            pidana?.personel_terlapor != null -> {
+                txt_detail_nama_terlapor.text = "Nama : ${pidana.personel_terlapor?.nama}"
+                txt_detail_pangkat_nrp_terlapor.text =
+                    "Pangkat : ${pidana.personel_terlapor?.pangkat.toString().toUpperCase()}," +
+                            " NRP : ${pidana.personel_terlapor?.nrp}"
+                txt_detail_jabatan_terlapor.text = "Jabatan : ${pidana.personel_terlapor?.jabatan}"
+                txt_detail_kesatuan_terlapor.text =
+                    "Kesatuan : ${
+                        pidana.personel_terlapor?.satuan_kerja?.kesatuan.toString().toUpperCase()
+                    }"
+            }
+            pidana?.personel_terlapor_lhp != null -> {
+                txt_detail_nama_terlapor.text = "Nama : ${pidana.personel_terlapor_lhp?.personel?.nama}"
+                txt_detail_pangkat_nrp_terlapor.text =
+                    "Pangkat : ${pidana.personel_terlapor_lhp?.personel?.pangkat.toString().toUpperCase()}," +
+                            " NRP : ${pidana.personel_terlapor_lhp?.personel?.nrp}"
+                txt_detail_jabatan_terlapor.text =
+                    "Jabatan : ${pidana.personel_terlapor_lhp?.personel?.jabatan}"
+                txt_detail_kesatuan_terlapor.text =
+                    "Kesatuan : ${
+                        pidana.personel_terlapor_lhp?.personel?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+        }
+
 
         /*  //pelapor
           txt_detail_nama_pelapor.text = "Nama : ${pidana?.detail_laporan?.nama_pelapor}"
@@ -280,20 +303,33 @@ class DetailLpPidanaActivity : BaseActivity() {
           txt_detail_jabatan_pelapor.text = "Jabatan : ${pidana?.detail_laporan?.personel_pelapor?.jabatan}"
           txt_detail_kesatuan_pelapor.text =
               "Kesatuan : ${pidana?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString().toUpperCase()}"*/
-
-        //sipil
-        txt_detail_nama_sipil.text = "Nama :  ${pidana?.detail_laporan?.nama_pelapor}"
-        txt_detail_agama_sipil.text = "Agama : ${pidana?.detail_laporan?.agama_pelapor}"
-        txt_detail_pekerjaan_sipil.text = "Pekerjaan : ${pidana?.detail_laporan?.pekerjaan_pelapor}"
-        txt_detail_kwg_sipil.text =
-            "Kewarganegaraan : ${pidana?.detail_laporan?.kewarganegaraan_pelapor}"
-        txt_detail_alamat_sipil.text = "Alamat : ${pidana?.detail_laporan?.alamat_pelapor}"
-        txt_detail_no_telp_sipil.text = "No Telepon : ${pidana?.detail_laporan?.no_telp_pelapor}"
-        txt_detail_nik_sipil.text = "NIK KTP : ${pidana?.detail_laporan?.nik_ktp_pelapor}"
-        txt_detail_jk_sipil.text =
-            "Jenis Kelamin : ${pidana?.detail_laporan?.jenis_kelamin_pelapor}"
-        txt_detail_ttl_sipil.text =
-            "TTL : ${pidana?.detail_laporan?.tempat_lahir_pelapor}, ${formatterTanggal(pidana?.detail_laporan?.tanggal_lahir_pelapor)}"
+        if (pidana?.status_pelapor == "sipil") {
+            //sipil
+            ll_detail_personel_pidana.gone()
+            ll_detail_sipil_pidana.visible()
+            txt_detail_nama_sipil.text = "Nama :  ${pidana?.nama_pelapor}"
+            txt_detail_agama_sipil.text = "Agama : ${pidana?.agama_pelapor}"
+            txt_detail_pekerjaan_sipil.text = "Pekerjaan : ${pidana?.pekerjaan_pelapor}"
+            txt_detail_kwg_sipil.text =
+                "Kewarganegaraan : ${pidana?.kewarganegaraan_pelapor}"
+            txt_detail_alamat_sipil.text = "Alamat : ${pidana?.alamat_pelapor}"
+            txt_detail_no_telp_sipil.text = "No Telepon : ${pidana?.no_telp_pelapor}"
+            txt_detail_nik_sipil.text = "NIK KTP : ${pidana?.nik_ktp_pelapor}"
+            txt_detail_jk_sipil.text =
+                "Jenis Kelamin : ${pidana?.jenis_kelamin_pelapor}"
+            txt_detail_ttl_sipil.text =
+                "TTL : ${pidana?.tempat_lahir_pelapor}, ${formatterDiffTanggal(pidana?.tanggal_lahir_pelapor)}"
+        } else {
+            ll_detail_personel_pidana.visible()
+            ll_detail_sipil_pidana.gone()
+            txt_detail_nama_pelapor.text = "Nama: ${pidana?.personel_pelapor?.nama}"
+            txt_detail_pangkat_nrp_pelapor.text = "Pangkat: ${
+                pidana?.personel_pelapor?.pangkat.toString().toUpperCase()
+            }, NRP: ${pidana?.personel_pelapor?.nrp}"
+            txt_detail_jabatan_pelapor.text = "Jabatan: ${pidana?.personel_pelapor?.jabatan}"
+            txt_detail_kesatuan_pelapor.text =
+                "Kesatuan: ${pidana?.personel_pelapor?.satuan_kerja?.kesatuan}"
+        }
 
 
         //setPasal

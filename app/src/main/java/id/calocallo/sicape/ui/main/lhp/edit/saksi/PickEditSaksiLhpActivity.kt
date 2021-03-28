@@ -2,6 +2,7 @@ package id.calocallo.sicape.ui.main.lhp.edit.saksi
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -78,15 +79,24 @@ class PickEditSaksiLhpActivity : BaseActivity() {
 
         callbackSaksiLhp = object : AdapterCallback<SaksiLhpResp> {
             override fun initComponent(itemView: View, data: SaksiLhpResp, itemIndex: Int) {
-                if(data.personel == null) {
+                if (data.personel == null) {
                     itemView.txt_detail_1.text = data.nama
-                }else{
+                } else {
                     itemView.txt_detail_1.text = data.personel?.nama
                 }
                 when (data.status_saksi) {
-                    "personel" -> itemView.txt_detail_2.text = "Personel"
-                    "sipil" -> itemView.txt_detail_2.text = "Sipil"
-
+                    "personel" -> {
+                        when (data.is_korban) {
+                            0 -> itemView.txt_detail_2.text = "Personel, Bukan Korban"
+                            1 -> itemView.txt_detail_2.text = "Personel, Korban"
+                        }
+                    }
+                    "sipil" -> {
+                        when (data.is_korban) {
+                            0 -> itemView.txt_detail_2.text = "Sipil, Bukan Korban"
+                            1 -> itemView.txt_detail_2.text = "Sipil, Korban"
+                        }
+                    }
                 }
             }
 
@@ -97,7 +107,7 @@ class PickEditSaksiLhpActivity : BaseActivity() {
             }
         }
         dataSaksi?.let {
-            adapterSaksiLhp.adapterCallback(callbackSaksiLhp)
+            adapterSaksiLhp.adapterCallback(callbackSaksiLhp).filterable()
                 .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
                 .build(rv_list_saksi_lhp)
         }

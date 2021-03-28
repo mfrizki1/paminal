@@ -92,10 +92,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="80dp"
                 android:layout_marginTop="@dimen/space_8dp"
-                android:hint="Tempat Penyelidikan">
+                android:hint="Tempat Penyelidikan"
+                android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_tempat_penyelidikan_lhp_edit"
@@ -181,8 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine|textCapSentences"
-                    />
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <include layout="@layout/layout_separator" />
@@ -206,8 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine|textCapSentences"
-                    />
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <include layout="@layout/layout_separator" />
@@ -231,8 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine|textCapSentences"
-                    />
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <include layout="@layout/layout_separator" />
@@ -256,8 +253,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine|textCapSentences"
-                    />
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <include layout="@layout/layout_separator" />
@@ -281,8 +277,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine|textCapSentences"
-                    />
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -297,8 +292,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine|textCapSentences"
-                    />
+                    android:inputType="textMultiLine|textCapSentences" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <include layout="@layout/layout_separator" />
@@ -349,6 +343,34 @@
             </LinearLayout>
 
             <include layout="@layout/layout_separator" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_8dp"
+                android:text="Apakah Laporan Ini Terbukti Atau Tidak?"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/rg_terbukti_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/space_12dp">
+
+                <RadioButton
+                    android:id="@+id/rb_terbukti_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Terbukti" />
+
+                <RadioButton
+                    android:id="@+id/rb_tidak_terbukti_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tidak Terbukti" />
+
+            </RadioGroup>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save_lhp_edit"

@@ -69,20 +69,29 @@ interface ApiLhp {
         @Path("id_lhp") id_lhp: Int?
     ): Call<ArrayList<SaksiLhpResp>>
 
+    @Headers(ApiLp.ACCEPT)
+    @GET("lhp/saksi/{id_saksi}")
+    fun detailSaksiLhp(
+        @Header("Authorization") token: String,
+        @Path("id_saksi") id_saksi: Int?
+    ): Call<DetailSaksiLhpResp>
+
 
     @Headers(ApiLp.ACCEPT)
-    @POST("lhp/{id_lhp}}/saksi")
+    @POST("lhp/{id_lhp}/saksi/{jenis_saksi}")
     fun addSaksiLhp(
         @Header("Authorization") token: String,
         @Path("id_lhp") id_lhp: Int?,
+        @Path("jenis_saksi") jenis_saksi: String?,
         @Body saksiLhpReq: SaksiLhpReq
     ): Call<Base1Resp<AddSaksiLhpResp>>
 
     @Headers(ApiLp.ACCEPT)
-    @PATCH("lhp/saksi/{id_saksi}")
+    @PATCH("lhp/saksi/{id_saksi}/{jenis_saksi}")
     fun updSaksiLhp(
         @Header("Authorization") token: String,
         @Path("id_saksi") id_saksi: Int?,
+        @Path("jenis_saksi") jenis_saksi: String?,
         @Body saksiLhpReq: SaksiLhpReq
     ): Call<Base1Resp<AddSaksiLhpResp>>
 
@@ -168,6 +177,42 @@ interface ApiLhp {
         @Path("id_pers_lidik") id_pers_lidik: Int?
     ): Call<BaseResp>
 
+    @Headers(ApiLp.ACCEPT)
+    @GET("lhp/{id_lhp}/personel/terlapor")
+    fun listTerlapor(
+        @Header("Authorization") token: String,
+        @Path("id_lhp") id_lhp: Int?
+    ): Call<ArrayList<PersonelPenyelidikResp>>
+
+    @Headers(ApiLp.ACCEPT)
+    @POST("lhp/{id_lhp}/personel/terlapor")
+    fun addSingleTerlapor(
+        @Header("Authorization") token: String,
+        @Path("id_lhp") id_lhp: Int?,
+        @Body ketTerlaporReq: KetTerlaporReq
+    ): Call<Base1Resp<KetTerlaporLhpResp>>
+
+    @Headers(ApiLp.ACCEPT)
+    @GET("lhp/personel/terlapor/{id_terlapor}")
+    fun detailPersTerlapor(
+        @Header("Authorization") token: String,
+        @Path("id_terlapor") id_terlapor: Int?
+    ): Call<PersonelPenyelidikResp>
+
+    @Headers(ApiLp.ACCEPT)
+    @PATCH("lhp/personel/terlapor/{id_terlapor}")
+    fun updPersTerlapor(
+        @Header("Authorization") token: String,
+        @Path("id_terlapor") id_terlapor: Int?,
+        @Body ketTerlaporReq: KetTerlaporReq
+    ): Call<Base1Resp<KetTerlaporLhpResp>>
+
+    @Headers(ApiLp.ACCEPT)
+    @DELETE("lhp/personel/terlapor/{id_terlapor}")
+    fun delPersTerlapor(
+        @Header("Authorization") token: String,
+        @Path("id_terlapor") id_terlapor: Int?
+    ): Call<BaseResp>
 
 
 }

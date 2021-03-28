@@ -26,6 +26,7 @@
             android:id="@+id/rg_saksi_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:paddingHorizontal="@dimen/space_12dp">
 
             <RadioButton
@@ -231,6 +232,31 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_ket_saksi_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:inputType="textMultiLine|textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:text="Kesimpulan Keterangan Saksi"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_half"
+            android:hint="Kesimpulan Keterangan Saksi">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_kesimpulan_ket_saksi_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|start"

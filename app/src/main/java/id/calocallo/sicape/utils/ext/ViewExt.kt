@@ -16,9 +16,11 @@ import java.util.*
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
+
 fun Context.toast(message: Int) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
+
 fun EditText.onFocusChanged(hasFocus: (Boolean) -> Unit) {
     this.setOnFocusChangeListener { _, b -> hasFocus(b) }
 }
@@ -83,6 +85,18 @@ fun formatterTanggal(tgl: String?): String? {
     val tanggalFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
     val tanggal = tanggalFormatter.parse(tgl)
     return DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale("id", "ID")).format(tanggal)
+}
+
+fun formatterDiffTanggal(tgl: String?): String? {
+    val tanggalFormatter = DateTimeFormatter.ofPattern("yyyy-dd-MM")
+    val tanggal = tanggalFormatter.parse(tgl)
+    return DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale("id", "ID")).format(tanggal)
+}
+
+fun reverseTanggal(tgl: String?): String? {
+    val tanggalFormatter = DateTimeFormatter.ofPattern("yyyy-dd-MM")
+    val tanggal = tanggalFormatter.parse(tgl)
+    return DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale("")).format(tanggal)
 }
 
 

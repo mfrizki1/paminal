@@ -34,15 +34,17 @@ import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lhp.*
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
+import kotlinx.android.synthetic.main.item_1_text.view.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
+import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import org.marproject.reusablerecyclerviewadapter.ReusableAdapter
 import org.marproject.reusablerecyclerviewadapter.interfaces.AdapterCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 class DetailLhpActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
@@ -53,10 +55,10 @@ class DetailLhpActivity : BaseActivity() {
     private var adapterLidik = ReusableAdapter<PersonelPenyelidikResp>(this)
     private lateinit var callbackLidk: AdapterCallback<PersonelPenyelidikResp>
 
-    private var adapterSaksi = ReusableAdapter<SaksiLhpResp>(this)
-    private lateinit var callbackSaksi: AdapterCallback<SaksiLhpResp>
-    private var adapterketTerlapor = ReusableAdapter<KetTerlaporLhpResp>(this)
-    private lateinit var callbackketTerlapor: AdapterCallback<KetTerlaporLhpResp>
+    private var adapterSaksi = ReusableAdapter<LpSaksiResp>(this)
+    private lateinit var callbackSaksi: AdapterCallback<LpSaksiResp>
+    private var adapterketTerlapor = ReusableAdapter<PersonelPenyelidikResp>(this)
+    private lateinit var callbackketTerlapor: AdapterCallback<PersonelPenyelidikResp>
     var terbukti = ""
     private lateinit var downloadID: Any
 
@@ -95,13 +97,6 @@ class DetailLhpActivity : BaseActivity() {
         }
         btn_edit_saksi_lhp.setOnClickListener {
             val intent = Intent(this, PickEditSaksiLhpActivity::class.java)
-            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-
-        btn_edit_ket_terlapor_lhp.setOnClickListener {
-            val intent = Intent(this, PickTerlaporLhpActivity::class.java)
             intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -217,15 +212,18 @@ class DetailLhpActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getDetailLHP(dataLhp: LhpResp?) {
+        btn_edit_ket_terlapor_lhp.setOnClickListener {
+            val intent = Intent(this, PickTerlaporLhpActivity::class.java)
+            intent.putExtra(EditLhpActivity.EDIT_LHP, dataLhp)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
         /* *//*personel terlapor*//*
         val terlapor = dataLhp?.referensi_penyelidikan
         for(i in 0 until terlapor?.size!!){
 
-        }
-        txt_nama_terlapor_lhp_detail.text = "Nama: ${dataLhp.referensi_penyelidikan?.}"
-        txt_pangkat_nrp_terlapor_lhp_detail.text = "Nama: ${dataLhp}"
-        txt_jabatan_terlapor_lhp_detail.text = "Nama: ${dataLhp}"
-        txt_kesatuan_terlapor_lhp_detail.text = "Nama: ${dataLhp}"*/
+        }*/
 
         txt_no_lhp_detail.text = dataLhp?.no_lhp
         txt_kesimpulan_detail.text = dataLhp?.kesimpulan
@@ -252,10 +250,20 @@ class DetailLhpActivity : BaseActivity() {
         txt_barbukti_detail_lhp.text = dataLhp?.barang_bukti
         txt_kota_buat_lhp.text = "Kota : ${dataLhp?.kota_buat_laporan}"
         txt_tanggal_buat_lhp.text = "Tanggal : ${formatterTanggal(dataLhp?.tanggal_buat_laporan)}"
+        if (dataLhp?.is_terbukti == 1) {
+            txt_terbukti_lhp.text = "Ya"
+        } else {
+            txt_terbukti_lhp.text = "Tidak Terbukti"
+        }
         listOfRefLP(dataLhp?.referensi_penyelidikan)
         listOfLidik(dataLhp?.personel_penyelidik)
-//        listOfSaksi(dataLhp?.saksi)
-//        listOfKetTerlapor(dataLhp?.keterangan_terlapor)
+        if(dataLhp?.saksi?.isEmpty() == true){
+            rv_saksi_detail.gone()
+            rl_no_data_saksi.visible()
+        }else{
+            listOfSaksi(dataLhp?.saksi)
+        }
+        listOfKetTerlapor(dataLhp?.personel_terlapor)
 
         if (dataLhp?.is_ada_dokumen == 1) {
             btn_lihat_doc_lhp.visible()
@@ -268,24 +276,46 @@ class DetailLhpActivity : BaseActivity() {
 
     }
 
-    private fun listOfSaksi(saksi: ArrayList<SaksiLhpResp>?) {
-        callbackSaksi = object : AdapterCallback<SaksiLhpResp> {
-            override fun initComponent(itemView: View, data: SaksiLhpResp, itemIndex: Int) {
+    private fun listOfKetTerlapor(personelTerlapor: ArrayList<PersonelPenyelidikResp>?) {
+        callbackketTerlapor = object : AdapterCallback<PersonelPenyelidikResp> {
+            override fun initComponent(
+                itemView: View, data: PersonelPenyelidikResp, itemIndex: Int
+            ) {
+                itemView.txt_item_detail_lhp.text = data.personel?.nama
+            }
+
+            override fun onItemClicked(
+                itemView: View, data: PersonelPenyelidikResp, itemIndex: Int
+            ) {
+            }
+        }
+        personelTerlapor?.let {
+            adapterketTerlapor.adapterCallback(callbackketTerlapor).isVerticalView()
+                .addData(it).setLayout(R.layout.item_1_text)
+                .build(rv_personel_terlapor_lhp)
+        }
+    }
+
+    private fun listOfSaksi(saksi: ArrayList<LpSaksiResp>?) {
+
+        callbackSaksi = object : AdapterCallback<LpSaksiResp> {
+            override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
                 itemView.txt_detail_1.textSize = 14F
                 itemView.txt_detail_2.textSize = 12F
-                if (data.personel == null) {
-                    itemView.txt_detail_1.text = data.nama
-                } else {
+                if (data.status_saksi == "personel") {
                     itemView.txt_detail_1.text = data.personel?.nama
-                }
-                if (data.is_korban == 1) {
-                    itemView.txt_detail_2.text = "Sipil"
+                    itemView.txt_detail_2.text = "Personel"
                 } else {
-                    itemView.txt_detail_2.text = "Polisi"
+                    itemView.txt_detail_1.text = data.nama
+                    if (data.is_korban == 0) {
+                        itemView.txt_detail_2.text = "Saksi"
+                    } else {
+                        itemView.txt_detail_2.text = "Korban"
+                    }
                 }
             }
 
-            override fun onItemClicked(itemView: View, data: SaksiLhpResp, itemIndex: Int) {
+            override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {
             }
         }
         saksi?.let {
@@ -399,7 +429,7 @@ class DetailLhpActivity : BaseActivity() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             finish()
                         }, 1000)
-                    }else{
+                    } else {
                         toast("${response.body()?.message}")
                     }
                 }

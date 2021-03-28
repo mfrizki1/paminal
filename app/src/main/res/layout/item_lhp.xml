@@ -37,7 +37,6 @@
             android:id="@+id/txt_isTerbukti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/space_half"
             android:text="Terbukti / Tidak Terbukti"
             android:textSize="@dimen/text_14"

@@ -111,13 +111,13 @@ interface ApiLp {
         @Body lpKkeReq: LpKkeReq
     ): Call<Base1Resp<DokLpResp>>
 
-    @Headers(ACCEPT)
-    @PATCH("$LP_PIDANA/{id_lp}")
-    fun updLpPidana(
-        @Header("Authorization") tokenBearer: String,
-        @Path("id_lp") id_lp: Int?,
-        @Body lpPidanaReq: LpPidanaReq
-    ): Call<Base1Resp<DokLpResp>>
+//    @Headers(ACCEPT)
+//    @PATCH("$LP_PIDANA/{id_lp}")
+//    fun updLpPidana(
+//        @Header("Authorization") tokenBearer: String,
+//        @Path("id_lp") id_lp: Int?,
+//        @Body lpPidanaReq: LpPidanaReq
+//    ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)
     @PATCH("$LP_DISIPLIN/{id_lp}")
@@ -256,4 +256,25 @@ interface ApiLp {
         @Header("Authorization") tokenBearer: String,
         @Path("id_saksi") id_saksi: Int
     ): Call<BaseResp>
+
+    @Headers(ACCEPT)
+    @POST("lp/pidana/{jenis_lhp}/lhp/pelapor/{jenis_pelapor}")
+    fun addLpPidanaWithLhp(
+        @Header("Authorization") tokenBearer: String,
+        @Path("jenis_pelapor") jenis_pelapor: String?,
+        @Path("jenis_lhp") jenis_lhp: String?,
+        @Body lpPidanaReq: LpPidanaReq
+    ): Call<Base1Resp<DokLpResp>>
+
+    @Headers(ACCEPT)
+    @PATCH("lp/pidana/{id_lp}/{jenis_lhp}/lhp/pelapor/{jenis_pelapor}")
+    fun updLpPidana(
+        @Header("Authorization") tokenBearer: String,
+        @Path("id_lp") id_lp: Int?,
+        @Path("jenis_pelapor") jenis_pelapor: String?,
+        @Path("jenis_lhp") jenis_lhp: String?,
+        @Body lpPidanaReq: LpPidanaReq
+    ): Call<Base1Resp<DokLpResp>>
+
+
 }

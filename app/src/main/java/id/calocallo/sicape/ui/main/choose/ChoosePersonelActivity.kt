@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.choose
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.response.PersonelMinResp
+import id.calocallo.sicape.network.response.PersonelPenyelidikResp
 import id.calocallo.sicape.network.response.SatKerResp
 import id.calocallo.sicape.ui.gelar.AddGelarActivity
 import id.calocallo.sicape.ui.main.choose.multiple.PersonelDetailsLookup
@@ -28,8 +30,12 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.lp.AddLpActivity
+import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_choose_personel.*
 import kotlinx.android.synthetic.main.item_choose_personel.view.*
+import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
+import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
 import kotlinx.android.synthetic.main.layout_progress_dialog.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import kotlinx.android.synthetic.main.view_no_data.*
@@ -44,14 +50,18 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
         const val MULTIPLE = "MULTIPLE"
         const val DATA_MULTIPLE = "DATA_MULTIPLE"
         const val REQ_MULTIPLE = "MULTIPLE"
+        const val DATA_PERSONEL = "DATA_PERSONEL"
+        const val REQ_PERSONEL = 1322
     }
 
     private lateinit var sessionManager1: SessionManager1
     private lateinit var personelChooseAdapter: ReusableAdapter<PersonelMinResp>
     private lateinit var personelChooseCallback: AdapterCallback<PersonelMinResp>
-    private lateinit var selevted : ArrayList<PersonelMinResp>
+    private var persLhpChooseAdapter = ReusableAdapter<PersonelPenyelidikResp>(this)
+    private lateinit var persLhpChooseCallback: AdapterCallback<PersonelPenyelidikResp>
+    private lateinit var selevted: ArrayList<PersonelMinResp>
 
-    private var selectedPersonel : MutableList<PersonelMinResp> = mutableListOf<PersonelMinResp>()
+    private var selectedPersonel: MutableList<PersonelMinResp> = mutableListOf<PersonelMinResp>()
     private lateinit var adapterPersonelMultiple: PersonelMultipleAdapter
     private var tracker: SelectionTracker<PersonelMinResp>? = null
 
@@ -73,6 +83,7 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
         val isPolres = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLRES)
         val isPolsek = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLSEK)
         val isMultipleSelect = intent.getBooleanExtra(MULTIPLE, false)
+        val isPersLp = intent.getIntExtra(AddLpActivity.IS_LHP_PERSONEL, 0)
         if (isMultipleSelect) {
             getPersonel()
             ll_button_choose.visible()
@@ -90,7 +101,9 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
                     Log.e("isPolsek", "$isPolsek")
                     apiChoosePersonelBySatker(isPolsek)
                 }
-//            else -> initAPI()
+                isPersLp != 0 -> {
+                    apiChoosePersonel(isPersLp)
+                }
 
             }
         }
@@ -103,6 +116,58 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
 //        }else{
 //            getPersonelByTerlapor()
 //        }*/
+    }
+
+    private fun apiChoosePersonel(id_lhp: Int) {
+        rl_pb.visible()
+        NetworkConfig().getServLhp()
+            .listTerlapor("Bearer ${sessionManager1.fetchAuthToken()}", id_lhp)
+            .enqueue(object : Callback<ArrayList<PersonelPenyelidikResp>> {
+                override fun onResponse(
+                    call: Call<ArrayList<PersonelPenyelidikResp>>,
+                    response: Response<ArrayList<PersonelPenyelidikResp>>
+                ) {
+                    if (response.body()?.isNotEmpty() == true) {
+                        rl_pb.gone()
+                        listPersonelByLhp(response.body())
+                    } else {
+                        rl_pb.gone()
+                        rl_no_data.visible()
+                        rv_list_choose_personel.gone()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ArrayList<PersonelPenyelidikResp>>, t: Throwable
+                ) {
+                    toast("$t")
+                }
+            })
+    }
+
+    private fun listPersonelByLhp(list: ArrayList<PersonelPenyelidikResp>?) {
+        persLhpChooseCallback = object : AdapterCallback<PersonelPenyelidikResp> {
+            override fun initComponent(
+                itemView: View, data: PersonelPenyelidikResp, itemIndex: Int
+            ) {
+                itemView.txt_edit_pendidikan.text = "${data.personel?.nama}"
+            }
+
+            override fun onItemClicked(
+                itemView: View, data: PersonelPenyelidikResp, itemIndex: Int
+            ) {
+                val intent = Intent().apply {
+                    this.putExtra(DATA_PERSONEL, data)
+                }
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
+        }
+        list?.let {
+            persLhpChooseAdapter.adapterCallback(persLhpChooseCallback).filterable().addData(it)
+                .isVerticalView().setLayout(R.layout.layout_edit_1_text)
+                .build(rv_list_choose_personel)
+        }
     }
 
     private fun apiChoosePersonelBySatker(satker: SatKerResp) {
@@ -240,10 +305,11 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
                         Log.e("personelMultiple", "$selectedPersonel")
 //                        Log.e("personelMultiple", "$selection")
 //                        Log.e("selevted", "$selevted")
-                        if(selectedPersonel.isEmpty()){
+                        if (selectedPersonel.isEmpty()) {
                             actionMode?.finish()
-                        }else{
-                            if(actionMode == null)actionMode=startSupportActionMode(this@ChoosePersonelActivity)
+                        } else {
+                            if (actionMode == null) actionMode =
+                                startSupportActionMode(this@ChoosePersonelActivity)
                             actionMode?.title = "${selectedPersonel.size}"
                         }
                     }
@@ -284,9 +350,9 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_view_list ->{
+            R.id.action_view_list -> {
                 val listNamaPers = ArrayList<String>()
-                for(i in 0 until selectedPersonel.size){
+                for (i in 0 until selectedPersonel.size) {
                     selectedPersonel[i].nama?.let { listNamaPers.add(it) }
                 }
                 Toast.makeText(this, "$listNamaPers", Toast.LENGTH_SHORT).show()

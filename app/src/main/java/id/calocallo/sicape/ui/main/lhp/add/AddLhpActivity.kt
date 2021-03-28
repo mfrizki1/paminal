@@ -59,7 +59,7 @@ class AddLhpActivity : BaseActivity() {
             lhp.setKesimpulanLHP(edt_kesimpulan_lhp.text.toString())
             lhp.setRekomendasiLHP(edt_rekomendasi_lhp.text.toString())
             isTerbukti?.let { it1 -> lhp.setIsTerbukti(it1) }
-            val intent = Intent(this, ListRefPenyelidikanActivity::class.java)
+            val intent = Intent(this, PickPersonelPenyelidikActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 

@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
@@ -54,7 +56,6 @@ class AddSaksiLpActivity : BaseActivity() {
                 jenisSaksi = "personel"
                 ll_personel_saksi_lp.visible()
                 ll_sipil_saksi_lp.gone()
-                ll_saksi_korban_saksi_add.gone()
                 /*  saksiLpReq.nama == null
                   saksiLpReq.tempat_lahir == null
                   saksiLpReq.tanggal_lahir == null
@@ -102,6 +103,7 @@ class AddSaksiLpActivity : BaseActivity() {
         saksiLpReq.tanggal_lahir = edt_tanggal_lahir_saksi_single.text.toString()
         saksiLpReq.pekerjaan = edt_pekerjaan_saksi_single.text.toString()
         saksiLpReq.alamat = edt_alamat_saksi_single.text.toString()
+        saksiLpReq.kesimpulan_keterangan = edt_kesimpulan_ket_saksi_add_single_lp.text.toString()
         val id: Int = rg_status_saksi_lp_add.checkedRadioButtonId
         if (id != -1) {
             val radio: RadioButton = findViewById(id)
@@ -129,7 +131,14 @@ class AddSaksiLpActivity : BaseActivity() {
                             response: Response<Base1Resp<AddSaksiSipilResp>>
                         ) {
                             if (response.body()?.message == "Data saksi sipil saved succesfully") {
-                                gotoListSaksi(response.body()?.data?.saksi?.id_lp)
+                                if (isSingleAdd) {
+                                    btn_save_add_saksi.hideProgress(R.string.data_saved)
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        finish()
+                                    }, 750)
+                                } else {
+                                    gotoListSaksi(response.body()?.data?.saksi?.id_lp)
+                                }
                             } else {
                                 toast("${response.body()?.message}")
                                 btn_save_add_saksi.hideProgress(R.string.not_save)
@@ -153,7 +162,14 @@ class AddSaksiLpActivity : BaseActivity() {
                             response: Response<Base1Resp<AddSaksiPersonelResp>>
                         ) {
                             if (response.body()?.message == "Data saksi personel saved succesfully") {
-                                gotoListSaksi(response.body()?.data?.saksi?.id_lp)
+                                if (isSingleAdd) {
+                                    btn_save_add_saksi.hideProgress(R.string.data_saved)
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        finish()
+                                    }, 750)
+                                } else {
+                                    gotoListSaksi(response.body()?.data?.saksi?.id_lp)
+                                }
                             } else {
                                 toast("${response.body()?.message}")
                                 btn_save_add_saksi.hideProgress(R.string.not_save)
@@ -189,7 +205,7 @@ class AddSaksiLpActivity : BaseActivity() {
                         startActivity(intent)
                         finish()
                     }
-                    "kode_etik"->{
+                    "kode_etik" -> {
                         val intent = Intent(
                             this@AddSaksiLpActivity,
                             ListLpKodeEtikActivity::class.java
@@ -200,7 +216,7 @@ class AddSaksiLpActivity : BaseActivity() {
                         startActivity(intent)
                         finish()
                     }
-                    "disiplin"->{
+                    "disiplin" -> {
                         val intent = Intent(
                             this@AddSaksiLpActivity,
                             ListLpDisiplinActivity::class.java
@@ -211,7 +227,7 @@ class AddSaksiLpActivity : BaseActivity() {
                         startActivity(intent)
                         finish()
                     }
-                    else->{
+                    else -> {
                         val intent = Intent(
                             this@AddSaksiLpActivity,
                             ListSaksiLpActivity::class.java

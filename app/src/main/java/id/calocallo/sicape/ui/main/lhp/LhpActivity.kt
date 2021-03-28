@@ -33,7 +33,7 @@ class LhpActivity : BaseActivity() {
     private var refPenyelidikan = ArrayList<RefPenyelidikanResp>()
     private var personelPenyelidikan = ArrayList<PersonelPenyelidikResp>()
     private var saksiLhp = ArrayList<SaksiLhpResp>()
-    private var ketTerlaporLhpResp = ArrayList<KetTerlaporLhpResp>()
+    private var ketTerlaporLhpResp = ArrayList<PersonelPenyelidikResp>()
 
     //    private lateinit var adapterLhp: LhpAdapter
     private lateinit var adapterLhp: ReusableAdapter<LhpMinResp>
@@ -91,6 +91,12 @@ class LhpActivity : BaseActivity() {
         adapterCallbackLhp = object : AdapterCallback<LhpMinResp> {
             override fun initComponent(itemView: View, data: LhpMinResp, itemIndex: Int) {
                 itemView.txt_no_lhp.text = data.no_lhp
+                if(data.is_terbukti == 1){
+                    itemView.txt_isTerbukti.text = "Terbukti"
+                }else{
+                    itemView.txt_isTerbukti.text = "Tidak Terbukti"
+
+                }
                 /*                val lidik = data.personel_penyelidik?.find { it.is_ketua == 1 }
                 if (lidik?.is_ketua == 1) itemView.txt_ketua_tim.text =
                                  "Ketua Tim : ${lidik.nama}"

@@ -10,6 +10,7 @@ import com.google.android.material.textfield.TextInputEditText
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.AllPersonelModel
 import id.calocallo.sicape.network.request.SipilPelaporReq
+import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.ID_PELAPOR
 import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity.Companion.SIPIL
@@ -61,9 +62,33 @@ class AddLpPidanaActivity : BaseActivity() {
             startActivityForResult(intent, REQ_PELAPOR)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
+        var _jenisPelapor : String? = null
+        rg_pidana.setOnCheckedChangeListener { group, checkedId ->
+            val radio :RadioButton = findViewById(checkedId)
+            if(radio.isChecked && radio.text == "Sipil"){
+                ll_personel.gone()
+                ll_sipil.visible()
+                _jenisPelapor = radio.text.toString().toLowerCase()
+            }else{
+                ll_personel.visible()
+                ll_sipil.gone()
+                _jenisPelapor = radio.text.toString().toLowerCase()
+                sipilPelaporReq.nama_sipil = null
+                sipilPelaporReq.agama_sipil = null
+                sipilPelaporReq.jenis_kelamin = null
+                sipilPelaporReq.alamat_sipil = null
+                sipilPelaporReq.kewarganegaraan_sipil = null
+                sipilPelaporReq.nik_sipil = null
+                sipilPelaporReq.no_telp_sipil = null
+                sipilPelaporReq.pekerjaan_sipil = null
+                sipilPelaporReq.tempat_lahir_pelapor = null
+                sipilPelaporReq.tanggal_lahir_pelapor = null
+            }
+        }
 
         btn_next_lp_pidana.setOnClickListener {
-            sessionManager1.setPembukaanLapLP(edt_pembukaan_laporan_pidana.text.toString())
+            _jenisPelapor?.let { it1 -> sessionManager1.setJenisPelapor(it1) }
+            idPelapor?.let { it1 -> sessionManager1.setIDPersonelPelapor(it1) }
             sessionManager1.setIsiLapLP(edt_isi_laporan_pidana.text.toString())
             sessionManager1.setUraianPelanggaranLP(edt_uraian_pelanggaran_pidana.text.toString())
             sipilPelaporReq.nama_sipil = namaSipil
@@ -85,18 +110,6 @@ class AddLpPidanaActivity : BaseActivity() {
             }
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-        rg_pidana.setOnCheckedChangeListener { _, checkedId ->
-            val radio = findViewById<RadioButton>(checkedId)
-            if (radio.isChecked) sessionManager1.setPelapor(radio.text.toString().toLowerCase())
-            if (radio.text == "Polisi") {
-                ll_personel.visible()
-                ll_sipil.gone()
-            } else {
-                ll_personel.gone()
-                ll_sipil.visible()
-
-            }
         }
 
         //sipil view
@@ -210,7 +223,7 @@ class AddLpPidanaActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val personel = data?.getParcelableExtra<AllPersonelModel>("ID_PERSONEL")
+        val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
         when (resultCode) {
             RESULT_OK ->
                 when (requestCode) {

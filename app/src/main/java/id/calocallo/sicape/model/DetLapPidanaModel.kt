@@ -6,16 +6,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class DetLapPidanaModel(
-    var nama_pelapor: String?,
-    var tempat_lahir_pelapor: String?,
-    var tanggal_lahir_pelapor: String?,
-    var agama_pelapor: String?,
-    var pekerjaan_pelapor: String?,
-    var kewarganegaraan_pelapor: String?,
-    var alamat_pelapor: String?,
-    var no_telp_pelapor: String?,
-    var nik_ktp_pelapor: String?,
-    var jenis_kelamin_pelapor: String?,
     var isi_laporan: String?,
     var waktu_buat_laporan: String?,
 

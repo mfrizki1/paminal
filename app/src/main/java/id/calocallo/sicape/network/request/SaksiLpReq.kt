@@ -11,7 +11,8 @@ data class SaksiLpReq (
     var tanggal_lahir: String?,
     var pekerjaan: String?,
     var alamat: String?,
-    var is_korban: Int?
+    var is_korban: Int?,
+    var kesimpulan_keterangan: String?
 ) : Parcelable {
-    constructor():this(null,null,null,null,null,null,null)
+    constructor():this(null,null,null,null,null,null,null,null)
 }

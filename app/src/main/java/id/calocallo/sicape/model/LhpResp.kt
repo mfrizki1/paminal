@@ -26,8 +26,11 @@ data class LhpResp(
 
     var referensi_penyelidikan: ArrayList<RefPenyelidikanResp>?,/**/
     var personel_penyelidik: ArrayList<PersonelPenyelidikResp>?,/**/
+    var personel_terlapor: ArrayList<PersonelPenyelidikResp>?,/**/
+    var saksi: ArrayList<LpSaksiResp>?,/**/
 //    var keterangan_terlapor: ArrayList<KetTerlaporLhpResp>?,
     var is_ada_dokumen: Int?,/**/
+    var is_terbukti: Int?,/**/
     var dokumen: DokResp?,
     var user_creator: UserCreatorResp?,/**/
     var user_updater: UserCreatorResp?,/**/
@@ -47,6 +50,9 @@ data class LhpResp(
 
 ) : Parcelable {
     constructor() : this(
+        null,
+        null,
+        null,
         null,
         null,
         null,

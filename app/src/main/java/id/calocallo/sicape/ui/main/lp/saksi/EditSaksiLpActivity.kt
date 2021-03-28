@@ -58,6 +58,7 @@ class EditSaksiLpActivity : BaseActivity() {
             saksiReq.pekerjaan = edt_pekerjaan_saksi_edit.text.toString()
             saksiReq.alamat = edt_alamat_saksi_edit.text.toString()
             saksiReq.is_korban = isKorban
+            saksiReq.kesimpulan_keterangan = edt_kesimpulan_ket_saksi_edit_single_lp.text.toString()
             saksiReq.id_personel = idPersonel
 
             btn_save_edit_saksi_lp.showProgress { progressColor = Color.WHITE }
@@ -146,7 +147,7 @@ class EditSaksiLpActivity : BaseActivity() {
     }
 
     private fun getViewSaksi(saksi: LpSaksiResp?) {
-
+        edt_kesimpulan_ket_saksi_edit_single_lp.setText(saksi?.kesimpulan_keterangan)
         if (saksi?.status_saksi == "personel") {
             text_edit_saksi.text = "Edit Data Saksi Personel"
             idPersonel = saksi.personel?.id
@@ -154,8 +155,6 @@ class EditSaksiLpActivity : BaseActivity() {
             ll_personel_saksi_lp_edit.visible()
             ll_sipil_saksi_lp_edit.gone()
             /*isKorban*/
-            text_is_korban_edit.gone()
-            rg_korban_saksi_edit.gone()
             txt_nama_saksi_lp_edit.text = saksi.personel?.nama
             txt_pangkat_saksi_lp_edit.text = saksi.personel?.pangkat.toString().toUpperCase()
             txt_nrp_saksi_lp_edit.text = saksi.personel?.nrp
@@ -246,7 +245,7 @@ class EditSaksiLpActivity : BaseActivity() {
                         if (response.body()?.message == "Data saksi personel updated succesfully") {
                             btn_save_edit_saksi_lp.hideProgress(R.string.data_updated)
                             Handler(Looper.getMainLooper()).postDelayed({
-                              finish()
+                                finish()
                             }, 750)
                         } else {
                             btn_save_edit_saksi_lp.hideProgress(R.string.not_update)

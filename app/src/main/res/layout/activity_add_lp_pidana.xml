@@ -32,6 +32,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txt_title_pembukaan_laporan_pidana_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/txt_layout_pembukaan_laporan_pidana_add"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/space_half"
@@ -58,13 +60,11 @@
 
             <TextView
                 style="@style/TitleText"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pilih Salah Satu Pelapor" />
 
             <RadioGroup
-                android:visibility="gone"
                 android:id="@+id/rg_pidana"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Polisi" />
+                    android:text="Personel" />
 
             </RadioGroup>
 
@@ -173,6 +173,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_sipil"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8dp"

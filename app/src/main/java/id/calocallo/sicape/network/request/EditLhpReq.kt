@@ -19,7 +19,7 @@ data class EditLhpReq(
     var petunjuk: String?,/**/
     var barang_bukti: String?,/**/
     var analisa: String?,/**/
-    var isTerbukti: Int?
+    var is_terbukti: Int?
 ) {
     constructor() : this(
         null,

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.RadioButton
 import android.widget.Toast
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
@@ -33,6 +34,7 @@ class EditLhpActivity : BaseActivity() {
     private lateinit var adapterTerlapor: TerlaporAdapter
     private lateinit var adapterAnalisa: AnalisaAdapter
     private var editLhpReq = EditLhpReq()
+    private var _isTerbukti: Int? = null
 
     companion object {
         const val EDIT_LHP = "EDIT_LHP"
@@ -59,6 +61,14 @@ class EditLhpActivity : BaseActivity() {
         btn_save_lhp_edit.attachTextChangeAnimator()
         btn_save_lhp_edit.setOnClickListener {
             updateLhp(editLHP)
+        }
+        rg_terbukti_edit.setOnCheckedChangeListener { _, checkedId ->
+            val radio: RadioButton = findViewById(checkedId)
+            if (radio.isChecked && radio.text == "Terbukti") {
+                _isTerbukti = 1
+            } else {
+                _isTerbukti = 0
+            }
         }
 
     }
@@ -87,6 +97,7 @@ class EditLhpActivity : BaseActivity() {
         btn_save_lhp_edit.showProgress {
             progressColor = Color.WHITE
         }
+        editLhpReq.is_terbukti = _isTerbukti
         editLhpReq.no_lhp = edt_no_lhp_edit.text.toString()
         editLhpReq.tentang = edt_isi_pengaduan_lhp_edit.text.toString()
         editLhpReq.no_surat_perintah_penyelidikan = edt_no_sp_lhp_edit.text.toString()
@@ -109,32 +120,39 @@ class EditLhpActivity : BaseActivity() {
     }
 
     private fun apiUpdLhp(editLHP: LhpMinResp?) {
-        NetworkConfig().getServLhp().updLhp("Bearer ${sessionManager1.fetchAuthToken()}", editLHP?.id, editLhpReq).enqueue(
-            object : Callback<Base1Resp<AddLhpResp>> {
-                override fun onResponse(
-                    call: Call<Base1Resp<AddLhpResp>>,
-                    response: Response<Base1Resp<AddLhpResp>>
-                ) {
-                    if (response.body()?.message == "Data lhp updated succesfully") {
-                        btn_save_lhp_edit.hideProgress(R.string.data_updated)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            finish()
-                        },750)
+        NetworkConfig().getServLhp()
+            .updLhp("Bearer ${sessionManager1.fetchAuthToken()}", editLHP?.id, editLhpReq).enqueue(
+                object : Callback<Base1Resp<AddLhpResp>> {
+                    override fun onResponse(
+                        call: Call<Base1Resp<AddLhpResp>>,
+                        response: Response<Base1Resp<AddLhpResp>>
+                    ) {
+                        if (response.body()?.message == "Data lhp updated succesfully") {
+                            btn_save_lhp_edit.hideProgress(R.string.data_updated)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                finish()
+                            }, 750)
 
-                    } else {
-                        toast("${response.body()?.message}")
+                        } else {
+                            toast("${response.body()?.message}")
+                            btn_save_lhp_edit.hideProgress(R.string.not_update)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Base1Resp<AddLhpResp>>, t: Throwable) {
+                        Toast.makeText(this@EditLhpActivity, "$t", Toast.LENGTH_SHORT).show()
                         btn_save_lhp_edit.hideProgress(R.string.not_update)
                     }
-                }
-
-                override fun onFailure(call: Call<Base1Resp<AddLhpResp>>, t: Throwable) {
-                    Toast.makeText(this@EditLhpActivity, "$t", Toast.LENGTH_SHORT).show()
-                    btn_save_lhp_edit.hideProgress(R.string.not_update)
-                }
-            })
+                })
     }
 
     private fun getViewLhpEdit(editLHP: LhpResp?) {
+        if (editLHP?.is_terbukti == 1) {
+            rb_terbukti_edit.isChecked = true
+        } else {
+            rb_tidak_terbukti_edit.isChecked = true
+        }
+        _isTerbukti = editLHP?.is_terbukti
         edt_no_lhp_edit.setText(editLHP?.no_lhp)
         edt_isi_pengaduan_lhp_edit.setText(editLHP?.tentang)
         edt_no_sp_lhp_edit.setText(editLHP?.no_surat_perintah_penyelidikan)
@@ -151,6 +169,6 @@ class EditLhpActivity : BaseActivity() {
         edt_petunjuk_lhp_edit.setText(editLHP?.petunjuk)
         edt_barbukti_lhp_edit.setText(editLHP?.barang_bukti)
         edt_analisa_lhp_edit.setText(editLHP?.analisa)
-          }
+    }
 
 }

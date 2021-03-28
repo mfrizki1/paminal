@@ -213,7 +213,6 @@
             <include layout="@layout/layout_separator" />
 
             <TextView
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/space_8dp"
@@ -224,7 +223,6 @@
             <RadioGroup
                 android:id="@+id/rg_terbukti"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/space_12dp">
 

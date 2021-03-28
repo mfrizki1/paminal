@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class LhpMinResp(
     val id: Int?,
     val no_lhp: String?,
-    val status_penyelidikan: String?,
+    val is_terbukti: Int?,
     val created_at: String?,
     val updated_at: String?,
     val deleted_at: String?

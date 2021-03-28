@@ -3,6 +3,8 @@ package id.calocallo.sicape.ui.main.lp.pasal
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -30,6 +32,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal.*
 import kotlinx.android.synthetic.main.activity_pick_saksi.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -52,6 +55,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
 
     /*action mode*/
     private var actionMode: ActionMode? = null
+    private var typeLhpApi: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +63,12 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
         setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
 
+        val isLhp = sessionManager1.getWithLhp()
+        if (isLhp == true) {
+            typeLhpApi = "dengan"
+        } else {
+            typeLhpApi = "tanpa"
+        }
         when (sessionManager1.getJenisLP()) {
             "pidana" -> {
                 supportActionBar?.title = "Tambah Data Laporan Pidana"
@@ -180,14 +190,16 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
 
         when (jenisLP) {
             "pidana" -> {
-//                lpPidanaReq.no_lp = sessionManager1.getNoLP()
-                lpPidanaReq.id_satuan_kerja = sessionManager1.getIDPersonelTerlapor()
+                lpPidanaReq.no_lp = sessionManager1.getNoLP()
                 lpPidanaReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
-//                lpPidanaReq.id_personel_pelapor = idPelapor
-                lpPidanaReq.nama_kep_spkt = sessionManager1.getNamaPimpBidLp()
-                lpPidanaReq.pangkat_kep_spkt = sessionManager1.getPangkatPimpBidLp()
-                lpPidanaReq.nrp_kep_spkt = sessionManager1.getNrpPimpBidLp()
-                lpPidanaReq.jabatan_kep_spkt = sessionManager1.getJabatanPimpBidLp()
+                lpPidanaReq.id_lhp = sessionManager1.getIdLhp()
+                lpPidanaReq.id_personel_terlapor_lhp = sessionManager1.getIDPersonelTerlapor()
+                lpPidanaReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
+                lpPidanaReq.id_personel_pelapor = sessionManager1.getIDPersonelPelapor()
+                lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpPidanaReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
 //                lpPidanaReq.status_pelapor = sessionManager1.getPelapor()
 //                lpPidanaReq.pembukaan_laporan = sessionManager1.getPembukaanLpLP()
                 lpPidanaReq.isi_laporan = sessionManager1.getIsiLapLP()
@@ -324,7 +336,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                     } else {
                         Toast.makeText(
                             this@PickPasalActivity,
-                         "${response.body()?.message}",
+                            "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                         btn_save_lp_all.hideDrawable(R.string.not_save)
@@ -335,7 +347,10 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
 
     private fun apiAddLpPidana() {
         NetworkConfig().getServLp()
-            .addLpPidana("Bearer ${sessionManager1.fetchAuthToken()}", lpPidanaReq)
+            .addLpPidanaWithLhp(
+                "Bearer ${sessionManager1.fetchAuthToken()}",
+                sessionManager1.getJenisPelapor(), typeLhpApi, lpPidanaReq
+            )
             .enqueue(object : Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
                     Toast.makeText(this@PickPasalActivity, "$t", Toast.LENGTH_SHORT)
@@ -361,7 +376,17 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
                         }
-                        gotoAddSaksiLp(response.body()?.data)
+                        if (response.body()?.data?.lp?.is_ada_lhp == 1) {
+                            startActivity(
+                                Intent(
+                                    this@PickPasalActivity, ListLpPidanaActivity::class.java
+                                ).apply {
+                                    this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                })
+                            finish()
+                        } else {
+                            gotoAddSaksiLp(response.body()?.data)
+                        }
 
                     } else {
                         Toast.makeText(
@@ -369,6 +394,9 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_lp_all.hideDrawable(R.string.save)
+                        }, 1500)
                         btn_save_lp_all.hideDrawable(R.string.not_save)
                     }
                 }
