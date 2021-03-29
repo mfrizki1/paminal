@@ -80,7 +80,6 @@ class EditLpPidanaActivity : BaseActivity() {
         getViewEditPidana(pidana)
 
         btn_choose_lhp_lp_edit.setOnClickListener {
-
             val intent = Intent(this, ChooseLhpActivity::class.java)
             startActivityForResult(intent, REQ_LHP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -489,8 +488,8 @@ class EditLpPidanaActivity : BaseActivity() {
             txt_jk_sipil_pidana_lp_edit.text =
                 "Jenis Kelamin : ${parent.getItemAtPosition(position)}"
             when (position) {
-                0 -> jkSipil == "laki_laki"
-                1 -> jkSipil == "perempuan"
+                0 -> jkSipil = "laki_laki"
+                1 -> jkSipil = "perempuan"
             }
         }
 

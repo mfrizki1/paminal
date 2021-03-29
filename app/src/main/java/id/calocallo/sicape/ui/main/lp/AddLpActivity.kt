@@ -55,7 +55,6 @@ class AddLpActivity : BaseActivity() {
                 supportActionBar?.title = "Tambah Data Laporan Polisi Pidana"
             }
             "kode_etik" -> {
-                txt_layout_no_lp_add.gone()
                 supportActionBar?.title = "Tambah Data Laporan Polisi Kode Etik"
             }
             "disiplin" -> {

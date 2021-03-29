@@ -32,6 +32,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.lp.kke.ListLpKodeEtikActivity
 import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal.*
 import kotlinx.android.synthetic.main.activity_pick_saksi.*
@@ -242,28 +243,49 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpDisiplinReq.kronologis_dari_pelapor = sessionManager1.getKronologisPelapor()
                 lpDisiplinReq.rincian_pelanggaran_disiplin = sessionManager1.getRincianDisiplin()
                 lpDisiplinReq.pasal_dilanggar = listIdPasal
+                lpDisiplinReq.nama_pelapor = sipil?.nama_sipil
+                lpDisiplinReq.agama_pelapor = sipil?.agama_sipil
+                lpDisiplinReq.pekerjaan_pelapor = sipil?.pekerjaan_sipil
+                lpDisiplinReq.kewarganegaraan_pelapor = sipil?.kewarganegaraan_sipil
+                lpDisiplinReq.alamat_pelapor = sipil?.alamat_sipil
+                lpDisiplinReq.nik_ktp_pelapor = sipil?.nik_sipil
+                lpDisiplinReq.no_telp_pelapor = sipil?.no_telp_sipil
+                lpDisiplinReq.jenis_kelamin_pelapor = sipil?.jenis_kelamin
+                lpDisiplinReq.tempat_lahir_pelapor = sipil?.tempat_lahir_pelapor
+                lpDisiplinReq.tanggal_lahir_pelapor = sipil?.tanggal_lahir_pelapor
+
 //                lpDisiplinReq.kesatuan_yang_mengetahui = sessionManager1.getKesatuanPimpBidLp()
                 Log.e("addDisipin", "$lpDisiplinReq")
                 apiAddLpDisiplin()
             }
             "kode_etik" -> {
-                //                lpKKeReq.no_lp = sessionManager1.getNoLP()
-//                lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
-                lpKKeReq.id_satuan_kerja = 123
+                lpKKeReq.no_lp = sessionManager1.getNoLP()
+                lpKKeReq.id_lhp = sessionManager1.getIdLhp()
                 lpKKeReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
                 lpKKeReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
                 lpKKeReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
                 lpKKeReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
+                lpKKeReq.id_personel_terlapor_lhp = sessionManager1.getIDPersonelTerlapor()
                 lpKKeReq.id_personel_pelapor = idPelapor
 //                lpKKeReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
-                lpKKeReq.nama_kabid_propam = sessionManager1.getNamaPimpBidLp()
-                lpKKeReq.pangkat_kabid_propam = sessionManager1.getPangkatPimpBidLp()
-                lpKKeReq.nrp_kabid_propam = sessionManager1.getNrpPimpBidLp()
-                lpKKeReq.jabatan_kabid_propam = sessionManager1.getJabatanPimpBidLp()
+                lpKKeReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpKKeReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpKKeReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpKKeReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
                 lpKKeReq.alat_bukti = sessionManager1.getAlatBukiLP()
                 lpKKeReq.isi_laporan = sessionManager1.getIsiLapLP()
                 lpKKeReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
                 lpKKeReq.pasal_dilanggar = listIdPasal
+                lpKKeReq.nama_pelapor = sipil?.nama_sipil
+                lpKKeReq.agama_pelapor = sipil?.agama_sipil
+                lpKKeReq.pekerjaan_pelapor = sipil?.pekerjaan_sipil
+                lpKKeReq.kewarganegaraan_pelapor = sipil?.kewarganegaraan_sipil
+                lpKKeReq.alamat_pelapor = sipil?.alamat_sipil
+                lpKKeReq.nik_ktp_pelapor = sipil?.nik_sipil
+                lpKKeReq.no_telp_pelapor = sipil?.no_telp_sipil
+                lpKKeReq.jenis_kelamin_pelapor = sipil?.jenis_kelamin
+                lpKKeReq.tempat_lahir_pelapor = sipil?.tempat_lahir_pelapor
+                lpKKeReq.tanggal_lahir_pelapor = sipil?.tanggal_lahir_pelapor
 
 //                lpKKeReq.saksi_kode_etik = listSaksi as ArrayList<SaksiReq>
 //                lpKKeReq.saksi_kode_etik = selectedSaksi as ArrayList<LpSaksiResp>
@@ -276,7 +298,12 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
     }
 
     private fun apiAddKke() {
-        NetworkConfig().getServLp().addLpKke("Bearer ${sessionManager1.fetchAuthToken()}", lpKKeReq)
+        NetworkConfig().getServLp().addLpKkeWithLhp(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            sessionManager1.getJenisPelapor(),
+            typeLhpApi,
+            lpKKeReq
+        )
             .enqueue(object :
                 Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
@@ -301,8 +328,17 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             buttonTextRes = R.string.data_saved
                             textMarginRes = R.dimen.space_10dp
                         }
-                        gotoAddSaksiLp(response.body()?.data)
-
+                        if (response.body()?.data?.lp?.is_ada_lhp == 1) {
+                            startActivity(
+                                Intent(
+                                    this@PickPasalActivity, ListLpKodeEtikActivity::class.java
+                                ).apply {
+                                    this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                })
+                            finish()
+                        } else {
+                            gotoAddSaksiLp(response.body()?.data)
+                        }
                     } else {
                         Toast.makeText(
                             this@PickPasalActivity,

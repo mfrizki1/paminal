@@ -165,17 +165,16 @@ class PickSaksiActivity : BaseActivity() {
             "kode_etik" -> {
 //                lpKKeReq.no_lp = sessionManager1.getNoLP()
 //                lpKKeReq.id_personel_operator = sessionManager.fetchUser()?.id
-                lpKKeReq.id_satuan_kerja = 123
                 lpKKeReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
                 lpKKeReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
                 lpKKeReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
                 lpKKeReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
                 lpKKeReq.id_personel_pelapor = idPelapor
 //                lpKKeReq.id_sipil_pelapor = sessionManager.getIdSipilPelapor()
-                lpKKeReq.nama_kabid_propam = sessionManager1.getNamaPimpBidLp()
-                lpKKeReq.pangkat_kabid_propam = sessionManager1.getPangkatPimpBidLp()
-                lpKKeReq.nrp_kabid_propam = sessionManager1.getNrpPimpBidLp()
-                lpKKeReq.jabatan_kabid_propam = sessionManager1.getJabatanPimpBidLp()
+                lpKKeReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpKKeReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpKKeReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpKKeReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
                 lpKKeReq.alat_bukti = sessionManager1.getAlatBukiLP()
                 lpKKeReq.isi_laporan = sessionManager1.getIsiLapLP()
                 lpKKeReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()

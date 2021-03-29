@@ -34,7 +34,7 @@ class ListSaksiLpActivity : BaseActivity() {
     private lateinit var adapterSaksiEdit: ReusableAdapter<LpSaksiResp>
     private lateinit var callbackSaksiEdit: AdapterCallback<LpSaksiResp>
     private var jenisPelanggaran: String? = null
-    private var saksiLp: LpMinResp? = null
+    private var saksiLp: LpResp? = null
     private var dataLpFull: LpResp? = null
     private var tempIdLp: Int? = null
 
@@ -46,7 +46,7 @@ class ListSaksiLpActivity : BaseActivity() {
         jenisPelanggaran = sessionManager1.getJenisLP()
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Edit Data Laporan Kode Etik"
-        saksiLp = intent.getParcelableExtra<LpMinResp>(EDIT_SAKSI)
+        saksiLp = intent.getParcelableExtra<LpResp>(EDIT_SAKSI)
         dataLpFull = intent.getParcelableExtra<LpResp>(PickPasalActivity.DATA_LP)
         if (saksiLp != null) {
             apiListSaksiEdit(saksiLp?.id)

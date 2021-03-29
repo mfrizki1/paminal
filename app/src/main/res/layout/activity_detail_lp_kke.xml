@@ -32,6 +32,27 @@
             android:textSize="@dimen/text_16" />
 
         <include layout="@layout/layout_separator" />
+        <LinearLayout
+            android:id="@+id/ll_ref_lp_detail_kke"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Referensi Laporan" />
+            <TextView
+                android:id="@+id/txt_ref_lp_detail_kke"
+                style="@style/JustText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No LHP" />
+            <include layout="@layout/line_separator" />
+
+        </LinearLayout>
 
         <TextView
             style="@style/TitleText"

@@ -16,6 +16,245 @@
 
         <include layout="@layout/view_separator" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                style="@style/TitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pilih Salah Satu Pelapor" />
+
+            <RadioGroup
+                android:id="@+id/rg_kke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:paddingHorizontal="@dimen/space_12dp">
+
+                <RadioButton
+                    android:id="@+id/rb_sipil_kke"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sipil" />
+
+                <RadioButton
+                    android:id="@+id/rb_polisi_kke"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Personel" />
+
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:id="@+id/ll_personel_pelapor_lp_kke_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_choose_personel_pelapor_lp_add_kke"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pilih Personel Pelapor"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_personel_pelapor_kke"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/space_8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Personel Pelapor"
+                            android:textSize="@dimen/text_18"
+                            android:textStyle="bold" />
+
+                        <include layout="@layout/layout_separator" />
+
+                        <TextView
+                            android:id="@+id/txt_nama_pelapor_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_8dp"
+                            android:text="Nama Personel Pelapor"
+                            android:textSize="@dimen/text_14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_pangkat_pelapor_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Pangkat Personel Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_nrp_pelapor_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="NRP Personel Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_jabatan_pelapor_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Jabatan Personel Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_kesatuan_pelapor_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Kesatuan Personel Pelapor"
+                            android:textSize="@dimen/text_14" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_sipil_lp_kke_add"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8dp"
+                android:layout_marginHorizontal="@dimen/space_12dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_sipil_lp_kke_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Data Pelapor Sipil"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_sipil_pelapor_kke"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/space_8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Pelapor Sipil"
+                            android:textSize="@dimen/text_18"
+                            android:textStyle="bold" />
+
+                        <include layout="@layout/layout_separator" />
+
+                        <TextView
+                            android:id="@+id/txt_nama_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_8dp"
+                            android:text="Nama Sipil Pelapor"
+                            android:textSize="@dimen/text_14"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/txt_ttl_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="TTL Sipil Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+
+                        <TextView
+                            android:id="@+id/txt_agama_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Agama Sipil Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_jk_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Jenis Kelamin Sipil Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_pekerjaan_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Pekerjaan Sipil Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_kwg_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Kewarganegaraan Sipil Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_alamat_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="Alamat Sipil Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_no_telp_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="No Telepon Sipil Pelapor"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:id="@+id/txt_nik_ktp_sipil_kke_lp_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_half"
+                            android:text="NIK Ktp Sipil Pelapor"
+                            android:textSize="@dimen/text_14" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
@@ -60,91 +299,7 @@
                 android:inputType="textMultiLine|textCapSentences"
                 />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_personel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_12dp"
-            android:layout_marginTop="@dimen/space_8dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_choose_personel_pelapor_lp_add_kke"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pilih Personel Pelapor"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cv_personel_pelapor_pidana"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:strokeColor="@color/colorPrimary"
-                app:strokeWidth="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/space_8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Personel Pelapor"
-                        android:textSize="@dimen/text_18"
-                        android:textStyle="bold" />
-
-                    <include layout="@layout/layout_separator" />
-
-                    <TextView
-                        android:id="@+id/txt_nama_pelapor_kke_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_8dp"
-                        android:text="Nama Personel Pelapor"
-                        android:textSize="@dimen/text_14"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_pangkat_pelapor_kke_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_half"
-                        android:text="Pangkat Personel Pelapor"
-                        android:textSize="@dimen/text_14" />
-
-                    <TextView
-                        android:id="@+id/txt_nrp_pelapor_kke_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_half"
-                        android:text="NRP Personel Pelapor"
-                        android:textSize="@dimen/text_14" />
-
-                    <TextView
-                        android:id="@+id/txt_jabatan_pelapor_kke_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_half"
-                        android:text="Jabatan Personel Pelapor"
-                        android:textSize="@dimen/text_14" />
-
-                    <TextView
-                        android:id="@+id/txt_kesatuan_pelapor_kke_lp_add"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_half"
-                        android:text="Kesatuan Personel Pelapor"
-                        android:textSize="@dimen/text_14" />
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
+        
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"

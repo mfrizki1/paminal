@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.net.Uri
 import android.os.*
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -26,8 +27,8 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
 import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
+import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
-import kotlinx.android.synthetic.main.activity_detail_put_kke.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
 import kotlinx.android.synthetic.main.item_pasal_lp.view.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -203,6 +204,82 @@ class DetailLpDisiplinActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getViewDisiplin(disiplin: LpResp?) {
+        Log.e("disiplin", "$disiplin")
+        when {
+            disiplin?.personel_terlapor != null -> {
+                txt_detail_nama_terlapor_disiplin.text =
+                    "Nama : ${disiplin.personel_terlapor?.nama}"
+                txt_detail_pangkat_nrp_terlapor_disiplin.text =
+                    "Pangkat : ${
+                        disiplin.personel_terlapor?.pangkat.toString()
+                            .toUpperCase()
+                    }, NRP : ${disiplin.personel_terlapor?.nrp}"
+                txt_detail_jabatan_terlapor_disiplin.text =
+                    "Jabatan : ${disiplin.personel_terlapor?.jabatan}"
+                txt_detail_kesatuan_terlapor_disiplin.text =
+                    "Kesatuan : ${
+                        disiplin.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+            disiplin?.personel_terlapor_lhp != null -> {
+                txt_detail_nama_terlapor_disiplin.text =
+                    "Nama : ${disiplin.personel_terlapor_lhp?.personel?.nama}"
+                txt_detail_pangkat_nrp_terlapor_disiplin.text =
+                    "Pangkat : ${
+                        disiplin.personel_terlapor_lhp?.personel?.pangkat.toString()
+                            .toUpperCase()
+                    }, NRP : ${disiplin.personel_terlapor_lhp?.personel?.nrp}"
+                txt_detail_jabatan_terlapor_disiplin.text =
+                    "Jabatan : ${disiplin.personel_terlapor_lhp?.personel?.jabatan}"
+                txt_detail_kesatuan_terlapor_disiplin.text =
+                    "Kesatuan : ${
+                        disiplin.personel_terlapor_lhp?.personel?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+        }
+        when {
+            disiplin?.status_pelapor == "sipil" -> {
+                ll_detail_sipil_disiplin.visible()
+                txt_detail_nama_sipil_disiplin.text = "Nama: ${disiplin.nama_pelapor}"
+                txt_detail_ttl_sipil_disiplin.text =
+                    "TTL: ${disiplin.tempat_lahir_pelapor}, ${formatterDiffTanggal(disiplin.tanggal_lahir_pelapor)}"
+                txt_detail_jk_sipil_disiplin.text =
+                    "Jenis Kelamin: ${disiplin.jenis_kelamin_pelapor}"
+                txt_detail_agama_sipil_disiplin.text = "Agama: ${disiplin.agama_pelapor}"
+                txt_detail_pekerjaan_sipil_disiplin.text =
+                    "Pekerjaan: ${disiplin.pekerjaan_pelapor}"
+                txt_detail_kwg_sipil_disiplin.text =
+                    "Kewarganegaraan: ${disiplin.kewarganegaraan_pelapor}"
+                txt_detail_alamat_sipil_disiplin.text = "Alamat: ${disiplin.nama_pelapor}"
+                txt_detail_no_telp_sipil_disiplin.text = "No Telepon: ${disiplin.nama_pelapor}"
+                txt_detail_nik_sipil_disiplin.text = "NIK KTP: ${disiplin.nama_pelapor}"
+            }
+            disiplin?.status_pelapor == "personel" -> {
+                Log.e("personelDisiplin", "${disiplin.personel_pelapor}")
+                ll_detail_personel_disiplin.visible()
+                txt_detail_nama_pelapor_disiplin.text = "Nama: ${disiplin.personel_pelapor?.nama}"
+                txt_detail_pangkat_nrp_pelapor_disiplin.text =
+                    "Pangkat : ${
+                        disiplin.personel_pelapor?.pangkat.toString()
+                            .toUpperCase()
+                    }, NRP : ${disiplin.personel_pelapor?.nrp}"
+                txt_detail_jabatan_pelapor_disiplin.text =
+                    "Jabatan : ${disiplin.personel_pelapor?.jabatan}"
+                txt_detail_kesatuan_pelapor_disiplin.text =
+                    "Kesatuan : ${
+                        disiplin.personel_pelapor?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase()
+                    }"
+            }
+        }
+
+        if (disiplin?.is_ada_lhp == 1) {
+            ll_ref_lp_detail_disiplin.visible()
+            txt_ref_lp_detail_disiplin.text = "No LHP: ${disiplin.lhp?.no_lhp}"
+        }
+
         //general
         txt_detail_no_lp_disiplin.text = disiplin?.no_lp
         txt_detail_macam_pelanggaran_disiplin.text = disiplin?.detail_laporan?.macam_pelanggaran

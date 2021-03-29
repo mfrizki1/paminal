@@ -291,9 +291,10 @@ class DetailLpKkeActivity : BaseActivity() {
                     }"
             }
         }
-
-
-        //pelapor
+        if (detailKKe?.is_ada_lhp == 1) {
+            ll_ref_lp_detail_kke.visible()
+            txt_ref_lp_detail_kke.text = "No LHP: ${detailKKe?.lhp?.no_lhp}"
+        }
 
         txt_detail_alat_bukti_kke.text = detailKKe?.detail_laporan?.alat_bukti
         txt_detail_kota_buat_kke.text = "Kota : ${detailKKe?.kota_buat_laporan}"
