@@ -28,6 +28,8 @@ import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_kke.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
@@ -89,12 +91,6 @@ class DetailLpPidanaActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             intent.putExtra(EDIT_PASAL_DILANGGAR, pidana)
             startActivity(intent)
-        }
-        btn_edit_saksi_pidana.setOnClickListener {
-            val intent = Intent(this, ListSaksiLpActivity::class.java)
-            intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, pidana)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
@@ -237,7 +233,22 @@ class DetailLpPidanaActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getDetailPidana(pidana: LpResp?) {
-        if(pidana?.lhp != null){
+
+        btn_edit_saksi_pidana.setOnClickListener {
+            if (pidana?.is_ada_lhp == 1) {
+                toast("Edit Data Saksi DI Fitur LHP")
+                val intent = Intent(this, PickEditSaksiLhpActivity::class.java)
+                intent.putExtra(EditLhpActivity.EDIT_LHP, pidana.lhp)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            } else {
+                val intent = Intent(this, ListSaksiLpActivity::class.java)
+                intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, pidana)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+        }
+        if (pidana?.lhp != null) {
             ll_ref_lp_detail.visible()
             txt_ref_lp_detail.text = "No LHP: ${pidana?.lhp?.no_lhp}"
         }
@@ -273,9 +284,12 @@ class DetailLpPidanaActivity : BaseActivity() {
                     }"
             }
             pidana?.personel_terlapor_lhp != null -> {
-                txt_detail_nama_terlapor.text = "Nama : ${pidana.personel_terlapor_lhp?.personel?.nama}"
+                txt_detail_nama_terlapor.text =
+                    "Nama : ${pidana.personel_terlapor_lhp?.personel?.nama}"
                 txt_detail_pangkat_nrp_terlapor.text =
-                    "Pangkat : ${pidana.personel_terlapor_lhp?.personel?.pangkat.toString().toUpperCase()}," +
+                    "Pangkat : ${
+                        pidana.personel_terlapor_lhp?.personel?.pangkat.toString().toUpperCase()
+                    }," +
                             " NRP : ${pidana.personel_terlapor_lhp?.personel?.nrp}"
                 txt_detail_jabatan_terlapor.text =
                     "Jabatan : ${pidana.personel_terlapor_lhp?.personel?.jabatan}"
@@ -326,40 +340,56 @@ class DetailLpPidanaActivity : BaseActivity() {
 
 
         //setPasal
-        callbackDetailPasalDilanggar = object : AdapterCallback<PasalDilanggarResp> {
-            override fun initComponent(itemView: View, data: PasalDilanggarResp, itemIndex: Int) {
-                itemView.txt_item_1.text = data.pasal?.nama_pasal
-            }
+        callbackDetailPasalDilanggar =
+            object : AdapterCallback<PasalDilanggarResp> {
+                override fun initComponent(
+                    itemView: View,
+                    data: PasalDilanggarResp,
+                    itemIndex: Int
+                ) {
+                    itemView.txt_item_1.text = data.pasal?.nama_pasal
+                }
 
-            override fun onItemClicked(itemView: View, data: PasalDilanggarResp, itemIndex: Int) {
+                override fun onItemClicked(
+                    itemView: View,
+                    data: PasalDilanggarResp,
+                    itemIndex: Int
+                ) {
+                }
             }
-        }
-        pidana?.pasal_dilanggar?.let {
+        pidana?.pasal_dilanggar?.let{
             adapterDetailPasalDilanggar.adapterCallback(callbackDetailPasalDilanggar)
                 .isVerticalView().addData(it)
                 .setLayout(R.layout.item_pasal_lp).build(rv_detail_lp_pidana_pasal)
 
         }
         //saksi
-        callbackDetailSaksiPidana = object : AdapterCallback<LpSaksiResp> {
-            override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
-                if (data.status_saksi == "personel") {
-                    itemView.txt_detail_1.text = data.personel?.nama
-                    itemView.txt_detail_2.text = "Personel"
-                } else {
-                    itemView.txt_detail_1.text = data.nama
-                    if (data.is_korban == 0) {
-                        itemView.txt_detail_2.text = "Saksi"
+        callbackDetailSaksiPidana =
+            object : AdapterCallback<LpSaksiResp> {
+                override fun initComponent(itemView: View, data: LpSaksiResp, itemIndex: Int) {
+                    if (data.status_saksi == "personel") {
+                        itemView.txt_detail_1.text = data.personel?.nama
+                        if(data.is_korban == 1){
+                            itemView.txt_detail_2.text = "Personel, Korban"
+                        }else{
+                            itemView.txt_detail_2.text = "Personel, Bukan Korban"
+                        }
                     } else {
-                        itemView.txt_detail_2.text = "Korban"
+                        itemView.txt_detail_1.text = data.nama
+                        if(data.status_saksi == "sipil"){
+                            if(data.is_korban == 1){
+                                itemView.txt_detail_2.text = "Sipil, Korban"
+                            }else{
+                                itemView.txt_detail_2.text = "Sipil, Bukan Korban"
+                            }
+                        }
                     }
+
                 }
 
+                override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {}
             }
-
-            override fun onItemClicked(itemView: View, data: LpSaksiResp, itemIndex: Int) {}
-        }
-        pidana?.saksi?.let {
+        pidana?.saksi?.let{
             adapterDetailSaksiPidana.adapterCallback(callbackDetailSaksiPidana)
                 .isVerticalView().addData(it).setLayout(R.layout.item_2_text)
                 .build(rv_detail_saksi_pidana)
@@ -375,7 +405,7 @@ class DetailLpPidanaActivity : BaseActivity() {
             }
         }
 
-        btn_edit_pidana.setOnClickListener {
+        btn_edit_pidana.setOnClickListener{
             val intent = Intent(this, EditLpPidanaActivity::class.java)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             intent.putExtra(EDIT_PIDANA, pidana)
