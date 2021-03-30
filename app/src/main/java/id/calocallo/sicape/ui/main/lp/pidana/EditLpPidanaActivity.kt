@@ -188,6 +188,9 @@ class EditLpPidanaActivity : BaseActivity() {
                         R.string.error_conn,
                         Toast.LENGTH_SHORT
                     ).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_edit_lp_pidana.hideDrawable(R.string.save)
+                    }, 1000)
                     btn_save_edit_lp_pidana.hideDrawable(R.string.not_update)
                     Log.e("t", "$t")
                 }

@@ -90,23 +90,7 @@ class EditLpKkeActivity : BaseActivity() {
             btn_save_edit_lp_kke.showProgress {
                 progressColor = Color.WHITE
             }
-
-            /*Handler(Looper.getMainLooper()).postDelayed({
-                btn_save_edit_lp_kke.hideDrawable(R.string.save)
-            }, 3000)*/
         }
-        /*
-            spinner_kesatuan_lp_kke_edit.setAdapter(
-                ArrayAdapter(
-                    this,
-                    R.layout.item_spinner,
-                    resources.getStringArray(R.array.satker)
-                )
-            )
-            spinner_kesatuan_lp_kke_edit.setOnItemClickListener { parent, view, position, id ->
-                namaSatker = parent.getItemAtPosition(position) as String?
-            }*/
-
     }
 
     private fun launchSipilView(kke: LpResp?) {
@@ -295,9 +279,12 @@ class EditLpKkeActivity : BaseActivity() {
             .enqueue(object :
                 Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
-                    Toast.makeText(this@EditLpKkeActivity, R.string.error_conn, Toast.LENGTH_SHORT)
+                    Toast.makeText(this@EditLpKkeActivity, "$t", Toast.LENGTH_SHORT)
                         .show()
-                    btn_save_edit_lp_kke.hideProgress(R.string.not_update)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btn_save_edit_lp_kke.hideDrawable(R.string.save)
+                    }, 1000)
+                    btn_save_edit_lp_kke.hideDrawable(R.string.not_update)
                 }
 
                 override fun onResponse(
@@ -320,10 +307,13 @@ class EditLpKkeActivity : BaseActivity() {
                         }, 500)
                     } else {
                         Toast.makeText(
-                            this@EditLpKkeActivity, R.string.error_conn, Toast.LENGTH_SHORT
+                            this@EditLpKkeActivity, "${response.body()?.message}", Toast.LENGTH_SHORT
                         )
                             .show()
-                        btn_save_edit_lp_kke.hideProgress(R.string.not_update)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_edit_lp_kke.hideDrawable(R.string.save)
+                        }, 1000)
+                        btn_save_edit_lp_kke.hideDrawable(R.string.not_update)
                     }
                 }
             })
@@ -353,7 +343,7 @@ class EditLpKkeActivity : BaseActivity() {
                 val intent = Intent(this, ChoosePersonelActivity::class.java).apply {
                     this.putExtra(AddLpActivity.IS_LHP_PERSONEL, _idLhp!!)
                 }
-                startActivityForResult(intent, EditLpPidanaActivity.REQ_TERLAPOR_LHP)
+                startActivityForResult(intent, REQ_TERLAPOR_LHP)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
         }
@@ -504,6 +494,22 @@ class EditLpKkeActivity : BaseActivity() {
                         _idLhp = dataLhp?.id
                         txt_no_lhp_lp_edit_kke.text = "No LHP: ${dataLhp?.no_lhp}"
                     }
+                    REQ_TERLAPOR_LHP -> {
+                        val dataPersLhp =
+                            data?.getParcelableExtra<PersonelPenyelidikResp>(ChoosePersonelActivity.DATA_PERSONEL)
+                        changedIdTerlapor = dataPersLhp?.id
+                        txt_nama_menerima_lp_edit.text = "Nama : ${dataPersLhp?.personel?.nama}"
+                        txt_pangkat_menerima_lp_edit.text =
+                            "Pangkat : ${dataPersLhp?.personel?.pangkat.toString().toUpperCase()}"
+                        txt_nrp_menerima_lp_edit.text = "NRP : ${dataPersLhp?.personel?.nrp}"
+                        txt_jabatan_menerima_lp_edit.text = "Jabatan : ${dataPersLhp?.personel?.jabatan}"
+                        txt_kesatuan_menerima_lp_edit.text =
+                            "Kesatuan : ${
+                                dataPersLhp?.personel?.satuan_kerja?.kesatuan.toString()
+                                    .toUpperCase()
+                            }"
+                    }
+
                 }
             }
         }
@@ -514,5 +520,6 @@ class EditLpKkeActivity : BaseActivity() {
         const val REQ_TERLAPOR = 202
         const val REQ_PELAPOR = 102
         const val REQ_LHP = 103
+        const val REQ_TERLAPOR_LHP = 104
     }
 }

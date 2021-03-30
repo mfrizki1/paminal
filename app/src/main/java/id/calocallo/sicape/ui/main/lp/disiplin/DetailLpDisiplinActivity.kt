@@ -26,6 +26,8 @@ import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
@@ -70,16 +72,6 @@ class DetailLpDisiplinActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             startActivity(intent)
         }
-
-        btn_edit_saksi_disiplin.setOnClickListener {
-            val intent = Intent(this, ListSaksiLpActivity::class.java)
-            intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, disiplin)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
-
-
-
         btn_generate_disiplin.attachTextChangeAnimator()
         bindProgressButton(btn_generate_disiplin)
         btn_generate_disiplin.setOnClickListener {
@@ -205,6 +197,20 @@ class DetailLpDisiplinActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     private fun getViewDisiplin(disiplin: LpResp?) {
         Log.e("disiplin", "$disiplin")
+        btn_edit_saksi_disiplin.setOnClickListener {
+            if (disiplin?.is_ada_lhp == 1) {
+                toast("Edit Data Saksi DI Fitur LHP")
+                val intent = Intent(this, PickEditSaksiLhpActivity::class.java)
+                intent.putExtra(EditLhpActivity.EDIT_LHP, disiplin.lhp)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            } else {
+                val intent = Intent(this, ListSaksiLpActivity::class.java)
+                intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, disiplin)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+        }
         when {
             disiplin?.personel_terlapor != null -> {
                 txt_detail_nama_terlapor_disiplin.text =
@@ -239,8 +245,8 @@ class DetailLpDisiplinActivity : BaseActivity() {
                     }"
             }
         }
-        when {
-            disiplin?.status_pelapor == "sipil" -> {
+        when (disiplin?.status_pelapor) {
+            "sipil" -> {
                 ll_detail_sipil_disiplin.visible()
                 txt_detail_nama_sipil_disiplin.text = "Nama: ${disiplin.nama_pelapor}"
                 txt_detail_ttl_sipil_disiplin.text =
@@ -256,9 +262,9 @@ class DetailLpDisiplinActivity : BaseActivity() {
                 txt_detail_no_telp_sipil_disiplin.text = "No Telepon: ${disiplin.nama_pelapor}"
                 txt_detail_nik_sipil_disiplin.text = "NIK KTP: ${disiplin.nama_pelapor}"
             }
-            disiplin?.status_pelapor == "personel" -> {
-                Log.e("personelDisiplin", "${disiplin.personel_pelapor}")
+            "personel" -> {
                 ll_detail_personel_disiplin.visible()
+                Log.e("personelDisiplin", "${disiplin.personel_pelapor}")
                 txt_detail_nama_pelapor_disiplin.text = "Nama: ${disiplin.personel_pelapor?.nama}"
                 txt_detail_pangkat_nrp_pelapor_disiplin.text =
                     "Pangkat : ${
@@ -290,46 +296,15 @@ class DetailLpDisiplinActivity : BaseActivity() {
             disiplin?.detail_laporan?.rincian_pelanggaran_disiplin
         //pimpinan
         txt_detail_nama_pimpinan_disiplin.text =
-            "Nama : ${disiplin?.detail_laporan?.nama_kabid_propam}"
+            "Nama : ${disiplin?.nama_yang_mengetahui}"
         txt_detail_pangkat_nrp_pimpinan_disiplin.text =
             "Pangkat : ${
-                disiplin?.detail_laporan?.pangkat_kabid_propam.toString()
+                disiplin?.pangkat_yang_mengetahui.toString()
                     .toUpperCase(Locale.ROOT)
-            }, NRP : ${disiplin?.detail_laporan?.nrp_kabid_propam}"
+            }, NRP : ${disiplin?.nrp_yang_mengetahui}"
         txt_detail_jabatan_pimpinan_disiplin.text =
-            "Jabatan : ${disiplin?.detail_laporan?.jabatan_kabid_propam}"
+            "Jabatan : ${disiplin?.jabatan_yang_mengetahui}"
 
-        //terlapor
-        txt_detail_nama_terlapor_disiplin.text = "Nama : ${disiplin?.personel_terlapor?.nama}"
-        txt_detail_pangkat_nrp_terlapor_disiplin.text =
-            "Pangkat : ${
-                disiplin?.personel_terlapor?.pangkat.toString()
-                    .toUpperCase(Locale.ROOT)
-            }, NRP : ${disiplin?.personel_terlapor?.nrp}"
-        txt_detail_jabatan_terlapor_disiplin.text =
-            "Jabatan : ${disiplin?.personel_terlapor?.jabatan}"
-        txt_detail_kesatuan_terlapor_disiplin.text =
-            "Kesatuan : ${
-                disiplin?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                    .toUpperCase(Locale.ROOT)
-            }"
-
-        //pelapor
-        txt_detail_nama_pelapor_disiplin.text =
-            "Nama : ${disiplin?.detail_laporan?.personel_pelapor?.nama}"
-        txt_detail_pangkat_nrp_pelapor_disiplin.text =
-            "Pangkat : ${
-                disiplin?.detail_laporan?.personel_pelapor?.pangkat.toString()
-                    .toUpperCase(Locale.ROOT)
-            }, NRP : ${disiplin?.detail_laporan?.personel_pelapor?.nrp}"
-
-        txt_detail_jabatan_pelapor_disiplin.text =
-            "Jabatan : ${disiplin?.detail_laporan?.personel_pelapor?.jabatan}"
-        txt_detail_kesatuan_pelapor_disiplin.text =
-            "Kesatuan : ${
-                disiplin?.detail_laporan?.personel_pelapor?.satuan_kerja?.kesatuan.toString()
-                    .toUpperCase(Locale.ROOT)
-            }"
         txt_detail_keterangan_pelapor_disiplin.text = disiplin?.detail_laporan?.keterangan_pelapor
         txt_detail_kronologis_pelapor_disiplin.text =
             disiplin?.detail_laporan?.kronologis_dari_pelapor

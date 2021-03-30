@@ -32,6 +32,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.lp.disiplin.ListLpDisiplinActivity
 import id.calocallo.sicape.ui.main.lp.kke.ListLpKodeEtikActivity
 import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
 import kotlinx.android.synthetic.main.activity_pick_pasal.*
@@ -78,7 +79,6 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 supportActionBar?.title = "Tambah Data Laporan Disiplin"
             }
             "kode_etik" -> {
-                btn_save_lp_all.text = getString(R.string.next)
                 supportActionBar?.title = "Tambah Data Laporan Kode Etik"
             }
         }
@@ -196,7 +196,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 lpPidanaReq.id_lhp = sessionManager1.getIdLhp()
                 lpPidanaReq.id_personel_terlapor_lhp = sessionManager1.getIDPersonelTerlapor()
                 lpPidanaReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
-                lpPidanaReq.id_personel_pelapor = sessionManager1.getIDPersonelPelapor()
+                lpPidanaReq.id_personel_pelapor = idPelapor
                 lpPidanaReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
                 lpPidanaReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
                 lpPidanaReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
@@ -225,18 +225,21 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 apiAddLpPidana()
             }
             "disiplin" -> {
-                lpDisiplinReq.id_satuan_kerja = sessionManager1.getIDPersonelTerlapor()
+                lpDisiplinReq.no_lp = sessionManager1.getNoLP()
+                lpDisiplinReq.id_lhp = sessionManager1.getIdLhp()
                 lpDisiplinReq.waktu_buat_laporan = sessionManager1.getWaktuBuatLaporan()
                 lpDisiplinReq.no_lp = sessionManager1.getNoLP()
                 lpDisiplinReq.uraian_pelanggaran = sessionManager1.getUraianPelanggaranLP()
 //                lpDisiplinReq.id_personel_operator = sessionManager1.fetchUserPersonel()?.id
+                lpDisiplinReq.id_lhp = sessionManager1.getIdLhp()
                 lpDisiplinReq.id_personel_terlapor = sessionManager1.getIDPersonelTerlapor()
+                lpDisiplinReq.id_personel_terlapor_lhp = sessionManager1.getIDPersonelTerlapor()
                 lpDisiplinReq.kota_buat_laporan = sessionManager1.getKotaBuatLp()
                 lpDisiplinReq.tanggal_buat_laporan = sessionManager1.getTglBuatLp()
-                lpDisiplinReq.nama_kabid_propam = sessionManager1.getNamaPimpBidLp()
-                lpDisiplinReq.pangkat_kabid_propam = sessionManager1.getPangkatPimpBidLp()
-                lpDisiplinReq.nrp_kabid_propam = sessionManager1.getNrpPimpBidLp()
-                lpDisiplinReq.jabatan_kabid_propam = sessionManager1.getJabatanPimpBidLp()
+                lpDisiplinReq.nama_yang_mengetahui = sessionManager1.getNamaPimpBidLp()
+                lpDisiplinReq.pangkat_yang_mengetahui = sessionManager1.getPangkatPimpBidLp()
+                lpDisiplinReq.nrp_yang_mengetahui = sessionManager1.getNrpPimpBidLp()
+                lpDisiplinReq.jabatan_yang_mengetahui = sessionManager1.getJabatanPimpBidLp()
                 lpDisiplinReq.id_personel_pelapor = idPelapor
                 lpDisiplinReq.macam_pelanggaran = sessionManager1.getMacamPelanggaranLP()
                 lpDisiplinReq.keterangan_pelapor = sessionManager1.getKetPelaporLP()
@@ -346,6 +349,9 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                             Toast.LENGTH_SHORT
                         )
                             .show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_lp_all.hideDrawable(R.string.save)
+                        }, 1500)
                         btn_save_lp_all.hideDrawable(R.string.not_save)
                     }
                 }
@@ -354,7 +360,7 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
 
     private fun apiAddLpDisiplin() {
         NetworkConfig().getServLp()
-            .addLpDisiplin("Bearer ${sessionManager1.fetchAuthToken()}", lpDisiplinReq)
+            .addLpDispWithLhp("Bearer ${sessionManager1.fetchAuthToken()}",  sessionManager1.getJenisPelapor(), typeLhpApi, lpDisiplinReq)
             .enqueue(object : Callback<Base1Resp<DokLpResp>> {
                 override fun onFailure(call: Call<Base1Resp<DokLpResp>>, t: Throwable) {
                     Toast.makeText(this@PickPasalActivity, "$t", Toast.LENGTH_SHORT)
@@ -368,13 +374,26 @@ class PickPasalActivity : BaseActivity(), ActionMode.Callback {
                 ) {
                     if (response.body()?.message == "Data lp disiplin saved succesfully") {
                         btn_save_lp_all.hideDrawable(R.string.data_saved)
-                        gotoAddSaksiLp(response.body()?.data)
+                        if (response.body()?.data?.lp?.is_ada_lhp == 1) {
+                            startActivity(
+                                Intent(
+                                    this@PickPasalActivity, ListLpDisiplinActivity::class.java
+                                ).apply {
+                                    this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                })
+                            finish()
+                        } else {
+                            gotoAddSaksiLp(response.body()?.data)
+                        }
                     } else {
                         Toast.makeText(
                             this@PickPasalActivity,
                             "${response.body()?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            btn_save_lp_all.hideDrawable(R.string.save)
+                        }, 1500)
                         btn_save_lp_all.hideDrawable(R.string.not_save)
                     }
                 }

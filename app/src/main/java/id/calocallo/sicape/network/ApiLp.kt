@@ -301,7 +301,7 @@ interface ApiLp {
         @Header("Authorization") tokenBearer: String,
         @Path("jenis_pelapor") jenis_pelapor: String?,
         @Path("jenis_lhp") jenis_lhp: String?,
-        @Body lpKkeReq: LpKkeReq
+        @Body lpDisiplinReq: LpDisiplinReq
     ): Call<Base1Resp<DokLpResp>>
 
     @Headers(ACCEPT)
@@ -311,7 +311,7 @@ interface ApiLp {
         @Path("id_lp") id_lp: Int?,
         @Path("jenis_pelapor") jenis_pelapor: String?,
         @Path("jenis_lhp") jenis_lhp: String?,
-        @Body lpKkeReq: LpKkeReq
+        @Body lpDisiplinReq: LpDisiplinReq
     ): Call<Base1Resp<DokLpResp>>
 
 

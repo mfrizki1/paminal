@@ -33,6 +33,8 @@ import id.calocallo.sicape.ui.main.lp.saksi.ListSaksiLpActivity.Companion.EDIT_S
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.*
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.lhp.EditLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.saksi.PickEditSaksiLhpActivity
 import kotlinx.android.synthetic.main.activity_detail_lp_disiplin.*
 import kotlinx.android.synthetic.main.activity_detail_lp_kke.*
 import kotlinx.android.synthetic.main.activity_detail_lp_pidana.*
@@ -75,14 +77,6 @@ class DetailLpKkeActivity : BaseActivity() {
         }
 
         registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-
-        //EDIT LP KKE (SAKSI)
-        btn_edit_saksi_kke.setOnClickListener {
-            val intent = Intent(this, ListSaksiLpActivity::class.java)
-            intent.putExtra(EDIT_SAKSI, detailKKe)
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-        }
 
         //EDIT LP KKE (PASAL)
         btn_edit_pasal_kke.setOnClickListener {
@@ -212,6 +206,23 @@ class DetailLpKkeActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getViewKke(detailKKe: LpResp?) {
+        //EDIT LP KKE (SAKSI)
+        btn_edit_saksi_kke.setOnClickListener {
+            if (detailKKe?.is_ada_lhp == 1) {
+                toast("Edit Data Saksi DI Fitur LHP")
+                val intent = Intent(this, PickEditSaksiLhpActivity::class.java)
+                intent.putExtra(EditLhpActivity.EDIT_LHP, detailKKe.lhp)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            } else {
+                val intent = Intent(this, ListSaksiLpActivity::class.java)
+                intent.putExtra(ListSaksiLpActivity.EDIT_SAKSI, detailKKe)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            }
+        }
+
+
         //EDIT LP KKE
         btn_edit_kke.setOnClickListener {
             val intent = Intent(this, EditLpKkeActivity::class.java)

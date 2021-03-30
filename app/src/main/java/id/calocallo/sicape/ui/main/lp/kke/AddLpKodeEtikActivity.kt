@@ -66,6 +66,7 @@ class AddLpKodeEtikActivity : BaseActivity() {
         //button next to pasal
         btn_next_lp_kke.setOnClickListener {
             jenisPelapor?.let { it1 -> sessionManager1.setJenisPelapor(it1) }
+            idPelapor?.let { it1 -> sessionManager1.setIDPersonelPelapor(it1) }
             sessionManager1.setIsiLapLP(edt_isi_laporan_kke.text.toString())
             sessionManager1.setAlatBuktiLP(edt_alat_bukti_kke.text.toString())
             sessionManager1.setUraianPelanggaranLP(edt_uraian_pelanggaran_kke.text.toString())
