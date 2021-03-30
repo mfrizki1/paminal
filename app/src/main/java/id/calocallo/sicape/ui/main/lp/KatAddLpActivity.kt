@@ -7,6 +7,7 @@ import id.calocallo.sicape.R
 import id.calocallo.sicape.ui.base.BaseActivity
 import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_kat_add_lp.*
+import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
 class KatAddLpActivity : BaseActivity() {
     companion object{
@@ -15,6 +16,8 @@ class KatAddLpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kat_add_lp)
+        setupActionBarWithBackButton(toolbar)
+        supportActionBar?.title = "Pilih Kategori Tambah Laporan Polisi"
         val jenis = intent.getStringExtra("JENIS_LP")
 
         btn_lp_add_with_lhp.setOnClickListener {

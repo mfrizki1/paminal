@@ -9,7 +9,7 @@ import id.calocallo.sicape.network.response.LpKkeResp
 import id.calocallo.sicape.network.response.LpResp
 import id.calocallo.sicape.ui.main.putkke.AddPutKkeActivity
 import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
-import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity.Companion.IDLHP_FOR_LP
+import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity.Companion.LP_SKHD
 import id.calocallo.sicape.utils.ext.toggleVisibility
 import id.calocallo.sicape.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_choose_lp_skhd.*
@@ -22,7 +22,7 @@ class ChooseLpSkhdActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Jenis Laporan Polisi"
         /*get id_lhp from activity add skhd*/
-        val idLhpSkhd = intent.extras?.getInt(IDLHP_FOR_LP)
+        val idLhpSkhd = intent.extras?.getInt(LP_SKHD)
         val idLhpPutKke = intent.extras?.getInt(AddPutKkeActivity.IDLHP_PUTKKE)
         Log.e("idLhpPutKke", "$idLhpPutKke")
         Log.e("idLhpSkhd", "$idLhpSkhd")

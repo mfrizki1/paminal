@@ -205,19 +205,44 @@ class DetailSkhdActivity : BaseActivity() {
         txt_tembusan_skhd_detail.text = detailSKHD?.tembusan
 
         /*personel terhukum*/
-        txt_nama_personel_detail_skhd.text = "Nama: ${detailSKHD?.lp?.personel_terlapor?.nama}"
-        txt_pangkat_personel_detail_skhd.text =
-            "Pangkat: ${
-                detailSKHD?.lp?.personel_terlapor?.pangkat.toString().toUpperCase(Locale.ROOT)
-            }"
-        txt_nrp_personel_detail_skhd.text = "NRP: ${detailSKHD?.lp?.personel_terlapor?.nrp}"
-        txt_jabatan_personel_detail_skhd.text =
-            "Jabatan: ${detailSKHD?.lp?.personel_terlapor?.jabatan}"
-        txt_kesatuan_personel_detail_skhd.text =
-            "Kesatuan: ${
-                detailSKHD?.lp?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
-                    .toUpperCase(Locale.ROOT)
-            }"
+        when {
+            detailSKHD?.lp?.personel_terlapor != null -> {
+                txt_nama_personel_detail_skhd.text =
+                    "Nama: ${detailSKHD?.lp?.personel_terlapor?.nama}"
+                txt_pangkat_personel_detail_skhd.text =
+                    "Pangkat: ${
+                        detailSKHD?.lp?.personel_terlapor?.pangkat.toString()
+                            .toUpperCase(Locale.ROOT)
+                    }"
+                txt_nrp_personel_detail_skhd.text = "NRP: ${detailSKHD?.lp?.personel_terlapor?.nrp}"
+                txt_jabatan_personel_detail_skhd.text =
+                    "Jabatan: ${detailSKHD?.lp?.personel_terlapor?.jabatan}"
+                txt_kesatuan_personel_detail_skhd.text =
+                    "Kesatuan: ${
+                        detailSKHD?.lp?.personel_terlapor?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase(Locale.ROOT)
+                    }"
+            }
+            detailSKHD?.lp?.personel_terlapor_lhp != null -> {
+                txt_nama_personel_detail_skhd.text =
+                    "Nama: ${detailSKHD?.lp?.personel_terlapor_lhp?.personel?.nama}"
+                txt_pangkat_personel_detail_skhd.text =
+                    "Pangkat: ${
+                        detailSKHD?.lp?.personel_terlapor_lhp?.personel?.pangkat.toString()
+                            .toUpperCase(Locale.ROOT)
+                    }"
+                txt_nrp_personel_detail_skhd.text =
+                    "NRP: ${detailSKHD?.lp?.personel_terlapor_lhp?.personel?.nrp}"
+                txt_jabatan_personel_detail_skhd.text =
+                    "Jabatan: ${detailSKHD?.lp?.personel_terlapor_lhp?.personel?.jabatan}"
+                txt_kesatuan_personel_detail_skhd.text =
+                    "Kesatuan: ${
+                        detailSKHD?.lp?.personel_terlapor_lhp?.personel?.satuan_kerja?.kesatuan.toString()
+                            .toUpperCase(Locale.ROOT)
+                    }"
+            }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

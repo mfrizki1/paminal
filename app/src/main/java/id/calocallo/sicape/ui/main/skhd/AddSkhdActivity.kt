@@ -17,6 +17,10 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.lp.LpChooseActivity
+import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
+import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
+import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -47,8 +51,9 @@ class AddSkhdActivity : BaseActivity() {
         /*set button for add id_lp*/
         bnt_pick_lp_skhd_add.setOnClickListener {
 //            val intent = Intent(this, ChooseLpSkhdActivity::class.java)
-            val intent = Intent(this, ChooseLhpActivity::class.java)
-//            intent.putExtra(IDLHP_FOR_LP, idLhp)
+//            val intent = Intent(this, ChooseLhpActivity::class.java)
+            val intent = Intent(this, LpChooseActivity::class.java)
+            intent.putExtra(LP_SKHD, true)
             startActivityForResult(intent, REQ_CHOOSE_LP)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
@@ -140,6 +145,11 @@ class AddSkhdActivity : BaseActivity() {
             }
         } else if (requestCode == REQ_CHOOSE_LP) {
             when (resultCode) {
+                PickJenisLpActivity.RES_LP_CHOOSE->{
+                    val pidana = data?.getParcelableExtra<LpMinResp>(AddLhpActivity.DATA_LP)
+                    idLp = pidana?.id
+                    txt_lp_skhd_add.text = pidana?.no_lp
+                }
                 ChooseLpSkhdActivity.RES_LP_PIDANA_SKHD -> {
                     val pidana = data?.getParcelableExtra<LpResp>(ID_LP)
                     idLp = pidana?.id
@@ -164,7 +174,7 @@ class AddSkhdActivity : BaseActivity() {
     companion object {
         const val REQ_CHOOSE_LHP = 2
         const val REQ_CHOOSE_LP = 1
-        const val IDLHP_FOR_LP = "LP_SKHD"
+        const val LP_SKHD = "LP_SKHD"
         const val ID_LP = "ID_LP"
     }
 }

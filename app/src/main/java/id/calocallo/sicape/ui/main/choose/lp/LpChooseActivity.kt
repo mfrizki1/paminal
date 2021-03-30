@@ -20,6 +20,8 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
+import id.calocallo.sicape.ui.main.skhp.AddSkhpActivity
 import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_lp_choose.*
 import kotlinx.android.synthetic.main.item_2_text.view.*
@@ -78,6 +80,7 @@ class LpChooseActivity : BaseActivity() {
                 supportActionBar?.title = "Pilih Data Laporan"
             }
         }
+        val lpSkhd = intent.getBooleanExtra(AddSkhdActivity.LP_SKHD, false)
         /*LIST LP FOR REF PENYELIDIKAN*/
         isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, false)
         isLpForLhg = intent.getBooleanExtra(AddGelarActivity.IS_LHG, false)
@@ -86,6 +89,9 @@ class LpChooseActivity : BaseActivity() {
         isLpForSktb = intent.getBooleanExtra(AddSktbActivity.IS_SKTB, false)
         isLpForSp4 = intent.getBooleanExtra(AddSp4Activity.IS_SP4, false)
         when {
+            lpSkhd ->{
+                urlKasus = "masuk/pidana/disiplin"
+            }
             isLpForRef == true -> {
                 urlKasus = "masuk"
             }

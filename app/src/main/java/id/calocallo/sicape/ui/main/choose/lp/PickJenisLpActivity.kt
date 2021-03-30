@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import id.calocallo.sicape.R
 import id.calocallo.sicape.network.request.RefPenyelidikanReq
+import id.calocallo.sicape.network.response.AddSkhdResp
 import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.DATA_LP
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity.Companion.REQ_LP
@@ -12,6 +13,7 @@ import id.calocallo.sicape.ui.main.lhp.add.ListRefPenyelidikanActivity
 import id.calocallo.sicape.ui.main.lhp.edit.ref_penyelidikan.AddRefPenyelidikActivity
 import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
 import kotlinx.android.synthetic.main.activity_pick_jenis_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -24,7 +26,7 @@ class PickJenisLpActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Pilih Jenis Laporan Polisi"
         val isLpRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, false)
-
+        val lpSkhd = intent.getBooleanExtra(AddSkhdActivity.LP_SKHD, false)
         /*get value from sktt*/
         sktt = intent.extras?.getString(AddSkttActivity.LP_SKTT)
         /*set jika ad ket terlapor dari activity ListKetTerlaporLhpActivity*/
@@ -32,10 +34,17 @@ class PickJenisLpActivity : BaseActivity() {
             val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LpChooseActivity.JENIS_LP_CHOOSE, "Pidana")
             /*LP UNTUK REF PENYELIDIKAN*/
-            if (sktt != null) {
-                intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
-            } else {
-                intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
+            when{
+                sktt != null->{
+                    intent.putExtra(AddSkttActivity.LP_SKTT, sktt)
+                }
+                lpSkhd != null->{
+                    intent.putExtra(AddSkhdActivity.LP_SKHD, lpSkhd)
+                }
+                else->{
+                    intent.putExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, isLpRef)
+
+                }
             }
             startActivityForResult(intent, REQ_LP)
         }
