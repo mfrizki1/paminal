@@ -149,7 +149,8 @@
                 android:id="@+id/edt_tgl_berkas_pemeriksaan_put_kke_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="date" />
+                android:inputType="date"
+                android:maxLength="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -185,7 +186,8 @@
                 android:id="@+id/edt_tgl_keputusan_kapolda_put_kke_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="date" />
+                android:inputType="date"
+                android:maxLength="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -213,13 +215,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
             android:hint="Tanggal Surat Persangkaan">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_tgl_surat_persangkaan_put_kke_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="date" />
+                android:inputType="date"
+                android:maxLength="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -255,6 +259,7 @@
                 android:id="@+id/edt_tgl_tuntunan_pelanggaran_put_kke_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:maxLength="10"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -577,6 +582,7 @@
                     android:inputType="textCapSentences" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"

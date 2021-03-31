@@ -10,12 +10,16 @@ import com.orhanobut.logger.Logger
 import id.calocallo.sicape.R
 import id.calocallo.sicape.model.LpOnSkhd
 import id.calocallo.sicape.network.request.LhgReq
+import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.GelarDataManager
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.lp.LpChooseActivity
+import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
+import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import kotlinx.android.synthetic.main.activity_add_gelar.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import java.text.SimpleDateFormat
@@ -76,7 +80,7 @@ class AddGelarActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_choose_lp_lhg_add.setOnClickListener {
-            val intent = Intent(this, ChooseLhpActivity::class.java).apply {
+            val intent = Intent(this, LpChooseActivity::class.java).apply {
                 this.putExtra(IS_LHG, true)
             }
             startActivityForResult(intent, REQ_LP_GELAR)
@@ -156,10 +160,10 @@ class AddGelarActivity : BaseActivity() {
                 }
             }
             REQ_LP_GELAR -> {
-                if (resultCode == ChooseLhpActivity.RES_LP_CHOSE_LHP) {
-                    val dataLpGelar = data?.getParcelableExtra<LpOnSkhd>(ChooseLhpActivity.DATA_LP)
-                    txt_no_lp_choose_lhg_add.text = dataLpGelar?.lp?.no_lp
-                    idLp = dataLpGelar?.lp?.id
+                if (resultCode == PickJenisLpActivity.RES_LP_CHOOSE) {
+                    val dataLpGelar = data?.getParcelableExtra<LpMinResp>(AddLhpActivity.DATA_LP)
+                    txt_no_lp_choose_lhg_add.text = dataLpGelar?.no_lp
+                    idLp = dataLpGelar?.id
 
                 }
             }

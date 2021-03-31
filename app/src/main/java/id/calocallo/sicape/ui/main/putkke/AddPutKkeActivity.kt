@@ -12,11 +12,15 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.PutKkeReq
 import id.calocallo.sicape.network.response.AddPutKkeResp
 import id.calocallo.sicape.network.response.Base1Resp
+import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.lp.LpChooseActivity
+import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
+import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_put_kke.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -26,7 +30,6 @@ import retrofit2.Response
 
 class AddPutKkeActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
-    private var idLhp: Int? = null
     private var idLp: Int? = null
     private var putKkeReq = PutKkeReq()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +52,7 @@ class AddPutKkeActivity : BaseActivity() {
               }*/
         btn_pick_lp_put_kke_add.setOnClickListener {
 //            val intent = Intent(this, ChooseLpSkhdActivity::class.java)
-            val intent = Intent(this, ChooseLhpActivity::class.java).apply {
+            val intent = Intent(this, LpChooseActivity::class.java).apply {
                 this.putExtra(IS_PUTTKE, true)
             }
 //            intent.putExtra(IDLHP_PUTKKE, idLhp)
@@ -179,11 +182,11 @@ class AddPutKkeActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_CHOOSE_LP) {
             when (resultCode) {
-                ChooseLhpActivity.RES_LP_CHOSE_LHP -> {
+                PickJenisLpActivity.RES_LP_CHOOSE -> {
                     val lpKke =
-                        data?.getParcelableExtra<LpOnSkhd>(ChooseLhpActivity.DATA_LP)
-                    idLp = lpKke?.lp?.id
-                    txt_lp_put_kke_add.text = lpKke?.lp?.no_lp
+                        data?.getParcelableExtra<LpMinResp>(AddLhpActivity.DATA_LP)
+                    idLp = lpKke?.id
+                    txt_lp_put_kke_add.text = lpKke?.no_lp
                 }
             }
         }

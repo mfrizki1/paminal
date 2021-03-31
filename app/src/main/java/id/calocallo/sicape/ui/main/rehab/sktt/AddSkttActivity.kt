@@ -12,11 +12,15 @@ import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SkttReq
 import id.calocallo.sicape.network.response.AddSkttResp
 import id.calocallo.sicape.network.response.Base1Resp
+import id.calocallo.sicape.network.response.LpMinResp
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.lp.LpChooseActivity
+import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
+import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
 import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_sktt.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -43,7 +47,7 @@ class AddSkttActivity : BaseActivity() {
         }
 
         btn_pick_lp_sktt_add.setOnClickListener {
-            val intent = Intent(this, ChooseLhpActivity::class.java)
+            val intent = Intent(this, LpChooseActivity::class.java)
             intent.putExtra(LP_SKTT, true)
             startActivityForResult(intent, REQ_LP_ON_SKTT)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -102,10 +106,10 @@ class AddSkttActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_LP_ON_SKTT) {
             when (resultCode) {
-                ChooseLhpActivity.RES_LP_CHOSE_LHP -> {
-                    val dataLp = data?.getParcelableExtra<LpOnSkhd>(ChooseLhpActivity.DATA_LP)
-                    idLp = dataLp?.lp?.id
-                    txt_no_lp_sktt_add.text = dataLp?.lp?.no_lp
+                PickJenisLpActivity.RES_LP_CHOOSE -> {
+                    val dataLp = data?.getParcelableExtra<LpMinResp>(AddLhpActivity.DATA_LP)
+                    idLp = dataLp?.id
+                    txt_no_lp_sktt_add.text = dataLp?.no_lp
                 }
             }
         }

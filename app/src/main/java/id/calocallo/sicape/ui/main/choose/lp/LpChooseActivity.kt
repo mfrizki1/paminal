@@ -20,6 +20,8 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.putkke.AddPutKkeActivity
+import id.calocallo.sicape.ui.main.rehab.sktt.AddSkttActivity
 import id.calocallo.sicape.ui.main.skhd.AddSkhdActivity
 import id.calocallo.sicape.ui.main.skhp.AddSkhpActivity
 import id.calocallo.sicape.utils.ext.toast
@@ -81,6 +83,8 @@ class LpChooseActivity : BaseActivity() {
             }
         }
         val lpSkhd = intent.getBooleanExtra(AddSkhdActivity.LP_SKHD, false)
+        val lpPutkke = intent.getBooleanExtra(AddPutKkeActivity.IS_PUTTKE, false)
+        val lpSktt = intent.getBooleanExtra(AddSkttActivity.LP_SKTT, false)
         /*LIST LP FOR REF PENYELIDIKAN*/
         isLpForRef = intent.getBooleanExtra(AddRefPenyelidikActivity.IS_KASUS_MASUK, false)
         isLpForLhg = intent.getBooleanExtra(AddGelarActivity.IS_LHG, false)
@@ -92,11 +96,17 @@ class LpChooseActivity : BaseActivity() {
             lpSkhd ->{
                 urlKasus = "masuk/pidana/disiplin"
             }
+            lpPutkke ->{
+                urlKasus = "masuk/kode/etik"
+            }
+            lpSktt ->{
+                urlKasus = "masuk/dengan/gelar"
+            }
             isLpForRef == true -> {
                 urlKasus = "masuk"
             }
             isLpForLhg == true -> {
-                Log.e("lhg", "$isLpForLhg")
+                urlKasus = "masuk/tanpa/gelar"
             }
             isLpForRps == true -> {
                 urlKasus = "masa/hukuman/pidana/disiplin"
