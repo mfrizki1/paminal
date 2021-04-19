@@ -81,14 +81,13 @@ class AnevActivity : BaseActivity() {
                     call: Call<BaseAnev>,
                     response: Response<BaseAnev>
                 ) {
-                    if (response.isSuccessful) {
+                    if (response.body()?.message == "Data Kosong") {
                         rl_pb.gone()
-                        defaultPie(response.body())
+                        rl_no_data.visible()
 //                   tesPie()
                     } else {
                         rl_pb.gone()
-                        rl_no_data.visible()
-                    }
+                        defaultPie(response.body()) }
                 }
             })
     }
@@ -852,23 +851,6 @@ class AnevActivity : BaseActivity() {
             )
         )
         pie_anev.setChart(pie)
-/*//        val pieDataSet = PieDataSet(totalKasus, "")
-//        pieDataSet.valueTextSize = 20f
-//        pieDataSet.valueTextColor = Color.WHITE
-
-//        val colorSet = java.util.ArrayList<Int>()
-//        colorSet.add(Color.rgb(255, 107, 107))  //red
-//        colorSet.add(Color.rgb(173, 232, 244))  // blue
-//        pieDataSet.setColors(colorSet)
-//        val pieData = PieData(pieDataSet)
-//        pie_anev.data = pieData
-
-//        pie_anev.description.text = "Pie chart"
-//        pie_anev.description.textSize = 20f
-//        pie_anev.centerTextRadiusPercent = 0f
-//        pie_anev.isDrawHoleEnabled = true
-//        pie_anev.legend.isEnabled = false
-//        pie_anev.description.isEnabled = true*/
     }
 
     private fun convertMonth(req: FilterReq):String {

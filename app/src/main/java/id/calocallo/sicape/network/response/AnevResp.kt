@@ -16,5 +16,6 @@ data class BaseAnev(
     var data: ArrayList<AnevResp>?,
     val bulan: String?,
     val tahun: String?,
-    val grand_total: Int?
+    val grand_total: Int?,
+    val message: String?
 ) : Parcelable
