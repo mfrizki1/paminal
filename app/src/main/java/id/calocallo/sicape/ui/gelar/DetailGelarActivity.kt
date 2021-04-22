@@ -55,8 +55,8 @@ class DetailGelarActivity : BaseActivity() {
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_peserta_gelar_detail_lhg.gone()
-            btn_generate_doc_lhg.gone()
-            btn_see_doc_lhg.gone()
+//            btn_generate_doc_lhg.gone()
+//            btn_see_doc_lhg.gone()
         }
     }
 
@@ -208,7 +208,12 @@ class DetailGelarActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.btn_delete_item -> {
-                alertDialogDelete()
+                val hak = sessionManager1.fetchHakAkses()
+                if(hak != "operator"){
+                    alertDialogDelete()
+                }else{
+                    toast("Hanya bisa melalui Admin")
+                }
             }
         }
         return super.onOptionsItemSelected(item)

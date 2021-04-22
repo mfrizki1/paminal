@@ -61,7 +61,7 @@ class DetailSkhdActivity : BaseActivity() {
         val hakAkses = sessionManager1.fetchHakAkses()
         if (hakAkses == "operator") {
             btn_edit_skhd.gone()
-            btn_generate_skhd.gone()
+//            btn_generate_skhd.gone()
         }
 
         btn_edit_skhd.setOnClickListener {
@@ -254,7 +254,12 @@ class DetailSkhdActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.btn_delete_item -> {
-                alertDialogDelete()
+                val hak = sessionManager1.fetchHakAkses()
+                if(hak != "operator"){
+                    alertDialogDelete()
+                }else{
+                    toast("Hanya bisa melalui Admin")
+                }
             }
         }
         return super.onOptionsItemSelected(item)
