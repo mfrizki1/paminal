@@ -67,14 +67,15 @@ class EditRpsActivity : BaseActivity() {
     }
 
     private fun updateRps(dataRps: RpsResp?) {
+        rpsReq.no_rps = edt_no_rps_edit.text.toString()
         rpsReq.nama_dinas = edt_nama_dinas_rps_edit.text.toString()
         rpsReq.no_nota_dinas = edt_no_nota_dinas_rps_edit.text.toString()
         rpsReq.tanggal_nota_dinas = edt_tanggal_nota_dinas_rps_edit.text.toString()
         rpsReq.kota_penetapan = edt_kota_penetapan_rps_edit.text.toString()
         rpsReq.tanggal_penetapan = edt_tanggal_penetapan_rps_edit.text.toString()
-        rpsReq.nama_kabid_propam = edt_nama_pimpinan_rps_edit.text.toString()
-        rpsReq.pangkat_kabid_propam = edt_pangkat_pimpinan_rps_edit.text.toString()
-        rpsReq.nrp_kabid_propam = edt_nrp_pimpinan_rps_edit.text.toString()
+        rpsReq.nama_yang_mengetahui = edt_nama_pimpinan_rps_edit.text.toString()
+        rpsReq.pangkat_yang_mengetahui = edt_pangkat_pimpinan_rps_edit.text.toString()
+        rpsReq.nrp_yang_mengetahui = edt_nrp_pimpinan_rps_edit.text.toString()
         rpsReq.tembusan = edt_tembusan_rps_edit.text.toString()
         Log.e("edit RPs", "$rpsReq")
         apiEditRps(dataRps)
@@ -115,11 +116,11 @@ class EditRpsActivity : BaseActivity() {
         edt_tanggal_nota_dinas_rps_edit.setText(dataRps?.tanggal_nota_dinas)
         edt_kota_penetapan_rps_edit.setText(dataRps?.kota_penetapan)
         edt_tanggal_penetapan_rps_edit.setText(dataRps?.tanggal_penetapan)
-        edt_nama_pimpinan_rps_edit.setText(dataRps?.nama_kabid_propam)
+        edt_nama_pimpinan_rps_edit.setText(dataRps?.nama_yang_mengetahui)
         edt_pangkat_pimpinan_rps_edit.setText(
-            dataRps?.pangkat_kabid_propam.toString().toUpperCase()
+            dataRps?.pangkat_yang_mengetahui.toString().toUpperCase()
         )
-        edt_nrp_pimpinan_rps_edit.setText(dataRps?.nrp_kabid_propam)
+        edt_nrp_pimpinan_rps_edit.setText(dataRps?.nrp_yang_mengetahui)
         edt_tembusan_rps_edit.setText(dataRps?.tembusan)
     }
 

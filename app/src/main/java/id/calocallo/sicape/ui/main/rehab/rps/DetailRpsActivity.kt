@@ -190,12 +190,12 @@ class DetailRpsActivity : BaseActivity() {
         txt_kota_penetapan_rps_detail.text = "Kota: ${dataRPS?.kota_penetapan}"
         txt_tanggal_penetapan_rps_detail.text =
             "Tanggal: ${formatterTanggal(dataRPS?.tanggal_penetapan)}"
-        txt_nama_pimpinan_rps_detail.text = "Nama : ${dataRPS?.nama_kabid_propam}"
+        txt_nama_pimpinan_rps_detail.text = "Nama : ${dataRPS?.nama_yang_mengetahui}"
         txt_pangkat_nrp_pimpinan_rps_detail.text =
             "Pangkat: ${
-                dataRPS?.pangkat_kabid_propam.toString()
+                dataRPS?.pangkat_yang_mengetahui.toString()
                     .toUpperCase()
-            }, NRP : ${dataRPS?.nrp_kabid_propam}"
+            }, NRP : ${dataRPS?.nrp_yang_mengetahui}"
         txt_tembusan_rps_detail.text = dataRPS?.tembusan
     }
 

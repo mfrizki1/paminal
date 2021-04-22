@@ -53,15 +53,16 @@ class AddRpsActivity : BaseActivity() {
     }
 
     private fun addRps() {
+        rpsReq.no_rps = edt_no_rps_add.text.toString()
         rpsReq.id_lp = idLp
         rpsReq.nama_dinas = edt_nama_dinas_rps_add.text.toString()
         rpsReq.no_nota_dinas = edt_no_nota_dinas_rps_add.text.toString()
         rpsReq.tanggal_nota_dinas = edt_tanggal_nota_dinas_rps_add.text.toString()
         rpsReq.kota_penetapan = edt_kota_penetapan_rps_add.text.toString()
         rpsReq.tanggal_penetapan = edt_tanggal_penetapan_rps_add.text.toString()
-        rpsReq.nama_kabid_propam = edt_nama_pimpinan_rps_add.text.toString()
-        rpsReq.pangkat_kabid_propam = edt_pangkat_pimpinan_rps_add.text.toString()
-        rpsReq.nrp_kabid_propam = edt_nrp_pimpinan_rps_add.text.toString()
+        rpsReq.nama_yang_mengetahui = edt_nama_pimpinan_rps_add.text.toString()
+        rpsReq.pangkat_yang_mengetahui = edt_pangkat_pimpinan_rps_add.text.toString()
+        rpsReq.nrp_yang_mengetahui = edt_nrp_pimpinan_rps_add.text.toString()
         rpsReq.tembusan = edt_tembusan_rps_add.text.toString()
         Log.e("add RPS", "$rpsReq")
         btn_save_rps_add.showProgress {
