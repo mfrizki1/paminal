@@ -76,16 +76,15 @@
             android:text="No Putusan Kke" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_no_put_kke_edit"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:enabled="false"
             android:hint="No Putusan Kke">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_no_put_kke_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textCapCharacters" />

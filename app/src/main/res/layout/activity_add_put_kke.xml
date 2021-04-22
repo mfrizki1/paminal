@@ -71,6 +71,26 @@
         </LinearLayout>
 
 
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Putusan Kke" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_12dp"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="No Putusan Kke">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_no_put_kke_add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textCapCharacters" />
+        </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_pick_lp_put_kke_add"
             style="@style/Widget.Button"

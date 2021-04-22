@@ -62,6 +62,8 @@ class AddPutKkeActivity : BaseActivity() {
     }
 
     private fun addPutKke() {
+        putKkeReq.no_putkke = edt_no_put_kke_add.text.toString()
+
         putKkeReq.id_lp = idLp
 
         putKkeReq.no_berkas_pemeriksaan_pendahuluan =

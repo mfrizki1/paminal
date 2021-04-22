@@ -66,7 +66,7 @@ class EditPutKkeActivity : BaseActivity() {
     }
 
     private fun getDataPutKke(detailPutKke: PutKkeResp?) {
-        edt_no_put_kke_edit.setText(detailPutKke?.no_putkke)
+        edt_no_put_kke_edit.editText?.setText(detailPutKke?.no_putkke)
         txt_lp_put_kke_edit.text = detailPutKke?.lp?.no_lp
         edt_no_berkas_pemeriksaan_put_kke_edit.setText(detailPutKke?.no_berkas_pemeriksaan_pendahuluan)
         edt_tgl_berkas_pemeriksaan_put_kke_edit.setText(detailPutKke?.tanggal_berkas_pemeriksaan_pendahuluan)
@@ -116,6 +116,8 @@ class EditPutKkeActivity : BaseActivity() {
          putKkeReq.memperhatikan_p5 = edt_memperhatikan_p5_put_kke_edit.text.toString()
          putKkeReq.memutuskan_p1 = edt_memutuskan_p1_put_kke_edit.text.toString()
          putKkeReq.sanksi_rekomendasi = edt_sanksi_rekomendasi_put_kke_edit.text.toString()*/
+        putKkeReq.no_putkke = edt_no_put_kke_edit.editText?.text.toString()
+
         putKkeReq.no_berkas_pemeriksaan_pendahuluan =
             edt_no_berkas_pemeriksaan_put_kke_edit.text.toString()
 

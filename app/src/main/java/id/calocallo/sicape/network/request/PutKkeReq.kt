@@ -1,6 +1,7 @@
 package id.calocallo.sicape.network.request
 
 data class PutKkeReq(
+    var no_putkke: String?,
     var id_lp: Int?,/**/
     var no_berkas_pemeriksaan_pendahuluan: String?,/*!*/
     var tanggal_berkas_pemeriksaan_pendahuluan: String?,/*!*/
@@ -34,7 +35,6 @@ data class PutKkeReq(
 
 
     /*var id_lhp: Int?,
-    var no_putkke: String?,
     var pembukaan_putusan: String?,
     var menimbang_p2: String?,
     var mengingat_p4: String?,
@@ -46,7 +46,7 @@ data class PutKkeReq(
     var kota_putusan: String?*/
 ) {
     constructor() : this(
-        null, null, null, null,
+        null, null, null, null, null,
         null, null, null, null,
         null, null, null, null,
         null, null, null, null,
