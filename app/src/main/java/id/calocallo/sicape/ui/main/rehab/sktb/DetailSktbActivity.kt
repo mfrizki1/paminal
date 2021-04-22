@@ -51,7 +51,7 @@ class DetailSktbActivity : BaseActivity() {
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_sktb_detail.gone()
-            btn_generate_sktb_detail.gone()
+//            btn_generate_sktb_detail.gone()
         }
 
 
@@ -181,12 +181,12 @@ class DetailSktbActivity : BaseActivity() {
         txt_kota_penetapan_sktb_detail.text = "Kota : ${detailSktb?.kota_penetapan}"
         txt_tanggal_penetapan_sktb_detail.text =
             "Tanggal : ${formatterTanggal(detailSktb?.tanggal_penetapan)}"
-        txt_nama_pimpinan_sktb_detail.text = "Nama: ${detailSktb?.nama_kabid_propam}"
+        txt_nama_pimpinan_sktb_detail.text = "Nama: ${detailSktb?.nama_yang_mengetahui}"
         txt_pangkat_nrp_sktb_detail.text =
             "Pangkat ${
-                detailSktb?.pangkat_kabid_propam.toString()
+                detailSktb?.pangkat_yang_mengetahui.toString()
                     .toUpperCase()
-            }, NRP : ${detailSktb?.nrp_kabid_propam}"
+            }, NRP : ${detailSktb?.nrp_yang_mengetahui}"
         txt_tembusan_sktb_detail.text = detailSktb?.tembusan
     }
 
@@ -204,7 +204,12 @@ class DetailSktbActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.btn_delete_item -> {
-                alertDialogDelete()
+                val hak = sessionManager1.fetchHakAkses()
+                if(hak != "operator"){
+                    alertDialogDelete()
+                }else{
+                    toast("Hanya bisa melalui Admin")
+                }
             }
         }
         return super.onOptionsItemSelected(item)

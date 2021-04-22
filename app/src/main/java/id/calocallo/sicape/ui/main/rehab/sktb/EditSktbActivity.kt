@@ -43,13 +43,13 @@ class EditSktbActivity : BaseActivity() {
     }
 
     private fun updateSktb(dataSktb: SktbResp?) {
-
+        sktbReq.no_sktb = edt_no_sktb_edit.text.toString()
         sktbReq.kota_penetapan = edt_kota_penetapan_sktb_edit.text.toString()
         sktbReq.tanggal_penetapan = edt_tanggal_penetapan_sktb_edit.text.toString()
-        sktbReq.nama_kabid_propam = edt_nama_pimpinan_sktb_edit.text.toString()
-        sktbReq.pangkat_kabid_propam =
+        sktbReq.nama_yang_mengetahui = edt_nama_pimpinan_sktb_edit.text.toString()
+        sktbReq.pangkat_yang_mengetahui =
             edt_pangkat_pimpinan_sktb_edit.text.toString().toUpperCase()
-        sktbReq.nrp_kabid_propam = edt_nrp_pimpinan_sktb_edit.text.toString()
+        sktbReq.nrp_yang_mengetahui = edt_nrp_pimpinan_sktb_edit.text.toString()
         sktbReq.tembusan = edt_tembusan_sktb_edit.text.toString()
 
         btn_save_sktb_edit.showProgress {
@@ -64,40 +64,41 @@ class EditSktbActivity : BaseActivity() {
     }
 
     private fun apiUpdSktb(dataSktb: SktbResp?) {
-        NetworkConfig().getServSktb().updSktb("Bearer ${sessionManager1.fetchAuthToken()}", dataSktb?.id, sktbReq).enqueue(
-            object :
-                Callback<Base1Resp<AddSktbResp>> {
-                override fun onResponse(
-                    call: Call<Base1Resp<AddSktbResp>>,
-                    response: Response<Base1Resp<AddSktbResp>>
-                ) {
-                    if (response.body()?.message == "Data sktb updated succesfully") {
-                        btn_save_sktb_edit.hideDrawable(R.string.data_updated)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            finish()
-                        },750)
+        NetworkConfig().getServSktb()
+            .updSktb("Bearer ${sessionManager1.fetchAuthToken()}", dataSktb?.id, sktbReq).enqueue(
+                object :
+                    Callback<Base1Resp<AddSktbResp>> {
+                    override fun onResponse(
+                        call: Call<Base1Resp<AddSktbResp>>,
+                        response: Response<Base1Resp<AddSktbResp>>
+                    ) {
+                        if (response.body()?.message == "Data sktb updated succesfully") {
+                            btn_save_sktb_edit.hideDrawable(R.string.data_updated)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                finish()
+                            }, 750)
 
-                    } else {
-                        toast("${response.body()?.message}")
+                        } else {
+                            toast("${response.body()?.message}")
+                            btn_save_sktb_edit.hideDrawable(R.string.not_update)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Base1Resp<AddSktbResp>>, t: Throwable) {
+                        Toast.makeText(this@EditSktbActivity, "$t", Toast.LENGTH_SHORT).show()
                         btn_save_sktb_edit.hideDrawable(R.string.not_update)
                     }
-                }
-
-                override fun onFailure(call: Call<Base1Resp<AddSktbResp>>, t: Throwable) {
-                    Toast.makeText(this@EditSktbActivity, "$t", Toast.LENGTH_SHORT).show()
-                    btn_save_sktb_edit.hideDrawable(R.string.not_update)
-                }
-            })
+                })
     }
 
     private fun getViewSktb(dataSktb: SktbResp?) {
         txt_lp_sktb_edit.text = dataSktb?.lp?.no_lp
-        edt_no_sktb_edit.setText(dataSktb?.lp?.no_lp)
+        edt_no_sktb_edit.setText(dataSktb?.no_sktb)
         edt_kota_penetapan_sktb_edit.setText(dataSktb?.kota_penetapan)
         edt_tanggal_penetapan_sktb_edit.setText(dataSktb?.tanggal_penetapan)
-        edt_nama_pimpinan_sktb_edit.setText(dataSktb?.nama_kabid_propam)
-        edt_pangkat_pimpinan_sktb_edit.setText(dataSktb?.pangkat_kabid_propam)
-        edt_nrp_pimpinan_sktb_edit.setText(dataSktb?.nrp_kabid_propam)
+        edt_nama_pimpinan_sktb_edit.setText(dataSktb?.nama_yang_mengetahui)
+        edt_pangkat_pimpinan_sktb_edit.setText(dataSktb?.pangkat_yang_mengetahui)
+        edt_nrp_pimpinan_sktb_edit.setText(dataSktb?.nrp_yang_mengetahui)
         edt_tembusan_sktb_edit.setText(dataSktb?.tembusan)
     }
 

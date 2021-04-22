@@ -50,13 +50,14 @@ class AddSktbActivity : BaseActivity() {
     }
 
     private fun addSktb() {
+        sktbReq.no_sktb = edt_no_sktb_add.text.toString()
         sktbReq.id_lp = idLp
         sktbReq.kota_penetapan = edt_kota_penetapan_sktb_add.text.toString()
         sktbReq.tanggal_penetapan = edt_tanggal_penetapan_sktb_add.text.toString()
-        sktbReq.nama_kabid_propam = edt_nama_pimpinan_sktb_add.text.toString()
-        sktbReq.pangkat_kabid_propam =
+        sktbReq.nama_yang_mengetahui = edt_nama_pimpinan_sktb_add.text.toString()
+        sktbReq.pangkat_yang_mengetahui =
             edt_pangkat_pimpinan_sktb_add.text.toString().toUpperCase()
-        sktbReq.nrp_kabid_propam = edt_nrp_pimpinan_sktb_add.text.toString()
+        sktbReq.nrp_yang_mengetahui = edt_nrp_pimpinan_sktb_add.text.toString()
         sktbReq.tembusan = edt_tembusan_sktb_add.text.toString()
 
         btn_save_sktb_add.showProgress {

@@ -7,13 +7,11 @@ import android.util.Log
 import android.widget.Toast
 import com.github.razir.progressbutton.*
 import id.calocallo.sicape.R
-import id.calocallo.sicape.model.LpOnSkhd
 import id.calocallo.sicape.network.NetworkConfig
 import id.calocallo.sicape.network.request.SkttReq
 import id.calocallo.sicape.network.response.AddSkttResp
 import id.calocallo.sicape.network.response.Base1Resp
 import id.calocallo.sicape.network.response.LpMinResp
-import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.action
 import id.calocallo.sicape.utils.ext.showSnackbar
@@ -55,15 +53,16 @@ class AddSkttActivity : BaseActivity() {
     }
 
     private fun addSktt() {
+        skttReq.no_sktt = edt_no_sktt_add.text.toString()
         skttReq.id_lp = idLp
         skttReq.no_laporan_hasil_audit_investigasi =
             edt_no_lap_hasil_audit_inves_sktt_add.text.toString()
         skttReq.kota_penetapan = edt_kota_penetapan_sktt_add.text.toString()
         skttReq.tanggal_penetapan = edt_tanggal_penetapan_sktt_add.text.toString()
-        skttReq.nama_kabid_propam = edt_nama_pimpinan_sktt_add.text.toString()
-        skttReq.pangkat_kabid_propam =
+        skttReq.nama_yang_mengetahui = edt_nama_pimpinan_sktt_add.text.toString()
+        skttReq.pangkat_yang_mengetahui =
             edt_pangkat_pimpinan_sktt_add.text.toString().toUpperCase()
-        skttReq.nrp_kabid_propam = edt_nrp_pimpinan_sktt_add.text.toString()
+        skttReq.nrp_yang_mengetahui = edt_nrp_pimpinan_sktt_add.text.toString()
         skttReq.tembusan = edt_tembusan_sktt_add.text.toString()
         Log.e("add SKTT", "$skttReq")
 

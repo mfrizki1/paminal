@@ -49,9 +49,11 @@ class EditSp4Activity : BaseActivity() {
     }
 
     private fun updateSp3(detailSp3: Sp4Resp?) {
+        sp4Req.no_sp4 = edt_no_sp4_edit.text.toString()
         sp4Req.id_lp = idLp
         sp4Req.no_surat_perintah_kapolri = edt_surat_perinth_kapolri_sp4_edit.text.toString()
-        sp4Req.tanggal_surat_perintah_kapolri = edt_tgl_surat_perinth_kapolri_sp4_edit.text.toString()
+        sp4Req.tanggal_surat_perintah_kapolri =
+            edt_tgl_surat_perinth_kapolri_sp4_edit.text.toString()
         sp4Req.no_hasil_audit = edt_no_hasil_audit_sp4_edit.text.toString()
         sp4Req.tanggal_hasil_audit = edt_tgl_hasil_audit_sp4_edit.text.toString()
         sp4Req.tanggal_gelar_audit = edt_tgl_gelar_audit_sp4_edit.text.toString()

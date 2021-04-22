@@ -55,14 +55,15 @@ class EditSkttActivity : BaseActivity() {
     }
 
     private fun updateSktt(sktt: SkttResp?) {
+        skttReq.no_sktt = edt_no_sktt_edit.text.toString()
         skttReq.id_lp = idLp
         skttReq.no_laporan_hasil_audit_investigasi =
             edt_no_lap_hasil_audit_inves_sktt_edit.text.toString()
         skttReq.kota_penetapan = edt_kota_penetapan_sktt_edit.text.toString()
         skttReq.tanggal_penetapan = edt_tanggal_penetapan_sktt_edit.text.toString()
-        skttReq.nama_kabid_propam = edt_nama_pimpinan_sktt_edit.text.toString()
-        skttReq.pangkat_kabid_propam = edt_pangkat_pimpinan_sktt_edit.text.toString()
-        skttReq.nrp_kabid_propam = edt_nrp_pimpinan_sktt_edit.text.toString()
+        skttReq.nama_yang_mengetahui = edt_nama_pimpinan_sktt_edit.text.toString()
+        skttReq.pangkat_yang_mengetahui = edt_pangkat_pimpinan_sktt_edit.text.toString()
+        skttReq.nrp_yang_mengetahui = edt_nrp_pimpinan_sktt_edit.text.toString()
         skttReq.tembusan = edt_tembusan_sktt_edit.text.toString()
         Log.e("edit SKTT", "$skttReq")
 
@@ -106,9 +107,9 @@ class EditSkttActivity : BaseActivity() {
         edt_no_lap_hasil_audit_inves_sktt_edit.setText(sktt?.no_laporan_hasil_audit_investigasi)
         edt_kota_penetapan_sktt_edit.setText(sktt?.kota_penetapan)
         edt_tanggal_penetapan_sktt_edit.setText(sktt?.tanggal_penetapan)
-        edt_nama_pimpinan_sktt_edit.setText(sktt?.nama_kabid_propam)
-        edt_pangkat_pimpinan_sktt_edit.setText(sktt?.pangkat_kabid_propam)
-        edt_nrp_pimpinan_sktt_edit.setText(sktt?.nrp_kabid_propam)
+        edt_nama_pimpinan_sktt_edit.setText(sktt?.nama_yang_mengetahui)
+        edt_pangkat_pimpinan_sktt_edit.setText(sktt?.pangkat_yang_mengetahui)
+        edt_nrp_pimpinan_sktt_edit.setText(sktt?.nrp_yang_mengetahui)
         edt_tembusan_sktt_edit.setText(sktt?.tembusan)
     }
 

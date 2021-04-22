@@ -5,12 +5,13 @@ import id.calocallo.sicape.model.LpOnSkhd
 
 data class SkttReq(
     var id_lp: Int?,/*ADD*/
+    var no_sktt: String?,
     var no_laporan_hasil_audit_investigasi: String?,
     var kota_penetapan: String?,
     var tanggal_penetapan: String?,
-    var nama_kabid_propam: String?,
-    var pangkat_kabid_propam: String?,
-    var nrp_kabid_propam: String?,
+    var nama_yang_mengetahui: String?,
+    var pangkat_yang_mengetahui: String?,
+    var nrp_yang_mengetahui: String?,
     var tembusan: String?
 
     /*var id_lhp: Int?,
@@ -25,7 +26,7 @@ data class SkttReq(
     var tembusan: String?*/
 ) {
     constructor() : this(
-        null, null, null, null, null, null,
+        null,null, null, null, null, null, null,
         null, null
     )
 }

@@ -5,6 +5,7 @@ import id.calocallo.sicape.model.SkhdOnRpsModel
 
 data class Sp4Req(
     var id_lp: Int?,/*ADD*/
+    var no_sp4: String?,
     var no_surat_perintah_kapolri: String?,
     var tanggal_surat_perintah_kapolri: String?,
     var no_hasil_audit: String?,
@@ -30,7 +31,7 @@ data class Sp4Req(
 
 ) {
     constructor() : this(
-        null, null, null, null, null, null, null, null, null,
+        null,null, null, null, null, null, null, null, null, null,
         null, null
     )
 }

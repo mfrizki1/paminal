@@ -49,7 +49,7 @@ class DetailSkttActivity : BaseActivity() {
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_sktt.gone()
-            btn_generate_sktt.gone()
+//            btn_generate_sktt.gone()
         }
         btn_generate_sktt.attachTextChangeAnimator()
         bindProgressButton(btn_generate_sktt)
@@ -180,12 +180,12 @@ class DetailSkttActivity : BaseActivity() {
         txt_kota_penetapan_sktt_detail.text = "Kota : ${sktt?.kota_penetapan}"
         txt_tanggal_penetapan_sktt_detail.text =
             "Tanggal : ${formatterTanggal(sktt?.tanggal_penetapan)}"
-        txt_nama_pimpinan_sktt_detail.text = "Nama : ${sktt?.nama_kabid_propam}"
+        txt_nama_pimpinan_sktt_detail.text = "Nama : ${sktt?.nama_yang_mengetahui}"
         txt_pangkat_nrp_pimpinan_sktt_detail.text =
             "Pangkat : ${
-                sktt?.pangkat_kabid_propam.toString()
+                sktt?.pangkat_yang_mengetahui.toString()
                     .toUpperCase()
-            }, NRP : ${sktt?.nrp_kabid_propam}"
+            }, NRP : ${sktt?.nrp_yang_mengetahui}"
         txt_tembusan_sktt_detail.text = sktt?.tembusan
     }
 
@@ -198,7 +198,12 @@ class DetailSkttActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.btn_delete_item -> {
-                alertDialogDelete()
+                val hak = sessionManager1.fetchHakAkses()
+                if(hak != "operator"){
+                    alertDialogDelete()
+                }else{
+                    toast("Hanya bisa melalui Admin")
+                }
             }
         }
         return super.onOptionsItemSelected(item)

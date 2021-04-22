@@ -52,6 +52,7 @@ class AddSp4Activity : BaseActivity() {
         btn_save_sp4_add.attachTextChangeAnimator()
         bindProgressButton(btn_save_sp4_add)
         btn_save_sp4_add.setOnClickListener {
+            sp4Req.no_sp4 = edt_no_sp4_add.text.toString()
             sp4Req.id_lp = idLp
             sp4Req.no_surat_perintah_kapolri = edt_surat_perinth_kapolri_sp4_add.text.toString()
             sp4Req.tanggal_surat_perintah_kapolri =

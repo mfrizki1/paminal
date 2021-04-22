@@ -19,8 +19,7 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No SKTB"
-            android:visibility="gone" />
+            android:text="No SKTB" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -28,14 +27,13 @@
             android:layout_height="80dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="No SKTB"
-            android:visibility="gone">
+            android:hint="No SKTB">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_no_sktb_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text|textCapSentences" />
+                android:inputType="textMultiLine|textCapCharacters" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

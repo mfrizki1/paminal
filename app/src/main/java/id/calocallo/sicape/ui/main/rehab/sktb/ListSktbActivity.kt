@@ -34,9 +34,9 @@ class ListSktbActivity : BaseActivity() {
         supportActionBar?.title = "List Data SKTB"
         sessionManager1 = SessionManager1(this)
         val hak = sessionManager1.fetchHakAkses()
-        if(hak == "operator"){
-            btn_add_single_sktb.gone()
-        }
+//        if(hak == "operator"){
+//            btn_add_single_sktb.gone()
+//        }
         btn_add_single_sktb.setOnClickListener {
             startActivity(Intent(this, AddSktbActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

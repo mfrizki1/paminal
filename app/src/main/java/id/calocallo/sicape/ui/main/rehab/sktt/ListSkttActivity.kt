@@ -37,9 +37,9 @@ class ListSkttActivity : BaseActivity() {
         sessionManager1 = SessionManager1(this)
         getListSktt()
         val hak = sessionManager1.fetchHakAkses()
-        if(hak == "operator"){
-            btn_add_single_sktt.gone()
-        }
+//        if(hak == "operator"){
+//            btn_add_single_sktt.gone()
+//        }
         btn_add_single_sktt.setOnClickListener {
             startActivity(Intent(this, AddSkttActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

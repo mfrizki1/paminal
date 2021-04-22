@@ -50,7 +50,7 @@ class DetailSp4Activity : BaseActivity() {
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_sp4_detail.gone()
-            btn_generate_sp4_detail.gone()
+//            btn_generate_sp4_detail.gone()
         }
         btn_generate_sp4_detail.attachTextChangeAnimator()
         bindProgressButton(btn_generate_sp4_detail)
@@ -206,7 +206,12 @@ class DetailSp4Activity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.btn_delete_item -> {
-                alertDialogDelete()
+                val hak = sessionManager1.fetchHakAkses()
+                if(hak != "operator"){
+                    alertDialogDelete()
+                }else{
+                    toast("Hanya bisa melalui Admin")
+                }
             }
         }
         return super.onOptionsItemSelected(item)

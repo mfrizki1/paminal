@@ -48,8 +48,9 @@ class DetailRpsActivity : BaseActivity() {
         registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
-            btn_generate_rps_detail.gone()
+//            btn_generate_rps_detail.gone()
             btn_edit_rps.gone()
+
         }
         apiDetailRps(dataMinRps)
 //        getViewRps(dataMinRps)
@@ -208,7 +209,12 @@ class DetailRpsActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.btn_delete_item -> {
-                alertDialogDelete()
+                val hak = sessionManager1.fetchHakAkses()
+                if(hak != "operator"){
+                    alertDialogDelete()
+                }else{
+                    toast("Hanya bisa melalui Admin")
+                }
             }
         }
         return super.onOptionsItemSelected(item)
