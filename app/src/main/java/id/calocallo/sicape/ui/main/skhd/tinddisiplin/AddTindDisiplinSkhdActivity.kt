@@ -22,7 +22,9 @@ import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toast
+import id.calocallo.sicape.utils.ext.visible
 import kotlinx.android.synthetic.main.activity_add_tind_disiplin_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -47,6 +49,7 @@ class AddTindDisiplinSkhdActivity : BaseActivity() {
             btn_save_tind_disiplin_add.showProgress {
                 progressColor = Color.WHITE
             }
+            tindDisiplinReq.keterangan = edt_lainnya_tind_disp_add.editText?.text.toString()
             tindDisiplinReq.id_personel = idPersonel
             tindDisiplinReq.isi_tindakan_disiplin = tindakan
             Log.e("add Tind", "$tindDisiplinReq")
@@ -61,14 +64,23 @@ class AddTindDisiplinSkhdActivity : BaseActivity() {
             "Jumping Jack",
             "Hormat Bendera",
             "Mengguling",
-            "Jalan Jongkok"
+            "Jalan Jongkok",
+            "Lain-Lainnya"
         )
         val adapter = ArrayAdapter(this, R.layout.item_spinner, itemTind)
         spinner_tind_disiplin.setAdapter(adapter)
+//        tindakan = spinner_tind_disiplin.text.toString()
         spinner_tind_disiplin.setOnItemClickListener { parent, _, position, _ ->
             tindakan = parent.getItemAtPosition(position).toString()
-//            Log.e("spinner", parent.getItemAtPosition(position).toString())
+            if (tindakan == "Lain-Lainnya") {
+                edt_lainnya_tind_disp_add.visible()
+            } else {
+                edt_lainnya_tind_disp_add.gone()
+            }
+            Log.e("spinner", parent.getItemAtPosition(position).toString())
         }
+
+
 
         btn_choose_personel_tind_disiplin.setOnClickListener {
             val intent = Intent(this, KatPersonelActivity::class.java)

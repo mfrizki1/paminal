@@ -55,12 +55,12 @@ class ListSkhdActivity : BaseActivity() {
         setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
         val jenisFromPickSkhd = intent.extras?.getString(SKHD)
-        supportActionBar?.title = "Surat Keterangan Hasil Disiplin $jenisFromPickSkhd"
+        supportActionBar?.title = "Surat Keterangan Hasil Disiplin"
 
         val hak = sessionManager1.fetchHakAkses()
-        if(hak == "operator"){
-            btn_add_skhd.gone()
-        }
+//        if(hak == "operator"){
+//            btn_add_skhd.gone()
+//        }
         btn_add_skhd.setOnClickListener {
             val intent = Intent(this, AddSkhdActivity::class.java)
             startActivity(intent)

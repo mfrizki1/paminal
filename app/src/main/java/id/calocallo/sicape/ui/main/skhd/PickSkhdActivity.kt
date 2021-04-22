@@ -14,7 +14,7 @@ class PickSkhdActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_skhd)
         setupActionBarWithBackButton(toolbar)
-        supportActionBar?.title = "Surat Keterangan Hasil Disiplin"
+        supportActionBar?.title = "Surat Keputusan Hukuman Disiplin"
 
         btn_skhd_pidana.setOnClickListener {
             val intent = Intent(this, ListSkhdActivity::class.java)

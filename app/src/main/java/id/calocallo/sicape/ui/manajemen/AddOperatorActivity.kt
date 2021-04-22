@@ -51,6 +51,7 @@ class AddOperatorActivity : BaseActivity() {
     private var nrpPersonel: String? = null
     private var personelOperatorReq = PersonelOperatorReq()
     private var sipilOperatorReq = SipilOperatorReq()
+    private var jenisOperator: String? = null
     private lateinit var sheenValidator: SheenValidator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +84,7 @@ class AddOperatorActivity : BaseActivity() {
                 personelOperatorReq.is_aktif = idStatus
                 personelOperatorReq.id_personel = idPersonel
                 personelOperatorReq.id_satuan_kerja = idSatker
+                personelOperatorReq.jenis_operator = jenisOperator
 
                 Log.e("add_operator", "$personelOperatorReq")
                 addPolisiOperator(personelOperatorReq)
@@ -113,6 +115,7 @@ class AddOperatorActivity : BaseActivity() {
 
     private fun changeButton() {
         btn_personel_add_polda_polisi_oper.setOnClickListener {
+            jenisOperator = "polda"
             btn_personel_add_polda_polisi_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
             btn_personel_add_polda_polisi_oper.setTextColor(ContextCompat.getColor(this,R.color.white))
 
@@ -133,6 +136,7 @@ class AddOperatorActivity : BaseActivity() {
             txt_satker_polisi_oper_add.text = ""
         }
         btn_personel_add_polre_polisi_oper.setOnClickListener {
+            jenisOperator = "polres"
             btn_personel_add_polre_polisi_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
             btn_personel_add_polre_polisi_oper.setTextColor(ContextCompat.getColor(this,R.color.white))
 
@@ -151,6 +155,7 @@ class AddOperatorActivity : BaseActivity() {
             txt_satker_polisi_oper_add.text = ""
         }
         btn_personel_add_polsek_polisi_oper.setOnClickListener {
+            jenisOperator = "polsek"
             btn_personel_add_polsek_polisi_oper.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
             btn_personel_add_polsek_polisi_oper.setTextColor(ContextCompat.getColor(this,R.color.white))
 

@@ -23,7 +23,10 @@ import id.calocallo.sicape.network.response.TindDisplResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toast
+import id.calocallo.sicape.utils.ext.visible
+import kotlinx.android.synthetic.main.activity_add_tind_disiplin_skhd.*
 import kotlinx.android.synthetic.main.activity_edit_tind_disiplin_skhd.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -34,6 +37,7 @@ import java.util.*
 class EditTindDisiplinSkhdActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var tindakan: String? = null
+    private var keterangan: String? = null
     private var tindDisiplinReq = TindDisiplinReq()
     private var idPersonel: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,12 +60,20 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
             "Jumping Jack",
             "Hormat Bendera",
             "Mengguling",
-            "Jalan Jongkok"
+            "Jalan Jongkok",
+            "Lain-Lainnya"
         )
         val adapter = ArrayAdapter(this, R.layout.item_spinner, itemTind)
         spinner_tind_disiplin_edit.setAdapter(adapter)
         spinner_tind_disiplin_edit.setOnItemClickListener { parent, _, position, _ ->
             tindakan = parent.getItemAtPosition(position).toString()
+            if (tindakan == "Lain-Lainnya") {
+                edt_lainnya_tind_disp_edit.visible()
+                keterangan = edt_lainnya_tind_disp_edit.editText?.text.toString()
+            } else {
+                edt_lainnya_tind_disp_edit.gone()
+            }
+            Log.e("spinner", parent.getItemAtPosition(position).toString())
         }
 
         btn_choose_personel_tind_disiplin_edit.setOnClickListener {
@@ -78,6 +90,7 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
             }
             tindDisiplinReq.isi_tindakan_disiplin = tindakan
             tindDisiplinReq.id_personel = idPersonel
+            tindDisiplinReq.keterangan = keterangan
             Log.e("edit Tind", "$tindDisiplinReq")
             apiEditTindDispl(dataTindDisp)
         }
@@ -99,7 +112,7 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
                         btn_save_tind_disiplin_edit.hideProgress(R.string.data_updated)
                         Handler(Looper.getMainLooper()).postDelayed({
                             finish()
-                        },750)
+                        }, 750)
                     } else {
                         toast("${response.body()?.message}")
                         btn_save_tind_disiplin_edit.hideProgress(R.string.not_update)
@@ -133,8 +146,13 @@ class EditTindDisiplinSkhdActivity : BaseActivity() {
     }
 
     private fun getDataTindDisiplin(dataTindDisp: TindDisplResp?) {
+        if (dataTindDisp?.isi_tindakan_disiplin == "Lain-Lainnya") {
+            edt_lainnya_tind_disp_edit.visible()
+            edt_lainnya_tind_disp_edit.editText?.setText(dataTindDisp?.keterangan)
+        }
         spinner_tind_disiplin_edit.setText(dataTindDisp?.isi_tindakan_disiplin)
         tindakan = dataTindDisp?.isi_tindakan_disiplin
+        keterangan = edt_lainnya_tind_disp_edit.editText?.text.toString()
         txt_nama_personel_tind_disiplin_edit.text = dataTindDisp?.personel?.nama
         txt_pangkat_personel_tind_disiplin_edit.text = dataTindDisp?.personel?.pangkat.toString()
             .toUpperCase(Locale.ROOT)

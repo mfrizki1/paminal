@@ -81,7 +81,7 @@ class AnevActivity : BaseActivity() {
                     call: Call<BaseAnev>,
                     response: Response<BaseAnev>
                 ) {
-                    if (response.body()?.message == "Data Kosong") {
+                    if (response.body()?.message == "Data kosong") {
                         rl_pb.gone()
                         rl_no_data.visible()
 //                   tesPie()

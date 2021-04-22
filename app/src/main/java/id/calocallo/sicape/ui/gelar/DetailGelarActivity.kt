@@ -186,7 +186,7 @@ class DetailGelarActivity : BaseActivity() {
 
         txt_kronologis_kasus_detail_lhg.text = lhgResp?.kronologis_kasus
 
-        txt_personel_notulen_detail_lhg.text = "Nama: ${lhgResp?.nama_notulen}, Pangkat: ${
+        txt_personel_notulen_detail_lhg.text = "Nama: ${lhgResp?.nama_notulen}/nPangkat: ${
             lhgResp?.pangkat_notulen.toString().toUpperCase(Locale.ROOT)
         }, NRP: ${lhgResp?.nrp_notulen}"
 

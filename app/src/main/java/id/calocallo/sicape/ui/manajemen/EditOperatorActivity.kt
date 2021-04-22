@@ -39,6 +39,7 @@ class EditOperatorActivity : BaseActivity() {
     private var idPersonel: Int? = null
     private var namaPersonel: String? = null
     private var nrpPersonel: String? = null
+    private var jenisOperator: String? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +62,24 @@ class EditOperatorActivity : BaseActivity() {
             } else {
                 spinner_status_operator_edit.setText("Tidak")
                 isAktif = this?.is_aktif
+            }
+            jenisOperator = this?.jenis_operator
+            when (this?.jenis_operator) {
+                "polda" -> {
+                    btn_personel_edit_polda_polisi_oper.setBackgroundColor(
+                        ContextCompat.getColor(this@EditOperatorActivity, R.color.colorPrimary)
+                    )
+                }
+                "polres" -> {
+                    btn_personel_edit_polre_polisi_oper.setBackgroundColor(
+                        ContextCompat.getColor(this@EditOperatorActivity, R.color.colorPrimary)
+                    )
+                }
+                "polsek" -> {
+                    btn_personel_edit_polsek_polisi_oper.setBackgroundColor(
+                        ContextCompat.getColor(this@EditOperatorActivity, R.color.colorPrimary)
+                    )
+                }
             }
             txt_satker_polisi_oper_edit.visible()
             txt_satker_polisi_oper_edit.text = this?.satuan_kerja?.kesatuan
@@ -92,6 +111,7 @@ class EditOperatorActivity : BaseActivity() {
             personelOperatorReq.username = nrpPersonel
             personelOperatorReq.id_satuan_kerja = idSatker
             personelOperatorReq.is_aktif = isAktif
+            personelOperatorReq.jenis_operator = jenisOperator
             personelOperatorReq.password = edt_password_new_operator_edit.text.toString()
             personelOperatorReq.password_confirmation =
                 edt_password_renew_operator_edit.text.toString()
@@ -103,6 +123,7 @@ class EditOperatorActivity : BaseActivity() {
 
     private fun changeButton() {
         btn_personel_edit_polda_polisi_oper.setOnClickListener {
+            jenisOperator = "polda"
             btn_personel_edit_polda_polisi_oper.setBackgroundColor(
                 ContextCompat.getColor(this, R.color.colorPrimary)
             )
@@ -131,10 +152,10 @@ class EditOperatorActivity : BaseActivity() {
             txt_satker_polisi_oper_edit.text = ""
         }
         btn_personel_edit_polre_polisi_oper.setOnClickListener {
+            jenisOperator = "polres"
             btn_personel_edit_polre_polisi_oper.setBackgroundColor(
                 ContextCompat.getColor(
-                    this,
-                    R.color.colorPrimary
+                    this, R.color.colorPrimary
                 )
             )
             btn_personel_edit_polre_polisi_oper.setTextColor(
@@ -164,6 +185,7 @@ class EditOperatorActivity : BaseActivity() {
             txt_satker_polisi_oper_edit.text = ""
         }
         btn_personel_edit_polsek_polisi_oper.setOnClickListener {
+            jenisOperator = "polsek"
             btn_personel_edit_polsek_polisi_oper.setBackgroundColor(
                 ContextCompat.getColor(this, R.color.colorPrimary)
             )

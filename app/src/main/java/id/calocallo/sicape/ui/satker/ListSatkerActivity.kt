@@ -30,7 +30,7 @@ class ListSatkerActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_satker)
-    setupActionBarWithBackButton(toolbar)
+        setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "List Data Satker/Satwil"
         sessionManager1 = SessionManager1(this)
 

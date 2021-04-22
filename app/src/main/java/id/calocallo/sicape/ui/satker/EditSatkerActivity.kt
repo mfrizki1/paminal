@@ -19,6 +19,7 @@ import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_satker.*
 import kotlinx.android.synthetic.main.activity_edit_satker.*
+import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,15 +33,24 @@ class EditSatkerActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_satker)
+        setupActionBarWithBackButton(toolbar)
         sessionManager1 = SessionManager1(this)
         jenis = intent.getStringExtra(AddSatkerActivity.JENIS_SATKERN)
         if (jenis == "polres") {
-            txt_judul_satker_edit.text = "Edit Data Polres"
+            supportActionBar?.title ="Edit Data Polres"
+            txt_judul_satker_edit.text = "Edit Data"
             edt_nama_satker_edit.hint = "Edit Nama Polres"
             edt_alamat_satker_edit.hint = "Edit Alamat Polres"
-            edt_no_telp_satker_edit.hint = "Edit Telp Polres"
-        } else {
-            txt_judul_satker_edit.text = "Edit Data Polsek"
+        }else if(jenis == "polda"){
+            supportActionBar?.title ="Edit Data Satker"
+            txt_judul_satker_edit . text = "Edit Data"
+            edt_nama_satker_edit.hint = "Edit Nama Satker"
+            edt_alamat_satker_edit.hint = "Edit Alamat Satker"
+            edt_no_telp_satker_edit.hint = "Edit Telp Satker"
+        }
+        else {
+            supportActionBar?.title ="Edit Data Polsek"
+            txt_judul_satker_edit.text = "Edit Data"
             edt_nama_satker_edit.hint = "Edit Nama Polsek"
             edt_alamat_satker_edit.hint = "Edit Alamat Polsek"
             edt_no_telp_satker_edit.hint = "Edit Telp Polsek"

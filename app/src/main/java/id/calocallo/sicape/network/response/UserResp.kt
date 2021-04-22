@@ -12,6 +12,7 @@ data class UserResp(
     var hak_akses: String?,
     var satuan_kerja: SatKerResp?,
     var is_aktif: Int?,
+    var jenis_operator: String?,
     var created_at: String?,
     var updated_at: String?,
     var deleted_at: String?
@@ -26,6 +27,7 @@ data class UserResp(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
         parcel.readString()
     ) {
     }
@@ -38,6 +40,7 @@ data class UserResp(
         parcel.writeString(hak_akses)
         parcel.writeParcelable(satuan_kerja, flags)
         parcel.writeValue(is_aktif)
+        parcel.writeString(jenis_operator)
         parcel.writeString(created_at)
         parcel.writeString(updated_at)
         parcel.writeString(deleted_at)

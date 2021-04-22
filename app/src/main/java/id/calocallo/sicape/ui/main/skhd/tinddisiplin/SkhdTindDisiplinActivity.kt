@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.skhd.tinddisiplin
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -74,8 +75,10 @@ class SkhdTindDisiplinActivity : BaseActivity() {
 
     private fun listTindDisiplin(list: ArrayList<TindDisplMinResp>?) {
         callbackTindDisplMin = object : AdapterCallback<TindDisplMinResp> {
+            @SuppressLint("SetTextI18n")
             override fun initComponent(itemView: View, data: TindDisplMinResp, itemIndex: Int) {
-                itemView.txt_edit_pendidikan.text = data.id_personel
+                itemView.txt_edit_pendidikan.text = "Nama: ${data.personel?.nama}\n" +
+                        "Pangkat: ${data.personel?.pangkat}, NRP: ${data.personel?.nrp}"
 //                itemView.txt_detail_2.text = data.isi_tindakan_disiplin
             }
 

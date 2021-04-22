@@ -105,7 +105,21 @@
                 android:id="@+id/spinner_tind_disiplin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number" />
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_lainnya_tind_disp_add"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:hint="Lain-Lainnya">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

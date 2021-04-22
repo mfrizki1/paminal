@@ -11,7 +11,8 @@ data class PersonelOperatorReq(
     var id_personel: Int?,
     var password: String?,
     var password_confirmation: String?,
-    var is_aktif: Int?
+    var is_aktif: Int?,
+    var jenis_operator: String?
 ) : Parcelable {
-    constructor() : this(null, null, null, null, null, null, null)
+    constructor() : this(null, null,null, null, null, null, null, null)
 }

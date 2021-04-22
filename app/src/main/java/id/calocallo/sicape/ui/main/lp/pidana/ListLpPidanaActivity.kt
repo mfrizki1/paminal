@@ -41,9 +41,9 @@ class ListLpPidanaActivity : BaseActivity() {
         sessionManager1.setJenisLP("pidana")
 
         val hak = sessionManager1.fetchHakAkses()
-        if (hak == "operator") {
-            btn_add_lp_pidana.gone()
-        }
+//        if (hak == "operator") {
+//            btn_add_lp_pidana.gone()
+//        }
 
         btn_add_lp_pidana.setOnClickListener {
 //            val intent = Intent(this, AddLpActivity::class.java)

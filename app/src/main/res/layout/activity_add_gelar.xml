@@ -249,7 +249,8 @@
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pasal KUH Pidana" />
+            android:text="Pasal KUH Pidana"
+            android:visibility="gone" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edt_pasal_kuh_pidana_gelar_add"
@@ -258,7 +259,8 @@
             android:layout_height="100dp"
             android:layout_marginHorizontal="@dimen/space_12dp"
             android:layout_marginTop="@dimen/space_8dp"
-            android:hint="Pasal KUH Pidana">
+            android:hint="Pasal KUH Pidana"
+            android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

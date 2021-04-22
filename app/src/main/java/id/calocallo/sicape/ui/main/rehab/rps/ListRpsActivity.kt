@@ -35,9 +35,9 @@ class ListRpsActivity : BaseActivity() {
         supportActionBar?.title = "List Data RPS"
         sessionManager1 = SessionManager1(this)
         val hak = sessionManager1.fetchHakAkses()
-        if(hak == "operator"){
-            btn_add_single_rps.gone()
-        }
+//        if(hak == "operator"){
+//            btn_add_single_rps.gone()
+//        }
         btn_add_single_rps.setOnClickListener {
             startActivity(Intent(this, AddRpsActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

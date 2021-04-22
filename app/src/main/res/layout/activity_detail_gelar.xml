@@ -129,22 +129,27 @@
             android:layout_height="wrap_content"
             android:text="Waktu Selesai" />
 
-        <include layout="@layout/line_separator" />
+        <include layout="@layout/line_separator"
+            android:visibility="gone"/>
 
         <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pasal KUH Pidana" />
+            android:text="Pasal KUH Pidana"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_pasal_kuh_pidana_detail_lhg"
             style="@style/JustText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pasal KUH Pidana" />
+            android:text="Pasal KUH Pidana"
+            android:visibility="gone" />
 
-        <include layout="@layout/line_separator" /> <TextView
+        <include layout="@layout/line_separator" />
+
+        <TextView
             style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

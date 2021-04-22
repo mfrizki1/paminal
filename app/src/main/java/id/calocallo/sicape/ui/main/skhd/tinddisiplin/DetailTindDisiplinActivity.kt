@@ -73,7 +73,12 @@ class DetailTindDisiplinActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getDetailTindDisiplin(detailTindDisplMin: TindDisplResp?) {
-        txt_tindakan_detail.text = detailTindDisplMin?.isi_tindakan_disiplin
+        if (detailTindDisplMin?.isi_tindakan_disiplin == "Lain-Lainnya") {
+            txt_tindakan_detail.text = detailTindDisplMin.keterangan
+
+        } else {
+            txt_tindakan_detail.text = detailTindDisplMin?.isi_tindakan_disiplin
+        }
         txt_nama_personel_tind_disiplin_detail.text = "Nama : ${detailTindDisplMin?.personel?.nama}"
         txt_pangkat_personel_tind_disiplin_detail.text =
             "Pangkat : ${detailTindDisplMin?.personel?.pangkat.toString().toUpperCase()}"

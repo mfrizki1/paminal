@@ -45,9 +45,9 @@ class ListLpKodeEtikActivity : BaseActivity() {
         supportActionBar?.title = "List Data Laporan Polisi Kode Etik"
         sessionManager1.setJenisLP("kode_etik")
         val hak = sessionManager1.fetchHakAkses()
-        if (hak == "operator") {
-            btn_add_lp_kke.gone()
-        }
+//        if (hak == "operator") {
+//            btn_add_lp_kke.gone()
+//        }
 
         btn_add_lp_kke.setOnClickListener {
 //            val intent = Intent(this, AddLpActivity::class.java)
