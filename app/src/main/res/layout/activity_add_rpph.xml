@@ -33,7 +33,7 @@
                 android:id="@+id/edt_no_rpph_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="text|textCapSentences" />
+                android:inputType="textCapCharacters|textMultiLine" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

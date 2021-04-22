@@ -60,9 +60,9 @@ class EditRpphActivity : BaseActivity() {
             edt_penerima_salinan_keputusan_rpph_edit.text.toString()
         rpphReq.kota_penetapan = edt_kota_penetapan_rpph_edit.text.toString()
         rpphReq.tanggal_penetapan = edt_tanggal_penetapan_rpph_edit.text.toString()
-        rpphReq.nama_kabid_propam = edt_nama_pimpinan_rpph_edit.text.toString()
-        rpphReq.pangkat_kabid_propam = edt_pangkat_pimpinan_rpph_edit.text.toString().toUpperCase()
-        rpphReq.nrp_kabid_propam = edt_nrp_pimpinan_rpph_edit.text.toString()
+        rpphReq.nama_yang_mengetahui = edt_nama_pimpinan_rpph_edit.text.toString()
+        rpphReq.pangkat_yang_mengetahui = edt_pangkat_pimpinan_rpph_edit.text.toString().toUpperCase()
+        rpphReq.nrp_yang_mengetahui = edt_nrp_pimpinan_rpph_edit.text.toString()
         Log.e("edit RPPH", "$rpphReq")
 
 
@@ -110,12 +110,12 @@ class EditRpphActivity : BaseActivity() {
         edt_penerima_salinan_keputusan_rpph_edit.setText(dataRpph?.penerima_salinan_keputusan)
         edt_kota_penetapan_rpph_edit.setText(dataRpph?.kota_penetapan)
         edt_tanggal_penetapan_rpph_edit.setText(dataRpph?.tanggal_penetapan)
-        edt_nama_pimpinan_rpph_edit.setText(dataRpph?.nama_kabid_propam)
+        edt_nama_pimpinan_rpph_edit.setText(dataRpph?.nama_yang_mengetahui)
         edt_pangkat_pimpinan_rpph_edit.setText(
-            dataRpph?.pangkat_kabid_propam.toString()
+            dataRpph?.pangkat_yang_mengetahui.toString()
                 .toUpperCase(Locale.ROOT)
         )
-        edt_nrp_pimpinan_rpph_edit.setText(dataRpph?.nrp_kabid_propam)
+        edt_nrp_pimpinan_rpph_edit.setText(dataRpph?.nrp_yang_mengetahui)
         /* txt_put_kke_rps_edit.text = dataRpph?.putkke?.no_putkke
          idPutKke = dataRpph?.putkke?.id
          edt_no_rpph_edit.setText(dataRpph?.no_rpph)

@@ -55,10 +55,10 @@ class AddRpphActivity : BaseActivity() {
                 edt_penerima_salinan_keputusan_rpph_add.text.toString()
             rpphReq.kota_penetapan = edt_kota_penetapan_rpph_add.text.toString()
             rpphReq.tanggal_penetapan = edt_tanggal_penetapan_rpph_add.text.toString()
-            rpphReq.nama_kabid_propam = edt_nama_pimpinan_rpph_add.text.toString()
-            rpphReq.pangkat_kabid_propam =
+            rpphReq.nama_yang_mengetahui = edt_nama_pimpinan_rpph_add.text.toString()
+            rpphReq.pangkat_yang_mengetahui =
                 edt_pangkat_pimpinan_rpph_add.text.toString().toUpperCase()
-            rpphReq.nrp_kabid_propam = edt_nrp_pimpinan_rpph_add.text.toString()
+            rpphReq.nrp_yang_mengetahui = edt_nrp_pimpinan_rpph_add.text.toString()
             btn_save_rpph_add.showProgress {
                 progressColor = Color.WHITE
             }

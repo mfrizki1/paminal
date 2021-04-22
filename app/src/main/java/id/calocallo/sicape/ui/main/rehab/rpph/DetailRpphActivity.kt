@@ -54,7 +54,7 @@ class DetailRpphActivity : BaseActivity() {
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_rpph_detail.gone()
-            btn_generate_dok_rpph_detail.gone()
+//            btn_generate_dok_rpph_detail.gone()
         }
         btn_generate_dok_rpph_detail.attachTextChangeAnimator()
         bindProgressButton(btn_generate_dok_rpph_detail)
@@ -186,11 +186,11 @@ class DetailRpphActivity : BaseActivity() {
         txt_tanggal_penetapan_rpph_detail.text =
             "Tanggal: ${formatterTanggal(detailRpph?.tanggal_penetapan)}"
         txt_penerima_salinan_keputusan_rpph_detail.text = detailRpph?.penerima_salinan_keputusan
-        txt_nama_pimpinan_rpph_detail.text = "Nama : ${detailRpph?.nama_kabid_propam}"
+        txt_nama_pimpinan_rpph_detail.text = "Nama : ${detailRpph?.nama_yang_mengetahui}"
         txt_pangkat_nrp_pimpinan_rpph_detail.text =
             "Pangkat : ${
-                detailRpph?.pangkat_kabid_propam.toString().toUpperCase(Locale.ROOT)
-            }, NRP : ${detailRpph?.nrp_kabid_propam}"
+                detailRpph?.pangkat_yang_mengetahui.toString().toUpperCase(Locale.ROOT)
+            }, NRP : ${detailRpph?.nrp_yang_mengetahui}"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
