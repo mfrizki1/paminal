@@ -99,7 +99,7 @@ class CatpersActivity : BaseActivity() {
                   }
               }*/
             mAlerDBuilder.setView(filterAlertD)
-                .setTitle("Filter Bulan & Tahun")
+                .setTitle("Filter Tahun")
                 .setPositiveButton("Selesai") { dialog, _ ->
                     if (!edtTahunFilter.text.isNullOrBlank()) {
                         filterCatpers(edtTahunFilter.text.toString())

@@ -70,21 +70,45 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
 
     override fun onClick(position: Int) {
         val hak = sessionmanager.fetchHakAkses()
-//        if(hak == "operator"){
-//            when (listFitur[position].nameFitur) {
-//                "Personel" -> {
-//                    startActivity(Intent(activity, KatPersonelActivity::class.java))
-//                    activity!!.overridePendingTransition(
-//                        R.anim.slide_in_right,
-//                        R.anim.slide_out_left
-//                    )
-//
-//                }
-//                else->{
-//                    activity?.toast("Fitur ini bisa dibuka Admin")
-//                }
-//            }
-//        }else{
+        if(hak == "operator"){
+            when (listFitur[position].nameFitur) {
+                "Personel" -> {
+                    startActivity(Intent(activity, KatPersonelActivity::class.java))
+                    activity!!.overridePendingTransition(
+                        R.anim.slide_in_right,
+                        R.anim.slide_out_left
+                    )
+                }
+                "Laporan Polisi" -> {
+                    startActivity(Intent(activity, PickLpActivity::class.java))
+//                Toast.makeText(activity, listFitur[position].nameFitur, Toast.LENGTH_SHORT).show()
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Laporan Hasil Penyelidikan" -> {
+                    startActivity(Intent(activity, LhpActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Surat Keputusan Hukuman Disiplin" -> {
+                    startActivity(Intent(activity, PickSkhdActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Catatan Personel" -> {
+                    startActivity(Intent(activity, CatpersActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Rehab" -> {
+                    startActivity(Intent(activity, PickRehabActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                "Laporan Hasil Gelar" -> {
+                    startActivity(Intent(activity, ListGelarActivity::class.java))
+                    activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                }
+                else->{
+                    activity?.toast("Fitur ini bisa dibuka Admin")
+                }
+            }
+        }else{
         when (listFitur[position].nameFitur) {
             "Personel" -> {
                 startActivity(Intent(activity, KatPersonelActivity::class.java))
@@ -138,10 +162,10 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
                 activity!!.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
-//                else -> {
-//                }
-//
-//            }
+                else -> {
+                }
+
+            }
         }
     }
 }
