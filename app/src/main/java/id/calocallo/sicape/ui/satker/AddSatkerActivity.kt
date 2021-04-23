@@ -26,13 +26,13 @@ import retrofit2.Response
 class AddSatkerActivity : BaseActivity() {
     private lateinit var sessionManager1: SessionManager1
     private var satkerReq = SatkerReq()
-    private var jenis :String? = null
+    private var jenis: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_satker)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Satker"
-         jenis = intent.getStringExtra(JENIS_SATKERN)
+        jenis = intent.getStringExtra(JENIS_SATKERN)
         if (jenis == "polda") {
             edt_alamat_satker_add.gone()
             edt_no_telp_satker_add.gone()
@@ -62,7 +62,7 @@ class AddSatkerActivity : BaseActivity() {
     private fun apiAddSatker() {
         jenis?.let {
             NetworkConfig().getSatker().addSatker(
-                ListSatkerActivity.token,
+                "Bearer ${sessionManager1.fetchAuthToken()}",
                 it, satkerReq
             ).enqueue(object : Callback<Base1Resp<SatKerResp>> {
                 override fun onResponse(

@@ -3,10 +3,7 @@ package id.calocallo.sicape.network
 import id.calocallo.sicape.network.request.AdminReq
 import id.calocallo.sicape.network.request.SatkerReq
 import id.calocallo.sicape.network.request.SettingReq
-import id.calocallo.sicape.network.response.Base1Resp
-import id.calocallo.sicape.network.response.SatKerResp
-import id.calocallo.sicape.network.response.SettingResp
-import id.calocallo.sicape.network.response.UserResp
+import id.calocallo.sicape.network.response.*
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -35,6 +32,13 @@ interface ApiSatker {
         @Path("jenis_polisi") jenis_polisi: String,
         @Body satkerReq: SatkerReq
     ): Call<Base1Resp<SatKerResp>>
+
+    @Headers(ApiPersonel.ACCEPT)
+    @DELETE("satuan/kerja/{id_satker}")
+    fun delSatker(
+        @Header("Authorization") token: String?,
+        @Path("id_satker") id_satker: Int?
+    ): Call<BaseResp>
 
     @Headers(ApiPersonel.ACCEPT)
     @PATCH("setting")
