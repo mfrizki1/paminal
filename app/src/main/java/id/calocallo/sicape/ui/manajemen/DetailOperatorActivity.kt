@@ -108,7 +108,7 @@ class DetailOperatorActivity : BaseActivity() {
         this.alert("Hapus Data", "Yakin Hapus?") {
             positiveButton("Iya") {
                 ApiDelete()
-                finish()
+//                finish()
             }
             negativeButton("Tidak") {
             }
@@ -118,30 +118,24 @@ class DetailOperatorActivity : BaseActivity() {
     private fun ApiDelete() {
         val dataOper = intent.extras?.getParcelable<UserResp>("acc")
 
-          NetworkConfig().getServUser()
-              .delPersOperator("Bearer ${sessionManager1.fetchAuthToken()}", dataOper?.id.toString())
-              .enqueue(object : Callback<BaseResp> {
-                  override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                      Toast.makeText(
-                          this@DetailOperatorActivity,
-                          getString(R.string.failed_deleted),
-                          Toast.LENGTH_SHORT
-                      ).show()
-                  }
+        NetworkConfig().getServUser()
+            .delPersOperator("Bearer ${sessionManager1.fetchAuthToken()}", dataOper?.id.toString())
+            .enqueue(object : Callback<BaseResp> {
+                override fun onFailure(call: Call<BaseResp>, t: Throwable) {
+                    toast("$t")
+                }
 
-                  override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
-                      if (response.isSuccessful) {
-                          Toast.makeText(
-                              this@DetailOperatorActivity,
-                              R.string.data_deleted,
-                              Toast.LENGTH_SHORT
-                          ).show()
-                          finish()
-                      } else {
-                          toast("${response.body()?.message}")
-                      }
-                  }
-              })
+                override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
+                    if (response.body()?.message == "Data lp removed succesfully") {
+                        toast(R.string.data_deleted)
+                        finish()
+                    } else if (response.body()?.message == "Data lp has been used as reference in another data") {
+                            toast(R.string.used_on_references_lp)
+                    } else {
+                        toast("${response.body()?.message}")
+                    }
+                }
+            })
     }
 
     override fun onResume() {

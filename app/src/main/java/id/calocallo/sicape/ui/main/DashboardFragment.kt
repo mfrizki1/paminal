@@ -18,6 +18,7 @@ import id.calocallo.sicape.ui.main.lapbul.ListLapbulActivity
 import id.calocallo.sicape.ui.main.lhp.LhpActivity
 import id.calocallo.sicape.ui.main.lp.PickLpActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
+import id.calocallo.sicape.ui.main.personel.PersonelActivity
 import id.calocallo.sicape.ui.main.rehab.PickRehabActivity
 import id.calocallo.sicape.ui.main.skhd.PickSkhdActivity
 import id.calocallo.sicape.ui.main.skhp.ListSkhpActivity
@@ -73,7 +74,7 @@ class DashboardFragment : Fragment(), FiturAdapter.FiturListener {
         if(hak == "operator"){
             when (listFitur[position].nameFitur) {
                 "Personel" -> {
-                    startActivity(Intent(activity, KatPersonelActivity::class.java))
+                    startActivity(Intent(activity, PersonelActivity::class.java))
                     activity!!.overridePendingTransition(
                         R.anim.slide_in_right,
                         R.anim.slide_out_left

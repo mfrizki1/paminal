@@ -24,17 +24,21 @@ import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.ui.main.choose.lhp.ChooseLhpActivity
 import id.calocallo.sicape.ui.main.personel.PersonelActivity
 import id.calocallo.sicape.utils.ext.visible
+import kotlinx.android.synthetic.main.activity_add_gelar.*
 import kotlinx.android.synthetic.main.activity_add_lp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
+import java.util.*
 
 class AddLpActivity : BaseActivity() {
     companion object {
         const val REQ_DILAPOR = 111
         const val REQ_TERLAPOR = 222
         const val REQ_TERLAPOR_LHP = 122
+        const val REQ_TERLAPOR_LHP_OPER = 444
         const val REQ_PELANGGARAN = 333
         const val REQ_LHP_LP = 444
         const val IS_LHP_PERSONEL = "IS_LHP_PERSONEL"
+        const val IS_LHP_PERSONEL_OPER = "IS_LHP_PERSONEL_OPER"
         const val LP = "LP"
     }
 
@@ -75,18 +79,27 @@ class AddLpActivity : BaseActivity() {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_choose_personel_terlapor_lp_add.setOnClickListener {
-            if (_idLhp == null || _idLhp == 0) {
-                val intent = Intent(this, KatPersonelActivity::class.java)
-                intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
-                startActivityForResult(intent, REQ_TERLAPOR)
+            val hak = sessionManager1.fetchHakAkses()
+            if (hak == "operator") {
+                val intent = Intent(this, ChoosePersonelActivity::class.java).apply {
+                    this.putExtra(IS_LHP_PERSONEL_OPER, _idLhp)
+                }
+                startActivityForResult(intent, REQ_TERLAPOR_LHP_OPER)
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
-                val intent = Intent(this, ChoosePersonelActivity::class.java).apply {
-                    this.putExtra(IS_LHP_PERSONEL, _idLhp!!)
-                }
-                startActivityForResult(intent, REQ_TERLAPOR_LHP)
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                if (_idLhp == null || _idLhp == 0) {
+                    val intent = Intent(this, KatPersonelActivity::class.java)
+                    intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
+                    startActivityForResult(intent, REQ_TERLAPOR)
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+                } else {
+                    val intent = Intent(this, ChoosePersonelActivity::class.java).apply {
+                        this.putExtra(IS_LHP_PERSONEL, _idLhp!!)
+                    }
+                    startActivityForResult(intent, REQ_TERLAPOR_LHP)
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
+                }
             }
         }
 
@@ -175,51 +188,61 @@ class AddLpActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
         val pelanggaran = data?.getParcelableExtra<PelanggaranResp>("PELANGGARAN")
-        when (resultCode) {
-            Activity.RESULT_OK -> {
-                when (requestCode) {
-                    REQ_DILAPOR -> {
+        if (resultCode == Activity.RESULT_OK || resultCode == 123) {
+            when (requestCode) {
+                REQ_DILAPOR -> {
 //                        idPersonelDilapor = personel?.id
 //                        txt_jabatan_dilapor_lp_add.text = personel?.jabatan
 //                        txt_kesatuan_dilapor_lp_add.text = personel?.satuan_kerja?.kesatuan
 //                        txt_nama_dilapor_lp_add.text = personel?.nama
 //                        txt_nrp_dilapor_lp_add.text = "NRP : ${personel?.nrp}"
 //                        txt_pangkat_dilapor_lp_add.text = "Pangkat ${personel?.pangkat}"
-                    }
-                    REQ_TERLAPOR_LHP -> {
-                        val dataPersLhp =
-                            data?.getParcelableExtra<PersonelPenyelidikResp>(ChoosePersonelActivity.DATA_PERSONEL)
-                        idPersonelTerlapor = dataPersLhp?.id
-                        txt_jabatan_terlapor_lp_add.text =
-                            "Jabatan : ${dataPersLhp?.personel?.jabatan}"
-                        txt_kesatuan_terlapor_lp_add.text =
-                            "Kesatuan : ${dataPersLhp?.personel?.satuan_kerja?.kesatuan}"
-                        txt_nama_terlapor_lp_add.text = "Nama : ${dataPersLhp?.personel?.nama}"
-                        txt_nrp_terlapor_lp_add.text = "NRP : ${dataPersLhp?.personel?.nrp}"
-                        txt_pangkat_terlapor_lp_add.text =
-                            "Pangkat : ${dataPersLhp?.personel?.pangkat.toString().toUpperCase()}"
-                    }
-                    REQ_TERLAPOR -> {
-                        idPersonelTerlapor = personel?.id
-                        txt_jabatan_terlapor_lp_add.text = "Jabatan : ${personel?.jabatan}"
-                        txt_kesatuan_terlapor_lp_add.text =
-                            "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
-                        txt_nama_terlapor_lp_add.text = "Nama : ${personel?.nama}"
-                        txt_nrp_terlapor_lp_add.text = "NRP : ${personel?.nrp}"
-                        txt_pangkat_terlapor_lp_add.text =
-                            "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
-                    }
-                    REQ_PELANGGARAN -> {
-                        idPelanggaran = pelanggaran?.id
+                }
+                REQ_TERLAPOR_LHP_OPER -> {
+                    val pimpinan = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
+                    idPersonelTerlapor = pimpinan?.id
+                    txt_nama_terlapor_lp_add.text = "Nama: ${pimpinan?.nama}"
+                    txt_pangkat_terlapor_lp_add.text = "Pangkat: ${
+                        pimpinan?.pangkat.toString().toUpperCase(Locale.ROOT)
+                    }"
+                    txt_nrp_terlapor_lp_add.text = "NRP: ${pimpinan?.nrp}"
+                    txt_jabatan_terlapor_lp_add.text = "Jabatan: ${pimpinan?.jabatan}"
+                    txt_kesatuan_terlapor_lp_add.text =
+                        "Kesatuan: ${pimpinan?.satuan_kerja?.kesatuan}"
+                }
+                REQ_TERLAPOR_LHP -> {
+                    val dataPersLhp =
+                        data?.getParcelableExtra<PersonelPenyelidikResp>(ChoosePersonelActivity.DATA_PERSONEL)
+                    idPersonelTerlapor = dataPersLhp?.id
+                    txt_jabatan_terlapor_lp_add.text =
+                        "Jabatan : ${dataPersLhp?.personel?.jabatan}"
+                    txt_kesatuan_terlapor_lp_add.text =
+                        "Kesatuan : ${dataPersLhp?.personel?.satuan_kerja?.kesatuan}"
+                    txt_nama_terlapor_lp_add.text = "Nama : ${dataPersLhp?.personel?.nama}"
+                    txt_nrp_terlapor_lp_add.text = "NRP : ${dataPersLhp?.personel?.nrp}"
+                    txt_pangkat_terlapor_lp_add.text =
+                        "Pangkat : ${dataPersLhp?.personel?.pangkat.toString().toUpperCase()}"
+                }
+                REQ_TERLAPOR -> {
+                    idPersonelTerlapor = personel?.id
+                    txt_jabatan_terlapor_lp_add.text = "Jabatan : ${personel?.jabatan}"
+                    txt_kesatuan_terlapor_lp_add.text =
+                        "Kesatuan : ${personel?.satuan_kerja?.kesatuan}"
+                    txt_nama_terlapor_lp_add.text = "Nama : ${personel?.nama}"
+                    txt_nrp_terlapor_lp_add.text = "NRP : ${personel?.nrp}"
+                    txt_pangkat_terlapor_lp_add.text =
+                        "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
+                }
+                REQ_PELANGGARAN -> {
+                    idPelanggaran = pelanggaran?.id
 //                        txt_pelanggaran_lp_add.text =
 //                            "Pelanggaran : ${pelanggaran?.nama_pelanggaran}"
-                    }
-                    REQ_LHP_LP -> {
-                        val dataLhp =
-                            data?.getParcelableExtra<LhpMinResp>(ChooseLhpActivity.DATA_LP)
-                        _idLhp = dataLhp?.id
-                        txt_no_lhp_lp_add.text = "No LHP: ${dataLhp?.no_lhp}"
-                    }
+                }
+                REQ_LHP_LP -> {
+                    val dataLhp =
+                        data?.getParcelableExtra<LhpMinResp>(ChooseLhpActivity.DATA_LP)
+                    _idLhp = dataLhp?.id
+                    txt_no_lhp_lp_add.text = "No LHP: ${dataLhp?.no_lhp}"
                 }
             }
         }

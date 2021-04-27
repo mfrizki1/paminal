@@ -23,6 +23,7 @@ import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.LhpDataManager
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import kotlinx.android.synthetic.main.activity_add_personel_lidik.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import retrofit2.Call
@@ -84,7 +85,13 @@ class AddPersonelLidikActivity : BaseActivity() {
 
         //set Pick Personel
         btn_choose_personel_lidik.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var intent = Intent()
+            val hak = sessionManager1.fetchHakAkses()
+            if (hak == "operator") {
+                intent = Intent(this, ChoosePersonelActivity::class.java)
+            } else {
+                intent = Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_LIDIK)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -105,7 +112,7 @@ class AddPersonelLidikActivity : BaseActivity() {
                             btn_save_single_lidik.hideProgress(R.string.data_saved)
                             Handler(Looper.getMainLooper()).postDelayed({
                                 finish()
-                            },1000)
+                            }, 1000)
                         } else {
                             btn_save_single_lidik.hideProgress(R.string.not_save)
                         }
@@ -122,30 +129,34 @@ class AddPersonelLidikActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
-        if (resultCode == Activity.RESULT_OK && requestCode == REQ_LIDIK) {
-            lidikReq.id_personel = personel?.id
-            lidikReq.nama_personel = personel?.nama
+        if (requestCode == REQ_LIDIK) {
+            if (resultCode == Activity.RESULT_OK || resultCode == 123) {
+                lidikReq.id_personel = personel?.id
+                lidikReq.nama_personel = personel?.nama
 
-            /*for addOnLhpAll*/
+                /*for addOnLhpAll*/
 //            penyelidikResp.personel?.nama = personel?.nama
 //            penyelidikResp.personel?.id = personel?.id
-            /*  penyelidikResp.nrp = personel?.nrp
-              penyelidikResp.id_satuan_kerja = personel?.satuan_kerja?.id
-              penyelidikResp.pangkat = personel?.pangkat.toString().toUpperCase()
-              penyelidikResp.personel = personel?.id
-              penyelidikResp.nama = personel?.nama
-              penyelidikResp.jabatan = personel?.jabatan
-              penyelidikResp.kesatuan = personel?.satuan_kerja?.kesatuan.toString().toUpperCase()
-              idPersonel = personel?.id*/
+                /*  penyelidikResp.nrp = personel?.nrp
+                  penyelidikResp.id_satuan_kerja = personel?.satuan_kerja?.id
+                  penyelidikResp.pangkat = personel?.pangkat.toString().toUpperCase()
+                  penyelidikResp.personel = personel?.id
+                  penyelidikResp.nama = personel?.nama
+                  penyelidikResp.jabatan = personel?.jabatan
+                  penyelidikResp.kesatuan = personel?.satuan_kerja?.kesatuan.toString().toUpperCase()
+                  idPersonel = personel?.id*/
 
 //set lidik req
 //            lidikReq.id_personel = penyelidikResp.personel?.id
-            txt_nama_lidik_add.text = "Nama : ${personel?.nama}"
-            txt_pangkat_lidik_add.text = "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
-            txt_nrp_lidik_add.text = "NRP : ${personel?.nrp}"
-            txt_jabatan_lidik_add.text = "Jabatan : ${personel?.jabatan}"
-            txt_kesatuan_lidik_add.text =
-                "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+                txt_nama_lidik_add.text = "Nama : ${personel?.nama}"
+                txt_pangkat_lidik_add.text =
+                    "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
+                txt_nrp_lidik_add.text = "NRP : ${personel?.nrp}"
+                txt_jabatan_lidik_add.text = "Jabatan : ${personel?.jabatan}"
+                txt_kesatuan_lidik_add.text =
+                    "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+            }
+
         }
     }
 

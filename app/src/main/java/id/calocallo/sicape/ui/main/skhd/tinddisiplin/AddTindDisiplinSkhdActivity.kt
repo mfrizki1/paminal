@@ -22,6 +22,7 @@ import id.calocallo.sicape.network.response.PersonelMinResp
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.toast
 import id.calocallo.sicape.utils.ext.visible
@@ -83,7 +84,13 @@ class AddTindDisiplinSkhdActivity : BaseActivity() {
 
 
         btn_choose_personel_tind_disiplin.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var intent = Intent()
+            val hak = sessionManager1.fetchHakAkses()
+            if (hak == "operator") {
+                intent = Intent(this, ChoosePersonelActivity::class.java)
+            } else {
+                intent = Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PERSONEL_TIND)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

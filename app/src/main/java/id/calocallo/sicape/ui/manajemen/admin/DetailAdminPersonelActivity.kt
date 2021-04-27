@@ -37,7 +37,7 @@ class DetailAdminPersonelActivity : BaseActivity() {
 
 
         btn_edit_personel_admin.setOnClickListener {
-            val intent= Intent(this, EditAdminPersonelActivity::class.java)
+            val intent = Intent(this, EditAdminPersonelActivity::class.java)
             intent.putExtra("admin", detailAdmin)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -46,8 +46,10 @@ class DetailAdminPersonelActivity : BaseActivity() {
     }
 
     private fun apiDetailAdmin(detailAdmin: UserResp?) {
-       NetworkConfig().getServUser().getDetailAdmin("Bearer ${sessionManager1.fetchAuthToken()}",
-        detailAdmin?.id.toString())
+        NetworkConfig().getServUser().getDetailAdmin(
+            "Bearer ${sessionManager1.fetchAuthToken()}",
+            detailAdmin?.id.toString()
+        )
             .enqueue(object : Callback<UserResp> {
                 override fun onFailure(call: Call<UserResp>, t: Throwable) {
                     Toast.makeText(
@@ -61,9 +63,9 @@ class DetailAdminPersonelActivity : BaseActivity() {
                     call: Call<UserResp>,
                     response: Response<UserResp>
                 ) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         viewDetailAdmin(response.body())
-                    }else{
+                    } else {
                         Toast.makeText(
                             this@DetailAdminPersonelActivity,
                             "Error Koneksi",
@@ -82,9 +84,9 @@ class DetailAdminPersonelActivity : BaseActivity() {
             copyTextToClipboard(txt_nrp_admin_detail)
         }
         txt_kesatuan_admin_detail.text = admin?.satuan_kerja?.kesatuan
-        if(admin?.is_aktif == 1){
+        if (admin?.is_aktif == 1) {
             txt_status_aktif_admin_detail.text = "Aktif"
-        }else{
+        } else {
             txt_status_aktif_admin_detail.text = "Tidak Aktif"
         }
     }
@@ -122,7 +124,7 @@ class DetailAdminPersonelActivity : BaseActivity() {
         this.alert("Hapus Data", "Yakin Hapus?") {
             positiveButton("Iya") {
                 ApiDelete()
-                finish()
+//                finish()
             }
             negativeButton("Tidak") {
             }
@@ -132,25 +134,19 @@ class DetailAdminPersonelActivity : BaseActivity() {
     private fun ApiDelete() {
         val detailAdmin = intent.getParcelableExtra<UserResp>("admin")
 
-       NetworkConfig().getServUser()
+        NetworkConfig().getServUser()
             .delAdmin("Bearer ${sessionManager1.fetchAuthToken()}", detailAdmin?.id.toString())
             .enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(
-                        this@DetailAdminPersonelActivity,
-                        R.string.failed_deleted,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toast("$t")
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {
                     if (response.body()?.message == "Data personel admin removed succesfully") {
-                        Toast.makeText(
-                            this@DetailAdminPersonelActivity,
-                            R.string.data_deleted,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        toast(R.string.data_deleted)
                         finish()
+                    } else if (response.body()?.message == "Data lp has been used as reference in another data") {
+                        toast(R.string.used_on_references_lp)
                     } else {
                         toast("${response.body()?.message}")
                     }

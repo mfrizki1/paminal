@@ -64,6 +64,7 @@ class DetailLpDisiplinActivity : BaseActivity() {
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_disiplin.gone()
+            btn_edit_saksi_disiplin.gone()
             btn_edit_pasal_disiplin.gone()
         }
         btn_edit_pasal_disiplin.setOnClickListener {

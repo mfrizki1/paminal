@@ -20,6 +20,7 @@ import id.calocallo.sicape.ui.base.BaseActivity
 import id.calocallo.sicape.ui.main.choose.lp.LpChooseActivity
 import id.calocallo.sicape.ui.main.choose.lp.PickJenisLpActivity
 import id.calocallo.sicape.ui.main.lhp.add.AddLhpActivity
+import id.calocallo.sicape.utils.SessionManager1
 import kotlinx.android.synthetic.main.activity_add_gelar.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 import java.text.SimpleDateFormat
@@ -27,8 +28,10 @@ import java.util.*
 
 class AddGelarActivity : BaseActivity() {
     private lateinit var gelarDataManager: GelarDataManager
+    private lateinit var sessionManager1: SessionManager1
     private var lhgReq = LhgReq()
     private var idLp: Int? = null
+    private var isOperator: String? = null
 
     companion object {
         const val REQ_PESERTA = 1
@@ -44,9 +47,12 @@ class AddGelarActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_gelar)
         gelarDataManager = GelarDataManager(this)
+        sessionManager1 = SessionManager1(this)
         setupActionBarWithBackButton(toolbar)
         supportActionBar?.title = "Tambah Data Gelar Perkara"
         Logger.addLogAdapter(AndroidLogAdapter())
+        val hak = sessionManager1.fetchHakAkses()
+        isOperator = sessionManager1.fetchHakAkses()
 
         btn_peserta_lhg_add.setOnClickListener {
             val intent = Intent(this, ChoosePersonelActivity::class.java)
@@ -56,19 +62,34 @@ class AddGelarActivity : BaseActivity() {
         }
 
         btn_choose_personel_pemapar_lhg_add.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var intent = Intent()
+            intent = if (isOperator == "operator") {
+                Intent(this, ChoosePersonelActivity::class.java)
+            } else {
+                Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PEMAPAR)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_choose_personel_pimpinan_lhg_add.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var intent = Intent()
+            intent = if (isOperator == "operator") {
+                Intent(this, ChoosePersonelActivity::class.java)
+            } else {
+                Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PIMPINAN)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         btn_choose_personel_notulen_lhg_add.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var intent = Intent()
+            intent = if (isOperator == "operator") {
+                Intent(this, ChoosePersonelActivity::class.java)
+            } else {
+                Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_NOTULEN)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -112,7 +133,7 @@ class AddGelarActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQ_PIMPINAN -> {
-                if (resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK || resultCode == 123) {
                     val pimpinan = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
                     txt_nama_pimpinan_lhg_add.text = "Nama: ${pimpinan?.nama}"
                     txt_pangkat_pimpinan_lhg_add.text = "Pangkat: ${
@@ -121,14 +142,14 @@ class AddGelarActivity : BaseActivity() {
                     txt_nrp_pimpinan_lhg_add.text = "NRP: ${pimpinan?.nrp}"
                     txt_jabatan_pimpinan_lhg_add.text = "Jabatan: ${pimpinan?.jabatan}"
                     txt_kesatuan_pimpinan_lhg_add.text =
-                        "Kesatuan:e ${pimpinan?.satuan_kerja?.kesatuan}"
+                        "Kesatuan: ${pimpinan?.satuan_kerja?.kesatuan}"
                     lhgReq.nama_pimpinan = pimpinan?.nama
                     lhgReq.nrp_pimpinan = pimpinan?.nrp
                     lhgReq.pangkat_pimpinan = pimpinan?.pangkat.toString().toUpperCase()
                 }
             }
             REQ_PEMAPAR -> {
-                if (resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK || resultCode == 123) {
                     val pemapar = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
                     txt_nama_pemapar_lhg_add.text = "Nama: ${pemapar?.nama}"
                     txt_pangkat_pemapar_lhg_add.text = "Pangkat: ${
@@ -144,7 +165,7 @@ class AddGelarActivity : BaseActivity() {
                 }
             }
             REQ_NOTULEN -> {
-                if (resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK || resultCode == 123) {
                     val notulen = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
                     txt_nama_notulen_lhg_add.text = "Nama: ${notulen?.nama}"
                     txt_pangkat_notulen_lhg_add.text = "Pangkat: ${

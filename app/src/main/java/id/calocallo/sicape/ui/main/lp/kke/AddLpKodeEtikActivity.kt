@@ -18,6 +18,7 @@ import id.calocallo.sicape.ui.main.lp.pasal.PickPasalActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
@@ -57,7 +58,13 @@ class AddLpKodeEtikActivity : BaseActivity() {
         }
         //button pick personel pelapor
         btn_choose_personel_pelapor_lp_add_kke.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var intent = Intent()
+            val hak = sessionManager1.fetchHakAkses()
+            if (hak == "operator") {
+                intent = Intent(this, ChoosePersonelActivity::class.java)
+            } else {
+                intent = Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PELAPOR)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -84,9 +91,9 @@ class AddLpKodeEtikActivity : BaseActivity() {
 
 //            val intent = Intent(this, PickPasalLpActivity::class.java)
             val intent = Intent(this, PickPasalActivity::class.java)
-            if(idPelapor == null || idPelapor == 0){
+            if (idPelapor == null || idPelapor == 0) {
                 intent.putExtra(PickPasalActivity.SIPIL, sipilPelaporReq)
-            }else{
+            } else {
                 intent.putExtra(PickPasalActivity.ID_PELAPOR, idPelapor!!)
 
             }
@@ -131,8 +138,10 @@ class AddLpKodeEtikActivity : BaseActivity() {
             sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_no_telp_sipil)
         val nikSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_nik_sipil)
 
-        val tempatLahirSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tempat_lahir_sipil)
-        val tglLahirSipilView = sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tanggal_lahir_sipil)
+        val tempatLahirSipilView =
+            sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tempat_lahir_sipil)
+        val tglLahirSipilView =
+            sipilAlertDialog.findViewById<TextInputEditText>(R.id.edt_tanggal_lahir_sipil)
 
         val agamaItem =
             listOf("Islam", "Katolik", "Protestan", "Buddha", "Hindu", "Khonghucu")
@@ -149,20 +158,20 @@ class AddLpKodeEtikActivity : BaseActivity() {
                     txt_agama_sipil_kke_lp_add.text = "Agama : Katolik"
                 }
                 2 -> {
-                    agamaSipil="protestan"
+                    agamaSipil = "protestan"
                     sipilPelaporReq.agama_sipil = "protestan"
                     txt_agama_sipil_kke_lp_add.text = "Agama : Protestan"
                 }
                 3 -> {
-                    agamaSipil="buddha"
+                    agamaSipil = "buddha"
                     txt_agama_sipil_kke_lp_add.text = "Agama : Buddha"
                 }
                 4 -> {
-                    agamaSipil="hindu"
+                    agamaSipil = "hindu"
                     txt_agama_sipil_kke_lp_add.text = "Agama : Hindu"
                 }
                 5 -> {
-                    agamaSipil="konghuchu"
+                    agamaSipil = "konghuchu"
                     txt_agama_sipil_kke_lp_add.text = "Agama : Konghuchu"
                 }
             }
@@ -172,10 +181,11 @@ class AddLpKodeEtikActivity : BaseActivity() {
         val adapterJk = ArrayAdapter(this, R.layout.item_spinner, jkItem)
         jkSipilView.setAdapter(adapterJk)
         jkSipilView.setOnItemClickListener { parent, _, position, _ ->
-            txt_jk_sipil_kke_lp_add.text ="Jenis Kelamin : ${parent.getItemAtPosition(position).toString()}"
-            when(position){
-                0->jkSipil = "laki_laki"
-                1->jkSipil = "perempuan"
+            txt_jk_sipil_kke_lp_add.text =
+                "Jenis Kelamin : ${parent.getItemAtPosition(position).toString()}"
+            when (position) {
+                0 -> jkSipil = "laki_laki"
+                1 -> jkSipil = "perempuan"
             }
         }
 
@@ -184,26 +194,27 @@ class AddLpKodeEtikActivity : BaseActivity() {
 //            .setMessage("Masukkan Data Sipil")
             .setPositiveButton("Tambah") { _, _ ->
                 namaSipil = namaSipilView.text.toString()
-                txt_nama_sipil_kke_lp_add.text ="Nama : ${namaSipilView.text.toString()}"
+                txt_nama_sipil_kke_lp_add.text = "Nama : ${namaSipilView.text.toString()}"
 
                 tmptSipil = tempatLahirSipilView.text.toString()
                 tglSipil = tglLahirSipilView.text.toString()
                 txt_ttl_sipil_kke_lp_add.text = "TTL : ${tmptSipil}, ${formatterTanggal(tglSipil)}"
 
                 pekerjaanSipil = pekerjaanSipilView.text.toString()
-                txt_pekerjaan_sipil_kke_lp_add.text ="Pekerjaan : ${pekerjaanSipilView.text.toString()}"
+                txt_pekerjaan_sipil_kke_lp_add.text =
+                    "Pekerjaan : ${pekerjaanSipilView.text.toString()}"
 
                 kwgSipil = kwgSipilView.text.toString()
-                txt_kwg_sipil_kke_lp_add.text ="Kewarganegaraan : ${kwgSipilView.text.toString()}"
+                txt_kwg_sipil_kke_lp_add.text = "Kewarganegaraan : ${kwgSipilView.text.toString()}"
 
                 alamatSipil = alamatSipilView.text.toString()
-                txt_alamat_sipil_kke_lp_add.text ="Alamat : ${alamatSipilView.text.toString()}"
+                txt_alamat_sipil_kke_lp_add.text = "Alamat : ${alamatSipilView.text.toString()}"
 
                 notelpSipil = noTelpSipilView.text.toString()
-                txt_no_telp_sipil_kke_lp_add.text ="No Telp : ${noTelpSipilView.text.toString()}"
+                txt_no_telp_sipil_kke_lp_add.text = "No Telp : ${noTelpSipilView.text.toString()}"
 
                 nikSipil = nikSipilView.text.toString()
-                txt_nik_ktp_sipil_kke_lp_add.text ="NIK KTP : ${nikSipilView.text.toString()}"
+                txt_nik_ktp_sipil_kke_lp_add.text = "NIK KTP : ${nikSipilView.text.toString()}"
 
 //                dialog.dismiss()
 
@@ -220,14 +231,17 @@ class AddLpKodeEtikActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val pelapor = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
-        if (resultCode == Activity.RESULT_OK && requestCode == REQ_PELAPOR) {
-            idPelapor = pelapor?.id
-            txt_nama_pelapor_kke_lp_add.text = "Nama : ${pelapor?.nama}"
-            txt_pangkat_pelapor_kke_lp_add.text =
-                "Pangkat : ${pelapor?.pangkat.toString().toUpperCase()}"
-            txt_nrp_pelapor_kke_lp_add.text = "NRP : ${pelapor?.nrp}"
-            txt_jabatan_pelapor_kke_lp_add.text = "Jabatan : ${pelapor?.jabatan}"
-            txt_kesatuan_pelapor_kke_lp_add.text = "Kesatuan : ${pelapor?.satuan_kerja?.kesatuan}"
+        if (resultCode == Activity.RESULT_OK || resultCode == 123) {
+            if (requestCode == REQ_PELAPOR) {
+                idPelapor = pelapor?.id
+                txt_nama_pelapor_kke_lp_add.text = "Nama : ${pelapor?.nama}"
+                txt_pangkat_pelapor_kke_lp_add.text =
+                    "Pangkat : ${pelapor?.pangkat.toString().toUpperCase()}"
+                txt_nrp_pelapor_kke_lp_add.text = "NRP : ${pelapor?.nrp}"
+                txt_jabatan_pelapor_kke_lp_add.text = "Jabatan : ${pelapor?.jabatan}"
+                txt_kesatuan_pelapor_kke_lp_add.text =
+                    "Kesatuan : ${pelapor?.satuan_kerja?.kesatuan}"
+            }
         }
     }
 

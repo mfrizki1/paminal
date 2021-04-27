@@ -22,6 +22,7 @@ import id.calocallo.sicape.ui.main.lp.pidana.ListLpPidanaActivity
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.utils.ext.*
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.*
 import kotlinx.android.synthetic.main.activity_add_saksi_lp.txt_jabatan_saksi_lp_add
@@ -40,7 +41,7 @@ class AddSaksiLpActivity : BaseActivity() {
     private var saksiLpReq = SaksiLpReq()
     private var isSingleAdd: Boolean = false
     private var jenisSaksi: String? = null
-    private var dataLp: LpMinResp? = null
+    private var dataLp: LpResp? = null
     private var dataLpFull: LpResp? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +80,7 @@ class AddSaksiLpActivity : BaseActivity() {
                 progressColor = Color.WHITE
             }
             if (isSingleAdd) {
-                dataLp = intent.getParcelableExtra<LpMinResp>("DATA_LP")
+                dataLp = intent.getParcelableExtra<LpResp>("DATA_LP")
                 addSaksiLp(dataLp?.id)
             } else {
                 dataLpFull = intent.getParcelableExtra<LpResp>(PickPasalActivity.DATA_LP)
@@ -89,7 +90,13 @@ class AddSaksiLpActivity : BaseActivity() {
         }
 
         btn_choose_personel_saksi_lp_add.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var hak = sessionManager1.fetchHakAkses()
+            var intent = Intent()
+            intent = if (hak == "operator") {
+                Intent(this, ChoosePersonelActivity::class.java)
+            } else {
+                Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PERSONEL)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -245,17 +252,19 @@ class AddSaksiLpActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQ_PERSONEL) {
-            val personelSaksi = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
-            saksiLpReq.nama = personelSaksi?.nama
-            saksiLpReq.id_personel = personelSaksi?.id
-            txt_nama_saksi_lp_add.text = "Nama : ${personelSaksi?.nama}"
-            txt_pangkat_saksi_lp_add.text =
-                "Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
-            txt_nrp_saksi_lp_add.text = "NRP : ${personelSaksi?.nrp}"
-            txt_jabatan_saksi_lp_add.text = "Jabatan : ${personelSaksi?.jabatan}"
-            txt_kesatuan_saksi_lp_add.text =
-                "Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+        if (requestCode == REQ_PERSONEL) {
+            if (resultCode == Activity.RESULT_OK || resultCode == 123) {
+                val personelSaksi = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
+                saksiLpReq.nama = personelSaksi?.nama
+                saksiLpReq.id_personel = personelSaksi?.id
+                txt_nama_saksi_lp_add.text = "Nama : ${personelSaksi?.nama}"
+                txt_pangkat_saksi_lp_add.text =
+                    "Pangkat : ${personelSaksi?.pangkat.toString().toUpperCase()}"
+                txt_nrp_saksi_lp_add.text = "NRP : ${personelSaksi?.nrp}"
+                txt_jabatan_saksi_lp_add.text = "Jabatan : ${personelSaksi?.jabatan}"
+                txt_kesatuan_saksi_lp_add.text =
+                    "Kesatuan : ${personelSaksi?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+            }
         }
     }
 

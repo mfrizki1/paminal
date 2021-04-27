@@ -419,11 +419,7 @@ class DetailLpKkeActivity : BaseActivity() {
             .delLp("Bearer ${sessionManager1.fetchAuthToken()}", detailKKe?.id)
             .enqueue(object : Callback<BaseResp> {
                 override fun onFailure(call: Call<BaseResp>, t: Throwable) {
-                    Toast.makeText(
-                        this@DetailLpKkeActivity,
-                        R.string.error_conn,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toast("$t")
                 }
 
                 override fun onResponse(call: Call<BaseResp>, response: Response<BaseResp>) {

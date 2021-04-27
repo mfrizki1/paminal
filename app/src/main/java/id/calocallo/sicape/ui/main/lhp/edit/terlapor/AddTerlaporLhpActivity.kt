@@ -20,6 +20,7 @@ import id.calocallo.sicape.ui.main.lhp.add.ListKetTerlaporLhpActivity.Companion.
 import id.calocallo.sicape.ui.main.personel.KatPersonelActivity
 import id.calocallo.sicape.utils.SessionManager1
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_add_terlapor_lhp.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
@@ -53,7 +54,13 @@ class AddTerlaporLhpActivity : BaseActivity() {
         /*set button for get personel*/
         bt_choose_personel_terlapor.setOnClickListener {
             //TODO CHANGE FILTERING PERSONEL(BERDASARKAN LP YG ADA DI LHP TRS PILIH PERSONELNYA)
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var intent = Intent()
+            val hak = sessionManager1.fetchHakAkses()
+            if (hak == "operator") {
+                intent = Intent(this, ChoosePersonelActivity::class.java)
+            } else {
+                intent = Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, ADD_TERLAPOR_PERSONEL)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -117,16 +124,18 @@ class AddTerlaporLhpActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
-        if (resultCode == Activity.RESULT_OK && requestCode == ADD_TERLAPOR_PERSONEL) {
-            idTerlapor = personel?.id
-            namaTerlapor = personel?.nama
-            txt_nama_terlapor_add.text = "Nama : ${personel?.nama}"
-            txt_pangkat_terlapor_add.text =
-                "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
-            txt_nrp_terlapor_add.text = "NRP : ${personel?.nrp}"
-            txt_jabatan_terlapor_add.text = "Jabatan : ${personel?.jabatan}"
-            txt_kesatuan_terlapor_add.text =
-                "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+        if (requestCode == ADD_TERLAPOR_PERSONEL) {
+            if (resultCode == Activity.RESULT_OK || resultCode == 123) {
+                idTerlapor = personel?.id
+                namaTerlapor = personel?.nama
+                txt_nama_terlapor_add.text = "Nama : ${personel?.nama}"
+                txt_pangkat_terlapor_add.text =
+                    "Pangkat : ${personel?.pangkat.toString().toUpperCase()}"
+                txt_nrp_terlapor_add.text = "NRP : ${personel?.nrp}"
+                txt_jabatan_terlapor_add.text = "Jabatan : ${personel?.jabatan}"
+                txt_kesatuan_terlapor_add.text =
+                    "Kesatuan : ${personel?.satuan_kerja?.kesatuan.toString().toUpperCase()}"
+            }
         }
     }
 

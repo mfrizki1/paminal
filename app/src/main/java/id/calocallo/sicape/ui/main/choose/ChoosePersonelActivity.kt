@@ -33,6 +33,7 @@ import id.calocallo.sicape.ui.base.BaseActivity
 import id.calocallo.sicape.ui.main.lp.AddLpActivity
 import id.calocallo.sicape.utils.ext.toast
 import kotlinx.android.synthetic.main.activity_choose_personel.*
+import kotlinx.android.synthetic.main.activity_personel.*
 import kotlinx.android.synthetic.main.item_choose_personel.view.*
 import kotlinx.android.synthetic.main.layout_1_text_clickable.view.*
 import kotlinx.android.synthetic.main.layout_edit_1_text.view.*
@@ -84,9 +85,18 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
         val isPolsek = intent.extras?.getParcelable<SatKerResp>(PersonelActivity.IS_POLSEK)
         val isMultipleSelect = intent.getBooleanExtra(MULTIPLE, false)
         val isPersLp = intent.getIntExtra(AddLpActivity.IS_LHP_PERSONEL, 0)
+        val isPersLpOper = intent.getIntExtra(AddLpActivity.IS_LHP_PERSONEL_OPER, 0)
+
+        val hak = sessionManager1.fetchHakAkses()
         if (isMultipleSelect) {
             getPersonel()
             ll_button_choose.visible()
+        } else if (hak == "operator") {
+            if(isPersLpOper != 0){
+                apiChoosePersonel(isPersLpOper)
+            }else {
+                apiPersOper()
+            }
         } else {
             when {
                 isPolda != null -> {
@@ -104,7 +114,9 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
                 isPersLp != 0 -> {
                     apiChoosePersonel(isPersLp)
                 }
-
+//                hak == "operator"->{
+//                    apiPersOper()
+//                }
             }
         }
 
@@ -116,6 +128,37 @@ class ChoosePersonelActivity : BaseActivity(), ActionMode.Callback {
 //        }else{
 //            getPersonelByTerlapor()
 //        }*/
+    }
+
+    private fun apiPersOper() {
+        rl_pb.visible()
+        NetworkConfig().getServPers().showPersonel("Bearer ${sessionManager1.fetchAuthToken()}")
+            .enqueue(object : Callback<ArrayList<PersonelMinResp>> {
+                override fun onResponse(
+                    call: Call<ArrayList<PersonelMinResp>>,
+                    response: Response<ArrayList<PersonelMinResp>>
+                ) {
+                    if (response.isSuccessful) {
+                        rl_pb.gone()
+                        if (response.body()?.isEmpty()!!) {
+                            rl_no_data.visible()
+                            rl_pb.gone()
+                            rv_personel.gone()
+                        } else {
+                            listPersonelBySatker(response.body())
+                        }
+                    } else {
+                        toast(R.string.error_conn)
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<PersonelMinResp>>, t: Throwable) {
+                    toast("$t")
+                    rl_no_data.visible()
+                    rl_pb.gone()
+                    rv_personel.gone()
+                }
+            })
     }
 
     private fun apiChoosePersonel(id_lhp: Int) {

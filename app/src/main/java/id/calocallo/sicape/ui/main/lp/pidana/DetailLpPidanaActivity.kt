@@ -72,6 +72,7 @@ class DetailLpPidanaActivity : BaseActivity() {
         val hak = sessionManager1.fetchHakAkses()
         if (hak == "operator") {
             btn_edit_pidana.gone()
+            btn_edit_saksi_pidana.gone()
             btn_edit_pasal_pidana.gone()
         }
 

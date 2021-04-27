@@ -41,9 +41,9 @@ class ListGelarActivity : BaseActivity() {
         apiListGelar()
 
         val hak = sessionManager1.fetchHakAkses()
-        if (hak == "operator") {
-            btn_add_single_gelar.gone()
-        }
+//        if (hak == "operator") {
+//            btn_add_single_gelar.gone()
+//        }
 
         btn_add_single_gelar.setOnClickListener {
             startActivity(Intent(this, AddGelarActivity::class.java))

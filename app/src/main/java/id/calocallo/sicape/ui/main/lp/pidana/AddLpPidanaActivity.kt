@@ -1,5 +1,6 @@
 package id.calocallo.sicape.ui.main.lp.pidana
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import id.calocallo.sicape.utils.ext.formatterTanggal
 import id.calocallo.sicape.utils.ext.gone
 import id.calocallo.sicape.utils.ext.visible
 import id.calocallo.sicape.ui.base.BaseActivity
+import id.calocallo.sicape.ui.main.choose.ChoosePersonelActivity
 import kotlinx.android.synthetic.main.activity_add_lp_pidana.*
 import kotlinx.android.synthetic.main.layout_toolbar_white.*
 
@@ -57,7 +59,13 @@ class AddLpPidanaActivity : BaseActivity() {
         txt_layout_pembukaan_laporan_pidana_add.gone()
 
         btn_choose_personel_pelapor_lp_add_pidana.setOnClickListener {
-            val intent = Intent(this, KatPersonelActivity::class.java)
+            var intent = Intent()
+            val hak = sessionManager1.fetchHakAkses()
+            if(hak == "operator"){
+                intent = Intent(this, ChoosePersonelActivity::class.java)
+            }else {
+                intent = Intent(this, KatPersonelActivity::class.java)
+            }
             intent.putExtra(KatPersonelActivity.PICK_PERSONEL, true)
             startActivityForResult(intent, REQ_PELAPOR)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -224,8 +232,7 @@ class AddLpPidanaActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val personel = data?.getParcelableExtra<PersonelMinResp>("ID_PERSONEL")
-        when (resultCode) {
-            RESULT_OK ->
+        if(resultCode == 123 || resultCode == Activity.RESULT_OK){
                 when (requestCode) {
                     REQ_PELAPOR -> {
                         idPelapor = personel?.id
